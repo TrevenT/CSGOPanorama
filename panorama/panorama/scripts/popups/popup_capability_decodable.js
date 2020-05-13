@@ -187,6 +187,7 @@ var CapabilityDecodable = ( function()
 		}
 
 		_SetupHeader( m_caseId );
+		_SetupDescription( m_caseId );
 		_SetUpAsyncActionBar( m_caseId );
 
 		if ( m_isXrayMode )
@@ -212,6 +213,22 @@ var CapabilityDecodable = ( function()
 	{
 		var elCapabilityHeaderPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpCapabilityHeader' );
 		CapabiityHeader.Init( elCapabilityHeaderPanel, caseId, _GetSettingCallback );
+	};
+
+	var _SetupDescription = function( caseId )
+	{
+		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'InspectItemDesc' );
+		var count = ItemInfo.GetLootListCount( caseId );
+		
+		if ( count === 0 && m_storeItemId )
+		{
+			elPanel.visible = true;
+			elPanel.text = InventoryAPI.GetItemDescription( caseId );
+		}
+		else
+		{
+			elPanel.visible = false;
+		}
 	};
 
 	var _GetSettingCallback = function( settingname, defaultvalue )

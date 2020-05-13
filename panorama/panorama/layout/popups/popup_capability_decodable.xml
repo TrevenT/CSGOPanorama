@@ -175,8 +175,11 @@
 					<Label id="DecodableCountdownLabel" text="5" class="popup-decodable-countdown-text mono-spaced-font-bold"/>
 				</Panel>
 
-				<Frame id="PopUpInspectAsyncBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_async-bar.xml" />
-				<Frame id="PopUpInspectPurchaseBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_purchase-bar.xml" />
+				<Panel class="bottom-top-flow vertical-align-bottom full-width horizontal-center">
+					<Frame id="PopUpInspectAsyncBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_async-bar.xml" />
+					<Frame id="PopUpInspectPurchaseBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_purchase-bar.xml" />
+					<Label id="InspectItemDesc"  html="true" class="popup-inspect__desc" text="{s:h:item_description}"/>
+				</Panel>
 			</Panel>
 		</Panel>
 	</PopupCustomLayout>
