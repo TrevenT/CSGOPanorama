@@ -6,7 +6,8 @@
 		<include src="file://{resources}/styles/mainmenu_watch_eventsched.css" />
 		
 	</styles>	
-	<scripts>		
+	<scripts>
+		<include src="file://{resources}/scripts/common/eventutil.js" />
 		<include src="file://{resources}/scripts/mainmenu_watch_eventsched.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
 		<include src="file://{resources}/scripts/watch_events_debug.js" />

@@ -11,7 +11,7 @@
 
 	<PopupCustomLayout class="PopupPanel Hidden"
 						popupbackground="dim"
-						style="max-width:450px;"
+						style="max-width:950px;min-width:500px;"
 						onload="PopupCrosshairCode.Init();">
 		<Label class="PopupTitle" text="#GameUI_Xhair_Code_Popup" />
 

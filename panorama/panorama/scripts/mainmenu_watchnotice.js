@@ -9,9 +9,7 @@ var MainmenuWatchNotice = (function () {
 	var _m_elWatchNoticeContainer = $( "#id-watchnotice-events-container" );
 
 	var _m_arrEvents = undefined;                          
-	var _m_arrFeatured = undefined;
 	var _m_arrFavorites = undefined;
-
 	var _m_prevSchedeventsString = "";
 
 	function _Init()
@@ -25,6 +23,7 @@ var MainmenuWatchNotice = (function () {
 		_m_cP.SetHasClass( "hidden", true );
 
 		TournamentsAPI.RequestFavorites();
+		TournamentsAPI.RequestTournaments();
 	};
 
 	function _StartDateCompareFunction ( a, b )
@@ -52,6 +51,7 @@ var MainmenuWatchNotice = (function () {
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
 	}
 
+	                                            
 	function _EventsReceived ( eventsAsString )
 	{
 
@@ -70,31 +70,20 @@ var MainmenuWatchNotice = (function () {
 
 	function _FavoritesReceived ( jsonFavorites, jsonFeatured )
 	{
-		if ( ( jsonFavorites.length > 0 ) || ( jsonFeatured.length > 0 ) )
+		if ( ( jsonFavorites.length > 0 ) )
 		{
-			                                                  
-			TournamentsAPI.RequestTournaments();
-
 			_m_arrFavorites = JSON.parse( jsonFavorites );
-			_m_arrFeatured = JSON.parse( jsonFeatured );
-
 		}
 	}
 
 	                          
 	function _IngestEvents ( eventsAsString )
 	{
-	
 		if ( eventsAsString != undefined && eventsAsString != "" )
 		{
-			_m_arrEvents = JSON.parse( eventsAsString );
+			var jsonEvents = JSON.parse( eventsAsString );
+			_m_arrEvents = EventUtil.AnnotateOfficialEvents( jsonEvents );
 			_m_arrEvents.sort( _StartDateCompareFunction );
-
-			_m_arrEvents.forEach( oEvent => 
-				{
-					if ( arrListOfOfficialEventIds.includes( oEvent.event_id ) || arrListOfOfficialEventIds.includes( Number(oEvent.event_id )) )
-						oEvent.is_official = true;
-				} );
 		}
 	}
 	
@@ -122,9 +111,9 @@ var MainmenuWatchNotice = (function () {
 		}
 	}
 
+	                                          
 	function _FindNoticeEvents ()
 	{
-
 		var retArr = [];
 
 		if ( ADD_DEBUG_EVENT == 1 )
@@ -168,13 +157,13 @@ var MainmenuWatchNotice = (function () {
 			}
 		}
 
-		                               
+		                                      
 		for ( var jdx in _m_arrEvents )
 		{
 			var oEvent = _m_arrEvents[ jdx ];
 
-			if ( 'is_featured' in oEvent && oEvent[ 'is_featured' ] == true &&
-				'live_matches' in oEvent && Object.keys( oEvent[ 'live_matches' ] ).length > 0 )
+			if ( ( oEvent[ 'is_featured' ] || oEvent[ 'is_official' ] ) &&
+				( 'live_matches' in oEvent && Object.keys( oEvent[ 'live_matches' ] ).length > 0 ) )
 			{
 				if ( !retArr.includes( oEvent ) )
 				{

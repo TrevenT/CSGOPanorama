@@ -262,3 +262,19 @@ CSGOHudDeathNotice Label
 {
 	visibility: visible;
 }
+
+.noscope #NoScopeIcon
+{
+    visibility: visible;
+}
+
+.through-smoke #ThroughSmokeIcon
+{
+    visibility: visible;
+}
+
+.attacker-blind #AttackerBlindIcon
+{
+    visibility: visible;
+}
+

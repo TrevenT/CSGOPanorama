@@ -16,6 +16,8 @@
 					<Image id="Revenge" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/revenge.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                        
 					<Image id="Domination" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/domination.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                            
+					<Image id="AttackerBlindIcon" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/blind_kill.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                                        
 					<Label id="Attacker" text="{s:name}" />
 					                                         
@@ -27,6 +29,10 @@
 					</Panel>
 					                                                                                                  
 					<Image id="Weapon" class="DeathNoticeIcon"  textureheight="24" scaling="none" />
+					                     
+					<Image id="NoScopeIcon" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/noscope.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                           
+					<Image id="ThroughSmokeIcon" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/smoke_kill.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                       
 					<Image id="Penetrate" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/penetrate.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                      

@@ -64,8 +64,8 @@ var MainMenu = ( function() {
 		var defaultMovie = 'nuke';
 
 		                                                                 
-		var overrideMovie = 'sirocco_night';
-		var backgroundMovie = overrideMovie;
+		var overrideMovie = '';
+		var backgroundMovie = !overrideMovie ? defaultMovie : overrideMovie;
 
 		                                                            
 		                                                                                   

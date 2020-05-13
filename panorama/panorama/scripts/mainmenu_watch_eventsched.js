@@ -240,7 +240,8 @@ var mainmenu_watch_eventsched = ( function()
 	{
 		if ( eventsAsString != undefined && eventsAsString != "" )
 		{
-			_m_arrEvents = JSON.parse( eventsAsString );
+			var jsonEvents = JSON.parse( eventsAsString );
+			_m_arrEvents = EventUtil.AnnotateOfficialEvents( jsonEvents );
 			_m_arrEvents.sort( _StartDateCompareFunction );
 
 			_m_arrEvents.forEach( oEvent => 
