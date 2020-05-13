@@ -1,7 +1,10 @@
 
 
-.news-panel--store-container
+.news-panel--store-container,
+.mainmenu-news-container-stream-active .news-panel.news-panel--store-container,
+.news-panel-style-feature-panel-visible .news-panel.news-panel--store-container
 {
+	                           
 	height: 288px;
 	margin-bottom: 0px;
 }

@@ -202,8 +202,6 @@ var StreamPanel = (function () {
 
 			m_elSteamPanel.SetHasClass( 'hidden', !bIsVideoPlaying );
 		}
-
-		m_elSteamPanel.SetHasClass( 'news-panel-style-short-entires', bIsVideoPlaying );
 	};
 
 	return {

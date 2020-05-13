@@ -1,3 +1,13 @@
+
+.mainmenu-news-container-stream-active .featured-parent
+{
+    height: fill-parent-flow( 0.0 );
+
+    transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
 .featured-parent
 {
 	                                           
@@ -5,8 +15,11 @@
 	width: 100%;
 	height: fill-parent-flow( .50 );
     background-color: none;
-                                                
-	margin-bottom: 16px;
+    margin-bottom: 16px;
+    
+    transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
 }
 
 .featured__survival-movie

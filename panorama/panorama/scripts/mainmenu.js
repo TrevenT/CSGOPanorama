@@ -613,7 +613,9 @@ var MainMenu = ( function() {
 		elPanel.BLoadLayout( featuredXML, false, false );
 
 		$.FindChildInContext( '#JsNewsContainer' ).MoveChildBefore( elPanel, $.FindChildInContext( '#JsNewsPanel' ) );
-		$.FindChildInContext( '#JsNewsPanel' ).AddClass( 'news-panel-style-feature-panel-visible' );
+
+		                                                                                                 
+		$.FindChildInContext( '#JsNewsContainer' ).AddClass( 'news-panel-style-feature-panel-visible' );
 	};
 
 	var _AddWatchNoticePanel = function()
@@ -635,6 +637,28 @@ var MainMenu = ( function() {
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );
 		elNews.SetHasClass( 'hidden', true );
 	};
+
+	                                                                
+	                                                             
+	var _OnSteamIsPlaying = function()
+    {
+		var elNewsContainer = $.FindChildInContext( '#JsNewsContainer' );
+
+		if ( elNewsContainer )
+		{
+			elNewsContainer.SetHasClass( 'mainmenu-news-container-stream-active', EmbeddedStreamAPI.IsVideoPlaying() );
+		}
+    };
+
+    var _ResetNewsEntryStyle = function()
+    {
+		var elNewsContainer = $.FindChildInContext( '#JsNewsContainer' );
+
+		if ( elNewsContainer )
+		{
+			elNewsContainer.RemoveClass( 'mainmenu-news-container-stream-active' );
+		}
+    };
 
 	                                                                                                    
 	                     
@@ -1450,6 +1474,8 @@ var MainMenu = ( function() {
 		ShowTournamentStore					: _ShowTournamentStore,
 		TournamentDraftUpdate				: _TournamentDraftUpdate,
 		ResetSurvivalEndOfMatch				: _ResetSurvivalEndOfMatch,
+		ResetNewsEntryStyle					: _ResetNewsEntryStyle,
+		OnSteamIsPlaying					: _OnSteamIsPlaying,
 		WatchBtnPressedUpdateAlert			: _WatchBtnPressedUpdateAlert
 	};
 })();
@@ -1488,6 +1514,9 @@ var MainMenu = ( function() {
 
   	                                                                                     
 	$.RegisterForUnhandledEvent( 'UnloadLoadingScreenAndReinit', MainMenu.ResetSurvivalEndOfMatch );
+
+	$.RegisterForUnhandledEvent( "PanoramaComponent_EmbeddedStream_VideoPlaying", MainMenu.OnSteamIsPlaying );
+	$.RegisterForUnhandledEvent( "StreamPanelClosed", MainMenu.ResetNewsEntryStyle );
 	
 	
 	MainMenu.MinimizeSidebar();

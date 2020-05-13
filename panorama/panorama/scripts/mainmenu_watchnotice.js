@@ -127,14 +127,15 @@ var MainmenuWatchNotice = (function () {
 			watchEventLiveExample_02[ 'DEBUG_IGNORE_DATES_FORCE_SHOW' ] = true;
 			watchEventLiveExample_03[ 'DEBUG_IGNORE_DATES_FORCE_SHOW' ] = true;
 
-			retArr.unshift( watchEventLiveExample_01 );
+			watchEventLiveExample_03[ 'is_featured' ] = true;
+
 			_m_arrEvents.unshift( watchEventLiveExample_01 );
-
-			retArr.unshift( watchEventLiveExample_02 );
 			_m_arrEvents.unshift( watchEventLiveExample_02 );
-
-			retArr.unshift( watchEventLiveExample_03 );
 			_m_arrEvents.unshift( watchEventLiveExample_03 );
+
+			_m_arrFavorites.unshift( Number( watchEventLiveExample_01[ 'event_id' ] ) );
+			_m_arrFavorites.unshift( Number( watchEventLiveExample_02[ 'event_id' ] ));
+			_m_arrFavorites.unshift( Number( watchEventLiveExample_03[ 'event_id' ] ));
 		}
 
 		                          
@@ -150,6 +151,8 @@ var MainmenuWatchNotice = (function () {
 						Object.keys( oEvent[ 'live_matches' ] ).length > 0 )
 					{
 						retArr.push( oEvent );
+
+						break;
 					}
 				}
 			}
@@ -163,8 +166,10 @@ var MainmenuWatchNotice = (function () {
 			if ( 'is_featured' in oEvent && oEvent[ 'is_featured' ] == true &&
 				'live_matches' in oEvent && Object.keys( oEvent[ 'live_matches' ] ).length > 0 )
 			{
-				retArr.push( oEvent );
-				break;                                                        
+				if ( !retArr.includes( oEvent ) )
+				{
+					retArr.push( oEvent );
+				}
 			}
 		}
 

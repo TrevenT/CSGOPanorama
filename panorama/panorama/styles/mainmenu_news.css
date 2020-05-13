@@ -3,6 +3,7 @@
 
 @define news-image-width: 671px;
 
+
 .news-panel
 {
 	                                           
@@ -19,20 +20,14 @@
 }
 
 
-.news-panel.news-panel-style-feature-panel-visible 
+.mainmenu-news-container-stream-active .news-panel,
+.news-panel-style-feature-panel-visible .news-panel
 {
 	height: fill-parent-flow( .25 );
-}
 
-.news-panel.news-panel-style-short-entires
-{
-	height: fill-parent-flow( .25 );
-}
-
-                                                                                               
-.news-panel.news-panel-style-short-entires.news-panel.news-panel-style-feature-panel-visible 
-{
-	height: fill-parent-flow( .0 );
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
 }
 
 .news-panel-navbar
