@@ -8,7 +8,14 @@
 		var onOpenServerBrowser = function ()
 		{
 			updateNeverShowAgainSetting();
-			GameInterfaceAPI.ConsoleCommand( "gamemenucommand openserverbrowser");
+			if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
+			{
+				SteamOverlayAPI.OpenURL( 'https://csgo.wanmei.com/communityserver' );
+			}
+			else
+			{
+				GameInterfaceAPI.ConsoleCommand( "gamemenucommand openserverbrowser");
+			}
 			$.DispatchEvent( 'UIPopupButtonClicked', '' );
 		}
 
@@ -24,7 +31,6 @@
 
 			if( elToggle.checked )
 				GameInterfaceAPI.SetSettingString( 'player_nevershow_communityservermessage', '1' );
-
 		}
 	</script>
 

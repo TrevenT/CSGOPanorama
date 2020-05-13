@@ -48,15 +48,17 @@ var PlayMenu = ( function()
 
 	var _Init = function()
 	{
-		                                             
-		if ( m_bPerfectWorld )
-		{
-			$.GetContextPanel().AddClass( 'launcher-type-perfect-world' );
-
-			var elDropDownCommunity = $( '#PlayTopNavDropdown' );
-			if ( elDropDownCommunity )
-				elDropDownCommunity.RemoveOption( "PlayCommunity" );
-		}
+		                                                                                                     
+		                         
+		    
+		   	                                                              
+		   	                                                     
+		   	                          
+		   	 
+		   		                                                    
+		   	 
+		    
+		      
 
 		                                                
 		var cfg = GameTypesAPI.GetConfig();
@@ -1349,7 +1351,14 @@ var PlayMenu = ( function()
 			}
 			else
 			{
-				GameInterfaceAPI.ConsoleCommand( "gamemenucommand openserverbrowser");
+				if ( m_bPerfectWorld )
+				{
+					SteamOverlayAPI.OpenURL( 'https://csgo.wanmei.com/communityserver' );
+				}
+				else
+				{
+					GameInterfaceAPI.ConsoleCommand( "gamemenucommand openserverbrowser" );
+				}
 			}
 		}
 

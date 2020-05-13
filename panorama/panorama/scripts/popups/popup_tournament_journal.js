@@ -6,7 +6,13 @@ var TournamentJournal = ( function()
                                                                                                                                     
     ];
 
-    var isInMatch = GameStateAPI.IsDemoOrHltv() || GameStateAPI.IsLocalPlayerPlayingMatch(); 
+                                                                                         
+                                                                                                                            
+                                                         
+                                                                                                                                   
+    var m_activeTournament = 16;
+
+    var m_isInMatch = GameStateAPI.IsDemoOrHltv() || GameStateAPI.IsLocalPlayerPlayingMatch(); 
 
     var _Init = function()
     {
@@ -43,12 +49,22 @@ var TournamentJournal = ( function()
         _SetModel( journalId );
         _SetBannerColor( journalId );
         _SetThesholdText( journalId );
-        _UpdateChallengesList( journalId );
-        _SetUpSpray();
-        _SouvenirsEarned( journalId, tournamentId );
+        _UpdateChallengesList( journalId, tournamentId );
+        _SouvenirsEarned( journalId );
+        _SouvenirsImage( tournamentId );
         _SetEventSticker( tournamentId );
+
+        $.GetContextPanel().SetHasClass( 'tournament-over', m_activeTournament !== tournamentId );
+
+        if ( m_activeTournament !== tournamentId )
+        {
+            _SetWinners( tournamentId );
+            return;
+        }
+
+
+        _SetUpSpray();
         _WatchStreamBtn();
-        _RedeemBtn();
     };
 
     var _ClosePopup = function()
@@ -78,7 +94,7 @@ var TournamentJournal = ( function()
         var coinLevel = InventoryAPI.GetItemAttributeValue( journalId, "upgrade level" );
                                                                                                  
 
-        var style = coinLevel <= 1 ? 'bronze' : coinLevel == 2 ? 'silver' : coinLevel < 2 ? 'gold' : 'bronze';
+        var style = coinLevel < 1 ? 'bronze' : coinLevel === 1 ? 'silver' : coinLevel > 1 ? 'gold' : 'bronze';
         $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-container' ).AddClass( style );
     };
 
@@ -103,15 +119,42 @@ var TournamentJournal = ( function()
         $.GetContextPanel().SetDialogVariableInt( 'challenges_complete', completedChallenges.length );
     };
 
-    var _SouvenirsEarned = function( journalId, tournamentId )
+    var _SouvenirsEarned = function( journalId )
     {
         var coinLevel = InventoryAPI.GetItemAttributeValue( journalId, "upgrade level" );
         var redeemed = InventoryAPI.GetItemAttributeValue( journalId, "operation drops awarded 0" );
         var redeemsAvailable = coinLevel - redeemed;
+
+        $.GetContextPanel().SetDialogVariableInt( 'redeems_earned', ( coinLevel !== undefined ) ? coinLevel : 0 );
         $.GetContextPanel().SetDialogVariableInt( 'redeems_remain', ( redeemsAvailable !== undefined ) ? redeemsAvailable : 0 );
 
+                 
+        var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-redeem-btn-label' );
+
+        elLabel.text = redeemsAvailable === 1 ?
+            $.Localize( '#tournament_coin_redeem_action', elLabel ) :
+            $.Localize( '#tournament_coin_redeem_action_multi', elLabel );
+        
+        _RedeemBtn( redeemsAvailable );
+
+                 
+        elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-souvenir-earned' );
+        
+        elLabel.text = redeemsAvailable === 1 ?
+            $.Localize( '#tournament_coin_earned_souvenir', elLabel ) :
+            $.Localize( '#tournament_coin_earned_souvenir_multi', elLabel );
+    };
+
+    var _SouvenirsImage = function( tournamentId )
+    {
         var elImage = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-ticket-icon' );
         elImage.SetImage( 'file://{images}/tournaments/souvenir/souvenir_blank_tournament_' + tournamentId + '.png' );
+    };
+
+    var _RedeemBtn = function( redeemsAvailable )
+    {   
+        var elbtn = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-redeem-btn' );
+        elbtn.enabled = !m_isInMatch && redeemsAvailable > 0;
     };
 
     var _SetEventSticker = function( tournamentId )
@@ -130,7 +173,7 @@ var TournamentJournal = ( function()
         });
     };
 
-    var _UpdateChallengesList = function( journalId )
+    var _UpdateChallengesList = function( journalId, tournamentId )
     {
         var elList = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal__challenges-list' );
 
@@ -142,7 +185,7 @@ var TournamentJournal = ( function()
             {
                 elChallenge = _CreateChallenge( elList, index );
             }
-            _UpdateChallenge( obj, elChallenge, index );
+            _UpdateChallenge( obj, elChallenge, index, tournamentId );
         } );
 
         function _CreateChallenge ( elList, index )
@@ -154,7 +197,7 @@ var TournamentJournal = ( function()
             return elChallenge;
         }
 
-        function _UpdateChallenge ( objData, elChallenge, index )
+        function _UpdateChallenge ( objData, elChallenge, index, tournamentId )
         {
             var elName = elChallenge.FindChildInLayoutFile( 'id-tournament-journal__challenge__name' );
             var elIcon = elChallenge.FindChildInLayoutFile( 'id-tournament-journal__challenge__icon' );
@@ -165,7 +208,7 @@ var TournamentJournal = ( function()
 
             elIcon.SetImage( iconPath );
             elChallenge.SetHasClass( 'complete', objData.value === 1 );
-            elChallenge.enabled = objData.value !== 1 && !isInMatch;
+            elChallenge.enabled = objData.value !== 1 && !m_isInMatch && m_activeTournament === tournamentId;
 
             if ( objData.context === "trophy" )
             {
@@ -245,15 +288,29 @@ var TournamentJournal = ( function()
     };
 
     var _WatchStreamBtn = function()
-    {
+    {   
         var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-watch-stream' );
         _OnWatchStream( elPanel );
     };
 
-    var _RedeemBtn = function()
+    var _SetWinners = function( tournamentId )
     {
-        var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-redeem-btn' );
-        elPanel.enabled = !isInMatch;
+                                                                      
+        var aData = [
+            { tournamentId: 15, team: 'astr', teamname: '#CSGO_TeamID_60', descString: '#CSGO_CollectibleCoin_Katowice2019_Champion' }
+                                      
+        ];
+
+        var ObjWinner = aData.filter( winner => winner.tournamentId == tournamentId )[0];
+
+        $.GetContextPanel().FindChildInLayoutFile( 'tournament-journal-winners-img' ).SetImage( "file://{images}/tournaments/teams/" + ObjWinner.team +".svg"); 
+        $.GetContextPanel().FindChildInLayoutFile( 'tournament-journal-winners-desc' ).text = $.Localize( ObjWinner.descString );
+        $.GetContextPanel().FindChildInLayoutFile( 'tournament-journal-winners-title' ).text = $.Localize( ObjWinner.teamname );
+
+        var elModel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-trophy' );
+        elModel.SetCameraPreset( 1, false );
+        elModel.SetSceneIntroRotation( -8.0, 60, 1 );
+        elModel.SetFlashlightColor( 2, 2, 2 );
     };
 
 	return{

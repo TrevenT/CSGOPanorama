@@ -84,7 +84,6 @@
     padding-top: 8px;
     width: 54px;
     height: 54px;
-
 }
 
 .tournament-journal__titlebar__subtitle
@@ -107,6 +106,11 @@
     width: 100%;
     flow-children: right;
     border-top: 1px solid rgba(255, 255, 255, 0.041);
+}
+
+.tournament-journal__section.center
+{
+    height: 82%;
 }
 
 .tournament-journal__section--noborder
@@ -191,6 +195,11 @@
     width: height-percentage(100%);
     height: fill-parent-flow( 1 );
     horizontal-align: center;
+}
+
+.tournament-journal__model.trophy
+{
+    brightness: .25 ;
 }
 
                                 
@@ -333,3 +342,23 @@
     color:#89ABD2;
     font-size: 16px;
 }
+
+.tournament-over #id-graffiti-block,
+.tournament-over #id-steam-block,
+.tournament-over #id-tournament-journal-remaining,
+.tournament-over #id-tournament-journal-subtitle
+{
+    visibility: collapse;
+}
+
+.tournament-over #id-winners-block
+{
+    visibility: visible;
+    width: fit-children;
+}
+
+.tournament-over #id-bottom-block
+{
+    flow-children: none;
+}
+

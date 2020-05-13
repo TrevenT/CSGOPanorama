@@ -251,8 +251,7 @@ var ItemContextEntires = ( function (){
 			AvailableForItem: function ( id ) {
 				if ( GameStateAPI.GetMapBSPName() )	                                           
 					return false;
-				var tournament = 'tournament:' + NewsAPI.GetActiveTournamentEventID();
-				return ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' );
+				return ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_journal_') && ( InventoryAPI.GetRawDefinitionKey(id, 'item_sub_position2') === 'spray0' ) );
 			},
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'OpenWatchMenu' );

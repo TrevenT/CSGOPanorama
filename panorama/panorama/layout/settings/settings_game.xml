@@ -23,6 +23,9 @@
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsTeamSettings')" group="SettingsGame">
 					<Label text="#settings_team_section"/>
 				</RadioButton> 
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsCommunicationSettings')" group="SettingsGame">
+					<Label text="#settings_communication_section"/>
+				</RadioButton> 
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsSpectatorSettings')" group="SettingsGame">
 					<Label text="#settings_spectator_section"/>
 				</RadioButton>
@@ -277,6 +280,59 @@
 							<Label text="#SFUI_Settings_LobbyAccessFGN" value="6" id ="teamlobbyaccess4"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
+				</Panel>
+			</Panel>
+
+			                                        
+			<Panel id="SettingsCommunicationSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_communication_section" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width">
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_MuteEnemies_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_mute_enemy_team" >
+							<Label text="#GameUI_No" value="0" id="muteenemies0" />
+							<Label text="#GameUI_Yes" value="1" id="muteenemies1" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                    
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_MuteAllButFriends_Tooltip">
+						<Label text="#SFUI_Settings_MuteAllButFriends_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_mute_all_but_friends_and_party" >
+							<Label text="#GameUI_No" value="0" id="muteothers0"/>
+							<Label text="#GameUI_Yes" value="1" id="muteothers1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<Panel class="SettingsMenuDropdownContainer" >
+						<Label text="#SFUI_Settings_HideAvatars_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hide_avatar_images">
+							<Label text="#SFUI_Settings_HideAvatars_All" value="0" id="hideavatars0" />
+							<Label text="#SFUI_Settings_HideAvatars_None" value="1" id="hideavatars1" />
+							<Label text="#SFUI_Settings_HideAvatars_Friends" value="2" id="hideavatars2" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_SanitizeNames_Title_Tooltip">
+						<Label text="#SFUI_Settings_SanitizeNames_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_sanitize_player_names">
+							<Label text="#GameUI_No" value="0" id="sanitizenames0"/>
+							<Label text="#GameUI_Yes" value="1" id="sanitizenames1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+						
 				</Panel>
 			</Panel>
 

@@ -1370,6 +1370,7 @@ var Scoreboard = ( function()
 							elAvatarImage.AddClass( "sb-row__cell--avatar--" + team );
 
 							elAvatarImage.m_team = team;
+							elAvatarImage.SetDefaultImage( "file://{images}/icons/scoreboard/avatar-"+team+".png" );
 						}
 					}
 					                                                                         
@@ -1441,7 +1442,7 @@ var Scoreboard = ( function()
 				
 					var newStatValue = GameStateAPI.GetPlayerCompetitiveRanking( oPlayer.m_xuid );
 
-					if ( ( newStatValue != -1 ) && ( oPlayer.m_oStats[ stat ] !== newStatValue ) )
+					if ( oPlayer.m_oStats[ stat ] !== newStatValue )
 					{
 
 						oPlayer.m_oStats[ stat ] = newStatValue;
@@ -1487,7 +1488,7 @@ var Scoreboard = ( function()
 				{
 					var newStatValue = GameStateAPI.GetPlayerXpLevel( oPlayer.m_xuid );
 
-					if ( ( newStatValue != -1 ) && ( oPlayer.m_oStats[ stat ] !== newStatValue ) )
+					if ( oPlayer.m_oStats[ stat ] !== newStatValue )
 					{
 						oPlayer.m_oStats[ stat ] = newStatValue;
 

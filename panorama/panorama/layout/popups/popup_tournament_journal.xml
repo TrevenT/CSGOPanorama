@@ -35,12 +35,13 @@
                 <Panel id="id-tournament-journal-title-bar" class="tournament-journal__titlebar">
                     <Panel  class="top-bottom-flow vertical-center horizontal-center">
                         <Label id="id-tournament-journal-title" class="tournament-journal__titlebar__title stratum-font horizontal-center" text=""/>
-                        <Label class="tournament-journal__titlebar__subtitle horizontal-center" text="#tournament_coin_desc"/>
+                        <Label id="id-tournament-journal-subtitle" class="tournament-journal__titlebar__subtitle horizontal-center" text="#tournament_coin_desc"/>
                     </Panel>
                                                      
                 </Panel>
-                <Panel class="tournament-journal__section">
-                    <Panel class="horizontal-center left-right-flow">
+
+                <Panel id="id-tournament-journal-challenges" class="tournament-journal__section">
+                    <Panel class="horizontal-center left-right-flow vertical-center">
                                                 
                         <Panel class="tournament-journal__column">
                             <Panel class="tournament-journal__info-block">
@@ -70,14 +71,14 @@
                             <Panel class="tournament-journal__info-block">
                                 <Panel class="right-margin-medium" >
                                     <Image id="id-tournament-ticket-icon" class="horizontal-center" src="file://{images}/icons/ui/ticket.svg" scaling='stretch-to-fit-y-preserve-aspect'/>
-                                    <Label class="tournament-journal__titlebar__title count souvenir stratum-font" text="{d:redeems_remain}"/>
+                                                                                                                                                       
                                 </Panel>
 
                                 <Panel class="top-bottom-flow vertical-center horizontal-center">
-                                    <Label class="tournament-journal__info-block__title stratum-font" text="#tournament_coin_earned_souvenir"/>
+                                    <Label id="id-tournament-journal-souvenir-earned" class="tournament-journal__info-block__title stratum-font" text="#tournament_coin_earned_souvenir"/>
                                     <Label class="tournament-journal__info-block__subtitle" html="true" text="#tournament_coin_redeem_souvenir"/>
                                     <Button id="id-tournament-journal-redeem-btn" class="tournament-journal-button" onactivate="TournamentJournal.OnActivateRedeem();">
-                                        <Label  id="" text="#tournament_coin_redeem_action"/>
+                                        <Label  id="id-tournament-journal-redeem-btn-label" html="true" text="#tournament_coin_redeem_action"/>
                                     </Button>
                                 </Panel>
                             </Panel>
@@ -90,9 +91,28 @@
                                                                                                                                                                                    
                                      
                                  
-                <Panel class="tournament-journal__section tournament-journal__section--noborder">
+                <Panel id="id-bottom-block" class="tournament-journal__section tournament-journal__section--noborder">
+
+                    <Panel id="id-winners-block" class="tournament-journal__column short horizontal-center hide">
+                        <Panel class="tournament-journal__info-block short">
+                            <Panel class="right-margin-medium" >
+                                <ItemPreviewPanel id="id-tournament-journal-trophy"
+                                    class="tournament-journal__model trophy"
+                                    manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+                                    item="models/inventory_items/trophy_majors.mdl"
+                                    mouse_rotate="true"
+                                    sound=""/>
+                                <ItemImage id="tournament-journal-winners-img" class="horizontal-center vertical-center" src="" textureheight="112" texturewidth="-1"/>
+                            </Panel>
+                            <Panel class="top-bottom-flow vertical-center horizontal-center">
+                                <Label id="tournament-journal-winners-title" class="tournament-journal__titlebar__title stratum-font" text=""/>
+                                <Label id="tournament-journal-winners-desc" class="tournament-journal__info-block__title stratum-font" html="true" text=""/>
+                            </Panel>
+                        </Panel>
+                    </Panel>
+
                     <Panel class="horizontal-center left-right-flow">
-                        <Panel class="tournament-journal__column short">
+                        <Panel id="id-graffiti-block" class="tournament-journal__column short">
                             <Panel class="tournament-journal__info-block short">
                                 <Panel class="right-margin-medium" >
                                     <ItemImage id="id-tournament-journal-spray" class="horizontal-center" src=""/>
@@ -106,7 +126,7 @@
                                 </Panel>
                             </Panel>
                         </Panel>
-                        <Panel class="tournament-journal__column short">
+                        <Panel id="id-steam-block" class="tournament-journal__column short">
                             <Panel class="tournament-journal__info-block short">
                                 <Image id="" class="tournament-journal__info-steamtv-icon" src="file://{images}/browser/steamtv.svg" textureheight="28" texturewidth="-1"/>
                                 <Panel class="top-bottom-flow vertical-center horizontal-center">
