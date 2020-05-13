@@ -1031,6 +1031,18 @@ var PlayMenu = ( function()
 			}
 		};
 
+		                                                                                                                                      
+		                                                                                                                                      
+		                                                                                                                                
+		                                                                                                                                      
+		                                                                                       
+		if ( selectedMaps.startsWith( "random_" ) )
+		{
+			var arrMapGroups = _GetAvailableMapGroups( gameMode, false );
+			var idx = 1 + Math.floor( ( Math.random() * ( arrMapGroups.length - 1 ) ) );
+			settings.update.Game.map = arrMapGroups[ idx ].substring( 3 );
+		}
+
 		                       
 		                                                  
 		if ( m_isWorkshop )

@@ -176,7 +176,7 @@ Label {
 	text-shadow-fast:1px 1px 1px 1.0 #000000;
 
 	max-width: 90px;
-	overflow: noclip;
+	overflow: squish noclip;
 
 }
 
