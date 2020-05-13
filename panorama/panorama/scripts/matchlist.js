@@ -448,7 +448,7 @@ var matchList = ( function() {
             parentPanel.downloadFailedHandler = undefined;
         }
 
-        function GetListOfMatchIds( tournament_id, tournamentIndex, unfilteredCount, sectionDesc, teamId = undefined )
+        function GetListOfMatchIds( matchListDescriptor, tournamentIndex, unfilteredCount, sectionDesc, teamId = undefined )
         {
             var MatchIds= [];
             
@@ -457,14 +457,15 @@ var matchList = ( function() {
                 var matchId = '';
                 if ( tournamentIndex > 3 )
                 {
-                    matchId = PredictionsAPI.GetSectionMatchByIndex( tournament_id, sectionDesc, i );
+                    matchId = PredictionsAPI.GetSectionMatchByIndex( matchListDescriptor, sectionDesc, i );
                 }
-                else
+                else if( tournamentIndex <= 3 || !tournamentIndex )
                 {
-                    matchId = MatchListAPI.GetMatchByIndex( tournament_id, i );
+                                                                                      
+                    matchId = MatchListAPI.GetMatchByIndex( matchListDescriptor, i );
                 }
 
-                if ( teamId && teamId != 0 )
+                if ( tournamentIndex && teamId && teamId != 0 )
                 {
                     if ( IsTeamInMatch( teamId, matchId ) )
                     {
@@ -536,6 +537,11 @@ var matchList = ( function() {
                 MatchIdsFiltered = GetListOfMatchIds( parentPanel.tournament_id, tournamentIndex, unfilteredCount, sectionDesc, undefined );
                 nCount = MatchIdsFiltered.length - 1;                   
             }
+        }
+        else
+        {
+            MatchIdsFiltered = GetListOfMatchIds( matchListDescriptor, null, unfilteredCount, '', undefined );
+            nCount = unfilteredCount;
         }
 
         _ShowListSpinner( false, parentPanel );
