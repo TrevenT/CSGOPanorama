@@ -99,6 +99,8 @@ var EOM_Rank = (function () {
 
 			$.Schedule( animTime, function()
 			{
+				if ( !elBar.IsValid() )
+					return 0;
 
 				var elRankSegment = $.CreatePanel( 'Panel', elBar, 'id-eom-rank__bar__segment' );
 				elRankSegment.AddClass( "eom-rank__bar__segment" );
@@ -141,7 +143,10 @@ var EOM_Rank = (function () {
 
 				$.Schedule( 0.0, function()
 				{
-					elRankSegment.style.width = ( xp / xPPerLevel * 70 ) + '%;';                               
+					if ( elRankSegment.IsValid() )
+					{
+						elRankSegment.style.width = ( xp / xPPerLevel * 70 ) + '%;';                               
+					}
 				} );
 				
 				elRankSegment.style.transitionDuration = duration + "s";

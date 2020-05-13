@@ -17,7 +17,7 @@ var PopupCommendPlayer = ( function(){
 		_Update();
 	}
 
-	function _CancelLoading ()
+	function _CancelLoading()
 	{
 		m_loadingJob = 0;
 
@@ -27,8 +27,7 @@ var PopupCommendPlayer = ( function(){
 		}
 		
 		m_elCommend.visible = false;
-		
-		
+	}
 
 	function _ReceivedCommendationFromServer()
 	{
