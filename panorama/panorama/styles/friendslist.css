@@ -242,7 +242,6 @@
 	vertical-align: top;
 	horizontal-align: center;
 	margin-top: 128px;
-	flow-children: right;
 	opacity: 1;
 	visibility: visible;
 
@@ -256,7 +255,7 @@
 	height: 32px;
 	width: 32px;
 	vertical-align: top;
-	horizontal-align: center;
+	horizontal-align: left;
 	margin-left: 36px;
 	wash-color: baseText;
 }
@@ -264,10 +263,10 @@
 .friendslist-nodata-text
 {
 	vertical-align: top;
-	margin-left: 14px;
+	horizontal-align: left;
+	margin-left: 82px;
 	margin-right: 16px;
-	height: fit-children;
-	flow-Children: down;
+	flow-children: down;
 }
 
 .friendslist-nodata-text__title

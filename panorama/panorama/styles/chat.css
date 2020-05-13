@@ -1,14 +1,23 @@
 @define chatBgGrey: rgba(94, 94, 94, 0.5);
+
 .chat-panel-outer
 {
 	opacity: 1;
 	visibility: visible;
 	horizontal-align: right;
+	vertical-align: top;
 	padding-right: 100px;
+	z-index: 1;
 
-	transition-property: clip;
+	transition-property: clip, position;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.accept-match .chat-panel-outer
+{
+	horizontal-align: center;
+	padding-right: 0px;
 }
 
 .chat-panel-outer.hidden
@@ -137,6 +146,12 @@
 	transition-duration: 0.2s;
 	transition-timing-function: ease-in-out;
 
+}
+
+.accept-match .chat-panel-blur
+{
+	background-color: rgb(39, 46, 51);
+	
 }
 
 .chat-open .chat-panel-blur

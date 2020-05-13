@@ -134,6 +134,8 @@ var InpsectPurchaseBar = ( function()
 
 	var _ClosePopup = function()
 	{
+		InventoryAPI.StopItemPreviewMusic();
+
 		$.DispatchEvent( 'HideSelectItemForCapabilityPopup' );
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
 		$.DispatchEvent( 'CapabilityPopupIsOpen', false );

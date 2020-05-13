@@ -36,6 +36,7 @@ var PopupAcceptMatch = ( function(){
 		m_lobbySettings = LobbyAPI.GetSessionSettings().game;
 
 		$.DispatchEvent( "ShowReadyUpPanel", "" );
+
 		
 		_SetMatchData( map );
 
@@ -112,6 +113,7 @@ var PopupAcceptMatch = ( function(){
 				m_jsTimerUpdateHandle = false;
 			}
 
+			$.DispatchEvent( "CloseAcceptPopup" );
 			$.DispatchEvent( 'UIPopupButtonClicked', '' );
 			return;
 		}
@@ -168,8 +170,8 @@ var PopupAcceptMatch = ( function(){
 		labelData.SetDialogVariable ( 'map', $.Localize ( '#SFUI_Map_' + map ));
 		labelData.text = $.Localize( '#match_ready_match_data', labelData );
 
-		var imgMap = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchMapImage' );
-		imgMap.SetImage( 'file://{images}/map_icons/screenshots/360p/' + map + '.png');
+		var imgMap = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchMapImage' );		
+		imgMap.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + map + '.png")';
 	}
 
 	var _OnNqmmAutoReadyUp = function ()
@@ -177,6 +179,7 @@ var PopupAcceptMatch = ( function(){
 		m_jsTimerUpdateHandle = false;
 		$.DispatchEvent( 'PlaySoundEffect', 'popup_accept_match_confirmed', 'MOUSE' );
 		LobbyAPI.SetLocalPlayerReady( 'deferred' );
+		$.DispatchEvent( "CloseAcceptPopup" );
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
 	}
 

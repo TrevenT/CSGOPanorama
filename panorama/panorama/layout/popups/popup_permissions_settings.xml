@@ -15,7 +15,7 @@
 						useglobalcontext="true"
 						popupbackground="dim"
 						onload="PopupPermissionsSettings.Init();">
-		<Label class="PopupTitle" text="#permissions_title" />
+		<Label class="PopupTitle" text="#SFUI_Client_PermissionsTitle" />
 
 		                                                                             
 
@@ -44,10 +44,13 @@
 				<Panel id="PermissionsSettingsGroupsBlock" class="popup-permissions-setting__inset">
 					<Label class="popup-permissions-setting__text" 
 						text="#permissions_allow_steam_groups" />
-					<Panel class="popup-permissions-settings">
+					<Panel class="popup-permissions-settings--right">
 						<DropDown id="JsPopUpPermissionsGroupsDropdown" class="PopupButton" menuclass="DropDownMenu Width-250">
 							<Label text="#permissions_no_group" id="NoGroup" value="1"/>
 						</DropDown>
+						<ToggleButton id="JsPopUpPermissionsGroupsDropdownEnabled" class="PopupButton Row FillRemainingWidth" >
+							<Label id="" text=" " />                                        
+						</ToggleButton>
 					</Panel>
 				</Panel>
 
@@ -64,7 +67,7 @@
 
 			<Panel class="PopupButtonRow">
 				<TextButton class="PopupButton" 
-							text="#permissions_apply" 
+							text="#SFUI_Change_Permissions" 
 							onactivate="PopupPermissionsSettings.ApplySessionSettings();" />
 				<TextButton class="PopupButton" text="#Cancel" onactivate="UIPopupButtonClicked()" />
 			</Panel>

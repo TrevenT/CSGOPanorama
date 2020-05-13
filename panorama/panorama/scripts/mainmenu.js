@@ -55,6 +55,7 @@ var MainMenu = ( function() {
 		_UpdateOverwatch();
 
 		_UpdateNotifications();
+		_ShowWeaponUpdatePopup();
 
 		                              
 		_GcLogonNotificationReceived();
@@ -574,7 +575,7 @@ var MainMenu = ( function() {
 			team: '',
 			loadoutSlot: ''
 		};
-		
+
 		var i = 0;
 		for ( i = 0; i < 2; ++ i )
 		{	                                                                 
@@ -705,6 +706,11 @@ var MainMenu = ( function() {
 	{
 		_InsureSessionCreated();
 		_NavigateToTab( 'JsPlay', 'mainmenu_play' );
+	};
+
+	var _OpenInventory = function ()
+	{
+		_NavigateToTab( 'JsInventory', 'mainmenu_inventory' );
 	};
 
 	var _InsureSessionCreated = function()
@@ -1009,8 +1015,8 @@ var MainMenu = ( function() {
 				notification.color_class = "NotificationYellow";
 			}
 			
-			                    
-			if ( strType != "global" )
+			                                                                                                                
+			if ( nBanRemaining <= 49*24*3600 )
 			{
 				notification.title = notification.title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
 			}
@@ -1020,8 +1026,6 @@ var MainMenu = ( function() {
 
 		return null;
 	}
-
-	
 
 	function _UpdateNotificationBar()
 	{
@@ -1135,12 +1139,35 @@ var MainMenu = ( function() {
 	    _m_storePopupElement = UiToolkitAPI.ShowCustomLayoutPopupParameters(
             'store_popup',
             'file://{resources}/layout/popups/popup_store_status.xml',
-            'text=' + $.UrlEncode( strText )
-             + '&allowclose=' + paramclose
-             + '&cancel=' + paramcancel
-             + '&okcmd=' + $.UrlEncode( strOkCmd ) );
+			'text=' + $.UrlEncode( strText ) +
+			'&' + 'allowclose=' + paramclose +
+			'&' + 'cancel=' + paramcancel +
+			'&'+'okcmd=' + $.UrlEncode( strOkCmd ) );
 	};
-	
+
+	var _ShowWeaponUpdatePopup = function()
+	{
+		var setVersionTo = '1';
+		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
+
+		if ( currentVersion !== setVersionTo )
+		{
+			                      
+			$.Schedule( 1.75, showMp5Popup );
+
+			function showMp5Popup ()
+			{
+				var defIndex = 23;
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_weapon_update.xml',
+					'defindex=' + defIndex +
+					'&' + 'uisettingversion=' + setVersionTo,
+					'none'
+				);
+			}
+		}
+	};
 
 	return {
 		OnInitFadeUp						: _OnInitFadeUp,
@@ -1162,6 +1189,7 @@ var MainMenu = ( function() {
 		ForceRestartVanity	 				: _ForceRestartVanity,
 		OnEquipSlotChanged	 				: _OnEquipSlotChanged,
 		OpenPlayMenu						: _OpenPlayMenu,
+		OpenInventory						: _OpenInventory,
 		OnHomeButtonPressed					: _OnHomeButtonPressed,
 		OnQuitButtonPressed					: _OnQuitButtonPressed,
 		OnEscapeKeyPressed					: _OnEscapeKeyPressed,
@@ -1176,8 +1204,8 @@ var MainMenu = ( function() {
 		ResetAcknowlegeHandler				: _ResetAcknowlegeHandler,
 		ShowNotificationBarTooltip			: _ShowNotificationBarTooltip,
 		ShowVote 							: _ShowVote,
-		ShowStoreStatusPanel                : _ShowStoreStatusPanel,
-		HideStoreStatusPanel                : _HideStoreStatusPanel
+		ShowStoreStatusPanel				: _ShowStoreStatusPanel,
+		HideStoreStatusPanel				: _HideStoreStatusPanel
 	};
 })();
 
@@ -1191,6 +1219,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'SidebarContextMenuActive', MainMenu.OnSideBarElementContextMenuActive );
 	$.RegisterForUnhandledEvent( 'UpdateVanityModelData', MainMenu.ForceRestartVanity );
 	$.RegisterForUnhandledEvent( 'OpenPlayMenu', MainMenu.OpenPlayMenu );
+	$.RegisterForUnhandledEvent( 'OpenInventory', MainMenu.OpenInventory );
 	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', MainMenu.OnShowMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOHideMainMenu', MainMenu.OnHideMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOShowPauseMenu', MainMenu.OnShowPauseMenu);

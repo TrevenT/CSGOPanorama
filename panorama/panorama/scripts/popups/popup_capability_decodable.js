@@ -91,6 +91,12 @@ var CapabilityDecodable = ( function()
 		if ( ! ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' ) )
 		{
 			_ShowPurchase(( m_keyId ) ? '' : m_keytoSellId );
+
+			var slot = ItemInfo.GetSlot( m_caseId );
+			if ( slot == "musickit" )
+			{
+				InventoryAPI.PlayItemPreviewMusic( null, m_caseId );
+			}
 		}
 		
 		_SetUpAsyncActionBar( m_caseId );
@@ -737,6 +743,8 @@ var CapabilityDecodable = ( function()
 
 	var _ClosePopUp = function()
 	{
+		InventoryAPI.StopItemPreviewMusic();
+
 		if ( m_Inspectpanel.IsValid() )
 		{ 
 			if ( m_showInspectScheduleHandle )

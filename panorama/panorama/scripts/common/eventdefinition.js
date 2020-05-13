@@ -25,6 +25,7 @@
     $.DefineEvent( 'InitAvatar', 2, 'xuid, type of panel', 'Update the avatar panel data for a xuid' );
     $.DefineEvent( 'UpdateVanityModelData', 0, 'no args', 'Update the vanity model with list of anims and model panel from updated settings' );
     $.DefineEvent( 'OpenPlayMenu', 0, 'no args', 'opens the play menu from anywhere. EXAMPLE from party menu settings button from client' );
+    $.DefineEvent( 'OpenInventory', 0, 'no args', 'opens the inventory menu from anywhere.' );
     $.DefineEvent( 'OpenSidebarPanel', 0, 'no args', 'open the sidebar from a abutton click from anywhere' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
 
@@ -45,6 +46,8 @@
 
 	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOver', 0, '', '' );
 	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOut', 0, '', '' );
+	$.DefineEvent( 'ShowAcceptPopup', 1, 'popup', 'Fired when accept match popup is shown.' );
+	$.DefineEvent( 'CloseAcceptPopup', 0, '', 'Fired when accept match popup Closes.' );
 
 
     $.DefineEvent( 'CloseSubMenuContent', 0, 'no args', 'Closes up the submenu panel');

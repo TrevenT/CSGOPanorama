@@ -16,16 +16,14 @@
 	</snippets>
 
 	<PopupCustomLayout class="accept-match Hidden" 
-					popupbackground="blur" 
+					popupbackground="dim" 
 					onload="PopupAcceptMatch.Init();"
 					oncancel="">                                                                                                        
 					
-		<Panel class="accept-match">
+		<Panel id="id-accept-match" class="accept-match accept-match-container">
 
 			<Panel class="accept-match__bg">
-				<Panel class="accept-match__map">
-					<Image id="AcceptMatchMapImage" class="accept-match__map__image" src="" scaling="stretch-to-fit-preserve-aspect"/>
-				</Panel>
+				<Panel id="AcceptMatchMapImage" class="accept-match__map"/>
 
 				<Panel id="AcceptMatchDataContainer" class="accept-match__data">
 					<Label class="accept-match__data__title" text="#match_ready_title"/>
@@ -40,6 +38,13 @@
 					<Panel id="AcceptMatchSlots" class="accept-match__slots hidden">
 
 						                                                              
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
+						<Panel class="accept-match__slots__player"/>
 
 					</Panel>
 					<Label  id="AcceptMatchPlayersAccepted"  class="accept-match__data__title--details" text=""/>

@@ -144,9 +144,8 @@ var contextmenuPlayerCard = ( function (){
 		{
 			name: 'message',
 			icon: 'message',
-			AvailableForItem: function ( id ) {
-				return FriendsListAPI.GetFriendRelationship( id ) === "friend";
-
+			AvailableForItem: function ( id ) {	                                                                                           
+				return true;                                                                   
 			},
 			OnSelected:  function ( id ) {
 				SteamOverlayAPI.StartChatWithUser( id );

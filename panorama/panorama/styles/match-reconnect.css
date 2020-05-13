@@ -9,6 +9,7 @@
 	margin-right: 96px;
 	horizontal-align: right;
 	height: 96px;
+	z-index: 5;
 
 	transition-property: opacity, transform;
 	transition-duration: 0.50s;

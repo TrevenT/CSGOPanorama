@@ -27,13 +27,10 @@
 
 .popup-permissions-settings--right
 {
-	width: fit-children;
+	width: 100%;
 	height: fit-children;
 	flow-children: right;
 	horizontal-align: left;
-
-	padding-bottom: 0px;
-	margin: 32px;
 }
 
 .popup-permissions-settings--bg
@@ -83,6 +80,11 @@
 {
 	vertical-align: middle;
 	horizontal-align: left;
+}
+
+.popup-permissions-settings .PopupButton.Row.FillRemainingWidth
+{
+	width: fill-parent-flow(1);
 }
 
 .popup-permissions-setting__text

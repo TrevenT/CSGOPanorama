@@ -372,20 +372,20 @@ var CharacterAnims = ( function ()
 					};
 				}
 				        
-				                                        
-				   
-				  	        
-				  		                
-				  		                                 
-				  		                            
-				  		            
-				  			                               
-				  			                              
-				  			                             
-				  			                             
-				  		 
-				  	  
-				   
+				if( weapon.indexOf( 'mp5sd' ) !== -1 )
+				{
+					return {
+						cameraPreset: 2,
+						intro: 'ct_loadout_mp5sd_walkup',
+						idle: 'ct_loadout_p90_idle',
+						animsList: [
+							'ct_loadout_p90_weightshift01',
+							'ct_loadout_p90_lookbehind01',
+							'ct_loadout_p90_lookatwatch',
+							'ct_loadout_p90_lookbehind02'
+						]
+					};
+				}
 				          
 				return {
 					cameraPreset: 0,
@@ -794,6 +794,23 @@ var CharacterAnims = ( function ()
 							't_loadout_ump45_lookaround02',
 							't_loadout_ump45_spray',
 							't_loadout_ump45_lookaround03'
+						]
+					};
+				}
+				if( weapon.indexOf( 'mp5sd' ) !== -1 )
+				{
+					return {
+						cameraPreset: 1,
+						intro: 't_loadout_shotgun_xm_walkup',
+						idle: 't_loadout_shotgun_xm_idle',
+						animsList: [
+							't_loadout_shotgun_xm_weightshift',
+							't_loadout_shotgun_xm_lookat01',
+							't_loadout_shotgun_xm_shrug',
+							't_loadout_shotgun_xm_headcock',
+							't_loadout_shotgun_xm_headgrab',
+							't_loadout_shotgun_xm_bellyscratch',
+							't_loadout_shotgun_xm_lookback'
 						]
 					};
 				}

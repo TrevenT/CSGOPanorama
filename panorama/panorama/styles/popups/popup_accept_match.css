@@ -1,8 +1,8 @@
                                   
 .accept-match
 {
-	width: fit-children;
-	height: fit-children;
+	width: 100%;
+	height: 100%;
 	vertical-align: center;
 	horizontal-align: center;
 	pre-transform-scale2d: 1;
@@ -11,11 +11,18 @@
 	opacity: 1.0;
 	border-radius: 0px;
 	flow-children: none;
-	padding: 40px;
 
 	transition-property: transform, pre-transform-scale2d, opacity, background-color, height;
 	transition-duration: 0.2s;
 	transition-timing-function: ease-in;
+}
+
+.accept-match-container
+{
+	flow-children: down;
+	vertical-align: center;
+	margin-top: 35%;
+	box-shadow: none;
 }
 
 .accept-match__bg
@@ -23,7 +30,16 @@
 	width: fit-children;
 	height: fit-children;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4CAF50 ), to( #255E28 ));
+	vertical-align: center;
+	horizontal-align: center;
 	box-shadow: shadowOffset;
+	z-index: 2;
+
+	background-repeat: no-repeat;
+	background-position: 0% 50%;
+	background-size: 100%;
+	background-image: url( "file://{resources}/videos/gobutton.webm" );
+	
 	padding: 6px;
 }
 
@@ -33,17 +49,24 @@
 	width: fit-children;
 	vertical-align: center;
 	horizontal-align: center;
-	background-color: #0E370F;
+	width: 700px;
+	height: 300px;
+	brightness: .1;
+
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+	background-image: url( "file://{images}/map_icons/screenshots/360p/de_overpass.png" );
+	background-img-opacity: 0.8;
 }
 
 .accept-match__map__image
 {
 	width: 700px;
-	height: 400px;
+	height: 250px;
 	opacity: .1;
 	vertical-align: center;
 	horizontal-align: center;
-	blur: fastgaussian( 1, 1, 2 );
 }
 
 .accept-match__data
@@ -91,26 +114,25 @@
 
 .accept-match__data__time
 {
-	background-color: #255E28;
+	                                         
 	border-radius: 2px;
 	width: 242px;
-	height: 64px;
+	height: 32px;
 
 	vertical-align: bottom;
 	horizontal-align: center;
-	box-shadow: fill #00000033 0px -8px 4px 4px;
-	transform: translateY( 2px );
+	margin-bottom: 16px;
 }
 
 .accept-match__data__time__text
 {
 	text-transform: uppercase;
 	horizontal-align: center;
-	font-size: 32px;
+	font-size: 20px;
 	font-family: notomono-regular, 'Arial Unicode MS';
 	font-weight: bold;
-	text-shadow: 0px 0px 4px 2.0 rgba(144, 212, 144, 0.493);
-	color: white;
+	color: rgb(101, 228, 106);
+	text-shadow: 0px 0px 4px 2.0 rgba(0, 0, 0, 0.534);
 	text-align: center;
 }
 
@@ -132,6 +154,7 @@
 {
 	horizontal-align: center;
 	vertical-align: center;
+	margin-top: 68px;
 	ui-scale: 100% 100% 100%;
 
 	transition-property: opacity, ui-scale;
@@ -142,7 +165,7 @@
 .accept-match .FlatButton.hidden
 {
 	opacity: 0;
-	ui-scale: 200% 200% 200%;
+	ui-scale: 150% 150% 150%;
 
 	transition-property: opacity, ui-scale;
 	transition-duration: .25s;
@@ -155,7 +178,7 @@
 	font-weight: bold;
 	text-transform: uppercase;
 	margin: 16px 32px 16px 32px;
-	color: black;
+	color: rgb(32, 90, 19);
 	font-size: 42px;
 	text-align: center;
 
@@ -191,8 +214,8 @@
 	width: fit-children;
 	height: fit-children;
 	horizontal-align: center;
-	vertical-align: bottom;
-	margin-bottom: 72px;
+	vertical-align: center;
+	margin-top: 78px;
 }
 
 .accept-match__slots
@@ -202,7 +225,7 @@
 	height: fit-children;
 	horizontal-align: center;
 	vertical-align: center;
-	margin-bottom: 76px;
+	margin-bottom: 0px;
 	ui-scale: 100% 100% 100%;
 
 	opacity: 1;

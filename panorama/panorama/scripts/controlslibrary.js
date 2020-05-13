@@ -86,7 +86,8 @@ function OnPopupCustomLayoutMatchAccept()
 {
     ClearPopupsText();
     popupLoadingBarLevel = 0;
-    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_accept_match.xml', 'map_and_isreconnect=de_dust2,false');
+    var popup = UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_accept_match.xml', 'map_and_isreconnect=de_dust2,false');
+	$.DispatchEvent( "ShowAcceptPopup", popup );
 }
 
 function OnPopupCustomLayoutLoadingScreen()

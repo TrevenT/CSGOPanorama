@@ -265,6 +265,10 @@ Label {
 
 	font-weight: bold;
 	font-family: Stratum2, 'Arial Unicode MS';
+
+	text-overflow: shrink;
+	max-width: 550px;
+	height: 40px;
 }
 
 
@@ -286,6 +290,7 @@ Label {
 	-s2-mix-blend-mode: SRGBadditive;
 
 	font-family: Stratum2, 'Arial Unicode MS';
+
 }
 
 #id-viewers {
@@ -435,6 +440,10 @@ Button.sb-row__cell:hover {
 	text-align: center;
 	letter-spacing: 0px;
 
+	max-width: 100px;
+	height: 40px;
+	text-overflow: shrink;
+
 }
 
 #id-gametime__desc{
@@ -449,6 +458,10 @@ Button.sb-row__cell:hover {
 
 	vertical-align: bottom;
 	                                  
+
+	max-width: 150px;
+	height: 40px;
+	text-overflow: shrink;
 }
 
 
@@ -1349,8 +1362,8 @@ Label.sb-row__cell--mvps__count {
 	visibility: collapse;
 }
 
-.spectator-hidden Image,
-.spectator-hidden Label {                                                                                                                 
+.sb-team--Spectator .spectator-hidden Image,
+.sb-team--Spectator .spectator-hidden Label {                                                                                                                 
 	opacity: 0;
 }
 

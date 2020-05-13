@@ -147,14 +147,14 @@ var PlayMenu = ( function()
 		elPermissionsButton.SetPanelEvent( 'onmouseover', function()
 		{
 
-			var displayString = $.Localize( '#tooltip_permissions_title' );
+			var displayString = $.Localize( '#SFUI_Client_PermissionsTitle' );
 
 			if ( m_permissions !== 'private' )
 			{
 				if ( m_steamGroupIdThatCanJoin )
 				{
 					var clan = PartyListAPI.GetPartyClanTag();
-					elPermissionsButton.SetDialogVariable( "group", clan );
+					elPermissionsButton.SetDialogVariable( "group", $.HTMLEscape( clan ) );
 					displayString = displayString + '<br><br>' + $.Localize( 'tooltip_permissions_group', elPermissionsButton );
 				}
 
