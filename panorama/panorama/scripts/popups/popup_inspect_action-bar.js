@@ -181,7 +181,8 @@ var InspectActionBar = ( function (){
 	var _ShowWeaponAndCharacterModelBtns = function ( elPanel, id )
 	{
 		var list = _GetValidCharacterModels( id );
-		if ( list && !ItemInfo.IsEquippalbleButNotAWeapon( id ) &&
+		if ( ( list && list.length > 0 ) &&
+			!ItemInfo.IsEquippalbleButNotAWeapon( id ) &&
 			!ItemInfo.ItemMatchDefName( id, 'sticker' ) &&
 			!ItemInfo.IsSpraySealed( id ) &&
 			!ItemInfo.ItemDefinitionNameSubstrMatch( id, "tournament_journal_" ) &&
