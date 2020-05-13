@@ -13,16 +13,6 @@ var PopupNews = ( function()
 
 		var link = $.GetContextPanel().GetAttributeString( "link", '' );
 
-		var elBlogHTML = $.GetContextPanel().FindChildTraverse( 'BlogHTML' );
-		if ( elBlogHTML )
-		{
-			var link = $.GetContextPanel().GetAttributeString( "link", '' );
-
-	  		                                                                       
-	  		                                    
-			elBlogHTML.SetURL( link );
-		}
-
 		function _OpenUrl ()
 		{
 			SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( link );
@@ -34,6 +24,29 @@ var PopupNews = ( function()
 		if ( elUrlBtn )
 		{
 			elUrlBtn.SetPanelEvent( 'onactivate', _OpenUrl );
+		}
+
+		  
+		                                                                     
+		  
+		var elBlogHTML = $.GetContextPanel().FindChildTraverse( 'BlogHTML' );
+		if ( elBlogHTML )
+		{
+			               
+			                                                                          
+			                                       
+
+			                                                                                   
+			                                                                                 
+			                                              
+			if ( link.indexOf( '?' ) < 0 )
+				link += '?';
+			else
+				link += '&';
+			link += 'clientview=1';
+
+			                      
+			elBlogHTML.SetURL( link );
 		}
 	};
 
