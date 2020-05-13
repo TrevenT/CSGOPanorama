@@ -1042,7 +1042,7 @@ var OperationMain = ( function()
 				elModel.SetFlashlightColor( 4.16, 4.06, 5.20 );
 				elModel.SetFlashlightFOV( 60 );
 				                                            
-				elModel.SetFlashlightAmount( 5 );
+		  		                                 
 				elModel.SetDirectionalLightModify( 1 );
 				elModel.SetDirectionalLightDirection( 66.83, -23.02, 121.82);
 				elModel.SetDirectionalLightColor(0.29, 0.09, 0.63);
