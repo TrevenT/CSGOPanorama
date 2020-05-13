@@ -311,6 +311,15 @@ Label.eventsched-match__datum--vs{
 
 	background-color: #00000090;
 }
+
+.eventsched__capsule.eventsched-featured:not(.eventsched-favorite)
+ {
+	background-color: #8d853f90;
+
+ }
+
+
+
 .eventsched__capsule {
 
 	width: fit-children;
@@ -382,6 +391,26 @@ Label.eventsched-match__datum--vs{
 	animation-duration: 1s;
 	animation-timing-function: ease-out;
 	animation-iteration-count: 1;
+}
+
+.eventsched-featured{
+
+
+	background-size: 200% 100%;
+	background-color: rgba(255, 217, 0, 0.2);
+
+	  	                                       
+	  	                                                                  
+}
+
+.eventsched-favorite.eventsched-featured{
+	box-shadow: inset 4px 4px 0.5px 7px gold;
+}
+
+.eventsched-featured,
+.eventsched-featured Label,
+.eventsched-featured Label.wmt__datum{
+	color: gold;
 }
 
 
@@ -745,6 +774,11 @@ ToggleButton.favorite-star .TickBox:selected
 ToggleButton.favorite-star .TickBox
 {
 
+}
+
+.eventsched-featured ToggleButton.favorite-star{
+
+	wash-color:gold;
 }
 
 .eventsched-controls__hltv {

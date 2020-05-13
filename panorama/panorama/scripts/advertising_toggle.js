@@ -89,7 +89,7 @@ var AdvertisingToggle = ( function()
         var OnMouseOver = function()
         {
             var tooltipText = isDisabled === false ? '#advertising_for_hire_tooltip_disabled' : '#advertising_for_hire_tooltip';
-            UiToolkitAPI.ShowTitleTextTooltip( 'HireAdvertisingToggle', '#advertising_for_hire_tooltip_title', tooltipText );
+            UiToolkitAPI.ShowTitleTextTooltip( 'HireAdvertisingToggleContainer', '#advertising_for_hire_tooltip_title', tooltipText );
         };
         
         elBtn.SetPanelEvent( 'onmouseover', OnMouseOver );

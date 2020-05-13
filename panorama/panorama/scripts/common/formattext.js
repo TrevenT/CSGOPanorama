@@ -162,7 +162,7 @@ var FormatText = ( function ()
 		                                           
 		if ( number < 0 )
 			return -1;
-
+		
 		var pow10 = Math.log10( number ) | 0;
 		
 		var stringToken = "";
@@ -192,13 +192,18 @@ var FormatText = ( function ()
 
 		                   
 		var scaledNumber = number / scale;
+
+		                                                    
+		var decimals = scaledNumber < 10.0 ? 1 : 0;
 		
 		                                                                     
-		var finalNum = scaledNumber.toFixed( 0 ).replace( /\.?0+$/, '' );
+		var finalNum = scaledNumber.toFixed( decimals ).replace( /\.0+$/, '' );
 
 		$.GetContextPanel().SetDialogVariable( 'abbreviated_number', finalNum );
 
 		var result = $.Localize( stringToken, $.GetContextPanel() );
+
+		                                                         
 
 		return result;
 	}

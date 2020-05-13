@@ -9,11 +9,12 @@
 
 
     <Panel class="btn_advertising" >
-        <Button id="HireAdvertisingToggle" class="btn_advertising__toggle" onactivate="AdvertisingToggle.OnActivate();">
-            <Image clampfractionalpixelpositions="false" class="btn_advertising__img-pole" texturewidth="-1" textureheight="32" src="file://{images}/icons/ui/broadcast_pole.svg" />
-            <Image clampfractionalpixelpositions="false" class="btn_advertising__img-ring" texturewidth="-1" textureheight="32" src="file://{images}/icons/ui/broadcast_ring_inner.svg" />
-            <Image clampfractionalpixelpositions="false" class="btn_advertising__img-ring-outer" texturewidth="-1" textureheight="32" src="file://{images}/icons/ui/broadcast_ring.svg" />
-        </Button>
-
+        <Panel id="HireAdvertisingToggleContainer" class="full-width vertical-center">
+            <Button id="HireAdvertisingToggle" class="btn_advertising__toggle" onactivate="AdvertisingToggle.OnActivate();">
+                <Image clampfractionalpixelpositions="false" class="btn_advertising__img-pole" texturewidth="-1" textureheight="38" src="file://{images}/icons/ui/broadcast_pole.svg" />
+                <Image clampfractionalpixelpositions="false" class="btn_advertising__img-ring" texturewidth="-1" textureheight="38" src="file://{images}/icons/ui/broadcast_ring_inner.svg" />
+                <Image clampfractionalpixelpositions="false" class="btn_advertising__img-ring-outer" texturewidth="-1" textureheight="38" src="file://{images}/icons/ui/broadcast_ring.svg" />
+            </Button>
+        </Panel>
     </Panel>
 </root>

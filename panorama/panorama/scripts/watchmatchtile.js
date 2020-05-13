@@ -34,6 +34,13 @@ var watchMatchTile = ( function (){
 		var elTeam2Container = elTile.FindChildTraverse( 'id-wmt-team2-container' );
 		_CreateTeamPanelsInContainerPanel( elTeam2Container, 2, oTeam2 );
 
+		                                                                                                               
+		var elVersusContainer = elTile.FindChildTraverse( 'id-wmt-vs-container' );
+		$.CreatePanel( "Label", elVersusContainer, 'id-wmt-label-vs', { 
+			class: 'wmt__datum wmt__datum--vs stratum-font',
+			text: $.Localize( '#eventsched_versus' )
+		} );
+
 		
 		          
 		var elWatchButton = elTile.FindChildTraverse( "id-wmt" );

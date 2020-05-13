@@ -147,7 +147,13 @@ var MainmenuWatchNotice = (function () {
 			{
 				if ( _m_arrEvents[ jdx ][ 'event_id' ] == _m_arrFavorites[ idx ] )
 				{
-					retArr.push( _m_arrEvents[ jdx ] );
+					var oEvent = _m_arrEvents[ jdx ];
+
+					if ( 'live_matches' in oEvent &&
+						Object.keys( oEvent[ 'live_matches' ] ).length > 0 )
+					{
+						retArr.push( oEvent );
+					}
 				}
 			}
 		}

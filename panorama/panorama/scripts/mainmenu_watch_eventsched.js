@@ -194,7 +194,29 @@ var mainmenu_watch_eventsched = (function () {
 		}
 	}
 	
+	function GetEventMonthString ( oEvent )
+	{
+		var startTimeUTCSeconds = -1;
+		var endTimeUTCSeconds = -1;
 
+		var startDate = new Date( 0 );
+		var endDate = new Date( 0 );
+
+		if ( 'start_date_time' in oEvent && 'seconds' in oEvent[ 'start_date_time' ] )
+		{
+			startTimeUTCSeconds = Number( oEvent[ 'start_date_time' ][ 'seconds' ] );
+			startDate.setUTCSeconds( startTimeUTCSeconds );
+
+			if ( 'end_date_time' in oEvent && 'seconds' in oEvent[ 'end_date_time' ] )
+			{
+				endTimeUTCSeconds = Number( oEvent[ 'end_date_time' ][ 'seconds' ] );
+				endDate.setUTCSeconds( endTimeUTCSeconds );
+			}
+
+			var monthPaddedNumber = ( '0' + ( startDate.getMonth() + 1 ) ).slice( -2 );
+			return $.Localize( 'MonthName' + monthPaddedNumber + '_long' );                      
+		}
+	}
 
 	                          
 	function _IngestEvents ( eventsAsString )
@@ -364,6 +386,20 @@ var mainmenu_watch_eventsched = (function () {
 			elEvent.m_favoriteCount = ( 'favorites' in oEvent ) ? Number( oEvent[ 'favorites' ] ) : 0;
 			_AddToFavoriteCountAndDisplay( elEvent, 0 );                                  
 
+			           
+
+			if ( 'is_featured' in oEvent && oEvent[ 'is_featured'] == true )
+			{
+				elEvent.AddClass( 'eventsched-featured' );
+				
+				var elEventBtn = elEvent.FindChildTraverse( 'id-eventsched__capsule__main__btn' );
+
+				elEvent.SetDialogVariable( 'eventsched_fave_month', GetEventMonthString( oEvent ) );
+				elEvent.SetDialogVariable( 'eventsched_featured', $.Localize( '#eventsched_featured', elEvent))
+
+				elEventBtn.SetPanelEvent( 'onmouseover', _OnMouseOverTextTooltip.bind( undefined, elEvent.id,  $.Localize( '{s:eventsched_featured}', elEvent ) ) );
+				elEventBtn.SetPanelEvent( 'onmouseout', _OnMouseOutTextTooltip );
+			}
 		
 			       
 		

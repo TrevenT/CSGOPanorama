@@ -329,11 +329,8 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 
 .mainmenu-navbar__btn-play
 {
-	                                      
-	width: 64px;
-	height: 64px;
-	                                              
-	                     
+	width: 96px;
+	height: 96px;
 
 	transition-property:  wash-color, border;
 	transition-duration: .25s;
@@ -343,7 +340,6 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 .mainmenu-navbar__btn-home 
 {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-	margin-bottom: 16px;
 }
 
 .mainmenu-navbar__btn-play Image

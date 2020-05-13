@@ -1,19 +1,17 @@
 .btn_advertising
 {
     horizontal-align: center;
-    margin: 4px 0px 18px 0px;
-}
-
-.btn_advertising--playmenu
-{
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    padding-right:16px;
+    width: 96px;
+    height: 96px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .btn_advertising__toggle
 {
     border-radius: 50%;
-    padding: 8px;
+    padding: 6px;
+    horizontal-align: center;
+    vertical-align: center;
 
     transition-property: background-color;
 	transition-duration: 0.40s;
@@ -33,7 +31,12 @@
 .btn_advertising__toggle:disabled
 {
     wash-color: disabledColor;
-} 
+}
+
+.btn_advertising__toggle:hover
+{
+    wash-color: rgb(24, 24, 24);
+}
 
 .btn_advertising__toggle .TickBox
 {

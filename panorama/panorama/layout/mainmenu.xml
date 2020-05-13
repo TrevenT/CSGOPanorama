@@ -81,7 +81,6 @@
 					</Panel>
 				</CSGOBlurTarget>
 
-
 				<CSGOBlurTarget id="MainMenuNavBarLeft" class="mainmenu-navbar-container" blurrects="CSGOLoadingScreen">
 	
 					<Panel id="JsMainMenuNavBar" class="mainmenu-navbar">
@@ -94,7 +93,6 @@
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/csgologo.svg" />
 						</RadioButton>
-						<Frame class="MainMenuModeOnly" src="file://{resources}/layout/advertising_toggle.xml" />
 						<RadioButton id="MainMenuNavBarPlay"
 									class="mainmenu-navbar__btn-small mainmenu-navbar__btn-play"
 									group="NavBar"
@@ -103,6 +101,7 @@
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="56" texturewidth="-1" src="file://{images}/icons/ui/play_circle.svg" />
 						</RadioButton>
+						<Frame class="MainMenuModeOnly" src="file://{resources}/layout/advertising_toggle.xml" />
 						                                                    
 						<RadioButton id="MainMenuNavBarResumeGame"
 									class="mainmenu-navbar__btn-small PauseMenuModeOnly"
