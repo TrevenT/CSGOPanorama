@@ -45,6 +45,7 @@
 {
 	padding-left: 5px;
 	width: fill-parent-flow(1);
+	max-height: 24px;
 }
 
 .vote-header-callvote .hud-vote-header__label

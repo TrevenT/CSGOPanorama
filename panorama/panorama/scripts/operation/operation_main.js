@@ -795,7 +795,7 @@ var OperationMain = ( function()
 	{
 		var elWarning = _m_cp.FindChildInLayoutFile( 'id-op-main-inspect-warning' );
 		var bHideWarning = bIsCase || ( bIsCoin && !OperationUtil.GetOperationInfo().bPremiumUser );
-		_m_cp.FindChildInLayoutFile( 'id-op-main-inspect-warning' ).SetHasClass( 'hidden', bHideWarning );
+		elWarning.SetHasClass( 'hidden', bHideWarning );
 
 		if ( bHideWarning )
 		{
@@ -807,6 +807,14 @@ var OperationMain = ( function()
 		{
 			var id = InventoryAPI.GetActiveSeasonCoinItemId();
 			var missionsThreshold = InventoryAPI.GetItemAttributeValue( id, 'upgrade threshold' );
+
+			                                                                                  
+			if ( !missionsThreshold || missionsThreshold < 0 || missionsThreshold > 1000 )
+			{
+				elWarning.SetHasClass( 'hidden', true );
+				return;
+			}
+
 			var missionsRemaining = missionsThreshold - OperationUtil.GetOperationInfo().nMissionsCompleted;
 			_m_cp.SetDialogVariableInt( 'missions_remaining', missionsRemaining );
 

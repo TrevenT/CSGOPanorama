@@ -427,7 +427,8 @@ var PlayMenu = ( function()
 
 		function BIsServerTypeDropdownEnabled()
 		{
-			if ( m_gameModeSetting === "cooperative" || m_gameModeSetting === "coopmission" )
+			if ( _IsPlayingOnValveOfficial() &&
+				( m_gameModeSetting === "cooperative" || m_gameModeSetting === "coopmission" ) )
 				return false;
 			else
 				return isEnabled;
@@ -1451,11 +1452,15 @@ var PlayMenu = ( function()
 
 			return aListMapPanels;
 		}
-		else if ( m_gameModeSetting === 'survival'
-			|| m_gameModeSetting === 'cooperative'
-			|| m_gameModeSetting === 'coopmission' )
+		else if ( _IsPlayingOnValveOfficial() && ( m_gameModeSetting === 'survival'
+			|| m_gameModeSetting === 'cooperative' 
+			|| m_gameModeSetting === 'coopmission' ) )
 		{
-			return elParent.FindChildTraverse( "MapTile" ).Children();
+			let elMapTile = elParent.FindChildTraverse( "MapTile" );
+			if ( elMapTile )
+				return elMapTile.Children();
+			else
+				return elParent.Children();
 		}
 		else
 		{
