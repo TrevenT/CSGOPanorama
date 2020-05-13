@@ -449,7 +449,6 @@ var mainmenu_watch = ( function() {
 		_InitTab( 'JsLive' );
 		_InitResourceManagement( $( '#JsTournaments' ) );
 		
-		
 		$.GetContextPanel().Data().elMainMenuRoot;
 
 		                                             
@@ -462,8 +461,10 @@ var mainmenu_watch = ( function() {
 		else
 		{
 			_InitResourceManagement( $( '#JsStreams' ) );
-			_InitTab( 'JsEvents' );
 		}
+
+		_InitTab( 'JsEvents' );
+		
 
 		  
 		                                                               
@@ -479,19 +480,13 @@ var mainmenu_watch = ( function() {
 		  
 
 		                                                                                                     
-		if ( _m_bPerfectWorld )
-		{
-			_NavigateToTab( 'JsLive' );
-			$( '#WatchNavBarButtonLive' ).checked = true;
-		}
-		else
-		{
-			                             
-			                                               
-			
-			_NavigateToTab( 'JsEvents' );
-			$( '#WatchNavBarButtonEvents' ).checked = true;
-		}
+
+		                             
+		                                               
+		
+		_NavigateToTab( 'JsEvents' );
+		$( '#WatchNavBarButtonEvents' ).checked = true;
+		
 	}
 
 	var _RunEveryTimeWatchIsShown = function()

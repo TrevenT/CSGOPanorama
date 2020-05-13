@@ -14,10 +14,6 @@ var mainmenu_watch_eventsched = (function () {
 
 	function _Init()
 	{
-		if ( _m_isPerfectWorld )
-			return;
-		
-		
 		$.RegisterForUnhandledEvent( 'Tournaments_EventsReceived', _EventsReceived );
 		$.RegisterForUnhandledEvent( 'Tournaments_FavoritesReceived', _FavoritesReceived );
 		$.RegisterForUnhandledEvent( 'Tournaments_RequestMatch', _RequestMatchString );

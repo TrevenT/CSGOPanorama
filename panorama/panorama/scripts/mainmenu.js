@@ -593,11 +593,8 @@ var MainMenu = ( function() {
 		                                     
 		_AddFeaturedPanel();
 
-		                                                                           
-		if ( !_m_bPerfectWorld )
-		{
-			_AddWatchNoticePanel();
-		}
+		_AddWatchNoticePanel();
+		
 	};
 
 	var _AddStream = function()
