@@ -55,7 +55,7 @@ var MainMenuTournamentPassStatus = ( function()
 		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-header' );
 		var title = '';
 		var elDescLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-game-countdown' );
-		var onActivate = null;
+	var onActivate = null;
 
 		                                                                                                
 		var id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid );
@@ -89,11 +89,18 @@ var MainMenuTournamentPassStatus = ( function()
 
 				if ( !reduction )
 				{
-					elDescLabel.text = "#CSGO_TournamentPass_katowice2019_Desc_short";
+					if ( MyPersonaAPI.GetAccountCategory( 'viewerpass' ) === 1 )
+					{
+						EnableCountdownTimer( elDescLabel, "#pickem_timer_upsell" );
+					}
+					else
+					{
+						elDescLabel.text = "#CSGO_TournamentPass_katowice2019_Desc_short";
+					}
 				}
 				else
 				{
-					EnableCountdownTimer( elDescLabel );
+					EnableCountdownTimer( elDescLabel, "#pickem_timer" );
 				}
 			}
 			else
@@ -114,7 +121,7 @@ var MainMenuTournamentPassStatus = ( function()
 		{
 			                  
 			elImage.SetHasClass( 'pass', false );
-			EnableCountdownTimer( elDescLabel );
+			EnableCountdownTimer( elDescLabel, "#pickem_timer" );
 
 			$.GetContextPanel().style.backgroundImage = 'url( "file://{images}/tournaments/backgrounds/background_' + g_ActiveTournamentInfo.eventid + '.png" )';
 			$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
@@ -132,11 +139,11 @@ var MainMenuTournamentPassStatus = ( function()
 		);
 	};
 
-	var EnableCountdownTimer = function( elDescLabel )
+	var EnableCountdownTimer = function( elDescLabel, displayString )
 	{
 		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status' );
 
-		elDescLabel.text = "#pickem_timer";
+		elDescLabel.text = displayString;
 		if ( !_m_schTimer )
 		{
 			_m_schTimer = $.Schedule( 0.1, _Timer.bind( undefined, elPanel ) );
