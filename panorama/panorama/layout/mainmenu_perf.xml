@@ -1,0 +1,41 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/mainmenu_perf.js" />
+	</scripts>
+
+	<Panel class="mainmenu-content__container" hittest="false">
+		<Panel class="content-navbar">
+			<Panel class="content-navbar__tabs">
+				<RadioButton id="JsBtnPerfCpp" selected="false" group="perf" onactivate="NavigateToTab('JsCpp', 'CSGOPerfTestsCpp', 'JsBtnPerfCpp' )" >
+					<Label text="C++"/>
+				</RadioButton>
+				<RadioButton id="JsBtnPerfMultipleContexts" selected="false" group="perf" onactivate="NavigateToTab('JsMultipleContexts', 'CSGOPerfTestsJsMultipleContexts', 'JsBtnPerfMultipleContexts' )" >
+					<Label text="Js / Multiple Contexts"/>
+				</RadioButton>
+				<RadioButton id="JsBtnPerfSingleContext" selected="false" group="perf" onactivate="NavigateToTab('JsSingleContext', 'CSGOPerfTestsJsSingleContext', 'JsBtnPerfSingleContext' )" >
+					<Label text="Js / Single Context"/>
+				</RadioButton>
+				<RadioButton id="JsBtnPerfTypeSafety" selected="false" group="perf" onactivate="NavigateToTab('JsTypeSafety', 'CSGOPerfTestsTypeSafety', 'JsBtnPerfTypeSafety' )" >
+					<Label text="Type-safety Test"/>
+				</RadioButton>
+			</Panel>
+		</Panel>
+		
+		<Panel class="top-bottom-flow full-width full-height">
+			<Panel class="horizontal-center" style="padding-top:5px;">
+				<Panel class="left-right-flow">
+					<Label text="Creation Time = " />
+					<Label id="JsPerfTime" class="MonoNumbersFont" text="--" />
+					<Label text=" ms" />
+				</Panel>
+			</Panel>
+			<Panel id="JsPerfContent" class="full-width full-height" style="padding:6%;">
+				<Label id="JsPerfIntro" class="fontSize-xxl fontWeight-Bold horizontal-center vertical-center" text="Performance Tests"/>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

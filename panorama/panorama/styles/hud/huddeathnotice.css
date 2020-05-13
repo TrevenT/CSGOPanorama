@@ -1,0 +1,196 @@
+                                                
+
+                                                                  
+@define CTColor: #6f9ce6;
+@define TColor: #eabe54;
+
+                            
+@define DeathNoticeLifetime: 5.0;				                                       
+@define DeathNoticeLocalPlayerLifetimeMod: 1.5;	                                                            
+												                                                                   
+@define DeathNoticeFadeOutTime: 1.0s;			                      
+
+
+CSGOHudDeathNotice
+{
+	height: fill-parent-flow(1);
+	margin-top: 72px;
+	padding-right: 10px;
+	horizontal-align: right;
+}
+
+CSGOHudDeathNotice Label
+{
+    font-family: Stratum2, 'Arial Unicode MS';
+}
+
+#VisibleNotices
+{
+	height: 100%;
+	flow-children: down;
+	horizontal-align: right;
+}
+
+                                                                               
+                                                                               
+                                                                               
+
+.DeathNotice
+{
+	horizontal-align: right;
+	                      
+	margin-top: 3px;
+	
+	transition-property: position;
+	transition-timing-function: ease-out;
+	transition-duration: .2s;
+}
+
+.DeathNotice.FadeOut .DeathNoticeBGBorder,
+.DeathNotice.FadeOut .DeathNoticeContent,
+{
+	opacity: 0.0;
+}
+
+.DeathNoticeBGBorder
+{
+	border-radius: 3px;
+	width: 100%;
+	height: 100%;
+
+	transition-property: opacity;
+	transition-timing-function: ease-out;
+	transition-duration: DeathNoticeFadeOutTime;
+}
+
+.Available .DeathNoticeBGBorder,
+.Available .DeathNoticeContent
+{
+	opacity: 0;
+	transition-duration: .2s;
+}
+
+.DeathNoticeBG
+{
+	width: 100%;
+	height: 100%;
+	                              
+	                                                                                                                                                                                                                                                      
+	background-color: black;
+	opacity: 0.65;
+}
+
+.DeathNoticeBGGradient
+{
+	width: 100%;
+	height: 100%;
+	opacity: 0.0;
+}
+
+
+                                                                               
+                                                                               
+                                                                               
+
+
+.DeathNotice_Victim .DeathNoticeBG
+{
+	visibility: visible;
+	background-color: #a81313;
+	opacity: 0.7;
+	box-shadow: inset #e10000e6 0px 0px 1px;
+}
+
+
+                                                                               
+                                                                               
+                                                                               
+
+.DeathNotice_Killer .DeathNoticeBGBorder
+{
+	border: 2px solid #e10000;
+}
+
+.DeathNotice_Killer .DeathNoticeBGGradient
+{
+	visibility: collapse;
+}
+
+.DeathNotice_Killer .DeathNoticeBG
+{
+	visibility: visible;
+	background-color: black;
+	opacity: 0.65;
+}
+
+
+                                                                               
+                                                                               
+                                                                               
+
+.DeathNoticeContent
+{
+	flow-children: right;
+	padding: 6px 10px 3px 10px;
+	-s2-mix-blend-mode: additive;
+	transition-property: opacity;
+	transition-timing-function: ease-out;
+	transition-duration: DeathNoticeFadeOutTime;
+}
+
+.DeathNoticeContent Label
+{
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	letter-spacing: 0.45px;
+	text-shadow-fast: 1px 1px #000000;
+}
+
+.DeathNoticeCTColor
+{
+	color: CTColor;
+}
+
+.DeathNoticeTColor
+{
+	color: TColor;
+}
+
+.DeathNoticeIcon
+{
+	height: 24px;
+	vertical-align: middle;
+	visibility: collapse;
+	margin: -2px 2px 0px 2px;
+	                      
+}
+
+                                                         
+#Weapon
+{
+	visibility: visible;
+}
+.DeathNoticeSuicide #Weapon
+{
+	visibility: collapse;
+}
+
+#AssistParent
+{
+	visibility: collapse;
+	vertical-align: middle;
+	flow-children: right;
+}
+
+.DeathNoticeRevenge #Revenge,
+.DeathNoticeDomination #Domination,
+.DeathNoticePenetrate #Penetrate,
+.DeathNoticeHeadShot #HeadShot,
+.DeathNoticeSuicide #Suicide,
+.DeathNoticeAssist #AssistParent
+{
+	visibility: visible;
+}

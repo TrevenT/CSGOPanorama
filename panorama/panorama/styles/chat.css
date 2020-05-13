@@ -1,0 +1,398 @@
+@define chatBgGrey: rgba(94, 94, 94, 0.5);
+.chat-panel-outer
+{
+	opacity: 1;
+	visibility: visible;
+	horizontal-align: right;
+	padding-right: 112px;
+
+	transition-property: clip;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-panel-outer.hidden
+{
+	opacity: 0;
+	visibility: collapse;
+
+	transition-property: opacity;
+	transition-duration: .3s;
+	transition-timing-function: ease-in-out;
+}
+
+.MainMenuRootPanel--PauseMenuMode .chat-panel-outer
+{	                            
+	opacity: 0;
+	visibility: collapse;
+}
+
+.chat-panel
+{
+	flow-children: right;
+	
+	opacity: 1;
+	visibility: visible;
+
+	transition-property: opacity, brightness;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-panel .TickBox
+{
+	visibility: collapse;
+}
+
+.chat-panel.hidden
+{
+	opacity: 0;
+	visibility: collapse;
+
+	transition-property: opacity, transform;
+	transition-duration: .3s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-panel-icon
+{
+	margin: 32px 8px 0px 0px;
+	height: 32px;
+	width: 32px;
+	vertical-align: top;
+
+	transition-property: wash-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container
+{
+	horizontal-align: right;
+	vertical-align: top;
+	margin-top: 24px;
+	width: 440px;
+	height: 48px;
+	border-radius: 3px;
+	flow-children: down;
+
+	transition-property: height, border;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-panel:Hover .chat-container:not(.chat-open)
+{
+	brightness: 1.5;
+
+	transition-property: brightness;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-open
+{
+	visibility: visible;
+	height: 528px;
+
+	transition-property: height;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container__lines
+{
+	height: 448px;
+	width: 100%;
+
+	overflow: squish squish;
+	flow-children: up;
+	vertical-align: bottom;
+	background-color: #FFFFFF11;
+
+	transition-property: background-color, border;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container.chat-open .chat-container__lines
+{
+	background-color: #FFFFFF55;
+	overflow: squish scroll;
+
+	transition-property: background-color;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+                                                                               
+                                                                               
+                                                                               
+.chat-entry
+{
+	padding: 0px 24px 0px 24px;
+	margin: 4px 0px;
+	height: fit-children;
+	              
+}
+
+.chat-container:not(.chat-open) .chat-entry
+{
+	padding: 0px 4px;
+}
+
+
+
+.chat-entry__player-invited
+{
+	flow-children: right;
+	height: fit-children;
+}
+
+.chat-entry__player-labels
+{
+	flow-children: down;
+	height: fit-children;
+	background-color: chatBgGrey;
+	border-radius: 3px;
+}
+
+.chat-entry__player-labels--removed
+{
+	background-color:chatBgGrey;
+}
+
+.chat-entry__avatar-label-wrapper:not(.chat-open) 
+{
+	vertical-align: center;
+}
+
+
+.self-chat,
+.self-chat .chat-entry__avatar-label-wrapper
+{
+	horizontal-align: right;
+}
+
+.chat-container.chat-open .chat-entry Label
+{
+	padding:4px 6px;
+}
+
+.chat-entry Label
+{
+	color: white;
+	background-color: rgba(0, 0, 0, 0.315);
+	font-size: 15px;
+	padding: 12px 6px;
+	max-width: 340px;
+	max-height: 380px;
+	height: fit-children;
+	text-align: right;
+	white-space: normal;
+	border-radius: 3px;
+
+	transition-property: background-color;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+
+	animation-name: chat-new-entry;
+	animation-duration: .5s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+}
+
+
+.player-invite Button
+{
+	vertical-align: bottom;
+}
+
+.player-invite:not(.invitee-name) Label
+{
+	text-align: left;
+	background-color: rgba(94, 94, 94, 0.5);
+	margin-right: 8px;
+}
+
+.player-invite__button
+{
+	background-color: chatBgGrey;
+}
+
+.self-chat Label
+{
+	background-color: rgb(58, 103, 128)
+	horizontal-align: right;
+}
+
+.self-chat CSGOAvatarImage
+{
+	visibility: collapse;
+}
+
+.error-message Label
+{
+	background-color: negativeColor;
+	horizontal-align: left;
+	text-align: left;
+}
+
+.green-error Label
+{
+	background-color: #9e9d42;
+	text-align: left;
+}
+
+.yellow-error Label
+{
+	background-color: #ffbb42;
+	text-align: left;
+}
+
+.tournament-matchmaking-status Label
+{
+	background-color: rgba(0, 80, 0, 0.8);
+	text-align: left;
+}
+
+.chat-entry__player-title
+{
+	font-weight: bold;
+}
+
+.chat-entry CSGOAvatarImage
+{
+	vertical-align: center;
+
+	width: 32px;
+	height: 32px;
+	margin-right: 8px;
+}
+
+.chat-container.chat-open .chat-chat-entry__avatar 
+{
+	                                                                        
+	vertical-align: bottom;
+}
+
+@keyframes 'chat-new-entry'
+{
+	0%
+	{
+		brightness: 10;
+	}
+
+	100%
+	{
+		brightness: 1;
+	}
+}
+
+                                                                               
+                                                                               
+                                                                               
+.chat-container__input-container
+{
+	height: 48px;
+	width: 100%;
+	background-color: #FFFFFF55;
+
+	transition-property: position;
+	transition-duration: .1s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container__input
+{
+	visibility: collapse;
+	font-size: 18px;
+	width: 100%;
+	color: White;
+	padding-left: 8px;
+	margin: 0px 5px;
+	border: 0px solid white;
+
+	vertical-align: center;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+TextEntry.chat-container__input #PlaceholderText
+{
+	opacity: .5;
+	transition-property: opacity;
+	transition-duration: 0.2s;
+	color: rgb(184, 181, 181);
+	font-size: 18px;
+}
+
+TextEntry.chat-container__input.HasInput #PlaceholderText
+{
+	opacity: 0.0;
+}
+
+.chat-container__input:focus
+{
+	border-bottom: 0px;                                                  
+}
+
+.chat-container.chat-open .chat-container__input 
+{
+	visibility: visible;
+}
+
+                                                                               
+                                                                               
+                                                                               
+.chat-container__close
+{
+	width: 100%;
+	height:fit-children;
+	visibility: collapse;
+	background-color: #FFFFFF55;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container.chat-open .chat-container__close
+{
+	visibility: visible;
+}
+
+
+.chat-container__close__icon
+{
+	horizontal-align: center;
+	margin: 8px 0px;
+	height: 16px;
+	width: 16px;
+	vertical-align: top;
+	transform: rotateZ( 180deg );
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container__close:Hover 
+{
+	brightness: .5;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.chat-container__close:Hover .chat-container__close__icon
+{
+	brightness: .1;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}

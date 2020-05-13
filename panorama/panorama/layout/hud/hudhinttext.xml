@@ -1,0 +1,21 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/hudhinttext.css" />
+	</styles>
+
+	<CSGOHudHintText hittest="false" class="hud-hint">
+		<Panel class="hrTop" />
+		<Panel class="hud-hint__text">
+			<Panel class="vertical-center top-bottom-flow">
+				<Panel class="hud-hint_top">
+					<Image src="file://{images}/icons/ui/info.svg" class="hud-hint__icon"/>
+					<Image src="file://{images}/icons/ui/alert.svg" class="hud-hint__icon priority-icon"/>
+					<Label class="hud-hint__priority-label" text="#UI_Alert"/>
+				</Panel>
+				<Label id="HintLabel" html="true" class="hud-hint__label mono-spaced-font-bold"/>
+			</Panel>
+		</Panel>
+		<Panel class="hrBot" />
+	</CSGOHudHintText>
+</root>

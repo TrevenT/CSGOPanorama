@@ -1,0 +1,182 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/itempreview.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/itempreviewdebug.js" />
+	</scripts>
+	
+	<ItemPreviewDebug oncanel="DeletePanel( this )">
+
+		<Panel id="ItemPreviewDebugPanel" class="debug-background"  >
+
+            <Button id="ItemPeviewToggleModeButton" class="ItemPreviewDebugButton2" onactivate="UIItemPreviewPanelToggleDebugMode()">
+            	<Label id="ToggleDebugModeLabelCamera" class="fontSize-m fontWeight-light" onmouseover="UiToolkitAPI.ShowCustomLayoutTooltip( 'ToggleDebugModeLabelCamera', 'TestTooltipCamera', 'file://{resources}/layout/tooltips/tooltip_model_panel_instructions_camera.xml' )" onmouseout="UiToolkitAPI.HideCustomLayoutTooltip( 'TestTooltipCamera' )" text="Mode : CAMERA"/>
+            	<Label id="ToggleDebugModeLabelLights" class="fontSize-m fontWeight-light" onmouseover="UiToolkitAPI.ShowCustomLayoutTooltip( 'ToggleDebugModeLabelLights', 'TestTooltipLights', 'file://{resources}/layout/tooltips/tooltip_model_panel_instructions_lights.xml' )" onmouseout="UiToolkitAPI.HideCustomLayoutTooltip( 'TestTooltipLights' )" text="Mode : LIGHTS"/>
+            </Button>
+
+			<Panel id="LightMode" class="debug-background"  >
+
+            	<Panel id="LightsMenuDropdownContainer" class="left-right-flow">
+   	        		<Label id="LightSelectionLabel" text="Light: " class="fontSize-m fontWeight-light"/>
+       	      		<DropDown class="LightsDropDown" id="LightSelectionEnum" oninputsubmit="UIItemPreviewPanelDebugLightSelection()">
+           	    		<Label text="Flashlight" id="Flashlight" value="1"/>
+               			<Label text="Dir 0" id="Dir0" value="2"/>
+                		<Label text="Dir 1" id="Dir1" value="3"/>
+                		<Label text="Dir 2" id="Dir2" value="4"/>
+                		<Label text="Dir 3" id="Dir3" value="5"/>
+                		<Label text="Ambient" id="Ambient" value="6"/>
+              		</DropDown>
+            	</Panel>
+  
+       			<Label id="LightColorSectionGap" class="fontSize-s fontWeight-medium" text=""/>
+
+				<Panel id="LightColorSection" class="LightSection">
+       				<Label id="LightColorSectionLabel" text="Color"/>
+					<Image id="LightColorSectionOpen" class="HA_Icon" src="file://{images}/control_icons/arrow_solid_down.vtf" onactivate="UIItemPreviewPanelDebugToggleSection_LightColor()" />
+				</Panel>
+  
+            	<Panel id="LightColorSettings" class="LightSettings">
+					<Panel id="Hue" class="LightPicker">
+    	        		<Label id="ColorPick_HueLabel" class="fontSize-m fontWeight-medium" text="H:"/>
+						<ItemPreviewColorSlider id="ColorPick_HueSlider" />
+					</Panel>
+					<Panel id="Sat" class="LightPicker">
+	            		<Label id="ColorPick_SatLabel" class="fontSize-m fontWeight-medium" text="S:"/>
+						<ItemPreviewColorSlider id="ColorPick_SatSlider" />
+					</Panel>
+					<Panel id="Val" class="LightPicker">
+            			<Label id="ColorPick_ValLabel" class="fontSize-m fontWeight-medium" text="V:"/>
+						<ItemPreviewColorSlider id="ColorPick_ValSlider" />
+					</Panel>
+ 					<Panel id="ColorPick_RGBBox" class="LightPicker_RGBBox"/>
+ 					<Panel id="HDR" class="LightPicker">
+    	     			<Label id="ColorPick_HDRLabel" class="fontSize-m fontWeight-medium" text="HDR:"/>
+ 						<ItemPreviewColorSlider id="ColorPick_HDRSlider" />
+ 					</Panel>
+				</Panel>
+
+	       		<Label id="LightAnimSectionGap" class="fontSize-s fontWeight-medium" text=""/>
+   				<Panel id="LightAnimSection" class="LightSection LightSection--Closed">
+    	   			<Label id="LightAnimSectionLabel" text="Animation"/>
+					<Image id="LightAnimSectionOpen" class="HA_Icon" src="file://{images}/control_icons/arrow_solid_left.vtf" onactivate="UIItemPreviewPanelDebugToggleSection_LightAnim()" />
+				</Panel>
+
+				<Panel id="LightAnimSettings" class="LightSettings">
+
+					<Label id="LightFlickerSpace" class="LightSectionSub" text="Flicker"/>
+
+					<Panel id="LightFlicker" class="LightSettings">
+						<Panel id="LightFlickerA" class="LightPicker">
+							<Label id="LightFlickerA_Label" class="fontSize-m fontWeight-medium" text="a:"/>
+							<ItemPreviewSlider id="LightFlickerA_Slider" class="LightRot_Slider" />
+						</Panel>
+						<Panel id="LightFlickerF" class="LightPicker">
+							<Label id="LightFlickerF_Label" class="fontSize-m fontWeight-medium" text="f:"/>
+							<ItemPreviewSlider id="LightFlickerF_Slider" class="LightRot_Slider" />
+						</Panel>
+					</Panel>
+
+					<Label id="LightPulseSpace" class="LightSectionSub" text="Pulse"/>
+
+					<Panel id="LightPulse" class="LightSettings">
+						<Panel id="LightPulseA" class="LightPicker">
+							<Label id="LightPulseA_Label" class="fontSize-m fontWeight-medium" text="a:"/>
+							<ItemPreviewSlider id="LightPulseA_Slider" class="LightRot_Slider" />
+						</Panel>
+						<Panel id="LightPulseF" class="LightPicker">
+							<Label id="LightPulseF_Label" class="fontSize-m fontWeight-medium" text="f:"/>
+							<ItemPreviewSlider id="LightPulseF_Slider" class="LightRot_Slider" />
+						</Panel>
+					</Panel>
+
+					<Label id="LightRotSpace" class="LightSectionSub" text="Rotation"/>
+
+					<Panel id="LightRot" class="LightSettings">
+						<Panel id="LightRotX" class="LightPicker">
+							<Label id="LightRotX_Label" class="fontSize-m fontWeight-medium" text="X:" onactivate="UIItemPreviewPanelDebugResetLightAnim_RotX()"/>
+							<ItemPreviewSlider id="LightRotX_Slider" class="LightRot_Slider"/>
+						</Panel>
+						<Panel id="LightRotY" class="LightPicker">
+							<Label id="LightRotY_Label" class="fontSize-m fontWeight-medium" text="Y:" onactivate="UIItemPreviewPanelDebugResetLightAnim_RotY()"/>
+							<ItemPreviewSlider id="LightRotY_Slider" class="LightRot_Slider" />
+						</Panel>
+						<Panel id="LightRotZ" class="LightPicker">
+							<Label id="LightRotZ_Label" class="fontSize-m fontWeight-medium" text="Z:" onactivate="UIItemPreviewPanelDebugResetLightAnim_RotZ()"/>
+							<ItemPreviewSlider id="LightRotZ_Slider" class="LightRot_Slider" />
+						</Panel>
+					</Panel>
+					
+				</Panel>
+
+	       		<Label class="fontSize-s fontWeight-medium" text=""/>
+   				<Panel id="LightFlashlightShadowSection" class="LightSection LightSection--Closed">
+    	   			<Label id="LightFlashlightShadowSectionLabel" text="Flashlight Shadow"/>
+					<Image id="LightFlashlightShadowSectionOpen" class="HA_Icon" src="file://{images}/control_icons/arrow_solid_left.vtf" onactivate="UIItemPreviewPanelDebugToggleSection_LightFlashlightShadow()" />
+				</Panel>
+
+            	<Panel id="LightFlashlightShadowSettings" class="LightSettings">
+					<Panel id="FOV" class="LightPicker">
+    	        		<Label id="FlashlightShadow_FOVLabel" class="fontSize-m fontWeight-medium" text="fov:"/>
+						<ItemPreviewSlider id="FlashlightShadow_FOVSlider" class="LightRot_Slider"/>
+					</Panel>
+					<Panel id="NearZ" class="LightPicker">
+    	        		<Label id="FlashlightShadow_NearZLabel" class="fontSize-m fontWeight-medium" text="minZ:"/>
+						<ItemPreviewSlider id="FlashlightShadow_NearZSlider" class="LightRot_Slider"/>
+					</Panel>
+					<Panel id="FarZ" class="LightPicker">
+    	        		<Label id="FlashlightShadow_FarZLabel" class="fontSize-m fontWeight-medium" text="maxZ:"/>
+						<ItemPreviewSlider id="FlashlightShadow_FarZSlider" class="LightRot_Slider"/>
+					</Panel>
+				</Panel>
+
+			</Panel>
+ 
+           	<Panel id="CameraFOVSettings" class="LightSettings">
+				<Panel id="CameraFOV" class="LightPicker">
+   	        		<Label id="Camera_FOVLabel" class="fontSize-m fontWeight-medium" text="fov:"/>
+					<ItemPreviewSlider id="Camera_FOVSlider" class="LightRot_Slider"/>
+				</Panel>
+			</Panel>
+
+            <Button class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelCopyToClipboard()">
+            	<Label class="fontSize-m fontWeight-light" text="Copy to Clipboard"/>
+            </Button>
+            <Button id="ItemPreviewCopyAsPresetButton" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelCopyPresetToClipboard()">
+            	<Label class="fontSize-m fontWeight-light" text="Copy as Preset to Clipboard"/>
+            </Button>
+                                                                                                                                                          
+            	                                                                                   
+                       
+            <Button id="EnabledLightsToggleButton" class="ItemPreviewDebugButton2" onactivate="UIItemPreviewPanelToggleEnabledLights()">
+            	<Label id="ToggleLightsLabelAll" class="fontSize-m fontWeight-light" text="Enabled: All"/>
+            	<Label id="ToggleLightsLabelSelected" class="fontSize-m fontWeight-light" text="Enabled : Selected"/>
+            </Button>
+
+            <Button class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelSceneReload()">
+            	<Label class="fontSize-m fontWeight-light" text="Reload Manifest"/>
+            </Button>
+
+            <Button class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelCloseDebugCamera()">
+            	<Label class="fontSize-m fontWeight-medium" text="EXIT"/>
+            </Button>
+
+                                                                                  
+            	                                                                  
+                       
+
+                                                                            
+            	                                                            
+                       
+
+                                                                                  
+            	                                                                  
+                       
+
+		</Panel>
+
+	</ItemPreviewDebug>
+
+</root>

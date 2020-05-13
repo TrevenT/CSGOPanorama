@@ -1,0 +1,98 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/popups/popups_shared.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+				<include src="file://{resources}/styles/popups/popup_inventory_inspect.css" />
+		<include src="file://{resources}/styles/popups/popup_capability_decodable.css" />
+		<include src="file://{resources}/styles/popups/popup_capability_shared.css" />
+		<include src="file://{resources}/styles/itemtile.css" />
+	</styles>
+	
+	<scripts>
+		 <include src="file://{resources}/scripts/popups/popup_capability_decodable.js" />
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/itemtile.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="LootListItem">
+			<Panel class="item-tile item-tile--small"
+					onactivate="ItemTile.OnActivate()"
+					oncontextmenu="ItemTile.OnActivate()"
+					context_menu_filter='lootlist'
+					acceptsinput="true"
+					onmouseover="ItemTile.ShowTooltip()"
+					onmouseout="ItemTile.HideTooltip()"
+					antialias="true"
+					useglobalcontext="true">
+				<Panel id="ItemTileBg" class="item-tile__bg"/>
+				<ItemImage class="item-tile__image" id="ItemImage" scaling="stretch-to-fit-preserve-aspect"/>
+				<Label html="true" id="JsItemName" class="item-tile__name"/>
+				<Panel class="item-tile__rarity" id="JsRarity"/>
+			</Panel>
+		</snippet>
+
+		<snippet name="ScrollItem">
+			<Panel class="popup-decodable-scroll-item"
+					acceptsinput="false"
+					antialias="true">
+				<Panel class="popup-decodable-scroll-item-tint" id="JItemTint"/>
+				<Panel class="popup-decodable-scroll-item-rarity" id="JsRarity"/>
+				<ItemImage class="full-width full-height" scaling="stretch-to-fit-x-preserve-aspect" id="ItemImage" />
+				
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<PopupCustomLayout class="PopupPanel Capability Hidden"
+						useglobalcontext="true"
+						popupbackground="blur"
+						oncancel="CapabilityDecodable.ClosePopUp();"
+						onload="CapabilityDecodable.Init();">
+
+		<Panel class="mainmenu-content__container mainmenu-content__container--inspect" hittest="true" >
+			<Panel class="full-width full-height">
+
+				<Frame id="PopUpInspectModelOrImage" hitest="false" src="file://{resources}/layout/popups/popup_inspect_model-image.xml" />
+				<Frame id="PopUpCapabilityHeader" class='hidden' src="file://{resources}/layout/popups/popup_capability_header.xml" />
+
+				<Panel id="DecodableLootlistContainer" class="popup-decodable-lootlist-container hidden" >
+					<Label id="CanDecodableDesc" html="true" class="fontSize-m horizontal-align-left bottom-padding" text="#SFUI_InvUse_Items_InContainer_Header"/>
+					<Panel id="DecodableLootlist" class="popup-decodable-lootlist" hittest="true">
+						                          
+					</Panel>
+				</Panel>
+
+				<Panel id="DecodableItemsScroll" class="popup-decodable-opening hidden" hittest="false" hittestchildren="false">
+					<Panel class="popup-decodable-opening__list" hittest="false">
+						<Panel id="ScrollList" 
+								class="popup-decodable-opening-items-container"
+								hittest="false">
+
+						</Panel>
+					</Panel>
+
+					<Panel class="popup-decodable-opening__list popup-decodable-opening__list--magnified" hittest="false">
+						<Panel id="ScrollListMagnified" 
+								class="popup-decodable-opening-items-container"
+								hittest="false">
+								
+						</Panel>
+					</Panel>
+				
+					<Panel class="popup-decodable-center-bar"/>
+				</Panel>
+
+
+				<Panel id="DecodableCountdown" class="vertical-center horizontal-center hidden">
+					<Panel id="DecodableCountdownRadial" class="popup-countdown-timer-circle"/>
+					<Label id="DecodableCountdownLabel" text="5" class="popup-decodable-countdown-text mono-spaced-font-bold"/>
+				</Panel>
+
+				<Frame id="PopUpInspectAsyncBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_async-bar.xml" />
+				<Frame id="PopUpInspectPurchaseBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_purchase-bar.xml" />
+					</Panel>
+		</Panel>
+	</PopupCustomLayout>
+</root>

@@ -1,0 +1,279 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/settings/settings.css" />
+		<include src="file://{resources}/styles/mainmenu.css"/>
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/settingsmenu_shared.js" />
+	</scripts>
+
+	<Panel useglobalcontext="true" class="SettingsMenuTab" >
+
+			<Panel class="content-navbar content-navbar--short" >
+				<Panel class="content-navbar__tabs content-navbar__tabs--small">
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsKeyboardMouse')" group="SettingsKbMouse">
+						<Label text="#settings_keyboard_mouse_section"/>
+					</RadioButton>
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsMovementBinds')" group="SettingsKbMouse">
+						<Label text="#settings_movement_binds_section"/>
+					</RadioButton>
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsWeaponBinds')" group="SettingsKbMouse">
+						<Label text="#settings_weapon_binds_section"/>
+					</RadioButton> 
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsCommBinds')" group="SettingsKbMouse">
+						<Label text="#settings_comm_binds_section"/>
+					</RadioButton>
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsUiBinds')" group="SettingsKbMouse">
+						<Label text="#settings_ui_binds_section"/>
+					</RadioButton>
+				</Panel>
+			</Panel>
+		<Panel class="SettingsMenuTabContent vscroll">
+
+			                                        
+			
+			<Panel id="SettingsKeyboardMouse" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_keyboard_mouse_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+					                    
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_ReverseMouse" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="m_pitch">
+							<Label text="#SFUI_Off" id="reversemouse0" value="0.022"/>
+							<Label text="#SFUI_On"  id="reversemouse1" value="-0.022" />  
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					                
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_JoystickDuckMode" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White"  convar="option_duck_method">
+							<Label text="#SFUI_Hold"  id="walkmode0" value="0"/>
+							<Label text="#SFUI_Toggle" id="walkmode1" value="1" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					                
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_JoystickSpeedMode" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="option_speed_method">
+							<Label text="#SFUI_Hold"  id="duckmode0" value="0"/>
+							<Label text="#SFUI_Toggle" id="duckmode1" value="1" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					                        
+					<CSGOSettingsSlider text="#SFUI_MouseSensitivity" max="8" min="0.05" displayprecision="2" convar="sensitivity"/>
+					<Panel class="horizontal-separator"/>
+					                       
+					<CSGOSettingsSlider  text="#SFUI_MouseZoomSensitivity" max="1.0" min="0.1" displayprecision="2" convar="zoom_sensitivity_ratio_mouse"/>
+					<Panel class="horizontal-separator"/>
+					                
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_RawInput" class="half-width"/>
+						<CSGOSettingsEnumDropDown convar="m_rawinput">
+							<Label text="#SFUI_Off"  id="rawinputmode0" value="0"/>
+							<Label text="#SFUI_On" id="rawinputmode1" value="1" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					                         
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_MouseAcceleration" class="half-width"/>
+						<CSGOSettingsEnumDropDown convar="m_customaccel">
+							<Label text="#SFUI_Off"  id="rawinputmode0" value="0"/>
+							<Label text="#SFUI_On" id="rawinputmode1" value="3" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			                                  
+
+			<Panel id="SettingsMovementBinds" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_movement_binds_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_Toggle_Always_Show_Inv" id="InvDispBinder" bind="show_loadout_toggle"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_Forward" id="MovFwdBinder" bind="+forward"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_Backward" id="MovBkBinder" bind="+back"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_MoveLeft" id="MovLeftBinder" bind="+moveleft"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_MoveRight" id="MovRightBinder" bind="+moveright"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_Walk" id="WalkBinder" bind="+speed"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_Jump" id="JumpBinder" bind="+jump"/>
+					<Panel class="horizontal-separator"/>
+			
+					<CSGOSettingsKeyBinder text="#SFUI_Duck" id="DuckBinder" bind="+duck"/>
+				</Panel>
+			</Panel>
+
+			                                
+			
+			<Panel id="SettingsWeaponBinds" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_weapon_binds_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_Pickup_Use_Objects" id="UseBinder" bind="+use"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Fire" id="FireBinder" bind="+attack"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_WeaponSpecial" id="SecFireBinder" bind="+attack2"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Reload_Weapon" id="ReloadBinder" bind="+reload"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_PreviousWeapon" id="SelPrevWeaponBinder" bind="invprev"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_NextWeapon" id="SelLastWeaponBinder" bind="invnext"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Previous" id="LastWeaponUsedBinder" bind="lastinv"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Drop_Weapon" id="DropWeaponBinder" bind="drop"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_LookAtWeapon" id="InspectWeaponBinder" bind="+lookatweapon"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Buy" id="BuyMenuBinder" bind="buymenu"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Autobuy" id="AutoBuyBinder" bind="autobuy"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Rebuy" id="RebuyBinder" bind="rebuy"/>
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_PrimaryWeapon" id="PrimWpnBinder" bind="slot1"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_SecondaryWeapon" id="SecWpnBinder" bind="slot2"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Knifeslot" id="KnifeBinder" bind="slot3"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_CycleGrenades" id="CycleGrenadesBinder" bind="slot4"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_BombSlot" id="BombBinder" bind="slot5"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_HE_Grenade" id="HEGrenadeBinder" bind="slot6"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_Flashbang" id="FlashBinder" bind="slot7"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_Smoke_Grenade" id="SmkGrenadeBinder" bind="slot8"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_DecoySlot" id="DecGrenadeBinder" bind="slot9"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_MolotovSlot" id="MolotovBinder" bind="slot10"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_TaserSlot" id="ZeusBinder" bind="slot11"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_SprayMenu" id="GraffitiBinder" bind="+spray_menu"/>
+					<Panel class="horizontal-separator"/>
+
+				</Panel>
+			</Panel>
+
+			                                       
+			<Panel id="SettingsCommBinds" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_comm_binds_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_CommandRadio" id="CmdRadioBinder" bind="radio1"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_StandardRadio" id="StdRadioBinder" bind="radio2"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_ReportRadio" id="ReportRadioMessageBinder" bind="radio3"/>
+					<Panel class="horizontal-separator"/>
+
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_TeamMessage" id="TeamMessageBinder" bind="messagemode2"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_ChatMessage" id="ChatMessageBinder" bind="messagemode"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_Voice" id="VoiceBinder" bind="+voicerecord"/>
+					<Panel class="horizontal-separator"/>          
+				
+				</Panel>
+			</Panel>
+						
+			                            
+			<Panel id="SettingsUiBinds" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_ui_binds_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_Menu_Scoreboard" id="ScoreBinder" bind="+showscores"/>
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_ShowTeamEquipment" id="ShowTeamEquipmentBinder" bind="+cl_show_team_equipment"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_CallVote" id="VoteBinder" bind="callvote"/>
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_ChooseTeam" id="TeamBinder" bind="teammenu"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_ToggleConsole" id="ConsoleBinder" bind="toggleconsole"/>
+					<Panel class="horizontal-separator"/>
+
+				</Panel>
+			</Panel>
+		</Panel>
+
+		<Panel class="content-controls-actions-bar">
+			<Button id="SettingsRestoreKbMouse"
+					class="PopupButton White"
+					onactivate="SettingsMenuShared.ShowConfirmReset( SettingsMenuShared.ResetKeybdMouseDefaults, '#settings_reset_confirm_keyboard_mouse_desc' );"
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'SettingsRestoreKbMouse', '#tooltip_reset_defaults' );"
+					onmouseout="UiToolkitAPI.HideTextTooltip();" >
+				<Image id="PermissionsSettingsImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/recent.svg" />
+				<Label text="#settings_reset" />
+			</Button>
+		</Panel>
+	</Panel>
+</root>
+

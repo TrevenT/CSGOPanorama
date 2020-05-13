@@ -1,0 +1,21 @@
+                                        
+
+.TitleTextContents
+{
+                   
+    flow-children: down;
+}
+
+#TitleLabel
+{
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+                                
+}
+
+#TextLabel
+{
+    font-size: 14px;
+    color: #bbbbbb;
+}

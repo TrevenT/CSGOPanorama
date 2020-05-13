@@ -1,0 +1,42 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/tooltips/tooltip_custom_test.css" />
+	</styles>
+
+	           
+
+		                       
+		 
+			                                                                            
+			                                                                           
+		 
+
+	           
+	
+	                                                                  
+	                                                                
+	<Panel class="TestContents">
+		<Label text="Scene Panel - Debug Camera Mode" />
+		<Label text="" />
+		<Label text="left-click + drag - orbit cam rotate" />
+		<Label text="right-click + drag - orbit cam in/out" />
+		<Label text="middle-click + drag - relocate orbit pivot" />
+		<Label text="" />
+		<Label text="pg up/pg down - cycle between camera 'presets'" />
+		<Label text="" />
+		<Label text="ctrl + c - copy camera to clipboard" />
+		<Label text="p - copy camera 'preset' to clipboard" />
+		                                
+	</Panel>
+
+	                                                           
+		                                                
+		                 
+		                                                      
+		                                                              
+		                 
+		                                                    
+	          
+
+</root>

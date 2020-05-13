@@ -1,0 +1,223 @@
+                                                
+
+@define defaultColor: #ffffff;
+@define yIcon : 0px;
+@define yText : 2px;
+@define yBar : 27px;
+
+
+                                                                               
+                                                                               
+                                                                               
+
+CSGOHudHealthArmor Label
+{
+    font-family: Stratum2, 'Arial Unicode MS';
+}
+
+                                                                               
+                                                                               
+                                                                               
+
+.hud-HA-icon-container
+{
+    x: 15px;
+    y: yIcon;
+    width: 30px;
+    height:100%;
+    opacity: 1.0;
+}
+
+.hud-HA-text
+{
+    x: 42px;
+    y: yText;
+}
+
+.hud-HA-bar
+{
+    x: 110px;
+    y: yBar;
+    background-color: #66666699;
+}
+
+
+                                                                               
+                                                                               
+                                                                               
+
+
+.hud-HA
+{
+    width: 410px;
+    height: 53px;
+	vertical-align: bottom;
+    opacity: 0.0;
+	transition-property: opacity;
+	transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    margin-left: 8px;
+}
+
+.hud-HA.hud-HA--active
+{
+    opacity: 1.0;
+}
+
+.hud-HA-bg
+{
+                                                                                                                             
+    background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.3, #000000CC ) , color-stop(0.6, #000000CC), color-stop( 0.9, #000000BB ), to( #00000000 ) );
+                       
+                          
+	                              
+                              
+    width: 100%;
+    height: 100%;
+    opacity: 1.0;
+}
+
+.hud-HA-main
+{
+    height: 100%;
+    width: 100%;
+
+                                       	
+                                   
+                                 		
+}
+
+                                                                               
+                                                                               
+                                                                               
+
+.hud-HA-icon
+{
+    horizontal-align: center;
+    vertical-align: middle;
+    opacity: 0.65;
+}
+
+.hud-HA-icon--health
+{
+    width: 22px;
+}
+.hud-HA--on-damage .hud-HA-icon--health,
+.hud-HA--critical  .hud-HA-icon--health
+{
+    wash-color: #ff0000;
+}
+
+.hud-HA-icon--heavy
+{
+    padding-top: 1px;
+    wash-color: defaultColor;
+    visibility: collapse;
+}
+.hud-HA--heavyassaultsuit .hud-HA-icon--heavy
+{
+    visibility: visible;
+}
+
+.hud-HA-icon--armor
+{
+                  
+    height: 100%;
+    visibility: visible;
+    -s2-mix-blend-mode: normal;  
+}
+
+.hud-HA-icon--helmet
+{
+                  
+    visibility: collapse;
+}
+.hud-HA--helmet .hud-HA-icon--helmet
+{
+    visibility: visible;
+}
+
+                                                                               
+                                                                               
+                                                                               
+
+.hud-HA-health
+{
+    height: 100%;
+    padding-right: 10px;
+}
+
+.hud-HA--critical .hud-HA-health
+{
+                                  
+}
+
+                                                                               
+                                                                               
+                                                                               
+
+.hud-HA-armor
+{
+    height: 100%;
+    padding-right: 10px;
+}
+
+.hud-HA-text
+{
+    width: 70px;
+}
+
+.hud-HA-text Label
+{
+    font-size: 42px;
+    font-weight: bold;
+    color: defaultColor;
+    letter-spacing: 0px;
+    horizontal-align: center;
+                                           
+    text-shadow: 0px 0px 3px 0.0 #000000DD;
+    margin-left: 5px;
+                   
+                                   
+}
+
+  
+                                                     
+                                                    
+ 
+                   
+ 
+  
+
+                                                                               
+                                                                               
+                                                                               
+
+ProgressBar
+{
+    width: 82px;
+	height: 12px;
+                                  
+	border-radius: 0px;
+    margin-left: 5px;
+    margin-top: -5px;
+    box-shadow: 0px 0px 4px 1.0 #000000cc;
+    opacity: 0.99;
+}
+
+.hud-HA--small ProgressBar
+{
+    visibility: collapse;
+}
+
+.ProgressBarLeft
+{
+	background-color: defaultColor;
+}
+
+.hud-HA--on-damage .hud-HA-bar         .ProgressBarLeft,
+.hud-HA--critical  .hud-HA-bar--health .ProgressBarLeft
+{
+    background-color: red;
+}
+

@@ -1,0 +1,135 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/hudwinpanel.css" />
+	</styles>
+
+	<CSGOHudWinPanel class="WinPanelRoot" hittest="false" hittestchildren="false">
+		
+		                       
+		<Panel class="WinPanelRow WinPanelRow--Main">
+			<Panel class="WinPanelTeam">
+				<Panel class="TeamBG">
+					                                   
+						<Panel class="TeamBG__MainBG" />
+						<Panel class="TeamBG__hrTop" />
+						<Panel class="TeamBG__TitleBG" />
+						<Panel class="TeamBG__hrMid" />
+						<Panel class="TeamBG__hrBot" />
+						<Panel class="TeamBG__DefaultLogo" />
+						<Image id="TeamLogo" class="TeamBG__TeamLogo hidden" scaling="stretch-to-fit-preserve-aspect" />
+						<ItemPreviewPanel 	id=""
+								class="TeamBG__TeamModel"
+								manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+								item="models/inventory_items/scoreboard_logos/logo_ct.mdl"
+								mouse_rotate="false"/>
+					             
+				</Panel>
+				<Panel class="TeamFG">
+					<Label id="Title" class="TeamFG__Title" />
+					<Label id="Surrender" class="TeamFG__Surrender" />
+				</Panel>
+			</Panel>
+			<Panel class="WinPanelGunGame">
+				<Panel class="GunGameBG">
+					                                      
+						<Panel class="GunGameBG__MainBG" />
+						<Panel class="GunGameBG__TitleBG" />
+					             
+				</Panel>
+				<Panel class="GunGameFG">
+					<Label class="GunGameFG__Title" text="#SFUI_WinPanel_arsenal_first" />
+				</Panel>
+			</Panel>
+			
+			<Panel class="MVP_content">
+			<Panel id="MVP" class="MVP">	
+		
+				                                
+					<Panel class="MVP__Winner">
+						<CSGOAvatarImage id="MVPAvatar" class="MVP__Avatar"/>
+						<Image class="MVP__WinnerStar" src="file://{images}/icons/ui/star.svg" scaling="stretch-to-fit-preserve-aspect" />
+						<Label id="MVPWinnerName" class="MVP__WinnerName" html="true" />
+					</Panel>
+					<Panel id="MVPMusicKit" class="MVP__MusicKit">
+						<Image id="MVPMusicKitIcon" class="MVP__MusicKitIcon" scaling="stretch-to-fit-preserve-aspect" />
+						<Label id="MVPMusicKitName" class="MVP__MusicKitText" text="Music Kit Name" />
+						<Label id="MVPMusicKitStatTrak" class="MVP__MusicKitText MVP__MusicKitText--Bold" text="#SFUI_WinPanel_Playing_MVP_MusicKit_StatTrak" />
+						
+						                                                                                                     
+						<Label id="MVPMusicKitInfo" class="MVP__MusicKitInfoText" text="Music Kit Info" />
+						                                         
+						<Panel id="MVPMusicKitAnim" class="MVP__MusicKitAnim">	
+						</Panel>
+					</Panel>
+				             
+				<Panel class="MVP__Layout MVP__Layout--Right">
+					<Panel id="MVPGunGameAvatars" class="MVP__GunGameAvatars">
+						<Label class="MVP__AvatarText" text="#SFUI_WinPanel_arsenal_second" />
+						<CSGOAvatarImage id="MVPAvatar2nd" class="MVP__Avatar MVP__Avatar--ExtraMargin"/>
+						<Label class="MVP__AvatarText" text="#SFUI_WinPanel_arsenal_third" />
+						<CSGOAvatarImage id="MVPAvatar3rd" class="MVP__Avatar MVP__Avatar--ExtraMargin"/>
+					</Panel>
+				</Panel>
+
+			</Panel>
+			</Panel>
+
+		</Panel>
+
+		                  
+		<Panel id="Funfact" class="WinPanelRow">
+			<Label id="FunFactText" class="WinPanelRow__Title WinPanelRow__Title--Bold" html="true" />
+		</Panel>
+
+		                 
+		<Panel id="Progress" class="WinPanelRow">
+			<Label class="WinPanelRow__Title" text="#SFUI_WinPanelProg_need_in_catagory" html="true" />
+		</Panel>
+
+		                              
+		<Panel id="Medals" class="WinPanelRow WinPanelRow--FlowDown">
+			<Label class="WinPanelRow__Title WinPanelRow__Title--Bold" text="#SFUI_WinPanel_medal_awarded" />
+			<Panel class="WinPanelRow__Body">
+				<Panel id="MedalsContainer" class="Medals">
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+					<Image class="Medals__Icon" scaling="stretch-to-fit-preserve-aspect" />
+				</Panel>
+			</Panel>
+		</Panel>
+
+		                    
+		<Panel id="MedalStats" class="WinPanelRow">
+			<Panel class="MedalStats">
+				<Image id="MedalStatsIcon" class="MedalStats__Icon" scaling="stretch-to-fit-preserve-aspect" />
+				<Label id="MedalStatsText" class="MedalStats__Text" />
+			</Panel>
+		</Panel>
+
+		                      
+		<Panel id="RankUp" class="WinPanelRow WinPanelRow--FlowDown RankUp">
+			<Label class="RankUp__Text RankUp__Text--Bold RankUp__Text--SingleRank" text="#SFUI_WinPanel_rank_awarded" />
+			<Label class="RankUp__Text RankUp__Text--Bold RankUp__Text--Coin" text="#SFUI_WinPanel_coin_awarded" />
+			<Label class="RankUp__Text RankUp__Text--Bold RankUp__Text--MultiRank" text="#Panorama_WinPanel_rank_awarded_multi" />
+			<Label class="RankUp__Text RankUp__Text--Show" html="true" text="#Panorama_WinPanel_rank_name_string" />
+		</Panel>
+
+		                            
+		<Panel id="GunGameExtra" class="WinPanelRow WinPanelRow--FlowDown GunGameExtra">
+			<Panel class="GunGameExtra__Center">
+				<Label id="GunGameExtraTitle" class="GunGameExtra__Text" />
+				<Label id="GunGameExtraWeaponName" class="GunGameExtra__Text GunGameExtra__Text--Bold" />
+			</Panel>
+			<Panel class="GunGameExtra__Center">
+				<Image id="GunGameExtraWeaponIcon" class="GunGameExtra__Icon" />
+				<Image id="GunGameExtraGrenadeIcon" class="GunGameExtra__Icon" />
+			</Panel>
+		</Panel>
+
+	</CSGOHudWinPanel>
+</root>

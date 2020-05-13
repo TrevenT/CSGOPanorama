@@ -1,0 +1,407 @@
+'use strict';
+
+var contextmenuPlayerCard = ( function (){
+
+	var _Init = function ()
+	{
+		_LoadPlayerCard();
+		_GetContextMenuEnteries();
+
+		                                                                                 
+	};
+
+	var _LoadPlayerCard = function( xuid )
+	{
+		var xuid = $.GetContextPanel().GetAttributeString( "xuid", "(not found)" );
+		var newPanel = $.GetContextPanel().FindChildInLayoutFile( 'JsContextMenuPlayercard' );
+
+		if( newPanel )
+			newPanel.DeleteAsync( .0 );
+
+		var newPanel = $.CreatePanel('Panel', $.GetContextPanel().FindChildInLayoutFile('JsContextMenuSections'), 'JsContextMenuPlayercard' ); 
+		newPanel.SetAttributeString( "xuid", xuid );
+		newPanel.BLoadLayout('file://{resources}/layout/playercard.xml', false, false);
+	};
+
+	var _ContextMenus = [
+		  
+		 
+			                                                                            
+			                                   
+				                                                                 
+				            	
+			  
+			                              
+				                                    
+			 
+		  
+		  
+		
+		{
+			name: 'invite',
+			icon: 'invite',
+			AvailableForItem: function ( id ) {
+				                                                                                              
+				return !GameStateAPI.IsLocalPlayerPlayingMatch() && !( LobbyAPI.IsPartyMember( id ) ) && !_IsSelf( id) ;
+			},
+			OnSelected:  function ( id ) {
+				FriendsListAPI.ActionInviteFriend( id, '' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				$.DispatchEvent( 'FriendInvitedFromContextMenu', id ); 
+			} 
+		},
+		{
+			name: 'join',
+			icon: 'JoinPlayer',
+			AvailableForItem: function ( id ) {
+				if( FriendsListAPI.IsFriendJoinable( id ))
+				{
+					if ( GameStateAPI.IsPlayerConnected( id ) )
+						return false;
+					
+					if (LobbyAPI.IsSessionActive()) {
+						var party = LobbyAPI.GetSessionSettings().members;
+
+						for (var i = 0; i < party.numPlayers; i++) {
+							if ( id === party['machine' + i].player0.xuid )
+								return false;
+						}
+					}
+					return true;
+				}
+			},
+			OnSelected:  function ( id ) {
+				FriendsListAPI.ActionJoinFriendSession( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'watch',
+			icon: 'watch_tv',
+			AvailableForItem: function ( id ) {
+				return !GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					FriendsListAPI.IsFriendWatchable( id ) &&
+					!GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected:  function ( id ) {
+				FriendsListAPI.ActionWatchFriendSession( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'steamprofile',
+			icon: 'profile',
+			AvailableForItem: function ( id ) {
+				return 	MyPersonaAPI.GetLauncherType() !== "perfectworld";
+				
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.ShowUserProfilePage( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'kick_from_lobby',
+			icon: 'friendignore',
+			AvailableForItem: function( id )
+			{
+				if ( GameStateAPI.IsLocalPlayerPlayingMatch() )
+					return false;
+				
+				if (LobbyAPI.IsSessionActive() && LobbyAPI.BIsHost()) {
+					var party = LobbyAPI.GetSessionSettings().members;
+
+					for (var i = 0; i < party.numPlayers; i++) {
+						if (id === party['machine' + i].player0.xuid && !_IsSelf( id ))
+							return true;
+					}
+
+				}
+			},
+			OnSelected:  function ( id ) {
+				LobbyAPI.KickPlayer( id );                               
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			                                                              
+			name: 'leave_lobby',
+			icon: 'leave',
+			AvailableForItem: function ( id ) {
+				if( !GameStateAPI.IsLocalPlayerPlayingMatch() && id === MyPersonaAPI.GetXuid() && LobbyAPI.IsSessionActive() )
+				{
+					var party = LobbyAPI.GetSessionSettings().members;
+					return party.numPlayers > 1 ? true : false;
+				}
+
+				return false;
+			},
+			OnSelected:  function ( id ) {
+				LobbyAPI.CloseSession();
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'message',
+			icon: 'message',
+			AvailableForItem: function ( id ) {
+				return FriendsListAPI.GetFriendRelationship( id ) === "friend";
+
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.StartChatWithUser( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'summonmissioncoopmission',
+			icon: 'coop',
+			AvailableForItem: function ( id ) {
+				return false;
+			},
+			OnSelected:  function ( id ) {
+			}
+		},
+		{
+			name: 'summonmissioncoop',
+			icon: 'coop',
+			AvailableForItem: function ( id ) {
+				return false;
+			},
+			OnSelected:  function ( id ) {
+			}
+		},
+		{
+			name: 'friendaccept',
+			icon: 'friendaccept',
+			AvailableForItem: function ( id ) {
+				return FriendsListAPI.GetFriendStatusBucket( id ) === 'AwaitingLocalAccept';
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.InteractWithUser( id, 'friendrequestaccept' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'friendignore',
+			icon: 'friendignore',
+			AvailableForItem: function ( id ) {
+				return FriendsListAPI.GetFriendStatusBucket( id ) === 'AwaitingLocalAccept';
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.InteractWithUser( id, 'friendrequestignore' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'cancelinvite',
+			icon: 'friendignore',
+			AvailableForItem: function ( id ) {
+				return FriendsListAPI.GetFriendStatusBucket( id ) === 'AwaitingRemoteAccept';
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.InteractWithUser( id, 'friendremove' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'removefriend',
+			icon: 'friendremove',
+			AvailableForItem: function ( id ) {
+				if( MyPersonaAPI.GetLauncherType() === "perfectworld" )
+				{
+					if ( id === MyPersonaAPI.GetXuid() ) return false;
+					var status = FriendsListAPI.GetFriendStatusBucket( id );
+					return status !== 'AwaitingRemoteAccept' && status !== 'AwaitingLocalAccept';
+				}
+
+				return false;
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.InteractWithUser( id, 'friendremove' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'request',
+			icon: 'addplayer',
+			AvailableForItem: function ( id ) {
+				var isSelf = id === MyPersonaAPI.GetXuid() ? true : false;
+				var status = FriendsListAPI.GetFriendStatusBucket( id );
+				var isRequest = status === 'AwaitingRemoteAccept' || status === 'AwaitingLocalAccept';
+				
+				return FriendsListAPI.GetFriendRelationship( id ) !== "friend" && !isSelf && !isRequest;
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.InteractWithUser( id, 'friendadd' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'editprofile',
+			icon: 'edit',
+			AvailableForItem: function ( id ) {
+				return _IsSelf( id );
+			},
+			OnSelected:  function ( id ) {
+				var appID = SteamOverlayAPI.GetAppID();
+				var communityUrl = SteamOverlayAPI.GetSteamCommunityURL();
+				SteamOverlayAPI.OpenURL( communityUrl+"/profiles/"+id+"/minimaledit" );
+	
+				                                   
+				                                                      
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'changecolor',
+			icon: 'colorwheel',
+			AvailableForItem: function ( id ) {
+				return !GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					LobbyAPI.IsSessionActive() &&
+					_IsSelf( id );
+			},
+			OnSelected: function ( id ) {
+				LobbyAPI.ChangeTeammateColor();
+				                                                                                                        
+			}
+		},
+		{
+			name: 'mute',
+			icon: 'unmuted',
+			AvailableForItem: function ( id ) {
+				return GameStateAPI.IsLocalPlayerPlayingMatch() && 
+					!_IsSelf( id ) && 
+					!GameStateAPI.IsSelectedPlayerMuted( id ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function ( id ) {
+				GameStateAPI.ToggleMute( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'unmute',
+			icon: 'muted',
+			AvailableForItem: function ( id ) {
+				return GameStateAPI.IsLocalPlayerPlayingMatch() && 
+					!_IsSelf( id ) && 
+					GameStateAPI.IsSelectedPlayerMuted( id ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function ( id ) {
+				GameStateAPI.ToggleMute( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'report',
+			icon: 'alert',
+			AvailableForItem: function ( id ) {
+				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					!_IsSelf( id ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function ( id ) {
+				UiToolkitAPI.ShowCustomLayoutPopupParameters('', 'file://{resources}/layout/popups/popup_report_player.xml', 'xuid=' + id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'commend',
+			icon: 'smile',
+			AvailableForItem: function ( id ) {
+				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					!_IsSelf( id ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function ( id ) {
+				UiToolkitAPI.ShowCustomLayoutPopupParameters('', 'file://{resources}/layout/popups/popup_commend_player.xml', 'xuid=' + id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
+			name: 'borrowmusickit',
+			icon: 'music_kit',
+			AvailableForItem: function ( id ) {
+				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					!_IsSelf( id ) && _HasMusicKit( id ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function( id )
+			{
+				GameInterfaceAPI.ConsoleCommand( "cl_borrow_music_from_player_index " + GameStateAPI.GetPlayerIndex( id ) );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		}
+	];
+
+	var _HasMusicKit = function( id )
+	{
+		return ( InventoryAPI.GetMusicIDForPlayer( id ) > 1 );
+	};
+
+	var _IsSelf = function ( id )
+	{
+		return id === MyPersonaAPI.GetXuid();
+	};
+
+
+	var _GetContextMenuEnteries = function ()
+	{
+		$.CreatePanel('Panel', $.GetContextPanel(), '', { class: 'context-menu-playercard-seperator' } );
+		var elContextMenuBtns = $.CreatePanel('Panel', $.GetContextPanel(), 'JsContextMenuPlayercardBtns', { class: 'context-menu-playercard-btns' } );
+
+		var items = [];
+		var xuid = $.GetContextPanel().GetAttributeString( "xuid", "(not found)" );
+
+		_ContextMenus.forEach( function( entry ) {
+			if ( entry.AvailableForItem( xuid )) 
+			{
+				                                                   
+				
+				                                   
+				var elEntryBtn = $.CreatePanel( 'Button', elContextMenuBtns, entry.name, { 
+					class: 'IconButton',
+					style: 'tooltip-position: bottom;'
+				} );
+
+				elEntryBtn.SetPanelEvent('onactivate', entry.OnSelected.bind( this, xuid ) );
+
+				var OnMouseOver = function ()
+				{
+					UiToolkitAPI.ShowTextTooltip( elEntryBtn.id, '#tooltip_' + entry.name );
+				}
+
+				var OnMouseOut = function ()
+				{
+					UiToolkitAPI.HideTextTooltip();
+				}
+				
+				elEntryBtn.SetPanelEvent('onmouseover', OnMouseOver );
+				elEntryBtn.SetPanelEvent('onmouseout', OnMouseOut );
+
+				$.CreatePanel( 'Image', elEntryBtn, entry.name, { src: 'file://{images}/icons/ui/' + entry.icon + '.svg' });
+				
+				              
+					                                           
+					                                                           
+					                                                 
+				     
+			}
+		});
+
+		
+	};
+
+	return {
+		Init		:	_Init,                 
+	};
+
+})();
+
+                                                                                                    
+                                            
+                                                                                                    
+(function(){
+})();

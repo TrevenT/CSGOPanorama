@@ -1,0 +1,67 @@
+<root>
+
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/chat.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/chat.js" />
+	</scripts>
+		
+	<snippets>
+		<snippet name="PlayerChat" >
+			<Panel class="chat-entry">
+				<Panel class="chat-entry__avatar-label-wrapper left-right-flow horizontal-align-left">
+					<CSGOAvatarImage id="ChatAvatar" />
+					<Label id="ChatLabel" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="PlayerInvited" >
+			<Panel class="chat-entry player-invite">
+				<Panel class="chat-entry__player-invited">
+					<CSGOAvatarImage id="ChatAvatar" />
+					<Label id="PlayerStatusTitle" text="#SFUI_Settings_Chat_NotePartyInvited" class="chat-entry__player-title" />
+					<CSGOAvatarImage id="ChatAvatarInvitee" />
+					<Panel class="chat-entry__player-labels">
+						<Label id="InviteeName" class="invitee-name" />
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="MatchmakingError" >
+			<Panel class="chat-entry error-message">
+				<Label id="ErrorLabel" class="error-message__label"/>
+			</Panel>
+		</snippet>
+
+		<snippet name="TournamentStatus" >
+			<Panel class="chat-entry tournament-matchmaking-status">
+				<Label id="MessageLabel" html="true" class="tournament-matchmaking-status__label"/>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="chat-panel-outer" defaultfocus="ChatInput">
+		<Button id="ChatPanelContainer" class="chat-panel hidden">
+			<Image class="chat-panel-icon" src="file://{images}/icons/ui/message.svg" />
+			<Panel id="ChatContainer" class="chat-container">
+				<Panel id="ChatLinesContainer" class="chat-container__lines" >
+					                                   
+				</Panel>
+				<Panel class="chat-container__input-container" >
+					<TextEntry id="ChatInput" class="chat-container__input" maxchars="1024" placeholder="#party_chat_placeholder"/>
+				</Panel>
+				<Button id="ChatCloseButton" class="chat-container__close" >
+					<Image class="chat-container__close__icon" src="file://{images}/icons/ui/expand.svg" />
+				</Button>
+			</Panel>
+		</Button>
+	</Panel>
+</root>
+
+

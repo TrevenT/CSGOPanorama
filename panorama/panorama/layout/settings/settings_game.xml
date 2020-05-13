@@ -1,0 +1,513 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/settings/settings.css" />
+		<include src="file://{resources}/styles/mainmenu.css"/>
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/settingsmenu_shared.js" />
+		<include src="file://{resources}/scripts/settingsmenu_gamesettings.js" />
+	</scripts>
+
+	<Panel useglobalcontext="true" class="SettingsMenuTab" >
+
+		<Panel class="content-navbar content-navbar--short" >
+			<Panel class="content-navbar__tabs content-navbar__tabs--small">
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsGameSettings')" group="SettingsGame">
+					<Label text="#settings_game_settings_section"/>
+				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsHudSettings')" group="SettingsGame">
+					<Label text="#settings_hud_section"/>
+				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsTeamSettings')" group="SettingsGame">
+					<Label text="#settings_team_section"/>
+				</RadioButton> 
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsSpectatorSettings')" group="SettingsGame">
+					<Label text="#settings_spectator_section"/>
+				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsItemSettings')" group="SettingsGame">
+					<Label text="#settings_items_section"/>
+				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsRadarSettings')" group="SettingsGame">
+					<Label text="#settings_radar_section"/>
+				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsAccountConnSettings')" group="SettingsGame">
+					<Label text="#settings_account_conn_section"/>
+				</RadioButton>
+			</Panel>
+		</Panel>
+
+		<Panel class="SettingsMenuTabContent vscroll">
+
+			                              
+
+			<Panel id="SettingsGameSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_game_settings_section" />
+				</Panel>
+			
+				<Panel class ="top-bottom-flow full-width">
+					                                       
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_Enable_Game_Instructor" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="gameinstructor_enable">
+							<Label text="#GameUI_Yes" id="enablegameinstructor0" value="1"/>
+							<Label text="#GameUI_No"  id="enablegameinstructor1" value="0" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                            
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Match_Ping_Threshold_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_Match_Ping_Threshold" max="350" min="25" convar="mm_dedicated_search_maxping"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                          
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Network_Bandwidth_Info">
+						<Label text="#SFUI_Settings_Network_Bandwidth" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="rate">
+							<Label text="#SFUI_Settings_Network_Bandwidth_Min" id="netbandwidth0" value="24576"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_384kbps" id="netbandwidth1" value="49152"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_512kbps" id="netbandwidth2" value="65536"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_768kbps" id="netbandwidth3" value="98304"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_1024kbps" id="netbandwidth4" value="131072"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_1536kbps" id="netbandwidth5" value="196608"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_20mbps" id="netbandwidth6" value="262144"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_25mbps" id="netbandwidth7" value="327680"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_30mbps" id="netbandwidth8" value="393216"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_40mbps" id="netbandwidth9" value="524288"/>
+							<Label text="#SFUI_Settings_Network_Bandwidth_Max"  id="netbandwidth10" value="786432"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_SteamToast_Location" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="ui_steam_overlay_notification_position">
+							<Label text="#SFUI_SteamToast_Location_TL" id="toastloc0" value="topleft"/>
+							<Label text="#SFUI_SteamToast_Location_BL" id="toastloc1" value="bottomleft"/>
+							<Label text="#SFUI_SteamToast_Location_BR" id="toastloc2" value="bottomright"/>
+							<Label text="#SFUI_SteamToast_Location_TR" id="toastloc3" value="topright"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_Enable_Console" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="con_enable">
+							<Label text="#GameUI_Yes" id="enableconsole0" value="1"/>
+							<Label text="#GameUI_No"  id="enableconsole1" value="0" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_Clock_Format" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_clock_24hour">
+							<Label text="#GameUI_Clock_24hr" id="clockformat0" value="1"/>
+							<Label text="#GameUI_Clock_12hr" id="clockformat1" value="0" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			                             
+
+			<Panel id="SettingsHudSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_hud_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+					                      
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_CrosshairStyle" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshairstyle">
+							<Label text="#GameUI_CrosshairStyleDefault" id="crosshairstyle0" value="0"/>
+							<Label text="#GameUI_CrosshairStyleDefaultStatic"	id="crosshairstyle1" value="1"/>
+							<Label text="#GameUI_CrosshairStyleClassic" id="crosshairstyle2" value="2"/>
+							<Label text="#GameUI_CrosshairStyleClassicDyn" id="crosshairstyle3" value="3"/>
+							<Label text="#GameUI_CrosshairStyleClassicStatic"	id="crosshairstyle4" value="4"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                      
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_CrosshairColor" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshaircolor">
+							<Label text="#GameUI_ColorGreen" id="crosshairclr0" value="1"/>
+							<Label text="#GameUI_ColorYellow"	id="crosshairclr1" value="2"/>
+							<Label text="#GameUI_ColorBlue" id="crosshairclr2" value="3"/>
+							<Label text="#GameUI_ColorLtBlue" id="crosshairclr3" value="4"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUDScaling_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_HUDScaling" max="0.95" min="0.5" displayprecision="2" convar="hud_scaling"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_Color_Info">
+						<Label text="#SFUI_Settings_HUD_Color" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hud_color">
+							<Label text="#SFUI_Settings_HUD_Color_0" value="0" id ="hudcolor0"/>
+							<Label text="#SFUI_Settings_HUD_Color_1" value="1" id ="hudcolor1"/>
+							<Label text="#SFUI_Settings_HUD_Color_2" value="2" id ="hudcolor2"/>
+							<Label text="#SFUI_Settings_HUD_Color_3" value="3" id ="hudcolor3"/>
+							<Label text="#SFUI_Settings_HUD_Color_4" value="4" id ="hudcolor4"/>
+							<Label text="#SFUI_Settings_HUD_Color_10" value="10" id ="hudcolor5"/>
+							<Label text="#SFUI_Settings_HUD_Color_5" value="5" id ="hudcolor6"/>
+							<Label text="#SFUI_Settings_HUD_Color_6" value="6" id ="hudcolor7"/>
+							<Label text="#SFUI_Settings_HUD_Color_7" value="7" id ="hudcolor8"/>
+							<Label text="#SFUI_Settings_HUD_Color_8" value="8" id ="hudcolor9"/>
+							<Label text="#SFUI_Settings_HUD_Color_9" value="9" id ="hudcolor10"/>
+							<Label text="#SFUI_Settings_HUD_Color_11" value="11" id ="hudcolor11"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                           
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_BackgroundAlpha_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_HUD_BackgroundAlpha" max="1.0" min="0.0" displayprecision="2" convar="cl_hud_background_alpha"/>
+					</TooltipPanel>
+
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_HUD_HealthAmmo_Style" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hud_healthammo_style">
+							<Label text="#SFUI_Settings_HUD_HealthAmmo_Style_0" value="0" id ="healthammostyle0"/>
+							<Label text="#SFUI_Settings_HUD_HealthAmmo_Style_1" value="1" id ="healthammostyle1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                          
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_Bomb_Position_Info">
+						<Label text="#SFUI_Settings_HUD_Bomb_Position" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hud_bomb_under_radar">
+							<Label text="#SFUI_Settings_HUD_Bomb_Position_I" value="0" id ="hudbombposition0"/>
+							<Label text="#SFUI_Settings_HUD_Bomb_Position_R" value="1" id ="hudbombposition1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                        
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_HUD_PCount_Pos" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hud_playercount_pos">
+							<Label text="#SFUI_Settings_HUD_PCount_Pos_T" value="0" id ="pcountpos0"/>
+							<Label text="#SFUI_Settings_HUD_PCount_Pos_B" value="1" id ="pcountpos1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_HUD_PCount_Style" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_hud_playercount_showcount">
+							<Label text="#SFUI_Settings_HUD_PCount_Style_A" value="0" id ="pcountstyle0"/>
+							<Label text="#SFUI_Settings_HUD_PCount_Style_B" value="1" id ="pcountstyle1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+				</Panel>
+			</Panel>
+
+
+			                              
+			<Panel id="SettingsTeamSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_team_section" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width">
+					<Panel class="horizontal-separator"/>
+
+					                 
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_ClanTag_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_clanid" id="ClanTagsEnum" >
+							                                                         
+							<Label text="DUMMY"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                                    
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_ClanTag_In_Death_Notice" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_show_clan_in_death_notice">
+							<Label text="#GameUI_Yes" value="1" id ="clantagdeathnotice0"/>
+							<Label text="#GameUI_No" value="0" id ="clantagdeathnotice1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					
+					                                    
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_Identify_Teammates" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_teamid_overhead_always">
+							<Label text="#GameUI_Off" value="0" id="clteamidoverheadalways0"/>
+							<Label text="#GameUI_Settings_ShowLocation" value="1" id="clteamidoverheadalways1"/>
+							<Label text="#GameUI_Settings_ShowLocationAndEquipment" value="2" id="clteamidoverheadalways2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                           
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_UniqueTeammateColors" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_teammate_colors_show">
+							<Label text="#SFUI_Settings_TeammateColorsShow" value="1" id ="playerteamclr0"/>
+							<Label text="#SFUI_Settings_TeammateColorsShowLetters" value="2" id ="playerteamclr1"/>
+							<Label text="#GameUI_No" value="0" id ="playerteamclr2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                         
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_LobbyDefaultAccess" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="lobby_default_privacy_bits1">
+							<Label text="#SFUI_Settings_LobbyAccessPrivate" value="0" id ="teamlobbyaccess0"/>
+							<Label text="#SFUI_Settings_LobbyAccessPublic" value="1" id ="teamlobbyaccess1"/>
+							<Label text="#SFUI_Settings_LobbyAccessNearby" value="4" id ="teamlobbyaccess2"/>
+							<Label text="#SFUI_Settings_LobbyAccessClan" value="2" id ="teamlobbyaccess3"/>
+							<Label text="#SFUI_Settings_LobbyAccessFGN" value="6" id ="teamlobbyaccess4"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			                                                  
+
+			<Panel id="SettingsSpectatorSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_spectator_section" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width">
+
+					                                      
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Spectator_Use_Raw_Number_Keys" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="spec_usenumberkeys_nobinds">
+							<Label text="#SFUI_SpectatorNumber_UseKeys" value="1" id ="specuserawnumberkeys0"/>
+							<Label text="#SFUI_SpectatorNumber_UseBinds" value="0" id ="specuserawnumberkeys1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                               
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_ScoreboardMouseEnable" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_scoreboard_mouse_enable_binding">
+							<Label text="#SFUI_WeaponSpecial" value="+attack2" id ="scoremouseenable0"/>
+							<Label text="#SFUI_Jump" value="+jump" id ="scoremouseenable1"/>
+							<Label text="#SFUI_Duck" value="+duck" id ="scoremouseenable2"/>
+							<Label text="#SFUI_Drop_Weapon" value="drop" id ="scoremouseenable3"/>
+							<Label text="#SFUI_Previous" value="lastinv" id ="scoremouseenable4"/>
+							<Label text="#SFUI_CommandRadio" value="radio1" id ="scoremouseenable4"/>
+							<Label text="#SFUI_Pickup_Use_Objects" value="+use" id ="scoremouseenable4"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                                               
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Spec_InterpCamera_Info">
+						<Label text="#SFUI_Settings_Spec_InterpCamera" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_obs_interp_enable">
+							<Label text="#GameUI_Yes" value="1" id ="interpolatecamwhenswitching0"/>
+							<Label text="#GameUI_No" value="0" id ="interpolatecamwhenswitching1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Spec_InterpCameraSpeed_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_Spec_InterpCameraSpeed" max="0.4" min="0.05" displayprecision="2" convar="cl_obs_interp_pos_rate"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_DisableCamermanWithUserControl_Info">
+						<Label text="#SFUI_Settings_DisableCamermanWithUserControl" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="spec_cameraman_disable_with_user_control">
+							<Label text="#GameUI_Yes" value="1" id ="disablecamwithusercontrol0"/>
+							<Label text="#GameUI_No" value="0" id ="disablecamwithusercontrol1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                           
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_FollowGrenadeKey_Info">
+						<Label text="#SFUI_Settings_FollowGrenadeKey" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_spec_follow_grenade_key">
+							<Label text="#SFUI_Settings_FollowGrenade_LeftAlt" value="0" id ="followgrenadekey0"/>
+							<Label text="#SFUI_Settings_FollowGrenade_LeftShift" value="1" id ="followgrenadekey1"/>
+							<Label text="#SFUI_Settings_FollowGrenade_ReloadKey" value="2" id ="followgrenadekey2"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                          
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_EnableAutomaticDeathcamReplay_Info">
+						<Label text="#SFUI_Settings_EnableAutomaticDeathcamReplay" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="spec_replay_autostart">
+							<Label text="#GameUI_Yes" value="1" id ="deathcamreplay0"/>
+							<Label text="#GameUI_No" value="0" id ="deathcamreplay1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+				</Panel>
+			</Panel>
+
+			                              
+
+			<Panel id="SettingsItemSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_items_section" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width">
+					                            
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#Cstrike_Auto_Apply_Graffiti_Info">
+						<Label text="#Cstrike_Auto_Apply_Graffiti" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_playerspray_auto_apply">
+							<Label text="#GameUI_Yes" value="1" id ="switchweaponpickup0"/>
+							<Label text="#GameUI_No" value="0" id ="switchweaponpickup1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                 
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#Cstrike_Switch_Weapon_on_Pick_Up" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_autowepswitch">
+							<Label text="#GameUI_Yes" value="1" id ="switchweaponpickup0"/>
+							<Label text="#GameUI_No" value="0" id ="switchweaponpickup1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                         
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_ViewmodelPos" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="viewmodel_presetpos">
+							<Label text="#SFUI_Settings_ViewmodelPosDesktop" value="1" id ="viewmodelpreset0"/>
+							<Label text="#SFUI_Settings_ViewmodelPosCouch" value="2" id ="viewmodelpreset1"/>
+							<Label text="#SFUI_Settings_ViewmodelPosClassic" value="3" id ="viewmodelpreset2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                              
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_Always_Show_Inventory" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_showloadout">
+							<Label text="#GameUI_Yes" value="1" id ="alwaysshowinv0"/>
+							<Label text="#GameUI_No" value="0" id ="alwaysshowinv1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					
+					                          
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Close_Buy_menu_on_purchase" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="closeonbuy">
+							<Label text="#GameUI_Yes" value="1" id ="closemenuonbuy0"/>
+							<Label text="#GameUI_No" value="0" id ="closemenuonbuy1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                          
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Open_Buy_menu_with_use" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_use_opens_buy_menu">
+							<Label text="#GameUI_Yes" value="1" id ="openbuywithuse0"/>
+							<Label text="#GameUI_No" value="0" id ="openbuywithuse1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+				
+			</Panel>
+			</Panel>
+
+			                               
+			<Panel id="SettingsRadarSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_radar_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+					                     
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_Radar_Size_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_HUD_Radar_Size" max="1.3" min="0.8" displayprecision="2" convar="cl_hud_radar_scale"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Radar_Rotate_Info">
+						<Label text="#SFUI_Settings_Radar_Rotate" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_radar_rotate">
+							<Label text="#GameUI_Yes" value="1" id ="radarrotation0"/>
+							<Label text="#GameUI_No" value="0" id ="radarrotation1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                   
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Radar_Scale_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_Radar_Scale" max="1.0" min="0.4" displayprecision="2" convar="cl_radar_scale"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                    
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Radar_Shape_Scoreboard_Info">
+						<Label text="#SFUI_Settings_Radar_Shape_Scoreboard" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_radar_square_with_scoreboard">
+							<Label text="#GameUI_Yes" value="1" id ="radarshapewithscore0"/>
+							<Label text="#GameUI_No" value="0" id ="radarshapewithscore1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+				</Panel>
+			</Panel> 
+
+			                                   
+			<Panel id="SettingsAccountConnSettings" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_account_conn_section" />
+				</Panel>
+					<Panel class ="top-bottom-flow full-width">
+					                                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_AccountPrivacy_Profile_Info">
+						<Label text="#SFUI_Settings_AccountPrivacy_Profile" class="half-width"/>
+						<CSGOSettingsEnumDropDown id="accountprivacydropdown" class="PopupButton White" convar="cl_accountprivacysetting1">
+							<Label text="#SFUI_Settings_AccountPrivacy_Profile_valDefault" value="1" id ="accountprivacy0"/>
+							<Label text="#SFUI_Settings_AccountPrivacy_Profile_valEnabled" value="3" id ="accountprivacy1"/>
+							<Label text="#SFUI_Settings_AccountPrivacy_Profile_valDisabled" value="2" id ="accountprivacy2"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+				</Panel>
+			</Panel>
+		</Panel>
+		<Panel class="content-controls-actions-bar">
+			<Button id="SettingsRestoreKbMouse"
+					class="PopupButton White"
+					onactivate="SettingsMenuShared.ShowConfirmReset( SettingsMenuShared.ResetControls, '#settings_reset_confirm_game_desc' );"
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'SettingsRestoreKbMouse', '#tooltip_reset_defaults' );"
+					onmouseout="UiToolkitAPI.HideTextTooltip();" >
+				<Image id="PermissionsSettingsImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/recent.svg" />
+				<Label text="#settings_reset" />
+			</Button>
+		</Panel>
+	</Panel>
+</root>
+

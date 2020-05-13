@@ -1,0 +1,179 @@
+
+
+.news-panel--store-container
+{
+	height: fill-parent-flow( .30 );
+	margin-bottom: 0px;
+}
+
+.store-panel__carousels
+{
+	width: 100%;
+	height: 100%;
+}
+
+.store-panel__carousel-container
+{
+	width: 100%;
+	height: 100%;
+
+	opacity: 1;
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel__hitblocker
+{
+	width: 48px;
+	height: 100%;
+}
+
+.store-panel__carousel-container.hidden
+{
+	opacity: 0;
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel__carousel-page
+{
+	vertical-align: center;
+	width: 100%;
+	height: fit-children;
+	padding: 0px 16px;
+	flow-children: right;
+}
+
+.store-panel__carousel__item
+{
+	width: 172px;
+	flow-children: down;
+	vertical-align: top;
+	transform-origin: 50% 50%;
+	brightness: 1;
+}
+
+.store-panel__carousel__item__image
+{
+	height: 160px;
+
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rolloff";
+}
+
+.store-panel__carousel__item__image:hover
+{
+	brightness: 1.2;
+	transform: scale3d( 1.05, 1.05, 1.05 );
+
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rollover";
+}
+
+.store-panel__carousel__item__stattrak
+{
+	horizontal-align: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	background-color: rgb(172, 146, 0);
+	text-align: center;
+	padding: 4px;
+	vertical-align: top;
+	margin-top: 8px;
+	margin-left: 8px;
+	border-radius: 3px;
+	vertical-align: top;
+	box-shadow: shadowOffset;
+}
+
+.store-panel__carousel__item__stattrak.hidden
+{
+	visibility: collapse;
+}
+
+.store-panel__carousel__item__name
+{
+	vertical-align: bottom;
+	margin-left: 8px;
+	font-size: 16px;
+	font-weight: medium;
+	horizontal-align: left;
+	text-overflow: ellipsis;
+	height: 20px;
+}
+
+.store-panel__carousel__item__name.saleprice
+{
+	font-size: 14px;
+	color: rgb(141, 141, 141);
+	font-weight: medium;
+	text-decoration: line-through;
+}
+
+.store-panel__carousel__item__name.price
+{
+	font-size: 14px;
+	margin-bottom: 0px;
+	color: positiveColor;
+}
+
+.store-panel__carousel-page.Focused
+{
+	opacity: 1;
+}
+
+.PreviouslyLeft.store-panel__carousel-page:not(.Focused)
+{
+	transform: translatex( -100% );
+	opacity: 0;
+} 
+
+.PreviouslyRight.store-panel__carousel-page:not(.Focused)
+{
+	transform: translatex( 100% );
+	opacity: 0;
+}
+
+.store-panel__carousel-page.store-panel__carousel-page__animations_enabled
+{
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel-connectingtogc
+{
+	visibility: collapse;
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.GameClientConnectingToGC .store-panel-connectingtogc
+{
+	visibility: visible;
+}
+
+.store-panel-connectingtogc-text
+{
+	color: white;
+	font-weight: medium;
+	font-size: 20px;
+
+	horizontal-align: center;
+
+	padding-top: 15px;
+	padding-bottom: 5px;
+	margin-top: 30%;
+}

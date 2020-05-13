@@ -1,0 +1,132 @@
+   
+	         
+	                                                                          
+  
+
+.hud-hint
+{
+	width: 750px;
+	flow-children: none;
+	opacity: 0;
+	horizontal-align: center;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( 0.1, #0000000d ), color-stop( 0.25, #00000099 ), color-stop( 0.50, #00000080 ), color-stop( 0.75, #00000099 ), color-stop( 0.9, #0000000d ), to( #00000000 ) );
+	                    
+}
+
+.hud-hint--visible
+{
+	animation-name: hud-hint-FadeIn;
+	animation-duration: 0.2s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+    animation-fill-mode: both;
+}
+
+@keyframes 'hud-hint-FadeIn' {
+  0% {
+    opacity: 0.0;
+    position: 0px 280px 0px;
+  }
+  100% {
+    opacity: 1.0;
+    position: 0px 140px 0px;
+  }
+}
+
+  
+                        
+ 
+ 
+  
+
+.hrTop { 
+	width: 100%;
+	height: 1px;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.05, #00000012 ) , color-stop(0.5, #00000080), color-stop( 0.95, #00000012 ), to( #00000000 ) );
+	vertical-align: top;
+}
+
+.hrBot { 
+	width: 100%;
+	height: 1px;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.05, #00000012 ) , color-stop(0.5, #00000080), color-stop( 0.95, #00000012 ), to( #00000000 ) );
+	vertical-align: bottom;
+}
+
+.hud-hint_top
+{
+	flow-children: right;
+	horizontal-align: center;
+	height: fit-children;
+}
+
+.hud-hint__icon
+{
+	width: 32px;
+	height: 32px;
+	margin: 0px 10px;
+	text-shadow-fast: 1px 1px #00000088;
+	                   
+	                  
+		                                             
+		                            
+	                    
+	  
+}
+
+.hud-hint--priority .hud-hint__icon
+{
+	visibility: collapse;
+}
+
+.priority-icon
+{
+	wash-color: #ea4141;
+	                            
+	visibility: collapse;
+}
+
+.hud-hint--priority .priority-icon 
+{
+	visibility: visible;
+}
+
+.hud-hint__text
+{
+	flow-children: down;
+	                                                                                          
+	vertical-align: middle;
+	horizontal-align: center;
+	height: fit-children;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.hud-hint__priority-label
+{
+	font-family: Stratum2;
+	horizontal-align: center;
+	                    
+	color: #ea4141;
+	font-size: 32px;
+	font-weight: bold;
+	visibility: collapse;
+	text-shadow-fast: 1px 1px #00000088;
+}
+
+.hud-hint--priority .hud-hint__priority-label
+{
+	visibility: visible;
+}
+
+.hud-hint__label
+{
+	horizontal-align: center;
+	height: fit-children;
+	color: #ffffff;
+	                    
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow-fast: 1px 1px #00000088;
+	                          
+}

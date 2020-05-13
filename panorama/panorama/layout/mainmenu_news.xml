@@ -1,0 +1,71 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/mainmenu_news.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/mainmenu_news.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="news-full-entry">
+			<Button class="news-entry">
+
+				                              
+
+				                                            
+				<CSGOBlurTarget id="NewsEntryBlurTarget" class="news-entry__image--blur" >
+					<Image id="NewsHeaderImage" class="news-entry__image" src="" scaling="stretch-to-fit-x-preserve-aspect" />
+				</CSGOBlurTarget>
+			</Button>
+		</snippet>
+
+		<snippet name="news-info">
+				<Panel class="news-entry__info">
+					<Label id="Date" html="true" class="news-entry__details stratum-font" text="" />
+					<Label id="Title" html="true" class="news-entry__title stratum-font" text="" />
+					<Label id="BodyText" html="true" class="news-entry__body" text="" />
+				</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="news-panel">
+		<Panel class="news-panel-navbar">
+			<Label id="Title" html="false" text="#SFUI_MainMenu_News_Title" />
+		</Panel>
+		<Panel id="NewsPanelLister" class="news-panel__list vscroll">
+			
+			                               
+		</Panel>
+	</Panel>
+</root>
+
+
+
+	                                             
+		                                         
+                                                            
+					                              
+						                                               
+                    		                                   
+                        		                                              
+                    		         
+							                           
+								                                                                       
+							        
+                		        
+                		                                                
+                    		                                   
+                        		                                                 
+                   			         
+						        
+					        
+				        
+				                             
+					                                                  	
+					                                                                                                                                                 
+				        
+		        
+	            

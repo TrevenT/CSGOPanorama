@@ -1,0 +1,42 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+    <include src="file://{resources}/styles/tests/paneldebug.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/mainmenu_tests.js" />
+	</scripts>
+
+	<Panel class="mainmenu-content__container" hittest="false">
+		<Panel class="content-navbar">
+			<Panel class="content-navbar__tabs">
+				<RadioButton selected="false" group="tests" onactivate="PanelTypeTab('CSGOWeaponSelectionView', 'square')" >
+					<Label text="WeaponSelection"/>
+				</RadioButton>
+        			<RadioButton selected="false" group="tests" onactivate="PanelTypeTab('CSGODemolitionProgressionView', 'wide')" >
+          				<Label text="DemolitionProgress"/>
+        			</RadioButton>
+       				<RadioButton selected="false" group="tests" onactivate="PanelTypeTab('CSGOTeamSelectMenu')" >
+					<Label text="TeamSelect"/>
+				</RadioButton>
+				<RadioButton selected="false" group="tests" onactivate="PanelTypeTab('CSGOHudVote')" >
+					<Label text="Vote"/>
+				</RadioButton>
+            
+                                                                                       
+					                       
+				              
+           
+        			<RadioButton selected="false" group="tests" onactivate="LayoutTab('anim')" >
+					<Label text="Anim"/>
+				</RadioButton>
+			</Panel>
+		</Panel>
+		<Panel class="top-bottom-flow full-width full-height">
+			<Panel id="TestContent" class="full-width full-height" style="padding:6%;">
+				<Label id="TestIntro" class="fontSize-xxl fontWeight-Bold horizontal-center vertical-center" text="Content Tests"/>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

@@ -1,0 +1,78 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/hudspecplayer.css" />
+	</styles>
+  
+	<CSGOHudSpecPlayer class="HudSpecplayerRoot" hittest="false" hittestchildren="false">
+                                                                    
+    
+                                                                                                           
+    <Panel id="ServerSponserLogosContainer">
+      <Image id="ServerSponserLogos" class="HudSpecplayer__SponserLogos" scaling="stretch-to-fit-preserve-aspect"/>
+    </Panel>
+    <Panel id="HotKeyLabelContainer" class="HudSpecplayer__key-hints">
+      <Label id="HotKeyLabel" class="HudSpecplayer__key-hints-text" html="true" text="#SFUIHUD_Spectate_Navigation_Arrows"/>
+    </Panel>
+    <Panel id="HudSpecplayer__Stats">
+                                                                                                                    
+      
+      <Panel class="HudSpecplayer__Stats_Header">
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_kills"/>
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_assists"/>
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_deaths"/>
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_kdr"/>
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_adr"/>
+        <Label class="HudSpecplayer__Stats_HeaderText" text="#Scoreboard_hsp"/>
+        <Label id="Stat_HeadX_1" class="HudSpecplayer__Stats_HeaderText" text=""/>
+        <Label id="Stat_HeadX_2" class="HudSpecplayer__Stats_HeaderText" text=""/>
+        <Label id="Stat_HeadX_3" class="HudSpecplayer__Stats_HeaderText" text=""/>
+        <Label id="Stat_HeadX_4" class="HudSpecplayer__Stats_HeaderText" text=""/>
+        <Label id="Stat_HeadX_5" class="HudSpecplayer__Stats_HeaderText" text=""/>
+      </Panel>
+      <Panel class="HudSpecplayer__Stats_Numbers">
+        <Label id="Stat_NumK" class="HudSpecplayer__Stats_NumberText" text="12"/>
+        <Label id="Stat_NumA" class="HudSpecplayer__Stats_NumberText" text="3"/>
+        <Label id="Stat_NumD" class="HudSpecplayer__Stats_NumberText" text="99"/>
+        <Label id="Stat_NumKDR" class="HudSpecplayer__Stats_NumberText" text="1.1"/>
+        <Label id="Stat_NumADR" class="HudSpecplayer__Stats_NumberText" text="83"/>
+        <Label id="Stat_NumHSP" class="HudSpecplayer__Stats_NumberText" text="56%"/>
+
+        <Label id="Stat_NumX_1" class="HudSpecplayer__Stats_NumberText" text=""/>
+        <Label id="Stat_NumX_2" class="HudSpecplayer__Stats_NumberText" text=""/>
+        <Label id="Stat_NumX_3" class="HudSpecplayer__Stats_NumberText" text=""/>
+        <Label id="Stat_NumX_4" class="HudSpecplayer__Stats_NumberText" text=""/>
+        <Label id="Stat_NumX_5" class="HudSpecplayer__Stats_NumberText" text=""/>
+        
+      </Panel>
+      
+      <Panel class="hud-spectator-bkg-BOT"/>
+    </Panel>
+    <Panel class="HudSpecplayerContainer">
+      
+      <Panel class="HudSpecplayerBG">
+        <Panel class="HudSpecplayerBG__Border">
+                                                          
+          <Panel id="DefaultTeamLogo" class="HudSpecplayerBG__DefaultLogo" />
+          <Panel id="TeamLogo" class="HudSpecplayerBG__TeamLogo" />
+          <Panel class="HudSpecplayerBG__TopStrip" />
+          <Panel class="HudSpecplayerBG__BottomStrip" />
+                                                                                                                            
+        </Panel>      
+        <Label id="PlayerName" class="HudSpecplayer__player-name" text="XXXXX"/>
+        <Panel id="ItemContainer" class="HudSpecplayer__ItemContainer">
+
+          <Panel id="ItemContainerBG" class="HudSpecplayer__ItemContainerBG">
+            <Image id="WeaponImage" class="HudSpecplayer__Item" scaling="stretch-to-fit-preserve-aspect" />
+          </Panel>
+          <Label id="WeaponName" html="true" class="HudSpecplayer__ItemName" text="XXXXX"/>
+        </Panel>
+      </Panel>
+      <Image id="PlayerAvatarDefault" class="HudSpecplayerRoot__avatar HudSpecplayerRoot__avatardefault" src="file://{images}/hud/teamcounter/teamcounter_alivebgCT.png" />
+      <CSGOAvatarImage id="PlayerAvatar" class="HudSpecplayerRoot__avatar"/>
+   
+    </Panel>
+    <ItemImage id="PlayerAvatarDisplayItem" class="HudSpecplayerRoot__avatardisplay" small="true" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" texturewidth="64" scaling="stretch-to-fit-preserve-aspect" />
+
+  </CSGOHudSpecPlayer>
+</root>

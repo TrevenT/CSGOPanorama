@@ -1,0 +1,15 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/huddamageindicator.css" />
+	</styles>
+
+	<CSGOHudDamageIndicator hittest="false" hittestchildren="false">
+		<Panel id="Damage" class="Damage">
+			<Panel id="DamageTop" class="Damage__Segment Damage__Segment--Top" />
+			<Panel id="DamageRight" class="Damage__Segment Damage__Segment--Right" />
+			<Panel id="DamageBottom" class="Damage__Segment Damage__Segment--Bottom" />
+			<Panel id="DamageLeft" class="Damage__Segment Damage__Segment--Left" />
+		</Panel>
+	</CSGOHudDamageIndicator>
+</root>

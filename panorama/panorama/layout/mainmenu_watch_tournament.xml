@@ -1,0 +1,194 @@
+<root>
+    <styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+        <include src="file://{resources}/styles/mainmenu_watch.css" />
+        <include src="file://{resources}/styles/mainmenu.css" />
+	</styles>	
+	<scripts>		
+		<include src="file://{resources}/scripts/matchlist.js" />
+        <include src="file://{resources}/scripts/matchinfo.js" />
+        <include src="file://{resources}/scripts/watchtile.js"/>
+        <include src="file://{resources}/scripts/mainmenu_watch_tournament.js" />
+	</scripts>
+
+                                      
+    <snippets>
+		<snippet name="tournament_pickem_title_text">
+            <Panel>
+                <Panel id="pickem-tournament-text" class= "pickem-playoff-text">
+                    <Panel id="background-color"/>
+                    <Panel class="left-right-flow">
+                        <Panel id= "pickem-playoff-description" class="top-bottom-flow">
+                            <Label id = "title" class="fontSize-l fontWeight-Bold"/>
+                            <Panel id="bullets" class="top-bottom-padding">
+                                <Label text="#WatchMenu_Tournament_BulletPoint" class="fontSize-ssm" html="true"/>
+                            </Panel>
+                        </Panel>
+
+                        <Panel id="pickem-right-panel">
+                            <Panel id="background-image" src ="file://{images}/tournament/Krawkow.jpeg"/>
+                            <Panel id="text" class="top-bottom-flow full-width">
+                                
+                                <Panel class="left-right-flow">
+                                    <Panel id="info" class="top-bottom-padding">
+                                        <Image id = "info-icon" src ="file://{images}/icons/ui/info.svg" texturewidth="50" textureheight="50"/>
+                                    </Panel>
+                                    <Label text="This Pick'Em Challenge has Ended." class="top-bottom-padding"/>
+                                </Panel>
+                                
+                                <Panel id="trophy" class="left-right-flow">
+
+                                    <Panel id="trophy-status">
+                                        <Panel id="background-trophy" class="trophy-bg"/>
+                                        <Panel class="left-right-flow">
+                                            <Panel>
+                                                <Panel id="left" class="top-bottom-flow">
+                                                    <Label text="Pick'Em Trophy Status" class="fontWeight-Bold"/>
+                                                    <Panel class="padding top-bottom-flow">
+                                                        <Label id = "total-points" text="Your Total Points: -" class="fontSize-ssm"/>
+                                                        <Label id = "pointsAwayFromNextTrophy" text="25 away from Bronze" class="fontSize-ssm"/>
+                                                    </Panel>
+                                                    <Button class="FlatButton" >
+                                                        <Label text="Pick'Em LeaderBoard" class="fontSize-ssm"/>
+                                                    </Button>
+                                                </Panel>	
+                                            </Panel>
+                                            <Panel id="right-side">
+                                                <Image id = "trophy-icon" class="vertical-center horizontal-center icons" src ="file://{images}/icons/ui/trophy.svg" texturewidth="50" textureheight="50"/>
+                                            </Panel>
+                                        </Panel>
+                                    </Panel>
+
+                                    <Panel id="get-items-panel">
+                                        <Panel id="background" class="green-background"/>
+                                        <Panel id="right" class="top-bottom-flow">
+                                            <Label text="50% of the proceeds from each sale support the players and organizations." class="fontSize-ssm padding"/>
+                                            <Button id ="items-button" class="FlatButton" >
+                                                <Label text="Get the Items!" class="fontSize-ssm"/>
+                                            </Button>
+                                            <Button text="Get the Items"/>
+                                        </Panel>
+                                    </Panel>
+                                </Panel>
+                            </Panel>
+                        </Panel>
+                    </Panel>
+                </Panel>
+            </Panel>
+		</snippet>
+
+        <snippet name = "tournament-navbar-text">
+            <Panel>
+                <Label id="navbar-header-text" class="" text="#CSGO_Fantasy_PickEm_Groups_Title"/>
+            </Panel>
+        </snippet>
+
+        <snippet name="tournament-spinner">
+            <Panel class="full-width full-height">
+                <Panel id="Spinner" class="Spinner horizontal-center vertical-center"/>
+                <Label id="Message" class="Info-Message horizontal-center"/>
+            </Panel>
+        </snippet>
+
+	</snippets>
+
+
+<Panel class="full-width full-height top-bottom-flow" useglobalcontext="true">
+    <Panel class="content-navbar content-navbar--short">
+                          
+        <Panel class="content-navbar__extra-buttons">	
+            <Button class="IconButton" >
+                <Image src = "file://{images}/icons/ui/back.svg" onactivate="mainmenu_watch_tournament.CloseSubMenu();"/>
+            </Button>
+        </Panel>
+
+        <Label id="id-tournament-title" class="mainmenu-content--popuptab__title" text="{s:tournament_name}"/>
+    </Panel>
+    <Panel class="content-navbar content-navbar--short">
+        
+                                                                                                                                                                             
+        <Panel id = "content-navbar__tabs" class="content-navbar__tabs content-navbar__tabs--small"/>
+    </Panel>
+    
+    <Panel class="full-width full-height">
+        <Panel id="JsTournamentMatches" class="TournamentMenu TournamentMenu--Hide">
+             <Panel class="full-width full-height left-right-flow WatchMenu" >
+                <Panel class="no-flow full-width full-height">
+                    <Panel class="left-right-flow full-width full-height">
+                        <Panel id="id-match-list-container" class="MatchList subsection-content__background-color">
+                            <DropDown id="id-match-list-selector" class="White MatchList--Selector hide" menuclass="DropDownMenu">
+                            </DropDown>
+                            <Panel id="JsMatchList" class="MatchList MatchList-scroll">
+                                                                            
+                            </Panel>
+                        </Panel>
+                        <Panel id="Info" class="subsection-content__background-color full-width full-height">
+                                                                        
+                            <Panel class="full-width full-height no-flow">
+                                <Panel id="id-match-spinner" class="Spinner horizontal-center vertical-center hide"/>
+                                <Panel id="id-match-message-container" class="left-right-flow horizontal-center vertical-center hide">
+                                    <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                                    <Label id="id-match-message" class="Info-Message horizontal-center"/>
+                                </Panel>
+                            </Panel>
+                        </Panel>
+                    </Panel>
+                    <Panel class="full-width full-height no-flow" hittest="false" acceptsfocus="false" mousetracking="false">
+                        <Panel id="id-list-spinner" class="Spinner horizontal-center vertical-center hide"/>
+                        <Panel id="id-list-message-container" class="left-right-flow horizontal-center vertical-center hide">
+                            <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                            <Label id="id-list-message" class="Info-Message horizontal-center"/>
+                        </Panel>
+                    </Panel>
+                </Panel>
+            </Panel>
+        </Panel>
+        <Panel id="JsPickemGroup" class="TournamentMenu TournamentMenu--Hide">
+            <Panel id="Info" class="subsection-content__background-color full-width full-height">
+                <Panel class="full-width full-height no-flow">
+                    <Panel id="id-match-message-container" class="left-right-flow horizontal-center vertical-center">
+                        <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                        <Label id="id-match-message" class="Info-Message horizontal-center" text="#WatchMenu_PickEm_ComingSoon"/>
+                    </Panel>
+                </Panel>
+            </Panel>
+        </Panel>
+        <Panel id="JsPickemPlayoffs" class="TournamentMenu TournamentMenu--Hide">
+            <Panel id="Info" class="subsection-content__background-color full-width full-height">
+                <Panel class="full-width full-height no-flow">
+                    <Panel id="id-match-message-container" class="left-right-flow horizontal-center vertical-center">
+                        <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                        <Label id="id-match-message" class="Info-Message horizontal-center" text="#WatchMenu_PickEm_ComingSoon"/>
+                    </Panel>
+                </Panel>
+            </Panel>
+        </Panel>
+        <Panel id="JsPickemFantasy" class="TournamentMenu TournamentMenu--Hide">
+            <Panel id="Info" class="subsection-content__background-color full-width full-height">
+                <Panel class="full-width full-height no-flow">
+                    <Panel id="id-match-message-container" class="left-right-flow horizontal-center vertical-center">
+                        <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                        <Label id="id-match-message" class="Info-Message horizontal-center" text="#WatchMenu_PickEm_ComingSoon"/>
+                    </Panel>    
+                </Panel>
+            </Panel>
+        </Panel>
+        <Panel id="JsTeamPickem" class="TournamentMenu TournamentMenu--Hide">
+            <Panel id="Info" class="subsection-content__background-color full-width full-height">
+                <Panel class="full-width full-height no-flow">
+                    <Panel id="id-match-message-container" class="left-right-flow horizontal-center vertical-center">
+                        <Image class="info-icon" src="file://{images}/icons/ui/info.svg" texturewidth="32" textureheight="32"/>
+                        <Label id="id-match-message" class="Info-Message horizontal-center" text="#WatchMenu_PickEm_ComingSoon"/>
+                    </Panel>
+                </Panel>
+            </Panel>
+        </Panel>
+    </Panel>
+
+    
+                
+                                                                                                                                                                                                  
+             
+       
+</Panel>
+</root>

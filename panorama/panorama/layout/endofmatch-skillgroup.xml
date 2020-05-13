@@ -1,0 +1,59 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/endofmatch-skillgroup.css" />
+		<include src="file://{resources}/styles/endofmatch-podium.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/endofmatch-skillgroup.js" />
+	</scripts>
+
+
+	<snippets>
+
+		                      
+		<snippet name="eom-no-skillgroup">
+			<Panel>
+				<Label text="#eom_CompWins_No_Skill_Group" />
+			</Panel>
+		</snippet>
+
+		                               
+		<snippet name="eom-skillgroup-expired">
+			<Panel>
+				<Label text="#eom_CompWins_Skill_Group_Expired" />
+			</Panel>
+		</snippet>
+
+		                   
+		<snippet name="eom-skillgroup">
+			<Panel>
+				<Label id="id-eom-skillgroup--new__label" class="hidden new-skillgroup" text="#eom_skillgroup_up_string" />
+				<Panel id="id-eom-skillgroup--new__image-and-label">
+					                                                
+
+					<ItemPreviewPanel id="id-eom-skillgroup-model"
+									class="eom-rank__model hidden"
+									manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+									item=""
+									mouse_rotate="true"/>
+					<Panel style="flow-children:none;">
+						<Label text="{s:skillgroup_name}" class="metallic"/>
+						<Label text="{s:skillgroup_name}" class="sheen"/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+
+	<CSGOEndOfMatchSkillgroupPanel class="eom-skillgroup" useglobalcontext="true">
+		<Panel id="id-eom-skillgroup" />
+		<Panel id="id-eom-skillgroup__wins">
+			<Label id="id-endofmatch-comp-wins-value" text="#eom_CompWins_count" />
+			<Image src="file://{images}/icons/ui/trophy.svg"/>
+			<Label id="id-endofmatch-comp-wins-title" text="#eom_CompWins" />
+		</Panel>	
+	</CSGOEndOfMatchSkillgroupPanel>
+	
+</root>

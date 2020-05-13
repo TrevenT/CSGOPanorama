@@ -1,0 +1,459 @@
+                                                                               
+                                                                     
+                                                                               
+
+.content-navbar__extra-buttons .PopupButton.hidden
+{
+	visibility: collapse;
+}
+
+                                                                               
+                                                                           
+                                                                               
+
+.map-selection-list
+{
+	width: fit-children;
+	height: fit-children;
+	flow-children: right-wrap;
+	overflow: clip scroll;
+	opacity: 1;
+	transform: translatex( 0px );
+	visibility: visible;
+	horizontal-align: center;
+
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-list-all
+{
+	width: 100%;
+	height: fill-parent-flow ( 1 ); 
+	flow-children: none;
+	horizontal-align: center;
+
+	padding: 0px 64px;
+
+	background-color: contentPanelBackground;
+}
+
+.map-selection-list RadioButton
+{
+	flow-children: none;
+}
+
+.map-selection-btn
+{
+	width: 224px;
+	height: width-percentage(142%);
+	margin: 24px 28px 24px 0px;
+	border: 0px solid gray;
+	box-shadow: shadowOffset;
+	tooltip-position: bottom;
+	brightness: .5;
+
+	transition-property: border, box-shadow, brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn--large
+{
+	width: 224px;
+	height: fit-children;
+}
+
+.map-selection-btn--wide
+{	                                       
+	brightness:1.0;
+	padding: 0px;
+	width: 430px;
+	height: width-percentage(56%);
+	margin: 20px;
+}
+
+.map-selection-btn__screenshot
+{
+	width: 100%;
+	height: 100%;
+	pre-transform-scale2d: 1, 1;
+	
+	background-repeat: no-repeat;
+
+	transition-property: opacity, pre-transform-scale2d;
+	transition-duration: 2s, .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn:enabled:Hover .map-selection-btn__screenshot
+{
+	pre-transform-scale2d: 1.02, 1.02;
+
+	transition-property: opacity, pre-transform-scale2d;
+	transition-duration: 2s, .25s;
+	transition-timing-function: ease-in-out;
+	
+	sound: "UIPanorama.submenu_contents_rollover";
+
+}
+
+.map-selection-btn:Hover .Focused
+{
+	sound: "UIPanorama.submenu_contents_rollover";
+}
+
+.map-selection-btn:selected .map-selection-btn__screenshot
+{
+	pre-transform-scale2d: 1.2, 1.2;
+
+	transition-property: opacity, pre-transform-scale2d;
+	transition-duration: 2s, .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn:selected
+{
+	border: 7px solid white;
+	box-shadow: white 0px 0px 4px 0px;
+	brightness: 1.0;
+
+	transition-property: border, box-shadow, brightness;
+	transition-duration:.25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn__gradient
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #00000020 ), to( #000000ee ) );
+}
+
+.map-selection-btn-container
+{
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.map-selection-btn-container--large
+{
+	height: fit-children;
+}
+
+.map-selection-btn__top-icon-row
+{
+	margin-left: 8px;
+	margin-top: 8px;
+	width: 100%;
+	height: 32px;
+	flow-children: right;
+}
+
+.map-selection-btn__groupmap-icons
+{
+	width: 92px;
+	height: fit-children;
+	horizontal-align: middle;
+	flow-children: down;
+	margin: 0px 0px 20px 0px;
+}
+
+.map-selection-btn__map-icon
+{
+	horizontal-align: middle;
+	width: 116px;
+	height: 116px;
+}
+
+.map-selection-btn__map-icon-small
+{
+	width: 72px;
+	height: 72px;
+	margin: 4px;
+}
+
+.map-selection-list:disabled .map-selection-btn
+{
+	opacity: .5;
+	brightness: .3;
+}
+
+.map-selection-list:disabled .map-selection-btn .map-selection-btn__screenshot,
+.map-selection-list:disabled .map-selection-btn:selected .map-selection-btn__map-icon
+{
+	pre-transform-scale2d: 1, 1;
+	opacity: 1;
+}
+
+.map-selection-list:disabled .map-selection-btn:selected 
+{
+	border: 7px solid rgb(148, 147, 147);
+	box-shadow: shadowOffset;
+	brightness: 1;
+	opacity: 1;
+}
+
+.map-selection-info
+{
+	flow-children: up;
+	vertical-align: bottom;
+	width: 100%;
+	height: fit-children;
+	margin-bottom: 24px;
+}
+
+.map-selection-info__map-name
+{
+	width: 100%;
+	height: 34px;
+	vertical-align: bottom;
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+.map-selection-info__wait-time-block
+{
+	height: fit-children;
+	flow-children: right;
+	horizontal-align: center;
+	vertical-align: bottom;
+	visibility: visible;
+}
+
+.map-selection-info__wait-time-block.Hidden
+{
+	visibility: collapse;
+}
+
+.map-selection-info__wait-icon
+{
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+.map-selection-btn .RadioBox,
+{
+	visibility: collapse;
+}
+
+.map-selection-btn .TickBox
+{
+	-s2-mix-blend-mode: screen;
+}
+
+.map-selection-list:disabled .map-selection-btn .TickBox
+{
+	visibility: collapse;
+}
+
+.map-selection-list.Hidden
+{
+	opacity: 0;
+	transform: translatex( 200px );
+
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn CarouselNav
+{
+	z-index: 3;
+}
+
+.map-selection-btn__screenshot.Focused
+{
+	opacity: 1.0;
+	transform: translatex( 0px );
+	
+	transition-property: opacity, saturation, contrast, pre-transform-scale2d;
+	transition-duration: 2s, .25s, .25s, .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn__screenshot.LeftOfFocus1,
+.map-selection-btn__screenshot.LeftOfFocus2,
+.map-selection-btn__screenshot.LeftOfFocus3,
+.map-selection-btn__screenshot.LeftOfFocus4,
+.map-selection-btn__screenshot.LeftOfFocus5,
+.map-selection-btn__screenshot.LeftOfFocus6,
+.map-selection-btn__screenshot.LeftOfFocus7,
+.map-selection-btn__screenshot.LeftOfFocus8,
+.map-selection-btn__screenshot.LeftOfFocus9,
+.map-selection-btn__screenshot.LeftOfFocus10,
+.map-selection-btn__screenshot.LeftOfFocus11,
+.map-selection-btn__screenshot.LeftOfFocus12
+{		
+	opacity: 1;
+
+	transition-property: opacity;
+	transition-duration: 2s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection-btn__screenshot.RightOfFocus1,
+.map-selection-btn__screenshot.RightOfFocus2,
+.map-selection-btn__screenshot.RightOfFocus3,
+.map-selection-btn__screenshot.RightOfFocus4,
+.map-selection-btn__screenshot.RightOfFocus5,
+.map-selection-btn__screenshot.RightOfFocus6,
+.map-selection-btn__screenshot.RightOfFocus7,
+.map-selection-btn__screenshot.RightOfFocus8,
+.map-selection-btn__screenshot.RightOfFocus9,
+.map-selection-btn__screenshot.RightOfFocus10,
+.map-selection-btn__screenshot.RightOfFocus11,
+.map-selection-btn__screenshot.RightOfFocus12
+{		
+	opacity: 0.0;
+
+	transition-property: opacity;
+	transition-duration: 2s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn
+{
+	horizontal-align: right;
+	vertical-align: center;
+	box-shadow: -2px -2px 12px 4px #0000009d;
+	transform: scale3D( 1, 1, 1 );
+
+	background-repeat: repeat;
+	background-position: 38% 50%;
+	background-size: 100%;
+	background-image: url( "file://{resources}/videos/gobutton.webm" );
+
+	transition-property: opacity, box-shadow, wash-color, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn.pressed
+{
+	                           
+	opacity: 0;
+	transform: scale3D( 2, 2, 2 );
+
+	transition-property: opacity, box-shadow, wash-color, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn.hidden
+{
+	opacity: 0;
+	visibility: collapse;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn Label
+{
+	margin: 2px 32px;
+	min-width: 256px;
+	font-family: stratum2Font;
+	text-transform: uppercase;
+	color: gradient( linear, 0% 0%, 100% 0%, from( positiveColor ), to( positiveColor) );
+	font-weight: bold;
+	padding-top: 3px;
+	letter-spacing: 4px;
+	font-size: 32px;
+	text-align: center;
+	text-shadow: 2px 2px 2px #000000;
+}
+
+.play-menu__playbtn:hover
+{
+	box-shadow: 0px 0px 12px 0px #5abd5d69;
+
+	transition-property: opacity, box-shadow, wash-color, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn--stopsearch
+{
+	transform: translateY( 0% );
+	opacity: 1;
+	wash-color: negativeColor;
+	background-image: none;
+	background-color: #424242;
+	
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__playbtn--stopsearch Label
+{
+	font-size: 32px;
+	text-shadow: none;
+	color:white;
+}
+
+.play-menu__playbtn--stopsearch:hover
+{
+	box-shadow: 0px 0px 12px 0px negativeColor;
+}
+
+.play-menu__playbtn--stopsearch:disabled
+{
+	transform: translateY( 100% );
+	opacity: 0;
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu__botdifficulty.hidden
+{
+	visibility: collapse;
+}
+
+.map-selection-no-subscriptions-label
+{
+    padding-top: 150px;
+    padding-left: 200px;
+    padding-right: 200px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.workshop-search-textentry
+{
+	height: 54px;
+	width: 512px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	padding-top: 10px;
+	font-size: 20px;
+	color: white;
+	border-radius: 0px;
+	border: 0px solid rgba(255, 255, 255, 1);
+	border-bottom: 2px solid rgba(255, 255, 255, 1);
+
+	transition-property: border;
+	transition-duration: 0.2s;
+}
+
+.workshop-search-textentry:focus
+{
+	border-bottom: 6px solid rgba(255, 255, 255, 1);
+	box-shadow: none;
+
+	transition-property: border;
+	transition-duration: 0.2s;
+}
+
+.workshop-search-textentry #PlaceholderText
+{
+	color: rgb(221, 221, 221);
+	font-size: 20px;
+	height: 64px;
+}

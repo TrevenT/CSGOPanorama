@@ -1,0 +1,61 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/popups/popups_shared.css" />
+		<include src="file://{resources}/styles/popups/popup_prime_status.css" />
+	</styles>
+	
+	<scripts>
+		<include src="file://{resources}/scripts/popups/popup_prime_status.js" />
+	</scripts>
+
+	<snippets>
+	</snippets>
+
+	<PopupCustomLayout class="PopupPanel Hidden"
+					useglobalcontext="true"
+					popupbackground="dim" 
+					onload="PopupPrimeStatus.Init();">
+		<Panel class="prime-status__title PopupTitle">
+			<Image class="title_image" texturewidth="-1" textureheight="80" src="file://{images}/icons/ui/prime.svg" />
+			<Label text="#SFUI_Elevated_Status_Title" />
+		</Panel>
+		<Panel class="full-width top-bottom-flow">
+			<Panel class="prime-status__desc_container vscroll" disablefocusonmousedown="true">
+				<Panel class="prime-status__desc" >
+					<Label id="PrimeStatusDesc" text="" />
+				</Panel>
+				<Panel class="prime-status__faq">
+					<Panel class="horizontal-separator"/>
+					<Label class="faq_title fontWeight-Bold" text="#SFUI_Elevated_Status_Faq_Title" />
+				             
+				                                      
+					<Label id="PrimeStatusFaq" class="faq_desc" html="true" text="" />
+				</Panel>
+			</Panel>
+			<Panel class="prime-status__status_container" >
+				<Panel class="horizontal-separator"/>
+				<Panel id="PrimeStatus" class="prime-status__status">
+					<Image id="PrimeStatusImage" texturewidth="-1" textureheight="18" src="file://{images}/icons/ui/info.svg" />
+					<Label id="PrimeStatusText" html="true" text="" />
+				</Panel>
+			</Panel>
+		</Panel>
+		<Panel id="ButtonPanel" class="prime-status__buttons">
+			<Panel id="LoadingProgress" class="prime-status__loading">
+				<Panel id="Spinner" class="Spinner SpinnerVisible"/>
+				<Label id="LoadingText" html="true" text="" />
+			</Panel>
+			<Button id="ActivateButton" class="PopupButton">
+				<Label id="ActivateButtonText" />
+			</Button>
+			<Button id="CheckStatusButton" class="PopupButton">
+				<Image id="CheckStatusButtonImage" texturewidth="-1" textureheight="14" src="file://{images}/icons/ui/info.svg" />
+				<Label id="CheckStatusButtonText" />
+			</Button>
+			<Button id="CloseButton" class="PopupButton" onactivate="UIPopupButtonClicked()">
+				<Label id="CloseButtonText" text="#vgui_close" />
+			</Button>
+		</Panel>
+	</PopupCustomLayout>
+</root>

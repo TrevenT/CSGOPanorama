@@ -1,0 +1,15 @@
+<root>
+	<styles>
+    <include src="file://{resources}/styles/csgostyles.css" />
+    <include src="file://{resources}/styles/settings/settings_slider.css" />
+	</styles>
+  
+  <CSGOSettingsSlider>
+      <Panel class="left-right-flow vertical-center">
+      <Label class="" id="Title" />
+      <Slider class="HorizontalSlider" direction="horizontal" id="Slider"/>
+      <Label id="Value" />
+      </Panel>
+  </CSGOSettingsSlider>
+  
+</root>

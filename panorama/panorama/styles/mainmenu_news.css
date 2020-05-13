@@ -1,0 +1,263 @@
+
+                                                  
+.news-panel
+{
+	                                           
+	
+	width: 100%;
+	height: fill-parent-flow( .75 );
+	background-color: blurBackgroundColor;
+	margin-bottom: 16px;
+	flow-children: down;
+
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-panel-navbar
+{
+	height: 38px;
+	flow-children: right;
+	width: 100%;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+	margin: 0px 16px;
+}
+
+.news-panel-navbar .RadioBox
+{
+	visibility: collapse;
+}
+
+.news-panel-navbar-btn
+{
+	height: 100%;
+	width: fit-children;
+	margin: 0px 24px 0px 0px;
+	vertical-align: center;
+	background-color: gradient( linear, 0% 100%, 0% 99%, from( white ), color-stop( 0, #ffffff00 ), to( #ffffff00 ) );
+}
+
+.news-panel-navbar Label
+{
+	margin: 0px;
+	font-size: 18px;
+	font-weight: medium;
+	color: white;
+	vertical-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.news-panel__list
+{
+	flow-children: down;
+	width: 100%;
+	padding: 0px 16px;
+	margin-bottom: 16px;
+	height: fit-children;
+}
+
+.news-entry
+{
+	width: 100%;
+	height: fit-children;
+	margin: 0px 8px 8px 8px;
+	border: 1px solid rgba(0, 0, 0, 0.363);
+	box-shadow: fill #000000aa 0px 0px 8px 4px;
+}
+
+.news-entry:hover .news-entry__image
+{
+	transform: scale3d( 1.05, 1.05, 1.05 );
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-entry__image
+{
+	width: 671px;
+	vertical-align: top;
+	horizontal-align: middle;
+
+	transition-property: transform, height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-entry__image--blur
+{
+	blur: fastgaussian( 8, 8, 5);
+}
+
+.news-entry__info
+{
+	flow-children: down;
+	vertical-align: bottom;
+	z-index: 3;
+	padding: 24px;
+	background-color:rgba(0, 0, 0, 0.5);
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-entry:hover .news-entry__info
+{
+	background-color:rgba(0, 0, 0, 0.2);
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-entry__title
+{
+	margin-top: 8px;
+	font-size: 30px;
+	font-weight: Bold;
+	color:white;
+}
+
+.news-entry__body
+{
+	margin-top: 8px;
+	font-size: 16px;
+	color:white;
+	max-height: 48px;
+	text-overflow: ellipsis;
+}
+
+.news-entry__details
+{
+	font-size: 14px;
+	color:white;
+	text-transform: uppercase;
+	font-weight: Bold;
+}
+
+  
+                                 
+
+        
+ 
+	            
+	             
+	                    
+ 
+
+           
+ 
+	            
+	             
+	                   
+	             
+	                             
+	                             
+	                         
+	                                                                                                                     
+ 
+
+               
+ 
+	             
+	             
+	                         
+	                       
+	                   
+ 
+
+                                
+ 
+	                       
+	                     
+	           
+	             
+	                       
+ 
+
+                                 
+ 
+	                        
+	                    
+	          
+	             
+	                       
+ 
+
+            
+ 
+	            
+	             
+	                               
+	               
+	                            
+	                                                  
+	                         
+	                                        
+	                          
+	                         
+	                       
+	                    
+	                    
+ 
+
+                  
+ 
+	              
+ 
+                   
+ 
+	            
+	             
+	                      
+	              
+	                                
+	                         
+	                                   
+	                       
+ 
+
+                         
+ 
+	              
+	                                
+	                          
+	                                        
+ 
+
+              
+ 
+	            
+	            
+	                       
+	                         
+	                    
+ 
+
+              
+ 
+	            
+	             
+	                         
+	                       
+
+ 
+
+                                 
+ 
+	            
+	             
+	                                                                                        
+	           
+ 
+  
+
+                           
+ 
+	                         
+	                       
+	                    
+   

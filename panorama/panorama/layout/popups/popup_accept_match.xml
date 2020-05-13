@@ -1,0 +1,58 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/popups/popup_accept_match.css" />
+	</styles>
+	
+	<scripts>
+		<include src="file://{resources}/scripts/common/formattext.js" />
+		<include src="file://{resources}/scripts/popups/popup_accept_match.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="AcceptMatchPlayerSlot">
+			<Panel class="accept-match__slots__player"/>
+		</snippet>
+	</snippets>
+
+	<PopupCustomLayout class="accept-match Hidden" 
+					popupbackground="blur" 
+					onload="PopupAcceptMatch.Init();">
+					
+		<Panel class="accept-match">
+
+			<Panel class="accept-match__bg">
+				<Panel class="accept-match__map">
+					<Image id="AcceptMatchMapImage" class="accept-match__map__image" src="" scaling="stretch-to-fit-preserve-aspect"/>
+				</Panel>
+
+				<Panel id="AcceptMatchDataContainer" class="accept-match__data">
+					<Label class="accept-match__data__title" text="#match_ready_title"/>
+					<Panel class="accept-match__seperator"/>
+					<Panel class="accept-match__data__details">
+						<Image id="AcceptMatchModeIcon" class="accept-match__top-icon" src="file://{images}/icons/ui/competitive.svg" textureheight="24" texturewidth="24"/>
+						<Label  id="AcceptMatchModeMap" class="accept-match__data__title--details" text=""/>
+					</Panel>
+				</Panel>
+
+				<Panel class="accept-match__slots-count"> 
+					<Panel id="AcceptMatchSlots" class="accept-match__slots hidden">
+
+						                                                              
+
+					</Panel>
+					<Label  id="AcceptMatchPlayersAccepted"  class="accept-match__data__title--details" text=""/>
+				</Panel>
+
+				<Button id="AcceptMatchBtn" class="FlatButton Positive hidden" onactivate="PopupAcceptMatch.OnAcceptMatchPressed();">
+					<Label  id="" text="#match_ready_accept"/>
+				</Button>
+
+				<Panel id="AcceptMatchCountdown" class="accept-match__data__time hidden">
+					<Label text="" class="accept-match__data__time__text"/>
+				</Panel>
+
+			</Panel>
+		</Panel>
+	</PopupCustomLayout>
+</root>

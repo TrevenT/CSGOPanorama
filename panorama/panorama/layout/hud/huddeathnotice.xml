@@ -1,0 +1,48 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/huddeathnotice.css" />
+	</styles>
+
+	<snippets>
+		<snippet name="DeathNotice">
+			<Panel class="DeathNotice">
+				<Panel class="DeathNoticeBGBorder">
+					<Panel class="DeathNoticeBG" />
+					<Image class="DeathNoticeBGGradient" src="file://{images}/hud/deathnotice/radialgradient.png" scaling="stretch" />
+				</Panel>
+				<Panel class="DeathNoticeContent">
+					                     
+					<Image id="Revenge" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/revenge.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                        
+					<Image id="Domination" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/domination.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                                        
+					<Label id="Attacker" html="true" />
+					                                         
+					<Panel id="AssistParent">
+						<Label text="+" />
+						<Label id="Assister" html="true" />
+					</Panel>
+					                                      
+					<Image id="Weapon" class="DeathNoticeIcon" scaling="stretch-to-fit-preserve-aspect" />
+					                       
+					<Image id="Penetrate" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/penetrate.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                      
+					<Image id="HeadShot" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/icon_headshot.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                     
+					<Image id="Suicide" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/icon_suicide.svg" scaling="stretch-to-fit-preserve-aspect" />
+					                                       
+					<Label id="Victim" html="true" />
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<CSGOHudDeathNotice hittest="false">
+
+		<Panel id="VisibleNotices">
+			                                                     
+		</Panel>
+
+	</CSGOHudDeathNotice>
+</root>

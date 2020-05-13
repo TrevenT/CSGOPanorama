@@ -1,0 +1,28 @@
+<root>
+	<styles>		
+		<include src="file://{resources}/styles/debugger.css" />
+	</styles>
+
+	<snippets>
+		<snippet name="PanelStart">
+			<Panel class="DebugLabelPanelRow" acceptsfocus="true">
+				<Panel id="Indent">
+					<ToggleButton id="DebugLabelToggle" selected="true" />					
+				</Panel>
+				<Label id="DebugLayoutPanelOpen" acceptsfocus="true" />
+				<Label id="StyleLink" class="StyleLink" />
+			</Panel>
+		</snippet>
+
+		<snippet name="PanelClose">
+			<Panel class="DebugLabelPanelRow" acceptsfocus="true">
+				<Panel id="Indent" />
+				<Label id="DebugLayoutPanelClose" />
+			</Panel>
+		</snippet>
+	</snippets>
+	
+	<DebugLayout>
+		                                                     
+	</DebugLayout>	
+</root>

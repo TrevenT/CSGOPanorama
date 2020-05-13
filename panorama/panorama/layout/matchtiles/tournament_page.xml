@@ -1,0 +1,38 @@
+<root>	
+    <styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/mainmenu_watch.css" />
+		
+	</styles>
+
+    <snippets>
+		<snippet name="tournament_tile">
+            <Panel class = "left-right-flow left-right-padding other-tournaments">
+                <Panel id= "individual-tournaments" class = "horizontal-align-right map-selection-btn map-selection-btn__no-margin">
+                    <CSGOBlurTarget id="blur-backing" class="tournament-tile__blur full-width full-height"/>
+                    <Panel id = "tournament-content" class = "top-bottom-flow horizontal-center top-padding bottom-padding full-height">
+                        <Panel id="image-container" class="horizontal=center"/>
+                        <Label id="title" class="horizontal-center"/>
+                    </Panel>
+                </Panel>
+            </Panel>
+		</snippet>
+	</snippets>
+    
+    <Panel>
+                                                                                 
+                                                                                                                                                            
+                                                                 
+                                                                                                                  
+                                                                                
+                                                                                                   
+                                                            
+                    
+                  
+
+        <Panel id = "other-tournaments" class = "left-right-padding OtherTournaments" useglobalcontext="true">
+        </Panel>
+    </Panel>
+
+</root>

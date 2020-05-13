@@ -1,0 +1,51 @@
+                                              
+
+                                                         
+                                     
+@define damageIndicatorSize: 300px;
+
+.Damage
+{
+	width: damageIndicatorSize;
+	height: damageIndicatorSize;
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+.Damage--Hidden
+{
+	visibility: collapse;
+}
+
+.Damage__Segment
+{
+	width: 100%;
+	height: 100%;
+	vertical-align: top;
+	
+	background-image: url( "file://{images}/hud/damageindicator/damage-segment.png" );
+	background-size: contain;
+	background-repeat: no-repeat;
+
+	-s2-mix-blend-mode: additive;
+}
+
+.Damage__Segment--Top
+{
+	
+}
+
+.Damage__Segment--Right
+{
+	transform: rotateZ( 90deg );
+}
+
+.Damage__Segment--Bottom
+{
+	transform: rotateZ( 180deg );
+}
+
+.Damage__Segment--Left
+{
+	transform: rotateZ( 270deg );
+}

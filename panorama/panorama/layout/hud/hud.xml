@@ -1,0 +1,97 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/hud.css" />
+	</styles>
+
+	<CSGOHud hittest="false">
+		                                                        
+		<Panel class="full-width full-height" hittest="false" hittestchildren="false">
+    		                                                                                     
+    		<Panel id="HudInWorld" hittest="false" hittestchildren="false">
+        		<CSGOHudDamageIndicator id="HudDamageIndicator"/>
+        		<CSGOHudReticle id="HudReticle"/>
+    		</Panel>
+
+    		<Panel id="HudSpectatorVignetting"/>
+
+			<Panel id="HudCenter">
+				<CSGOHudAlerts id="HudAlerts"/>
+				<CSGOHudDemolitionProgression id="HudDemolitionProgression" />
+			</Panel>
+
+			<CSGOHudWinPanel id="HudWinPanel"/>
+
+			<Panel id="HudTopLeft">
+				<CSGOHudRadar id="HudRadar"/>
+				<CSGOHudMoney id="HudMoney"/>
+				<CSGOHudGameIcons id="HudGameIcons"/>
+				<CSGOHudMissionPanel id="HudMissionPanel" />
+				<CSGOHudGuardianPanel id="HudGuardianPanel" />
+				<CSGOHudDMBonusPanel id="HudDMBonusPanel" />
+				<Panel />                                                                        
+			</Panel>
+
+			<Panel id="HudTopCenter"/>
+
+			<CSGOHudTeamCounter id="HudTeamCounter"/>
+
+			<Panel id="HudBottomCenter">
+				<CSGOHudProgressBar id="HudProgressBar"/>
+				<CSGOHudHintText id="HudHintText"/>
+				<CSGOHudSpecPlayer id="HudSpecPlayer"/>
+			</Panel>
+
+			<Panel id="HudLowerLeft">
+				<CSGOHudVoiceStatus id="Status"/>
+				<CSGOHudHealthArmor id="HudHealthArmor"/>
+			</Panel>
+
+			<CSGOHudRadio id="HudRadio"/>
+
+			<Panel id="HudTopRight">
+				<CSGOHudAutoDisconnect id="HudAutoDisconnect"/>
+				<CSGOHudDeathNotice id="HudDeathNotice"/>
+			</Panel>
+
+			<Panel id="HudBottomRight">
+				<CSGOHudWeaponSelection id="HudWeaponSelection"/>
+				<CSGOHudWeaponPanel id="HudWeaponPanel"/>
+			</Panel>
+
+			<CSGOHudFreezePanel id="HudFreezePanel"/>
+		</Panel>
+
+		<CSGOHudBlurTarget id="HudBlur" blurrects="Scoreboard EndOfMatch BuyMenu"  class="HudBlur">
+			<CSGOBackbufferImagePanel class="full-width full-height" />
+		</CSGOHudBlurTarget>
+    
+    	<CSGOHudSpectator id="HudSpectator"/>
+		<CSGOHudDemoPlayback id="HudDemoPlayback"/>
+
+		<CSGOHudRosettaSelector id="HudRosettaSelector"/>
+		<CSGOMapOverview id="MapOverview"/>
+
+		<CSGOBuyMenu id="BuyMenu" />
+		<CSGOScoreboard id="Scoreboard" />
+		<CSGOEndOfMatch id="EndOfMatch" />
+
+		<CSGOTeamSelectMenu id="TeamSelectMenu"/>
+
+		            
+		                                                   
+		                                           
+		            
+		
+		                                                       
+		<CSGOHudChat id="HudChat"/>
+		<CSGOHudVote id="HudVote"/>
+		
+		                                                                   
+		<Panel id="ItemPreviewDebugManager" hittest="false" />
+		<CSGOPopupManager id="PopupManager" onpopupsdismissed="" />
+		<ContextMenuManager id="ContextMenuManager" />
+		<CSGOTooltipManager id="TooltipManager" hittest="false" />
+
+	</CSGOHud>
+</root>

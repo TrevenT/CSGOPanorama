@@ -1,0 +1,26 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/endofmatch-drops.css" />
+		<include src="file://{resources}/styles/endofmatch-podium.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/endofmatch-drops.js" />
+	</scripts>
+
+
+	<snippets>
+
+		<snippet name="eom-drops__item">
+			<Panel class="eom-drops__item">
+				<Panel id="id-itemtile" />
+				<Label id="id-item-owner-name" />
+			</Panel>
+		</snippet>
+		
+	</snippets>
+
+
+	<CSGOEndOfMatchItemDropsPanel class="eom-panel eom-drops" useglobalcontext="true" />
+	
+</root>

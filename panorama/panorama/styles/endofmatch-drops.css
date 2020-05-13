@@ -1,0 +1,22 @@
+.eom-drops {
+	horizontal-align: center;
+
+	width: 100%;
+
+	vertical-align: bottom;
+	flow-children: right;
+
+	overflow: clip scroll;
+
+
+}
+
+.eom-drops__item {
+
+	flow-children: up;
+}
+
+.eom-drops__item__owner {
+
+	horizontal-align: center;
+}

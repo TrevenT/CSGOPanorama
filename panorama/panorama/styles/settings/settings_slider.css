@@ -1,0 +1,49 @@
+CSGOSettingsSlider
+{
+	height: 48px;
+	flow-children: right;
+	width: 100%;
+	vertical-align: middle;
+}
+
+#Title
+{
+    width: fill-parent-flow(1.0);
+}
+
+#Slider
+{
+    width: 25.5%;
+	margin-right: 10px;
+	vertical-align: center;
+}
+
+CSGOSettingsSlider:disabled Panel Label
+{
+    color: #333333;
+}
+
+
+#Value
+{
+	width: 48px;
+	text-align: right;
+	color: baseText;
+	                    
+	font-size: 18px;
+}
+
+             
+            
+              
+
+                                    
+.CSGOSettingsSlider__hidevalue #Slider
+{
+	width: 100%;
+}
+
+.CSGOSettingsSlider__hidevalue #Value
+{
+	visibility: collapse;
+}
