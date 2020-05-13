@@ -284,8 +284,11 @@ var PartyMenu = ( function()
 		}
 		else
 		{
-			$.UnregisterForUnhandledEvent( "PanoramaComponent_PartyList_RebuildPartyList", m_eventRebuildPartyList );
-			m_eventRebuildPartyList = undefined;
+			if ( m_eventRebuildPartyList )
+			{
+				$.UnregisterForUnhandledEvent( "PanoramaComponent_PartyList_RebuildPartyList", m_eventRebuildPartyList );
+				m_eventRebuildPartyList = undefined;
+			}
 		}
 
 		_RefreshPartyMembers();

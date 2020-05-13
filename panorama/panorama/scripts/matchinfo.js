@@ -404,9 +404,13 @@ var matchInfo = ( function() {
             var elTeam = elParentPanel.FindChildInLayoutFile( 'players-table-' + TEAMS[teamId] );
             for ( var i = 0; i < TEAMSIZE; i++ )
             {
-                var elPlayerName = elTeam.GetChild( i ).FindChildTraverse( 'name__label');
-                $.UnregisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', elPlayerName.nameUpdateHandler );
-                elPlayerName.nameUpdateHandler = undefined;
+                var elPlayerName = elTeam.GetChild( i ).FindChildTraverse( 'name__label' );
+                
+                if ( elPlayerName.nameUpdateHandler )
+                {
+                    $.UnregisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', elPlayerName.nameUpdateHandler );
+                    elPlayerName.nameUpdateHandler = undefined;
+                }
             }
         }
         if ( elParentPanel.downloadFailedHandler )
