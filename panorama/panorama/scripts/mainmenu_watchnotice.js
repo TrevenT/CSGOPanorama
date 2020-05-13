@@ -24,7 +24,7 @@ var MainmenuWatchNotice = (function () {
 
 		_m_cP.SetHasClass( "hidden", true );
 
-		TournamentsAPI.RequestFavorites( false                              );
+		TournamentsAPI.RequestFavorites();
 	};
 
 	function _StartDateCompareFunction ( a, b )
@@ -68,11 +68,8 @@ var MainmenuWatchNotice = (function () {
 		_PopulateLister();	
 	}
 
-	function _FavoritesReceived ( bAllRequested, jsonFavorites, jsonFeatured )
+	function _FavoritesReceived ( jsonFavorites, jsonFeatured )
 	{
-		if ( bAllRequested )
-			return;
-		
 		if ( ( jsonFavorites.length > 0 ) || ( jsonFeatured.length > 0 ) )
 		{
 			                                                  

@@ -23,7 +23,7 @@ var mainmenu_watch_eventsched = (function () {
 		$.RegisterForUnhandledEvent( 'Tournaments_RequestMatch', _RequestMatchString );
 		$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _PopulateLister );
 	
-		TournamentsAPI.RequestFavorites( true                             );
+		TournamentsAPI.RequestFavorites();
 		TournamentsAPI.RequestTournaments();
 	};
 
@@ -113,11 +113,8 @@ var mainmenu_watch_eventsched = (function () {
 		_PopulateLister();
 	}
 
-	function _FavoritesReceived ( bAllRequested, jsonFavorites, jsonFeatured )
+	function _FavoritesReceived ( jsonFavorites, jsonFeatured )
 	{
-		if ( !bAllRequested )
-			return;
-		
 		_m_arrFavorites = JSON.parse( jsonFavorites );
 
 		_PopulateLister();
