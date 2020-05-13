@@ -54,11 +54,6 @@ var MainMenu = ( function() {
 		videoPlayer.Play();
 	};
 
-	var _StartSnow = function()
-	{
-		MainMenuSnow.Init( $( '#MainMenuSnowCanvas' ) );
-	};
-
 	var _OnShowMainMenu = function()
 	{
 		$.DispatchEvent('PlayMainMenuMusic', true, true );
@@ -75,7 +70,6 @@ var MainMenu = ( function() {
 		_InitVanity();
 		_OnInitFadeUp();
 		_SetBackgroundMovie();
-		_StartSnow();
 
 		                                                   
 		$( '#MainMenuNavBarPlay' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', false );

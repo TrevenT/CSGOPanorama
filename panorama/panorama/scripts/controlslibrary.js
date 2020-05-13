@@ -8,35 +8,35 @@ var activeTab;
 
 function NavigateToTab( tab, btnPressed )
 {
-	             
-	                    
-	if ( activeTab )
-	{
-		activeTab.RemoveClass( 'Active' );
-	}
+                 
+                        
+    if ( activeTab )
+    {
+        activeTab.RemoveClass( 'Active' );
+    }
 
-	activeTab = $( '#' + tab );
+    activeTab = $( '#' + tab );
 
-	if( activeTab )
-	{
-		activeTab.AddClass( 'Active' );
-	}
-	
+    if( activeTab )
+    {
+        activeTab.AddClass( 'Active' );
+    }
+    
 }
 
 function CloseControlsLib()
 {
-	                                                                                                  
-	$.GetContextPanel().DeleteAsync(.3);
+                                                                                                      
+    $.GetContextPanel().DeleteAsync(.3);
 
-	var controlsLibPanel = $.GetContextPanel();
-	controlsLibPanel.RemoveClass( "Active" ); 
+    var controlsLibPanel = $.GetContextPanel();
+    controlsLibPanel.RemoveClass( "Active" ); 
 }
 
 function OpenControlsLib()
 {
-	var controlsLibPanel = $.GetContextPanel();
-	controlsLibPanel.AddClass( "Active");  
+    var controlsLibPanel = $.GetContextPanel();
+    controlsLibPanel.AddClass( "Active");  
 }
 
                                                                                                     
@@ -48,87 +48,87 @@ var popupLoadingBarLevel = 0;
 
 function ClearPopupsText()
 {
-	$( '#ControlsLibPopupsText' ).text = '--';
+    $( '#ControlsLibPopupsText' ).text = '--';
 }
 
 function OnControlsLibPopupEvent( msg )
 {
-	                                                              
-	$( '#ControlsLibPopupsText' ).text = msg;
+                                                                  
+    $( '#ControlsLibPopupsText' ).text = msg;
 }
 
 function OnPopupCustomLayoutParamsPressed()
 {
-	ClearPopupsText();
-	UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test.xml', 'popupvalue=123456&callback=' + jsPopupCallbackHandle );
+    ClearPopupsText();
+    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test.xml', 'popupvalue=123456&callback=' + jsPopupCallbackHandle );
 }
 
 function OnPopupCustomLayoutImagePressed()
 {
-	ClearPopupsText();
-	UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image&image=file://{images}/control_icons/home_icon.vtf&callback=' + jsPopupCallbackHandle );
+    ClearPopupsText();
+    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image&image=file://{images}/control_icons/home_icon.vtf&callback=' + jsPopupCallbackHandle );
 }
 
 function OnPopupCustomLayoutImageSpinnerPressed()
 {
-	ClearPopupsText();
-	UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image and a spinner&image=file://{images}/control_icons/home_icon.vtf&spinner=1&callback=' + jsPopupCallbackHandle );
+    ClearPopupsText();
+    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image and a spinner&image=file://{images}/control_icons/home_icon.vtf&spinner=1&callback=' + jsPopupCallbackHandle );
 }
 
 function OnPopupCustomLayoutImageLoadingPressed()
 {
-	ClearPopupsText();
-	popupLoadingBarLevel = 0;
-	UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image and a loading bar&image=file://{images}/control_icons/home_icon.vtf&callback=' + jsPopupCallbackHandle + '&loadingBarCallback=' + jsPopupLoadingBarCallbackHandle );
+    ClearPopupsText();
+    popupLoadingBarLevel = 0;
+    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_custom_layout_test_image.xml', 'message=Example of popup with an image and a loading bar&image=file://{images}/control_icons/home_icon.vtf&callback=' + jsPopupCallbackHandle + '&loadingBarCallback=' + jsPopupLoadingBarCallbackHandle );
 }
 
 function OnPopupCustomLayoutMatchAccept()
 {
-	ClearPopupsText();
-	popupLoadingBarLevel = 0;
-	var popup = UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_accept_match.xml', 'map_and_isreconnect=de_dust2,false');
+    ClearPopupsText();
+    popupLoadingBarLevel = 0;
+    var popup = UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_accept_match.xml', 'map_and_isreconnect=de_dust2,false');
 	$.DispatchEvent( "ShowAcceptPopup", popup );
 }
 
 function OnPopupCustomLayoutWeaponUpdate()
 {
-	ClearPopupsText();
-	
-	var defIndex = 23;
-	UiToolkitAPI.ShowCustomLayoutPopupParameters(
-		'',
-		'file://{resources}/layout/popups/popup_weapon_update.xml',
-		defIndex,
-		'none'
-	);
+    ClearPopupsText();
+    
+    var defIndex = 23;
+    UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/popups/popup_weapon_update.xml',
+        defIndex,
+        'none'
+    );
 }
 
 function OnPopupCustomLayoutSurvivalEndOfMatch()
 {
-	var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
-		'',
-		'file://{resources}/layout/survival/survival_endofmatch.xml',
-		'usefakedata=true',
-		'none'
-	);
+    var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/survival/survival_endofmatch.xml',
+        'usefakedata=true',
+        'none'
+    );
 
-	                                    
+                                        
 }
 
 function OnPopupCustomLayoutLoadingScreen()
 {
-	ClearPopupsText();
-	UiToolkitAPI.ShowCustomLayoutPopup( 'teams', 'file://{resources}/layout/teamselectmenu.xml');
+    ClearPopupsText();
+    UiToolkitAPI.ShowCustomLayoutPopup( 'teams', 'file://{resources}/layout/teamselectmenu.xml');
 }
 
 function OnControlsLibPopupLoadingBarEvent()
 {
-	popupLoadingBarLevel += 0.05;
-	if ( popupLoadingBarLevel > 1.0 )
-	{
-		popupLoadingBarLevel = 1.0;
-	}
-	return popupLoadingBarLevel;
+    popupLoadingBarLevel += 0.05;
+    if ( popupLoadingBarLevel > 1.0 )
+    {
+        popupLoadingBarLevel = 1.0;
+    }
+    return popupLoadingBarLevel;
 }
 
 
@@ -140,31 +140,31 @@ var jsContextMenuCallbackHandle;
 
 function ClearContextMenuText()
 {
-	$( '#ControlsLibContextMenuText' ).text = '--';
+    $( '#ControlsLibContextMenuText' ).text = '--';
 }
 
 function OnControlsLibContextMenuEvent( msg )
 {
-	                                                                    
-	$( '#ControlsLibContextMenuText' ).text = msg;
+                                                                        
+    $( '#ControlsLibContextMenuText' ).text = msg;
 }
 
 function OnSimpleContextMenu()
 {
-	ClearContextMenuText();
-	
-	var items = [];
-	items.push( { label: 'Item 1', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item1' ); } } );
-	items.push( { label: 'Item 2', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item2' ); } } );
-	items.push( { label: 'Item 3', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item3' ); } } ); 
-	
-	UiToolkitAPI.ShowSimpleContextMenu( '', 'ControlLibSimpleContextMenu', items );
+    ClearContextMenuText();
+    
+    var items = [];
+    items.push( { label: 'Item 1', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item1' ); } } );
+    items.push( { label: 'Item 2', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item2' ); } } );
+    items.push( { label: 'Item 3', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item3' ); } } ); 
+    
+    UiToolkitAPI.ShowSimpleContextMenu( '', 'ControlLibSimpleContextMenu', items );
 }
 
 function OnContextMenuCustomLayoutParamsPressed()
 {
-	ClearContextMenuText();
-	UiToolkitAPI.ShowCustomLayoutContextMenuParameters( '', '', 'file://{resources}/layout/context_menus/context_menu_custom_layout_test.xml', 'test=123456&callback=' + jsContextMenuCallbackHandle );
+    ClearContextMenuText();
+    UiToolkitAPI.ShowCustomLayoutContextMenuParameters( '', '', 'file://{resources}/layout/context_menus/context_menu_custom_layout_test.xml', 'test=123456&callback=' + jsContextMenuCallbackHandle );
 }
 
 
@@ -177,11 +177,11 @@ var g_VideoCurrentTrailer = 0;
 
 function VideoPlayNextTrailer()
 {
-	g_VideoCurrentTrailer = ( g_VideoCurrentTrailer + 1 ) % g_VideoNumTrailers;
-	var videoPlayer = $( '#VideoTrailerPlayer' );
-	videoPlayer.SetMovie( "file://{resources}/videos/trailer_" + g_VideoCurrentTrailer + ".webm" );
-	videoPlayer.SetTitle( "Trailer " + g_VideoCurrentTrailer );
-	videoPlayer.Play();
+    g_VideoCurrentTrailer = ( g_VideoCurrentTrailer + 1 ) % g_VideoNumTrailers;
+    var videoPlayer = $( '#VideoTrailerPlayer' );
+    videoPlayer.SetMovie( "file://{resources}/videos/trailer_" + g_VideoCurrentTrailer + ".webm" );
+    videoPlayer.SetTitle( "Trailer " + g_VideoCurrentTrailer );
+    videoPlayer.Play();
 }
 
                                                                                                     
@@ -190,144 +190,39 @@ function VideoPlayNextTrailer()
 
 function SetCanvasDrawColorCT()
 {
-	var canvas = $( '#Canvas1' );
+    var canvas = $( '#Canvas1' );
 
-	canvas.SetDrawColorJS( '#2a6b8f' );
-	_CancelSnowLoop();
+    canvas.SetDrawColorJS( '#2a6b8f' );
 }
 
 function SetCanvasDrawColorT()
 {
-	var canvas = $( '#Canvas1' );
+    var canvas = $( '#Canvas1' );
 
-	canvas.SetDrawColorJS( 'orange' );
-	_CancelSnowLoop();
+    canvas.SetDrawColorJS( 'orange' );
 }
 
 function ClearCanvas()
 {
-	var canvas = $( '#Canvas1' );
+    var canvas = $( '#Canvas1' );
 
-	canvas.ClearJS( '#00000000' );
+    canvas.ClearJS( '#00000000' );
 
-	                  
+                      
                                                                                                             
                                                                                                               
                                                            
 
-	var points = [ 10,15, 300,35, 400,500, 5,340 ];
-	var colors = [ 'blue', 'red', 'white', 'black' ];
+    var points = [ 10,15, 300,35, 400,500, 5,340 ];
+    var colors = [ 'blue', 'red', 'white', 'black' ];
 
-	canvas.DrawShadedPolyJS( 4, points, colors );
+    canvas.DrawShadedPolyJS( 4, points, colors );
 
-	canvas.DrawLineCircleJS( 720, 130, 187, 'orange' );
-	canvas.DrawFilledCircleJS( 610, 330, 127, 'pink' );
-	canvas.DrawFilledWedgeJS( 480, 430, 140, 1.3, 2.7, 'red' );
-
-	_CancelSnowLoop();
+    canvas.DrawLineCircleJS( 720, 130, 187, 'orange' );
+    canvas.DrawFilledCircleJS( 610, 330, 127, 'pink' );
+    canvas.DrawFilledWedgeJS( 480, 430, 140, 1.3, 2.7, 'red' );
 }
 
-var m_snowLoopScheduleHandler = null;
-
-function CanvasSnow ()
-{
-	var canvas = $( '#Canvas1' );
-	var numFlakes = 200,
-		canvasWidth = 800,
-		canvasHeight = 800;
-	var aFlakes = [];
-
-	function Flake ( x, y ) 
-	{
-		var minRadius = 5,
-		    maxRadius = 7,
-			maxSpeed = 3;
-		
-		this.x = x;
-		this.y = y;
-		this.a = randomBetweenRange( 0, Math.PI );
-		this.aStep = 0.01;
-
-		this.radius = randomBetweenRange( minRadius, maxRadius, false );
-		this.alpha = 0.2 + ( 0.8 * ( (this.radius - minRadius) / (maxRadius - minRadius) ) );
-		this.speed = (this.radius / maxRadius) * maxSpeed;
-		
-		this.update = function()
-		{
-			this.x += Math.cos( this.a );                                             
-			this.a += this.aStep;
-			this.y += this.speed;
-		};
-	}
-
-	function Init ()
-	{
-		_CancelSnowLoop();
-
-		m_snowLoopScheduleHandler = $.RegisterForUnhandledEvent( "CSGOFrameUpdate", UpdateCanvas );
-		
-		var i = numFlakes,
-			oflake,
-			x,
-			y;
-
-		while ( i-- )
-		{
-			x = randomBetweenRange( 5, canvasWidth, true );
-			y = randomBetweenRange( 5, canvasHeight, true );
-
-			oflake = new Flake(x, y);
-			aFlakes.push( oflake );
-		}
-	}
-
-	function UpdateCanvas()
-	{
-		var i = aFlakes.length,
-			flakeA;
-		
-		canvas.ClearJS( '#00000000' );
-
-		while ( i-- )
-		{
-			flakeA = aFlakes[ i ];
-			flakeA.update();
-			canvas.DrawFilledCircleJS( flakeA.x, flakeA.y, flakeA.radius, 'rgba(255, 255, 255, ' + flakeA.alpha + ')' );
-
-			if ( flakeA.y >= canvasHeight )
-			{
-				                                         
-				flakeA.y = -flakeA.radius;
-			}
-		}
-	}
-
-	function randomBetweenRange ( min, max, shouldRound )
-	{
-		var num = Math.random() * (max - min + 1) + min;
-
-		if ( shouldRound )
-		{
-			return Math.floor(num);
-		}
-		else
-		{
-			return num;
-		}
-	}
-
-	Init();
-}
-
-var _CancelSnowLoop = function ()
-{
-	                                                                                             
-	if ( m_snowLoopScheduleHandler )
-	{
-		$.UnregisterForUnhandledEvent( "CSGOFrameUpdate", m_snowLoopScheduleHandler );
-		m_snowLoopScheduleHandler = null;
-	}
-};
 
                                                                                                     
                    
@@ -337,47 +232,47 @@ var g_DialogVarCount = 0;
 
 function UpdateParentDialogVariablesFromTextEntry( panelName )
 {
-	var varStr = $( "#ParentDialogVarTextEntry" ).text;
+    var varStr = $( "#ParentDialogVarTextEntry" ).text;
 
-	$( "#DialogVarParentPanel" ).SetDialogVariable( 'testvar', varStr );
+    $( "#DialogVarParentPanel" ).SetDialogVariable( 'testvar', varStr );
 }
 
 function UpdateChildDialogVariablesFromTextEntry( panelName )
 {
-	var varStr = $( "#ChildDialogVarTextEntry" ).text;
+    var varStr = $( "#ChildDialogVarTextEntry" ).text;
 
-	$( "#DialogVarChildPanel" ).SetDialogVariable( 'testvar', varStr );
+    $( "#DialogVarChildPanel" ).SetDialogVariable( 'testvar', varStr );
 }
 
 function InitDialogVariables()
 {
-	$( "#ControlsLibDiagVars" ).SetDialogVariableInt( "count", g_DialogVarCount );
-	$( "#ControlsLibDiagVars" ).SetDialogVariable( "s1", "Test1" );
-	$( "#ControlsLibDiagVars" ).SetDialogVariable( "s2", "Test2" );
-	$( "#ControlsLibDiagVars" ).SetDialogVariable( "cam_key", "%jump%" );
-	$( "#ControlsLibDiagVars" ).SetDialogVariable( "np_key", "%attack%" );
-	$( "#ControlsLibDiagVars" ).SetDialogVariable( "sp_key", "%radio%" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariableInt( "count", g_DialogVarCount );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "s1", "Test1" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "s2", "Test2" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "cam_key", "%jump%" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "np_key", "%attack%" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "sp_key", "%radio%" );
 	                                                                        
 
-	                                            
-	$( "#DiagVarLabel" ).text = $.Localize( "\tDynamic Label Count: {d:r:count}", $( "#ControlsLibDiagVars" ) );
+                                                
+    $( "#DiagVarLabel" ).text = $.Localize( "\tDynamic Label Count: {d:r:count}", $( "#ControlsLibDiagVars" ) );
 
-	                                 
-	$.Schedule( 1.0, UpdateDialogVariables );
+                                     
+    $.Schedule( 1.0, UpdateDialogVariables );
 
-	$( "#ParentDialogVarTextEntry" ).RaiseChangeEvents( true );
-	$( "#ChildDialogVarTextEntry" ).RaiseChangeEvents( true );
-	$.RegisterEventHandler( 'TextEntryChanged', $( "#ParentDialogVarTextEntry" ), UpdateParentDialogVariablesFromTextEntry );
-	$.RegisterEventHandler( 'TextEntryChanged', $( "#ChildDialogVarTextEntry" ), UpdateChildDialogVariablesFromTextEntry );
+    $( "#ParentDialogVarTextEntry" ).RaiseChangeEvents( true );
+    $( "#ChildDialogVarTextEntry" ).RaiseChangeEvents( true );
+    $.RegisterEventHandler( 'TextEntryChanged', $( "#ParentDialogVarTextEntry" ), UpdateParentDialogVariablesFromTextEntry );
+    $.RegisterEventHandler( 'TextEntryChanged', $( "#ChildDialogVarTextEntry" ), UpdateChildDialogVariablesFromTextEntry );
 }
 
 function UpdateDialogVariables()
 {
-	g_DialogVarCount++;
-	$( "#ControlsLibDiagVars" ).SetDialogVariableInt( "count", g_DialogVarCount );
-	                                                                        
+    g_DialogVarCount++;
+    $( "#ControlsLibDiagVars" ).SetDialogVariableInt( "count", g_DialogVarCount );
+                                                                            
 
-	$.Schedule( 1.0, UpdateDialogVariables );
+    $.Schedule( 1.0, UpdateDialogVariables );
 }
 
 
@@ -387,25 +282,25 @@ function UpdateDialogVariables()
 
 function OnImageFailLoad( panelName, image )
 {
-	var varStr = $( "#ChildDialogVarTextEntry" ).text;
+    var varStr = $( "#ChildDialogVarTextEntry" ).text;
 
-	                                                                                                          
-	                                                                                    
+                                                                                                              
+                                                                                        
 }
 
 function InitPanels()
 {
-	var parent = $.FindChildInContext( "#ControlsLibPanelsDynParent" );
+    var parent = $.FindChildInContext( "#ControlsLibPanelsDynParent" );
 
-	$.CreatePanel( 'Label', parent, '', { text: 'Label, with text property, created dynamically from js.' } );
-	$.CreatePanel( 'Label', parent, '', { class: 'fontSize-l fontWeight-Bold', style:'color:#558927;', text: 'Label, with text and class properties, created dynamically from js.' } );
-	$.CreatePanel( 'TextButton', parent, '', { class: 'PopupButton', text:"Output to console", onactivate:"$.Msg('Panel tab - Button pressed !!!')" } );
+    $.CreatePanel( 'Label', parent, '', { text: 'Label, with text property, created dynamically from js.' } );
+    $.CreatePanel( 'Label', parent, '', { class: 'fontSize-l fontWeight-Bold', style:'color:#558927;', text: 'Label, with text and class properties, created dynamically from js.' } );
+    $.CreatePanel( 'TextButton', parent, '', { class: 'PopupButton', text:"Output to console", onactivate:"$.Msg('Panel tab - Button pressed !!!')" } );
 
-	$.CreatePanel( 'ControlLibTestPanel', $.FindChildInContext( '#ControlsLibPanelsJS' ), '', { MyCustomProp:'Created dynamically from javascript', CreatedFromJS:1 } );
+    $.CreatePanel( 'ControlLibTestPanel', $.FindChildInContext( '#ControlsLibPanelsJS' ), '', { MyCustomProp:'Created dynamically from javascript', CreatedFromJS:1 } );
 
-	                 
-	$.RegisterEventHandler( 'ImageFailedLoad', $( "#ControlsLibPanelImageFallback" ), OnImageFailLoad );
-	$( "#ControlsLibPanelImageFallback" ).SetImage( "file://{images}/unknown2.vtf" );
+                     
+    $.RegisterEventHandler( 'ImageFailedLoad', $( "#ControlsLibPanelImageFallback" ), OnImageFailLoad );
+    $( "#ControlsLibPanelImageFallback" ).SetImage( "file://{images}/unknown2.vtf" );
 }
 
                                                                                                     
@@ -414,60 +309,60 @@ function InitPanels()
 
 function TransitionBlurPanel()
 {
-	$("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimOut");
-	$("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimIn");
-	$("#MyBlendBlurFitParent").AddClass("TheBlurAnimIn");
+    $("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimOut");
+    $("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimIn");
+    $("#MyBlendBlurFitParent").AddClass("TheBlurAnimIn");
 }
 
 function TransitionBlurPanel2() {
-	$("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimIn");
-	$("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimOut");
-	$("#MyBlendBlurFitParent").AddClass("TheBlurAnimOut");
+    $("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimIn");
+    $("#MyBlendBlurFitParent").RemoveClass("TheBlurAnimOut");
+    $("#MyBlendBlurFitParent").AddClass("TheBlurAnimOut");
 }
 
 
 function CreateSvgFromJs()
 {
-	$.CreatePanel('Image', $('#svgButton'), '', {
-		src: "file://{images}/icons/ui/smile.svg",
-		texturewidth: 100,
-		textureheight: 100
-	});
+    $.CreatePanel('Image', $('#svgButton'), '', {
+        src: "file://{images}/icons/ui/smile.svg",
+        texturewidth: 100,
+        textureheight: 100
+    });
 }
 
 
 
 function GetRssFeed()
 {
-	BlogAPI.RequestRSSFeed();
+    BlogAPI.RequestRSSFeed();
 }
 
 function OnRssFeedReceived( feed )
 {
-	                                                         
+                                                             
 
 
-	var RSSFeedPanel = $( "#RSSFeed" );
-	if ( RSSFeedPanel === undefined || RSSFeedPanel === null )
-	{
-		return;
-	}
+    var RSSFeedPanel = $( "#RSSFeed" );
+    if ( RSSFeedPanel === undefined || RSSFeedPanel === null )
+    {
+        return;
+    }
 
-	RSSFeedPanel.RemoveAndDeleteChildren();
+    RSSFeedPanel.RemoveAndDeleteChildren();
 
-	                         
-	feed[ 'items' ].forEach( function( item ) {
-		var itemPanel = $.CreatePanel( 'Panel', RSSFeedPanel, '', { acceptsinput: true, onactivate: 'SteamOverlayAPI.OpenURL( "' + item.link + '" );' } );
-		itemPanel.AddClass( 'RSSFeed__Item' );
+                             
+    feed[ 'items' ].forEach( function( item ) {
+        var itemPanel = $.CreatePanel( 'Panel', RSSFeedPanel, '', { acceptsinput: true, onactivate: 'SteamOverlayAPI.OpenURL( "' + item.link + '" );' } );
+        itemPanel.AddClass( 'RSSFeed__Item' );
 
-		$.CreatePanel( 'Label', itemPanel, '', { text: item.title, html: true, class: 'RSSFeed__ItemTitle' } );
-		if ( item.imageUrl.length !== 0 )
-		{
-			$.CreatePanel( 'Image', itemPanel, '', { src: item.imageUrl, class: 'RSSFeed__ItemImage', scaling: 'stretch-to-fit-preserve-aspect' } );
-		}
-		$.CreatePanel( 'Label', itemPanel, '', { text: item.description, html: true, class: 'RSSFeed__ItemDesc' } );
-		$.CreatePanel( 'Label', itemPanel, '', { text: item.date, html: true, class: 'RSSFeed__ItemDate' } );
-	});
+        $.CreatePanel( 'Label', itemPanel, '', { text: item.title, html: true, class: 'RSSFeed__ItemTitle' } );
+        if ( item.imageUrl.length !== 0 )
+        {
+            $.CreatePanel( 'Image', itemPanel, '', { src: item.imageUrl, class: 'RSSFeed__ItemImage', scaling: 'stretch-to-fit-preserve-aspect' } );
+        }
+        $.CreatePanel( 'Label', itemPanel, '', { text: item.description, html: true, class: 'RSSFeed__ItemDesc' } );
+        $.CreatePanel( 'Label', itemPanel, '', { text: item.date, html: true, class: 'RSSFeed__ItemDate' } );
+    });
 }
 
                                                                                                     
@@ -476,12 +371,12 @@ function OnRssFeedReceived( feed )
 (function()
 {
   
-	OpenControlsLib();
-	NavigateToTab('ControlLibStyleGuide');
+    OpenControlsLib();
+    NavigateToTab('ControlLibStyleGuide');
    
-	jsPopupCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibPopupEvent );
-	jsContextMenuCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibContextMenuEvent );
-	jsPopupLoadingBarCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibPopupLoadingBarEvent );
+    jsPopupCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibPopupEvent );
+    jsContextMenuCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibContextMenuEvent );
+    jsPopupLoadingBarCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibPopupLoadingBarEvent );
 
-	$.RegisterForUnhandledEvent( "PanoramaComponent_Blog_RSSFeedReceived", OnRssFeedReceived );
+    $.RegisterForUnhandledEvent( "PanoramaComponent_Blog_RSSFeedReceived", OnRssFeedReceived );
 })();
