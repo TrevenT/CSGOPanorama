@@ -149,14 +149,15 @@ var EOM_Skillgroup = (function () {
 		elModel.AddParticleSystem( 'nuke_sparks1_glow', '', false );
 		elModel.AddParticleSystem( 'nuke_sparks1_core', '', false );
 		
-		$.Schedule( 1, function( panel )
+		function hide ( panel )
 		{
 			if ( !panel || !panel.IsValid() )
 				return;
 			
-				panel.AddClass( 'hidden' );
+			panel.AddClass( 'hidden' );		
 		}
-		).bind( undefined, elModel );
+		
+		$.Schedule( 1, hide.bind( undefined, elModel ));
 	}
 
 	function _FilloutRankData ( oData )
