@@ -503,6 +503,7 @@ var EOM_Podium = ( function () {
 
 	                      
 	return {
+        name: 'eom-podium',
 
 		Start									: _Start,
 		GetFreeForAllTopThreePlayers_Response	: _GetFreeForAllTopThreePlayers_Response,

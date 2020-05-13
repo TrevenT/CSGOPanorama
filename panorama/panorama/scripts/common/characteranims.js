@@ -28,6 +28,7 @@ var CharacterAnims = ( function ()
 		playerPanel.SetSceneAngles( 0, 0, 0 );
 		playerPanel.SetPlayerModel( settings.model );
 		playerPanel.EquipPlayerWithItem( settings.itemId );
+		playerPanel.EquipPlayerFromLoadout( settings.team, 'clothing_hands' );
 
 		var anims = _GetAnims(
 						settings.team,
@@ -172,7 +173,10 @@ var CharacterAnims = ( function ()
 			                                                                                                                 
 			                                                                                                           
 			                                                                                                                   
-			{ label:'#faction_phoenix', model:"models/player/custom_player/legacy/tm_phoenix.mdl", team:"t", loadoutSlot: 'secondary1' }
+			{ label: '#faction_phoenix', model: "models/player/custom_player/legacy/tm_phoenix.mdl", team: "t", loadoutSlot: 'secondary1' },
+			{ label: '#faction_survival_a', model: "models/player/custom_player/legacy/tm_jumpsuit_varianta.mdl", team: "any", loadoutSlot: 'secondary1' },
+			{ label: '#faction_survival_b', model: "models/player/custom_player/legacy/tm_jumpsuit_variantb.mdl", team: "any", loadoutSlot: 'secondary1' },
+			{ label: '#faction_survival_c', model:"models/player/custom_player/legacy/tm_jumpsuit_variantc.mdl", team:"any", loadoutSlot: 'secondary1' }
 		];
 		return dropdownEntries;
 	};
@@ -310,7 +314,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							                                
+							'ct_loadout_p90_lookbehind01',
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -325,7 +329,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							                                
+							'ct_loadout_p90_lookbehind01',
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -340,7 +344,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							                                
+							'ct_loadout_p90_lookbehind01',
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -355,7 +359,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							                                
+							'ct_loadout_p90_lookbehind01',
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -386,7 +390,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							                                
+							'ct_loadout_p90_lookbehind01',
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]

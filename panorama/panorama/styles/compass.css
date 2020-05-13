@@ -1,0 +1,196 @@
+.compass
+{
+	width: 1300px;
+	height: 70px;
+	overflow: clip;
+}
+
+                                       
+.compass-bg-container
+{
+	width: 100%;
+	height: 50%;
+	flow-children:right;
+}
+.compass-bg-left
+{
+	width:30%;
+	height:100%;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), to( #00000025 ) );
+}
+.compass-bg-center
+{
+	width:40%;
+	height:100%;
+	background-color: #00000025;
+}
+.compass-bg-right
+{
+	width:30%;
+	height:100%;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000025 ), to( #00000000 ) );
+}
+
+                        
+.compass-line-container
+{
+	width: 100%;
+	height: 1px;
+	vertical-align: bottom;
+	margin-bottom:50%;
+	                     
+	flow-children:right;
+}
+.compass-line-left
+{
+	width:30%;
+	height:1px;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #FFFFFF00 ), to( #FFFFFF60 ) );
+}
+.compass-line-center
+{
+	width:40%;
+	height:1px;
+	background-color: #FFFFFF60;
+}
+.compass-line-right
+{
+	width:30%;
+	height:1px;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #FFFFFF60 ), to( #FFFFFF00 ) );
+}
+
+                                
+.compass-line-forward
+{
+	horizontal-align:center;
+	vertical-align:top;
+	width: 1px;
+	height: 50px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #FFFFFF00 ), to( #FFFFFFFF ) );
+}
+
+                                 
+.compass-pip
+{
+	width: 100px;
+	margin-left: -50px;
+	height: 50px;
+}
+.compass-pip-hash
+{
+	horizontal-align:center;
+	vertical-align:bottom;
+	width: 1px;
+	height: 8px;
+	margin-top: -16px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #FFFFFF00 ), to( #FFFFFF78 ) );
+}
+.compass-pip-text
+{
+	margin-top: -10px;
+	horizontal-align:center;
+	font-family: Stratum2, 'Arial Unicode MS';
+	text-shadow: 0px 0px 3px 0.0 #000000;
+	color: #EEEEEEFF;
+	font-size: 14px;
+	text-align: center;
+}
+
+                           
+.compass-heading-container-left
+{
+	margin-top: 37px;
+	width: 50%;
+	horizontal-align:left;
+}
+.compass-heading-container-right
+{
+	margin-top: 37px;
+	width: 50%;
+	horizontal-align:right;
+}
+.compass-heading
+{
+	vertical-align:top;
+	horizontal-align:right;
+	font-family: Stratum2 Monodigit, 'Arial Unicode MS';
+	color: #EEEEEEFF;
+	font-size: 14px;
+}
+.compass-cardinal
+{
+	vertical-align:top;
+	horizontal-align:left;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: #EEEEEEFF;
+	font-size: 14px;
+}
+
+                            
+.compass-teammate-img
+{
+	width: 32px;
+	height: 32px;
+	margin-left: -16px;
+	margin-top: 26px;
+	background-image:url("file://{images}/survival/teammate/teammate.png");
+	background-size: 100% 100%;
+}
+
+                          
+.compass-rescue-img
+{
+	width: 44px;
+	height: 44px;
+	margin-left: -22px;
+	margin-top: 26px;
+	background-image:url("file://{images}/hud/radar/icon-hostage-zone.png");
+	background-size: 100% 100%;
+}
+
+.region-name
+{
+	margin-top: 12px;
+	margin-left: 4px;
+	margin-bottom: 12px;
+	padding: 2px 12px 2px 12px;
+	horizontal-align: left;
+	vertical-align: bottom;
+	font-family: Stratum2 Monodigit, 'Arial Unicode MS';
+	border: 1px solid #EEEEEE22;
+	background-color: #00000022;
+	font-size: 14px;
+	text-align: center;
+}
+
+
+@keyframes 'RegionNameFadeIn'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+
+.region-name
+{
+	opacity: 0;
+}
+
+.show-region .region-name
+{
+	opacity: 1;
+
+	animation-name: RegionNameFadeIn;
+	animation-duration: 0.75s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;	
+	animation-fill-mode: forwards;
+}

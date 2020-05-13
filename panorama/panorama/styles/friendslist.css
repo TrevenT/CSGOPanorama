@@ -503,13 +503,7 @@
 }
 
 .party-list.hidden,
-.party-members-list.hidden,
-#MatchStatusContainer.hidden,
-#MatchStatusWait.hidden,
-#MatchStatusSearching.hidden,
-#MatchStatusWarning.hidden,
-#MatchStatusFailIcon.hidden,
-.party-status-time.hidden
+.party-members-list.hidden
 {
 	opacity: 0;
 	transform: scaleY(0);
@@ -526,12 +520,6 @@
 	visibility: collapse;
 }
 
-.party-status-left
-{
-	width: 96px;
-	height: 64px;
-}
-
 .Spinner.additive
 {
 	-s2-mix-blend-mode: SRGBadditive;
@@ -544,25 +532,6 @@
 	font-size: 24px;
 	text-align: center;
 	horizontal-align: center;
-	-s2-mix-blend-mode: SRGBadditive;
-}
-
-#MatchStatusWait
-{
-	min-height: 64px;
-	margin-left: 24px;
-}
-
-.party-status-header
-{
-	font-size: 18px;
-	font-weight: medium;
-	text-transform: none;
-	color:  rgb(175, 175, 175);
-	vertical-align: center;
-	min-width: 50px;
-	max-width: 256px;
-	font-family: Stratum2, 'Arial Unicode MS';
 	-s2-mix-blend-mode: SRGBadditive;
 }
 

@@ -90,6 +90,31 @@ function OnPopupCustomLayoutMatchAccept()
 	$.DispatchEvent( "ShowAcceptPopup", popup );
 }
 
+function OnPopupCustomLayoutWeaponUpdate()
+{
+    ClearPopupsText();
+    
+    var defIndex = 23;
+    UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/popups/popup_weapon_update.xml',
+        defIndex,
+        'none'
+    );
+}
+
+function OnPopupCustomLayoutSurvivalEndOfMatch()
+{
+    var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/survival/survival_endofmatch.xml',
+        'usefakedata=true',
+        'none'
+    );
+
+                                        
+}
+
 function OnPopupCustomLayoutLoadingScreen()
 {
     ClearPopupsText();
@@ -131,8 +156,8 @@ function OnSimpleContextMenu()
     var items = [];
     items.push( { label: 'Item 1', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item1' ); } } );
     items.push( { label: 'Item 2', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item2' ); } } );
-    items.push( { label: 'Item 3', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item3' ); } } );    
-
+    items.push( { label: 'Item 3', jsCallback: function() { OnControlsLibContextMenuEvent( 'Item3' ); } } ); 
+    
     UiToolkitAPI.ShowSimpleContextMenu( '', 'ControlLibSimpleContextMenu', items );
 }
 
@@ -157,6 +182,45 @@ function VideoPlayNextTrailer()
     videoPlayer.SetMovie( "file://{resources}/videos/trailer_" + g_VideoCurrentTrailer + ".webm" );
     videoPlayer.SetTitle( "Trailer " + g_VideoCurrentTrailer );
     videoPlayer.Play();
+}
+
+                                                                                                    
+         
+                                                                                                    
+
+function SetCanvasDrawColorCT()
+{
+    var canvas = $( '#Canvas1' );
+
+    canvas.SetDrawColorJS( '#2a6b8f' );
+}
+
+function SetCanvasDrawColorT()
+{
+    var canvas = $( '#Canvas1' );
+
+    canvas.SetDrawColorJS( 'orange' );
+}
+
+function ClearCanvas()
+{
+    var canvas = $( '#Canvas1' );
+
+    canvas.ClearJS( '#00000000' );
+
+                      
+                                                                                                            
+                                                                                                              
+                                                           
+
+    var points = [ 10,15, 300,35, 400,500, 5,340 ];
+    var colors = [ 'blue', 'red', 'white', 'black' ];
+
+    canvas.DrawShadedPolyJS( 4, points, colors );
+
+    canvas.DrawLineCircleJS( 720, 130, 187, 'orange' );
+    canvas.DrawFilledCircleJS( 610, 330, 127, 'pink' );
+    canvas.DrawFilledWedgeJS( 480, 430, 140, 1.3, 2.7, 'red' );
 }
 
 
@@ -187,7 +251,7 @@ function InitDialogVariables()
     $( "#ControlsLibDiagVars" ).SetDialogVariable( "s2", "Test2" );
     $( "#ControlsLibDiagVars" ).SetDialogVariable( "cam_key", "%jump%" );
     $( "#ControlsLibDiagVars" ).SetDialogVariable( "np_key", "%attack%" );
-    $( "#ControlsLibDiagVars" ).SetDialogVariable( "sp_key", "%radio1%" );
+    $( "#ControlsLibDiagVars" ).SetDialogVariable( "sp_key", "%radio%" );
 	                                                                        
 
                                                 

@@ -195,8 +195,8 @@ var InspectActionBar = ( function (){
 	var _GetValidCharacterModels = function ( id )
 	{
 		return CharacterAnims.GetValidCharacterModels().filter(function (entry) {
-			return (ItemInfo.IsItemCt(id) && entry.team === 'ct') ||
-				(ItemInfo.IsItemT(id) && entry.team === 't') ||
+			return (ItemInfo.IsItemCt(id) && ( entry.team === 'ct' || entry.team === 'any' )) ||
+				(ItemInfo.IsItemT(id) && ( entry.team === 't'|| entry.team === 'any')) ||
 				ItemInfo.IsItemAnyTeam(id);
 		});
 	};
@@ -211,7 +211,7 @@ var InspectActionBar = ( function (){
 				'class': 'DropDownMenu',
 				'html': 'true',
 			    'text': entry.label,
-                'data-team': entry.team
+				'data-team': ( entry.team === 'any' ) ? ( ( ItemInfo.IsItemT(id) || ItemInfo.IsItemAnyTeam(id) ) ? 't' : 'ct' ) : entry.team
 			});
 	
 			elDropdown.AddOption( newEntry );

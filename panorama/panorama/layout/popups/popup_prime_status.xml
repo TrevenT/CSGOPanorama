@@ -26,7 +26,7 @@
 					<Label id="PrimeStatusDesc" text="" />
 				</Panel>
 				<Panel class="prime-status__faq">
-					<Label class="faq_title fontWeight-Bold" text="#SFUI_Elevated_Status_Faq_Title" />
+					<Label class="faq_title fontWeight-Bold" text="#SFUI_Elevated_Status_Faq_Title_1" />
 				             
 				                                      
 					<Label id="PrimeStatusFaq" class="faq_desc" html="true" text="" />
@@ -47,6 +47,12 @@
 			</Panel>
 			<Button id="ActivateButton" class="PopupButton">
 				<Label id="ActivateButtonText" />
+			</Button>
+			<Button id="ActivateButton" class="PopupButton">
+				<Label id="ActivateButtonText" />
+			</Button>
+			<Button id="PurchaseButton" class="PopupButton positiveColor">
+				<Label text="#SFUI_Elevated_Status_buy_Btn"/>
 			</Button>
 			<Button id="CheckStatusButton" class="PopupButton">
 				<Image id="CheckStatusButtonImage" texturewidth="-1" textureheight="14" src="file://{images}/icons/ui/info.svg" />

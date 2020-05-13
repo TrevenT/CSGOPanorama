@@ -1,0 +1,87 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/survival/survival_spawnselect.css" />
+	</styles>
+
+	<scripts>
+		                        
+		                                                                                      
+	</scripts>
+
+	<snippets>
+		<snippet name="spawnselect-map-hex">
+			<Panel class="spawnselect-map-hex-holder">
+				<Button class="spawnselect-map-hex-button">
+					<Panel class="spawnselect-map-hex" />
+				</Button>
+			</Panel>
+		</snippet>
+
+		<snippet name="spawnselect-tablet-hex">
+			<Panel class="spawnselect-tablet-hex-holder">
+				<Panel class="spawnselect-tablet-hex">
+					<Panel class="spawnselect-tablet-hex-image" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="spawnselect-map-label">
+			<Panel class="map-location-container">
+				<Label id="map-location-label" class="map-location-label" />
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<CSGOSurvivalSpawnSelect class="spawnselect">
+		<CSGOBlurTarget class="spawnselect-blurtarget" blurrects="spawnselect-blursrc">
+			                         
+			    
+			                              
+					                              
+					      
+					                                                                    
+					                                            
+			    
+			
+			<Panel class="spawnselect-blurtarget-background" />
+		</CSGOBlurTarget>
+
+		<Panel id="spawnselect-blursrc"/>
+
+		                                                                       
+		<Panel class="spawnselect-layout" id="spawnselect-layout">
+			<Panel class="spawnselect-toprow">
+				<Label class="spawnselect-toprow-title" text="{s:title}" />
+				<Panel class="spawnselect-toprow-info">
+					<Label class="spawnselect-ready-count" text="#Survival_SpawnSelect_ReadyCount" />
+					<Label class="spawnselect-not-ready" text="#Survival_SpawnSelect_NotReady" />
+				</Panel>
+				<Panel class="spawnselect-timer">
+					<Panel class="spawnselect-timer-circle-background" />
+					<Panel class="spawnselect-timer-circle" id="timer-bar" />
+					<Label class="spawnselect-timer-text" text="{d:timer-seconds}" />
+				</Panel>
+			</Panel>
+			<Panel class="spawnselect-map">
+				<Image id="spawnselect-mapimage" class="spawnselect-mapimage"
+							 src="file://{images}/survival/spawnselect/map_blank.png"
+							 scaling="stretch-to-fit-preserve-aspect">
+				</Image>
+
+				<Panel class="spawnselect-hexes-tablet" id="spawnselect-tablet" clampfractionalpixelpositions="false">
+					                                                                         
+				</Panel>
+
+				<Panel id="spawnselect-map-labels" class="spawnselect-maplabels" >
+					                                                                        
+				</Panel>
+
+				<Panel class="spawnselect-hexes" id="spawnselect-tiles">
+					                                                                      
+				</Panel>
+
+			</Panel>
+		</Panel>
+	</CSGOSurvivalSpawnSelect>
+</root>

@@ -7,11 +7,11 @@
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/friendtile.js" />
+		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/friendlobby.js" />
 		<include src="file://{resources}/scripts/friendslist.js" />
 		<include src="file://{resources}/scripts/common/teamcolor.js" />
 		<include src="file://{resources}/scripts/avatar.js" />
-		<include src="file://{resources}/scripts/matchmaking_status.js" />
 		<include src="file://{resources}/scripts/party.js" />
 	</scripts>
 
@@ -50,29 +50,8 @@
 		<Panel id="PartyList" class="party-list hidden">
 			<Panel id="MatchStatusBackground" class="party-list__bg"/>
 			<Panel class="top-bottom-flow full-width">
-
 				                                                
-				<Panel id="MatchStatusContainer" class="top-bottom-flow full-width hidden">
-
-					<Panel id="MatchStatusWait" class="left-right-flow">
-						<Label id="MatchStatusWaitLabel" class="party-status-header" html="true" text=""/>
-					</Panel>
-
-					<Panel id="MatchStatusSearching" class="left-right-flow" >
-						<Panel class="party-status-left">
-							<Image id="MatchStatusFailIcon" class="vertical-center horizontal-center warningColor hidden" texturewidth="36" textureheight="-1" src="file://{images}/icons/ui/warning.svg"/>
-							<Label id="MatchStatusTime" class="party-status-time" text="00:00"/>
-						</Panel>
-						<Label id="MatchStatusSearchingLabel" class="party-status-header" html="true" text=""/>
-					</Panel>
-
-					<Panel id="MatchStatusWarning" class="left-right-flow" >
-						<Panel class="party-status-left">
-							<Image class="vertical-center horizontal-center warningColor" texturewidth="36" textureheight="-1" src="file://{images}/icons/ui/warning.svg"/>
-						</Panel>
-						<Label id="MatchStatusWarningLabel" class="party-status-header" text=""/>
-					</Panel>
-				</Panel>
+				<Frame id="MatchStatusContainer" class="matchmaking-status-container" src="file://{resources}/layout//matchmaking_status.xml"/>
 				<Panel class="friendslist__seperator"/>
 
 				                                   
@@ -221,7 +200,6 @@
 				<Panel id="JsFriendsListSettings" class="friendslist-navbar friendslist-navbar--tab-settings expand">
 					<Panel class= "horizontal-align-left vertical-center left-right-flow" >
 							<RadioButton id="JsFriendsList-lobbies-toolbar-button-competitive"
-								selected="true"
 								group="JsFriendsList-lobbies-toolbar-button-modegroup"
 								class="IconButton friendslist-navbar-lobby-button" onactivate="friendsList.SetLobbiesTabListFilters( 'competitive' );"
 								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-competitive', '#SFUI_GameMode_competitive' );"
@@ -234,6 +212,13 @@
 								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-scrimcomp2v2', '#SFUI_GameMode_scrimcomp2v2' );"
 								onmouseout="UiToolkitAPI.HideTextTooltip();">
 								<Image src="file://{images}/icons/ui/scrimcomp2v2.svg"/>
+							</RadioButton>
+							<RadioButton id="JsFriendsList-lobbies-toolbar-button-survival"
+								group="JsFriendsList-lobbies-toolbar-button-modegroup"
+								class="IconButton friendslist-navbar-lobby-button" onactivate="friendsList.SetLobbiesTabListFilters( 'survival' );"
+								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-survival', '#SFUI_GameMode_survival' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+								<Image src="file://{images}/icons/ui/survival.svg"/>
 							</RadioButton>
 							<Panel class="friendslist-navbar-spacer-fit-width"/>
 							<Button id="JsFriendsList-lobbies-toolbar-button-info"

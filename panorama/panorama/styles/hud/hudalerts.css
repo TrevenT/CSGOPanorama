@@ -44,6 +44,14 @@ CSGOHudAlerts
 	text-shadow-fast: 1px 1px #00000088;
 }
 
+                                                                                                                                  
+                                                                                               
+                                                                                                       
+.Language_vietnamese #AlertText 
+{
+	font-family: 'Arial', 'Arial Unicode MS';
+}
+
 .MatchStartAlert
 {
 	color: #e10000;

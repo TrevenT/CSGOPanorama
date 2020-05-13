@@ -43,11 +43,8 @@
 				<RadioButton id="JsControlScene" group="nav" onactivate="NavigateToTab('ControlsLibScenePanel','JsControlScene');">
 					<Label text="Scene"/>
 				</RadioButton>
-				<RadioButton id="JsControlCharCt" group="nav" onactivate="NavigateToTab('ControlsLibCharacterCTPanel', 'JsControlCharCt')">
-					<Label text="Character-CT"/>
-				</RadioButton>
-				<RadioButton id="JsControlCharT" group="nav" onactivate="NavigateToTab('ControlsLibCharacterTPanel','JsControlCharT')">
-					<Label text="Character-T"/>
+				<RadioButton id="JsControlCanvas" group="nav" onactivate="NavigateToTab('ControlsLibCanvas','JsControlCanvas');">
+					<Label text="Canvas"/>
 				</RadioButton>
 				<RadioButton id="JsControlOther" group="nav" onactivate="NavigateToTab('ControlsLibOther', 'JsControlOther')">
 					<Label text="Other"/>
@@ -245,9 +242,14 @@
 						<Button class="PopupButton" onactivate="OnPopupCustomLayoutMatchAccept()">
 							<Label text="Accept Match"/>
 						</Button>
-
 						<Button class="PopupButton" onactivate="OnPopupCustomLayoutLoadingScreen()">
 							<Label text="Team Seclect"/>
+						</Button>
+						<Button class="PopupButton" onactivate="OnPopupCustomLayoutWeaponUpdate()">
+							<Label text="New Weapon"/>
+						</Button>
+						<Button class="PopupButton" onactivate="OnPopupCustomLayoutSurvivalEndOfMatch()">
+							<Label text="Survival End Of Match"/>
 						</Button>
 					</Panel>
 					
@@ -581,6 +583,23 @@
 					
 			</Panel>
 
+			                   
+			<Panel id="ControlsLibCanvas" class="ControlsLib left-right-flow" >
+				<UICanvas id="Canvas1" class="TestCanvas" allowDrawing="true"/>
+
+				<Panel class="top-bottom-flow">
+					<Button id="" class="FlatButton" onactivate='SetCanvasDrawColorCT();'>
+						<Label  id="" text="CT"/>
+					</Button>
+					<Button id="" class="FlatButton" onactivate='SetCanvasDrawColorT();'> 
+						<Label  id="" text="T"/>
+					</Button>
+					<Button id="" class="FlatButton" onactivate='ClearCanvas();'>
+						<Label  id="" text="Clear"/>
+					</Button>
+				</Panel>
+
+			</Panel>
 
 			                  
 			<Panel id="ControlsLibOther" class="ControlsLib">
@@ -802,19 +821,25 @@
 
 			                       
 			<Panel id="ControlsLibBackgroundTest" class="ControlsLib">
-				<Panel class="top-bottom-flow">
-					<Panel class="bg-test-no-alpha">
-						<Label text="Background opacity set. image does not have alpha. Hover to test transition" ></Label>
-					</Panel>
-					<Panel class="bg-test-alpha">
-						<Label text="background opacity not set. Image has alpha"></Label>
-					</Panel>
-					<Panel class="bg-test-alpha-ignored">
-						<Label text="Both background opacity and alpha set"></Label>
-					</Panel>
+				<Panel class="left-right-flow">
+					<Panel class="top-bottom-flow FillParentFlow">
+						<Panel class="bg-test-no-alpha">
+							<Label text="Background opacity set. image does not have alpha. Hover to test transition" ></Label>
+						</Panel>
+						<Panel class="bg-test-alpha">
+							<Label text="background opacity not set. Image has alpha"></Label>
+						</Panel>
+						<Panel class="bg-test-alpha-ignored">
+							<Label text="Both background opacity and alpha set"></Label>
+						</Panel>
 
-					<Label id ="alphaedge_bk" text="Hello World\nAnimating opacity on Labels bkgnd">
-					</Label>	
+						<Label id ="alphaedge_bk" text="Hello World\nAnimating opacity on Labels bkgnd">
+						</Label>	
+					</Panel>
+					<Panel class="top-bottom-flow FillParentFlow">
+						<Label text="'_rt_tablet' render target" />
+						<Image enginertsrc="_rt_Tablet" style="width: 200px;height: 200px;" />
+					</Panel>
 				</Panel>
 			</Panel>
 

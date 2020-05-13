@@ -1,0 +1,97 @@
+.QuickInventory
+{
+	width: 100%;
+	height: 100%;
+	vertical-align: center;
+	horizontal-align: center;
+}
+
+.QuickInventoryBackdrop
+{
+	width: 100%;
+	height: 100%;
+}
+
+.QuickInventorySegment-data
+{
+	horizontal-align:left;
+	vertical-align:top;
+	width:300px; height:250px;
+	transform: translateX(-150px) translateY(-110px);
+	flow-children: down;
+}
+
+.QuickInventorySegment-image
+{
+	horizontal-align: center;
+	margin-top:55px;
+	img-shadow: 1px 1px 20px 0.1 #222222;
+	wash-color-fast: #BBBBBB;
+}
+
+.QuickInventorySegment--hover .QuickInventorySegment-image
+{
+	wash-color-fast: #FFFFFF;
+}
+
+.QuickInventorySegment-text
+{
+	horizontal-align: center;
+	vertical-align: top;
+	width: 150px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: #DDDDDDFF;
+	font-size: 18px;
+	text-align: center;
+	text-shadow:1px 1px 1px #000000;
+}
+
+.QuickInventorySegment--hover .QuickInventorySegment-text
+{
+	color: #FFFFFFFF;
+}
+
+.QuickInventorySegment
+{
+	width: 950px;
+	height: 950px;
+	horizontal-align: center;
+	vertical-align: center;
+	
+	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #4c4c4c00 ),
+	color-stop(0.05, #4c4c4c00),
+	color-stop(0.05, #4c4c4c00),
+	color-stop(0.19, #4c4c4c00),
+	color-stop(0.19, #4c4c4cAA),
+	color-stop(0.20, #4c4c4cAA),
+	color-stop(0.20, #111111AA),
+	color-stop(0.44, #000000AA),
+	color-stop(0.44, #4c4c4cAA),
+	color-stop(0.45, #4c4c4cAA),
+	color-stop(0.45, #4c4c4c00),
+	to( #00000000 ) );
+	
+	transition-property: background-color;
+	transition-duration: 0.05s;
+	transition-timing-function: ease-in-out;
+}
+
+.QuickInventorySegment.QuickInventorySegment--hover
+{
+	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #4c4c4c00 ),
+	color-stop(0.05, #4c4c4c00),
+	color-stop(0.05, #4c4c4c55),
+	color-stop(0.18, #4c4c4c55),
+	color-stop(0.18, #4c4c4cED),
+	color-stop(0.19, #4c4c4cED),
+	color-stop(0.19, #333333ED),
+	color-stop(0.46, #000000ED),
+	color-stop(0.46, #4c4c4cED),
+	color-stop(0.49, #4c4c4cED),
+	color-stop(0.49, #4c4c4c00),
+	to( #00000000 ) );
+	
+	transform: scale3d( 1.008, 1.008, 1 );
+}

@@ -66,6 +66,24 @@
     border: 2px solid #000000FF;
 }
 
+.HudSpecplayerRoot__playercolor
+{
+    visibility:collapse;
+
+    x: 0px;
+    y: 0px;
+    width: 32px;
+    height: 16px;
+    horizontal-align: center;
+    vertical-align: top;
+    img-shadow: 0px 0px 1px 1.0 #000000CC;
+}
+
+.HudSpecplayerRoot__playercolor--show
+{
+    visibility:visible;
+}
+
 .HudSpecplayerRoot__avatardefault
 {
     y: 4px;
@@ -114,6 +132,14 @@
     text-shadow: 1px 1px 1px 1.0 black;
     color: #DDDDDDFF;
     text-overflow: shrink;
+}
+
+                                                                                                 
+                                                                         
+.Language_vietnamese .HudSpecplayer__player-name,
+.Language_vietnamese .HudSpecplayer__Stats_DamageTaken
+{
+	font-family: ForceStratum2, 'Arial Unicode MS';
 }
 
 .HudSpecplayer__Stats_DamageTaken--Hidden

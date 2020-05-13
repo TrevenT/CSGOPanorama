@@ -87,6 +87,19 @@ CSGOMapOverview Label
 	-s2-mix-blend-mode: normal;
 }
 
+#MapOverview__DangerZone
+{
+	width: MapOverview_VisSize;
+	height: MapOverview_VisSize;
+	
+	horizontal-align: center;
+	vertical-align: center;	
+
+	visibility: collapse;
+
+	-s2-mix-blend-mode: normal;
+}
+
 .Map
 {
 	width: 100%;
@@ -298,26 +311,20 @@ CSGOMapOverview Label
     text-shadow: 0px 0px 1px 2.0 black;
 }
 
-.PI_TextCT
+.player-team-ct .PI_TextName
 {
 	width: 256px;
 	text-align: right;
 	x: -64px;
 	y: -14px;
-		
-	color: #51d8ff;
-
-    text-shadow: 0px 0px 2px 2.5 #00000033;
+	text-shadow: 0px 0px 2px 2.5 #00000033;
 }
 
-.PI_TextT
+.player-team-t .PI_TextName
 {
 	x: 206px;
 	y: 12px;
-
-	color: #ffe324;	
-
-    text-shadow: 0px 0px 2px 2.5 #00000033;
+	text-shadow: 0px 0px 2px 2.5 #00000033;
 }
 
 #HostageTransitOnMap

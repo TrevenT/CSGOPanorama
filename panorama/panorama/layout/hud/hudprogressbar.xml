@@ -16,7 +16,7 @@
           
           <Panel class="hud-progress-bar-circle-background" />
           <Panel class="hud-progress-bar-circle-animator progress-bar-animating" progress-animation="circle-full-to-empty" />
-          <Image id="ActionIcon" src="file://{images}/icons/equipment/defuser.svg" class="hud-progress-bar-circle-icon" textureheight="60px" texturewidth="-1" scaling="none" />
+          <Image id="ActionIcon" src="file://{images}/icons/equipment/defuser.svg" class="hud-progress-bar-circle-icon" scaling="stretch-to-fit-preserve-aspect" />
           
                                                                        
           <Panel class="hud-progress-bar-circle-border-inner" />

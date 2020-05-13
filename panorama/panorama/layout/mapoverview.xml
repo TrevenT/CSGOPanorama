@@ -19,12 +19,9 @@
 					<Image id="HostageOnMap" class="PI_HostageOnMap" src="file://{images}/hud/radar/mapoverview/icon-hostage-on-map.png"/>
 					<Image id="HostageDeath" class="PI_Death" src="file://{images}/hud/radar/mapoverview/icon-hostage-death.png"/>
 					<Image id="HostageGhost" class="PI_Ghost" src="file://{images}/hud/radar/icon-hostage-ghost.png"/>
-`					<Image id="CTOnMap" class="PI_OnMap" src="file://{images}/hud/radar/mapoverview/icon-ct-on-map.png"/>
-					<Image id="CTDeath" class="PI_Death" src="file://{images}/hud/radar/mapoverview/icon-ct-death.png"/>
-					<Image id="CTGhost" class="PI_Ghost" src="file://{images}/hud/radar/icon-ct-ghost.png"/>
-					<Image id="TOnMap" class="PI_OnMap" src="file://{images}/hud/radar/mapoverview/icon-t-on-map.png"/>
-					<Image id="TDeath" class="PI_Death" src="file://{images}/hud/radar/mapoverview/icon-t-death.png"/>
-					<Image id="TGhost" class="PI_Ghost" src="file://{images}/hud/radar/icon-t-ghost.png"/>
+`					<Image id="PlayerOnMap" class="PI_OnMap" src="file://{images}/icons/ui/map_onmap.svg"/>
+					<Image id="PlayerDeath" class="PI_Death" src="file://{images}/hud/radar/mapoverview/icon-death_black.svg"/>
+					<Image id="PlayerGhost" class="PI_Ghost" src="file://{images}/icons/ui/map_ghost.svg"/>
 					<Image id="DirectionalIndicator" scaling="stretch-to-fit-preserve-aspect" src="file://{images}/hud/radar/icon-direction-indicator.png"/>
 					<Image id="MuzzleFlash" src="file://{images}/hud/radar/mapoverview/icon-muzzle-flash.png"/>
 					<Image id="LowHealth" src="file://{images}/hud/radar/mapoverview/icon-player-low-health.png"/>
@@ -46,8 +43,7 @@
 					<Image id="Flashed" src="file://{images}/hud/radar/mapoverview/icon-flashed.png"/>
 
 					<Label id="PlayerNumber" class="PI_Text PI_Text_Number"/>
-					<Label id="PlayerNameCT" class="PI_Text PI_TextCT"/>
-					<Label id="PlayerNameT" class="PI_Text PI_TextT"/>
+					<Label id="PlayerName" class="PI_Text PI_TextName"/>
 				</Panel>
 
 			</Panel>
@@ -74,6 +70,11 @@
 
   		<Panel id="MapOverview__Square">
 				<Image id="MapOverview__Map"/>
+				
+				            
+				<Image id="MapOverview__DangerZone" enginertsrc="_rt_ZoneProjectionSpectator" scaling="stretch" />
+				            
+				
 				                                       
 
         <Panel id="HotKeyLabelContainer" class="MapOverview__key-hints">

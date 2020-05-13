@@ -21,13 +21,13 @@
       </Panel>
       <Panel id="HotKeyLabelContainer" class="HudSpecplayer__key-hints">
         <Label id="HotKey_ControlBot" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Control_Bot" />
-        <Label id="HotKey_XRay" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_ToggleXRay" />
+        <Label id="HotKey_XRay" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_New_ToggleXRay" />
         <Label id="HotKey_CancelReplay" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Cancel_Replay" />
         <Label id="HotKey_Arrows" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Arrows" />
         <Label id="HotKey_Camera" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Camera" />
         <Label id="HotKey_Map" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_ToggleOverview" />
-        <Label id="HotKey_CameramanOn" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Cameraman_On" />
-        <Label id="HotKey_DirectorOn" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Director_On" />
+        <Label id="HotKey_CameramanOn" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_New_Cameraman_On" />
+        <Label id="HotKey_DirectorOn" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_New_Director_On" />
         <Label id="HotKey_ReplayLastKill" class="HudSpecplayer__key-hints-text" html="true" text="#PANOHUD_Spectate_Navigation_Replay_Death" />
       </Panel>
 
@@ -89,8 +89,9 @@
           </Panel>
         </Panel>
         <Image id="PlayerAvatarDefault" class="HudSpecplayerRoot__avatar HudSpecplayerRoot__avatardefault" src="file://{images}/hud/teamcounter/teamcounter_alivebgCT.png" />
-        <CSGOAvatarImage id="PlayerAvatar" class="HudSpecplayerRoot__avatar"/>
-   
+        <CSGOAvatarImage id="PlayerAvatar" class="HudSpecplayerRoot__avatar">
+          <Image id="PlayerAvatarColor" class="HudSpecplayerRoot__playercolor" src="file://{images}/hud/teamcounter/teamcounter_playercolor.png" />
+        </CSGOAvatarImage>
       </Panel>
       <ItemImage id="PlayerAvatarDisplayItem" class="HudSpecplayerRoot__avatardisplay" small="true" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" texturewidth="64" scaling="stretch-to-fit-preserve-aspect" />
     </Panel>

@@ -84,7 +84,7 @@ var Avatar = ( function()
 			return;
 		}
 
-		if( TeamColor )
+		if( typeof TeamColor !== 'undefined' )
 		{
 			var rgbColor = TeamColor.GetTeamColor( Number( teamColor ) );
 			

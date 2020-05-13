@@ -9,6 +9,9 @@
     <Panel id="MoneyBG" class="money-text-bg"/>
     <Panel class="money-text">
       <Label class="money-text-label cl-hud-wash-color" text="${d:r:hud-money-amount}"/>
+                  
+      <CSGOSurvivalZoneMoneyProgress id="SurvivalZoneMoneyProgress" class="hidden"/>
+			            
 			<Image class="money-text-buy-icon cl-hud-wash-color" src="file://{images}/icons/ui/buyzone.svg" />
     </Panel>
 

@@ -363,34 +363,34 @@ CSGOHudRadar Label
 
 .PI_Above
 {
-	              
-	               
+	width: 13px;
+	height: 7px;
 
 	y: 8px;                                            
-	x: 0px;
+	x: -1px;
 
     horizontal-align: center;
 	vertical-align: center;	
 
     wash-color:#CCCCCCCC;
 
-	opacity: 0.85;
+	opacity: 0.65;
 }
 
 .PI_Below
 {
-	              
-	               
+	width: 13px;
+	height: 7px;
 
 	y: -8px;                                            
-	x: 0px;
+	x: -1px;
 
     horizontal-align: center;
 	vertical-align: center;	
 
     wash-color:#CCCCCCCC;
 
-	opacity: 0.85;
+	opacity: 0.65;
 }
 
 .PI_EnemyOnMap

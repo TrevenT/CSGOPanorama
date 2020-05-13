@@ -38,9 +38,9 @@
     $.DefineEvent( 'EndOfMatch_GetFreeForAllTopThreePlayers_Response', 3, 'first, second, third', "Callback for Scoreboard_GetFreeForAllTopThreePlayers" );
     $.DefineEvent( 'Scoreboard_GetFreeForAllPlayerPosition', 1, 'xuid', "Given a player index and an xuid, returns top three players on that player's team" );
     $.DefineEvent( 'EndOfMatch_GetFreeForAllPlayerPosition_Response', 1, 'position', "Callback for Scoreboard_GetFreeForAllPlayerPosition" );
-           
+              
                                                                                               
-           
+              
     $.DefineEvent( 'Scoreboard_UnborrowMusicKit', 0, '', "Cancel Music Kit borrowing" );
 
     $.DefineEvent( 'Scoreboard_Casualties_OnMouseOver', 0, '', '' );

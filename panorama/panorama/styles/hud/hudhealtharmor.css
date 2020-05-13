@@ -15,6 +15,13 @@ CSGOHudHealthArmor Label
     font-family: Stratum2, 'Arial Unicode MS';
 }
 
+                                                                                                 
+                                                                         
+.Language_vietnamese CSGOHudHealthArmor Label 
+{
+	font-family: ForceStratum2, 'Arial Unicode MS';
+}
+
                                                                                
                                                                                
                                                                                
@@ -148,7 +155,7 @@ CSGOHudHealthArmor Label
                   
     height: 100%;
     visibility: visible;
-    -s2-mix-blend-mode: normal;  
+    -s2-mix-blend-mode: normal;
 }
 
 .hud-HA-icon--helmet
@@ -312,5 +319,40 @@ ProgressBar
 .hud-HA--critical  .hud-HA-bar--health .ProgressBarLeft
 {
     background-color: red;
+}
+
+.hud-HA-armor--pickup .hud-HA-armor
+{
+    animation-name: hud-HA-armor--pickup;
+    animation-duration: 0.4s;
+    animation-timing-function: linear;
+    animation-iteration-count: 6;
+}
+
+@keyframes hud-HA-armor--pickup
+{
+    0% {
+		opacity: 1;
+		brightness: 1;
+    }
+    49% {
+		opacity: 1;
+		brightness: 1;
+		transform: scale3d( 1.0, 1.0, 1.0 );
+    }
+    50% {
+		opacity: 0.5;
+		brightness: 4;
+		transform: scale3d( 1.2, 1.2, 1.2 );
+    }
+    99% {
+		opacity: 0.5;
+		brightness: 2;
+		transform: scale3d( 1.0, 1.0, 1.0 );
+    }
+    100% {
+		opacity: 1;
+		brightness: 1;
+    }
 }
 

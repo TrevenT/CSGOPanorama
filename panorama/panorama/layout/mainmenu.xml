@@ -14,14 +14,15 @@
 	<snippets>
 		<snippet name="MainMenuMovieSnippet">
 			<Panel>
+				                                 
+				                                                                                                              
 				<Movie class="mainmenu-movie MainMenuModeOnly" 
 					id="MainMenuMovie"
-					src="file://{resources}/videos/nuke.webm"
-					sound="UIPanorama.BG_Inferno"
-					controls="none" 
+					src=""
+					sound=""
+					controls="none"
 					repeat="true"
-					hittest="false"
-					data-type="nuke">
+					hittest="false">
 				</Movie>
 			</Panel>
 		</snippet>
@@ -53,6 +54,11 @@
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      
 						<CSGOBackbufferImagePanel class="full-width full-height PauseMenuModeOnly" />
+
+						            
+						                                                       
+						            
+						
 						            
 						<Panel id="MainMenuMovieParent">
 							                                                                                      
@@ -74,6 +80,7 @@
 						                                                                                    
 					</Panel >
 				</CSGOBlurTarget>
+
 
 				<CSGOBlurTarget id="MainMenuNavBarLeft" class="mainmenu-navbar-container" blurrects="CSGOLoadingScreen">
 	
@@ -166,7 +173,7 @@
 									onactivate="MainMenu.NavigateToTab('JsOverwatch', 'mainmenu_overwatch');"
 									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarOverwatch', '#tooltip_navbar_overwatch' );"
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
-							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/shield.svg" />
+							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/overwatch.svg" />
 							<Panel id="MainMenuOverwatchAlert" class="navbar-btn__notification overwatch">
 								<Label id="MainMenuOverwatchAlertText" class="navbar-btn__notification-text" text="+"/>
 							</Panel>
@@ -181,7 +188,7 @@
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/settings.svg" />
 						</RadioButton>
 						                                          
-						            
+						               
 						                                        
 									                                                         
 									              
@@ -190,9 +197,9 @@
 									                                             
 							                                                                                     
 						              
-						            
+						               
 						                                   
-						            
+						               
 						                                    
 									                                                        
 									              
@@ -201,9 +208,9 @@
 									                                             
 							                                                                                       
 						              
-						            
+						               
 						                                         
-						            
+						               
 						                                          
 									                                                        
 									              
@@ -212,7 +219,7 @@
 									                                             
 							                                                                                     
 						              
-						            
+						               
 		
 						<Panel class="vertical-align-bottom horizontal-center">
 							                                            

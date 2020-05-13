@@ -1266,6 +1266,14 @@ CSGOHudTeamCounter Label
  
   
 
+                                                                                                                                  
+                                                                                               
+                                                                                                       
+.Language_vietnamese CSGOHudTeamCounter .JoinPanel Label 
+{
+	font-family: 'Arial', 'Arial Unicode MS';
+}
+
 #JoinTextCT
 {
     font-size: 18px;

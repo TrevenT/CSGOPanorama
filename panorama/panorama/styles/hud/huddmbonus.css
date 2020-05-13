@@ -249,7 +249,7 @@
         wash-color-fast:#ff0000;
     }
     100% {
-        clip:radial(50% 50%, 0deg, 360deg);
+        clip:radial(50% 50%, -180deg, 360deg);
         wash-color-fast:#ff0000;
     }
 }

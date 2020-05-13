@@ -1,0 +1,317 @@
+.spawnselect
+{
+    height:100%;
+    width:100%;
+	
+	transition-property: transform, opacity;
+	transition-duration: 1.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.spawnselect-blurtarget
+{
+	height: 100%;
+	width: 100%;
+	brightness: .3;
+	blur: fastgaussian( 6, 6, 3);
+
+	transition-property: brightness, blur;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+.spawnselect-blurtarget-background
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( rgba(0, 0, 0, 0) ),  to( rgba(0, 0, 0, 0.7) ) );
+}
+
+.spawnselect-layout
+{
+    height:85%;
+    width:817.5px;
+    flow-children:down;
+    vertical-align: center;
+    horizontal-align: center;
+    border: 2px solid black;
+    border-radius: 3px;
+	
+	opacity: 0.0;
+	transform: scaleX( 1.02 ) scaleY( 1.02 );
+	transition-property: transform, opacity;
+	transition-duration: 0.8s;
+	transition-timing-function: cubic-bezier(1.000, 0.000, 0.610, 1.000);
+}
+
+.spawnselect--PopOut
+{
+	opacity: 1.0;
+	transform: scaleX( 1 ) scaleY( 1 );
+}
+
+.spawnselect--FadeOut
+{
+	opacity: 0.0;
+	transform: scaleX( 1.2 ) scaleY( 1.2 );
+}
+
+.spawnselect-toprow
+{
+    background-image: url( "file://{images}/survival/spawnselect/stripe_bg.png" );
+                                  
+    width:100%;
+    height:fit-children;
+    padding: 10px 0px 20px 0px;
+}
+
+.spawnselect-toprow-title
+{
+    horizontal-align: left;
+    vertical-align: center;
+    font-family: Stratum2, 'Arial Unicode MS';
+    color: #07dd07;
+    font-size: 28px;
+    padding-left: 10px;
+                        
+}
+
+.spawnselect-toprow-info {
+    margin: 45px 0px 0px 0px;
+    horizontal-align: left;
+    vertical-align: bottom;
+    flow-children: right;
+    padding-left: 10px;
+}
+
+.spawnselect-ready-count,
+.spawnselect-not-ready
+{
+    color: rgb(206, 206, 206);
+    font-family: Stratum2, 'Arial Unicode MS';
+    font-size: 16px;
+                           
+}
+
+.spawnselect-not-ready
+{
+	margin-left: 35px;
+}
+
+.spawnselect--local-player-ready .spawnselect-not-ready
+{
+    visibility:collapse;
+}
+
+.spawnselect-timer
+{
+    horizontal-align:right;
+    width: 60px;
+    height: 60px;
+                                 
+    opacity:0;                                       
+    margin: 10px 20px 0px 0px;
+}
+
+.spawnselect--stage-selection .spawnselect-timer
+{
+    opacity:1;
+}
+
+.spawnselect-timer-circle-background
+{
+    margin:5px;
+    width: 100%;
+    height: 100%;  
+                     
+    border: 4px solid #ffffff05;
+    border-radius: 50%;
+}
+
+.spawnselect-timer-circle {
+    margin:5px;
+    width: 100%;
+    height: 100%;  
+    border: 4px solid #ffffff79;
+    border-radius: 50%;
+    animation-name: spawnselect-timerbar-animation;
+    animation-duration:30s;
+    animation-timing-function:linear;
+    animation-iteration-count:1;
+}
+
+@keyframes 'spawnselect-timerbar-animation'
+{
+    0% {
+        clip:radial(50% 50%, 0deg, 0deg);
+    }
+    100% {
+        clip:radial(50% 50%, 0deg, 360deg);
+    }
+}
+
+.spawnselect-timer-text {
+	color: #ffffff79;
+    font-family: Stratum2, 'Arial Unicode MS';
+    font-size: 24px;
+    font-weight: bold;
+    vertical-align: middle;
+    horizontal-align: center;
+    line-height: 0px;
+    padding: 0px 0px 0px 2px;
+}
+
+.map-location-container
+{
+	padding-left: -50%;
+	padding-top: -50%;
+	width: 256px;
+	height: 256px;
+}
+
+.map-location-label
+{
+	opacity: 0.90;
+	text-shadow: 0px 0px 2px 4 #000000;
+	color: #dddddd;
+	font-size: 15px;
+	text-align: center;
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+.spawnselect-map
+{
+    height: fill-parent-flow(1.0);
+    width: height-percentage(100%);
+    opacity:1;
+}
+
+.spawnselect-blursrc        { height:100%; width: 100%; }
+
+.spawnselect-mapimage       { height:100%; width: 100%; }
+.spawnselect-hexes          { height:100%; width: 100%; overflow: clip clip; }
+.spawnselect-hexes-tablet {
+    height: 100%;
+    width: 100%;
+    overflow: clip clip;
+    opacity: 0;
+
+    transition-property: opacity;
+    transition-duration: 1.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.spawnselect--stage-ready .spawnselect-hexes-tablet
+{
+    opacity: 1;
+}
+
+.spawnselect-map-hex-holder
+{
+
+}
+
+.spawnselect-map-hex-button
+{
+    height:100%;
+    width:100%;
+}
+
+.spawnselect-map-hex {
+                                                                             
+                           
+                              
+                  
+                   
+                                 
+
+                                                                   
+                         
+                            
+                  
+                   
+                                 
+
+                            
+    margin-left: -50%;
+    margin-right: -50%;
+    margin-top: -75%;
+    margin-bottom: -75%;
+    width: 200%;
+    height: 250%;
+    background-size: 100% 100%;
+}
+
+.tile--enabled .spawnselect-map-hex
+{
+                  
+}
+.tile--enabled .spawnselect-map-hex-button
+{
+                           
+}
+.tile--enabled .spawnselect-map-hex-button:hover .spawnselect-map-hex
+{
+    background-image:url("file://{images}/survival/spawnselect/hex-hover.png");                    
+   	-s2-mix-blend-mode: additive;
+}
+
+.tile--disabled .spawnselect-map-hex
+{
+                  
+}
+
+.tile--selected-local-player .spawnselect-map-hex
+{
+    background-image:url("file://{images}/survival/spawnselect/hex-selected.png");                    
+}
+
+.tile--selected-local-teammate .spawnselect-map-hex
+{
+    background-image:url("file://{images}/survival/spawnselect/hex-selected-teammate.png");                    
+}
+
+.tile--selected-other-player .spawnselect-map-hex
+{
+    background-image:url("file://{images}/survival/spawnselect/hex-opponent.png");                    
+}
+
+.spawnselect-tablet-hex-holder
+{
+
+}
+
+.spawnselect-tablet-hex {
+                                                    
+    margin-top: -16.666%;
+    margin-bottom: -16.666%;
+    width: 100%;
+    height: 133%;
+}
+
+.spawnselect-tablet-hex-image {
+                                                                            
+                                                                           
+    margin-top: -0.341296928%;
+    margin-bottom: -0.341296928%;
+    background-size: 100% 100%;
+    height: 100.682593857%;
+    width: 100%;
+
+    background-image:url("file://{images}/survival/spawnselect/tablet-hex.png");                    
+}
+
+
+.tablet-tile--full.spawnselect-tablet-hex-holder
+{
+                                                                    
+                                        
+    z-index:1;
+}
+
+.tablet-tile--full .spawnselect-tablet-hex-image {
+    background-image:url("file://{images}/survival/spawnselect/tablet-hex-selected.png");                    
+}
+
+

@@ -1,0 +1,111 @@
+.featured-parent
+{
+	                                           
+	
+	width: 100%;
+	height: fill-parent-flow( .50 );
+    background-color: none;
+                                                
+	margin-bottom: 16px;
+}
+
+.featured__survival-movie
+{
+    width: height-percentage( 100% );
+    height: 99%;
+    horizontal-align: center;
+    vertical-align: center;
+    background-image: url( "file://{resources}/videos/survival_promo.webm" );
+    background-size: auto 100%;
+    opacity-mask: url( "file://{images}/masks/hex.png" );
+}
+
+.featured__survival-hex-outline
+{
+    width: height-percentage( 100% );
+    height: 100%;
+    horizontal-align: center;
+    vertical-align: center;
+}
+
+.featured__survival-title-parent
+{
+    horizontal-align: center;
+    vertical-align: top;
+    margin-top: 310px;
+    flow-children: down;
+}
+
+.featured__survival-title
+{
+    color: black;
+    font-size: 72px;
+    font-weight: medium;
+    letter-spacing: 18px;
+    horizontal-align: center;
+    text-align: center;
+    blur: gaussian( 4, 4, 0 );
+    text-transform: uppercase;
+
+    transition-property: transform, blur;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+.featured__survival-title-red
+{
+    color: rgb(153, 0, 0);
+    opacity: .8;
+}
+
+.featured__survival-title-dark
+{
+    color: rgb(36, 36, 36);
+    opacity: .8;
+}
+
+.featured-parent:hover
+{
+                                       
+}
+
+.featured-parent:hover .featured__survival-title-dark
+{
+    transform: translateX( 6px);
+    blur: gaussian( 1, 1, 1 );
+
+    transition-property: transform;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+.featured-parent:hover .featured__survival-title-red
+{
+    transform: translateX( -6px);
+    blur: gaussian( 1, 1, 1 );
+
+    transition-property: transform, blur;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+
+
+.featured__survival-desc
+{
+    font-size: 22px;
+    color: black;
+    horizontal-align: center;
+    text-align: center;
+    font-weight: bold;
+}
+
+.featured__survival-play 
+{
+    transform: translateY( -10px);
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+    horizontal-align: center;
+    text-align: center;
+}

@@ -175,13 +175,13 @@
 					<CSGOSettingsKeyBinder text="#SFUI_SecondaryWeapon" id="SecWpnBinder" bind="slot2"/>
 					<Panel class="horizontal-separator"/>
 
-					<CSGOSettingsKeyBinder text="#SFUI_Knifeslot" id="KnifeBinder" bind="slot3"/>
+					<CSGOSettingsKeyBinder text="#SFUI_MeleeSlotNew" id="KnifeBinder" bind="slot3"/>
 					<Panel class="horizontal-separator"/>
 
 					<CSGOSettingsKeyBinder text="#SFUI_CycleGrenades" id="CycleGrenadesBinder" bind="slot4"/>
 					<Panel class="horizontal-separator"/>
 
-					<CSGOSettingsKeyBinder text="#SFUI_BombSlot" id="BombBinder" bind="slot5"/>
+					<CSGOSettingsKeyBinder text="#SFUI_BombSlotNew" id="BombBinder" bind="slot5"/>
 					<Panel class="horizontal-separator"/>
 
 					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_HE_Grenade" id="HEGrenadeBinder" bind="slot6"/>
@@ -202,6 +202,12 @@
 					<CSGOSettingsKeyBinder text="#SFUI_TaserSlot" id="ZeusBinder" bind="slot11"/>
 					<Panel class="horizontal-separator"/>
 
+					<CSGOSettingsKeyBinder text="#SFUI_BoostSlot" id="BoostBinder" bind="slot12"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_UtilitySlot" id="UtilityBinder" bind="slot13"/>
+					<Panel class="horizontal-separator"/>
+
 					<CSGOSettingsKeyBinder text="#SFUI_SprayMenu" id="GraffitiBinder" bind="+spray_menu"/>
 					<Panel class="horizontal-separator"/>
 
@@ -214,6 +220,9 @@
 					<Label class="SettingsSectionTitleLabel" text="#settings_comm_binds_section" />
 				</Panel>
 				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_CommonRadio" id="CommonRadioBinder" bind="radio"/>
+					<Panel class="horizontal-separator"/>
 
 					<CSGOSettingsKeyBinder text="#SFUI_CommandRadio" id="CmdRadioBinder" bind="radio1"/>
 					<Panel class="horizontal-separator"/>

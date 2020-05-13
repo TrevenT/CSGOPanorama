@@ -33,6 +33,13 @@ CSGOHudReticle Label
 	font-family: Stratum2, 'Arial Unicode MS';
 }
 
+                                                                                                 
+                                                                         
+.Language_vietnamese CSGOHudReticle Label 
+{
+	font-family: ForceStratum2, 'Arial Unicode MS';
+}
+
                                                                                
                                                                                
                                                                                
@@ -476,4 +483,16 @@ CSGOHudReticle Label
 {
     -s2-mix-blend-mode: normal;
 	wash-color-fast: #eecb2aAA;
+}
+
+                     
+.playerid--team-survival .playerid__icon--arrow
+{
+	wash-color-fast: rgb(0, 195, 225);
+}
+
+.playerid--team-survival .playerid__icon--arrowborder
+{
+    -s2-mix-blend-mode: normal;
+	wash-color-fast: rgb(0, 100, 255);
 }

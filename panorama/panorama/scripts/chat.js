@@ -155,9 +155,6 @@ var Chat = ( function ()
 			return;
 
 		var panelToClipWidth = panelToClip.actuallayoutwidth;
-		if ( panelToClipWidth <= 0 )
-			return;
-
 		var friendsListWidthWhenExpanded = panelToClip.GetParent().FindChildInLayoutFile( 'mainmenu-sidebar__blur-target' ).contentwidth;
 		
 		var sideBarWidth = noClip ? 0 : friendsListWidthWhenExpanded;

@@ -145,12 +145,14 @@
 	height: 48px;
 }
 
-.friendslist .avatar:hover:not(.avatar--party) .avatar-image__icon
+.friendslist .avatar:hover:not(.avatar--party) .avatar-image__icon,
+.eom-survival .avatar:hover:not(.avatar--party) .avatar-image__icon
 {
 	border: 3px solid white;
+	brightness: 1;
 
-	transition-property: border;
-	transition-duration: .25s;
+	transition-property: border, brightness;
+	transition-duration: .20s;
 	transition-timing-function: ease-in-out;
 }
 
@@ -176,6 +178,23 @@
 	transition-property: opacity;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+                          
+                          
+                          
+
+.avatar-survival__avatar-dead
+{
+	margin-top: 76px;
+	width: 64px;
+	height: 54px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #cc000022 ), to( #97000000 ) );
+}
+
+.avatar-survival__avatar-dead--nocolor
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #acacac22 ), to( #83838300 ) );
 }
 
   

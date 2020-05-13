@@ -11,8 +11,8 @@
 
          
                         
-                                     
-                                                
+@define AddMoneyTime--Survival: 0.7s;
+@define AddRemoveMoneyFlashTime--Survival: 0.5s;
          
 
                                                                           
@@ -35,6 +35,14 @@
     font-family: Stratum2, 'Arial Unicode MS';
     font-size: 32px;
     font-weight: bold;
+}
+
+                                                                                                 
+                                                                         
+.Language_vietnamese .money-text-label,
+.Language_vietnamese .money-anim 
+{
+	font-family: ForceStratum2, 'Arial Unicode MS';
 }
 
                                                                                
@@ -81,10 +89,15 @@
 .money-text-bg
 {
     width: 100%;
-    height: 38px;
+    height: 48px;
     vertical-align: middle;
     margin-left: 12px;
     background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.5, #000000CC ) , color-stop(0.6, #000000CC), color-stop( 0.9, #000000BB ), to( #00000000 ) );
+}
+
+.survival .money-text-bg
+{
+    height: 64px;
 }
 
 .money-text
@@ -246,84 +259,84 @@
          
 
                               
-                                    
- 
-                        
+.money-anim.money-anim__add-survival
+{
+    visibility: visible;
 
-                         
-            
-           
+    color: AddMoneyColor;
+    x: 20px;
+    y: 8px;
 
-                 
-	                                         
-	                                           
-	                                  
-	                             
- 
+    opacity: 0.0;
+	animation-name: money-anim__add-survival;
+	animation-duration: AddMoneyTime--Survival;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+}
 
-                                     
- 
-	  
-	 
-                     
-                        
-                                     
-               
-     
-       
-     
-                     
-                        
-                             
-               
-     
-       
-     
-                     
-                        
-                             
-               
-     
-	    
-	 
-                     
-                        
-                            
-               
-	 
- 
+@keyframes 'money-anim__add-survival'
+{
+	0%
+	{
+        opacity: 0.0;
+        x: AddMoneyXPos;
+        y: MoneyYPosVanished;        
+        z: 0px;
+    }
+    13%
+    {
+        opacity: 1.0;
+        x: AddMoneyXPos;
+        y: MoneyYPosModified;
+        z: 0px;
+    }
+    87%
+    {
+        opacity: 1.0;
+        x: AddMoneyXPos;
+        y: MoneyYPosModified;
+        z: 0px;
+    }
+	100%
+	{
+        opacity: 0.0;
+        x: AddMoneyXPos;
+        y: MoneyYPosAtMoney;
+        z: 0px;
+	}
+}
 
-                                          
- 
-                           
-            
-             
+.money-anim.money-anim__add-flash-survival
+{
+    color: FlashMoneyColor;
+    x: 20px;
+    y: 140px;
 
-                 
-                                                   
-	                                                      
-	                                  
-	                             
- 
+    opacity: 0.0;
+    animation-name: money-anim__add-flash-survival;
+	animation-duration: AddRemoveMoneyFlashTime--Survival;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+}
 
-                                         
- 
-	  
-	 
-		             
-                                      
-                
-                
-               
-     
-        
-     
-                     
-                                      
-                
-                
-               
-     
- 
+@keyframes money-anim__add-flash-survival
+{
+	0%
+	{
+		opacity: 1.0;
+        transform: scale3d( 1, 1, 1 );
+        x: 36px;
+        y: 40px;
+        z: 0px;
+    }
+    100%
+    {
+        opacity: 0.0;
+        transform: scale3d( 2, 2, 1 );
+        x: 36px;
+        y: 40px;
+        z: 0px;
+    }
+}
 
          

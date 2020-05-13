@@ -160,7 +160,7 @@ var matchInfo = ( function() {
             {
                 elRoundStats.RemoveClass( 'no-hover' );
                 elRoundStats.style.tooltipPosition = "bottom";
-                elRoundStats.style.tooltipBodyPosition = "50% 0%"
+                elRoundStats.style.tooltipBodyPosition = "50% 0%";
                 function _OnRoundMouseOver( elButton )
                 {
                     UiToolkitAPI.ShowTextTooltipOnPanel( elButton, $.Localize( "#CSGO_Watch_Round" ) );

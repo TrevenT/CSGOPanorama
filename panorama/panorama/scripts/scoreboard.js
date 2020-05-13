@@ -413,6 +413,9 @@ var Scoreboard = ( function()
 			{
 				var xuid = oPlayerList[ teamName ][ j ];
 
+				if ( xuid == 0 )
+					continue;
+
 				var oPlayer = _m_oPlayers.GetPlayerByXuid( xuid );
 
 				                                                    
@@ -525,6 +528,7 @@ var Scoreboard = ( function()
 			_HighlightSortStatLabel( s );
 			break;
 		}
+
 	}
 
 
@@ -1307,6 +1311,10 @@ var Scoreboard = ( function()
 			case 'flair':
 				fn = function( oPlayer, bSilent = false )
 				{
+				                                                          
+				                                                                      
+				    if ( GameStateAPI.IsLatched() )
+				        return;
 
 					var newStatValue = InventoryAPI.GetFlairItemId( oPlayer.m_xuid );
 
@@ -1400,7 +1408,7 @@ var Scoreboard = ( function()
 
 						elAvatarMuteImage.SetHasClass( 'hidden', !isMuted && !( isEnemy && isEnemyTeamMuted ) );
 
-						       
+						          
 						             
 						                                                                            
 
@@ -1420,7 +1428,7 @@ var Scoreboard = ( function()
 								                                       
 							 
 						 
-						       
+						          
 
 					}
 				}
@@ -1555,11 +1563,6 @@ var Scoreboard = ( function()
 
 			case "gungametrbomb":
 				return "snippet_scoreboard__row--demolition";
-
-			       
-			                
-				                                           
-			       
 
 			case "casual":
 				if ( skirmish == "flyingscoutsman" )
@@ -1949,7 +1952,7 @@ var Scoreboard = ( function()
 		}
 	}
 
-	       
+	          
 	                                     
 	 
 		                                          
@@ -1976,16 +1979,16 @@ var Scoreboard = ( function()
 				      
 		 
 	 
-	       
+	          
 
-	       
+	          
 	                                
 	 
 		                                                                          
 
 		                            
 	 
-	       
+	          
 
 
 
@@ -2023,9 +2026,9 @@ var Scoreboard = ( function()
 		if ( $( "#sb-meta__labels__map" ) )
 			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + GameStateAPI.GetMapBSPName() + ".svg" );
 
-		       
+	              
 		                            
-		       
+	              
 
 		if ( !GameStateAPI.IsDemoOrHltv() )
 		{
@@ -2130,7 +2133,10 @@ var Scoreboard = ( function()
   		                                 
 
 		var elTick = elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" );
-		elTick.SetHasClass( "hilite", rnd <= jsoTime[ "rounds_played" ] + 1 );
+		if ( elTick && elTick.IsValid() )
+		{
+			elTick.SetHasClass( "hilite", rnd <= jsoTime[ "rounds_played" ] + 1 );
+		}
 		
 		                                                                               
 		if ( rnd > jsoTime[ "rounds_played" ] )
@@ -2925,11 +2931,6 @@ var Scoreboard = ( function()
 	{
 		switch ( mode )
 		{
-			       
-			                
-				                          
-			       
-
 			case "gungameprogressive":            
 				return sortOrder_gg;
 
@@ -2956,6 +2957,15 @@ var Scoreboard = ( function()
 		var mode = GameStateAPI.GetGameModeInternalName( false );
 		var skirmish = GameStateAPI.GetGameModeInternalName( true );
 
+		       
+		if ( mode === 'survival' )
+		{
+			                                      
+			                                                         
+			return;
+		}
+		       
+
 		switch ( mode )
 		{
 			case "competitive":
@@ -2969,12 +2979,6 @@ var Scoreboard = ( function()
 			case "gungameprogressive":
 				scoreboardTemplate = "snippet_scoreboard--no-teams";
 				break;
-
-			       		
-			                
-				                                                    
-				      
-			       	
 
 			case "casual":
 				if ( skirmish == "flyingscoutsman" )
@@ -3047,9 +3051,6 @@ var Scoreboard = ( function()
 				_UpdateScore_Classic( bForce );
 				break;
 
-			       		
-			                
-			       
 			case "deathmatch":
 			case "gungameprogressive":
 				               
@@ -3146,7 +3147,6 @@ var Scoreboard = ( function()
 
 	function _OnEndOfMatch ()
 	{
-		_Initialize();
 		_OpenScoreboard();
 	};
 
@@ -3264,9 +3264,9 @@ var Scoreboard = ( function()
 		ToggleSetCasterControlsXray:        _ToggleSetCasterControlsXray,
 		ToggleSetCasterControlsUI:          _ToggleSetCasterControlsUI,
 
-		       
+		          
 		                                
-		       
+		          
 
 		RankRevealAll: _RankRevealAll,
 
@@ -3311,9 +3311,9 @@ var Scoreboard = ( function()
 	$.RegisterForUnhandledEvent( "Scoreboard_ToggleSetCasterControlsXray", Scoreboard.ToggleSetCasterControlsXray );
 	$.RegisterForUnhandledEvent( "Scoreboard_ToggleSetCasterControlsUI", Scoreboard.ToggleSetCasterControlsUI );
 
-	       
+	          
 	                                                                                      
-	       
+	          
 
 	$.RegisterForUnhandledEvent( "GameState_RankRevealAll", Scoreboard.RankRevealAll );
 

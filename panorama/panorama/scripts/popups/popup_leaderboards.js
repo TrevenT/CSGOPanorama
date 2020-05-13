@@ -14,15 +14,69 @@ var PopupLeaderboards = ( function()
 			return;
 		}
 
-		m_type = type;
+		var aTypes = type.split( ',' );
 
-		$.GetContextPanel().FindChildInLayoutFile( 'id-popup-leaderboard-title' ).text = $.Localize( '#CSGO_' + type );
-		_UpdateLeaderboard( type );
+		_SetTitle( aTypes[ 0 ] );
+		_SetPointsTitle();
+		_MakeTabs( aTypes );
+		_ShowGlobalRank();
+	};
+
+	var _SetTitle = function( type )
+	{
+		var titleOverride = $.GetContextPanel().GetAttributeString( 'titleoverride', '' );
+		var title = titleOverride !== '' ? titleOverride : '#CSGO_' + type;
+		$.GetContextPanel().FindChildInLayoutFile( 'id-popup-leaderboard-title' ).text = $.Localize( title );
+	};
+
+	var _SetPointsTitle = function()
+	{
+		var strPointsTitle = $.GetContextPanel().GetAttributeString( 'points-title', '' );
+		if ( strPointsTitle !== '' )
+		{
+			$.GetContextPanel().FindChildInLayoutFile( 'id-list-column-header-points' ).text = $.Localize( strPointsTitle );
+		}
+	};
+
+	var _MakeTabs = function( aTypes )
+	{
+		if ( aTypes.length <= 1 )
+		{
+			m_type = aTypes[ 0 ];
+			_UpdateLeaderboard( aTypes[ 0 ] );
+			return;
+		}
+
+		var elNavBar = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-leaderboard-navbar' );
+		elNavBar.RemoveClass( 'hidden' );
+
+		var elTabs = elNavBar.FindChild( 'id-popup-leaderboard-tabs' );
+
+		for ( var i = 0; i < aTypes.length; i++ )
+		{
+			var elTab = $.CreatePanel( "RadioButton", elTabs, aTypes[ i ] );
+			elTab.BLoadLayoutSnippet( "leaderboard-tab" );
+			elTab.SetPanelEvent(
+				'onactivate',
+				_UpdateLeaderboard.bind( undefined, aTypes[ i ] )
+			);
+
+			elTab.FindChildInLayoutFile( 'leaderboard-tab-label' ).text = $.Localize( '#CSGO_' + aTypes[ i ] + '_tab' );
+		}
+		
+		$.DispatchEvent( "Activated", elTabs.Children()[ 0 ], "mouse" );
+	};
+
+	var _ShowGlobalRank = function()
+	{
+		var showRank = $.GetContextPanel().GetAttributeString( 'showglobaloverride', 'true' );
+		$.GetContextPanel().SetHasClass( 'hide-global-rank', showRank === 'false' );
 	};
 
 	var _UpdateLeaderboard = function( type )
 	{
 		                                
+		m_type = type;
 
 		var status = LeaderboardsAPI.GetState( type );
 		                                         
@@ -51,7 +105,7 @@ var PopupLeaderboards = ( function()
 			var count = LeaderboardsAPI.GetCount( type );
 			
 			if ( count === 0 )
-		    {
+			{
 				elData.SetHasClass( 'hidden', false );
 				elStatus.SetHasClass( 'hidden', true );
 				elLeaderboardList.SetHasClass( 'hidden', true );
@@ -65,7 +119,7 @@ var PopupLeaderboards = ( function()
 				_FillOutEntries( type, count );
 			}
 			
-			if ( 3 <= LeaderboardsAPI.HowManyMinutesAgoCached( type ) )
+			if ( 1 <= LeaderboardsAPI.HowManyMinutesAgoCached( type ) )
 			{
 				LeaderboardsAPI.Refresh( type );
 			}
@@ -77,6 +131,30 @@ var PopupLeaderboards = ( function()
 		var elParent = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-leaderboard-entries' );
 		elParent.RemoveAndDeleteChildren();
 
+		function _AddOpenPlayerCardAction( elAvatar, xuid ) {
+			var openCard = function ( xuid ) {
+				                                                                                             
+				$.DispatchEvent( 'SidebarContextMenuActive', true );
+	
+				if ( xuid !== 0 )
+				{
+					var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParametersDismissEvent(
+						'',
+						'',
+						'file://{resources}/layout/context_menus/context_menu_playercard.xml',
+						'xuid=' + xuid,
+						function () {
+							$.DispatchEvent( 'SidebarContextMenuActive', false );
+						}
+					);
+					contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
+				}
+			};
+	
+			elAvatar.SetPanelEvent( "onactivate", openCard.bind( undefined, xuid ) );
+			elAvatar.SetPanelEvent( "oncontextmenu", openCard.bind( undefined, xuid ) );
+		}
+
 		for ( var i = 0; i < count; i++ )
 		{
 			var xuid = LeaderboardsAPI.GetEntryXuidByIndex( type, i );
@@ -87,6 +165,8 @@ var PopupLeaderboards = ( function()
 			elEntry.BLoadLayoutSnippet( "leaderboard-entry" );
 
 			elEntry.FindChildInLayoutFile( 'popup-leaderboard-entry-avatar' ).steamid = xuid;
+			_AddOpenPlayerCardAction( elEntry, xuid );
+
 			elEntry.FindChildInLayoutFile( 'popup-leaderboard-entry-name' ).text = FriendsListAPI.GetFriendName( xuid );
 			elEntry.FindChildInLayoutFile( 'popup-leaderboard-entry-points' ).text = score;
 			elEntry.FindChildInLayoutFile( 'popup-leaderboard-entry-rank' ).text = rank + '%';
@@ -105,7 +185,7 @@ var PopupLeaderboards = ( function()
 		_HighightMySelf();
 	};
 
-	var _HighightMySelf = function( )
+	var _HighightMySelf = function()
 	{
 		var elParent = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-leaderboard-entries' );
 		var elEntry = elParent.FindChildInLayoutFile( m_myXuid );
@@ -115,8 +195,7 @@ var PopupLeaderboards = ( function()
 			elEntry.AddClass( 'local-player' );
 			elEntry.ScrollParentToMakePanelFit( 1, false );
 		}
-		
-	}
+	};
 
 	var _RefreshLeaderBoard = function( type )
 	{
@@ -125,27 +204,6 @@ var PopupLeaderboards = ( function()
 			_UpdateLeaderboard( type );
 			return;
 		}
-
-		_ErrorDialog();
-	};
-
-	var _ErrorDialog = function()
-	{
-		_Close();
-		
-		                                                                         
-		UiToolkitAPI.ShowGenericPopupOk(
-			$.Localize( '#SFUI_SteamConnectionErrorTitle' ),
-			$.Localize( '#SFUI_Steam_Error_LinkUnexpected' ),
-			'',
-			function()
-			{
-				$.DispatchEvent( 'HideContentPanel' );
-			},
-			function()
-			{
-			}
-		);
 	};
 
 	var _UpdateName = function( xuid )
@@ -179,5 +237,5 @@ var PopupLeaderboards = ( function()
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Leaderboards_StateChange', PopupLeaderboards.RefreshLeaderBoard );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', PopupLeaderboards.UpdateName );
 	                                                                                                                             
-
+	PopupLeaderboards.Init();
 })();

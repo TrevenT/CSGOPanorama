@@ -120,13 +120,18 @@ var EOM_Win = ( function () {
 			elPlayer.FindChildTraverse( 'WinPlacement' ).text = $.Localize( "#scoreboard_arsenal_" + i );
 			elPlayer.SetDialogVariable( 'winner_name', GameStateAPI.GetPlayerName( _m_arrTopPlayerXuid[ i ] ));
 
-			Avatar.Init( elAvatar, _m_arrTopPlayerXuid[ i ], 'playercard' );
+			var bIsBot = GameStateAPI.IsFakePlayer( _m_arrTopPlayerXuid[ i ] );
+			var xuidForAvatarLookup = bIsBot ? '0' : _m_arrTopPlayerXuid[ i ];
 
-			if ( GameStateAPI.IsFakePlayer( _m_arrTopPlayerXuid[ i ] ) )
+			Avatar.Init( elAvatar, xuidForAvatarLookup, 'playercard' );
+
+			if ( bIsBot )
 			{
 				var team = GameStateAPI.GetPlayerTeamName( _m_arrTopPlayerXuid[ i ] );
 				elAvatar.FindChildTraverse( 'JsAvatarImage' ).SetDefaultImage( 'file://{images}/icons/scoreboard/avatar-' + team + '.png' );
+				elAvatar.FindChildTraverse( 'JsAvatarImage' ).RemoveClass( 'hidden' );
 			}
+			
 
 			if ( i > 0 )
 			{
@@ -204,7 +209,7 @@ var EOM_Win = ( function () {
 
 	                      
 	return	{
-
+        name: 'eom-win',
 		Start									: _Start,
 		GetFreeForAllTopThreePlayers_Response	: _GetFreeForAllTopThreePlayers_Response,
 		GetFreeForAllPlayerPosition_Response:    _GetFreeForAllPlayerPosition_Response,

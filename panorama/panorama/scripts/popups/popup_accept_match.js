@@ -5,6 +5,7 @@ var PopupAcceptMatch = ( function(){
 
 	var m_hasPressedAccept = false;
 	var m_numPlayersReady = 0;
+	var m_numTotalClientsInReservation = 0;
 	var m_numSecondsRemaining = 0;
 	var m_isReconnect= false;
 	var m_isNqmmAnnouncementOnly = false;
@@ -66,7 +67,7 @@ var PopupAcceptMatch = ( function(){
 
 		if ( bShowPlayerSlots )
 		{
-			_UpdatePlayerSlots( elPlayerSlots, m_numPlayersReady );
+			_UpdatePlayerSlots( elPlayerSlots );
 			bHideTimer = true;
 		}
 
@@ -101,7 +102,7 @@ var PopupAcceptMatch = ( function(){
 		}
 	}
 
-	var _ReadyForMatch = function ( shouldShow, playersReadyCount )
+	var _ReadyForMatch = function ( shouldShow, playersReadyCount, numTotalClientsInReservation )
 	{
 		                                                             		
 		                                                
@@ -124,21 +125,23 @@ var PopupAcceptMatch = ( function(){
 			$.DispatchEvent( 'PlaySoundEffect', 'popup_accept_match_person', 'MOUSE' );
 		}
 
+		if ( playersReadyCount == 1 && numTotalClientsInReservation == 1 && ( m_numTotalClientsInReservation > 1 ) )
+		{	                                                                                 
+			                                                                          
+			numTotalClientsInReservation = m_numTotalClientsInReservation;
+			playersReadyCount = m_numTotalClientsInReservation;
+		}
 		m_numPlayersReady = playersReadyCount;
+		m_numTotalClientsInReservation = numTotalClientsInReservation;
 		m_numSecondsRemaining = LobbyAPI.GetReadyTimeRemainingSeconds();
 		_UpdateUiState();
 
 		m_jsTimerUpdateHandle = $.Schedule( 1.0, _OnTimerUpdate );
 	}
 
-	var _UpdatePlayerSlots = function ( elPlayerSlots, playersReadyCount )
+	var _UpdatePlayerSlots = function ( elPlayerSlots )
 	{
-		var numSlots = 0;
-
-		if( m_lobbySettings )
-			numSlots = m_lobbySettings.mode === 'scrimcomp2v2' ? 4 : 10;
-
-		for( var i = 0; i < numSlots; i++ )
+		for( var i = 0; i < m_numTotalClientsInReservation; i++ )
 		{
 			var Slot = $.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchSlot' + i );
 
@@ -148,12 +151,12 @@ var PopupAcceptMatch = ( function(){
 				Slot.BLoadLayoutSnippet( 'AcceptMatchPlayerSlot' );
 			}
 
-			Slot.SetHasClass ( 'accept-match__slots__player--accepted', ( i < playersReadyCount ));
+			Slot.SetHasClass ( 'accept-match__slots__player--accepted', ( i < m_numPlayersReady ) );
 		}
 
 		var labelPlayersAccepted = $.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchPlayersAccepted' );
-		labelPlayersAccepted.SetDialogVariableInt( 'accepted', playersReadyCount );
-		labelPlayersAccepted.SetDialogVariableInt( 'slots', numSlots );
+		labelPlayersAccepted.SetDialogVariableInt( 'accepted', m_numPlayersReady );
+		labelPlayersAccepted.SetDialogVariableInt( 'slots', m_numTotalClientsInReservation );
 		labelPlayersAccepted.text = $.Localize( '#match_ready_players_accepted', labelPlayersAccepted );
 	}
 

@@ -124,14 +124,14 @@
 
 @keyframes 'circle-full-to-empty' {
     0% {
-        clip:radial(50% 50%, 0deg, 0deg);
+        clip:radial(50% 50%, -180deg, 360deg);
         wash-color-fast: red;
     }
     50% {
         wash-color-fast: yellow;
     }
     100% {
-        clip:radial(50% 50%, 0deg, 360deg);
+        clip:radial(50% 50%, 0deg, 0deg);
         wash-color-fast: green;
     }
 }
@@ -221,7 +221,8 @@
         transform: scaleX(1.0) scaleY(1.0);
     }
 }
-.hud-progress-bar__defuse-nokit .hud-progress-bar-circle-icon
+.hud-progress-bar__defuse-nokit .hud-progress-bar-circle-icon,
+.hud-progress-bar__open-survival-safe .hud-progress-bar-circle-icon
 {
     wash-color-fast: color-icon-bomb;
 
@@ -249,7 +250,8 @@
     }
 }
 .hud-progress-bar__pickup-hostage .hud-progress-bar-circle-icon,
-.hud-progress-bar__drop-hostage .hud-progress-bar-circle-icon
+.hud-progress-bar__drop-hostage .hud-progress-bar-circle-icon,
+.hud-progress-bar__drop-heavyarmor .hud-progress-bar-circle-icon,
 {
     wash-color-fast: color-icon-hostage-transit;
 

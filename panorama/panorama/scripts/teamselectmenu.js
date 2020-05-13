@@ -193,9 +193,10 @@ var TeamSelectMenu = ( function (){
 	var _SetCharacterAnim = function ( elPanel, settings )
 	{
 		elPanel.ResetAnimation( false );
-		elPanel.SetPlayerModel( settings.model );
+		elPanel.SetScene( 'resource/ui/econ/ItemModelPanelCharMainMenu.res', settings.model, false );
 		
 		elPanel.EquipPlayerFromLoadout( settings.team, 'secondary0' );
+		elPanel.EquipPlayerFromLoadout( settings.team, 'clothing_hands' );
 
 		elPanel.LayerSequence( settings.anims.idle , true, false );
 		elPanel.SetCameraPreset( settings.anims.cameraPreset, false );

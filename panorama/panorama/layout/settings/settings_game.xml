@@ -30,7 +30,7 @@
 					<Label text="#settings_items_section"/>
 				</RadioButton>
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsRadarSettings')" group="SettingsGame">
-					<Label text="#settings_radar_section"/>
+					<Label text="#settings_radarandtablet_section"/>
 				</RadioButton>
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsAccountConnSettings')" group="SettingsGame">
 					<Label text="#settings_account_conn_section"/>
@@ -303,13 +303,13 @@
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_ScoreboardMouseEnable" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_scoreboard_mouse_enable_binding">
-							<Label text="#SFUI_WeaponSpecial" value="+attack2" id ="scoremouseenable0"/>
-							<Label text="#SFUI_Jump" value="+jump" id ="scoremouseenable1"/>
-							<Label text="#SFUI_Duck" value="+duck" id ="scoremouseenable2"/>
-							<Label text="#SFUI_Drop_Weapon" value="drop" id ="scoremouseenable3"/>
-							<Label text="#SFUI_Previous" value="lastinv" id ="scoremouseenable4"/>
-							<Label text="#SFUI_CommandRadio" value="radio1" id ="scoremouseenable4"/>
-							<Label text="#SFUI_Pickup_Use_Objects" value="+use" id ="scoremouseenable4"/>
+							<Label text="#SFUI_WeaponSpecial" value="+attack2" id="scoremouseenable0"/>
+							<Label text="#SFUI_Jump" value="+jump" id="scoremouseenable1"/>
+							<Label text="#SFUI_Duck" value="+duck" id="scoremouseenable2"/>
+							<Label text="#SFUI_Drop_Weapon" value="drop" id="scoremouseenable3"/>
+							<Label text="#SFUI_Previous" value="lastinv" id="scoremouseenable4"/>
+							<Label text="#SFUI_CommonRadio" value="radio" id="scoremouseenable5"/>
+							<Label text="#SFUI_Pickup_Use_Objects" value="+use" id="scoremouseenable6"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 					<Panel class="horizontal-separator"/>
@@ -446,12 +446,27 @@
 			                               
 			<Panel id="SettingsRadarSettings" class="SettingsBackground">
 				<Panel class="SettingsSectionTitleContianer">
-					<Label class="SettingsSectionTitleLabel" text="#settings_radar_section" />
+					<Label class="SettingsSectionTitleLabel" text="#settings_radarandtablet_section" />
 				</Panel>
 				<Panel class ="top-bottom-flow full-width">
-					                     
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_Radar_Size_Info">
-						<CSGOSettingsSlider text="#SFUI_Settings_HUD_Radar_Size" max="1.3" min="0.8" displayprecision="2" convar="cl_hud_radar_scale"/>
+					                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_TabletMap_Rotate_Info">
+						<Label text="#SFUI_Settings_TabletMap_Rotate" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_tablet_mapmode">
+							<Label text="#SFUI_Settings_TabletMap_Mode0" value="0" id ="tabletmode0"/>
+							<Label text="#SFUI_Settings_TabletMap_Mode1" value="1" id ="tabletmode1"/>
+							<Label text="#SFUI_Settings_TabletMap_Mode2" value="2" id ="tabletmode2"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Radar_Centered_Info">
+						<Label text="#SFUI_Settings_Radar_Centered" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_radar_always_centered">
+							<Label text="#GameUI_Yes" value="1" id ="radarcenter0"/>
+							<Label text="#GameUI_No" value="0" id ="radarcenter1"/>
+						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
@@ -462,6 +477,12 @@
 							<Label text="#GameUI_Yes" value="1" id ="radarrotation0"/>
 							<Label text="#GameUI_No" value="0" id ="radarrotation1"/>
 						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                     
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUD_Radar_Size_Info">
+						<CSGOSettingsSlider text="#SFUI_Settings_HUD_Radar_Size" max="1.3" min="0.8" displayprecision="2" convar="cl_hud_radar_scale"/>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 

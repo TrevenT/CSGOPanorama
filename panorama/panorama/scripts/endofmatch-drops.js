@@ -154,7 +154,7 @@ var EOM_Drops = (function () {
 
 	                      
 	return {
-		
+		name: 'eom-drops',
 		Start: _Start,
 		Shutdown: _Shutdown,
 	};

@@ -66,6 +66,7 @@
                                                                                       
                                                                                            
                                            
+	<Image src="file://{images}/icons/ui/parachute.svg" class="weapon-selection-parachuteicon weapon-selection-item-icon-main" textureheight="80" texturewidth="-1" />
     <Panel class="weapon-selection-list" id="weapon-selection-list">
                                                              
     </Panel>

@@ -12,6 +12,10 @@
 			<CSGOHudDamageIndicator id="HudDamageIndicator"/>
 			<CSGOHudReticle id="HudReticle"/>
 		</Panel>
+		
+		            
+		<CSGOSurvivalBuyMenu id="SurvivalBuyMenu"/>
+		            
 
 		                                                                            
 		<Panel id="HudSpectatorVignetting" hittest="false" hittestchildren="false" />
@@ -28,8 +32,25 @@
 		                                                    
 		<CSGOHudWinPanel id="HudWinPanel" hittest="false" hittestchildren="false" />
 
+		                                                                            
+		                                                                            
+		                                                                            
+		                                                                       
+		                                        
+		   
+		<Panel id="HudTopCenter" hittest="false" hittestchildren="false">
+			            
+			<CSGOCompass id="Compass"/>
+			            
+		</Panel>
+
 		                                                                                     
 		<Panel id="HudTopLeft" hittest="false" hittestchildren="false">
+			            
+			<Frame id="" class="matchmaking-status-container" data-type="hud" src="file://{resources}/layout/matchmaking_status.xml"/>
+			<CSGOSurvivalPlayerRemainingCounter id="SurvivalPlayerRemaining"/>
+			<Frame id="" class="" src="file://{resources}/layout/survival/survival_zonetimer.xml"/>
+			            
 			<CSGOHudRadar id="HudRadar"/>
 			<CSGOHudMoney id="HudMoney"/>
 			<CSGOHudGameIcons id="HudGameIcons"/>
@@ -39,23 +60,20 @@
 			<Panel />                                                                        
 		</Panel>
 
-		                                                                            
-		                                                                              
-			                                                                            
-			                                                                       
-			                                        
-			   
-		<Panel id="HudTopCenter" hittest="false" hittestchildren="false">
-		</Panel>
-
 		                                                              
 		<CSGOHudTeamCounter id="HudTeamCounter" hittest="false" hittestchildren="false" />
 
 		                                                                                
 		                                                                
 		<Panel id="HudBottomCenter" hittest="false" hittestchildren="false">
+			<CSGOOutOfAmmo id="OutOfAmmo"/>
 			<CSGOHudProgressBar id="HudProgressBar"/>
 			<CSGOHudHintText id="HudHintText"/>
+			                                                               
+			            
+			<Frame id="HudTabletHints" src="file://{resources}/layout/hud/hudtablethints.xml" />
+			            
+			
 		</Panel>
 
 		                                                                                      
@@ -67,16 +85,16 @@
 		                                                                
 		<CSGOHudRadio id="HudRadio" hittest="false" hittestchildren="false" />
 
-		                                                                           
-		<Panel id="HudTopRight" hittest="false" hittestchildren="false">
-			<CSGOHudAutoDisconnect id="HudAutoDisconnect"/>
-			<CSGOHudDeathNotice id="HudDeathNotice"/>
-		</Panel>
-
 		                                                                   
 		<Panel id="HudBottomRight" hittest="false" hittestchildren="false">
 			<CSGOHudWeaponSelection id="HudWeaponSelection"/>
 			<CSGOHudWeaponPanel id="HudWeaponPanel"/>
+		</Panel>
+
+		                                                                           
+		<Panel id="HudTopRight" hittest="false" hittestchildren="false">
+			<CSGOHudAutoDisconnect id="HudAutoDisconnect"/>
+			<CSGOHudDeathNotice id="HudDeathNotice"/>
 		</Panel>
 
 		                                                                
@@ -92,15 +110,21 @@
 		<CSGOHudRosettaSelector id="HudRosettaSelector" />
 		<CSGOMapOverview id="MapOverview"/>
 
+		<CSGOQuickInventory id="QuickInventory"/>
+		
 		<CSGOBuyMenu id="BuyMenu" />
-		<CSGOScoreboard id="Scoreboard" />
+
+		                                                                                                               
+		<Panel id="ScoreboardContainer" class="full-width full-height" hittest="false">
+			<CSGOScoreboard id="Scoreboard" />
+		</Panel>
+
 		<CSGOEndOfMatch id="EndOfMatch" />
 
 		<CSGOTeamSelectMenu id="TeamSelectMenu"/>
 
 		            
-		                                                   
-		                                           
+		<CSGOSurvivalSpawnSelect id="SurvivalSpawnSelect"/>
 		            
 		
 		                                                       

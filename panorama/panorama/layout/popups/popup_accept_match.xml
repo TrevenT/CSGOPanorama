@@ -6,6 +6,7 @@
 	
 	<scripts>
 		<include src="file://{resources}/scripts/common/formattext.js" />
+		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/popups/popup_accept_match.js" />
 	</scripts>
 
@@ -38,13 +39,6 @@
 					<Panel id="AcceptMatchSlots" class="accept-match__slots hidden">
 
 						                                                              
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
-						<Panel class="accept-match__slots__player"/>
 
 					</Panel>
 					<Label  id="AcceptMatchPlayersAccepted"  class="accept-match__data__title--details" text=""/>

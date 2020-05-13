@@ -1,7 +1,6 @@
                                                                                
                                                                      
                                                                                
-
 .content-navbar__extra-buttons .PopupButton.hidden
 {
 	visibility: collapse;
@@ -10,7 +9,6 @@
                                                                                
                                                                            
                                                                                
-
 .map-selection-list
 {
 	width: fit-children;
@@ -72,6 +70,31 @@
 	width: 430px;
 	height: width-percentage(56%);
 	margin: 20px;
+}
+
+.AspectRatio4x3 .map-selection-btn--full
+{
+	width: 1100px;
+	height: width-percentage( 64% );
+}
+
+.AspectRatio5x4 .map-selection-btn--full
+{
+	width: 1025px;
+	height: width-percentage( 68% );
+}
+
+.AspectRatio16x9 .map-selection-btn--full
+{
+	width: 1500px;
+	height: width-percentage( 47.5% );
+}
+
+.map-selection-btn--full,
+.AspectRatio16x10 .map-selection-btn--full
+{
+	width: 1350px;
+	height: width-percentage( 52% );
 }
 
 .map-selection-btn__screenshot
@@ -167,6 +190,13 @@
 	height: 116px;
 }
 
+.map-selection-btn--full .map-selection-btn__map-icon
+{
+	width: 256px;
+	height: 256px;
+	vertical-align: center;
+}
+
 .map-selection-btn__map-icon-small
 {
 	width: 72px;
@@ -185,7 +215,7 @@
 
 .map-selection-list:disabled .map-selection-btn .map-selection-btn__screenshot,
 .map-selection-list:disabled .map-selection-btn:selected .map-selection-btn__map-icon,
-.map-selection-list.is-client  .map-selection-btn:selected .map-selection-btn__map-icon
+.map-selection-list.is-client .map-selection-btn:selected .map-selection-btn__map-icon
 
 {
 	pre-transform-scale2d: 1, 1;
@@ -223,6 +253,21 @@
 	vertical-align: bottom;
 	text-align: center;
 	text-overflow: ellipsis;
+}
+
+.map-selection-btn--full .map-selection-info__map-name
+{
+	visibility: collapse;
+}
+
+.map-selection-info__map-name.fontSize-l
+{
+	font-size: 24px;
+}
+
+.map-selection-info__map-name.fontSize-m
+{
+	font-size: 18px;
 }
 
 .map-selection-info__new
@@ -513,4 +558,70 @@ RadioButton .map-selection-info__new
 .play-menu__tournament .play-menu__tournament-only
 {
 	visibility: visible;
+}
+
+#PlayMenulLeaderboards.show
+{
+	animation-name: show-leaderboard-btn;
+	animation-duration: .75s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+}
+
+@keyframes 'show-leaderboard-btn'
+{
+	0%
+	{
+		transform: translateY(100%);
+	}
+
+	100%
+	{
+		transform: translateY(0%);
+	}
+}
+
+.PopupButton.play-menu-get-prime Image
+{
+	margin: 0px;
+}
+
+.play-menu-primestatus,
+.play-menu-primestatus:disabled
+{
+	width: 48px;
+	height: 48px;
+	vertical-align: center;
+	border-radius: 50%;
+	box-shadow: fill #000000aa 0px 0px 4px 2px;
+	wash-color: none;
+
+	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( warningColor ), color-stop(.5, warningColor ), to( #000000) );
+	border: 2px solid warningColor;
+
+	transition-property:  background-color, border;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.active .play-menu-primestatus
+{
+	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( positiveColor ), color-stop(.5, positiveColor ), to( #000000) );
+	border: 2px solid #45a747;
+
+	transition-property:  background-color, border;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-primestatus .TickBox
+{
+	visibility: collapse;
+}
+
+.play-menu-primestatus-image
+{
+	vertical-align: center;
+	horizontal-align:center;
+	wash-color:black;
 }

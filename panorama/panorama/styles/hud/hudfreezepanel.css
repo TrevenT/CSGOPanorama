@@ -396,6 +396,16 @@ CSGOHudFreezePanel Label
 	text-shadow-fast: 2px 2px black;
 }
 
+.FreezePanel__SurvivalEndOfMatch
+{
+	padding-left: 90px;
+
+	color: #cccccc;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow-fast: 2px 2px black;
+}
+
 .FreezeCancel--Hidden
 {
 	visibility: collapse;

@@ -125,10 +125,7 @@ var friendLobby = ( function (){
 	var _SetLobbyPlayerSlots = function ( elTile, gameMode, lobbyType )
 	{	
 		var count = PartyBrowserAPI.GetPartyMembersCount( _m_xuid );
-		var numSlotsToShow = ( gameMode == "scrimcomp2v2" ||
-				gameMode == "cooperative" ||
-				gameMode == "coopmission") ?
-				1 : 4;
+		var numSlotsToShow = SessionUtil.GetMaxLobbySlotsForGameMode( gameMode ) - 1;
 
 		var clientXuid = MyPersonaAPI.GetXuid();
 		var clientInLobby = false; 

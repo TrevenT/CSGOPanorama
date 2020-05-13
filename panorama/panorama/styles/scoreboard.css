@@ -369,12 +369,12 @@ Button.sb-row__cell:hover {
 }
 
 
-         
+            
                  
 
 	                   
  
-         
+            
 
                
  #id-sb-meta__musickit{
@@ -564,10 +564,10 @@ Button.sb-row__cell:hover {
 }
 
          
-                
- 
-	                    
- 
+.sb-row.survival
+{
+	flow-children: none;
+}
          
 
 .sb-row__set
@@ -862,6 +862,7 @@ Label.sb-row__cell--ping__label--bot {
 	height: 22px;
 	margin-left: 3px;
 	margin-right: 3px;
+	margin-bottom: 1px;
 
 	vertical-align: center;
 
@@ -1015,13 +1016,11 @@ Label.sb-row__cell--mvps__count {
 	background-color: #00000000;
 }
 
-                             
 .sb-team--Spectator  {
 	opacity: 0.8;
 	margin-left:0px;
 }
 
-                              
 .sb-team--Spectator .sb-row__cell {
 	background-color: #00000000;
 }
@@ -1450,9 +1449,6 @@ Label.sb-row__cell--mvps__count {
 	opacity: 0;
 }
 
-.sb-team--Spectator #id-sb-name__nameicons {                                                   
-	visibility: collapse;
-}
 
 .fade {
 	opacity: 0;

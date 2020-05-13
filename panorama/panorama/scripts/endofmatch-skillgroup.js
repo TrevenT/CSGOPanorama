@@ -204,7 +204,7 @@ var EOM_Skillgroup = (function () {
 
 	                      
 	return {
-		
+		name: 'eom-skillgroup',
 		Start: _Start,
 		Shutdown: _Shutdown,
 	};

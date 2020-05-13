@@ -101,21 +101,14 @@ var PlayMenu = ( function()
 			} );
 		} );
 
-		                              
-		var elPrimeStatusButton = $( '#PrimeStatusButton' );
-		elPrimeStatusButton.SetPanelEvent( 'onactivate', function()
-		{
-			UiToolkitAPI.HideTextTooltip();
-			UiToolkitAPI.ShowCustomLayoutPopup( 'prime_status', 'file://{resources}/layout/popups/popup_prime_status.xml' );
-		} );
-
 		                      
-		var elPrimeButton = $( '#PrimeButton' );
-		elPrimeButton.SetPanelEvent( 'onactivate', function()
-		{
-			UiToolkitAPI.HideTextTooltip();
-			_ApplySessionSettings();
-		} );
+		           
+		                                           
+		                                                        
+		    
+		   	                               
+		   	                        
+		       
 
 		                         
 		var elPermissionsButton = $( '#PermissionsSettings' );
@@ -188,12 +181,12 @@ var PlayMenu = ( function()
 	var _IsGameModeAvailable = function( serverType, gameMode )
 	{
 		       
-		                                           
-			                           
-			 
-		 
-			             
-		 
+		if ( !_IsValveOfficialServer( serverType ) 
+			&& gameMode === "survival" 
+			)
+		{
+			return false;
+		}
 		       
 
 		return true;
@@ -351,6 +344,9 @@ var PlayMenu = ( function()
 		_UpdatePrimeBtn( settings.game.prime === 1 ? true : false, isEnabled );
 		_UpdatePermissionBtnText( settings, isEnabled );
 
+		                             
+		_UpdateLeaderboardBtn( m_gameModeSetting );
+
 		                                  
 		_UpdatePlayDropDown();
 		_UpdateBotDifficultyButton();
@@ -484,6 +480,7 @@ var PlayMenu = ( function()
 		var bIsSkirmish = gameMode === 'skirmish';
 		var bIsWingman = gameMode === 'scrimcomp2v2';
 		var panelType = ( ( ( bIsCompetitive || bIsSkirmish || bIsWingman ) && isPlayingOnValveOfficial ) ? "ToggleButton" : "RadioButton" );
+		
 		for ( var k in arrMapGroups )
 		{
 			var mapName = arrMapGroups[k];
@@ -508,17 +505,30 @@ var PlayMenu = ( function()
 				p.AddClass( 'map-selection-btn--large' );
 				p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
 				p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
-				p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
 			}
 			else
 			{
-				mapIcon = p.FindChildInLayoutFile( 'MapGroupCollectionIcon' );
-				mapIcon.visible = true;
+				if ( gameMode === 'survival' && isPlayingOnValveOfficial )
+				{
+					p.AddClass( 'map-selection-btn--full' );
 
-				IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/' + mg.icon_image_path );
+					if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
+					{
+						p.FindChildInLayoutFile( 'MapGroupBetaTag' ).RemoveClass( 'hidden' );
+					}
+				}
+				
+				var iconPath = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
+				var iconSize = gameMode === 'survival' ? '256' : '116';
+				var mapGroupIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapSelectionButton' ), 'MapGroupCollectionIcon', {
+					defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
+					texturewidth: iconSize,
+					textureheight: iconSize,
+					src: iconPath,
+					class: 'map-selection-btn__map-icon'
+				} );
 
-				var mapGroupIcon = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
-				mapIcon.SetImage( mapGroupIcon );
+				p.FindChildInLayoutFile( 'MapSelectionButton' ).MoveChildBefore( mapGroupIcon, p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ) )
 			}
 
 			if ( mapName === 'random' )
@@ -538,7 +548,15 @@ var PlayMenu = ( function()
 			{
 				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
 				mapImage.AddClass( 'map-selection-btn__screenshot' );
-				mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[i] + '.png")';
+				
+				if ( gameMode === 'survival' )
+				{
+					mapImage.style.backgroundImage = 'url("file://{resources}/videos/' + keysList[i] + '_preview.webm")';
+				}
+				else
+				{
+					mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[i] + '.png")';
+				}
 				mapImage.style.backgroundPosition = '50% 0%';
 				mapImage.style.backgroundSize = 'auto 100%';
 
@@ -655,7 +673,7 @@ var PlayMenu = ( function()
 		btnCancel.enabled = ( isSearching && isHost );
 	};
 
-	var _UpdatePrimeBtn = function( isPrime, isEnabled )
+	var _UpdatePrimeBtn = function( isPrime )
 	{
 		var AreLobbyPlayersPrime = function()
 		{
@@ -676,26 +694,32 @@ var PlayMenu = ( function()
 		};
 
 		var elPrimeStatusButton = $( '#PrimeStatusButton' );
-		elPrimeStatusButton.visible = false;
-		var elPrimeButton = $( '#PrimeButton' );
-		elPrimeButton.visible = false;
-		var tooltipText = '';
 
-		var elActiveButton = null;
+		                                                                                  
+		if ( !_IsPlayingOnValveOfficial() || !MyPersonaAPI.IsInventoryValid() )
+		{
+			elPrimeStatusButton.visible = false;
+			return;
+		}
+
+		elPrimeStatusButton.visible = true;
+		elPrimeStatusButton.checked = false;
+		elPrimeStatusButton.RemoveClass( 'active' );
+		var btnText = '';
+		var tooltipText = '';
 
 		                                                
 		                                                                               
-		if ( AreLobbyPlayersPrime() && _IsPlayingOnValveOfficial() )
+		if ( AreLobbyPlayersPrime() )
 		{
-			elPrimeButton.visible = true;
-			elPrimeButton.enabled = isEnabled;
-			elPrimeButton.checked = isPrime;
 			tooltipText = isPrime ? '#tooltip_prime_only' : '#tooltip_prime_priority';
-
-			elActiveButton = elPrimeButton;
+			btnText = "#SFUI_Elevated_Status_enabled";
+			elPrimeStatusButton.checked = true;
+			elPrimeStatusButton.AddClass( 'active' );
 		}
-		else if ( !PartyListAPI.GetFriendPrimeEligible( MyPersonaAPI.GetXuid() ) )
+		else if (!PartyListAPI.GetFriendPrimeEligible( MyPersonaAPI.GetXuid() ) )
 		{
+			               
 			var bPrimeUpgradeAvailable = MyPersonaAPI.HasPrestige() || FriendsListAPI.GetFriendLevel( MyPersonaAPI.GetXuid() ) > 20;
 			if ( bPrimeUpgradeAvailable )
 			{
@@ -704,36 +728,27 @@ var PlayMenu = ( function()
 			else
 			{
 				var isPerfectWorld = MyPersonaAPI.GetLauncherType() == "perfectworld" ? true : false;
-				tooltipText = isPerfectWorld ? '#tooltip_prime_not_enrolled_pw' : '#tooltip_prime_not_enrolled';
+				tooltipText = isPerfectWorld ? '#tooltip_prime_not_enrolled_pw_1' : '#tooltip_prime_not_enrolled_1';
 			}
 
-			elPrimeStatusButton.visible = true;
-			elPrimeStatusButton.enabled = bPrimeUpgradeAvailable;
-			elActiveButton = elPrimeStatusButton;
+			btnText = "#SFUI_Elevated_Status_upgrade_status";
 		}
 		else
 		{
-			elPrimeButton.enabled = false;
-
-			                                                
-			if ( !_IsPlayingOnValveOfficial() )
-			{
-				tooltipText = '#tooltip_prime-playing-offline';
-			}
-			else
-			{
-				tooltipText = '#tooltip_prime-lobby_has_nonprime_player';
-			}
-
-			elPrimeButton.visible = true;
-			elActiveButton = elPrimeButton;
+			                                         
+			tooltipText = '#tooltip_prime-lobby_has_nonprime_player';
+			btnText = "#SFUI_Elevated_Status_disabled";
 		}
 
-		                                           
-		elActiveButton.visible = SessionUtil.DoesGameModeHavePrimeQueue( m_gameModeSetting );
+		elPrimeStatusButton.FindChild( 'PrimeStatusButtonLabel' ).text = $.Localize( btnText );
 
-		elActiveButton.SetPanelEvent( 'onmouseover', function() { UiToolkitAPI.ShowTextTooltip( elActiveButton.id, tooltipText ); } );
-		elActiveButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
+		elPrimeStatusButton.SetPanelEvent( 'onmouseover', function() { UiToolkitAPI.ShowTextTooltip( elPrimeStatusButton.id, tooltipText ); } );
+		elPrimeStatusButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
+		elPrimeStatusButton.SetPanelEvent( 'onactivate', function()
+		{
+			UiToolkitAPI.HideTextTooltip();
+			UiToolkitAPI.ShowCustomLayoutPopup( 'prime_status', 'file://{resources}/layout/popups/popup_prime_status.xml' );
+		} );
 	};
 
 	var _UpdatePermissionBtnText = function( settings, isEnabled )
@@ -765,12 +780,41 @@ var PlayMenu = ( function()
 		elBtn.enabled = isEnabled;
 	};
 
+	var _UpdateLeaderboardBtn = function( gameMode, isOfficalMatchmaking )
+	{
+		var elLeaderboardButton = $( '#PlayMenulLeaderboards' );
+		
+		if ( gameMode === 'survival' && _IsPlayingOnValveOfficial() )
+		{
+			elLeaderboardButton.visible = true;
+			
+			var _OnActivate = function()
+			{
+				UiToolkitAPI.ShowCustomLayoutPopupParameters( 
+					'', 
+					'file://{resources}/layout/popups/popup_leaderboards.xml',
+					'type=official_leaderboard_survival_solo,official_leaderboard_survival_squads' +
+					'&' + 'titleoverride=#CSGO_official_leaderboard_survival_title' +
+					'&' + 'showglobaloverride=false' +
+					'&' + 'points-title=#Cstrike_TitlesTXT_WINS',
+					'none'
+				);
+			};
+
+			elLeaderboardButton.SetPanelEvent( 'onactivate', _OnActivate );
+			return;
+		}
+		
+		elLeaderboardButton.visible = false;
+	};
+
 	var _SetEnabledStateForMapBtns = function( elMapList, isSearching, isHost )
 	{
 		elMapList.SetHasClass( 'is-client', ( isSearching || !isHost ) );
 
 		var childrenList = elMapList.Children();
 		childrenList.forEach(element => {
+			if ( element.id !== "SurvivalLeaderboardsContainer" )
 			element.enabled = !isSearching && isHost; 
 		});
 	};
@@ -819,11 +863,6 @@ var PlayMenu = ( function()
 	var _IsPlayingOnValveOfficial = function()
 	{
 		return _IsValveOfficialServer( m_serverSetting );
-	};
-
-	var _IsPrimeChecked = function()
-	{
-		return $( '#PrimeButton' ).checked;
 	};
 
 	                                                         
@@ -1002,7 +1041,7 @@ var PlayMenu = ( function()
 					server: serverType
 				},
 				Game: {
-					prime: _IsPrimeChecked(),
+					                            
 					mode: gameMode,
 					type: GetGameType( gameMode ),
 					mapgroupname: selectedMaps
@@ -1185,7 +1224,6 @@ var PlayMenu = ( function()
 			p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
 			p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = false;
 			p.FindChildInLayoutFile( 'MapGroupName' ).text = mapInfo.name;
-			p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
 
 			var mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot0' );
 			mapImage.AddClass( 'map-selection-btn__screenshot' );
@@ -1460,7 +1498,8 @@ var PlayMenu = ( function()
 		OnShowMainMenu				: _OnShowMainMenu,
 		PlayTopNavDropdownChanged	: _PlayTopNavDropdownChanged,
 		BotDifficultyChanged		: _BotDifficultyChanged,
-		WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged
+		WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged,
+		UpdatePrimeBtn				: _UpdatePrimeBtn
 	};
 
 } )();
@@ -1479,4 +1518,5 @@ var PlayMenu = ( function()
 	$.RegisterForUnhandledEvent( "CSGOShowMainMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOShowPauseMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOWorkshopSubscriptionsChanged", PlayMenu.WorkshopSubscriptionsChanged );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', PlayMenu.UpdatePrimeBtn );
 } )();

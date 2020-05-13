@@ -14,13 +14,15 @@ var EOM_Rank = (function () {
 	var _DisplayMe = function()
 	{
 
-		if ( GameStateAPI.IsDemoOrHltv() )
-		{
-			return false;
-		}
+		                                     
+		    
+		                                          
+		   	             
+		    
 
 		if ( !_m_cP.bXpDataReady )
 		{
+		                                                           
 			return false;
 		}
 
@@ -73,6 +75,8 @@ var EOM_Rank = (function () {
 
 		var elCurrentListerItem;
 
+		var _xpSoundNum = 1;
+
 		var xp = 0;
 
 		
@@ -104,11 +108,9 @@ var EOM_Rank = (function () {
 
 				        
 				var colorClass;
-				var soundEvent = null;
 				if ( reason == "old" )
 				{
 					colorClass = "eom-rank__blue";
-					soundEvent = "UIPanorama.XP.Milestone_01";
 				}
 				else if ( reason == "levelup" )
 				{
@@ -117,22 +119,20 @@ var EOM_Rank = (function () {
 				else if ( reason == "6" || reason == "7" )
 				{
 					colorClass = "eom-rank__yellow";
-					soundEvent = "UIPanorama.XP.Milestone_02";
 				}
 				else if ( reason == "9" || reason == "10" || reason == "59" )
 				{
 					colorClass = "eom-rank__yellow";
-					soundEvent = "UIPanorama.XP.Milestone_03";
 				}
 				else
 				{
 					colorClass = "eom-rank__green";
-					soundEvent = "UIPanorama.XP.Milestone_04";
 				}
 
-				if ( soundEvent != null )
+				$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.Milestone_0' + _xpSoundNum.toString(), 'eom-rank' );
+				if ( _xpSoundNum < 4 )
 				{
-					$.DispatchEvent( 'PlaySoundEffect', soundEvent, 'eom-rank' );
+					_xpSoundNum++;
 				}
 
 				elRankSegment.AddClass( colorClass );
@@ -375,7 +375,7 @@ var EOM_Rank = (function () {
 
 	                      
 	return {
-		
+	    name: 'eom-rank',
 		Start: _Start,
 		Shutdown: _Shutdown,
 	};

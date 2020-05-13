@@ -17,13 +17,18 @@ var PopupCommendPlayer = ( function(){
 		_Update();
 	}
 
-	function _CancelLoading()
+	function _CancelLoading ()
 	{
 		m_loadingJob = 0;
 
-		m_elStatus.text = $.Localize( '#SFUI_PlayerDetails_Loading_Failed' );
+		if ( m_elStatus && m_elStatus.IsValid() )
+		{
+			m_elStatus.text = $.Localize( '#SFUI_PlayerDetails_Loading_Failed' );
+		}
+		
 		m_elCommend.visible = false;
-	}
+		
+		
 
 	function _ReceivedCommendationFromServer()
 	{
@@ -47,13 +52,22 @@ var PopupCommendPlayer = ( function(){
 
 			if ( numTokens == 0 )
 			{
-				m_elStatus.text = $.Localize( "#SFUI_PlayerDetails_NoCommendations_Left" );
+				if ( m_elStatus && m_elStatus.IsValid() )
+				{
+					m_elStatus.text = $.Localize( "#SFUI_PlayerDetails_NoCommendations_Left" );
+				}
+
 				m_elCommend.visible = false;
+				
 			}
 			else
 			{
-				m_elStatus.SetDialogVariableInt( "num_token", numTokens );
-				m_elStatus.text = $.Localize( "#Panorama_PlayerDetails_Commendations_Left", m_elStatus );
+				if ( m_elStatus && m_elStatus.IsValid() )
+				{
+					m_elStatus.SetDialogVariableInt( "num_token", numTokens );
+					m_elStatus.text = $.Localize( "#Panorama_PlayerDetails_Commendations_Left", m_elStatus );
+				}
+
 				m_elCommend.visible = true;
 			}
 			
@@ -88,7 +102,11 @@ var PopupCommendPlayer = ( function(){
 			                                      
 			m_loadingJob = $.Schedule( 10, _CancelLoading );
 
-			m_elStatus.text = $.Localize( "#SFUI_PlayerDetails_Loading" );
+			if ( m_elStatus && m_elStatus.IsValid() )
+			{
+				m_elStatus.text = $.Localize( "#SFUI_PlayerDetails_Loading" );
+			}
+			
 			m_elCommend.visible = false;
 		}
 

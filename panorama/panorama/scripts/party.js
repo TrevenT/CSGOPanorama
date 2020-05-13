@@ -39,6 +39,7 @@ var PartyMenu = ( function()
 	{
 		_RefreshPartyMembers();
 		_AddOnActivateLeaveBtn();
+		_ShowMatchmakingStatusTooltipEvent();
 	};
 
 	var _RefreshPartyMembers = function()
@@ -84,7 +85,9 @@ var PartyMenu = ( function()
 			friendsList.HideLocalPlayer( false );
 		}
 
-		$( '#PartyList' ).GetParent().SetHasClass( 'friendslist-party-searching', bIsSearching );
+		                                                               
+		                                                                                                                               
+		$( '#PartyList' ).GetParent().SetHasClass( 'friendslist-party-searching', bIsSearching && ( numPlayersActuallyInParty <= 1 ) );
 
 		_UpdateLeaveBtn( numPlayersActuallyInParty );
 	};
@@ -104,14 +107,10 @@ var PartyMenu = ( function()
 
 	var _UpdateMembersList = function( lobbySettings, numPlayersActuallyInParty )
 	{
-		var maxCoopSlots = 2;
-		var maxCompetitiveSlots = 5;
-
 		                                                                  
 		                                                                                          
 		var maxAllowedInLobby = 10;
-		var numPlayersPossibleInMode = ( lobbySettings.mode === 'scrimcomp2v2' || lobbySettings.type === 'cooperative' ) ?
-			maxCoopSlots : maxCompetitiveSlots;
+		var numPlayersPossibleInMode = SessionUtil.GetMaxLobbySlotsForGameMode( lobbySettings.mode );
 
 		$( '#PartyList' ).RemoveClass( 'hidden' );
 
@@ -296,6 +295,22 @@ var PartyMenu = ( function()
 		}
 
 		_RefreshPartyMembers();
+		_TintBgForSearch();
+	};
+
+	var _TintBgForSearch = function()
+	{	
+		var serverWarning = NewsAPI.GetCurrentActiveAlertForUser();
+		var isWarning = serverWarning !== '' && serverWarning !== undefined ? true : false;
+
+		$.GetContextPanel().FindChildInLayoutFile( 'MatchStatusBackground' ).SetHasClass( 'party-list__bg--warning', ( isWarning && _IsSeaching() ) );
+		$.GetContextPanel().FindChildInLayoutFile( 'MatchStatusBackground' ).SetHasClass( 'party-list__bg--searching', _IsSeaching() );
+	};
+
+	var _IsSeaching = function()
+	{
+		var StatusString = _GetSearchStatus();
+		return ( StatusString !== '' && StatusString !== null ) ? true : false;
 	};
 
 	var _PlayerActivityVoice = function( xuid )
@@ -341,11 +356,35 @@ var PartyMenu = ( function()
 		return ( StatusString !== '' && StatusString !== null ) ? true : false;
 	};
 
+	                                                                                                    
+
+	var _ShowMatchmakingStatusTooltipEvent = function()
+	{
+		var btnSettings = $.GetContextPanel().FindChildInLayoutFile( 'MatchStatusInfo' );
+		btnSettings.SetPanelEvent( 'onmouseover', function()
+		{
+			UiToolkitAPI.ShowCustomLayoutParametersTooltip( 'MatchStatusInfo',
+				'LobbySettingsTooltip',
+				'file://{resources}/layout/tooltips/tooltip_lobby_settings.xml',
+				'xuid=' + ''
+			);
+		} );
+
+		btnSettings.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideCustomLayoutTooltip('LobbySettingsTooltip'); } );
+	};
+
+	var _ShowMatchAcceptPopUp = function( map )
+	{
+		var popup = UiToolkitAPI.ShowGlobalCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_accept_match.xml', 'map_and_isreconnect=' + map + ',false' );
+		$.DispatchEvent( "ShowAcceptPopup", popup );
+	};
+
 	return {
 		Init	: _Init,
 		SessionUpdate	: _SessionUpdate,
 		RefreshPartyMembers	:_RefreshPartyMembers,
-		PlayerActivityVoice : _PlayerActivityVoice,
+		PlayerActivityVoice: _PlayerActivityVoice,
+		ShowMatchAcceptPopUp: _ShowMatchAcceptPopUp
 	};
 } )();
 
@@ -361,5 +400,6 @@ var PartyMenu = ( function()
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", PartyMenu.SessionUpdate );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_PlayerUpdated", PartyMenu.SessionUpdate );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_PartyList_PlayerActivityVoice", PartyMenu.PlayerActivityVoice );
+	$.RegisterForUnhandledEvent( "ServerReserved", PartyMenu.ShowMatchAcceptPopUp );
 
 })();

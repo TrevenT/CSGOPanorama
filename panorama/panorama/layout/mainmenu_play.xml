@@ -21,19 +21,15 @@
 				</Carousel>
 				<Panel class="map-selection-btn__gradient" hittest="false" />
 				<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
+				<Label id="MapGroupBetaTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Overwatch_Beta'/>
 				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
 						<Image id="ActiveGroupIcon" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
-	
 					</Panel>
-					<Image id="MapGroupCollectionIcon"
-							class="map-selection-btn__map-icon"
-							textureheight="116"
-							texturewidth="116"
-							defaultsrc="file://{images}/map_icons/map_icon_NONE.png"
-						/>
+					                           
+
 					<Panel id="MapGroupCollectionMultiIcons" class="map-selection-btn__groupmap-icons">
-	
+						                                       
 					</Panel>
 					<Panel class="map-selection-info">
 						<Panel id="MapGroupWaitTime" class="map-selection-info__wait-time-block hidden">
@@ -69,6 +65,14 @@
 
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentTeamDropdown" menuclass="DropDownMenu Width-300" />
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentStageDropdown" menuclass="DropDownMenu Width-300" />
+
+					<Button id="PrimeStatusButton" class="PopupButton play-menu-get-prime" >
+						<Panel class="play-menu-primestatus" >
+							<Image class="play-menu-primestatus-image" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/prime.svg" />
+						</Panel>
+						<Label id="PrimeStatusButtonLabel" text="#SFUI_Elevated_Status_Title" html="true"/>
+					</Button>
+					
 				</Panel>
 			</Panel>
 			
@@ -95,10 +99,10 @@
 							<Label text="#SFUI_GameModeScrimComp2v2"/>
 					</RadioButton>
 					            
-					                            
-								                   
-						                                      
-					              
+					<RadioButton id='survival'  
+								group="gamemodes" >
+						<Label text="#SFUI_GameModeSurvival"/>
+					</RadioButton>
 					            
 				</Panel>
 
@@ -132,18 +136,14 @@
 							<Image id="PermissionsSettingsImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/unlockedwide.svg" />
 							<Label id="PermissionsSettingsLabel" text="" />
 						</Button>
-						<Button id="PrimeStatusButton" class="PopupButton" >
-							<Image texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/prime.svg" />
-							<Label text="#SFUI_Elevated_Status_Title" />
+						<Button id="PlayMenulLeaderboards" class="PopupButton" >
+							<Image texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/info.svg" />
+							<Label text="#SFUI_LEADERBOARD" />
 						</Button>
-						<ToggleButton id="PrimeButton" class="PopupButton White" >
-							<Label id="JsPlayMenuPrimeLabel" text="#prime_only_label" />
-						</ToggleButton>
 					</Panel>
 					<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
 						<Label text="#SFUI_Lobby_StartMatchButton" />
 					</Button>
-
 					<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch"  >
 						<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
 					</Button>

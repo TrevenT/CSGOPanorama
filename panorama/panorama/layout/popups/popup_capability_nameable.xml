@@ -27,7 +27,7 @@
 
 						<ItemPreviewPanel id="NameableNameTagModel" class="popup-nameable__model"
 										manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
-										item="models/weapons/uid.mdl"
+										item="models/weapons/uid_create.mdl"
 										mouse_rotate="false"
 										hittest="false">
 						</ItemPreviewPanel>

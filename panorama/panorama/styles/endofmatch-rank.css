@@ -16,6 +16,7 @@
 	width: fit-children;
 	height: 100%;
 	position: rank-bar-length-offset 0px 0px;
+	padding-right: 10%;
 }
 
 Label

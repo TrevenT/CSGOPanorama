@@ -77,8 +77,6 @@
 		<Panel id="" class="full-width full-height" hittest="false">
 			<ItemPreviewPanel id="TeamCharCT"
 							class="loading-screen-model loading-screen-model--right"
-							manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
-							item="models/player/custom_player/legacy/ctm_sas.mdl"
 							mouse_rotate="false"
 							hittest="false"
 							force-no-composition-layer="true">                                                                                   
@@ -87,8 +85,6 @@
 		
 			<ItemPreviewPanel id="TeamCharT"
 							class="loading-screen-model loading-screen-model--left"
-							manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
-							item="models/player/custom_player/legacy/tm_phoenix.mdl"
 							mouse_rotate="false"
 							hittest="false"
 							force-no-composition-layer="true">                                                                                   

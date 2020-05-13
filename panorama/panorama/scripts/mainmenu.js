@@ -33,6 +33,27 @@ var MainMenu = ( function() {
 		}
 	};
 
+	var _SetBackgroundMovie = function()
+	{
+		var videoPlayer = $( '#MainMenuMovie' );
+		var defaultMovie = 'nuke';
+
+		                                                                 
+		var overrideMovie = 'blacksite';
+		var backgroundMovie = overrideMovie;
+
+		                                                            
+		                                                                                   
+
+		                                                                                     
+		videoPlayer.SetAttributeString( 'data-type', backgroundMovie );
+
+		                          
+		videoPlayer.SetMovie( "file://{resources}/videos/" + backgroundMovie + ".webm" );
+		videoPlayer.SetSound( 'UIPanorama.BG_' + backgroundMovie );
+		videoPlayer.Play();
+	};
+
 	var _OnShowMainMenu = function()
 	{
 		$.DispatchEvent('PlayMainMenuMusic', true, true );
@@ -48,6 +69,7 @@ var MainMenu = ( function() {
 		_m_bVanityAnimationAlreadyStarted = false;                                               
 		_InitVanity();
 		_OnInitFadeUp();
+		_SetBackgroundMovie();
 
 		                                                   
 		$( '#MainMenuNavBarPlay' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', false );
@@ -60,6 +82,9 @@ var MainMenu = ( function() {
 
 		                              
 		_GcLogonNotificationReceived();
+
+		                                                                          
+		_DeleteSurvivalEndOfMatch();
 	};
 
 	var _TournamentDraftUpdate = function ()
@@ -210,6 +235,9 @@ var MainMenu = ( function() {
 		                                                                                           
 		$( '#MainMenuNavBarShowCommunityServerBrowser' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', !bIsCommunityServer );
 
+		                                                            
+		_UpdateSurvivalEndOfMatchInstance();
+
 		                
 		_OnHomeButtonPressed();
 	};
@@ -274,6 +302,7 @@ var MainMenu = ( function() {
 		if( !$.GetContextPanel().FindChildInLayoutFile( tab ) )
 		{
 			var newPanel = $.CreatePanel('Panel', _m_elContentPanel, tab );
+			
 			newPanel.Data().elMainMenuRoot = $.GetContextPanel();
 			                                                 
 
@@ -553,12 +582,25 @@ var MainMenu = ( function() {
 		};
 
 		_ShowNewsAndStore();
+		_AddFeaturedPanel();
 	};
 
 	var _AddStream = function()
 	{
 		var elStream = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsStreamPanel' );
 		elStream.BLoadLayout( 'file://{resources}/layout/mainmenu_stream.xml', false, false );
+	};
+
+	var _AddFeaturedPanel = function()
+	{
+		                  
+		var featuredXML = 'file://{resources}/layout/mainmenu_featured.xml';
+
+		var elPanel = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsFeaturedPanel' );
+		elPanel.BLoadLayout( featuredXML, false, false );
+
+		$.FindChildInContext( '#JsNewsContainer' ).MoveChildBefore( elPanel, $.FindChildInContext( '#JsNewsPanel' ) );
+		$.FindChildInContext( '#JsNewsPanel' ).AddClass( 'news-panel-style-feature-panel-visible' );
 	};
 
 	var _ShowNewsAndStore = function ()
@@ -627,7 +669,7 @@ var MainMenu = ( function() {
 				var arrModels = CharacterAnims.GetValidCharacterModels();
 				if ( arrModels.filter( function( entry )
 					{
-						return entry.model === loadout.model && entry.team === loadout.team;
+						return entry.model === loadout.model && ( entry.team === loadout.team || entry.team === 'any' );
 					} ).length <= 0 )
 				{
 					                                                                                                                 
@@ -701,8 +743,21 @@ var MainMenu = ( function() {
 	{
 		var loadoutsList = CharacterAnims.GetValidCharacterModels();
 		var randomEntry = Math.floor( Math.random() * loadoutsList.length );
+		
+		                                                                 
+		var result = Object.assign( {}, loadoutsList[ randomEntry ] );
 
-		return loadoutsList[ randomEntry ];
+		                                                                                                 
+		if ( result.team === 'any' )
+			result.team = 't';
+
+		  
+		                                                       
+		  
+		var survivalRandomEntry = loadoutsList.length - 3 + Math.floor( Math.random()*3 );
+		result.model = loadoutsList[ survivalRandomEntry ].model;
+
+		return result;
 	};
 
 	var _SetVanityLightingBasedOnBackgroundMovie = function( vanityPanel )
@@ -723,15 +778,36 @@ var MainMenu = ( function() {
 			vanityPanel.SetDirectionalLightDirection( -0.81, 0.41, 0.43 );
 			
 			vanityPanel.SetDirectionalLightModify( 1 );
-			vanityPanel.SetDirectionalLightColor( 0.82, 0.19, 0.08);
+			vanityPanel.SetDirectionalLightColor( 0.82, 0.19, 0.08 );
 			vanityPanel.SetDirectionalLightDirection( 0.62, 0.74, -0.25 );
 			vanityPanel.SetDirectionalLightPulseFlicker( 0.25, 0.25, 0.25, 0.25 );
 
 			vanityPanel.SetDirectionalLightModify( 2 );
-			vanityPanel.SetDirectionalLightColor( 0.72, 1.40, 1.68);
-			vanityPanel.SetDirectionalLightDirection(0.50, -0.69, -0.52);
+			vanityPanel.SetDirectionalLightColor( 0.72, 1.40, 1.68 );
+			vanityPanel.SetDirectionalLightDirection( 0.50, -0.69, -0.52 );
 
 			                                                   
+		}
+		else if ( 'blacksite' )
+		{
+			vanityPanel.SetFlashlightAmount( 1 );
+			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
+			vanityPanel.SetFlashlightPosition( 47.37, 172.91, 0.00 );
+			                                                            
+			vanityPanel.SetFlashlightColor( 4, 4, 4);
+			vanityPanel.SetAmbientLightColor( 0.16, 0.26, 0.30 );
+			
+			vanityPanel.SetDirectionalLightModify( 0 );
+			vanityPanel.SetDirectionalLightColor( 0.26, 0.35, 0.47 );
+			vanityPanel.SetDirectionalLightDirection( -0.50, 0.80, 0.00 );
+			
+			vanityPanel.SetDirectionalLightModify( 1 );
+			vanityPanel.SetDirectionalLightColor( 0.74, 1.01, 1.36 );
+			vanityPanel.SetDirectionalLightDirection( 0.47, -0.77, -0.42 );
+
+			vanityPanel.SetDirectionalLightModify( 2 );
+			vanityPanel.SetDirectionalLightColor( 0.75, 1.20, 1.94 );
+			vanityPanel.SetDirectionalLightDirection( 0.76, 0.48, -0.44 );
 		}
 	};
 
@@ -1235,7 +1311,7 @@ var MainMenu = ( function() {
 		}
 	}
 
-	var _ShowTournamentStore = function () 
+	var _ShowTournamentStore = function() 
 	{
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -1243,6 +1319,50 @@ var MainMenu = ( function() {
 			'',
 			'none'
 		);
+	}; 
+	
+	                                                                                                    
+	                                                
+	                                                                                                    
+	var _ResetSurvivalEndOfMatch = function()
+	{
+		_DeleteSurvivalEndOfMatch();
+
+		function CreateEndOfMatchPanel ()
+		{
+			var elPanel = $.CreatePanel(
+				'CSGOSurvivalEndOfMatch',
+				$( '#MainMenuBackground' ),
+				'PauseMenuSurvivalEndOfMatch',
+				{
+					class: 'PauseMenuModeOnly'
+				}
+			);
+
+			
+			elPanel.SetAttributeString( 'pausemenu', 'true' );
+			_UpdateSurvivalEndOfMatchInstance();
+		}
+
+		$.Schedule( 0.1, CreateEndOfMatchPanel );
+	};
+
+	var _DeleteSurvivalEndOfMatch = function()
+	{
+		if ( $( '#PauseMenuSurvivalEndOfMatch' ) )
+		{
+			$( '#PauseMenuSurvivalEndOfMatch' ).DeleteAsync( 0.0 );
+		}
+	};
+
+	function _UpdateSurvivalEndOfMatchInstance()
+	{
+		var elSurvivalPanel = $( '#PauseMenuSurvivalEndOfMatch' );
+
+		if ( elSurvivalPanel && elSurvivalPanel.IsValid() )
+		{
+			$( '#PauseMenuSurvivalEndOfMatch' ).matchStatus.UpdateFromPauseMenu();
+		}
 	}
 
 	return {
@@ -1285,7 +1405,8 @@ var MainMenu = ( function() {
 		HideStoreStatusPanel				: _HideStoreStatusPanel,
 		PauseMainMenuCharacter				: _PauseMainMenuCharacter,
 		ShowTournamentStore					: _ShowTournamentStore,
-		TournamentDraftUpdate				: _TournamentDraftUpdate
+		TournamentDraftUpdate				: _TournamentDraftUpdate,
+		ResetSurvivalEndOfMatch				: _ResetSurvivalEndOfMatch
 	};
 })();
 
@@ -1320,6 +1441,8 @@ var MainMenu = ( function() {
 
 	$.RegisterForUnhandledEvent( 'ShowVoteContextMenu', MainMenu.ShowVote );
 	$.RegisterForUnhandledEvent( 'ShowTournamentStore', MainMenu.ShowTournamentStore );
+
+	$.RegisterForUnhandledEvent( 'OnMapConfigLoaded', MainMenu.ResetSurvivalEndOfMatch );
 	
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitVanity();

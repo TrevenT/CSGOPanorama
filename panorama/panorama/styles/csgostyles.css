@@ -273,7 +273,10 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
 .csgo-hud--cl-hud-color-10 .cl-hud-wash-color { wash-color-fast: color-hud-10; }
 .csgo-hud--cl-hud-color-11 .cl-hud-wash-color { wash-color-fast: color-hud-11; }
 
-
+.csgo-hud--cl_hud_background_alpha
+{
+	opacity: .5;
+}
 
                                                                                
                                       				                           
@@ -1131,6 +1134,7 @@ RadioButton:disabled:selected .RadioBox
                                                                                
                                                                                
                                                                                
+                                                                               
 
               
 .SettingsMenuDropdownContainer
@@ -1166,18 +1170,18 @@ CSGOSettingsSlider
 	vertical-align: center;
 }
 
-#Title
+CSGOSettingsSlider #Title
 {
     width: fill-parent-flow(1.0);
 }
 
-#Slider
+CSGOSettingsSlider #Slider
 {
     width: 25.5%;
 	margin-right: 10px;
 }
 
-#Value
+CSGOSettingsSlider #Value
 {
 	width: 36px;
 	text-align: right;
@@ -1202,7 +1206,7 @@ CSGOSettingsKeyBinder:selected .ActiveBindFX
 	transition-duration: 0.1s;
 }
 
-#LabelFXContainer
+CSGOSettingsKeyBinder #LabelFXContainer
 {
 	background-color: #00000020;
 	width: fill-parent-flow( 0.3 );
@@ -1214,38 +1218,38 @@ CSGOSettingsKeyBinder:selected .ActiveBindFX
 	border-radius: 2px;
 }
 
-.BindingRow #Value.BindingRowButton
+CSGOSettingsKeyBinder .BindingRow #Value.BindingRowButton
 {
 	color:#ffffff70; 
 	font-weight: bold;
 }
 
-.BindingRow:hover #Value.BindingRowButton
+CSGOSettingsKeyBinder .BindingRow:hover #Value.BindingRowButton
 {
 	color:#ffffff; 
 }
 
-.BindingRow:hover #LabelFXContainer
+CSGOSettingsKeyBinder .BindingRow:hover #LabelFXContainer
 {
 	background-color: #00000050;
 }
 
                                               
 
-.BindingRow:hover .BindingRowLabel
+CSGOSettingsKeyBinder .BindingRow:hover .BindingRowLabel
 {
 	                     
 	                                    
 	                    
 }
 
-.BindingRow:selected #LabelFXContainer
+CSGOSettingsKeyBinder .BindingRow:selected #LabelFXContainer
 {
 	                            
 	                                          
 }
 
-.ActiveBindFX
+CSGOSettingsKeyBinder .ActiveBindFX
 {
 	width: 100%;
 	height: 100%;

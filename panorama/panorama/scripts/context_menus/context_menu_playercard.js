@@ -307,7 +307,7 @@ var contextmenuPlayerCard = ( function (){
 			name: 'report',
 			icon: 'alert',
 			AvailableForItem: function ( id ) {
-				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+				return ( GameStateAPI.IsLocalPlayerPlayingMatch() || GameStateAPI.GetGameModeInternalName( false ) === "survival" ) &&
 					!_IsSelf( id ) &&
 					GameStateAPI.IsPlayerConnected( id );
 			},
@@ -320,7 +320,7 @@ var contextmenuPlayerCard = ( function (){
 			name: 'commend',
 			icon: 'smile',
 			AvailableForItem: function ( id ) {
-				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+				return ( GameStateAPI.IsLocalPlayerPlayingMatch() || GameStateAPI.GetGameModeInternalName( false ) === "survival" ) &&
 					!_IsSelf( id ) &&
 					GameStateAPI.IsPlayerConnected( id );
 			},

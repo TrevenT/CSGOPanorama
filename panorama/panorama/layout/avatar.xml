@@ -60,7 +60,19 @@
 				</Panel>
 			</Panel>
 		</snippet>
+
+		<snippet name="player-dead">
+			<Panel class="avatar-survival__avatar-dead-container">
+				<Panel id="JsSurvivalDeadPlanel" class="avatar-survival__avatar-dead">
+					<Panel class="top-bottom-flow horizontal-center">
+						<Label id="JsSurvivalPlacement" class="avatar-survival__avatar-dead__placement stratum-font" text="16"/>
+						<Image id="JsSurvivalDeadIcon" class="avatar-survival__avatar-dead__icon" src="file://{images}/icons/ui/elimination.svg" scaling="stretch-to-fit-preserve-aspect" texturewidth="18" textureheight="-1"/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
 	</snippets>
+
 
 	<Panel class="" useglobalcontext="true">
 

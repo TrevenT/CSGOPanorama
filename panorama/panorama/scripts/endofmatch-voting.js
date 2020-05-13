@@ -113,7 +113,7 @@ var EOM_Voting = (function () {
 					elMapImage.AddClass( 'map-selection-btn__screenshot' );
 	
 					var cfg = GameTypesAPI.GetConfig();
-					if ( internalName in cfg.maps )
+					if ( cfg && ( 'maps' in cfg ) && ( internalName in cfg.maps ))
 					{
 						image = 'url("file://{images}/map_icons/screenshots/360p/' + internalName + '.png")';			
 					}	
@@ -353,7 +353,7 @@ var EOM_Voting = (function () {
 
                       
 return {
-
+    name: 'eom-voting',
 	Start: _Start,
 	
 };

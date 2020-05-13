@@ -4,7 +4,7 @@
 	</styles>
 	
 	<DebugStyleBlock>
-		<TextEntry id="Selector" tabindex="0" undohistory="enabled" />
+		<TextEntry id="Selector" multiline="true" tabindex="0" undohistory="enabled" />
 		<Label allowrawtext="true" text="{" />
 		<Panel id="PropertySection" class="DebugPropertySection" tabindex="1" />
 		<Label allowrawtext="true" text="}" />

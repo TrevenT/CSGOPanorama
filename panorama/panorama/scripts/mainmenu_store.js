@@ -173,7 +173,7 @@ var MainMenuStore = ( function()
 		if ( !itemsByCategory )
 		{
 			itemsByCategory = {};
-		}	
+		}
 	
 		for ( var i = 0; i < count; i++ )
 		{
@@ -207,6 +207,14 @@ var MainMenuStore = ( function()
 				if ( !itemsByCategory.store )
 				{
 					itemsByCategory.store = [];
+				}
+
+				if ( !PartyListAPI.GetFriendPrimeEligible( MyPersonaAPI.GetXuid() ) &&
+					!bPerfectWorld &&
+					itemsByCategory.store &&
+					( itemsByCategory.store.indexOf( 'prime' ) === -1 ))
+				{
+					itemsByCategory.store.push( 'prime' );
 				}
 
 				itemsByCategory.store.push( FauxItemId );
@@ -386,8 +394,15 @@ var MainMenuStore = ( function()
 		}
 
 		var elItem = $.CreatePanel( 'Panel', elPage, itemList[ i ] );
- 		                                                             
-		if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
+		                                                              
+		
+		
+		if ( itemList[ i ] === 'prime' )
+		{
+			elItem.BLoadLayoutSnippet( 'StoreEntry' );
+			_PrimeStoreItem( elItem, itemList[ i ], type );
+		}
+		else if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
 		{
 			elItem.BLoadLayoutSnippet( 'StoreEntry' );
 			_FillOutItemData( elItem, itemList[ i ], type );
@@ -443,8 +458,35 @@ var MainMenuStore = ( function()
 
 		var elPrice = elItem.FindChildInLayoutFile( 'StoreItemPrice' );
 		elPrice.text = ( type === 'market' ) ? $.Localize( '#SFUI_Store_Market_Link' ) : ItemInfo.GetStoreSalePrice( id, 1 );
+	};
 
+	var _PrimeStoreItem = function( elItem, id, type )
+	{
+		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
+		elImage.DeleteAsync( 0 );
 
+		var newimage = $.CreatePanel( 'Image', elItem, '' ,
+			{
+			src: 'file://{images}/icons/ui/prime.svg',
+				textureheight: '80px',
+				texturewidth: '-1px',
+				class: 'store-panel__carousel__item__image--prime'
+			}
+		);
+
+		var elName = elItem.FindChildInLayoutFile( 'StoreItemName' );
+		elName.text = "Prime Status Upgrade";
+		
+		elItem.MoveChildBefore( newimage, elName );
+
+		elItem.FindChildInLayoutFile( 'StoreItemPrice' ).visible = false;
+		elItem.FindChildInLayoutFile( 'StoreItemPercent' ).visible = false;
+
+		elItem.SetPanelEvent( 'onactivate', function()
+		{
+			UiToolkitAPI.HideTextTooltip();
+			UiToolkitAPI.ShowCustomLayoutPopup( 'prime_status', 'file://{resources}/layout/popups/popup_prime_status.xml' );
+		} );
 	};
 
 	var _MakeTabBtn = function ( prefix, type )

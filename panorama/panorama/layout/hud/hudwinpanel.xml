@@ -3,8 +3,34 @@
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/hud/hudwinpanel.css" />
 	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/survival/survival_winner.js" />
+	</scripts>
+
 
 	<CSGOHudWinPanel class="WinPanelRoot" hittest="false" hittestchildren="false">
+
+		                          
+		<Panel id="id-survival-winpanel" class="survival-winner-container">
+			<Panel id="id-survivor_winner-ring" class="survival-winner__ring"/>
+			<Panel id="id-survival-winner" class="survival-winner">
+				<Image id="id-survival-border-1" class="" src="file://{images}/survival/winpanel/gold_spikes.svg" textureheight="500" texturewidth="-1" />
+				<Image id="id-survival-border-2" class="" src="file://{images}/survival/winpanel/silver_spikes.svg" textureheight="500" texturewidth="-1" />
+				<Image id="id-survival-border-3" class="" src="file://{images}/survival/winpanel/bronze_spikes.svg" textureheight="500" texturewidth="-1" />
+				<Image id="id-survival-border-4" class="" src="file://{images}/survival/winpanel/red_spikes.svg" textureheight="500" texturewidth="-1" />
+
+				<Movie id="id-survival-movie" class="survival-winner__movie" src="file://{resources}/videos/survival_winner.webm" controls="none" repeat="false" autoplay="onload" />
+
+				<Panel class="survival-winner__data">
+					<Panel id="id-survival-avatar-container" class="horizontal-center">
+						<Panel class="survival-winner__avatar-bg"/>
+						<CSGOAvatarImage id="id-survival-avatar" class="survival-winner__avatar"/>
+					</Panel>
+					<Label id="id-survival-playername"  class="survival-winner__text-small stratum-font" text="#Panorama_winpanel_mvp_winner"/>
+					<Label id="id-survival-placement" class="survival-winner__text-large stratum-font" text="#EOM_PositionPlace_1"/>
+				</Panel>
+			</Panel>
+		</Panel>
 		
 		                       
 		<Panel class="WinPanelRow WinPanelRow--Main">
