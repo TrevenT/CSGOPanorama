@@ -18,6 +18,9 @@
 	                           
 	width: 100%;
 	height: fit-children;
+
+	max-height: 178px;
+	overflow: scroll;
 }
 
 
