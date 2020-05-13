@@ -234,6 +234,22 @@ var ItemTile = ( function()
 			{
 				_CapabilityStatTrakSwapAction( capabilityInfo, id );
 			}
+			else if ( capabilityInfo.capability === 'can_collect' )
+			{
+				_CapabilityPutIntoCasketAction( id, capabilityInfo.initialItemId );
+			}
+			else if ( capabilityInfo.capability === 'casketcontents' )
+			{
+				_CapabilityItemInsideCasketAction( capabilityInfo.initialItemId, id );
+			}
+			else if ( capabilityInfo.capability === 'casketretrieve' )
+			{
+				_CapabilityItemRetrieveFromCasketAction( capabilityInfo.initialItemId, id );
+			}
+			else if ( capabilityInfo.capability === 'casketstore' )
+			{
+				_CapabilityPutIntoCasketAction( capabilityInfo.initialItemId, id, capabilityInfo.capability );
+			}
 
 			return;
 		}
@@ -311,6 +327,75 @@ var ItemTile = ( function()
 			'&' + 'asyncworktype=decodeable'
 		);
 	};
+
+	var _CapabilityPutIntoCasketAction = function( idCasket, idItem, cap )
+	{
+		                                                                                           
+
+		$.DispatchEvent( 'ContextMenuEvent', '' );
+		if ( !cap ) {
+			$.DispatchEvent( 'HideSelectItemForCapabilityPopup' );
+			$.DispatchEvent( 'UIPopupButtonClicked', '' );
+			$.DispatchEvent( 'CapabilityPopupIsOpen', false );
+		}
+
+		if ( InventoryAPI.GetItemAttributeValue( idCasket, 'modification date' ) )
+		{
+			               
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'', 
+				'file://{resources}/layout/popups/popup_casket_operation.xml',
+				'op=add' +
+				( cap ? '&nextcapability=' + cap : '' ) +
+				'&spinner=1' +
+				'&casket_item_id=' + idCasket +
+				'&subject_item_id=' + idItem
+			);
+		}
+		else
+		{
+			                                                                                                    
+			var fauxNameTag = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 1200, 0 );              
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'', 
+				'file://{resources}/layout/popups/popup_capability_nameable.xml',
+				'nametag-and-itemtoname=' + fauxNameTag + ',' + idCasket +
+				'&' + 'asyncworktype=nameable' +
+				'&' + 'asyncworkitemwarningtext=#popup_newcasket_warning'
+			);
+		}
+	};
+
+	var _CapabilityItemInsideCasketAction = function( idCasket, idItem )
+	{
+		                                                              
+
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'',
+			'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+			'itemid=' + idItem +
+			'&' + 'inspectonly=true' +
+			'&' + 'insidecasketid=' + idCasket +
+			'&' + 'showequip=false' +
+			'&' + 'allowsave=false',
+			'none'
+		);
+	}
+
+	var _CapabilityItemRetrieveFromCasketAction = function( idCasket, idItem )
+	{
+		                                                                
+
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'', 
+			'file://{resources}/layout/popups/popup_casket_operation.xml',
+			'op=remove' +
+			'&nextcapability=casketretrieve' +
+			'&spinner=1' +
+			'&casket_item_id=' + idCasket +
+			'&subject_item_id=' + idItem
+		);
+	}
 
 	var _CapabilityStatTrakSwapAction = function( capInfo, id )
 	{

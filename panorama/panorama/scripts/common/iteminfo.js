@@ -600,8 +600,11 @@ var ItemInfo = ( function() {
 	var _GetModelPlayer = function( id )
 	{
 		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
-		var itemSchemaDef = JSON.parse( schemaString );		
 
+		if ( !schemaString )
+			return "";
+		
+		var itemSchemaDef = JSON.parse( schemaString );		
 		var modelPlayer = itemSchemaDef[ "model_player" ];
 
 		return modelPlayer;

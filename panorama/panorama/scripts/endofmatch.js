@@ -11,6 +11,7 @@ var EndOfMatch = ( function()
 	
 	$.RegisterEventHandler( "EndOfMatch_Show", _m_cP, _Start );
 	$.RegisterForUnhandledEvent( "EndOfMatch_Shutdown", _Shutdown );
+	$.RegisterForUnhandledEvent( "OnMouseEnableBinding", _ToggleBetweenScoreboardAndCharacters );
 
 	          
 	                                                                       
@@ -52,7 +53,6 @@ var EndOfMatch = ( function()
 	{
 		_m_cP.SetHasClass( 'scoreboard-visible', _m_cP.Data()._m_scoreboardVisible );
 
-		$.RegisterKeyBind( _m_cP, 'key_space', _ToggleBetweenScoreboardAndCharacters );
 	}
 
 	function _SwitchToPanel( tab )
@@ -94,7 +94,19 @@ var EndOfMatch = ( function()
 		                                
 		var mode = MockAdapter.GetGameModeInternalName( false );
 
-		_m_cP.Data()._m_scoreboardVisible = mode == "cooperative" || mode == "coopmission" ;
+		_m_cP.Data()._m_scoreboardVisible = mode == "cooperative" || mode == "coopmission";
+		
+		                            
+		var bind = GameInterfaceAPI.GetSettingString( "cl_scoreboard_mouse_enable_binding" );
+		
+		                                                                                 
+		if ( bind.charAt( 0 ) == '+' || bind.charAt( 0 ) == '-' )
+			bind = bind.substring( 1 );
+		
+		bind = "{v:csgo_bind:bind_" + bind + "}";
+		bind = $.Localize( bind, _m_cP );
+		_m_cP.SetDialogVariable( "scoreboard_toggle_bind", bind );
+		
 
 		_m_cP.FindChildrenWithClassTraverse( "timer" ).forEach( el => el.active = false );
 

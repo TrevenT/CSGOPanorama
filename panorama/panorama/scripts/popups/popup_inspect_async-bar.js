@@ -211,13 +211,18 @@ var InspectAsyncActionBar = ( function()
 		}
 
 		var sOkButtonText = '#popup_'+m_worktype+'_button';
+		var itemDefName = ItemInfo.GetItemDefinitionName( m_itemid );
 		if ( m_worktype === 'decodeable' )
 		{
-			var itemDefName = ItemInfo.GetItemDefinitionName( m_itemid );
 			if ( itemDefName && itemDefName.indexOf( "spray" ) != -1 )
 				sOkButtonText = sOkButtonText + "_graffiti";
 			else if ( itemDefName && itemDefName.indexOf( "tournament_pass_" ) != -1 )
 				sOkButtonText = sOkButtonText + "_fantoken";
+		}
+
+		if ( m_worktype === 'nameable' && itemDefName === 'casket' )
+		{
+			sOkButtonText = '#popup_newcasket_button';
 		}
 
 		elOK.text = sOkButtonText;

@@ -91,7 +91,7 @@ var InpsectPurchaseBar = ( function()
 		var elDropdown = m_elPanel.FindChildInLayoutFile( 'PurchaseCountDropdown' );
 		var qty = 1;
 
-		var bCanShowQuantityDropdown = !m_isXrayMode && ( m_bOverridePurchaseMultiple || !_isCouponOrPass() );
+		var bCanShowQuantityDropdown = !m_isXrayMode && _isAllowedToPurchaseMultiple();
 		elDropdown.visible = bCanShowQuantityDropdown;
 		if( bCanShowQuantityDropdown )
 		{
@@ -104,12 +104,25 @@ var InpsectPurchaseBar = ( function()
 		_UpdateSalePrice( ItemInfo.GetStoreOriginalPrice( m_itemid, qty ) );
 	};
 
-	var _isCouponOrPass = function()
+	var _isAllowedToPurchaseMultiple = function()
 	{
+		if ( m_bOverridePurchaseMultiple )
+			return true;                                             
+
 		var itemType = InventoryAPI.GetItemTypeFromEnum( m_itemid );
-		var attValue = InventoryAPI.GetItemAttributeValue( m_itemid, 'season access' );
 		                                 
-		return ( itemType === 'coupon' || itemType === 'coupon_crate'|| attValue ) ? true : false;
+		if ( itemType === 'coupon' || itemType === 'coupon_crate' )
+			return false;                                                        
+
+		var attValue = InventoryAPI.GetItemAttributeValue( m_itemid, 'season access' );
+		if ( attValue )
+			return false;                                                                  
+
+		var defName = InventoryAPI.GetItemDefinitionName( m_itemid );
+		if ( defName === 'casket' )
+			return false;                                                                               
+
+		return true;
 	};
 
 	var _SetUpPurchaseBtn = function ( elPanel )

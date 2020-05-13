@@ -82,36 +82,39 @@
 					</Panel>
 
 					<Panel class="full-width top-bottom-flow">
-						<Panel class="op-mainmenu__header-container">
-							<Label class="op-mainmenu__header" text="#op_mission_title"/>
-							<Button id="" class="op-mainmenu__btn horizontal-align-right">
-								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
-							</Button>
-						</Panel>
+						<Panel class="full-width" >
+							<TextButton id="id-op-mainmenu-mission-unlock" class="op-mainmenu__unlock-text horizontal-align-right" text="#op_missions_unlock"/>
+							                                                      
+								                                                                      
+								                                                                       
+									                                                                                              
+								                  
+							                 
 
-						<Panel class="op-header" >
-							<Panel class="left-right-flow full-width right-margin-medium" >
-								<Panel class="horizontal-center">
-									<Image class="op-header__stars-bg" texturewidth="48" textureheight="-1" src="file://{images}/operations/banner.svg" />
-									<Label class="vertical-center horizontal-center op-header__num" text="{d:total_missions}"/>
-								</Panel>
-								<Panel class="top-bottom-flow vertical-center left-margin" >
-									<Label id="op-main-header" class="vertical-center op-header__text" text="#op_mission_title_main"/>
-									<TooltipPanel id="id-mission-card-tag-xp" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_xp_tooltip" style='tooltip-position: bottom;'>
-										<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/xp_rank.svg" textureheight="18" texturewidth="-1"/>
-										<Label id="id-mission-card-xp-progress" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
-									</TooltipPanel>
-								</Panel>
+							<Panel class="op-header op-header--missions" >
+								<Panel class="left-right-flow full-width right-margin-medium" >
+									<Panel class="horizontal-center">
+										<Image class="op-header__stars-bg" texturewidth="48" textureheight="-1" src="file://{images}/operations/banner.svg" />
+										<Label class="vertical-center horizontal-center op-header__num" text="{d:total_missions}"/>
+									</Panel>
+									<Panel class="top-bottom-flow vertical-center left-margin" >
+										<Label id="op-main-header" class="vertical-center op-header__text" text="#op_mission_title_main"/>
+										<TooltipPanel id="id-mission-card-tag-xp" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_xp_tooltip" style='tooltip-position: bottom;'>
+											<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/xp_rank.svg" textureheight="18" texturewidth="-1"/>
+											<Label id="id-mission-card-xp-progress" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
+										</TooltipPanel>
+									</Panel>
 
-								<Panel class="vertical-center horizontal-align-right right-margin-medium left-right-flow">
-									<TooltipPanel id="" class="op-mainmenu__btn right-margin" tooltip="#op_missions_tooltip" style="tooltip-position: bottom;"> 
-										<Image texturewidth="26" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
-									</TooltipPanel>
-									<TooltipPanel tooltip="#op_faq_link" style="tooltip-position: bottom;">
-										<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/shatteredweb/' );" >
-											<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
-										</Button>
-									</TooltipPanel>
+									<Panel class="vertical-center horizontal-align-right right-margin-medium left-right-flow">
+										<TooltipPanel id="" class="op-mainmenu__btn right-margin" tooltip="#op_missions_tooltip" style="tooltip-position: bottom;"> 
+											<Image texturewidth="26" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
+										</TooltipPanel>
+										<TooltipPanel tooltip="#op_faq_link" style="tooltip-position: bottom;">
+											<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/shatteredweb/' );" >
+												<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+											</Button>
+										</TooltipPanel>
+									</Panel>
 								</Panel>
 							</Panel>
 						</Panel>

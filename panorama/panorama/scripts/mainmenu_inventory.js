@@ -649,6 +649,8 @@ var InventoryPanel = ( function (){
 			elLabel.SetDialogVariable( 'type', ItemInfo.GetName( _SelectedCapabilityInfo.initialItemId ) );
 			if ( ( _SelectedCapabilityInfo.capability === 'can_stattrack_swap' ) && !InventoryAPI.IsTool( _SelectedCapabilityInfo.initialItemId ) )
 				elLabel.text = $.Localize( '#inv_empty_lister_for_stattrackswap', elLabel );                                                   
+			else if ( _SelectedCapabilityInfo.capability === 'can_collect' )
+				elLabel.text = $.Localize( '#inv_empty_lister_nocaskets', elLabel );
 			else
 				elLabel.text = $.Localize( '#inv_empty_lister_for_use', elLabel );
 		}
@@ -813,6 +815,25 @@ var InventoryPanel = ( function (){
 			szPrefixString = InventoryAPI.IsTool( id ) ?
 							'#inv_select_item_use' :
 							'#inv_select_item_stattrack_swap';
+		}
+		else if ( capability === 'can_collect' ) 
+		{
+			var defName = InventoryAPI.GetItemDefinitionName( id );
+			szPrefixString = ( defName === 'casket' ) ?
+							'#inv_select_item_tostoreincasket' :
+							'#inv_select_casketitem_tostorethis';
+		}
+		else if ( capability === 'casketcontents' ) 
+		{
+			szPrefixString = '#inv_select_casketcontents';
+		}
+		else if ( capability === 'casketretrieve' ) 
+		{
+			szPrefixString = '#inv_select_casketretrieve';
+		}
+		else if ( capability === 'casketstore' ) 
+		{
+			szPrefixString = '#inv_select_casketstore';
 		}
 		elPrefixString.text = szPrefixString;
 

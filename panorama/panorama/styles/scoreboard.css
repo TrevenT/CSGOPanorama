@@ -1630,6 +1630,8 @@ Label.sb-row__cell--mvps__count {
 .eom-scoreboard .sb-team__info__number,
 .eom-scoreboard .sb-team--Spectator,
 .eom-scoreboard #id-sb-footer-server-website,
+.eom-scoreboard #id-sb-meta__blockugc,
+.eom-scoreboard #id-sb-meta__mutevoice,
  {
 	visibility: collapse;
  }

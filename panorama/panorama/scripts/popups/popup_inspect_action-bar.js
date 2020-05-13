@@ -9,6 +9,7 @@ var InspectActionBar = ( function (){
 	                                
 	var m_showCert = true;
 	var m_showEquip = true;
+	var m_insideCasketID = '';
 	var m_showSave = true;
 	var m_showMaketLink = false;
 	var m_showCharSelect = true;
@@ -27,6 +28,7 @@ var InspectActionBar = ( function (){
 		m_callbackHandle = funcGetSettingCallbackInt( 'callback', -1 );
 		m_showCert = ( funcGetSettingCallback( 'showitemcert', 'true' ) === 'false' );
 		m_showEquip = ( funcGetSettingCallback( 'showequip', 'true' ) === 'false' );
+		m_insideCasketID = funcGetSettingCallback( 'insidecasketid', '' );
 		m_showSave = ( funcGetSettingCallback( 'allowsave', 'true' ) === 'true' );
 		m_showMaketLink = ( funcGetSettingCallback( 'showmarketlink', 'false' ) === 'true' );
 		m_showCharSelect = ( funcGetSettingCallback( 'showcharselect', 'true' ) === 'true' );
@@ -113,6 +115,15 @@ var InspectActionBar = ( function (){
 	{
 		var elMoreActionsBtn = elPanel.FindChildInLayoutFile( 'InspectActionsButton' );
 		var elSingleActionBtn = elPanel.FindChildInLayoutFile( 'SingleAction' );
+
+		if ( m_insideCasketID )
+		{
+			elMoreActionsBtn.AddClass( 'hidden' );
+			elSingleActionBtn.RemoveClass( 'hidden' );
+			elSingleActionBtn.text = '#popup_casket_action_remove';
+			elSingleActionBtn.SetPanelEvent( 'onactivate', _OnMoveItemFromCasketToInventory.bind( this, m_insideCasketID, id ) );
+			return;
+		}
 		
 		if ( m_showEquip )
 		{
@@ -187,6 +198,21 @@ var InspectActionBar = ( function (){
 		}
 		
 		entry.OnSelected( id );
+	};
+
+	var _OnMoveItemFromCasketToInventory = function( idCasket, idSubjectItem )
+	{
+		_CloseBtnAction();
+		
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'', 
+			'file://{resources}/layout/popups/popup_casket_operation.xml',
+			'op=remove' +
+			'&nextcapability=casketcontents' +
+			'&spinner=1' +
+			'&casket_item_id=' + idCasket +
+			'&subject_item_id=' + idSubjectItem
+		);
 	};
 
 	                                                                                                    

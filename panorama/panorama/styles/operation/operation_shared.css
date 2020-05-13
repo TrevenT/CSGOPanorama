@@ -63,6 +63,11 @@
 	                                       
 }
 
+.op-header--missions
+{
+	padding-top: 24px;
+}
+
 .op-header__text
 {
 	font-family: Stratum2, 'Arial Unicode MS';

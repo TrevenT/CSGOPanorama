@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+		id: "TripleMonitor",
+		loc_name: "#SFUI_Settings_Triple_Monitor",
+		loc_desc: "#GameUI_TripleMonitor_Tooltip",
+		section: "VideoSettings",
+		start_date: new Date( 'November 20, 2019' ), 
+		end_date: new Date( 'January 30, 2020' )
+	},
+	{
 		id: "ClutchKey",
 		loc_name: "#GameUI_Clutch_Key",
 		loc_desc: "#GameUI_Clutch_Key_Tooltip",

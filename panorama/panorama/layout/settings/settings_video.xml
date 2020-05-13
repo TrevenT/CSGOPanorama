@@ -221,7 +221,7 @@
 					<Panel class="horizontal-separator"/>
 
 					                       
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Triple_Monitor_Info">
+					<TooltipPanel id="TripleMonitor" class="SettingsMenuDropdownContainer" tooltip="#GameUI_TripleMonitor_Tooltip">
 						<Label text="#SFUI_Settings_Triple_Monitor" class="half-width"/>
 						<CSGOSettingsEnumDropDown convar="triple_monitor_mode" class="PopupButton White" id ="MotionBlur">
 							<Label text="#SFUI_Settings_Disabled" value="0" id="triplemonitor0" />

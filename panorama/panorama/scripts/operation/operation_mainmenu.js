@@ -1,6 +1,7 @@
 'use strict';
 
-var OperationMainMenu = (function () {
+var OperationMainMenu = ( function()
+{
 
 	var _m_nSeasonIndex = null;
 	var _m_InventoryUpdatedHandler = null;
@@ -90,11 +91,11 @@ var OperationMainMenu = (function () {
 	};
 
 	var _ShowUpdatePanelBasedOnStatus = function( oStatus )
-	{	
+	{
 		if ( !oStatus.bPremiumUser )
 		{
 			                                               
-			if (  oStatus.nActiveCardIndex > -1 )
+			if ( oStatus.nActiveCardIndex > -1 )
 			{
 				_ShowOperationPanel( oStatus );
 				_HideUpSell();
@@ -122,7 +123,7 @@ var OperationMainMenu = (function () {
 				'#op_select_mission_card',
 				function() { _OnMissionSelectPopupBtnPress( 'Option1' ) },
 				'Cancel',
-				function() {  }
+				function() { }
 			);
 		};
 		
@@ -130,8 +131,8 @@ var OperationMainMenu = (function () {
 		elUpsell.AddClass( 'show' );
 
 		var btnPremium = elUpsell.FindChildInLayoutFile( 'id-op-mainmenu-upsell-store' );
-		btnPremium.SetPanelEvent('onactivate',
-			OperationUtil.OpenUpSell.bind(undefined)
+		btnPremium.SetPanelEvent( 'onactivate',
+			OperationUtil.OpenUpSell.bind( undefined )
 		);
 		
 		btnPremium.text = InventoryAPI.GetActiveSeasonPassItemId() ? '#SFUI_ConfirmBtn_ActivatePassNow' : '#op_get_premium';
@@ -198,21 +199,21 @@ var OperationMainMenu = (function () {
 		                                                      
 		                                          
 		    
-			var lockedIndex = 0;
-			for ( var i = 0; i < oRewardsNoGaps.length; i++ )
+		var lockedIndex = 0;
+		for ( var i = 0; i < oRewardsNoGaps.length; i++ )
+		{
+			if ( oRewardsNoGaps[ i ].isUnlocked === false )
 			{
-				if ( oRewardsNoGaps[ i ].isUnlocked === false )
-				{
-					lockedIndex = i;
-					break;
-				}
+				lockedIndex = i;
+				break;
 			}
+		}
 
-			_m_oNamesFlipModule.AddParamToCallbackData( 'nextRewardIndex', lockedIndex );
+		_m_oNamesFlipModule.AddParamToCallbackData( 'nextRewardIndex', lockedIndex );
 
-			                                 
-			_m_oNamesFlipModule.ActiveIndex = lockedIndex - 1;
-			_m_oNamesFlipModule.UseCallback();
+		                                 
+		_m_oNamesFlipModule.ActiveIndex = lockedIndex - 1;
+		_m_oNamesFlipModule.UseCallback();
 		    
 	};
 
@@ -249,7 +250,7 @@ var OperationMainMenu = (function () {
 
 	var UpdateRewardDisplay = function( oData, isPrev = false )
 	{
-		function UpdateData( oData )
+		function UpdateData ( oData )
 		{
 			var NextPanel = _m_oNamesFlipModule.DetermineHiddenPanel( oData.animPanelA, oData.animPanelB );
 			var id = oData.oCallbackData[ oData.activeIndex ].itempremium.ids[ 0 ];
@@ -311,8 +312,8 @@ var OperationMainMenu = (function () {
 			}
 		}
 
-		var imgA = _m_cp.FindChildInLayoutFile('id-op-reward-image-1');
-		var imgB = _m_cp.FindChildInLayoutFile('id-op-reward-image-2');
+		var imgA = _m_cp.FindChildInLayoutFile( 'id-op-reward-image-1' );
+		var imgB = _m_cp.FindChildInLayoutFile( 'id-op-reward-image-2' );
 		
 		if ( isPrev )
 		{
@@ -361,7 +362,7 @@ var OperationMainMenu = (function () {
 	};
 
 	var _SetUpFlipAnimForMissions = function()
-	{	 	
+	{
 		_m_oNamesFlipModuleMissions = new FlipPanelAnimation.Constructor( {
 			controlBtnPrev: _m_cp.FindChildInLayoutFile( 'id-op-mission-prev' ),
 			controlBtnNext: _m_cp.FindChildInLayoutFile( 'id-op-mission-next' ),
@@ -418,6 +419,29 @@ var OperationMainMenu = (function () {
 		}
 	};
 
+	var _SetUpCardUnlockDisplay = function()
+	{
+		var elPanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-mission-unlock' );
+		var numMissionBacklog = InventoryAPI.GetMissionBacklog();
+		var bShouldShow = _m_oNamesFlipModuleMissions.ActiveIndex < numMissionBacklog - 1;
+
+		elPanel.SetHasClass( 'hide', !bShouldShow );
+		
+		if ( !bShouldShow )
+		{
+			return;
+		}
+		
+		elPanel.SetDialogVariableInt( 'unlocked_week', numMissionBacklog );
+		elPanel.SetPanelEvent( 'onactivate', _GotoMissionWeek.bind( undefined, ( numMissionBacklog - 1 )) );
+	};
+
+	var _GotoMissionWeek = function( numMissionBacklog )
+	{
+		_m_oNamesFlipModuleMissions.oData.activeIndex = numMissionBacklog - 1;
+		UpdateMissionDisplay( _m_oNamesFlipModuleMissions.oData, false );
+	}
+
 	var UpdateMissionDisplay = function( oData, isPrev = false )
 	{
 		function UpdateData ( oData )
@@ -446,6 +470,8 @@ var OperationMainMenu = (function () {
 				oData.activeIndex,
 				_m_cp.FindChildInLayoutFile( 'id-op-mainmenu-mission-card' )
 			);
+
+			_SetUpCardUnlockDisplay();
 		}
 
 		if ( isPrev )

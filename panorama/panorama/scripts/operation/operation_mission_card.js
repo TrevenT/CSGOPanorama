@@ -135,9 +135,10 @@ var OperationMissionCard = ( function()
 			if ( seconds && seconds !== 0 )
 			{
 				seconds = seconds <= 60 ? 60 : seconds;
-				                 
-				                                                                                                          
-				elMissionCard.SetDialogVariable( 'unlock_time', $.Localize( '#op_mission_card_revealed_later', elMissionCard ) );
+				                  
+				elMissionCard.SetDialogVariable( 'unlock_time', FormatText.SecondsToSignificantTimeString( seconds ) );
+				                                                           
+				                                                                                                                    
 			}
 
 			_m_missionUnlockTimerHandler = $.Schedule( 5, _UpdateUnlockTimer.bind( undefined, elMissionCard ) );

@@ -326,39 +326,42 @@ var EOM_Characters = ( function()
 
 		arrPlayerList.forEach( function( oPlayer, index )
 		{
-			var settings =
+			if ( oPlayer )
 			{
-				display_immediately: false,                                                         
-				cameraPreset: 10,
-			}
-
-			var cheer = "";
-
-			if ( oPlayer && 'items' in oPlayer )
-			{
-				var playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) )[ 0 ];
-				cheer = playerModelItem ? ItemInfo.GetDefaultCheer( playerModelItem[ 'itemid' ] ) : "";
-
-				if ( oPlayer != _m_localPlayer &&
-					mapCheers[ cheer ] == 1 )                                         
+				var settings =
 				{
-					cheer = "";
+					display_immediately: false,                                                         
+					cameraPreset: 10,
 				}
 
-				mapCheers[ cheer ] = 1;
+				var cheer = "";
+
+				if ( 'items' in oPlayer )
+				{
+					var playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) )[ 0 ];
+					cheer = playerModelItem ? ItemInfo.GetDefaultCheer( playerModelItem[ 'itemid' ] ) : "";
+
+					if ( oPlayer != _m_localPlayer &&
+						mapCheers[ cheer ] == 1 )                                         
+					{
+						cheer = "";
+					}
+
+					mapCheers[ cheer ] = 1;
+				}
+
+				settings.arrModifiers = [ cheer ];
+				settings.activity = cheer == "" ? 'ACT_CSGO_UIPLAYER_WALKUP' : 'ACT_CSGO_UIPLAYER_CELEBRATE';
+
+				_AddModeSpecificSettings( mode, settings, index, arrPlayerList );
+
+				var label = oPlayer[ 'xuid' ];
+
+				CharacterLineUp.AddPlayer( elCLU, label, oPlayer, settings );
+
+				var elCharacter = CharacterLineUp.GetPlayerPanel( elCLU, label );
+				elCharacter.AddClass( 'darkmodel' );
 			}
-
-			settings.arrModifiers = [ cheer ];
-			settings.activity = cheer == "" ? 'ACT_CSGO_UIPLAYER_WALKUP' : 'ACT_CSGO_UIPLAYER_CELEBRATE';
-
-			_AddModeSpecificSettings( mode, settings, index, arrPlayerList );
-
-			var label = oPlayer[ 'xuid' ];
-
-			CharacterLineUp.AddPlayer( elCLU, label, oPlayer, settings );
-
-			var elCharacter = CharacterLineUp.GetPlayerPanel( elCLU, label );
-			elCharacter.AddClass( 'darkmodel' );
 
 		} );
 

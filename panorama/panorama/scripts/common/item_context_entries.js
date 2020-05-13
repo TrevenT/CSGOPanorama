@@ -52,12 +52,108 @@ var ItemContextEntires = ( function (){
 				return ( ( slotsub ) && ( slotsub.startsWith( "equipment" ) || slotsub.startsWith( "grenade" ) ) ) ? '' : 'BottomSeparator';
 			},
 			AvailableForItem: function ( id ) {
+				                              
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' )
+					return InventoryAPI.GetItemAttributeValue( id, 'modification date' ) ? true : false;
+
 				                                                                 
 				return ItemInfo.IsPreviewable( id );
 			},
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'ContextMenuEvent', '' );
+				
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' ) {	                              
+					if ( InventoryAPI.GetItemAttributeValue( id, 'items count' ) ) {
+						               
+						UiToolkitAPI.ShowCustomLayoutPopupParameters(
+							'', 
+							'file://{resources}/layout/popups/popup_casket_operation.xml',
+							'op=loadcontents' +
+							'&nextcapability=casketcontents' +
+							'&spinner=1' +
+							'&casket_item_id=' + id +
+							'&subject_item_id=' + id
+						);
+					} else {
+						UiToolkitAPI.ShowGenericPopupOk(
+							$.Localize( '#popup_casket_title_error_casket_empty' ),
+							$.Localize( '#popup_casket_message_error_casket_empty' ),
+							'',
+							function()
+							{
+							},
+							function()
+							{
+							}
+						);
+					}
+					return;
+				}
+
 				$.DispatchEvent( "InventoryItemPreview", id );
+			}
+		},
+		{
+			name: 'bulkretrieve',
+			populateFilter: ['loadout'],
+			AvailableForItem: function ( id ) {
+				                                           
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				return ( defName === 'casket' ) && InventoryAPI.GetItemAttributeValue( id, 'modification date' );
+			},
+			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' ) {	                              
+					if ( InventoryAPI.GetItemAttributeValue( id, 'items count' ) ) {
+						               
+						UiToolkitAPI.ShowCustomLayoutPopupParameters(
+							'', 
+							'file://{resources}/layout/popups/popup_casket_operation.xml',
+							'op=loadcontents' +
+							'&nextcapability=casketretrieve' +
+							'&spinner=1' +
+							'&casket_item_id=' + id +
+							'&subject_item_id=' + id
+						);
+					} else {
+						UiToolkitAPI.ShowGenericPopupOk(
+							$.Localize( '#popup_casket_title_error_casket_empty' ),
+							$.Localize( '#popup_casket_message_error_casket_empty' ),
+							'',
+							function()
+							{
+							},
+							function()
+							{
+							}
+						);
+					}
+					return;
+				}
+			}
+		},
+		{
+			name: 'bulkstore',
+			populateFilter: ['loadout'],
+			style: function (id){
+				return 'BottomSeparator';
+			},
+			AvailableForItem: function ( id ) {
+				                                           
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				return ( defName === 'casket' ) && InventoryAPI.GetItemAttributeValue( id, 'modification date' );
+			},
+			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' ) {	                              
+					$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'casketstore', id, '' );
+				}
 			}
 		},
 		{
@@ -557,13 +653,36 @@ var ItemContextEntires = ( function (){
 		   	 
 		     
 		{
-			name: 'nameable',
+			name: function( id )
+			{
+				var strActionName = 'nameable';
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' ) {
+					                                                                                                    
+					return InventoryAPI.GetItemAttributeValue( id, 'modification date' ) ? 'yourcasket' : 'newcasket';
+				}
+				return strActionName;
+			},
 			AvailableForItem: function ( id ) {
 				return ItemInfo.ItemHasCapability( id, 'nameable' );
 			},
 			OnSelected:  function ( id ) {
 
-				if( _DoesNotHaveChosenActionItems( id, 'nameable' ) )
+				var defName = InventoryAPI.GetItemDefinitionName( id );
+				if ( defName === 'casket' ) {
+					                                                                                                    
+					var fauxNameTag = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 1200, 0 );              
+					var noteText = InventoryAPI.GetItemAttributeValue( id, 'modification date' ) ? 'yourcasket' : 'newcasket';
+					$.DispatchEvent( 'ContextMenuEvent', '' );
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'', 
+						'file://{resources}/layout/popups/popup_capability_nameable.xml',
+						'nametag-and-itemtoname=' + fauxNameTag + ',' + id +
+						'&' + 'asyncworktype=nameable' +
+						'&' + 'asyncworkitemwarningtext=#popup_'+noteText+'_warning'
+					);
+				}
+				else if( _DoesNotHaveChosenActionItems( id, 'nameable' ) )
 				{
 					var nameTagId = '',
 					itemToNameId = id;
@@ -732,10 +851,39 @@ var ItemContextEntires = ( function (){
 			}
 		},
 		{
-			name: 'sell',
+			name: 'intocasket',
 			style: function (id){
 				return 'TopSeparator';
 			},
+			AvailableForItem: function ( id ) {
+				return InventoryAPI.IsMarketable( id );
+			},
+			OnSelected: function ( id ) {
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				if ( ItemInfo.GetChosenActionItemsCount( id, 'can_collect' ) > 0 ) {                 
+					$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'can_collect', id, '' );
+				} else {                
+					var fauxCasket = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 1201, 0 );            
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+						'itemid=' + fauxCasket
+						+ '&' +
+						'inspectonly=false'
+						+ '&' +
+						'asyncworkitemwarning=no'
+						+ '&' +
+						'storeitemid=' + fauxCasket,
+						'none'
+					);
+				}
+		}
+		},
+		{
+			name: 'sell',
+			                       
+			  	                      
+			    
 			AvailableForItem: function ( id ) {
 				return InventoryAPI.IsMarketable( id );
 			},

@@ -151,7 +151,13 @@ var CapabilityNameable = ( function()
 		m_elRemoveConfirm.SetPanelEvent( 'onactivate',
 			_OnRemoveConfirm.bind( undefined, itemId ) );
 
-		m_elRemoveConfirm.SetHasClass( 'hidden', !hasName );
+		var bCanRemoveName = hasName;
+		if ( bCanRemoveName ) {
+			var defName = InventoryAPI.GetItemDefinitionName( itemId );
+			if ( defName === 'casket' )
+				bCanRemoveName = false;
+		}
+		m_elRemoveConfirm.SetHasClass( 'hidden', !bCanRemoveName );
 		m_elTextEntry.SetFocus();
 		m_elTextEntry.SetMaxChars( 20 );
 		m_elTextEntry.text = _SetDefaultTextForTextEntry( hasName, itemId );

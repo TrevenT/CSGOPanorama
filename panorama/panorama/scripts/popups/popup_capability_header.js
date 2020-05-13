@@ -85,7 +85,11 @@ var CapabiityHeader = ( function()
 		}
 		else
 		{
-		    elTitle.text = '#popup_' + m_worktype + '_title';
+			var defName = InventoryAPI.GetItemDefinitionName( m_itemid );
+			if ( defName === 'casket' && m_worktype === 'nameable')
+				elTitle.text = '#popup_newcasket_title';
+			else
+		    	elTitle.text = '#popup_' + m_worktype + '_title';
 		}
 	};
 
