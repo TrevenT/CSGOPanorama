@@ -129,7 +129,7 @@
 				</Panel>
 				<Label id="StorePanelTournamentSaleTagLabel"
 					class="store-panel__tournament-saletag hidden" html="false"
-					text="50%"/>
+					text="#store_tournament_price_reduction"/>
 				<Label id="StorePanelTournamentLabel"
 					class="store-panel__tournament-label" html="true"
 					text="#CSGO_PickEm_Buy_Items"/>

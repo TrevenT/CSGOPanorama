@@ -51,7 +51,7 @@ var MainMenuStore = ( function()
 						];
 						var offset = 78;
 
-						_ShowSaleTag( g_ActiveTournamentInfo.itemid_sticker );
+						_ShowSaleTag( );
 						
 						for( var i = 0; i < randomItemsIndex.length ; i++ )
 						{
@@ -81,13 +81,43 @@ var MainMenuStore = ( function()
 							}
 						}
 
-						function _ShowSaleTag ( storeDefIndx )
+						function _ShowSaleTag ()
 						{
-							var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
-							var reduction = ItemInfo.GetStoreSalePercentReduction( storeDefIndx, 1 );
+							var itemsThatGoOnSale = [
+								g_ActiveTournamentInfo.itemid_sticker,
+								g_ActiveTournamentInfo.itemid_pass,
+								g_ActiveTournamentInfo.itemid_pack,
+								g_ActiveTournamentInfo.itemid_charge
+							];
 
-							elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
-							elPrecent.text = reduction;
+							var itemsWithSaleReduction = [];
+							itemsThatGoOnSale.forEach( itemDefIndex =>
+							{
+								var reduction = ItemInfo.GetStoreSalePercentReduction( itemDefIndex, 1 );
+								
+								if ( reduction )
+								{
+									var oItem = { defindex: itemDefIndex, reduction: reduction };
+									itemsWithSaleReduction.push( oItem );
+								}
+							} );
+
+							var aSorted = itemsWithSaleReduction.sort(function (a, b) {
+								return parseInt( a.reduction ) - parseInt( b.reduction );
+							});
+							
+							var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
+							elPrecent.SetHasClass( 'hidden', aSorted.length < 1 ? true : false );
+							
+							if ( aSorted.length >= 1 )
+							{
+								var itemName = aSorted[0].defindex === g_ActiveTournamentInfo.itemid_sticker ?
+									$.Localize( '#store_tournament_reduction_strickers' ) :
+									ItemInfo.GetName( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( aSorted[0].defindex , 0 ));
+								
+								elPrecent.SetDialogVariable( 'reduction', aSorted[ 0 ].reduction );
+								elPrecent.SetDialogVariable( 'reduction_name', itemName );
+							}
 						}
 						
 						elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
