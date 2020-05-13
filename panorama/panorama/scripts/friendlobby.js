@@ -40,7 +40,7 @@ var friendLobby = ( function (){
 	var _SetPrime = function ( elTile )
 	{
 		var primeValue = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/apr' );
-		elTile.FindChildTraverse( 'JsFriendLobbyPrime' ).visible = primeValue ? true : false;
+		elTile.FindChildTraverse( 'JsFriendLobbyPrime' ).visible = ( primeValue && primeValue != '0' ) ? true : false;
 	};
 
 	var _SetFlag = function ( elTile )

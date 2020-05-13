@@ -33,7 +33,7 @@ var FriendAdvertiseTile = ( function (){
 	var _SetPrime = function ( elTile )
 	{
 		var primeValue = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/apr' );
-		elTile.FindChildTraverse( 'JsFriendAdvertisePrime' ).visible = primeValue ? true : false;
+		elTile.FindChildTraverse( 'JsFriendAdvertisePrime' ).visible = ( primeValue && primeValue != '0' ) ? true : false;
 	};
 
 	var _SetFlag = function ( elTile )
