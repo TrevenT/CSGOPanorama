@@ -267,12 +267,22 @@ Label {
 
 }
 
+.bottom-divider{
+	border-bottom: 1px solid #80808030;
+
+}
+
+.meta-row{
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
 #id-sb-meta__mode__image
 {
-	width: 32px;
-	height: 32px;
+	width: 24px;
+	height: 24px;
+	vertical-align: top;
 	margin: 0px 18px 0px 6px;
-	vertical-align: center;
 	opacity: 1;			
 	wash-color: grey;
 	-s2-mix-blend-mode: SRGBadditive;
@@ -283,12 +293,11 @@ Label {
 	font-size: 18px;
 	horizontal-align: left;
 
-	vertical-align: middle;
-	position: 0px 10px 0px;
-
 	                      
 	color: grey;
 	-s2-mix-blend-mode: SRGBadditive;
+
+	position: 40px 0px 0px;
 
 	font-weight: bold;
 	font-family: Stratum2, 'Arial Unicode MS';
@@ -314,20 +323,18 @@ Label {
 	max-width: 550px;
 }
 
-#id-viewers {
+#id-sb-meta__labels__server-viewers {
 
-	font-size: 18px;
+	font-size: 14px;
 
-	horizontal-align: left;
+	horizontal-align: right;
 	                      
-
-	vertical-align: top;
 
 	color: grey;
 	-s2-mix-blend-mode: SRGBadditive;
 
 	                      
-	font-weight: bold;
+	font-weight: normal;
 	font-family: Stratum2, 'Arial Unicode MS';
 }
 
@@ -336,9 +343,9 @@ Label {
 	flow-children: left;
 
 	horizontal-align:right;
-	vertical-align: bottom;
 
-	margin-top: 15px;
+	margin-top: 10px;
+
 }
 
 .mutebuttonon Label,
@@ -369,7 +376,6 @@ Label {
 	flow-children: right;
 
 	margin-left: 10px;
-	margin-top: 5px;
 	height: 26px;
 
 	horizontal-align:right;
@@ -419,13 +425,8 @@ Button.sb-row__cell:hover {
  #id-sb-meta__musickit{
 
 	flow-children: right;
-
-	horizontal-align: right;
-
-	vertical-align: top;
-	position: 0px 20px 0px;
-
-  	                   
+	horizontal-align: left;
+  	                    
 }
 
 #id-sb-meta__musickit Label{
@@ -460,9 +461,7 @@ Button.sb-row__cell:hover {
 
 	horizontal-align: right;
 	flow-children: left;
-  	                   
 	width:fit-children;
-	vertical-align: top;
 }
 
 

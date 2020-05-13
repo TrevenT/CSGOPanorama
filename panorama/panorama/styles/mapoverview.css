@@ -127,20 +127,22 @@ CSGOMapOverview Label
     vertical-align: bottom;
 	                                                                                           
     margin-left: 8px;
-    visibility: visible;
+	visibility: visible;
+	flow-children: right;
 }
 
 .MapOverview__key-hints-text
 {
     font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 18px;
-    text-align: left;
+    text-align: center;
     text-shadow: 1px 1px 1px 2.0 black;
     color: #BBBBBBFF;
                       
                           
-	                      
+	font-weight: medium;
 	                       
+	width: 25%;
 }
 
                                                                                

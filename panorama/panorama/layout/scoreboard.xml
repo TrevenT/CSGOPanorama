@@ -26,86 +26,87 @@
 
 		<snippet name="snippet_sb-meta">
 			<Panel class="sb-meta">
-				<Panel class="left-right-flow">
-					<Image id="id-sb-meta__mode__image" textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/casual.svg"/>
-					<Panel class="left-right-flow">
+				<Panel class="top-bottom-flow full-width">
+					<Panel class="full-width bottom-divider meta-row">
+						<Image id="id-sb-meta__mode__image" textureheight="36" texturewidth="-1" src="file://{images}/icons/ui/casual.svg"/>
+						                 
 						<Label id="id-sb-meta__labels__mode-map" text="" />
-						<Label id="id-viewers" class="hidden" text="#Scoreboard_Viewers" />
+						              
+						<Panel class="time_container">
+							<CSGOGameTimeLabel id="id-gametime__time" text="{s:s_gametime_time}" />
+						</Panel>
 					</Panel>
-				</Panel>
-
-				              
-				<Panel class="time_container">
-					<CSGOGameTimeLabel id="id-gametime__time" text="{s:s_gametime_time}" />
-				</Panel>
-
-				                  
-				<Panel id="id-sb-meta__musickit" class="hidden">
-					<Button id="id-sb-meta__musickit-unborrow" class="hidden vertical-center" onactivate="$.DispatchEvent('Scoreboard_UnborrowMusicKit');" >
-						<TooltipPanel tooltip="#tooltip_stopborrowmusickit" style='tooltip-position: bottom;'>
-							<Image src="file://{images}/icons/ui/no_musickit.svg"/>
-						</TooltipPanel>
-					</Button>
-
-					<Image id="id-sb-meta__musickit-image" />
-					<Label id="id-sb-meta__musickit-name" />
-				</Panel>
-
-				                     
-				<Panel id="id-sb-meta__button-panel" class="hidden">
-
-					                    
-					<Panel class="sb-meta__button-panel__group">
-						<TooltipPanel tooltip="#scoreboard_cyclestats_button_tooltip">
-							<Button id="id-sb-meta__cycle" class="sb-meta__button-panel__btn hidden" onactivate="$.DispatchEvent('Scoreboard_CycleStats');">
-								<Image src="file://{images}/icons/ui/stats.svg" textureheight='20' texturewidth='-1'/>
+					<Panel class="full-width meta-row">
+						                  
+						<Panel id="id-sb-meta__musickit" class="hidden">
+							<Image id="id-sb-meta__musickit-image" />
+							<Label id="id-sb-meta__musickit-name" />
+							<Button id="id-sb-meta__musickit-unborrow" class="hidden vertical-center" onactivate="$.DispatchEvent('Scoreboard_UnborrowMusicKit');" >
+								<TooltipPanel tooltip="#tooltip_stopborrowmusickit" style='tooltip-position: bottom;'>
+									<Image src="file://{images}/icons/ui/no_musickit.svg"/>
+								</TooltipPanel>
 							</Button>
-						</TooltipPanel>	
-					</Panel>
+						</Panel>
 
-					<Panel class="sb-meta__button-panel__group">
-						<TooltipPanel tooltip="#scoreboard_mutevoice_button_tooltip">
-							<Button id="id-sb-meta__mutevoice" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_MuteVoice');">
-								<Image id="id-sb-meta__mutevoice__image" src="" textureheight='20' texturewidth='-1'/>
-							</Button>
-						</TooltipPanel>
-					</Panel>
+						                       
+						<Label id="id-sb-meta__labels__server-viewers" class="" text="{s:server_name}{s:hltv_viewers}" />
 
-					<Panel class="sb-meta__button-panel__group">
-						<TooltipPanel tooltip="#scoreboard_blockugc_button_tooltip">
-							<Button id="id-sb-meta__blockugc" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_BlockUgc');">
-								<Image id="id-sb-meta__blockugc__image" src="" textureheight='20' texturewidth='-1' />
-							</Button>
-						</TooltipPanel>
-					</Panel>
+						                     
+						<Panel id="id-sb-meta__button-panel" class="hidden">
 
-					               
-					                     
-					                                                                               
-						                                    
-						                                                                                                         
-						                                              
-						                                            
-						                                   
-						                                                             
-							                                         
-						         
-						                                            
-						                                   
-						                                                             
-							                                         
-						         
-						                                            
-						                                   
-						                                                            
-						                                                                                                                   
-						                                             
-							                                         
-						         
-					        
-					               
+							                    
+							<Panel class="sb-meta__button-panel__group">
+								<TooltipPanel tooltip="#scoreboard_cyclestats_button_tooltip">
+									<Button id="id-sb-meta__cycle" class="sb-meta__button-panel__btn hidden" onactivate="$.DispatchEvent('Scoreboard_CycleStats');">
+										<Image src="file://{images}/icons/ui/stats.svg" textureheight='20' texturewidth='-1'/>
+									</Button>
+								</TooltipPanel>	
+							</Panel>
+
+							<Panel class="sb-meta__button-panel__group">
+								<TooltipPanel tooltip="#scoreboard_mutevoice_button_tooltip">
+									<Button id="id-sb-meta__mutevoice" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_MuteVoice');">
+										<Image id="id-sb-meta__mutevoice__image" src="" textureheight='20' texturewidth='-1'/>
+									</Button>
+								</TooltipPanel>
+							</Panel>
+
+							<Panel class="sb-meta__button-panel__group">
+								<TooltipPanel tooltip="#scoreboard_blockugc_button_tooltip">
+									<Button id="id-sb-meta__blockugc" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_BlockUgc');">
+										<Image id="id-sb-meta__blockugc__image" src="" textureheight='20' texturewidth='-1' />
+									</Button>
+								</TooltipPanel>
+							</Panel>
+
+							               
+							                     
+							                                                                               
+								                                    
+								                                                                                                         
+								                                              
+								                                            
+								                                   
+								                                                             
+									                                         
+								         
+								                                            
+								                                   
+								                                                             
+									                                         
+								         
+								                                            
+								                                   
+								                                                            
+								                                                                                                                   
+								                                             
+									                                         
+								         
+							        
+							               
+						</Panel>
+					</Panel>
 				</Panel>
-
 
 			</Panel>
 		</snippet>

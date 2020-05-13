@@ -383,6 +383,9 @@ var EOM_Characters = ( function()
 
 		arrPlayerList.forEach( function( oPlayer ) 
 		{
+			if ( !oPlayer )
+				return;
+			
 			var elCharacter = CharacterLineUp.GetPlayerPanel( elCLU, oPlayer[ 'xuid' ] );
 
 			var oTitle = oPlayer[ 'nomination' ];                                         

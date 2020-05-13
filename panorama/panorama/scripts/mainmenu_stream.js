@@ -225,8 +225,10 @@ var StreamPanel = (function () {
 	$.RegisterForUnhandledEvent("PanoramaComponent_EmbeddedStream_VideoReload", StreamPanel.UpdateEmbeddedStream );
 	$.RegisterForUnhandledEvent("PanoramaComponent_EmbeddedStream_VideoPlaying", StreamPanel.UpdateEmbeddedStreamVisibility );
 	$.RegisterForUnhandledEvent("PanoramaComponent_EmbeddedStream_VolumeChanged", StreamPanel.OnVolumeCodeValueChanged );
-	$.RegisterForUnhandledEvent("HTMLJSAlert", StreamPanel.HTMLJSAlert );
-	$.RegisterForUnhandledEvent("HTMLFinishRequest", StreamPanel.HTMLFinishRequest );
 	$.RegisterForUnhandledEvent("CSGOHideMainMenu", StreamPanel.CSGOHideMainMenu );
 	$.RegisterForUnhandledEvent("CSGOShowMainMenu", StreamPanel.CSGOShowMainMenu );
+
+	                                                                                 
+	$.RegisterEventHandler( "HTMLJSAlert", $.GetContextPanel(), StreamPanel.HTMLJSAlert );
+	$.RegisterEventHandler( "HTMLFinishRequest", $.GetContextPanel(), StreamPanel.HTMLFinishRequest );
 })();

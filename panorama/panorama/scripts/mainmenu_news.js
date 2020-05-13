@@ -23,6 +23,9 @@ var NewsPanel = (function () {
 
 		elLister.RemoveAndDeleteChildren();
 
+		                                     
+		var foundFirstNewsItem = false;
+
 		feed[ 'items' ].forEach( function( item, i )
 		{
 			var elEntry = $.CreatePanel( 'Panel', elLister, 'NewEntry' + i, {
@@ -30,14 +33,24 @@ var NewsPanel = (function () {
 			} );
 
 			var lastReadItem = GameInterfaceAPI.GetSettingString( 'ui_news_last_read_link' );
-			if ( i == 0 && item.link != lastReadItem )
+
+			                                                           
+			if ( !foundFirstNewsItem && !item.categories.includes( 'Minor' ) )
 			{
-				if ( item.categories.includes( 'Important' ) )
+				foundFirstNewsItem = true;
+
+				                                             
+				elEntry.AddClass( 'new' );
+
+				if ( item.link != lastReadItem )
 				{
-					         
+					UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_news.xml',
+						'date=' + item.date + "&" + 
+						'title=' + item.title + "&" + 
+						'link=' + item.link );
 				}
 
-				elEntry.AddClass( 'new' );
+				GameInterfaceAPI.SetSettingString( 'ui_news_last_read_link', item.link );
 			}
 
 			elEntry.BLoadLayoutSnippet( 'news-full-entry' );
@@ -83,7 +96,8 @@ var NewsPanel = (function () {
 })();
 
 
-(function () {
+( function()
+{
 	NewsPanel.GetRssFeed();
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Blog_RSSFeedReceived", NewsPanel.OnRssFeedReceived );
 })();

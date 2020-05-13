@@ -500,7 +500,10 @@ var mainmenu_watch = ( function()
 	function _InitTab ( tab )
 	{
 		var elTab = $( '#' + tab );
-		elTab.BLoadLayoutSnippet( "MatchListAndInfo" );
+		if ( !elTab.BLoadLayoutSnippet( "MatchListAndInfo" ) )
+		{
+			                                                                                                                                        
+		}
 
 		_InitResourceManagement( elTab );
 	}
@@ -540,7 +543,7 @@ var mainmenu_watch = ( function()
 		$.GetContextPanel().Data().elMainMenuRoot;
 
 		_InitResourceManagement( $( '#JsStreams' ) );
-		_InitTab( 'JsEvents' );
+		_InitResourceManagement( $( '#JsEvents' ) );
 
 		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
 		if ( restrictions === false )

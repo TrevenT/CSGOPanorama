@@ -54,6 +54,8 @@ var Scoreboard = ( function()
 
 	var _m_cP = $.GetContextPanel();
 
+	var _m_haveViewers = false;
+
 	_Reset();
 
 
@@ -2034,8 +2036,6 @@ var Scoreboard = ( function()
 	 
 	          
 
-
-
 	function _UpdateMatchInfo ()
 	{
 
@@ -2045,7 +2045,7 @@ var Scoreboard = ( function()
 		                                            
 
 
-		_m_cP.SetDialogVariable( "server_name", MockAdapter.GetServerName() );
+		_m_cP.SetDialogVariable( "server_name", _m_haveViewers ? "" : MockAdapter.GetServerName() );
 		_m_cP.SetDialogVariable( "map_name", MockAdapter.GetMapName() );
 		_m_cP.SetDialogVariable( "gamemode_name", MockAdapter.GetGameModeName( true ) );
 		_m_cP.SetDialogVariable( "tournament_stage", MockAdapter.GetTournamentEventStage() );
@@ -2068,18 +2068,12 @@ var Scoreboard = ( function()
 					strLocalizeScoreboardTitle = "{s:gamemode_name} | " + $.Localize( '#SFUI_RankType_Modifier_Unranked', _m_cP ) + " | {s:map_name}";
 				}
 				
-				if ( MockAdapter.GetServerName() != "" )
-				{
-					strLocalizeScoreboardTitle += " | {s:server_name}"
-
-				}
-				
 				elMapLabel.text =  $.Localize( strLocalizeScoreboardTitle, _m_cP );
 			}
 		}
 
 		if ( $( "#id-sb-meta__mode__image" ) )
-		    $( "#id-sb-meta__mode__image" ).SetImage( MockAdapter.GetGameModeImagePath() );
+			$( "#id-sb-meta__mode__image" ).SetImage( MockAdapter.GetGameModeImagePath() );
 
 		if ( $( "#sb-meta__labels__map" ) )
 			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + MockAdapter.GetMapBSPName() + ".svg" );
@@ -2152,19 +2146,19 @@ var Scoreboard = ( function()
 	function _UpdateHLTVViewerNumber( nViewers )
 	{
 
-		var elViewers = _m_cP.FindChildTraverse( "id-viewers" );
+	  	                  
 
-		if ( elViewers && elViewers.IsValid() )
+		_m_cP.SetDialogVariableInt( "viewers", nViewers );
+
+		if ( nViewers > 0 )
 		{
-			if ( nViewers > 0 )
-			{
-				elViewers.RemoveClass( "hidden" );
-				elViewers.SetDialogVariableInt( "viewers", nViewers )
-			}
-			else
-			{
-				elViewers.AddClass( "hidden" );
-			}
+			_m_cP.SetDialogVariable( "hltv_viewers", $.Localize( "#Scoreboard_Viewers", _m_cP ) );
+			_m_haveViewers = true;
+		}
+		else
+		{
+			_m_cP.SetDialogVariable( "hltv_viewers", "" );
+			_m_haveViewers = false;
 		}
 	}
 
@@ -3248,10 +3242,15 @@ var Scoreboard = ( function()
 
 		_m_bInit = true;
 
+		                       
+		_m_cP.SetDialogVariable( "server_name", "" );
+		_UpdateHLTVViewerNumber( 0 );
+
 		_UpdateMatchInfo();
 
 
 	};
+
 
 	function _RankRevealAll ()
 	{
@@ -3326,6 +3325,10 @@ var Scoreboard = ( function()
 		var elButtonPanel = _m_cP.FindChildTraverse( 'id-sb-meta__button-panel' );
 		if ( elButtonPanel && elButtonPanel.IsValid() )
 			elButtonPanel.RemoveClass( "hidden" );
+		
+		var elServerViewers = _m_cP.FindChildTraverse( 'id-sb-meta__labels__server-viewers' );
+		if ( elServerViewers && elServerViewers.IsValid() )
+			elServerViewers.AddClass( "hidden" );
 	}
 
 	function _OnMouseInactive ()
@@ -3333,6 +3336,10 @@ var Scoreboard = ( function()
 		var elButtonPanel = _m_cP.FindChildTraverse( 'id-sb-meta__button-panel' );
 		if ( elButtonPanel && elButtonPanel.IsValid() )
 			elButtonPanel.AddClass( "hidden" );
+		
+		var elServerViewers = _m_cP.FindChildTraverse( 'id-sb-meta__labels__server-viewers' );
+		if ( elServerViewers && elServerViewers.IsValid() )
+			elServerViewers.RemoveClass( "hidden" );
 	}
 
 	                                                
