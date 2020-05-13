@@ -663,7 +663,7 @@
 					<CSGOSettingsSlider id="XhairGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_crosshairgap"/>
 					<Panel class="horizontal-separator"/>
 
-					<CSGOSettingsSlider id="XhairOutline" text="#GameUI_CrosshairOutline" toggleconvar="cl_crosshair_drawoutline" max="3" min="0" convar="cl_crosshair_outlinethickness"/>
+					<CSGOSettingsSlider id="XhairOutline" text="#GameUI_CrosshairOutline" toggleconvar="cl_crosshair_drawoutline" max="3.0" min="0.0" displayprecision="1" convar="cl_crosshair_outlinethickness"/>
 					<Panel class="horizontal-separator"/>
 
 					                      
