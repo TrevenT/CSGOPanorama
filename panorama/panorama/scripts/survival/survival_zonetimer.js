@@ -20,7 +20,7 @@ var SurvivalZoneTimer = ( function()
         }
         
         var time = GameStateAPI.GetSurvivalTimeUntilNextWave();
-        if ( time > 0 && time )
+        if (time > 0 && time && GameStateAPI.ShouldShowHudElements())
         {
             if ( !$.GetContextPanel().BHasClass( 'show' ) )
             {

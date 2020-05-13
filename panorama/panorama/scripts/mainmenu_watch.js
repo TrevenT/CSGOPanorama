@@ -115,11 +115,11 @@ var mainmenu_watch = ( function() {
 			var pastTournamentPanel = elTournamentList.FindChildTraverse( "other-tournaments" );
 			
 			                                                                                                                      
-			var maxTournaments = g_ActiveTournamentInfo.eventid - 1;
+			                                                           
 			      
 
 			                                                                             
-			                                                       
+			var maxTournaments = g_ActiveTournamentInfo.eventid;
 			      
 
 			for (var i = maxTournaments; i >= 1; i--)
@@ -470,24 +470,24 @@ var mainmenu_watch = ( function() {
 		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
 		if ( restrictions === false )
 		{
-			                                                                                        
-			_InitResourceManagement( $( '#JsActiveTournament' ) );
-			_NavigateToTab( 'JsActiveTournament' );
-			$( '#WatchNavBarActiveTourament' ).checked = true;
-			
+			                                                                                       
+			if ( false ) {
+				_InitResourceManagement( $( '#JsActiveTournament' ) );
+				_NavigateToTab( 'JsActiveTournament' );
+				$( '#WatchNavBarActiveTourament' ).checked = true;
+			}
 			
 			                                                          
 			                               
 			                                                 
 
-			  	                           
-			  	                                             
+			_NavigateToTab( 'JsLive' );
+			$( '#WatchNavBarButtonLive' ).checked = true;
 		}
 		else
 		{
 			                                                                            
 			          
-			                             
 			                                               
 			       
 			          
@@ -495,6 +495,9 @@ var mainmenu_watch = ( function() {
 			
 			_NavigateToTab( 'JsLive' );
 			$( '#WatchNavBarButtonLive' ).checked = true;
+			
+			                                
+			                                                  
 		}
 	}
 

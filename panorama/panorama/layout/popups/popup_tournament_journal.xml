@@ -76,7 +76,7 @@
 
                                 <Panel class="top-bottom-flow vertical-center horizontal-center">
                                     <Label id="id-tournament-journal-souvenir-earned" class="tournament-journal__info-block__title stratum-font" text="#tournament_coin_earned_souvenir"/>
-                                    <Label class="tournament-journal__info-block__subtitle" html="true" text="#tournament_coin_redeem_souvenir"/>
+                                    <Label id="id-tournament-journal-info-block-subtitle" class="tournament-journal__info-block__subtitle" html="true" text="#tournament_coin_redeem_souvenir"/>
                                     <Button id="id-tournament-journal-redeem-btn" class="tournament-journal-button" onactivate="TournamentJournal.OnActivateRedeem();">
                                         <Label  id="id-tournament-journal-redeem-btn-label" html="true" text="#tournament_coin_redeem_action"/>
                                     </Button>

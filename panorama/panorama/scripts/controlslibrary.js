@@ -285,7 +285,7 @@ function OnImageFailLoad( panelName, image )
     var varStr = $( "#ChildDialogVarTextEntry" ).text;
 
                                                                                                               
-                                                                                        
+    $( "#ControlsLibPanelImageFallback" ).SetImage( "file://{images}/icons/knife.vtf" );
 }
 
 function InitPanels()

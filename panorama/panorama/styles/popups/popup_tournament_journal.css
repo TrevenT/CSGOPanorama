@@ -362,3 +362,9 @@
     flow-children: none;
 }
 
+.tournament-over #id-tournament-journal-redeem-btn,
+.tournament-over #id-tournament-journal-info-block-subtitle
+{
+    visibility: collapse;
+}
+
