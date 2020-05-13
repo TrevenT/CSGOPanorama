@@ -30,7 +30,6 @@ var EOM_Skillgroup = (function () {
 		var oldRank = oSkillgroupData[ "old_rank" ];
 		var newRank = oSkillgroupData[ "new_rank" ];
 		var currentRank = oldRank < newRank ? newRank : oldRank;
-		var winsNeededForRank = 10;
 
 		var oData = {
 			currentRank: currentRank,
@@ -42,15 +41,26 @@ var EOM_Skillgroup = (function () {
 			image: ''
 		};
 
+		var winsNeededForRank = SessionUtil.GetNumWinsNeededForRank( oData.mode );
+
 		_m_cP.SetDialogVariable( 'eom_mode', GameStateAPI.GetGameModeName( true ) );
 
-		if ( currentRank < 1 && compWins >= winsNeededForRank )
+		if ( oData.mode === 'survival' && currentRank < 1 )
+		{	                                                
+			_LoadAndShowRank();
+
+			oData.rankInfo = $.Localize( '#eom-skillgroup-needed-dzgames', _m_cP );
+			oData.image = 'file://{images}/icons/skillgroups/dangerzone0.svg';
+		}
+		else if ( currentRank < 1 && compWins >= winsNeededForRank )
 		{	
 			                                              
 			_LoadAndShowRank();
+
+			var modePrefix = ( oData.mode === 'scrimcomp2v2' ) ? 'wingman' : ( ( oData.mode === 'survival' ) ? 'dangerzone' : 'skillgroup' );
 			
 			oData.rankInfo = $.Localize( '#eom-skillgroup-expired', _m_cP );
-			oData.image = 'file://{images}/icons/skillgroups/skillgroup_expired.svg';
+			oData.image = 'file://{images}/icons/skillgroups/'+modePrefix+'_expired.svg';
 		}
 		else if ( currentRank < 1 )
 		{
@@ -60,16 +70,18 @@ var EOM_Skillgroup = (function () {
 			_m_cP.SetDialogVariableInt( 'num_matches', matchesNeeded );
 			var winNeededString = ( matchesNeeded === 1 ) ? '#eom-skillgroup-needed-win' : '#eom-skillgroup-needed-wins';
 
+			var modePrefix = ( oData.mode === 'scrimcomp2v2' ) ? 'wingman' : ( ( oData.mode === 'survival' ) ? 'dangerzone' : 'skillgroup' );
+
 			oData.rankInfo = $.Localize( winNeededString, _m_cP );
-			oData.image = 'file://{images}/icons/skillgroups/skillgroup0.svg';
+			oData.image = 'file://{images}/icons/skillgroups/'+modePrefix+'0.svg';
 		}
 		else if ( currentRank >= 1 )
 		{
 			                         
-			var modePrefix = ( oData.mode === 'scrimcomp2v2' ) ? 'skillgroup_wingman' : 'skillgroup';
+			var modePrefix = ( oData.mode === 'scrimcomp2v2' ) ? 'skillgroup_wingman' : ( ( oData.mode === 'survival' ) ? 'skillgroup_dangerzone' : 'skillgroup' );
 			var modelPath = 'models/inventory_items/skillgroups/' + modePrefix + currentRank + '.mdl';
 			oData.model = modelPath;
-			oData.rankInfo = $.Localize( 'RankName_' + currentRank );
+			oData.rankInfo = $.Localize( ( oData.mode === 'survival' ) ? '#skillgroup_'+currentRank+'dangerzone' : 'RankName_' + currentRank );
 			oData.rankDesc = $.Localize( '#eom-skillgroup-name', _m_cP );
 
 			if ( oldRank < newRank )                             

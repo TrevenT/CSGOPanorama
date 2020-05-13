@@ -49,9 +49,17 @@ var SessionUtil = ( function ()
 		return true;
 	};
 
+	var _GetNumWinsNeededForRank = function( skillgroupType )
+	{
+		if ( skillgroupType.toLowerCase() === 'survival' ) return 0;                                                              
+		if ( skillgroupType.toLowerCase() === 'dangerzone' ) return 0;                                                              
+		return 10;                                                       
+	};
+
 	return{
 		DoesGameModeHavePrimeQueue : _DoesGameModeHavePrimeQueue,
 		GetMaxLobbySlotsForGameMode: _GetMaxLobbySlotsForGameMode,
-		AreLobbyPlayersPrime: _AreLobbyPlayersPrime
+		AreLobbyPlayersPrime: _AreLobbyPlayersPrime,
+		GetNumWinsNeededForRank : _GetNumWinsNeededForRank
 	};
 })();

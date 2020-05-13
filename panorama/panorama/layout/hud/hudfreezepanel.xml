@@ -26,6 +26,11 @@
 									<CSGOAvatarImage id="Avatar" class="FreezePanel__Avatar" scaling="stretch-to-cover-preserve-aspect" />
 									<ProgressBar id="AvatarHealthBar" class="FreezePanel__AvatarHealthBar" />
 									<Image id="AvatarFlair" class="FreezePanel__AvatarFlair" />
+									<Image id="PlayerAvatarSkillGroup" 
+										class="FreezePanel__AvatarSkillGroup FreezePanel__AvatarSkillGroup--Hidden" 
+										textureheight="-1" 
+										texturewidth="64" 
+										src="file://{images}/icons/skillgroups/skillgroup_expired.svg" />
 								</Panel>
 								<Panel class="top-bottom-flow vertical-center" style="width: fill-parent-flow( 1.0 );">
 									<Panel class="full-width">

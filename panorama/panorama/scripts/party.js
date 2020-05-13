@@ -178,10 +178,12 @@ var PartyMenu = ( function()
 		var skillgroupType = PartyListAPI.GetFriendCompetitiveRankType( xuid );
 		var skillGroup = PartyListAPI.GetFriendCompetitiveRank( xuid, skillgroupType );
 		var wins = PartyListAPI.GetFriendCompetitiveWins( xuid, skillgroupType );
-		var winsNeededForRank = 10;
+		var winsNeededForRank = SessionUtil.GetNumWinsNeededForRank( skillgroupType );
 		var elRank = elPartyMember.FindChildInLayoutFile( 'PartyRank' ); 
+
+		                                                                                                                                                    
 		
-		if ( wins < winsNeededForRank || wins >= winsNeededForRank && skillGroup < 1 )
+		if ( wins < winsNeededForRank || ( wins >= winsNeededForRank && skillGroup < 1 ) )
 		{
 			elRank.visible = false;
 			return;

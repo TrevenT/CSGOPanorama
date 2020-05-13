@@ -26,14 +26,14 @@
                                                                                        
                                                                                        
                                                                                       
-                                                                                      
+                                                                                                    
                                                                                       
                                                                                       
                                                                                      
                                                                                                                     
-                                                                                     
-                                                                                     
-                                                                                    
+                                                                                                   
+                                                                                                   
+                                                                                                   
           
                       
                         
@@ -466,7 +466,20 @@
         if ( !elPlayerPanel )
         {
             elPlayerPanel = $.CreatePanel( 'Panel', elList, oPlayer.xuid );
-            elPlayerPanel.BLoadLayoutSnippet( 'survival-player' );
+			elPlayerPanel.BLoadLayoutSnippet( 'survival-player' );
+
+			              
+			var elImage = elPlayerPanel.FindChildInLayoutFile( "JsSurvivalSkillGroup" );
+			if ( oPlayer.skillgroup )
+			{
+				elImage.AddClass( 'has-rank-icon' );
+				elImage.SetImage( 'file://{images}/icons/skillgroups/dangerzone'+oPlayer.skillgroup+'.svg' );
+			}
+			else
+			{
+				elImage.AddClass( 'no-rank-icon' );
+			}
+
             _InitAvatar( elPlayerPanel.FindChildInLayoutFile( 'JsSurvivalAvatar' ), oPlayer.xuid );
             _AddDeadStateToPlayer( elPlayerPanel, oPlayer );
 

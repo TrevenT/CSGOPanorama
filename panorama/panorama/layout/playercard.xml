@@ -6,6 +6,7 @@
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/common/teamcolor.js" />
+		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/avatar.js" />
 		<include src="file://{resources}/scripts/playercard.js" />
 	</scripts>

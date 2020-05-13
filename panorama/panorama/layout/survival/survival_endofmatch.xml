@@ -19,6 +19,11 @@
 		<snippet name="survival-player">
 			<Panel>
 				<Panel id="survival-player-avatar" class="top-bottom-flow">
+					<Image id="JsSurvivalSkillGroup" 
+							class="eom-survival__players-skillgroup-img" 
+							textureheight="-1" 
+							texturewidth="64" 
+							src="file://{images}/icons/skillgroups/skillgroup_expired.svg" />
 					<Frame id="JsSurvivalAvatar" src="file://{resources}/layout/avatar.xml" />
 					                                                                                                              
 				</Panel>

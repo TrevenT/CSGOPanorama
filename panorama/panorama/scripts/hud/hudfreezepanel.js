@@ -2,12 +2,13 @@
 
 var freezePanel = ( function() {
 	
-	var _OnSetFlairEvent = function( xuid )
+	var _OnSetFlairEvent = function( xuid, skillgroup )
 	{
 		var elAvatarFlair = $( '#AvatarFlair' );
 		var elMedalText = $( '#MedalText' );
 		var elAvatarFlairSS = $( '#AvatarFlairSS' );
 		var elMedalTextSS = $( '#MedalTextSS' );
+		var elPlayerAvatarSkillGroup = $( '#PlayerAvatarSkillGroup' );
 
 		var flairItemImage = _GetFlairItemImage( xuid );
 		if ( flairItemImage !== '' )
@@ -37,6 +38,16 @@ var freezePanel = ( function() {
 			elMedalText.AddClass( 'FreezePanel__MedalText--Hidden' );
 			elAvatarFlairSS.AddClass( 'FreezePanel__AvatarFlair--Hidden' );
 			elMedalTextSS.AddClass( 'FreezePanel__MedalText--Hidden' );
+		}
+
+		if ( skillgroup )
+		{
+			elPlayerAvatarSkillGroup.SetImage( 'file://{images}/icons/skillgroups/dangerzone'+skillgroup+'.svg' );
+			elPlayerAvatarSkillGroup.RemoveClass( 'FreezePanel__AvatarSkillGroup--Hidden' );
+		}
+		else
+		{
+			elPlayerAvatarSkillGroup.AddClass( 'FreezePanel__AvatarSkillGroup--Hidden' );
 		}
 	}
 

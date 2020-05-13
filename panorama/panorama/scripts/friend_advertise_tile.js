@@ -63,6 +63,10 @@ var FriendAdvertiseTile = ( function (){
 		{
 			szSkillGroupType = 'wingman';
 		}
+		else if ( gameMode === 'survival' )
+		{
+			szSkillGroupType = 'dangerzone';
+		}
 		
 		if( !skillGroup )
 			elSkillGroupImg.AddClass( 'hidden' );

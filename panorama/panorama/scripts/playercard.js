@@ -7,6 +7,7 @@ var playerCard = ( function (){
 	var _m_isSelf = false;
 	var _m_bShownInFriendsList = false;
 	var _m_tooltipDelayHandle = false;
+	var _m_arrAdditionalSkillGroups = [ 'wingman', 'dangerzone' ];
 
 	var _Init = function()
 	{
@@ -181,7 +182,9 @@ var playerCard = ( function (){
 	var _SetAllSkillGroups = function()
 	{
 		_SetSkillGroup( 'competitive' );
-		_SetSkillGroup( 'wingman' );
+		_m_arrAdditionalSkillGroups.forEach( type => {
+			_SetSkillGroup( type );
+		} );
 	};
 
 	var _SetSkillForLobbyTeammates= function()
@@ -249,29 +252,42 @@ var playerCard = ( function (){
 		                    
 		if ( !_m_bShownInFriendsList && _m_isSelf )
 		{
-			_AskForLocalPlayersWingmanSkillGroup();
+			_AskForLocalPlayersAdditionalSkillGroups();
 		}
 	};
 
-	var _AskForLocalPlayersWingmanSkillGroup = function()
+	var _AskForLocalPlayersAdditionalSkillGroups = function()
 	{
-		var skillGroup = FriendsListAPI.GetFriendCompetitiveRank( _m_xuid, 'wingman' );
-		
+		var hintLoadSkillGroups = '';
+
 		                                                                               
-		if ( skillGroup === -1 )
+		_m_arrAdditionalSkillGroups.forEach( type => {
+			if ( FriendsListAPI.GetFriendCompetitiveRank( _m_xuid, type ) === -1 )
+			{
+				hintLoadSkillGroups += ( hintLoadSkillGroups ? ',' : '' ) + type;
+			}
+		} );
+
+		                             
+		if ( hintLoadSkillGroups )
 		{
-			MyPersonaAPI.HintLoadPipRanks( 'wingman' );
+			MyPersonaAPI.HintLoadPipRanks( hintLoadSkillGroups );
 		}
 
-		_SetSkillGroup( 'wingman' );
+		                    
+		_m_arrAdditionalSkillGroups.forEach( type => {
+			_SetSkillGroup( type );
+		} );
 	};
 
 	var _UpdateSkillGroup = function( elSkillGroup, skillGroup, wins, type )
 	{
-		var winsNeededForRank = 10;
+		var winsNeededForRank = SessionUtil.GetNumWinsNeededForRank( type );
 		var tooltipText = '';
 		var isloading = ( skillGroup === -1 ) ? true : false;
-		var typeModifier = ( type === 'wingman' ) ? type : '';
+		var typeModifier = ( _m_arrAdditionalSkillGroups.indexOf( type ) >= 0 ) ? type : '';
+
+		var imageName = ( typeModifier !== '' ) ? typeModifier : 'skillgroup';
 
 		if ( wins < winsNeededForRank || isloading )
 		{
@@ -281,13 +297,13 @@ var playerCard = ( function (){
 
 			if ( isloading )
 			{
-				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/skillgroup_none.svg' );
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+imageName+'_none.svg' );
 				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#SFUI_LOADING' );
 			}
 			else
 			{
 				var winsneeded = ( winsNeededForRank - wins );
-				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/skillgroup_none.svg' );
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+imageName+'_none.svg' );
 				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_0' + typeModifier );
 				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).SetDialogVariableInt( "winsneeded", winsneeded );
 				tooltipText = $.Localize( '#tooltip_skill_group_none'+ typeModifier, elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ) );
@@ -300,16 +316,17 @@ var playerCard = ( function (){
 			if ( !_m_isSelf )
 				return;
 				
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/skillgroup_expired.svg' );
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+imageName+'_expired.svg' );
 			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_expired' + typeModifier );
 			tooltipText = $.Localize( '#tooltip_skill_group_expired' + typeModifier );
 		}
 		else
 		{
 			                   
-			var imageName = ( typeModifier !== '' ) ? typeModifier : 'skillgroup';
 			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+ imageName + skillGroup + '.svg' );
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_' + skillGroup );
+
+			var skillGroupNamingSuffix = ( typeModifier && typeModifier !== 'wingman' ) ? typeModifier : '';
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_' + skillGroup + skillGroupNamingSuffix );
 
 			if ( _m_isSelf )
 				tooltipText = $.Localize( '#tooltip_skill_group_generic' + typeModifier );
@@ -628,11 +645,12 @@ var playerCard = ( function (){
 
 		if ( elToggleBtn.checked )
 		{
-			_AskForLocalPlayersWingmanSkillGroup();
+			_AskForLocalPlayersAdditionalSkillGroups();
 		}
 
-		var elWingman = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardSkillGroup-wingman' );
-		elWingman.SetHasClass( 'collapsed', !elToggleBtn.checked );
+		_m_arrAdditionalSkillGroups.forEach( type => {
+			$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardSkillGroup-' + type ).SetHasClass( 'collapsed', !elToggleBtn.checked );
+		} );
 	};
 
 	var _FriendsListUpdateName = function( xuid )

@@ -179,6 +179,20 @@ CSGOHudFreezePanel Label
 	visibility: collapse;
 }
 
+.FreezePanel__AvatarSkillGroup
+{
+	width: 64px;
+	height: fit-children;
+	img-shadow: 2px 2px 2px #000000;
+	transform: translate3d( -32px, 58px, 0.0px );
+	overflow: noclip;
+}
+
+.FreezePanel__AvatarSkillGroup--Hidden
+{
+	visibility: collapse;
+}
+
 .FreezePanel__Name
 {
 	width: 100%;

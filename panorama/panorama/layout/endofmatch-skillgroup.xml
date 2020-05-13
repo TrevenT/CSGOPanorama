@@ -5,6 +5,7 @@
 		<include src="file://{resources}/styles/endofmatch-podium.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/endofmatch-skillgroup.js" />
 	</scripts>
 

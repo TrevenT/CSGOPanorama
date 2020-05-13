@@ -1184,6 +1184,10 @@ var PlayMenu = ( function()
 		{	                                                                                     
 			MyPersonaAPI.HintLoadPipRanks( 'wingman' );
 		}
+		else if ( m_gameModeSetting === 'survival' )
+		{	                                                                                     
+			MyPersonaAPI.HintLoadPipRanks( 'dangerzone' );
+		}
 
 		if ( !LobbyAPI.BIsHost() )
 		{
