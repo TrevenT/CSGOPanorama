@@ -583,14 +583,12 @@ var mainmenu_watch_eventsched = (function () {
 						{
 							var oPlayer = oTeam[ 'lineup' ][ pIdx ];
 
-							if ( 'profile_photo_url' in oPlayer && 'resource' in oPlayer[ 'profile_photo_url' ] )
+							                                                    
+							if (0)                                                                                                                                       
 							{
-								parms += "&player_photo" + pIdx + "=" + oPlayer[ 'profile_photo_url' ][ 'resource' ];
-
-								if ( oPlayer[ 'profile_photo_url' ][ 'resource' ] !== "" )
-								{
-									bHaveAnyPhoto = true;
-								}
+								parms += "&player_photo" + pIdx + "=" + oPlayer[ 'profile_photo_url' ];
+								bHaveAnyPhoto = true;
+								
 							}
 							else
 							{

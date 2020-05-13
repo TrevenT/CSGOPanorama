@@ -31,18 +31,22 @@ var ItemContextMenu = ( function (){
 			UiToolkitAPI.ShowTextTooltip( location, displayText );
 		};
 
+		var lastButtonAdded = null;
 		for( var i = 0; i < validEntries.length; i++ )
 		{
 			var entry = validEntries[ i ];
 			
 			if ( entry.AvailableForItem(id) ) {
 				var elButton = $.CreatePanel( 'Button', elParent, 'ContextMenuItem' + i );
+				lastButtonAdded = elButton;
+
 				var elLabel = $.CreatePanel( 'Label', elButton, '',{ html:'true'});
 				elLabel.text = '#inv_context_' + entry.name;
 
 				if( entry.style && populateFilterText === "(not found)" )
 				{
-					elButton.AddClass( entry.style(id) );
+					var strStyleToAdd = entry.style(id);
+					elButton.AddClass( strStyleToAdd );
 				}
 
 				var handler = entry.OnSelected.bind(this, id);
@@ -66,6 +70,11 @@ var ItemContextMenu = ( function (){
 				}
 			}
 		}
+		if ( lastButtonAdded )
+		{	                                                  
+			lastButtonAdded.RemoveClass( 'BottomSeparator' );
+		}
+
 	};
 
 	return {

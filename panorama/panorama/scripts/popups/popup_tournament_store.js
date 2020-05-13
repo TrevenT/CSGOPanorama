@@ -56,7 +56,8 @@ var TournamentStore = ( function()
 		                                                                                                                
 		SetItemsToOffer( elOrgPanel, g_ActiveTournamentInfo.itemid_sticker );
 
-		if ( InventoryAPI.GetDecodeableRestriction( "capsule" ) !== "restricted" )
+		var sRestriction = InventoryAPI.GetDecodeableRestriction( "capsule" );
+		if ( sRestriction !== "restricted" )
 		{
 			var elCapsules = $( "#Capsules" );
 			elCapsules.BLoadLayoutSnippet( "ItemCategory" );

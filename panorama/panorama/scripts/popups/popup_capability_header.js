@@ -82,7 +82,7 @@ var CapabiityHeader = ( function()
 		if ( m_worktype === 'decodeable' )
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
-			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+			if ( sRestriction === 'restricted' )
 			{	                                                               
 			    sWarnLocString = '#popup_' + m_worktype + '_err_' + sRestriction;
 				elWarn.AddClass( 'popup-capability__error' );

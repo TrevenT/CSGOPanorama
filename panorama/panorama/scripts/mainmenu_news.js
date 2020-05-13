@@ -24,7 +24,15 @@ var NewsPanel = (function () {
 			} );
 
 			elEntry.BLoadLayoutSnippet( 'news-full-entry' );
-			elEntry.FindChildInLayoutFile( 'NewsHeaderImage' ).SetImage( item.imageUrl );
+			var elImage = elEntry.FindChildInLayoutFile( 'NewsHeaderImage' );
+			if ( item.imageUrl )
+			{
+				elImage.SetImage( item.imageUrl );
+			}
+			else
+			{
+				elImage.SetImage( "file://{images}/store/default-news.png" );
+			}
 
 			var elEntryInfo = $.CreatePanel( 'Panel', elEntry, 'NewsInfo' + i );
 			elEntryInfo.BLoadLayoutSnippet( 'news-info' );

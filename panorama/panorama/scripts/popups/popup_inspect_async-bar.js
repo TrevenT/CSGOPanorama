@@ -61,7 +61,7 @@ var InspectAsyncActionBar = ( function()
 		if ( m_worktype === 'decodeable' )
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
-			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+			if ( sRestriction === 'restricted' )
 				return false;
 
 			return ( !m_toolid && !m_isDecodeableKeyless );
@@ -133,7 +133,7 @@ var InspectAsyncActionBar = ( function()
 		if ( m_worktype === 'decodeable' )
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
-			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+			if ( sRestriction === 'restricted' )
 			{
 				                                        
 				elOK.visible = false;

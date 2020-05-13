@@ -98,7 +98,7 @@ var CapabilityDecodable = ( function()
 		_SetCaseModelImage( m_caseId );
 
 		var sRestriction = InventoryAPI.GetDecodeableRestriction( m_caseId );
-		if ( ! ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' ) )
+		if ( sRestriction !== 'restricted' )
 		{
 			_ShowPurchase(( m_keyId ) ? '' : m_keytoSellId );
 
