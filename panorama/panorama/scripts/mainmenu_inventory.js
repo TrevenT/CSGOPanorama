@@ -414,8 +414,31 @@ var InventoryPanel = ( function (){
 				_UpdateSearchPanelVisibility( true );
 			} );
 
+			
+			_ShowHideXrayBtn();
+			var elXrayBtn = elTopRightExtraButtons.FindChildInLayoutFile( "InvXrayBtn" );
+			elXrayBtn.SetPanelEvent( 'onactivate', function ()
+			{
+				var oData = ItemInfo.GetItemsInXray()
+				var keyId = ItemInfo.GetKeyForCaseInXray( oData.case );
+				$.DispatchEvent( "ShowXrayCasePopup", keyId, oData.case, false );
+			} );
+
+
 			_AddMarketLink( elParent );
 		}
+	};
+
+	var _ShowHideXrayBtn = function()
+	{
+		var elXrayBtnContainer = $( '#InvCategories-NavBarParent' ).FindChildInLayoutFile( "InvXrayBtnContainer" );
+		var xrayRewardId = ItemInfo.GetItemsInXray().reward;
+		var sRestriction = InventoryAPI.GetDecodeableRestriction( 'capsule' );
+
+		elXrayBtnContainer.visible = xrayRewardId !== '' &&
+			xrayRewardId !== undefined &&
+			xrayRewardId !== null &&
+			( sRestriction === 'xray' || !InventoryAPI.IsFauxItemID( xrayRewardId ));
 	};
 
 	var _AddMarketLink = function( elParent )
@@ -663,6 +686,8 @@ var InventoryPanel = ( function (){
 
 	var _InventoryUpdated = function()
 	{
+		_ShowHideXrayBtn();
+		
 		                                           
 		if( $.GetContextPanel().BHasClass( _m_HiddenContentClassname ) || _m_isCapabliltyPopupOpen )
 			return;

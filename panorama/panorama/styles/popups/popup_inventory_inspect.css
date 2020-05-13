@@ -16,6 +16,12 @@
 	transition-timing-function: ease-in-out;
 }
 
+.popup-xray-container .popup-inspect-modelpanel,
+.popup-in-xray .popup-inspect-modelpanel
+{
+	background-image: none;
+}
+
 .popup-inspect-modelpanel_darken
 {
 	brightness: .25;

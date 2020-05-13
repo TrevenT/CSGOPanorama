@@ -19,6 +19,7 @@
     $.DefineEvent( 'SidebarIsCollapsed', 1, 'bActive', 'Is sidebar collapsed.' );
     $.DefineEvent( 'InventoryItemPreview', 1, 'itemId', 'Just itemid' );
     $.DefineEvent( 'LootlistItemPreview', 2, 'itemId', 'typeParams', 'Requesting an item preview popup for the given item id. typeParams, caseid, key id' );
+    $.DefineEvent( 'ShowXrayCasePopup', 3, 'toolid', 'caseId', 'showpopup', 'The case id for the container to xray' );
     $.DefineEvent( 'HideContentPanel', 0, 'no args', 'Hide all the content panels and show the default home dashboard' );
     $.DefineEvent( 'ShowContentPanel', 0, 'no args', 'Show a content panel' );
     $.DefineEvent( 'InitAvatar', 2, 'xuid, type of panel', 'Update the avatar panel data for a xuid' );

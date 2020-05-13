@@ -9,6 +9,7 @@ var CapabilityDecodable = ( function()
 	var m_aItemsInLootlist = [];
 	var m_scrollListsPanelIds = [ 'ScrollList', 'ScrollListMagnified' ];
 	var m_caseId = '';
+	var m_existingRewardFromXrayId = '';
 	var m_itemFromContainer = '';
 	var m_Inspectpanel = $.GetContextPanel();
 	var m_keyId = '';
@@ -18,17 +19,81 @@ var CapabilityDecodable = ( function()
 	var m_unusualItemImagePath = '';
 	var m_showInspectScheduleHandle = null;
 	var m_isAllowedToInteractWithLootlistItems = true;
+	var m_isXrayMode = false;
 	
 	var _Init = function()
 	{
+		function GetItemVarsFromMsg()
+		{
+			var idList = strMsg.split( ',' );
+			return { key: idList[ 0 ], case: idList[ 1 ] };
+		}
+		
+		function SetsItemVarsFromMsg()
+		{
+			var oData = GetItemVarsFromMsg();
+			m_keyId = oData.key;
+			m_caseId = oData.case;
+		}
+		
 		var strMsg = $.GetContextPanel().GetAttributeString( "key-and-case", "" );
 		                
-
+		
+		m_isXrayMode = $.GetContextPanel().GetAttributeString( "isxraymode", "no" ) === 'yes' ? true : false;
 		m_isAllowedToInteractWithLootlistItems = ( $.GetContextPanel().GetAttributeString( 'allowtointeractwithlootlistitems', 'true' ) === 'true' ) ? true : false;
 
-		var idList = strMsg.split( ',' );
-		m_caseId = idList[ 1 ];
-		m_keyId = idList[ 0 ];
+		if ( m_isXrayMode )
+		{
+			m_Inspectpanel.SetHasClass( 'popup-in-xray', m_isXrayMode ); 
+			var oData = ItemInfo.GetItemsInXray();
+			m_existingRewardFromXrayId = oData.reward;
+
+			if ( m_existingRewardFromXrayId )
+			{
+				if ( m_existingRewardFromXrayId )
+				{
+					                                                         
+					if ( InventoryAPI.IsFauxItemID( m_existingRewardFromXrayId ) )
+					{
+						var elPopup = UiToolkitAPI.ShowGenericPopupOk( '#popup_xray_first_use_title', '#popup_xray_first_use_desc', '', function() { } );
+						elPopup.FindChildInLayoutFile( 'MessageLabel' ).html = true;
+						var id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( m_existingRewardFromXrayId, 0 );
+						elPopup.SetDialogVariable( 'itemname', ItemInfo.GetName( m_existingRewardFromXrayId ) );
+						elPopup.FindChildInLayoutFile( 'MessageLabel' ).text = $.Localize( '#popup_xray_first_use_desc', elPopup );
+					}
+					else if( $.GetContextPanel().GetAttributeString( "showxraypopup", "no" ) === 'yes' )
+					{
+						UiToolkitAPI.ShowGenericPopupOk( '#popup_xray_in_use_title', '#popup_xray_in_use_desc', '', function() { } );
+					}
+				}
+
+				m_caseId = oData.case;
+			}
+			else
+			{
+				SetsItemVarsFromMsg();
+			}
+
+			                                                                               
+			                                                     
+			if ( !GetItemVarsFromMsg().key )
+			{
+				var keyId = ItemInfo.GetKeyForCaseInXray( m_caseId );
+			
+				if ( keyId )
+				{
+					m_keyId = keyId;
+				}
+			}
+			else
+			{
+				m_keyId = GetItemVarsFromMsg().key;
+			}
+		}
+		else
+		{
+			SetsItemVarsFromMsg();
+		}
 
 		var styleforPopUpInspectFullScreenHostContainer = $.GetContextPanel().GetAttributeString( 'extrapopupfullscreenstyle', null );
 		if ( styleforPopUpInspectFullScreenHostContainer )
@@ -48,12 +113,12 @@ var CapabilityDecodable = ( function()
 			}
 
 			m_storeItemId = $.GetContextPanel().GetAttributeString( "storeitemid", "" );
-			if (( associatedItemCount === 0 || !associatedItemCount ) && !m_storeItemId )
+			if ( ( associatedItemCount === 0 || !associatedItemCount ) && !m_storeItemId )
 			{
 				                                                           
 				m_isKeyless = true;
 			}
-			else if( !m_storeItemId )
+			else if ( !m_storeItemId )
 			{
 				                                                      
 				m_keytoSellId = InventoryAPI.GetAssociatedItemIdByIndex( m_caseId, 0 );
@@ -72,35 +137,47 @@ var CapabilityDecodable = ( function()
 		$.DispatchEvent( 'CapabilityPopupIsOpen', true );
 	};
 
-	var _SetUpPanelElements = function( )
+	var _SetUpPanelElements = function()
 	{
 		                                                                            
 		if ( !m_keyId )
 		{
 			$.GetContextPanel().SetAttributeString( 'asyncworkitemwarning', 'no' );
 			$.GetContextPanel().SetAttributeString( 'asyncactiondescription', 'no' );
+
+			if ( m_existingRewardFromXrayId )
+			{
+				$.GetContextPanel().SetAttributeString( 'allowxraypurchase', 'yes' );
+			}
 		}
 		else
 		{
 			$.GetContextPanel().SetAttributeString( 'toolid', m_keyId );
 			$.GetContextPanel().SetAttributeString( 'asyncworkitemwarning', 'yes' );
 			$.GetContextPanel().SetAttributeString( 'asyncactiondescription', 'yes' );
+
+			if ( m_existingRewardFromXrayId )
+			{
+				$.GetContextPanel().SetAttributeString( 'allowxrayclaim', 'yes' );
+			}
 		}
 
 		if ( m_isKeyless )
 		{
+			if ( m_existingRewardFromXrayId )
+			{
+				$.GetContextPanel().SetAttributeString( 'allowxrayclaim', 'yes' );
+			}
+			
 			$.GetContextPanel().SetAttributeString( 'decodeablekeyless', 'true' );
 			$.GetContextPanel().SetAttributeString( 'asyncworkitemwarning', 'yes' );
-			$.GetContextPanel().SetAttributeString( 'asyncactiondescription', 'no' );
+			$.GetContextPanel().SetAttributeString( 'asyncactiondescription', 'yes' );
 		}
 
-		_SetupHeader( m_caseId );
-		_SetCaseModelImage( m_caseId );
-
 		var sRestriction = InventoryAPI.GetDecodeableRestriction( m_caseId );
-		if ( sRestriction !== 'restricted' )
+		if ( sRestriction !== 'restricted' && sRestriction !== 'xray' || ( m_isXrayMode && sRestriction === 'xray' ) )
 		{
-			_ShowPurchase(( m_keyId ) ? '' : m_keytoSellId );
+			_ShowPurchase( ( m_keyId ) ? '' : m_keytoSellId );
 
 			var slot = ItemInfo.GetSlot( m_caseId );
 			if ( slot == "musickit" )
@@ -108,18 +185,27 @@ var CapabilityDecodable = ( function()
 				InventoryAPI.PlayItemPreviewMusic( null, m_caseId );
 			}
 		}
-		
+
+		_SetupHeader( m_caseId );
 		_SetUpAsyncActionBar( m_caseId );
-		_SetCaseModelCamera( 1, false );
 
-		if( !ItemInfo.ItemMatchDefName( m_caseId, 'spray' ) && !ItemInfo.ItemDefinitionNameSubstrMatch(m_caseId, 'tournament_pass_') )
+		if ( m_isXrayMode )
 		{
-			_PlayCaseModelAnim( 'fall', 'idle' );
-			_PlayContainerSound( m_caseId, 'fall' );
+			_SetUpXrayPanel();
 		}
+		else
+		{
+			_SetCaseModelImage( m_caseId, 'PopUpInspectModelOrImage' );
+			_SetCaseModelCamera( 1, false );
 
-		_SetLootListItems( m_caseId, m_keyId );
+			if ( !ItemInfo.ItemMatchDefName( m_caseId, 'spray' ) && !ItemInfo.ItemDefinitionNameSubstrMatch( m_caseId, 'tournament_pass_' ) )
+			{
+			_PlayCaseModelAnim( 'fall', 'idle' );
+				_PlayContainerSound( m_caseId, 'fall' );
+			}
 
+			_SetLootListItems( m_caseId, m_keyId );
+		}
 	};
 
 	var _SetupHeader = function( caseId )
@@ -136,9 +222,9 @@ var CapabilityDecodable = ( function()
 	                                                                                                    
 	                                                    
 	                                                                                                    
-	var _SetCaseModelImage = function( caseId )
+	var _SetCaseModelImage = function( caseId, PanelId )
 	{
-		var elItemModelImagePanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectModelOrImage' );
+		var elItemModelImagePanel = $.GetContextPanel().FindChildInLayoutFile( PanelId );
 		InspectModelImage.Init( elItemModelImagePanel, caseId, _GetSettingCallback );
 	};
 
@@ -239,7 +325,7 @@ var CapabilityDecodable = ( function()
 		                                 
 		InventoryAPI.PrecacheCustomMaterials( itemid );
 
-		var callBackFunc = function( itemid, caseId, keyId  )
+		var callBackFunc = function( itemid, caseId, keyId )
 		{
 			$.DispatchEvent( 'ContextMenuEvent', '' );
 			_ClosePopUp();
@@ -266,7 +352,7 @@ var CapabilityDecodable = ( function()
 
 	var _ViewOnMarket = function( id )
 	{
-		SteamOverlayAPI.OpenURL( ItemInfo.GetMarketLinkForLootlistItem( id ));
+		SteamOverlayAPI.OpenURL( ItemInfo.GetMarketLinkForLootlistItem( id ) );
 		StoreAPI.RecordUIEvent( "ViewOnMarket" );
 	};
 
@@ -309,7 +395,7 @@ var CapabilityDecodable = ( function()
 
 		var elBg = elItem.FindChildInLayoutFile( 'ItemTileBg' );
 
-		if( elBg )
+		if ( elBg )
 			elBg.AddClass( 'popup-decodable-wash-color-unusual-bg' );
 
 		var elName = elItem.FindChildInLayoutFile( 'JsItemName' );
@@ -362,7 +448,7 @@ var CapabilityDecodable = ( function()
 	{
 		var targetId = 'ItemFromContainer';
 
-		var xOffsetSlackPercent = (Math.floor( Math.random() * ( ( 90 ) - 10 + 1 ) + 10 )/100 );
+		var xOffsetSlackPercent = ( Math.floor( Math.random() * ( ( 90 ) - 10 + 1 ) + 10 ) / 100 );
 		
 		scrolllists.forEach( element =>
 		{
@@ -378,20 +464,22 @@ var CapabilityDecodable = ( function()
 		var itemDefName = ItemInfo.GetItemDefinitionName( m_caseId );
 
 		var soundEventName = "container_weapon_ticker";
-		if(itemDefName && itemDefName.indexOf("sticker") != -1) {
+		if ( itemDefName && itemDefName.indexOf( "sticker" ) != -1 )
+		{
 			soundEventName = "container_sticker_ticker";
 		}
 			
 
-		for(var i = 0; i < _TickSoundIntervals.length; ++i) {
-			$.Schedule( _TickSoundIntervals[i], _ScrollTick.bind(undefined, soundEventName));
+		for ( var i = 0; i < _TickSoundIntervals.length; ++i )
+		{
+			$.Schedule( _TickSoundIntervals[ i ], _ScrollTick.bind( undefined, soundEventName ) );
 		}
 	};
 
 	                                                                                                                                 
 	var _TickSoundIntervals = [ 0.000, 0.063, 0.125, 0.188, 0.250, 0.313, 0.375, 0.438, 0.500, 0.563, 0.625, 0.688, 0.750, 0.813, 0.875, 0.938, 1.000, 1.063, 1.125, 1.188, 1.250, 1.313, 1.375, 1.483, 1.351, 1.620, 1.701, 1.786, 1.872, 2.003, 2.154, 2.313, 2.466, 2.615, 2.773, 2.941, 3.104, 3.339, 3.630, 3.953, 4.385, 5.004, ];
 
-	var _ScrollTick = function(soundEventName)
+	var _ScrollTick = function( soundEventName )
 	{
 		$.DispatchEvent( "PlaySoundEffect", soundEventName, "MOUSE" );
 	};
@@ -401,12 +489,20 @@ var CapabilityDecodable = ( function()
 		var elTile = elParent.FindChildInLayoutFile( targetId );
 		var tileWidth = elTile.contentwidth;
 
-		return ( elTile.actualxoffset + ( tileWidth * xOffsetSlackPercent ));
+		return ( elTile.actualxoffset + ( tileWidth * xOffsetSlackPercent ) );
 	};
 
 	var _PreCacheTextureForNewWeaponInpsect = function()
 	{
-		InventoryAPI.PrecacheCustomMaterials( m_itemFromContainer );
+		if ( m_itemFromContainer )
+		{
+			InventoryAPI.PrecacheCustomMaterials( m_itemFromContainer );
+		}
+
+		if ( m_existingRewardFromXrayId )
+		{
+			InventoryAPI.PrecacheCustomMaterials( m_existingRewardFromXrayId );
+		}
 	};
 
 	var _ShowInspect = function()
@@ -442,15 +538,20 @@ var CapabilityDecodable = ( function()
 
 			var rarityVal = InventoryAPI.GetItemRarity( m_itemFromContainer );
 			var soundEvent = "ItemRevealRarityCommon";
-			if( rarityVal == 4 ) {
+			if ( rarityVal == 4 )
+			{
 				soundEvent = "ItemRevealRarityUncommon";
-			} else if( rarityVal == 5 ) {
+			} else if ( rarityVal == 5 )
+			{
 				soundEvent = "ItemRevealRarityRare";
-			} else if( rarityVal == 6 ) {
+			} else if ( rarityVal == 6 )
+			{
 				soundEvent = "ItemRevealRarityMythical";
-			} else if( rarityVal == 7 ) {
+			} else if ( rarityVal == 7 )
+			{
 				soundEvent = "ItemRevealRarityLegendary";
-			} else if( rarityVal == 8 ) {
+			} else if ( rarityVal == 8 )
+			{
 				soundEvent = "ItemRevealRarityAncient";
 			}
 	
@@ -458,21 +559,26 @@ var CapabilityDecodable = ( function()
 		}
 		else
 		{
-			CapabilityDecodable.ClosePopUp();
-			
-			                                                               
-			UiToolkitAPI.ShowGenericPopupOk(
-				$.Localize( '#SFUI_SteamConnectionErrorTitle' ),
-				$.Localize( '#SFUI_InvError_Item_Not_Given' ),
-				'',
-				function()
-				{
-				},
-				function()
-				{
-				}
-			);
+			_TimeoutPopup();
 		}
+	};
+
+	var _TimeoutPopup = function()
+	{
+		CapabilityDecodable.ClosePopUp();
+			
+		                                                               
+		UiToolkitAPI.ShowGenericPopupOk(
+			$.Localize( '#SFUI_SteamConnectionErrorTitle' ),
+			$.Localize( '#SFUI_InvError_Item_Not_Given' ),
+			'',
+			function()
+			{
+			},
+			function()
+			{
+			}
+		);
 	};
 	
 	                                                                                                    
@@ -486,8 +592,8 @@ var CapabilityDecodable = ( function()
 
 		var totalWeight = 0;
 		m_aItemsInLootlist.forEach( element =>
-			{
-				totalWeight += element.weight;
+		{
+			totalWeight += element.weight;
 		} );
 		
 		var displayItemsList = [];
@@ -496,7 +602,7 @@ var CapabilityDecodable = ( function()
 		{
 			var itemToAdd = GetItemBasedOnDisplayWeight( totalWeight, m_aItemsInLootlist );
 			
-			if( itemToAdd )
+			if ( itemToAdd )
 				displayItemsList.push( itemToAdd );
 		}
 		
@@ -514,10 +620,10 @@ var CapabilityDecodable = ( function()
 
 				_UpdateScrollTile( element, elTile, itemId );
 			}
-		});
+		} );
 	};
 
-	var _UpdateScrollTile = function ( listId, elTile, itemId )
+	var _UpdateScrollTile = function( listId, elTile, itemId )
 	{
 		if ( listId === 'ScrollListMagnified' )
 		{
@@ -528,7 +634,7 @@ var CapabilityDecodable = ( function()
 		itemId = ( elTile.id === 'ItemFromContainer' && m_itemFromContainer ) ? m_itemFromContainer : itemId;
 
 		if ( InventoryAPI.IsItemUnusual( itemId ) && m_unusualItemImagePath )
-		{	
+		{
 			_UpdateUnusualItemInfo( elTile, m_caseId, m_unusualItemImagePath );
 			                                                                                                          
 		}
@@ -567,7 +673,7 @@ var CapabilityDecodable = ( function()
 		_ShowHideLootList( false );
 	};
 
-	var _UpdateOpeningCounter = (function()
+	var _UpdateOpeningCounter = ( function()
 	{
 		var counterVal = 6;
 		var elCountdown = $.GetContextPanel().FindChildInLayoutFile( 'DecodableCountdown' );
@@ -637,23 +743,193 @@ var CapabilityDecodable = ( function()
 			SetIsGraffiti: _SetIsGraffiti
 		};
 	} )();
-	
+
 	                                                                                                    
+	        
+	                                                                                                   
+	var _SetUpXrayPanel = function()
+	{
+		if ( !m_caseId )
+		{
+			                                
+			                 
+			return;
+		}
+
+		var elActionsPanel = $.GetContextPanel().FindChildInLayoutFile( 'XrayItemsActionPanel' );
+		elActionsPanel.AddClass( 'hidden' );
+		if ( !m_existingRewardFromXrayId )
+		{
+			                                                 
+			elActionsPanel.RemoveClass( 'hidden' );
+			_SetCaseModelImage( m_caseId, 'PopUpXrayModelOrImage' );
+
+			var elBtn = $.GetContextPanel().FindChildInLayoutFile( 'ConfirmXray' );
+			elBtn.SetPanelEvent( 'onactivate', _OnActivateXray.bind( undefined, elBtn ) );
+
+			$.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayStatusLabel' ).text = $.Localize( "#popup_xray_ready_for_use" );
+		}
+		else if( m_existingRewardFromXrayId )
+		{
+			                                         
+			var elHeaderPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectHeader' );
+			InspectHeader.Init( elHeaderPanel, m_existingRewardFromXrayId, _GetSettingCallback );
+
+			$.GetContextPanel().FindChildInLayoutFile( 'XrayItemsActionPanelItemName' ).RemoveClass( 'hidden' );
+			var elImagePanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayModelOrImageReveal' );
+
+			if ( !elImagePanel.BHasClass( 'popup-xray-reverse-effect' ) )
+			{
+				elImagePanel.AddClass( 'no-anim' );
+				elImagePanel.AddClass( 'popup-xray-reverse-effect' );
+				_SetCaseModelImage( m_existingRewardFromXrayId, 'PopUpXrayModelOrImageReveal' );
+			}
+
+			$.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayStatusLabel' ).text = $.Localize( "#popup_xray_already_in_use" );
+			$.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayStatusDot' ).AddClass( 'in-use' );
+		}
+		
+		var elXrayPanel = $.GetContextPanel().FindChildInLayoutFile( 'XrayItemsPanel' );
+		elXrayPanel.RemoveClass( 'hidden' );
+
+		var aPanels = $.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayBgSquares' ).Children();
+		_AnimSquares( aPanels );
+	};
+
+	var _OnActivateXray = function( elBtn )
+	{
+		InventoryAPI.UseTool( m_caseId, m_caseId );
+		elBtn.enabled = false;
+		_XrayReveal();
+		$.DispatchEvent( 'PlaySoundEffect', 'XrayStart', 'MOUSE' );
+	};
+
+	var _XrayReveal = function()
+	{
+		var revealDelay = 3.5;
+		                                                                                         
+		$.Schedule( ( revealDelay - 0.5 ), _PreCacheTextureForNewWeaponInpsect );
+		m_showInspectScheduleHandle = $.Schedule( revealDelay, _ShowXrayReward );
+
+		var oData = {
+			clipValue: 0,
+			lineValue: 100,
+			clipPanel: $.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayModelOrImage' ),
+			linePanel: $.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayModelOrImageRevealLine' )
+		};
+	
+		oData.clipPanel.AddClass( 'popup-xray-inverse-effect' );
+		$.GetContextPanel().FindChildInLayoutFile( 'PopUpXrayModelOrImageReveal' ).AddClass( 'popup-xray-reverse-effect' );
+	
+		$.Schedule( 1, function()
+		{
+			oData.linePanel.visible = true;
+			_AnimClip( oData );
+		} );
+	};
+
+	var _AnimClip = function( oData )
+	{
+		if ( oData.clipValue <= 100 )
+		{
+			oData.clipPanel.style.clip = 'rect( 0%, 100%, 100%, ' + oData.clipValue + '% );';
+			oData.clipValue = oData.clipValue  + 1;
+
+			oData.linePanel.style.transform = 'translatex( -' + oData.lineValue + '%);';
+			oData.lineValue = oData.lineValue - 1;
+
+			$.Schedule( 0.02, _AnimClip.bind( undefined, oData ) );
+		}
+		else
+		{
+			oData.linePanel.AddClass( 'hide' );
+			oData.clipPanel.AddClass( 'hide' );
+			_SetUpPanelElements();
+		}
+	};
+
+	var _AnimSquares = function( aPanels )
+	{
+		if ( $.GetContextPanel().FindChildInLayoutFile( 'XrayItemsPanel' ).visible )
+		{
+			aPanels.forEach( panel =>
+			{
+				panel.style.backgroundColor = 'rgba(255, 255, 255, 0.0' + Math.ceil( Math.random() * 10 ) + ');';
+			} );
+			
+			$.Schedule( 1, _AnimSquares.bind( undefined, aPanels ) );
+		}
+	};
+
+	var _ShowXrayReward = function()
+	{
+		m_showInspectScheduleHandle = null;
+
+		if ( m_existingRewardFromXrayId )
+		{
+			                                
+			_SetUpPanelElements();
+			                                                    
+		}
+		else
+		{
+			_TimeoutPopup();
+		}
+	};
+
+	var _UpdateXrayRewardTile = function( itemId )
+	{
+		
+		                                                             
+		var oData = ItemInfo.GetItemsInXray();
+		m_existingRewardFromXrayId = itemId === oData.reward ? oData.reward : '';
+		
+		_PreCacheTextureForNewWeaponInpsect();
+		_SetCaseModelImage( itemId, 'PopUpXrayModelOrImageReveal' );
+		                                                                                                              
+
+
+	};
+
+	                                                                                                   
 	                        
 	                                                                                                   
 	var _UpdateScrollResultTile = function( numericType, type, itemId )
 	{
 		                                                                     
 		
-		                                               
-		                                 
-		                                     
-		                                                           
+		                                            
+		                              
+		                                  
+		                                                         
 
-		if ( type === "crate_unlock" || type === 'graffity_unseal' )
+		if ( type === "crate_unlock" ||
+			type === 'graffity_unseal' ||
+			type === 'xray_item_reveal' ||
+			type === "xray_item_claim"
+		)
 		{
-			m_itemFromContainer = itemId;
+			if ( m_isXrayMode )
+			{
+				var oData = ItemInfo.GetItemsInXray();
 
+				if ( oData.reward && type === 'xray_item_reveal' )
+				{
+					_UpdateXrayRewardTile( itemId );
+					return;
+				}
+				else if ( type === 'xray_item_claim' )
+				{
+					m_itemFromContainer = itemId;
+					_ShowInspect();
+					return;
+				}
+			}
+			else
+			{
+				m_itemFromContainer = itemId;
+			}
+	
 			                                                                                         
 			if ( $.GetContextPanel().FindChildInLayoutFile( 'DecodableItemsScroll' ).BHasClass( 'hidden' ) )
 			{
@@ -783,7 +1059,6 @@ var CapabilityDecodable = ( function()
 			{
 				InpsectPurchaseBar.ClosePopup();
 			}
-
 		}
 
 		_UpdateOpeningCounter.CancelTimer();

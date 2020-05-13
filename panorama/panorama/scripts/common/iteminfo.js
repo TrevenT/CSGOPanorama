@@ -179,6 +179,48 @@ var ItemInfo = ( function() {
 		return InventoryAPI.GetChosenActionItemIDByIndex( id, capability, index );
 	};
 
+	var _GetKeyForCaseInXray = function( caseId )
+	{
+		var numActionItems = _GetChosenActionItemsCount( caseId, 'decodable' );
+		if ( numActionItems > 0 )
+		{
+			                                                      
+			var aKeyIds = [];
+			for ( var i = 0; i < numActionItems; i++ )
+			{
+				aKeyIds.push( _GetChosenActionItemIDByIndex( caseId, 'decodable', i ) );
+			}
+
+			aKeyIds.sort( function( a, b ) { return a - b; } );
+			return aKeyIds[ 0 ];
+		}
+
+		return '';
+	};
+
+	var _GetItemsInXray = function()
+	{
+		InventoryAPI.SetInventorySortAndFilters( 'inv_sort_age', false, 'xraymachine', '', '' );
+		var count = InventoryAPI.GetInventoryCount();
+
+		if ( count === 0 )
+		{
+			return {};
+		}
+
+		var xrayCaseId = '';
+		var xrayRewardId = '';
+		for ( var i = 0; i < count; i++ )
+		{
+			var id = InventoryAPI.GetInventoryItemIDByIndex( i );
+
+			xrayRewardId = i === 0 ? id : xrayRewardId;
+			xrayCaseId = i === 1 ? id : xrayCaseId;
+		}
+
+		return { case: xrayCaseId, reward: xrayRewardId };
+	};
+
 	var _GetStickerSlotCount = function( id )
 	{
 		return InventoryAPI.GetItemStickerSlotCount( id );
@@ -492,6 +534,8 @@ var ItemInfo = ( function() {
 		IsStatTrak						: _IsStatTrak,
 		GetToolType						: _GetToolType,
 		GetMarketLinkForLootlistItem	: _GetMarketLinkForLootlistItem,
-		GetItemIdForItemEquippedInLoadoutSlot : _GetItemIdForItemEquippedInLoadoutSlot           
+		GetItemIdForItemEquippedInLoadoutSlot : _GetItemIdForItemEquippedInLoadoutSlot,           
+		GetKeyForCaseInXray				: _GetKeyForCaseInXray,
+		GetItemsInXray					: _GetItemsInXray
 	};
 })();

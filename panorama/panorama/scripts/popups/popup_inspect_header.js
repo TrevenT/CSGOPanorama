@@ -2,9 +2,13 @@
 
 var InspectHeader = ( function()
 {
-	var _Init = function( elPanel, itemId, funcGetSettingCallback)
+	var m_isXrayMode = false;
+	
+	var _Init = function( elPanel, itemId, funcGetSettingCallback )
 	{
-		if ( funcGetSettingCallback( 'inspectonly', 'false' ) === 'false' )
+		m_isXrayMode = ( funcGetSettingCallback( "isxraymode", "no" ) === 'yes' ) ? true : false; 
+		
+		if ( funcGetSettingCallback( 'inspectonly', 'false' ) === 'false' && !m_isXrayMode )
 			return;
 		
 		elPanel.RemoveClass( 'hidden' );

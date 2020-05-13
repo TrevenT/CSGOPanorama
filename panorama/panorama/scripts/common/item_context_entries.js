@@ -485,14 +485,16 @@ var ItemContextEntires = ( function (){
 			}
 		},
 		{
-			name: 'open_package',
+			name: function( id )
+			{
+				return InventoryAPI.GetDecodeableRestriction( id ) === 'xray' && !ItemInfo.IsTool( id ) ? 'look_inside' : _IsKeyForXrayItem( id ) !== '' ? 'goto_xray' : 'open_package';
+			},
 			AvailableForItem: function ( id ) {
 				return ItemInfo.ItemHasCapability( id, 'decodable' );
 			},
 			OnSelected: function( id )
 			{
 				$.DispatchEvent( 'ContextMenuEvent', '' );
-				var keyId = '';
 
 				if ( ItemInfo.GetChosenActionItemsCount( id, 'decodable' ) === 0 )
 				{
@@ -500,6 +502,7 @@ var ItemContextEntires = ( function (){
 					{
 						                                                             
 						$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'decodable', id, '' );
+		
 					}
 					else
 					{
@@ -515,9 +518,48 @@ var ItemContextEntires = ( function (){
 					return;
 				}
 				
+				if ( ItemInfo.GetChosenActionItemsCount( id, 'decodable' ) > 0 && ItemInfo.IsTool( id ) && InventoryAPI.GetDecodeableRestriction( id ) === 'xray' )
+				{
+						                                
+						var caseId = _IsKeyForXrayItem( id );
+						if ( caseId )
+						{
+							$.DispatchEvent( "ShowXrayCasePopup", id, caseId, false );
+							$.DispatchEvent( 'ContextMenuEvent', '' );
+							return;
+						}
+				}
+
+				if ( !ItemInfo.IsTool( id ) && InventoryAPI.GetDecodeableRestriction( id ) === 'xray' )
+				{
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_capability_decodable.xml',
+						'key-and-case=,' + id +
+						'&' + 'asyncworktype=decodeable'
+					);
+					return;
+				}
+				
 				$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'decodable', id, '' );
 			}
 		},
+		    
+		   	             
+		   	                                   
+		   		                                                       
+		   			                         
+		   			                                                       
+		   	  
+		   	                       
+		   		                      
+		   	  
+		   	                          
+		   	 
+		   		                                          
+		   		                                           
+		   	 
+		     
 		{
 			name: 'nameable',
 			AvailableForItem: function ( id ) {
@@ -732,6 +774,8 @@ var ItemContextEntires = ( function (){
 	                                                                                                    
 	                                
 	                                                                                                    
+	                                                                                                                                                  
+	
 	var _GetItemToReplaceName = function( id, team )
 	{
 		var currentEquippedItem = ItemInfo.GetItemIdForItemEquippedInLoadoutSlot( id, team );
@@ -792,6 +836,27 @@ var ItemContextEntires = ( function (){
 	var _CanEquipItem = function( itemID )
 	{
 		return ItemInfo.GetSlotSubPosition( itemID ) && !ItemInfo.IsEquippalbleButNotAWeapon( itemID ) && LoadoutAPI.IsLoadoutAllowed();
+	};
+
+	var _IsKeyForXrayItem = function( id )
+	{
+		var oData = ItemInfo.GetItemsInXray();
+		if ( oData.case && oData.reward )
+		{
+			var numActionItems = ItemInfo.GetChosenActionItemsCount( oData.case, 'decodable' );
+			if ( numActionItems > 0 )
+			{
+				for ( var i = 0; i < numActionItems; i++ )
+				{
+					if ( id === ItemInfo.GetChosenActionItemIDByIndex( oData.case, 'decodable', i ) )
+					{
+						return oData.case;
+					}
+				}
+			}
+		}
+
+		return '';
 	};
 
 	return {

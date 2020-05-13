@@ -946,6 +946,20 @@ var MainMenu = ( function() {
 		);
 	};
 
+	var _OnShowXrayCasePopup = function( toolid, caseId, bShowPopupWarning = false )
+	{
+		var showpopup = bShowPopupWarning ? 'yes' : 'no';
+		
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'',
+			'file://{resources}/layout/popups/popup_capability_decodable.xml',
+			'key-and-case=' + toolid + ',' + caseId +
+			'&' + 'asyncworktype=decodeable' +
+			'&' + 'isxraymode=yes' +
+			'&' + 'showxraypopup='+showpopup
+		);
+	};
+
 	var JsInspectCallback = -1;
 	var _OnLootlistItemPreview = function( id, params )
 	{
@@ -1461,6 +1475,7 @@ var MainMenu = ( function() {
 		GcLogonNotificationReceived			: _GcLogonNotificationReceived,
 		InventoryUpdated					: _InventoryUpdated,
 		OnInventoryInspect					: _OnInventoryInspect,
+		OnShowXrayCasePopup					: _OnShowXrayCasePopup,
 		WeaponPreviewRequest				: _WeaponPreviewRequest,
 		OnLootlistItemPreview				: _OnLootlistItemPreview,
 		UpdateOverwatch						: _UpdateOverwatch,
@@ -1502,6 +1517,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', MainMenu.InventoryUpdated );
 	$.RegisterForUnhandledEvent( 'InventoryItemPreview', MainMenu.OnInventoryInspect );
 	$.RegisterForUnhandledEvent( 'LootlistItemPreview', MainMenu.OnLootlistItemPreview );
+	$.RegisterForUnhandledEvent( 'ShowXrayCasePopup', MainMenu.OnShowXrayCasePopup );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_WeaponPreviewRequest', MainMenu.WeaponPreviewRequest );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Overwatch_CaseUpdated', MainMenu.UpdateOverwatch );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_TournamentMatch_DraftUpdate", MainMenu.TournamentDraftUpdate );

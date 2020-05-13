@@ -11,6 +11,8 @@ var InspectAsyncActionBar = ( function()
 	var m_isDecodeableKeyless = false;                                                   
 	var m_asynActionForceHide = false;
 	var m_showAsyncActionDesc = false;
+	var m_isXrayMode = false;
+	var m_allowXrayClaim = false;
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback, funcCallbackOnAction )
 	{
@@ -20,6 +22,8 @@ var InspectAsyncActionBar = ( function()
 		m_isDecodeableKeyless = ( funcGetSettingCallback( 'decodeablekeyless', 'false' ) === 'true' ) ? true : false;
 		m_asynActionForceHide = ( funcGetSettingCallback( 'asyncforcehide', 'false' ) === 'true' ) ? true : false;
 		m_showAsyncActionDesc = ( funcGetSettingCallback( 'asyncactiondescription', 'no' ) === 'yes' ) ? true : false;
+		m_isXrayMode = ( funcGetSettingCallback( "isxraymode", "no" ) === 'yes' ) ? true : false;
+		m_allowXrayClaim = ( funcGetSettingCallback( "allowxrayclaim", "no" ) === 'yes' ) ? true : false;
 
 		                                      
 		                               
@@ -58,10 +62,11 @@ var InspectAsyncActionBar = ( function()
 
 	var _DoesNotMeetDecodalbeRequirements = function()
 	{
+		                                                                                                      
 		if ( m_worktype === 'decodeable' )
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
-			if ( sRestriction === 'restricted' )
+			if ( sRestriction === 'restricted' || ( sRestriction === 'xray' && !m_isXrayMode ))
 				return false;
 
 			return ( !m_toolid && !m_isDecodeableKeyless );
@@ -114,12 +119,19 @@ var InspectAsyncActionBar = ( function()
 			{
 				InventoryAPI.UseTool( m_itemid, '' );
 			}
+			else if ( InventoryAPI.GetDecodeableRestriction( m_itemid ) === "xray" && !m_allowXrayClaim )
+			{
+				InventoryAPI.UseTool( m_itemid, m_itemid );
+			}
 			else
 			{
 				InventoryAPI.UseTool( m_toolid, m_itemid );
 			}
 
-			$.DispatchEvent( 'StartDecodeableAnim' );
+			if ( InventoryAPI.GetDecodeableRestriction( m_itemid ) !== "xray" )
+			{
+				$.DispatchEvent( 'StartDecodeableAnim' );
+			}
 		}
 	};
 	
@@ -127,24 +139,61 @@ var InspectAsyncActionBar = ( function()
 	{
 		var elOK = elPanel.FindChildInLayoutFile( 'AsyncItemWorkAcceptConfirm' );
 
-		  
-		                        
-		  
-		if ( m_worktype === 'decodeable' )
+		function _SetPanelEventOnAccept ()
+		{
+			elOK.SetPanelEvent(
+				'onactivate',
+				_OnAccept.bind(
+					undefined,
+					elPanel,
+					funcGetSettingCallback,
+					funcCallbackOnAction
+				) );
+		}
+
+		if ( m_worktype === 'decodeable' )                                                           
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
+			var elDescLabel = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDesc' );
+			var elDescImage = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDescImage' );
+
+			                               
 			if ( sRestriction === 'restricted' )
 			{
 				                                        
 				elOK.visible = false;
-				
-				var elDescLabel = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDesc' );
 				elDescLabel.visible = false;
-				elDescLabel.SetDialogVariable( 'itemname', ItemInfo.GetName( m_itemid ) );
-				elDescLabel.text = $.Localize( '#popup_'+m_worktype+'_err_'+sRestriction, elDescLabel );
-				elDescLabel.AddClass( 'popup-capability__error' );
+				elDescImage.visible = false;
+				return;
+			}
 
-				var elDescImage = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDescImage' );
+			if ( m_isXrayMode )
+			{
+				var enabled = m_allowXrayClaim ? true : false;
+				_EnableDisableOkBtn( elPanel, enabled );
+				elOK.AddClass( m_okButtonClass );
+				elOK.text = '#popup_xray_claim_item';
+				_SetPanelEventOnAccept();
+				return;
+			}
+
+			if ( sRestriction === 'xray' )
+			{
+				                                         
+				elOK.visible = true;
+				elOK.text = '#popup_xray_button_goto';
+				elOK.AddClass( m_okButtonClass );
+
+				elOK.SetPanelEvent( 'onactivate', function()
+				{
+					$.DispatchEvent( "ShowXrayCasePopup", m_toolid, m_itemid, true );
+					_ClosePopup();
+
+				} );
+
+				                                               
+				elDescLabel.visible = true;
+				elDescLabel.text = '#popup_decodeable_async_xray_desc';
 				elDescImage.visible = false;
 
 				return;
@@ -166,31 +215,37 @@ var InspectAsyncActionBar = ( function()
 			else if ( itemDefName && itemDefName.indexOf( "tournament_pass_" ) != -1 )
 				sOkButtonText = sOkButtonText + "_fantoken";
 		}
+
 		elOK.text = sOkButtonText;
 		elOK.AddClass( m_okButtonClass );
-		
-		elOK.SetPanelEvent( 'onactivate', _OnAccept.bind( undefined, elPanel, funcGetSettingCallback, funcCallbackOnAction ) );
+		_SetPanelEventOnAccept();
 	};
 
-	var _HideOkButton = function ()
+	var _HideOkButton = function()
 	{
 		return ( m_worktype === 'remove_sticker' ) ? true : false;
-	}
+	};
 
 	var _SetUpDescription = function( elPanel )
 	{
 		var elDescLabel = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDesc' );
 		var elDescImage = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDescImage' );
+
+		elDescLabel.SetHasClass( 'popup-capability-faded', m_isXrayMode && !m_allowXrayClaim );
+		elDescImage.SetHasClass( 'popup-capability-faded', m_isXrayMode && !m_allowXrayClaim );
 		
 		if ( m_showAsyncActionDesc )
 		{
 			elDescImage.itemid = m_toolid;
+			var itemName = ItemInfo.GetName( m_toolid );
 
-			elDescLabel.SetDialogVariable( 'itemname', ItemInfo.GetName( m_toolid ) );
-			elDescLabel.text = $.Localize( 'popup_'+m_worktype+'_async_desc', elDescLabel );
+			if ( itemName )
+			{
+				elDescLabel.SetDialogVariable( 'itemname', itemName);
+				elDescLabel.text = $.Localize( 'popup_' + m_worktype + '_async_desc', elDescLabel );
+			}
 		}	
 
-		elDescLabel.visible = m_showAsyncActionDesc;
 		elDescLabel.visible = m_showAsyncActionDesc;
 	};
 

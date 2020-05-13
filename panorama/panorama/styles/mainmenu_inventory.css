@@ -218,3 +218,55 @@
 	margin: 16px;
 	horizontal-align: center;
 }
+
+.content-navbar__tabs Button.inv-nav-solid-btn
+{
+	background-color: rgba(247, 247, 247, 0.76);
+	margin: 0px 12px;
+	border-radius: 3px;
+	height: fit-children;
+	-s2-mix-blend-mode: additive;
+
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.content-navbar__tabs Button.inv-nav-solid-btn Label
+{
+	padding: 14px 16px;
+	margin-left: 0px;
+	color: Black;
+	font-weight: bold;
+
+	transition-property: color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.content-navbar__tabs Button.inv-nav-solid-btn:hover
+{
+	background-color: rgba(34, 34, 34, 0.76);
+	-s2-mix-blend-mode: normal;
+
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.content-navbar__tabs Button.inv-nav-solid-btn:hover Label
+{
+	color: rgb(247, 247, 247);
+
+	transition-property: color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.inv-nav-solid-btn-notification
+{
+	horizontal-align: right;
+	vertical-align: top;
+	margin-top: 2px;
+	margin-right: 4px;
+}

@@ -161,7 +161,18 @@ var InspectActionBar = ( function (){
 			if ( entry.AvailableForItem( id ) )
 			{
 				var closeInspect = isSticker ? true : false;
-				elSingleActionBtn.text = '#inv_context_' + entry.name;
+				var displayName = '';
+
+				if ( entry.name instanceof Function )
+				{
+					displayName = entry.name( id );
+				}
+				else
+				{
+					displayName = entry.name;
+				}
+
+				elSingleActionBtn.text = '#inv_context_' + displayName;
 				elSingleActionBtn.SetPanelEvent( 'onactivate', _OnSingleAction.bind( this, entry, id, closeInspect ) );
 			}
 		}

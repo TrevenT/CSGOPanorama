@@ -64,6 +64,14 @@
 		<snippet name="TopRightExtraButtonsSnippet">
 			<Panel class='content-navbar__tabs'>
 				<Panel class="inv-nav__seperator" />
+				<Panel id="InvXrayBtnContainer" class="vertical-center full-height hide">
+					<Button id="InvXrayBtn" class="inv-nav-solid-btn">
+						<Label text="#popup_xray_title" />
+					</Button>
+					<Panel id="" class="navbar-btn__notification inv-nav-solid-btn-notification">
+						<Label id="" class="navbar-btn__notification-text" text="1"/>
+					</Panel>
+				</Panel>
 				<Button id="InvSearchBtn"
 							class="" 
 							data-type='any'>

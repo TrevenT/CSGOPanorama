@@ -44,7 +44,7 @@
 						<Label id="CanStickerTitle"  class="popup-capability__name horizontal-center" text="#SFUI_InvContextMenu_sticker_use"/>
 						<Label id="CanStickerDesc" html="true" class="fontSize-l horizontal-center" text="#popup_can_sticker_desc"/>
 						<Panel class="left-right-flow horizontal-center top-padding">
-							<Image class="right-padding vertical-center" texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/info.svg" />
+							<Image class="right-padding" texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/info.svg" />
 							<Label id="CanStickerWarning" html="true" class="popup-capability__warning" text="#SFUI_InvUse_Warning_use_can_sticker"/>
 						</Panel>
 					</Panel>

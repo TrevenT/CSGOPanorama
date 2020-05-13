@@ -40,8 +40,19 @@ var ItemContextMenu = ( function (){
 				var elButton = $.CreatePanel( 'Button', elParent, 'ContextMenuItem' + i );
 				lastButtonAdded = elButton;
 
-				var elLabel = $.CreatePanel( 'Label', elButton, '',{ html:'true'});
-				elLabel.text = '#inv_context_' + entry.name;
+				var elLabel = $.CreatePanel( 'Label', elButton, '', { html: 'true' } );
+				var displayName = ''
+				
+				if ( entry.name instanceof Function )
+				{
+					displayName = entry.name( id );
+				}
+				else
+				{
+					displayName = entry.name;
+				}
+
+				elLabel.text = '#inv_context_' + displayName;
 
 				if( entry.style && populateFilterText === "(not found)" )
 				{

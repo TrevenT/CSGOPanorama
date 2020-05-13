@@ -45,6 +45,13 @@
 	horizontal-align: center;
 }
 
+.popup-in-xray .popup-capability__top.inspect
+{
+	                                
+	vertical-align: center;
+	ui-scale: 65%;
+}
+
 .popup-capability__name
 {
 	font-size: 50px;
@@ -59,7 +66,7 @@
 .popup-capability__warning
 {
 	font-size: 18px;
-	max-width: 640px;
+	max-width: 940px;
 }
 
 .popup-capability__info-block
@@ -98,6 +105,15 @@
 	border-top: 0px solid rgba(145, 145, 145, 0.5);
 }
 
+.popup-capability-faded
+{
+	opacity: .15;
+
+	transition-property: opacity;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
 .popup-capability__purchase
 {
 	height: fit-children;
@@ -129,8 +145,8 @@
 	margin-left: 8px;
 	margin-right: 8px;
 	font-size: 24px;
-	font-weight: medium;
-	text-overflow: ellipsis;
+	font-weight: lighter;
+	text-overflow: shrink;
 }
 
 .popup-capability__purchase__text.popup-capability__error
