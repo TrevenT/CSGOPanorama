@@ -248,7 +248,113 @@ var MainMenuStore = ( function()
 		return true;
 	}
 
-	var _GetStoreItems = function( itemsByCategory )
+	var _CouponsSearchFilterCallback = function( strAction ) {
+		var elTextControl = $.GetContextPanel().FindChildInLayoutFile( 'CouponsSearchBarFilterText' );
+		if ( !elTextControl ) return;
+
+		                            
+		var strPageName = 'Page-1';
+
+		                         
+		var strFilterString = elTextControl.text;
+		if ( strAction === 'clear' || strAction === 'browse' )
+			strFilterString = '';
+		var arrSearchTokens = strFilterString.toLowerCase().split( /[\s\|]/ ).filter( subtoken => subtoken ? true : false );
+		if ( !arrSearchTokens.length )
+			strFilterString = '';
+
+		                                                                                                                                                            
+		var itemsByCategory = {};
+		itemsByCategory = _GetStoreItems( itemsByCategory, strFilterString );
+		itemsByCategory = _GetCoupons ( itemsByCategory );
+
+		                                        
+		var results = [];
+		if ( itemsByCategory.coupons && itemsByCategory.coupons.length > 8 && arrSearchTokens.length > 0 )
+		{
+			for ( var j = 0; j < itemsByCategory.coupons.length; ++ j )
+			{
+				var obj = itemsByCategory.coupons[j];
+				if ( typeof obj !== "string" ) continue;
+				
+				var strItemName = ItemInfo.GetName( obj );
+				if ( !strItemName ) continue;
+				strItemName = strItemName.toLowerCase();
+
+				var hasKeySearchToken = true;
+				arrSearchTokens.forEach( subtoken => hasKeySearchToken = hasKeySearchToken && ( strItemName.indexOf( subtoken ) >= 0 ) );
+				if ( hasKeySearchToken )
+					results.push( obj );
+			}
+
+			                                                            
+			if ( results.length <= 0 )
+			{	                                         
+				itemsByCategory.coupons = itemsByCategory.coupons.slice( 0, 8 );
+				var elTextControlErrorLabel = $.GetContextPanel().FindChildInLayoutFile( 'CouponsSearchBarFilterError' );
+				elTextControlErrorLabel.SetHasClass( 'hidden', false );
+				return;
+			}
+		}
+		if ( results.length > 0 )
+		{	                                                         
+			strPageName = 'Page-2';
+			itemsByCategory.coupons = itemsByCategory.coupons.slice( 0, 8 ).concat( results );
+		}
+
+		                                                                
+		if ( !strFilterString )
+		{
+			strPageName = 'Page-0';
+			if ( strAction === 'browse' )
+				strPageName = 'Page-2';
+		}
+
+		                        
+		var prop = 'coupons';
+		var elCarousel = _MakeIndividualCarousel( itemsByCategory.coupons, prop );
+
+		                                                              
+		for ( var i = 0; i < 9; ++ i ) {
+			if ( m_pendingItemsToPopulateScheduled.hasOwnProperty( prop ) &&
+				m_pendingItemsToPopulateScheduled[ prop ].m_hScheduled ) {
+					$.CancelScheduled( m_pendingItemsToPopulateScheduled[prop].m_hScheduled );
+					_ScheduledPopulateCarousel( prop );
+				}
+		}
+
+		                 
+		if ( strFilterString )
+		{
+			var elTextControlNew = $.GetContextPanel().FindChildInLayoutFile( 'CouponsSearchBarFilterText' );
+			elTextControlNew.text = strFilterString;
+
+			                                                                                                       
+			                                                     
+		}
+
+		if ( strPageName === 'Page-1' )
+		{
+			var elTextControlErrorLabel = $.GetContextPanel().FindChildInLayoutFile( 'CouponsSearchBarFilterError' );
+			elTextControlErrorLabel.SetHasClass( 'hidden', false );
+		}
+
+		                                              
+		var elPageChild = elCarousel.FindChildInLayoutFile( strPageName );
+		if ( elPageChild )
+			elCarousel.SetSelectedChild( elPageChild );
+
+		                                                                
+		if ( results.length > 0 )
+		{
+			var elPage0 = elCarousel.FindChildInLayoutFile( 'Page-0' );
+			if ( elPage0 ) {
+				elPage0.SetAttributeString( "on-carousel-select-action", 'couponsreset' );
+			}
+		}
+	}
+
+	var _GetStoreItems = function( itemsByCategory, bOptionalFullSearchResults )
 	{
 		var count = StoreAPI.GetBannerEntryCount();
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
@@ -299,6 +405,38 @@ var MainMenuStore = ( function()
 				}
 				
 				itemsByCategory.newstore.push( FauxItemId );
+			}
+			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "coupon" )
+			{
+				if ( !_BAllowDisplayingItemInStore( FauxItemId ) )
+					continue;
+
+				if ( !itemsByCategory.coupons )
+				{
+					itemsByCategory.coupons = [];
+				}
+
+				                                                      
+				if ( itemsByCategory.coupons.length == 4 )
+				{
+					itemsByCategory.coupons.push( { snippet_name: 'CouponsSearchBarItemSnippet', load_func: function( elItem ) {
+						elItem.SetHasClass( 'store-panel__carousel__coupons_searchitem', true );
+					} } );
+					itemsByCategory.coupons.push( { snippet_name: 'CouponsSearchBarItemDummy', load_func: function( elItem ) {} } );
+					itemsByCategory.coupons.push( { snippet_name: 'CouponsSearchBarItemDummy', load_func: function( elItem ) {} } );
+					itemsByCategory.coupons.push( { snippet_name: 'CouponsSearchBarItemDummy', load_func: function( elItem ) {} } );
+				}
+
+				if ( itemsByCategory.coupons.length > 4 )
+				{
+					if ( bOptionalFullSearchResults ) {
+						                                       
+					} else {
+						continue;                                              
+					}
+				}
+
+				itemsByCategory.coupons.push( FauxItemId );
 			}
 			else
 			{
@@ -462,6 +600,8 @@ var MainMenuStore = ( function()
 			} );
 
 		m_pendingItemsToPopulateScheduled[ prop ].m_hScheduled = $.Schedule( .1, _ScheduledPopulateCarousel.bind( undefined, prop ) );
+
+		return elCarousel;
 	};
 
 	var _ScheduledPopulateCarousel = function( prop )
@@ -545,7 +685,14 @@ var MainMenuStore = ( function()
 		if ( i % itemsPerPage === 0 )
 		{
 			if ( i > 0 )
+			{
 				elPage.AddClass( 'PreviouslyRight' );
+				if ( type === 'coupons' && i == 4 )
+				{
+					elCarousel.SetAutoScrollEnabled( false );
+					elPage.SetAttributeString( "on-carousel-select-action", 'couponssearch' );
+				}
+			}
 			elPage.AddClass( 'store-panel__carousel-page__animations_enabled' );
 		}
 	};
@@ -600,6 +747,34 @@ var MainMenuStore = ( function()
 			UiToolkitAPI.HideTextTooltip();
 			UiToolkitAPI.ShowCustomLayoutPopup( 'prime_status', 'file://{resources}/layout/popups/popup_prime_status.xml' );
 		} );
+	};
+
+	var _SetCarouselSelectedChild = function( objSelectedChild )
+	{
+		var strAction = objSelectedChild.GetAttributeString( "on-carousel-select-action", '' );
+		if ( !strAction )
+			return;
+
+		                                                         
+
+		                                          
+		                                                       
+		                                   
+		                                                                        
+		                              
+		                                                    
+
+		if ( strAction === 'couponssearch' )
+		{
+			var elTextEntry = objSelectedChild.FindChildInLayoutFile( 'CouponsSearchBarFilterText' );
+			if ( elTextEntry ) {
+				elTextEntry.SetFocus();
+			}
+		}
+		else if ( strAction === 'couponsreset' )
+		{
+			_CouponsSearchFilterCallback( 'clear' );
+		}
 	};
 
 	var _MakeTabBtn = function ( prefix, type )
@@ -775,7 +950,9 @@ var MainMenuStore = ( function()
 		CheckLicenseScreen : _CheckLicenseScreen,
 		AccountWalletUpdated : _AccountWalletUpdated,
 		OnNavigateTab: _OnNavigateTab,
-		RefreshCoupons : _RefreshCoupons
+		RefreshCoupons : _RefreshCoupons,
+		SetCarouselSelectedChild : _SetCarouselSelectedChild,
+		CouponsSearchFilterCallback: _CouponsSearchFilterCallback
 	};
 } )();
 
@@ -786,5 +963,10 @@ var MainMenuStore = ( function()
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_UpdateConnectionToGC', MainMenuStore.CheckLicenseScreen );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_AccountWalletUpdated', MainMenuStore.AccountWalletUpdated );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_PriceSheetChanged', MainMenuStore.Init );
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_PurchaseCompleted', MainMenuStore.RefreshCoupons );
+	$.RegisterForUnhandledEvent( 'FilterStoreCouponsDisplay', MainMenuStore.CouponsSearchFilterCallback );
+	                                                                                     
+	                                                                                                            
+
+	                                                                               
+	$.RegisterEventHandler( "SetCarouselSelectedChild", $.GetContextPanel(), MainMenuStore.SetCarouselSelectedChild );
 } )();

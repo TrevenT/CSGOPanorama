@@ -127,8 +127,16 @@ function LaunchMission ()
 			mapGroup = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_official_' + gameMode );
 		}
         if ( !mapGroup )
-        {	                                                                               
-            mapGroup = 'mg_' + InventoryAPI.GetQuestMap( QuestItemID );
+		{	                                                                               
+			var strIndividualMap = InventoryAPI.GetQuestMap( QuestItemID );
+			if ( strIndividualMap )
+			{	                                             
+				mapGroup = 'mg_' + strIndividualMap;
+			}
+			else
+			{	                                                                                 
+				mapGroup = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_official_' + gameMode );
+			}
         }
 
                                                                                

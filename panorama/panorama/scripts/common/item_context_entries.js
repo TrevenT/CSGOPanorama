@@ -856,7 +856,7 @@ var ItemContextEntires = ( function (){
 				return 'TopSeparator';
 			},
 			AvailableForItem: function ( id ) {
-				return InventoryAPI.IsMarketable( id );
+				return InventoryAPI.IsPotentiallyMarketable( id );
 			},
 			OnSelected: function ( id ) {
 				$.DispatchEvent( 'ContextMenuEvent', '' );

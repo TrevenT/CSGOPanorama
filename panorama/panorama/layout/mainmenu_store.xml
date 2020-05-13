@@ -94,6 +94,42 @@
 			</RadioButton>
 		</snippet>
 
+		<snippet name="CouponsSearchBarItemSnippet" class="">
+			<Panel class="store-panel__carousel__item"  hittest="true">
+				<Panel class='top-bottom-flow full-width'>
+					<Panel class='left-right-flow full-width store-panel__carousel__coupons_search_topbar'>
+						<TextEntry id="CouponsSearchBarFilterText"
+							class="store-panel__carousel__coupons_searchtext"
+							placeholder="#inv_search_default"
+							ontextentrysubmit="$.DispatchEvent( 'FilterStoreCouponsDisplay', 'apply' )"
+							onfocus="" />
+						<Button id="CouponsSearchBarFilterClear"
+							onactivate="$.DispatchEvent( 'FilterStoreCouponsDisplay', 'clear' )"
+							class="IconButton hidden" >
+							<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/cancel.svg"/>
+						</Button>
+						<TextButton id="CouponsSearchBarFilterButton"
+							class="store-panel__carousel__coupons_searchbtn store-sale-tag__text"
+							onactivate="$.DispatchEvent( 'FilterStoreCouponsDisplay', 'apply' )"
+							text="#store_btn_filter_coupons"/>
+					</Panel>
+					<Panel class='left-right-flow full-width store-panel__carousel__coupons_search_bottombar'>
+						<Label id="CouponsSearchBarFilterError"
+							class="store-panel__tournament-label hidden"
+							text="#store_btn_filter_coupons_not_found"/>
+						<TextButton id="CouponsSearchBarFilterBrowse"
+							class="store-panel__carousel__coupons_searchbtn store-sale-tag__text"
+							onactivate="$.DispatchEvent( 'FilterStoreCouponsDisplay', 'browse' )"
+							text="#store_btn_filter_coupons_browse"/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="CouponsSearchBarItemDummy">
+			<Panel class="hidden" hittest="false"></Panel>
+		</snippet>
+
 		<snippet name="TournamentStore">
 			<Button class="store-panel__tournament-banner store-panel__tournament-banner__buyitems"
 				onactivate="$.DispatchEvent( 'ShowTournamentStore' )">

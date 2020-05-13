@@ -233,6 +233,59 @@
 	opacity: 1;
 }
 
+.store-panel__carousel__coupons_searchitem
+{
+	width: 100%;
+	padding: 40px;
+}
+
+.store-panel__carousel__coupons_search_topbar
+{
+	padding-top: 35px;
+}
+
+.store-panel__carousel__coupons_searchtext
+{
+	width: fill-parent-flow( 1.0 );
+	font-size: 20px;
+}
+
+.store-panel__carousel__coupons_searchbtn.store-sale-tag__text
+{
+	padding: 6px;
+	padding-right: 12px;
+}
+
+.store-panel__carousel__coupons_search_bottombar .store-panel__carousel__coupons_searchbtn.store-sale-tag__text
+{
+	horizontal-align: right;
+	margin-top: 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #1B6085 ), to( #1B6085 ) );
+	opacity: 0;
+}
+
+.store-panel__carousel__coupons_search_bottombar .store-panel__carousel__coupons_searchbtn.store-sale-tag__text Label
+{
+	font-size: 16px;
+}
+
+#CouponsSearchBarFilterClear
+{
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
+.store-panel__carousel__coupons_searchitem .store-panel__tournament-label
+{
+	font-size: 16px;
+	color: wheat;
+	margin-top: 8px;
+	margin-left: 8px;
+	padding: 0px;
+	width: fill-parent-flow( 1.0 );
+	vertical-align: top;
+}
+
 .store-panel__tournament-saletag
 {
 	background-color: green;

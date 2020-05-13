@@ -21,13 +21,17 @@ var InpsectPurchaseBar = ( function()
 		                                          
 		m_itemid = !m_storeItemid ? itemId : m_storeItemid;
 
+		                              
+		var bFauxItemIdForPurchase = InventoryAPI.IsFauxItemID( m_itemid );
+		var priceOriginal = bFauxItemIdForPurchase ? ItemInfo.GetStoreOriginalPrice( m_itemid, 1 ) : '';
+
 		                                                          
-		                                                    
-		                                                                                           
+		                                                                                                                      
+		                                                           
 		                                                                                                                                                                                                    
 		                                                                                   
 
-		if ( !ItemInfo.GetStoreOriginalPrice( m_itemid, 1 ) ||
+		if ( !priceOriginal ||
 			( funcGetSettingCallback( 'inspectonly', 'false' ) === 'true' ) ||
 			!InventoryAPI.IsValidItemID( m_itemid )
 		)
@@ -109,10 +113,10 @@ var InpsectPurchaseBar = ( function()
 		if ( m_bOverridePurchaseMultiple )
 			return true;                                             
 
-		var itemType = InventoryAPI.GetItemTypeFromEnum( m_itemid );
-		                                 
-		if ( itemType === 'coupon' || itemType === 'coupon_crate' )
-			return false;                                                        
+		                                                               
+		                                    
+		                                                              
+		   	                                                                     
 
 		var attValue = InventoryAPI.GetItemAttributeValue( m_itemid, 'season access' );
 		if ( attValue )

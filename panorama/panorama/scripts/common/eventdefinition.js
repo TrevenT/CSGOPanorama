@@ -56,7 +56,8 @@
     $.DefineEvent( 'CloseAcceptPopup', 0, '', 'Fired when accept match popup Closes.' );
 
     $.DefineEvent( 'ShowTournamentStore', 0, '', 'Show tournament store popup' );
-    $.DefineEvent( 'ShowTournamentStorePassPopup', 0, '', 'Popup the passes in the tournament store' );
+	$.DefineEvent( 'ShowTournamentStorePassPopup', 0, '', 'Popup the passes in the tournament store' );
+	$.DefineEvent( 'FilterStoreCouponsDisplay', 1, 'action', 'Filter displayed coupons {apply|clear}' );
     $.DefineEvent( 'AddItemToCart', 1, 'itemID', 'Add an itemid to tournament store shopping cart' );
     $.DefineEvent( 'RemoveItemFromCart', 1, 'itemID', 'Remove an item of this id from the tournament store shopping cart' );
 
