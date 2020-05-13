@@ -593,6 +593,8 @@ Button.sb-row__cell:hover {
 	wash-color: #ff0000a0;
 }
 
+
+
 .sb-row--transition {
 
 	transition-property: position, opacity;
@@ -1052,9 +1054,13 @@ Label.sb-row__cell--mvps__count {
 	wash-color: #ffffff00;
 }
 
-:not(.eom-scoreboard) .sb-player-status-dead,  {
+:not(.eom-scoreboard) .sb-player-status-dead {
 	opacity: 0.5;
 	wash-color: #999;
+}
+
+:not(.eom-scoreboard) .sb-player-status-dead.muted {
+	wash-color: #ff0000a0;
 }
 
 :not(.eom-scoreboard) .sb-player-status-dead .sb-row__cell,
