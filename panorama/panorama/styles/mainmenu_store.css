@@ -57,6 +57,67 @@
 	brightness: 1;
 }
 
+.store-panel__carousel__item.store-panel__carousel__item__prime__full
+{
+	width: 690px;
+	flow-children: right;
+}
+
+.store-panel__carousel__item_primecontainer
+{
+	width: 172px;
+	flow-children: down;
+	vertical-align: center;
+	horizontal-align: left;
+	transform-origin: 50% 50%;
+}
+
+.store-panel__carousel__item__prime__full .store-panel__carousel__item__name
+{
+	horizontal-align: center;
+	margin-left: 0px;
+	color: positiveColor;
+}
+
+.store-panel__carousel__item_primecontainer_title
+{
+	font-size: 24px;
+	font-weight: medium;
+}
+
+                                                                                        
+ 
+	                     
+    
+
+.store-panel__carousel__item_primecontainer_detailed
+{
+	visibility: collapse;
+	flow-children: down;
+	height: fit-children;
+	vertical-align: center;
+	margin-left: 32px;
+}
+
+.store-panel__carousel__item__prime__full .store-panel__carousel__item_primecontainer_detailed
+{
+	visibility: visible;
+}
+
+.store-panel__carousel__item_prime_details
+{
+	font-size: 18px;
+	font-weight: lighter;
+	                    
+	width: 500px;
+}
+
+.store-panel__carousel__item_primecontainer_icon
+{
+	wash-color: baseText;
+	padding-right: 10px;
+}
+
 .store-panel__carousel__item__image
 {
 	height: 160px;

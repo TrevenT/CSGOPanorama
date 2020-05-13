@@ -396,9 +396,33 @@ var ItemContextEntires = ( function (){
 			}
 		},
 		{
+			name: 'getprestige',
+			AvailableForItem: function ( id ) {
+				return ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'xpgrant') &&
+					( FriendsListAPI.GetFriendLevel( MyPersonaAPI.GetXuid() ) >= InventoryAPI.GetMaxLevel() ) );
+			},
+			OnSelected: function( id )
+			{
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+					'itemid=' + '0' +                                                                                          
+					'&' + 'asyncworkitemwarning=no' +
+					'&' + 'asyncworktype=prestigecheck'
+				);
+				
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
 			name: 'useitem',
 			AvailableForItem: function ( id ) {
 				if ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_') ) return true;
+				if ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'xpgrant') )
+				{	                                                                
+					return ( FriendsListAPI.GetFriendLevel( MyPersonaAPI.GetXuid() ) < InventoryAPI.GetMaxLevel() );
+				}
+
 				if ( !InventoryAPI.IsTool( id ) ) return false;
 				var season = InventoryAPI.GetItemAttributeValue( id, 'season access' );
 				if ( season != undefined ) return true;                                    

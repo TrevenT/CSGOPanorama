@@ -13,7 +13,13 @@
 					<Image id="ViewFrustrum" src="file://{images}/icons/ui/map_view_angle.svg"/>
 					<Image id="SpeakingOnMap" src="file://{images}/icons/ui/map_speaking_onmap.svg"/>
           <Image id="SpeakingOffMap" src="file://{images}/icons/ui/map_speaking_offmap.svg"/>
-					<Image id="AbovePlayer" class="PI_Above" src="file://{images}/hud/radar/icon-radar-bomb-above.png" texturewidth="13" textureheight="7" />
+
+          <Image id="PlayerPing"/>
+          <Image id="PlayerPingOffMap">
+            <Image id="PlayerPingOffMapArrow" src="file://{images}/icons/ui/map_enemy_offmap.svg"/>
+          </Image>
+          
+          <Image id="AbovePlayer" class="PI_Above" src="file://{images}/hud/radar/icon-radar-bomb-above.png" texturewidth="13" textureheight="7" />
 					<Image id="BelowPlayer" class="PI_Below" src="file://{images}/hud/radar/icon-radar-bomb-below.png" texturewidth="13" textureheight="7" />
 					<Image id="HostageTransitOnMap" src="file://{images}/icons/ui/map_hostage_transit_onmap.svg"/>
 					<Image id="CTOnMap" class="PI_OnMap PI_Color_CT" textureheight="11" texturewidth="11" src="file://{images}/hud/radar/icon-on-map.png"/>

@@ -224,6 +224,15 @@ var MainMenuStore = ( function()
 					( itemsByCategory.store.indexOf( 'prime' ) === -1 ))
 				{
 					itemsByCategory.store.push( 'prime' );
+
+					                                                                           
+					                                                                                  
+					var nCurrentLvl = FriendsListAPI.GetFriendLevel( MyPersonaAPI.GetXuid() );
+					if ( ( nCurrentLvl > 1 ) && ( nCurrentLvl % 2 == 0 ) )
+					{
+						itemsByCategory.prime = [];
+						itemsByCategory.prime.push( 'prime' );
+					}
 				}
 
 				itemsByCategory.store.push( FauxItemId );
@@ -408,7 +417,7 @@ var MainMenuStore = ( function()
 		
 		if ( itemList[ i ] === 'prime' )
 		{
-			elItem.BLoadLayoutSnippet( 'StoreEntry' );
+			elItem.BLoadLayoutSnippet( 'StoreEntryPrimeStatus' );
 			_PrimeStoreItem( elItem, itemList[ i ], type );
 		}
 		else if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
@@ -471,25 +480,7 @@ var MainMenuStore = ( function()
 
 	var _PrimeStoreItem = function( elItem, id, type )
 	{
-		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
-		elImage.DeleteAsync( 0 );
-
-		var newimage = $.CreatePanel( 'Image', elItem, '' ,
-			{
-			src: 'file://{images}/icons/ui/prime.svg',
-				textureheight: '80px',
-				texturewidth: '-1px',
-				class: 'store-panel__carousel__item__image--prime'
-			}
-		);
-
-		var elName = elItem.FindChildInLayoutFile( 'StoreItemName' );
-		elName.text = "Prime Status Upgrade";
-		
-		elItem.MoveChildBefore( newimage, elName );
-
-		elItem.FindChildInLayoutFile( 'StoreItemPrice' ).visible = false;
-		elItem.FindChildInLayoutFile( 'StoreItemPercent' ).visible = false;
+		elItem.SetHasClass( 'store-panel__carousel__item__prime__full', ( type === 'prime' ) ? true : false );
 
 		elItem.SetPanelEvent( 'onactivate', function()
 		{
@@ -550,6 +541,7 @@ var MainMenuStore = ( function()
 		NewPostition( tabList.find(function (obj) { return obj.id === 'store'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'coupons'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'newstore'; } ) );
+		NewPostition( tabList.find(function (obj) { return obj.id === 'prime'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'tournament'; } ) );
 
 		_SetDefaultTabActive( elParent.Children()[0] )

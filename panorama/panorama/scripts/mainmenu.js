@@ -39,7 +39,7 @@ var MainMenu = ( function() {
 		var defaultMovie = 'nuke';
 
 		                                                                 
-		var overrideMovie = 'blacksite';
+		var overrideMovie = 'sirocco';
 		var backgroundMovie = overrideMovie;
 
 		                                                            
@@ -422,7 +422,6 @@ var MainMenu = ( function() {
 		}
 	};
 
-
 	                                                                                                    
 	                                              
 	                                                                                                    
@@ -584,7 +583,7 @@ var MainMenu = ( function() {
 		_ShowNewsAndStore();
 
 		                                     
-		                      
+		_AddFeaturedPanel();
 
 		          
 		                       
@@ -601,7 +600,7 @@ var MainMenu = ( function() {
 	{
 		                 
 		                                                                      
-		var featuredXML = 'file://{resources}/layout/mainmenu_tournament_pass_status.xml';
+		var featuredXML = 'file://{resources}/layout/mainmenu_featured.xml';
 
 		var elPanel = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsFeaturedPanel' );
 		elPanel.BLoadLayout( featuredXML, false, false );

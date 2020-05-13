@@ -1,7 +1,9 @@
 .playerremainingcounter
 {
-	height:fit-children;
+	                      
 	width: fit-children;
+
+    height: 300px;
 }
 
 .playerremainingcounter-bg1
@@ -9,16 +11,19 @@
 	height: 164px;
 	width: 164px;
 	horizontal-align: center;
-	vertical-align: center;
+	vertical-align: top;
+    margin-top: 66px;
 	-s2-mix-blend-mode: multiply;
 }
 
 .playerremainingcounter-container
 {
 	horizontal-align: center;
-	vertical-align: center;
+	vertical-align: top;
 	flow-children: down;
-	margin-top: 20px;
+	margin-top: 100px;
+
+    padding-bottom: 1px;
 }
 
 .playerremainingcounter-counter

@@ -51,7 +51,7 @@
 
 .money
 {
-    width: 220px;               
+    width: fit-children;         
     height: 140px;
 
     opacity: 1.0;
@@ -84,6 +84,38 @@
 .money__in-buy-zone .money-text-buy-icon
 {
     opacity:1;
+}
+
+.money-text-explorebonus-icon
+{
+    margin-left: 20px;
+    margin-right: -16px;
+    width: 48px;
+    height: 48px;
+    -s2-mix-blend-mode: additive;
+    visibility: collapse;
+    img-shadow: 1px 1px 2px 1.0 #00000033;
+    wash-color-fast: lightgreen;
+}
+.money__has-explorebonus .money-text-explorebonus-icon
+{
+    visibility: visible;
+}
+
+.money-text-bombwavebonus-icon
+{
+    margin-left: 20px;
+    margin-right: -16px;
+    width: 48px;
+    height: 48px;
+    -s2-mix-blend-mode: additive;
+    visibility: collapse;
+    img-shadow: 1px 1px 2px 1.0 #00000033;
+    wash-color-fast: lightgreen;
+}
+.money__has-bombwavebonus .money-text-bombwavebonus-icon
+{
+    visibility: visible;
 }
 
 .money-text-bg

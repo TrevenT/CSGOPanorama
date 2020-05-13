@@ -10,6 +10,51 @@
 {
 	width: 100%;
 	height: 100%;
+	vertical-align: center;
+	horizontal-align: center;
+}
+
+.QuickInventoryBackdropCircle
+{
+	width: 976px;
+	height: 976px;
+
+    vertical-align: center;
+	horizontal-align: center;
+
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131300 ),
+	color-stop(0.194, #131313AA),
+    color-stop(0.194, #13131300),
+	to( #13131300 ) );
+}
+
+.QuickInventoryCenterDot
+{
+    width: 400px;
+	height: 400px;
+
+    vertical-align: center;
+	horizontal-align: center;
+
+      
+                                                                  
+	                  
+	                            
+                                
+                                 
+                               
+	                  
+      
+
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131322 ),
+    color-stop(0.23, #13131322),
+	color-stop(0.434, #13131322),
+    color-stop(0.435, #00000055),
+    color-stop(0.45, #00000055),
+	color-stop(0.45, #00000000),
+	to( #13131300 ) );
 }
 
 .QuickInventorySegment-data
@@ -23,10 +68,13 @@
 
 .QuickInventorySegment-image
 {
+    width: 200px;
+    height: 160px;
+    margin-bottom: 35px;
 	horizontal-align: center;
-	margin-top:55px;
+	vertical-align: center;
 	img-shadow: 1px 1px 20px 0.1 #222222;
-	wash-color-fast: #BBBBBB;
+	wash-color-fast: #DDDDDD;
 }
 
 .QuickInventorySegment--hover .QuickInventorySegment-image
@@ -41,9 +89,22 @@
 	width: 150px;
 	font-family: Stratum2, 'Arial Unicode MS';
 	color: #DDDDDDFF;
-	font-size: 18px;
+	font-size: 22px;
+	text-align: center;
+	text-shadow:2px 2px 2px #000000;
+}
+
+.QuickInventorySegmentSelectedCenter-text
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 280px;
+	font-family: Stratum2Bold, 'Arial Unicode MS';
+	color: #DDDDDDFF;
+	font-size: 24px;
 	text-align: center;
 	text-shadow:1px 1px 1px #000000;
+	margin-bottom: 215px;
 }
 
 .QuickInventorySegment--hover .QuickInventorySegment-text
@@ -53,45 +114,57 @@
 
 .QuickInventorySegment
 {
-	width: 950px;
-	height: 950px;
+	width: 850px;
+	height: 850px;
 	horizontal-align: center;
 	vertical-align: center;
 	
 	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
-	from( #4c4c4c00 ),
-	color-stop(0.05, #4c4c4c00),
-	color-stop(0.05, #4c4c4c00),
-	color-stop(0.19, #4c4c4c00),
-	color-stop(0.19, #4c4c4cAA),
-	color-stop(0.20, #4c4c4cAA),
-	color-stop(0.20, #111111AA),
-	color-stop(0.44, #000000AA),
-	color-stop(0.44, #4c4c4cAA),
-	color-stop(0.45, #4c4c4cAA),
-	color-stop(0.45, #4c4c4c00),
-	to( #00000000 ) );
+	from( #13131300 ),
+    color-stop(0.23, #13131300),
+	color-stop(0.23, #131313AA),
+	color-stop(0.429, #131313AA),
+    color-stop(0.429, #000000CC),
+    color-stop(0.43, #000000CC),
+	color-stop(0.43, #00000000),
+	to( #13131300 ) );
 	
 	transition-property: background-color;
-	transition-duration: 0.05s;
+	transition-duration: 0.01s;
 	transition-timing-function: ease-in-out;
 }
 
 .QuickInventorySegment.QuickInventorySegment--hover
 {
-	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
-	from( #4c4c4c00 ),
-	color-stop(0.05, #4c4c4c00),
-	color-stop(0.05, #4c4c4c55),
-	color-stop(0.18, #4c4c4c55),
-	color-stop(0.18, #4c4c4cED),
-	color-stop(0.19, #4c4c4cED),
-	color-stop(0.19, #333333ED),
-	color-stop(0.46, #000000ED),
-	color-stop(0.46, #4c4c4cED),
-	color-stop(0.49, #4c4c4cED),
-	color-stop(0.49, #4c4c4c00),
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #00000000 ),
+    color-stop(0.227, #00000000),
+	color-stop(0.227, #000000EE),
+	color-stop(0.433, #000000EE),
+    color-stop(0.433, #EEEEEEEE),
+    color-stop(0.445, #EEEEEEEE),
+	color-stop(0.445, #00000000),
 	to( #00000000 ) );
 	
-	transform: scale3d( 1.008, 1.008, 1 );
+	transform: scale3d( 1.004, 1.004, 1 );
+}
+
+                                                        
+.QuickInventorySegment-item-count
+{
+    width: 32px;
+    height: 28px;
+
+    font-weight: medium;
+    visibility:collapse;
+	horizontal-align: center;
+	vertical-align: center;
+    y:28px;
+    x:30px;
+    font-size: 14px;
+    color:#CCCCCC;
+}
+.item--has-multiple .QuickInventorySegment-item-count
+{
+    visibility:visible;
 }

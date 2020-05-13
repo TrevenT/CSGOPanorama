@@ -56,6 +56,7 @@ CSGOHudDeathNotice Label
 
 .DeathNotice.FadeOut .DeathNoticeBGBorder,
 .DeathNotice.FadeOut .DeathNoticeContent,
+.DeathNotice.FadeOut .DeathNoticeWipeContainer
 {
 	opacity: 0.0;
 }
@@ -72,7 +73,8 @@ CSGOHudDeathNotice Label
 }
 
 .Available .DeathNoticeBGBorder,
-.Available .DeathNoticeContent
+.Available .DeathNoticeContent,
+.Available .DeathNoticeWipeContainer
 {
 	opacity: 0;
 	transition-duration: .2s;
@@ -203,6 +205,53 @@ CSGOHudDeathNotice Label
 	flow-children: right;
 }
 
+                                          
+                                          
+                                          
+.DeathNoticeWipeContainer
+{
+	visibility: collapse;
+	width: 100%;
+
+	flow-children: left;
+	margin-top: 30px;
+	padding: 0px 10px 0px 10px;
+	-s2-mix-blend-mode: additive;
+	transition-property: opacity;
+	transition-timing-function: ease-out;
+	transition-duration: DeathNoticeFadeOutTime;
+
+	                              
+	background-color: gradient( linear, 100% 100%, 0% 0%, from( #e10000e6 ), color-stop( 0.2, #e10000e6 ), color-stop( 0.4, #e1000066 ), color-stop( 0.8, #e1000011 ), to( #e1000000 ) );
+	border-radius: 3px;
+}
+
+.DeathNoticeWipeContainer Label
+{
+	font-size: 16px;
+	font-weight: bold;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	letter-spacing: 0.45px;
+	text-shadow-fast: 1px 1px #000000;
+
+	max-height: 22px;
+	max-width: 300px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.DeathNoticeWipeIcon
+{
+	height: 16px;
+	vertical-align: middle;
+	margin: -2px 1px 0px 1px;
+}
+
+
+
+.DeathNoticeWipe .DeathNoticeWipeContainer,
 .DeathNoticeRevenge #Revenge,
 .DeathNoticeDomination #Domination,
 .DeathNoticePenetrate #Penetrate,

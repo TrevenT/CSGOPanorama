@@ -1,0 +1,256 @@
+.RadialRadio
+{
+	width: 100%;
+	height: 100%;
+	vertical-align: center;
+	horizontal-align: center;
+}
+
+.RadialRadioBackdrop
+{
+	width: 100%;
+	height: 100%;
+	vertical-align: center;
+	horizontal-align: center;
+}
+
+.RadialRadioBackdropCircle
+{
+	width: 876px;
+	height: 876px;
+
+    vertical-align: center;
+	horizontal-align: center;
+
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131300 ),
+	color-stop(0.195, #131313AA),
+    color-stop(0.195, #13131300),
+	to( #13131300 ) );
+}
+
+.RadialRadioCenterDot
+{
+    width: 400px;
+	height: 400px;
+
+    vertical-align: center;
+	horizontal-align: center;
+
+      
+                                                                  
+	                  
+	                            
+                                
+                                 
+                               
+	                  
+      
+
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131322 ),
+    color-stop(0.23, #13131322),
+	color-stop(0.434, #13131322),
+    color-stop(0.435, #00000055),
+    color-stop(0.45, #00000055),
+	color-stop(0.45, #00000000),
+	to( #13131300 ) );
+}
+
+.RadialRadioSegment-data
+{
+	horizontal-align:left;
+	vertical-align:top;
+	width:300px; height:250px;
+	transform: translateX(-150px) translateY(-110px);
+	flow-children: down;
+}
+
+.RadialRadioSegment-container
+{
+    width: 110px;
+    height: 110px;
+    margin-top: 5px;
+	horizontal-align: center;
+	vertical-align: center;
+    flow-children: down;
+}
+
+.RadialRadioSegment-image
+{
+    width: 100px;
+                   
+                        
+	horizontal-align: center;
+	vertical-align: top;
+	img-shadow: 1px 1px 20px 0.1 #222222;
+	wash-color-fast: #DDDDDD;
+}
+
+.RadialRadioSegment-text
+{
+	horizontal-align: center;
+	vertical-align: top;
+	width: 90px;
+                   
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: #FFFFFFFF;
+	font-size: 16px;
+                        
+	text-align: center;
+	text-shadow:1px 1px 1px #000000;
+                       
+}
+
+.RadialRadioSegment-text-large
+{
+	               
+	                  
+}
+
+.RadialRadioSegmentSelectedCenter-image
+{
+	horizontal-align: center;
+	vertical-align: center;
+	margin-bottom: 160px;
+	img-shadow: 1px 1px 20px 0.1 #222222;
+	wash-color-fast: #FFFFFF;
+}
+
+.RadialRadioSegment--hover .RadialRadioSegment-image
+{
+	wash-color-fast: #FFFFFF;
+}
+
+.RadialRadioSegmentSelectedCenter-text
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 280px;
+	font-family: Stratum2Bold, 'Arial Unicode MS';
+	color: #DDDDDDFF;
+	font-size: 24px;
+	text-align: center;
+	text-shadow:1px 1px 1px #000000;
+	margin-bottom: 190px;
+}
+
+.RadialRadioTab-text
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 180px;
+	font-family: Stratum2Bold, 'Arial Unicode MS';
+	color: #DDDDDDFF;
+	font-size: 24px;
+    font-weight: bold;
+	text-align: center;
+	text-shadow:1px 1px 1px #000000;
+    padding-bottom: 100px;
+}
+
+.QuickInventorySegment--hover .RadialRadioSegment-text
+{
+	color: #FFFFFFFF;
+}
+
+.RadialRadioTab
+{
+	width: 750px;
+	height: 750px;
+	horizontal-align: center;
+	vertical-align: center;
+	
+	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131300 ),
+    color-stop(0.23, #13131300),
+	color-stop(0.23, #131313BB),
+	color-stop(0.445, #131313EE),
+    color-stop(0.445, #222222EE),
+    color-stop(0.456, #222222EE),
+	color-stop(0.456, #00000000),
+	to( #00000000 ) );
+	
+	transition-property: background-color;
+	transition-duration: 0.01s;
+	transition-timing-function: ease-in-out;
+}
+
+.RadialRadioTab.MouseoverRadioTab--hover
+{
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131300 ),
+    color-stop(0.226, #13131300),
+	color-stop(0.226, #131313DD),
+	color-stop(0.28, #555555EE),
+    color-stop(0.45, #555555EE),
+    color-stop(0.45, #FFFFFFFF),
+    color-stop(0.46, #FFFFFFFF),
+	color-stop(0.46, #00000000),
+	to( #00000000 ) );
+}
+
+.RadialRadioSegment
+{
+	width: 750px;
+	height: 750px;
+	horizontal-align: center;
+	vertical-align: center;
+	
+	background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #13131300 ),
+    color-stop(0.23, #13131300),
+	color-stop(0.23, #131313AA),
+	color-stop(0.419, #131313AA),
+    color-stop(0.419, #000000CC),
+    color-stop(0.42, #000000CC),
+	color-stop(0.42, #00000000),
+	to( #13131300 ) );
+	
+	transition-property: background-color;
+	transition-duration: 0.01s;
+	transition-timing-function: ease-in-out;
+}
+
+.RadialRadioSegment.QuickInventorySegment--hover
+{
+    background-color: gradient( radial, 50% 50%, 0% 0%, 100% 100%,
+	from( #00000000 ),
+    color-stop(0.227, #00000000),
+	color-stop(0.227, #000000EE),
+	color-stop(0.423, #000000EE),
+    color-stop(0.423, #EEEEEEEE),
+    color-stop(0.43, #EEEEEEEE),
+	color-stop(0.43, #00000000),
+	to( #00000000 ) );
+	
+	transform: scale3d( 1.004, 1.004, 1 );
+}
+
+.RadialRadioSegmentFlashAnim 
+{
+	opacity: 1.5;
+	animation-name: FlashAnim;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1.2;
+}
+
+@keyframes 'FlashAnim'
+{
+	0%
+	{
+        opacity: 1.5;
+        wash-color: #ffffffff;
+	}
+	50%
+	{
+		opacity: 1.0;
+        wash-color: #111111ff;
+	}
+	100%
+	{
+        opacity: 1.5;
+        wash-color: #ffffffff;
+	}
+}

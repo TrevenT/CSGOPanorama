@@ -3002,6 +3002,16 @@ EdgeScrollBar.Vertical #MaxButton
 	margin-right: 16px;
 }
 
+.left-margin
+{
+	margin-left: 8px;
+}
+
+.left-margin-medium
+{
+	margin-left: 16px;
+}
+
 .z-index-2
 {
 	z-index: 2;

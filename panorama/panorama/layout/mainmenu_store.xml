@@ -34,7 +34,6 @@
 			<Panel class="store-panel__carousel__item"  hittest="true">
 				<ItemImage id="StoreItemImage" class="store-panel__carousel__item__image" scaling="stretch-to-fit-x-preserve-aspect"  >
 					<Label id="StoreItemStattrak" class="store-panel__carousel__item__stattrak hidden" text="#CSGO_KillEater_Hud"/>
-			
 				</ItemImage>
 				<Label id="StoreItemName" class="store-panel__carousel__item__name stratum-font" text=""/>
 				<Panel class='left-right-flow full-width'>
@@ -42,6 +41,38 @@
 					<Panel  class='top-bottom-flow'>
 						<Label id="StoreItemPrice" class="store-panel__carousel__item__name price" text="$X.XX"/>
 						<Label id="StoreItemSalePrice" class="store-panel__carousel__item__name saleprice" html="true" text=""/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="StoreEntryPrimeStatus" class="">
+			<Panel class="store-panel__carousel__item"  hittest="true">
+				<Panel class="store-panel__carousel__item_primecontainer">
+					<ItemImage id="StoreItemImage" textureheight="80px" texturewidth="-1px" class="store-panel__carousel__item__image--prime"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/prime.svg" />
+					<Label class="store-panel__carousel__item__name stratum-font" html="true" text="#SFUI_Elevated_Status_SaleName"/>
+				</Panel>
+				<Panel class="store-panel__carousel__item_primecontainer_detailed">
+					<Label id="StoreItemName" class="store-panel__carousel__item_primecontainer_title stratum-font" text="#SFUI_Elevated_Status_Sale_action"/>
+					<Label class="store-panel__carousel__item_prime_details stratum-font bottom-padding-medium" html="true" text="#SFUI_Elevated_Status_SaleDetails_desc"/>
+
+					<Panel class="left-right-flow bottom-padding">
+						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/lobby.svg" />
+						<Label class="store-panel__carousel__item_prime_details stratum-font" html="true" text="#SFUI_Elevated_Status_SaleDetails_1"/>
+					</Panel>
+
+					<Panel class="left-right-flow bottom-padding">
+						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/inventory.svg" />
+						<Label class="store-panel__carousel__item_prime_details stratum-font" html="true" text="#SFUI_Elevated_Status_SaleDetails_2"/>
+					</Panel>
+
+					<Panel class="left-right-flow bottom-padding">
+						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/graph.svg" />
+						<Label class="store-panel__carousel__item_prime_details stratum-font" html="true" text="#SFUI_Elevated_Status_SaleDetails_3"/>
 					</Panel>
 				</Panel>
 			</Panel>

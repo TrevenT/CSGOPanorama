@@ -277,9 +277,9 @@ var InspectActionBar = ( function (){
 		elBtn.visible = m_showSave;
 	};
 
-	//--------------------------------------------------------------------------------------------------
-	// Actions from button presses
-	//--------------------------------------------------------------------------------------------------
+	                                                                                                    
+	                              
+	                                                                                                    
 	var _NavigateModelPanel = function ( type )
 	{ 
 		InspectModelImage.ShowHideItemPanel( m_modelImagePanel, ( type !== 'InspectModelChar' ) );

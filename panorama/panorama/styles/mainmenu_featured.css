@@ -15,9 +15,12 @@
     height: 99%;
     horizontal-align: center;
     vertical-align: center;
-    background-image: url( "file://{resources}/videos/survival_promo.webm" );
-    background-size: auto 100%;
+    background-image: url( "file://{resources}/videos/dz_sirocco_preview.webm" );
+	background-repeat: no-repeat;
+	background-size: clip_then_cover;
+	background-position: 50% 0%;
     opacity-mask: url( "file://{images}/masks/hex.png" );
+    brightness: .6;
 }
 
 .featured__survival-hex-outline
@@ -26,6 +29,7 @@
     height: 100%;
     horizontal-align: center;
     vertical-align: center;
+    opacity: .8;
 }
 
 .featured__survival-title-parent
@@ -38,7 +42,8 @@
 
 .featured__survival-title
 {
-    color: black;
+    color: #d1b151;
+    text-shadow:5px 0px 1px #00000085;
     font-size: 72px;
     font-weight: medium;
     letter-spacing: 18px;
@@ -75,7 +80,7 @@
     blur: gaussian( 1, 1, 1 );
 
     transition-property: transform;
-	transition-duration: .5s;
+	transition-duration: .2s;
 	transition-timing-function: ease-in-out;
 }
 
@@ -85,27 +90,28 @@
     blur: gaussian( 1, 1, 1 );
 
     transition-property: transform, blur;
-	transition-duration: .5s;
+	transition-duration: .2s;
 	transition-timing-function: ease-in-out;
 }
 
-
-
 .featured__survival-desc
 {
-    font-size: 22px;
-    color: black;
+    font-size: 24px;
+    color: rgb(146, 146, 146);
+
     horizontal-align: center;
     text-align: center;
     font-weight: bold;
+    -s2-mix-blend-mode: SRGBadditive;
 }
 
 .featured__survival-play 
 {
     transform: translateY( -10px);
     font-size: 32px;
-    color: black;
+    color: rgb(146, 146, 146);
     font-weight: bold;
     horizontal-align: center;
     text-align: center;
+    -s2-mix-blend-mode: SRGBadditive;
 }

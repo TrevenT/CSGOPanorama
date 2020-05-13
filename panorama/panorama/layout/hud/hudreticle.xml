@@ -57,6 +57,26 @@
         </Panel>
       </Panel>    
 		</snippet>
+
+    <snippet name="PlayerPing">
+      <Panel class="playerping">
+        <Panel id="ContentParent" class="playerping__content_parent">
+          <Panel class="playerping__content_trans">
+                                                                        
+            <Panel id="PingContentTrans" class="playerping__icons">
+              <Panel class="playerping__icon--bg" />
+              <Image id="DefaultIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/info.svg" textureheight="128"/>         
+              <Image id="WeaponIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/inventory.svg" textureheight="128"/>
+              <Image id="CrateIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/bomb_arrow_segment.svg" textureheight="128"/>
+              <Image id="ItemIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/watch.svg" textureheight="128"/>
+              <Image id="DangerIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/alert.svg" textureheight="128"/>
+            </Panel>
+          </Panel>
+
+
+        </Panel>
+      </Panel>
+    </snippet>
 	</snippets>
 
 	<CSGOHudReticle class="reticle" hittest="false" hittestchildren="false" >
@@ -105,6 +125,15 @@
 		<Panel id="UnusedPlayerIDs">
 			                                                                         
 		</Panel>
+
+                         
+    <Panel id="VisiblePlayerPings" clampfractionalpixelpositions="true">
+                                                          
+    </Panel>
+
+    <Panel id="UnusedPlayerPings">
+                                                                                  
+    </Panel>
 
 	</CSGOHudReticle>
 </root>

@@ -145,6 +145,9 @@
 					<CSGOSettingsKeyBinder text="#SFUI_Reload_Weapon" id="ReloadBinder" bind="+reload"/>
 					<Panel class="horizontal-separator"/>
 
+          <CSGOSettingsKeyBinder text="#SFUI_RadialWeaponMenu" id="RadialWepMenuBinder" bind="+quickinv"/>
+          <Panel class="horizontal-separator"/>
+          
 					<CSGOSettingsKeyBinder text="#SFUI_PreviousWeapon" id="SelPrevWeaponBinder" bind="invprev"/>
 					<Panel class="horizontal-separator"/>
 
@@ -221,7 +224,10 @@
 				</Panel>
 				<Panel class ="top-bottom-flow full-width">
 
-					<CSGOSettingsKeyBinder text="#SFUI_CommonRadio" id="CommonRadioBinder" bind="radio"/>
+          <CSGOSettingsKeyBinder text="#SFUI_PlayerPing" id="PlayerPingBinder" bind="player_ping"/>
+          <Panel class="horizontal-separator"/>
+          
+          <CSGOSettingsKeyBinder text="#SFUI_CommonRadio" id="CommonRadioBinder" bind="radio"/>
 					<Panel class="horizontal-separator"/>
 
 					<CSGOSettingsKeyBinder text="#SFUI_CommandRadio" id="CmdRadioBinder" bind="radio1"/>

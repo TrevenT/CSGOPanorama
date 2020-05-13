@@ -9,15 +9,23 @@
 		<snippet name="QuickInventorySegment">
 			<Panel class="QuickInventorySegment">
 				<Panel id="segment-data" class="QuickInventorySegment-data">
-					<Image id="item-image" class="QuickInventorySegment-image" textureheight="60" scaling="none" />
-					<Label id="item-name" class="QuickInventorySegment-text" text="{s:WeaponIcon--name}"/>
+					<Image id="item-image" class="QuickInventorySegment-image" textureheight="60" scaling="none" >
+            <Label id="item-count" class="QuickInventorySegment-item-count" text="#Panorama_WeaponSelection_ItemCount" />
+           </Image>    
 				</Panel>
 			</Panel>
 		</snippet>
 	</snippets>
 	
 	<CSGOQuickInventory class="QuickInventory">
-		<Panel class="QuickInventoryBackdrop"/>
+		<Panel id="backdrop" class="QuickInventoryBackdrop">
+      <Panel class="QuickInventoryBackdropCircle"/>
+    </Panel>
+                                                                     
+                                               
+               
+    <Panel id="center-dead" class="QuickInventoryCenterDot" force-no-composition-layer="true"/>
+		<Label id="item-selected-name" class="QuickInventorySegmentSelectedCenter-text" text="{s:WeaponIconSelected--name}"/>
 	</CSGOQuickInventory>
 	
 </root>

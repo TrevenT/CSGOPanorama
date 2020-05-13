@@ -1,0 +1,36 @@
+<root>
+
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/radialradio.css" />
+	</styles>
+
+	<snippets>
+		<snippet name="RadialRadioSegment">
+			<Panel class="RadialRadioSegment">
+				<Panel id="segment-data" class="RadialRadioSegment-data">
+          <Panel id="item-image" class="RadialRadioSegment-container">
+					  <Image id="item-image-image" class="RadialRadioSegment-image" textureheight="64" scaling="none" />
+            <Label id="item-text" class="RadialRadioSegment-text" text=""/>
+          </Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+    <snippet name="RadialRadioTab">
+      <Panel class="RadialRadioTab">
+        <Panel id="segment-data" class="RadialRadioSegment-data">
+          <Label id="radio-tab-text" class="RadialRadioTab-text" text="{s:RadialRadioTab--name}"/>
+        </Panel>
+      </Panel>
+    </snippet>
+	</snippets>
+	
+	<CSGORadialRadio class="RadialRadio">
+		<Panel id="backdrop" class="RadialRadioBackdrop">
+      <Panel class="RadialRadioBackdropCircle"/>
+    </Panel>
+    <Panel id="center-dead" class="RadialRadioCenterDot" force-no-composition-layer="true"/>
+		<Label id="item-selected-name" class="RadialRadioSegmentSelectedCenter-text" text="{s:WeaponIconSelected--name}"/>
+	</CSGORadialRadio>
+	
+</root>

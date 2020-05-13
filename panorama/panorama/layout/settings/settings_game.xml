@@ -292,6 +292,16 @@
 				<Panel class ="top-bottom-flow full-width">
 					<Panel class="horizontal-separator"/>
 
+                               
+          <Panel class="SettingsMenuDropdownContainer">
+            <Label text="#SFUI_Settings_PlayerPingMute_Title" class="half-width"/>
+            <CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_player_ping_mute" >
+              <Label text="#GameUI_No" value="0" id="playerpingmute0" />
+              <Label text="#GameUI_Yes" value="1" id="playerpingmute1" />
+            </CSGOSettingsEnumDropDown>
+          </Panel>
+          <Panel class="horizontal-separator"/>
+          
 					                     
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_MuteEnemies_Title" class="half-width"/>
@@ -495,7 +505,17 @@
 							<Label text="#GameUI_No" value="0" id ="openbuywithuse1"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
-				
+          <Panel class="horizontal-separator"/>
+          
+                                                                 
+          <TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_radial_wep_last_wep_on_tap_Info">
+            <Label text="#SFUI_radial_wep_last_wep_on_tap" class="half-width"/>
+            <CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_quickinventory_lastinv">
+              <Label text="#GameUI_Yes" value="1" id ="radialweplastwepontap0"/>
+              <Label text="#GameUI_No" value="0" id ="radialweplastwepontap1"/>
+            </CSGOSettingsEnumDropDown>
+          </TooltipPanel>     
+          
 			</Panel>
 			</Panel>
 

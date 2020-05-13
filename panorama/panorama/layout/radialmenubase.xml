@@ -1,0 +1,15 @@
+<root>
+
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		                                                                     
+	</styles>
+
+  <CCSGORadialMenuBase class="QuickInventory">
+    <Panel id="backdrop" class="QuickInventoryBackdrop">
+      <Panel class="QuickInventoryBackdropCircle"/>
+    </Panel>
+    <Panel id="center-dead" class="QuickInventoryCenterDot" force-no-composition-layer="true"/>
+  </CCSGORadialMenuBase>
+	
+</root>

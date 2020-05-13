@@ -66,6 +66,11 @@ CSGOHudHealthArmor Label
     margin-left: 8px;
 }
 
+.survival .hud-HA
+{
+    width: 550px;
+}
+
 .hud-HA.hud-HA--active
 {
     opacity: 1.0;
@@ -305,7 +310,8 @@ ProgressBar
     visibility: collapse;
 }
 
-.hud-HA--small .hud-HA-bg-h
+.hud-HA--small .hud-HA-bg-h,
+.hud-HA--small .hud-HA-bg-a
 {
     width: 124px;
 }

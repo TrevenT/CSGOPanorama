@@ -553,6 +553,67 @@ CSGOHudRadar Label
     wash-color:#78ff00FF;
 }
 
+#PlayerPing
+{
+    width: 80px;
+	height: 80px;
+
+    opacity: 0.2;
+
+	transform: scale3d( 1, 1, 1 );
+	
+	horizontal-align: center;
+	vertical-align: center;
+
+	border-radius: 50% / 50%;
+
+	border-width: 2px;
+	border-style: solid;
+	border-color: #FFFFFF;
+
+	animation-name: DroppedBomb--Animate;
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+	-s2-mix-blend-mode: screen;
+}
+
+#PlayerPingOffMap
+{
+    width: 50px;
+	height: 50px;
+
+    opacity: 0.2;
+
+	transform: scale3d( 1, 1, 1 );
+	
+	horizontal-align: center;
+	vertical-align: center;
+
+	border-radius: 50% / 50%;
+
+	border-width: 2px;
+	border-style: solid;
+	border-color: #FFFFFF;
+
+	animation-name: DroppedBomb--Animate;
+	animation-duration: 0.75s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+	-s2-mix-blend-mode: screen;
+}
+
+#PlayerPingOffMapArrow
+{
+    horizontal-align: center;
+	vertical-align: center;
+
+    width: 20px;
+	height: 20px;
+}
+
 #DirectionalIndicator
 {
 	height: 7px;
