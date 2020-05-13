@@ -344,6 +344,11 @@
 	opacity: 0.4;
 }
 
+.cl_buywheel_nonumberpurchasing .buywheel-button__key
+{
+	opacity: 0.0;
+}
+
 .buymenu-agent
 {
 	width: 1400px;

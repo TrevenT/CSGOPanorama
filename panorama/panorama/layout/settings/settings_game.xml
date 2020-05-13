@@ -519,16 +519,36 @@
 							<Label text="#GameUI_No" value="0" id ="openbuywithuse1"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
-          <Panel class="horizontal-separator"/>
-          
-                                                                 
-          <TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_radial_wep_last_wep_on_tap_Info">
-            <Label text="#SFUI_radial_wep_last_wep_on_tap" class="half-width"/>
-            <CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_quickinventory_lastinv">
-              <Label text="#GameUI_Yes" value="1" id ="radialweplastwepontap0"/>
-              <Label text="#GameUI_No" value="0" id ="radialweplastwepontap1"/>
-            </CSGOSettingsEnumDropDown>
-          </TooltipPanel>     
+					<Panel class="horizontal-separator"/>
+					
+					                                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Open_Buy_menu_mousecentering_Info">
+						<Label text="#SFUI_Open_Buy_menu_mousecentering" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_buywheel_nomousecentering">
+							<Label text="#SFUI_Open_Buy_menu_mousecentering_Wheel" value="0" id ="buynomousecentering0"/>
+							<Label text="#SFUI_Open_Buy_menu_mousecentering_Screen" value="1" id ="buynomousecentering1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
+					                                                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Open_Buy_menu_numberpurchasing_Info">
+						<Label text="#SFUI_Open_Buy_menu_numberpurchasing" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_buywheel_nonumberpurchasing">
+							<Label text="#SFUI_Open_Buy_menu_numberpurchasing_Yes" value="0" id ="buynonumberpurchasing0"/>
+							<Label text="#SFUI_Open_Buy_menu_numberpurchasing_Passthrough" value="1" id ="buynonumberpurchasing1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
+					                                                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_radial_wep_last_wep_on_tap_Info">
+						<Label text="#SFUI_radial_wep_last_wep_on_tap" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_quickinventory_lastinv">
+							<Label text="#GameUI_Yes" value="1" id ="radialweplastwepontap0"/>
+							<Label text="#GameUI_No" value="0" id ="radialweplastwepontap1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>     
           
 			</Panel>
 			</Panel>
