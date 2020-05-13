@@ -589,7 +589,7 @@ Button.sb-row__cell:hover {
 
 }
 
-.sb-row.muted {
+.sb-row.muted .sb-row__cell{
 	wash-color: #ff0000a0;
 }
 
@@ -1059,9 +1059,6 @@ Label.sb-row__cell--mvps__count {
 	wash-color: #999;
 }
 
-:not(.eom-scoreboard) .sb-player-status-dead.muted {
-	wash-color: #ff0000a0;
-}
 
 :not(.eom-scoreboard) .sb-player-status-dead .sb-row__cell,
 :not(.eom-scoreboard) .sb-row__cell--label {
