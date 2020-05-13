@@ -8,7 +8,7 @@ var Chat = ( function ()
 {
 	var m_isContentPanelOpen = false;
 	var m_ChatPanel = $( "#PartyChat" );
-	var m_PreviousParent = null;
+	var m_OriginalParent = m_ChatPanel.GetParent();                                                                                                               
 	
 	function _Init() 
 	{
@@ -182,7 +182,6 @@ var Chat = ( function ()
 
 	var _OnShowAcceptPopup = function( popup )
 	{
-		m_PreviousParent = m_ChatPanel.GetParent();
 		m_ChatPanel.SetParent( popup.FindChild( 'id-accept-match' ) );
 
 		var elChatContainer = $( '#ChatContainer' );
@@ -199,17 +198,14 @@ var Chat = ( function ()
 
 	var _OnCloseAcceptPopup = function() 
 	{
-		if ( m_PreviousParent )
-		{
-			m_ChatPanel.SetParent( m_PreviousParent );
-			m_PreviousParent.MoveChildAfter( m_ChatPanel, m_PreviousParent.FindChild( 'JsMainMenuSidebar' ) );
+		m_ChatPanel.SetParent( m_OriginalParent );
+		var elPreviousPeer = m_OriginalParent.FindChild( 'JsMainMenuSidebar' );
+		m_OriginalParent.MoveChildAfter( m_ChatPanel, elPreviousPeer );
 
-			                                                                                      
-			                                        
-			m_ChatPanel.style.y = '0px';
-			_Init();
-		}
-
+		                                                                                      
+		                                        
+		m_ChatPanel.style.y = '0px';
+		_Init();
 	};
 
 	return {

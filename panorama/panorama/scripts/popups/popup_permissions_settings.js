@@ -35,7 +35,7 @@ var PopupPermissionsSettings = ( function(){
 		var elDropdownCheckbox = $('#JsPopUpPermissionsGroupsDropdownEnabled');
 
 		var clanCount = MyPersonaAPI.GetMyClanCount();
-		var bClanDropDownSupport = ( clanCount > 0 || settings.game.clanid );
+		var bClanDropDownSupport = ( clanCount > 0 ) ? true : (  settings.game.clanid ? true : false );                                                                   
 		elDropdown.enabled = bClanDropDownSupport;
 		elDropdownCheckbox.enabled = bClanDropDownSupport;
 
