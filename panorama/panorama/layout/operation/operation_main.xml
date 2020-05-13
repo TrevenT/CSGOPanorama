@@ -146,7 +146,7 @@
 					<Panel class="op-main-rewards-inspect__btns" >
 						<Button id="id-op-main-inspect-preview-item" class="PopupButton op-main-wash-color-light">
 							<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/find.svg"/>
-							<Label  id="" text="#Preview"/>
+							<Label  id="" text="#Store_PreviewItem"/>
 						</Button>
 						<TextButton id="AsyncItemWorkCancelBtn" html="true"
 							class="PopupButton op-main-wash-color-light"
