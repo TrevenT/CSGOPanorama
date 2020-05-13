@@ -21,31 +21,6 @@
 	transition-duration: 2s;
 }
 
-.popup-nameable__nametag-text
-{
-	vertical-align: center;
-	horizontal-align: center;
-	font-weight: bold;
-	text-transform: uppercase;
-	text-align: center;
-	letter-spacing: 8px;
-	font-size: 36px;
-	margin-bottom: 28px;
-	text-shadow: 4px 4px 4px 0.0 #000000a1;
-	opacity: 1;
-	white-space: nowrap;
-	font-family: Arial Unicode MS, "Courier", "Courier New", "Lucida Console";
-	opacity: 1;
-}
-
-.popup-nameable__nametag-text.hidden
-{
-	opacity: 0;
-	transition-property: opacity;
-	transition-timing-function: ease-in-out;
-	transition-duration: 3s;
-}
-
 .popup-nameable__info-block
 {
 	flow-children: down;

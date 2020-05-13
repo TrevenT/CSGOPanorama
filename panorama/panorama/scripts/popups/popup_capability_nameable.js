@@ -5,7 +5,7 @@ var CapabilityNameable = ( function()
 {
 	var m_Inspectpanel = $.GetContextPanel(),
 		m_elTextEntry = $.GetContextPanel().FindChildInLayoutFile( 'NameableTextEntry' ),
-		m_elNameDisplay = $.GetContextPanel().FindChildInLayoutFile( 'NameableItemName' ),
+		m_elNameTagModel = $.GetContextPanel().FindChildInLayoutFile( 'NameableNameTagModel' ),
 		m_elRemoveConfirm = $.GetContextPanel().FindChildInLayoutFile( 'NameableRemoveConfirm' ),
 		m_elValidBtn = $.GetContextPanel().FindChildInLayoutFile( 'NameableValidBtn' ),
 		m_elRemoveBtn = $.GetContextPanel().FindChildInLayoutFile( 'NameableRemoveBtn' );
@@ -20,9 +20,6 @@ var CapabilityNameable = ( function()
 		var idList = strMsg.split( ',' );
 		m_toolId = idList[ 0 ];
 		m_itemId = idList[ 1 ];
-		var elModel = $.GetContextPanel().FindChildInLayoutFile( 'NameableNameTagModel' );
-		elModel.SetCameraPreset( 2, true );
-		m_elNameDisplay.RemoveClass( 'hidden' );
 
 		                                     
 		var defName = InventoryAPI.GetItemDefinitionName( m_itemId );
@@ -62,7 +59,6 @@ var CapabilityNameable = ( function()
 		var hasName = InventoryAPI.HasCustomName( m_itemId );
 
 		_SetUpButtonStates( m_toolId, m_itemId, hasName, noTool );
-		_UpdateTextOnModel( m_itemId, hasName );
 		_UpdateAcceptState();
 	};
 	
@@ -116,13 +112,15 @@ var CapabilityNameable = ( function()
 
 	var _SetUpNameTagModel = function()
 	{
-		var elModel = $.GetContextPanel().FindChildInLayoutFile( 'NameableNameTagModel' );
-		elModel.SetCameraPreset( 1, false );
-		elModel.SetCameraPreset( 2, true );
+		if ( m_elNameTagModel && m_elNameTagModel.IsValid() )
+		{
+			m_elNameTagModel.SetCameraPreset( 1, false );
+			m_elNameTagModel.SetCameraPreset( 2, true );
 
-		                                              
-		elModel.SetDirectionalLightModify( 0 );
-		elModel.SetDirectionalLightRotation( 30, 90, 10 );
+			                                              
+			m_elNameTagModel.SetDirectionalLightModify( 0 );
+			m_elNameTagModel.SetDirectionalLightRotation( 30, 90, 10 );
+		}
 	}
 
 	var _SetUpButtonStates = function( toolId, itemId, hasName, noTool )
@@ -192,20 +190,12 @@ var CapabilityNameable = ( function()
 		);
 	};
 
-	var _UpdateTextOnModel = function( itemId, hasName )
-	{
-		if ( hasName )
-			m_elNameDisplay.text = ItemInfo.GetName( itemId );
-		else
-			m_elNameDisplay.text = m_elTextEntry.text;
-	};
-
 	var _OnEntryChanged = function()
 	{
-		if ( m_elNameDisplay && m_elNameDisplay.IsValid() )
+		if ( m_elNameTagModel && m_elNameTagModel.IsValid() )
 		{
+			m_elNameTagModel.PreviewNameTag( m_elTextEntry.text );
 			$.DispatchEvent( "PlaySoundEffect", "rename_teletype", "MOUSE" );
-			m_elNameDisplay.text = m_elTextEntry.text;
 			_UpdateAcceptState();
 		}
 	};
