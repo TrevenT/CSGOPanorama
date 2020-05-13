@@ -333,7 +333,7 @@ var contextmenuPlayerCard = ( function (){
 			icon: 'music_kit',
 			AvailableForItem: function ( id )
 			{
-				var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
+				var borrowedPlayerIndex = parseInt( GameInterfaceAPI.GetSettingString( "cl_borrow_music_from_player_index" ) );
 				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
 					!_IsSelf( id ) &&
 					borrowedPlayerIndex !== GameStateAPI.GetPlayerIndex( id ) &&
@@ -342,7 +342,7 @@ var contextmenuPlayerCard = ( function (){
 			},
 			OnSelected: function( id )
 			{
-				InventoryAPI.SetUIPreferenceString( "cl_borrow_music_from_player_index", "" + GameStateAPI.GetPlayerIndex( id ) );
+				GameInterfaceAPI.SetSettingString( "cl_borrow_music_from_player_index", "" + GameStateAPI.GetPlayerIndex( id ) );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 		},
@@ -351,7 +351,7 @@ var contextmenuPlayerCard = ( function (){
 			icon: 'no_musickit',
 			AvailableForItem: function ( id )
 			{
-				var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
+				var borrowedPlayerIndex = parseInt( GameInterfaceAPI.GetSettingString( "cl_borrow_music_from_player_index" ) );
 				if ( borrowedPlayerIndex === 0 )
 					return false;
 

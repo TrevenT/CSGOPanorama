@@ -37,12 +37,12 @@ var MainMenu = ( function() {
 		$.DispatchEvent('PlayMainMenuMusic', true, true );
 
 		                                         
-		GameInterfaceAPI.SetConVarIntValue('panorama_play_movie_ambient_sound', 1);
+		GameInterfaceAPI.SetSettingString( 'panorama_play_movie_ambient_sound', '1' );
 
 		                                                                  
 		                                          
-		GameInterfaceAPI.SetConVarIntValue('dsp_room', 29);
-		GameInterfaceAPI.SetConVarStringValue('snd_soundmixer', 'MainMenu_Mix');
+		GameInterfaceAPI.SetSettingString( 'dsp_room', '29' );
+		GameInterfaceAPI.SetSettingString( 'snd_soundmixer', 'MainMenu_Mix' );
 
 		_m_bVanityAnimationAlreadyStarted = false;                                               
 		_InitVanity();
@@ -251,7 +251,7 @@ var MainMenu = ( function() {
 		$.DispatchEvent('PlayMainMenuMusic', true, false );
 
 		                                    
-		GameInterfaceAPI.SetConVarIntValue('panorama_play_movie_ambient_sound', 0);
+		GameInterfaceAPI.SetSettingString( 'panorama_play_movie_ambient_sound', '0' );
 
 		                                      
 		                            
@@ -569,7 +569,7 @@ var MainMenu = ( function() {
 		}
 
 		var loadout = {
-			itemId: InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_itemid' ),
+			itemId: GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_itemid' ),
 			modelPath: '',
 			team: '',
 			loadoutSlot: ''
@@ -583,17 +583,17 @@ var MainMenu = ( function() {
 				loadout = _DefaultModelLoadouts();
 				loadout.itemId = LoadoutAPI.GetItemID( loadout.team, loadout.loadoutSlot );
 				                                          
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_itemid', loadout.itemId );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_model', loadout.modelPath );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_team', loadout.team );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_loadoutslot', loadout.loadoutSlot );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', loadout.itemId );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', loadout.modelPath );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', loadout.team );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', loadout.loadoutSlot );
 				                                                                                                                      
 			}
 			else
 			{	                             
-				loadout.modelPath = InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_model' );
-				loadout.team = InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_team' );
-				loadout.loadoutSlot = InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_loadoutslot' );
+				loadout.modelPath = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_model' );
+				loadout.team = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' );
+				loadout.loadoutSlot = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_loadoutslot' );
 
 				                                            
 				                                         

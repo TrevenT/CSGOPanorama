@@ -119,19 +119,16 @@
 				</Panel>
 
 				               
-				<Panel id="id-sb-footer-panel"/>
+				<Frame snippet="snippet_sb-footer"/>
 
 			</Panel>
 		</snippet>
 
 
 		                                       
-		
-		<snippet name="snippet_scoreboard-classic">
-			<Panel class="sb-main">
 
-				                       
-				<Panel id="id-sb-meta"/>
+		<snippet name="snippet_scoreboard__classic-teams--CT">
+			<Panel class="top-bottom-flow" >
 
 				               
 				<Panel id="id-sb-label-container">
@@ -154,25 +151,15 @@
 						<Label class="sb-team__info__number"	text="#Scoreboard_Players_CT" />
 
 					</Panel>
-
-
-
 				</Panel>
 
-
-			                 
-				<Panel id="id-sb-timeline" class="sb-timeline" hittest="true" >
-
-					<Panel class="sb-timeline__bumper" />
-
-					<Panel style="width:100%;">
-						<Panel id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="Scoreboard.Casualties_OnMouseOver()" onmouseout="Scoreboard.Casualties_OnMouseOut()"/>
-						                                            
-					</Panel>
-				</Panel>
+			</Panel>
+		</snippet>
 
 
-				               
+		<snippet name="snippet_scoreboard__classic-teams--TERRORIST">
+			<Panel>
+
 				<Panel id="id-sb-team--TERRORIST" class="sb-team sb-team--TERRORIST" cachepaintcmdlist="true">
 					<Panel class="sb-team__data sb-team__data--TERRORIST">
 						                       
@@ -188,20 +175,43 @@
 					</Panel>
 
 				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet_scoreboard__classic-timeline">
+			<Panel class="sb-timeline" hittest="true" >
+
+				<Panel class="sb-timeline__bumper" />
+
+				<Panel style="width:100%;">
+					<Panel id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="$.DispatchEvent('Scoreboard_Casualties_OnMouseOver')" onmouseout="$.DispatchEvent('Scoreboard_Casualties_OnMouseOut')"/>
+					                                            
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet_scoreboard__classic-spacer">
+			<Panel class="sb-timeline" />
+		</snippet>
 
 
-				                               
+		<snippet name="snippet_scoreboard__classic-teams--Spectator" >
+			<Panel>
 				<Panel id="id-sb-team--Spectator" class="sb-team sb-team--Spectator" cachepaintcmdlist="true">
 					<Panel class="sb-team__data sb-team__data--Spectator">
 							<Panel id="players-table-Spectator" class="sb-players-table" />
+							                              
 					</Panel>
+
+					                                                                         
+					<Panel class="sb-team__info" />
 				</Panel>
 
-				               
-				<Panel id="id-sb-footer-panel"/>
+
 
 			</Panel>
 		</snippet>
+
 
 		<snippet name="snippet_sb-footer">
 			<Panel class="sb-footer-panel">
@@ -234,6 +244,47 @@
 				<Label id="id-sb-mouse-instructions" />
 			</Panel>
 		</snippet>
+
+		
+
+		                                          
+		<snippet name="snippet_scoreboard-classic--competitive">
+			<Panel class="sb-main">
+
+				<Frame snippet="snippet_sb-meta"/>
+
+				<Frame snippet="snippet_scoreboard__classic-teams--CT" />
+
+				<Frame snippet="snippet_scoreboard__classic-timeline" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--TERRORIST" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--Spectator" />
+
+				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
+
+		                                     
+		<snippet name="snippet_scoreboard-classic--casual">
+			<Panel class="sb-main">
+
+				<Frame snippet="snippet_sb-meta"/>
+
+				<Frame snippet="snippet_scoreboard__classic-teams--CT" />
+
+				<Frame snippet="snippet_scoreboard__classic-spacer" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--TERRORIST" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--Spectator" />
+
+				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
+
 
 		                                   
 		<snippet name="snippet_scoreboard-classic__timeline__segment--1">

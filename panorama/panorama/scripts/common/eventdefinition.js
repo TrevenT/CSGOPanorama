@@ -43,6 +43,9 @@
 	       
 	$.DefineEvent( 'Scoreboard_UnborrowMusicKit', 0, '', "Cancel Music Kit borrowing" );
 
+	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOver', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOut', 0, '', '' );
+
 
     $.DefineEvent( 'CloseSubMenuContent', 0, 'no args', 'Closes up the submenu panel');
     $.DefineEvent( 'NavigateToTab', 4, 'tab name, xml name, If its a tab, if you should add to stack', 'Closes up the submenu panel');

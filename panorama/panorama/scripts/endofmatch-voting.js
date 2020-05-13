@@ -60,7 +60,7 @@ var EOM_Voting = (function () {
 			}
 			else
 			{
-				var text = "undefined";
+				var text;
 
 				var elVoteItem = $.CreatePanel( "RadioButton", elMapSelectionList, "id-vote-item--" + key );
 				elVoteItem.BLoadLayoutSnippet( "MapGroupSelection" );
@@ -72,7 +72,7 @@ var EOM_Voting = (function () {
 				{
 					var skirmishId = oMatchEndVoteData[ "voting_options" ][ key ][ "id" ];
 
-					var text = $.Localize( GameTypesAPI.GetSkirmishName( skirmishId ) );
+					text = $.Localize( GameTypesAPI.GetSkirmishName( skirmishId ) );
 
 					var cfg = GameTypesAPI.GetConfig();
 					if ( cfg )
@@ -107,7 +107,8 @@ var EOM_Voting = (function () {
 				else if ( type == "map" )
 				{
 					var internalName = oMatchEndVoteData[ "voting_options" ][ key ][ "name" ];
-					var text = GameTypesAPI.GetFriendlyMapName( internalName );
+					text = GameTypesAPI.GetFriendlyMapName( internalName );
+
 					
 					                                                           
 					var image = 'url("file://{images}/map_icons/screenshots/360p/' + internalName + '.png")';

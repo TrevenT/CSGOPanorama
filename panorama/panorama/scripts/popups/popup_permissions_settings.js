@@ -90,16 +90,16 @@ var PopupPermissionsSettings = ( function(){
 		}
 
 		                                                                                              
-		InventoryAPI.SetUIPreferenceString( 'lobby_default_privacy_bits', "0" );
-		InventoryAPI.SetUIPreferenceString( 'lobby_default_privacy_clan_enabled', ( selectedGroupEntryId !== 'NoGroup' ) ? "1" : "0" );
-		InventoryAPI.SetUIPreferenceString( 'lobby_default_privacy_nearby_enabled', ''+nearbySetting );
+		GameInterfaceAPI.SetSettingString( 'lobby_default_privacy_bits', "0" );
+		GameInterfaceAPI.SetSettingString( 'lobby_default_privacy_clan_enabled', ( selectedGroupEntryId !== 'NoGroup' ) ? "1" : "0" );
+		GameInterfaceAPI.SetSettingString( 'lobby_default_privacy_nearby_enabled', ''+nearbySetting );
 		if ( selectedGroupEntryId !== 'NoGroup' )
 		{
-			InventoryAPI.SetUIPreferenceString( 'lobby_clanid', $('#JsPopUpPermissionsGroupsDropdown').GetSelected().id );
+			GameInterfaceAPI.SetSettingString( 'lobby_clanid', $('#JsPopUpPermissionsGroupsDropdown').GetSelected().id );
 		}
-		if ( $('#JsPopUpPermissionsPublic').checked && InventoryAPI.GetUIPreferenceString( 'lobby_default_privacy_bits' ) === "0" )
+		if ( $('#JsPopUpPermissionsPublic').checked && GameInterfaceAPI.GetSettingString( 'lobby_default_privacy_bits' ) === "0" )
 		{
-			InventoryAPI.SetUIPreferenceString( 'lobby_default_privacy_bits', $('#JsPopUpPermissionsPublic').checked ? "1" : "0" );
+			GameInterfaceAPI.SetSettingString( 'lobby_default_privacy_bits', $('#JsPopUpPermissionsPublic').checked ? "1" : "0" );
 		}
 
 		LobbyAPI.UpdateSessionSettings( settings );

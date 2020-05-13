@@ -253,28 +253,30 @@
           <Label id="ItemDropPanel_Footer" text="#SFUIHUD_Spec_Event_DroppingItemsTotalDropped"/>
         </Panel>
       </Panel>
-      <Panel id="TeamMoney_L" class="TeamSpecPanel_TeamMoney">
-        <Label id="TeamMoneyHeader_L" class="TeamSpecPanel_MoneyHeader_L" text="#SFUIHUD_Spectate_TeamMoney"/>
-        <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="$80000"/>
-        <Label id="TeamEQValueHeader_L" class="TeamSpecPanel_EQValueHeader_L" text="#SFUIHUD_Spectate_TeamEQValue"/>
-        <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="$56000"/>
-                                                             
-      </Panel>
-      <Panel id="TeamSpec_L" class="TeamSpecPanel">
+      <Panel class="TeamSpecPanel_PlayerPanels">
+        <Panel id="TeamMoney_L" class="TeamSpecPanel_TeamMoney">
+          <Label id="TeamMoneyHeader_L" class="TeamSpecPanel_MoneyHeader_L" text="#SFUIHUD_Spectate_TeamMoney"/>
+          <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="$80000"/>
+          <Label id="TeamEQValueHeader_L" class="TeamSpecPanel_EQValueHeader_L" text="#SFUIHUD_Spectate_TeamEQValue"/>
+          <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="$56000"/>
+                                                               
+        </Panel>
+        <Panel id="TeamSpec_L" class="TeamSpecPanel">
 
-      </Panel>
-                                  
+        </Panel>
+                                    
 
-      <Image id="EventLogo_R" class="EventLogo_Right" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" scaling="stretch-to-fit-preserve-aspect" />
-      <Panel id="TeamMoney_R" class="TeamSpecPanel_TeamMoney TeamSpecPanel_TeamMoney_R">
-        <Label id="TeamMoneyHeader_R" class="TeamSpecPanel_MoneyHeader_R" text="#SFUIHUD_Spectate_TeamMoney"/>
-        <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="$80000"/>
-        <Label id="TeamEQValueHeader_R" class="TeamSpecPanel_EQValueHeader_R" text="#SFUIHUD_Spectate_TeamEQValue"/>
-        <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="$56000"/>
-                                                             
-      </Panel>
-      <Panel id="TeamSpec_R" class="TeamSpecPanel TeamSpecPanel_Right">
+        <Image id="EventLogo_R" class="EventLogo_Right" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" scaling="stretch-to-fit-preserve-aspect" />
+        <Panel id="TeamMoney_R" class="TeamSpecPanel_TeamMoney TeamSpecPanel_TeamMoney_R">
+          <Label id="TeamMoneyHeader_R" class="TeamSpecPanel_MoneyHeader_R" text="#SFUIHUD_Spectate_TeamMoney"/>
+          <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="$80000"/>
+          <Label id="TeamEQValueHeader_R" class="TeamSpecPanel_EQValueHeader_R" text="#SFUIHUD_Spectate_TeamEQValue"/>
+          <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="$56000"/>
+                                                               
+        </Panel>
+        <Panel id="TeamSpec_R" class="TeamSpecPanel TeamSpecPanel_Right">
 
+        </Panel>
       </Panel>
     </Panel>
     

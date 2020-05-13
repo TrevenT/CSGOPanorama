@@ -78,18 +78,29 @@
 				</Button>
 			</Panel>
 		</snippet>
+
+		<snippet name="MarketLinkSnippet">
+			<Panel class="horizontal-align-right vertical-center left-right-padding">
+				<Button id="InvMarketLink" class="IconButton left-right-flow" >
+					<Label text="#Market"/>
+					<Image src="file://{images}/icons/ui/link.svg"/>
+				</Button>
+			</Panel>
+		</snippet>
 	</snippets>
 
 	<Panel class="mainmenu-content__container" useglobalcontext="true">
-				<Panel class="content-navbar">
+			<Panel class="content-navbar">
 				<Label id="" class="content-navbar__title" text="#SFUI_MainMenu_Inventory"/>
 			</Panel>
 		<Panel id="InventoryMainContainer" class="full-width full-height" hittest="false">
 
 			<Panel id="InventoryMain" class="mainmenu-content__container mainmenu-content__container--inventory">
-				                                                                  
+				                                                                                                               
+				                                                                                             
 			</Panel>
 
+			                                                      
 			<Panel id="InvLoadoutPanel" class="mainmenu-content--popuptab mainmenu-content__container mainmenu-content--hidden">
 				<Panel class="content-navbar inv-popup">
 

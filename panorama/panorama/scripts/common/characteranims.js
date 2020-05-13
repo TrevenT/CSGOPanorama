@@ -128,10 +128,10 @@ var CharacterAnims = ( function ()
 		{
 			if( settingsToSave )
 			{
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_team', settingsToSave.team );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_model', settingsToSave. modelPath );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_loadoutslot', settingsToSave.loadoutSlot );
-				InventoryAPI.SetUIPreferenceString( 'ui_vanitysetting_itemid', settingsToSave.itemId );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', settingsToSave.team );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', settingsToSave. modelPath );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', settingsToSave.loadoutSlot );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', settingsToSave.itemId );
 			}
 			settingsToSave = null;
 		};

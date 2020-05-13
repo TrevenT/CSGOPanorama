@@ -23,7 +23,7 @@
 			var elToggle = $.GetContextPanel().FindChildInLayoutFile( 'NeverShowToggle' );
 
 			if( elToggle.checked )
-				InventoryAPI.SetUIPreferenceString( 'player_nevershow_communityservermessage', '1' );
+				GameInterfaceAPI.SetSettingString( 'player_nevershow_communityservermessage', '1' );
 
 		}
 	</script>

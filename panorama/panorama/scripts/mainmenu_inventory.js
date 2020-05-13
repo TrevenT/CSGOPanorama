@@ -347,7 +347,7 @@ var InventoryPanel = ( function (){
 			}
 	
 			                        
-			elDropdown.SetSelected( GameInterfaceAPI.LookupConVarStringValue( "cl_inventory_saved_sort2" ) );
+			elDropdown.SetSelected( GameInterfaceAPI.GetSettingString( "cl_inventory_saved_sort2" ) );
 		}
 	};
 
@@ -365,9 +365,9 @@ var InventoryPanel = ( function (){
 				''
 			);
 
-			if ( typeof elDropdown.GetSelected().id === "string" && elDropdown.GetSelected().id !== GameInterfaceAPI.LookupConVarStringValue( "cl_inventory_saved_sort2" ) )
+			if ( typeof elDropdown.GetSelected().id === "string" && elDropdown.GetSelected().id !== GameInterfaceAPI.GetSettingString( "cl_inventory_saved_sort2" ) )
 			{
-				GameInterfaceAPI.SetConVarStringValue( "cl_inventory_saved_sort2", elDropdown.GetSelected().id );
+				GameInterfaceAPI.SetSettingString( "cl_inventory_saved_sort2", elDropdown.GetSelected().id );
 				GameInterfaceAPI.ConsoleCommand( "host_writeconfig" );
 			}
 		}
@@ -401,6 +401,27 @@ var InventoryPanel = ( function (){
 				_UpdateSearchPanelVisibility( true );
 			} );
 
+			_AddMarketLink( elParent );
+		}
+	};
+
+	var _AddMarketLink = function( elParent )
+	{
+		if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
+		{
+			return;
+		}
+		
+		var elMarketLink = $.CreatePanel( 'Panel', elParent, 'MarketLink' );
+		elMarketLink.BLoadLayoutSnippet( "MarketLinkSnippet" );
+		elMarketLink.SetPanelEvent( 'onactivate', onActivate );
+
+		var appId = SteamOverlayAPI.GetAppID();
+		var communityUrl = SteamOverlayAPI.GetSteamCommunityURL();
+		
+		function onActivate ()
+		{
+			SteamOverlayAPI.OpenURL( communityUrl + "/market/search?q=&appid=" + appId + "&lock_appid=" + appId );
 		}
 	};
 

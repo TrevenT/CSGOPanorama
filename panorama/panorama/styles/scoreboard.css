@@ -214,14 +214,6 @@ Label {
 	horizontal-align: left;
 }
 
-#players-table-Spectator{
-	margin-left: left-panel-width;
-}
-
-#players-table-Spectator .sb-row {
-
-	margin-left:0px;
-}
 
 
 
@@ -367,9 +359,6 @@ Button.sb-row__cell:hover {
 	height: 0px;
 }
 
-.sb-muted {
-
-}
 
          
                  
@@ -478,13 +467,12 @@ Button.sb-row__cell:hover {
 
 	overflow:clip scroll;
 
-	max-height: 520px;
-
 	flow-children: down;
 
 	horizontal-align: center;
 
 }
+
 
 #players-table-CT,
 #players-table-TERRORIST,
@@ -493,10 +481,21 @@ Button.sb-row__cell:hover {
 	min-height: 135px;                       
 }
 
+#players-table-CT,
+#players-table-TERRORIST {
+
+	max-height: 270px;                 
+}
+
+
+#players-table-ANY {
+	max-height: 540px;                 
+}
 
 #players-table-Spectator {
 
 	margin-bottom: 20px;
+	max-height: 108px;                
 }
 
 #id-sb-team--Spectator{
@@ -690,10 +689,7 @@ background-color: rgba(255, 238, 0, 0.07);
 .sb-row__cell--kdr,
 .sb-row__cell--utilitydamage,
 .sb-row__cell--score,
-.sb-row__cell.spectator-hidden,
-.sb-row__cell.sortstat.spectator-hidden
 {
-                                                                                                              
 	background-color: cell-background-dark;
 }
 
@@ -1000,13 +996,14 @@ Label.sb-row__cell--mvps__count {
 	background-color: #00000000;
 }
 
-.sb-team--Spectator.sb-player-team-spectator,  {
-	                                                                                      
+                             
+.sb-team--Spectator  {
 	opacity: 0.8;
-	wash-color: #999;
+	margin-left:0px;
 }
 
-.sb-team--Spectator.sb-player-team-spectator .sb-row__cell {
+                              
+.sb-team--Spectator .sb-row__cell {
 	background-color: #00000000;
 }
 
@@ -1076,11 +1073,18 @@ Label.sb-row__cell--mvps__count {
 	margin-top: 2px;
 	margin-bottom: 2px;
 
+	min-height: 20px;
+
 }
 
 .sb-timeline__bumper {
 
 	width:50px;
+}
+
+.sb-team-spacer {
+
+	height:20px;
 }
 
 
@@ -1350,7 +1354,7 @@ Label.sb-row__cell--mvps__count {
 	opacity: 0;
 }
 
-.sb-team--Spectator #id-sb-name__nameicons {                                                      
+.sb-team--Spectator #id-sb-name__nameicons {                                                   
 	visibility: collapse;
 }
 

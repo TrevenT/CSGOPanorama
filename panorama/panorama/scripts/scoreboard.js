@@ -673,7 +673,7 @@ var Scoreboard = ( function()
 	    if ( !elButtonPanel || !elButtonPanel.IsValid()  ) 
 	        return;
 
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 	    var bQ = ( GameStateAPI.IsLocalPlayerHLTV() && nCameraMan > -1 )
 
 	    if ( bQ )
@@ -762,6 +762,8 @@ var Scoreboard = ( function()
 	}
 
 
+	                                                          
+	  
 	function _SortPlayer ( idx )
 	{
 		if ( _m_arrSortingPausedRefGetCounter != 0 )
@@ -799,13 +801,13 @@ var Scoreboard = ( function()
 
 				if ( _m_sortOrder[ stat ] === -1 )            
 				{
-					p2stat = oPlayer.m_oStats[ stat ];
-					p1stat = oCompareTargetPlayer.m_oStats[ stat ];
+					p2stat = Number( oPlayer.m_oStats[ stat ] );
+					p1stat = Number( oCompareTargetPlayer.m_oStats[ stat ] );
 				}
 				else
 				{
-					p1stat = oPlayer.m_oStats[ stat ];
-					p2stat = oCompareTargetPlayer.m_oStats[ stat ];
+					p1stat = Number( oPlayer.m_oStats[ stat ] );
+					p2stat = Number( oCompareTargetPlayer.m_oStats[ stat ] );
 				}
 
 				if ( ( p1stat > p2stat ) ||
@@ -977,7 +979,7 @@ var Scoreboard = ( function()
 					var isBorrowed = false;
 					var borrowedXuid = 0;
 
-					var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
+					var borrowedPlayerIndex = parseInt( GameInterfaceAPI.GetSettingString( "cl_borrow_music_from_player_index" ) );
 
 					if ( borrowedPlayerIndex != 0 && isLocalPlayer )
 					{
@@ -1065,27 +1067,17 @@ var Scoreboard = ( function()
 
 						if ( elLabel )
 						{
-							var bLabelNeedsSpectatorStyle = false;
 							var szCustomLabel = _GetCustomStatTextValue( 'ping', oPlayer.m_xuid );
 							elLabel.SetHasClass( "sb-row__cell--ping__label--bot", !!szCustomLabel );                                                          
 							if ( szCustomLabel )
 							{
 								elLabel.text = $.Localize( szCustomLabel );
 								oPlayer.m_oStats[ stat ] = szCustomLabel;                                                                                     
-
-								if ( szCustomLabel === "#SFUI_scoreboard_lbl_spec" )
-								{
-									                                                                                                    
-									                                                            
-									bLabelNeedsSpectatorStyle = true;
-								}
 							}
 							else
 							{
 								_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerPing.bind( GameStateAPI ), true );
 							}
-
-							elPlayer.SetHasClass( "sb-player-team-spectator", bLabelNeedsSpectatorStyle );
 						}
 					}
 				};
@@ -1546,6 +1538,7 @@ var Scoreboard = ( function()
 					if ( !elAvatarMuteImage || !elAvatarMuteImage.IsValid() )
 					{
 						elAvatarMuteImage = $.CreatePanel( "Image", elPanel, "id-sb-avatar-mute-image", { scaling: 'stretch-to-fit-y-preserve-aspect' } );
+						elAvatarMuteImage.SetImage( 'file://{images}/icons/ui/muted.svg' );
 						elAvatarMuteImage.AddClass( "hidden" );
 						elAvatarMuteImage.AddClass( "sb-row__cell--avatar__muted" );
 
@@ -1553,25 +1546,12 @@ var Scoreboard = ( function()
 
 					              
 					var isMuted = GameStateAPI.IsSelectedPlayerMuted( oPlayer.m_xuid );
-
-					if ( oPlayer.m_isMuted !== isMuted )
-					{
-						if ( isMuted )
-						{
-							elAvatarMuteImage.AddClass( "sb-muted" );
-							elAvatarMuteImage.RemoveClass( "hidden" );
-							elAvatarMuteImage.SetImage( 'file://{images}/icons/ui/muted.svg' );
-						}
-						else
-						{
-							elAvatarMuteImage.RemoveClass( "sb-muted" );
-							elAvatarMuteImage.AddClass( "hidden" );
-						}
-
-						oPlayer.m_isMuted = isMuted;
-
-					}
+					oPlayer.m_isMuted = isMuted;
 					
+					var isEnemyTeamMuted = GameInterfaceAPI.GetSettingString( "cl_mute_enemy_team" ) == "1";
+					var isEnemy = GameStateAPI.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
+
+					elAvatarMuteImage.SetHasClass( 'hidden', !isMuted && !( isEnemy && isEnemyTeamMuted ) );
 
 					       
 					             
@@ -1627,7 +1607,7 @@ var Scoreboard = ( function()
 
 								if ( newStatValue > 0 )
 								{
-									var mode = GameStateAPI.GetGameModeInternalName( true );
+									var mode = GameStateAPI.GetGameModeInternalName( false );
 									
 									var imagePath = "skillgroup";
 
@@ -1711,7 +1691,8 @@ var Scoreboard = ( function()
 
 	function _GetPlayerRowForGameMode ()
 	{
-		var mode = GameStateAPI.GetGameModeInternalName(true);
+		var mode = GameStateAPI.GetGameModeInternalName( false );
+		var skirmish = GameStateAPI.GetGameModeInternalName( true );
 
 		switch ( mode )
 		{
@@ -1721,7 +1702,7 @@ var Scoreboard = ( function()
 			case "competitive":
 				return "snippet_scoreboard-classic__row--comp";
 
-			case "armsrace":            
+			case "gungameprogressive":            
 				return "snippet_scoreboard__row--armsrace";
 
 			case "training":
@@ -1730,8 +1711,7 @@ var Scoreboard = ( function()
 			case "deathmatch":
 				return "snippet_scoreboard__row--deathmatch";
 
-			case "flyingscoutsman":
-			case "demolition":
+			case "gungametrbomb":
 				return "snippet_scoreboard__row--demolition";
 
 			       
@@ -1740,6 +1720,11 @@ var Scoreboard = ( function()
 			       
 
 			case "casual":
+				if ( skirmish == "flyingscoutsman" )
+					return "snippet_scoreboard__row--demolition";
+				else
+					return "snippet_scoreboard-classic__row--casual";
+				
 			default:
 				return "snippet_scoreboard-classic__row--casual";
 
@@ -1888,7 +1873,7 @@ var Scoreboard = ( function()
 				var newSortOrder = {};
 
 				                                              
-				var modeDefaultSortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName( true ) );
+				var modeDefaultSortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName( false ) );
 
 				                                             
 				                                 
@@ -2102,7 +2087,7 @@ var Scoreboard = ( function()
 		                                          
 			       
 
-		                                                                                 
+		                                                                          
 		 
 			         
 				                                                                                        
@@ -2128,7 +2113,7 @@ var Scoreboard = ( function()
 	       
 	                                
 	 
-		                                                                      
+		                                                                          
 
 		                            
 	 
@@ -2183,7 +2168,7 @@ var Scoreboard = ( function()
 
 		                    
 
-		var bind = GameInterfaceAPI.LookupConVarStringValue( "cl_scoreboard_mouse_enable_binding" );
+		var bind = GameInterfaceAPI.GetSettingString( "cl_scoreboard_mouse_enable_binding" );
 
 		                                                                                 
 		if ( bind.charAt( 0 ) == '+' || bind.charAt( 0 ) == '-' )
@@ -2361,7 +2346,7 @@ var Scoreboard = ( function()
 
 				var nPlayers = 5;
 
-				if ( GameStateAPI.GetGameModeInternalName( true ) == "scrimcomp2v2" )
+				if ( GameStateAPI.GetGameModeInternalName( false ) == "scrimcomp2v2" )
 					nPlayers = 2;
 
 				for ( var i = 1; i <= nPlayers; i++ )
@@ -2563,10 +2548,13 @@ var Scoreboard = ( function()
 			_ResetTimeline();
 		}
 
-		                                             
-		for ( var rnd = 1; rnd <= jsoTime[ "maxrounds" ]; rnd++ )
+		if ( _SupportsTimeline( jsoTime ) )
 		{
-			_UpdateRound( rnd, oScoreData, jsoTime);
+			                                             
+			for ( var rnd = 1; rnd <= jsoTime[ "maxrounds" ]; rnd++ )
+			{
+				_UpdateRound( rnd, oScoreData, jsoTime);
+			}
 		}
 
 		var _HighlightCurrentTimelineRound = function()
@@ -2657,6 +2645,14 @@ var Scoreboard = ( function()
 		}
 	};
 
+	function _SupportsTimeline ( jsoTime )
+	{
+		if ( jsoTime == undefined )
+			jsoTime = GameStateAPI.GetTimeDataJSO();
+
+		return ( jsoTime[ "maxrounds" ] <= 30 );
+	}
+
 	function _ResetTimeline ()
 	{
 		                                      
@@ -2672,7 +2668,10 @@ var Scoreboard = ( function()
 		var jsoTime = GameStateAPI.GetTimeDataJSO();
 		if ( !jsoTime )
 			return;
-
+		
+		if ( !_SupportsTimeline( jsoTime ) )
+			return;
+		
 		if ( GameStateAPI.HasHalfTime() )
 		{
 			var midRound = Math.ceil( jsoTime[ "maxrounds" ] / 2 );
@@ -2682,7 +2681,7 @@ var Scoreboard = ( function()
 			_InitTimelineSegment( midRound + 1, lastRound, "3" );                   
 
 		}
-		else if ( jsoTime[ "maxrounds" ] <= 30 )                     
+		else                     
 		{
 			_InitTimelineSegment( 1, jsoTime[ "maxrounds" ], "1" );                
 		}
@@ -2690,7 +2689,7 @@ var Scoreboard = ( function()
 
 	function _UnborrowMusicKit ()
 	{
-		InventoryAPI.SetUIPreferenceString( "cl_borrow_music_from_player_index", "0" );
+		GameInterfaceAPI.SetSettingString( "cl_borrow_music_from_player_index", "0" );
 
 		var oLocalPlayer = _m_oPlayers.GetPlayerByXuid( GetLocalPlayerId() );
 		_m_oUpdateStatFns[ 'musickit' ]( oLocalPlayer, true );
@@ -2744,7 +2743,7 @@ var Scoreboard = ( function()
 	{
 	    $.DispatchEvent( 'PlaySoundEffect', 'generic_button_press', 'MOUSE' );
 
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 	    if ( GetCasterIsCameraman() )
 	    {
 	        GameStateAPI.SetCasterIsCameraman( 0 );
@@ -2761,7 +2760,7 @@ var Scoreboard = ( function()
 	{
 	    $.DispatchEvent( 'PlaySoundEffect', 'generic_button_press', 'MOUSE' );
 
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 	    if ( GetCasterIsHeard() )
 	    {
 	        GameStateAPI.SetCasterIsHeard( 0 );
@@ -2778,7 +2777,7 @@ var Scoreboard = ( function()
 	{
 	    $.DispatchEvent( 'PlaySoundEffect', 'generic_button_press', 'MOUSE' );
 
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 	    if ( GetCasterControlsXray() )
 	    {
 	        GameStateAPI.SetCasterControlsXray( 0 );
@@ -2795,7 +2794,7 @@ var Scoreboard = ( function()
 	{
 	    $.DispatchEvent( 'PlaySoundEffect', 'generic_button_press', 'MOUSE' );
 
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 	    if ( GetCasterControlsUI() )
 	    {
 	        GameStateAPI.SetCasterControlsUI( 0 );
@@ -2897,7 +2896,7 @@ var Scoreboard = ( function()
 				                          
 			       
 
-			case "armsrace":            
+			case "gungameprogressive":            
 				return sortOrder_gg;
 
 			case "deathmatch":
@@ -2920,21 +2919,21 @@ var Scoreboard = ( function()
 		
 		var scoreboardTemplate;
 
+		var mode = GameStateAPI.GetGameModeInternalName( false );
+		var skirmish = GameStateAPI.GetGameModeInternalName( true );
 
-		switch ( GameStateAPI.GetGameModeInternalName(true) )
+		switch ( mode )
 		{
 			case "competitive":
-				scoreboardTemplate = "snippet_scoreboard-classic";
+			case "gungametrbomb":
+			case "scrimcomp2v2":
+				scoreboardTemplate = "snippet_scoreboard-classic--competitive";
 				break;
 			
 			case "training":
 			case "deathmatch":
-			case "armsrace":
+			case "gungameprogressive":
 				scoreboardTemplate = "snippet_scoreboard-deathmatch";
-				break;
-			
-			default:
-				scoreboardTemplate = "snippet_scoreboard-classic";
 				break;
 
 			       		
@@ -2942,12 +2941,25 @@ var Scoreboard = ( function()
 				                                                     
 				      
 			       	
+
+			case "casual":
+				if ( skirmish == "flyingscoutsman" )
+				{
+					scoreboardTemplate = "snippet_scoreboard-classic--competitive";
+				}
+				else
+				{
+					scoreboardTemplate = "snippet_scoreboard-classic--casual";
+				}
+				break;
+			
+			default:
+				scoreboardTemplate = "snippet_scoreboard-classic--casual";
+				break;
 		}
 
 		_Helper_LoadSnippet( _m_cP, scoreboardTemplate );
 
-		_Helper_LoadSnippet( $( "#id-sb-meta" ), "snippet_sb-meta" );
-		_Helper_LoadSnippet( $( "#id-sb-footer-panel" ), "snippet_sb-footer" );
 
 		                                                                               
 		  
@@ -2961,7 +2973,7 @@ var Scoreboard = ( function()
 		
 		                                          
 
-		_m_sortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName(true) );
+		_m_sortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName( false ) );
 
 
 		             
@@ -2995,7 +3007,7 @@ var Scoreboard = ( function()
 
 	function _UpdateScore () 
 	{
-		switch ( GameStateAPI.GetGameModeInternalName(true) )
+		switch ( GameStateAPI.GetGameModeInternalName( false ) )
 		{
 			case "competitive":
 				_UpdateScore_Classic();
@@ -3005,7 +3017,7 @@ var Scoreboard = ( function()
 			                
 			       
 			case "deathmatch":
-			case "armsrace":
+			case "gungameprogressive":
 				               
 				break;
 
@@ -3154,7 +3166,7 @@ var Scoreboard = ( function()
 
 	function GetCasterIsCameraman()
 	{
-	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
+	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 
 	    var bQ = ( GameStateAPI.IsDemoOrHltv() && nCameraMan != 0 && GameStateAPI.IsHLTVAutodirectorOn() )
 
@@ -3167,7 +3179,7 @@ var Scoreboard = ( function()
 
 	    if ( GameStateAPI.IsDemoOrHltv() )
 	    {
-	        var bVoiceCaster = parseInt( GameInterfaceAPI.LookupConVarStringValue( "voice_caster_enable" ) );
+	        var bVoiceCaster = parseInt( GameInterfaceAPI.GetSettingString( "voice_caster_enable" ) );
 	        bQ = bVoiceCaster;
 	    }
 
@@ -3176,7 +3188,7 @@ var Scoreboard = ( function()
 
 	function GetCasterControlIsDisabled()
 	{
-	    var bDisableWithControl = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_cameraman_disable_with_user_control" ) );
+	    var bDisableWithControl = parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_disable_with_user_control" ) );
 
 	    var bQ = ( GameStateAPI.IsDemoOrHltv() && bDisableWithControl && GameStateAPI.IsHLTVAutodirectorOn() == false );
 
@@ -3185,14 +3197,14 @@ var Scoreboard = ( function()
 
 	function GetCasterControlsXray()
 	{
-	    var bXRay = GameStateAPI.IsDemoOrHltv() && parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_cameraman_xray" ) );
+	    var bXRay = GameStateAPI.IsDemoOrHltv() && parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_xray" ) );
 
 	    return bXRay;
 	}
 
 	function GetCasterControlsUI()
 	{
-	    var bSpecCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_cameraman_ui" ) );
+	    var bSpecCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_ui" ) );
 
 	    var bQ = ( GameStateAPI.IsDemoOrHltv() && bSpecCameraMan );
 
@@ -3277,4 +3289,8 @@ var Scoreboard = ( function()
 	$.RegisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
 
 	$.RegisterForUnhandledEvent( "Scoreboard_UpdateHLTVViewers", Scoreboard.UpdateHLTVViewerNumber );
+
+	$.RegisterForUnhandledEvent( "Scoreboard_Casualties_OnMouseOver", Scoreboard.Casualties_OnMouseOver );
+	$.RegisterForUnhandledEvent( "Scoreboard_Casualties_OnMouseOut", Scoreboard.Casualties_OnMouseOut );
+
 } )();

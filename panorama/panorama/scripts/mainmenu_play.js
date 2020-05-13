@@ -719,7 +719,7 @@ var PlayMenu = ( function()
 		if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
 		{
 		                                                                          
-		    var preferencesMapsForThisMode = InventoryAPI.GetUIPreferenceString( 'ui_playsettings_maps_' + serverType + '_' + gameMode );
+		    var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_' + serverType + '_' + gameMode );
 
                                                       
 		    if ( !preferencesMapsForThisMode )
@@ -774,7 +774,7 @@ var PlayMenu = ( function()
 	                                                                                                                 
 	    if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
 	    {
-	        var preferencesMapsForThisMode = InventoryAPI.GetUIPreferenceString( 'ui_playsettings_maps_workshop' );
+	        var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_workshop' );
 
 	                                                  
 	        if ( !preferencesMapsForThisMode )
@@ -896,12 +896,12 @@ var PlayMenu = ( function()
 	                                                      
 		if ( m_isWorkshop )
 		{
-		    InventoryAPI.SetUIPreferenceString( 'ui_playsettings_maps_workshop', selectedMaps );
+		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_workshop', selectedMaps );
 		}
         else
 		{
-		    InventoryAPI.SetUIPreferenceString( 'ui_playsettings_mode_' + serverType, m_gameModeSetting );
-		    InventoryAPI.SetUIPreferenceString( 'ui_playsettings_maps_' + serverType + '_' + m_gameModeSetting, selectedMaps );
+		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_mode_' + serverType, m_gameModeSetting );
+		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_' + serverType + '_' + m_gameModeSetting, selectedMaps );
 		}
 
 	                                                                      
@@ -1151,7 +1151,7 @@ var PlayMenu = ( function()
 		}
 		else if ( playType === 'community' )
 		{
-			if ( '0' === InventoryAPI.GetUIPreferenceString( 'player_nevershow_communityservermessage' ) )
+			if ( '0' === GameInterfaceAPI.GetSettingString( 'player_nevershow_communityservermessage' ) )
 			{
 				UiToolkitAPI.ShowCustomLayoutPopup( 'server_browser_popup', 'file://{resources}/layout/popups/popup_serverbrowser.xml' );
 			}
@@ -1175,7 +1175,7 @@ var PlayMenu = ( function()
 		elDropDown.SetHasClass( "hidden", !bShowBotDifficultyButton );
 
 		                         
-		var botDiff = InventoryAPI.GetUIPreferenceString( 'player_botdifflast_s' );
+		var botDiff = GameInterfaceAPI.GetSettingString( 'player_botdifflast_s' );
 		GameTypesAPI.SetCustomBotDifficulty( botDiff );
 		elDropDown.SetSelected( botDiff );
 	}
@@ -1188,7 +1188,7 @@ var PlayMenu = ( function()
 		GameTypesAPI.SetCustomBotDifficulty( botDiff );
 
 		                                  
-		InventoryAPI.SetUIPreferenceString( 'player_botdifflast_s', botDiff )
+		GameInterfaceAPI.SetSettingString( 'player_botdifflast_s', botDiff )
 	}	
 
 	var _DisplayWorkshopModePopup = function ()

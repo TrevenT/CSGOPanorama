@@ -85,12 +85,12 @@
 
 .HudSpecplayer__player-name
 {
-    font-size: 23px;
+    font-size: 22px;
     font-family: Stratum2, 'Arial Unicode MS';
     font-weight: medium;
 	vertical-align: bottom;
 	margin-left: 84px;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 	padding-right: 32px;
     text-shadow: 1px 1px 1px 1.5 #000000AA;
     text-overflow: shrink;
@@ -501,7 +501,7 @@
 
 .HudSpecplayer__ItemName
 {
-    font-size: 14px;
+    font-size: 13px;
     font-family: Stratum2, 'Arial Unicode MS';
     font-weight: medium;
                               

@@ -93,7 +93,7 @@ function setupTooltip()
     }
 
 	                                             
-	if ( GameInterfaceAPI.LookupConVarStringValue( "cl_inventory_debug_tooltip") == "1" )
+	if ( GameInterfaceAPI.GetSettingString( "cl_inventory_debug_tooltip") == "1" )
 	{
 		var debugOutput = "<br />";
 		var Print = function( string )

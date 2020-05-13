@@ -20,7 +20,7 @@
         <Image id="ServerSponserLogos" class="HudSpecplayer__SponserLogos" scaling="stretch-to-fit-preserve-aspect"/>
       </Panel>
       <Panel id="HotKeyLabelContainer" class="HudSpecplayer__key-hints">
-        <Label id="HotKeyLabel" class="HudSpecplayer__key-hints-text" html="true" text="#SFUIHUD_Spectate_Navigation_Arrows"/>
+        <Label id="HotKeyLabel" class="HudSpecplayer__key-hints-text" html="true" />
       </Panel>
 
       <Label id="Stat_DamageTaken" class="HudSpecplayer__Stats_DamageTaken" html="true" text="#Scoreboard_kills"/>
@@ -43,12 +43,12 @@
           <Label id="Stat_HeadX_5" class="HudSpecplayer__Stats_HeaderText" text=""/>
         </Panel>
         <Panel class="HudSpecplayer__Stats_Numbers">
-          <Label id="Stat_NumK" class="HudSpecplayer__Stats_NumberText" text="12"/>
-          <Label id="Stat_NumA" class="HudSpecplayer__Stats_NumberText" text="3"/>
-          <Label id="Stat_NumD" class="HudSpecplayer__Stats_NumberText" text="99"/>
-          <Label id="Stat_NumKDR" class="HudSpecplayer__Stats_NumberText" text="1.1"/>
-          <Label id="Stat_NumADR" class="HudSpecplayer__Stats_NumberText" text="83"/>
-          <Label id="Stat_NumHSP" class="HudSpecplayer__Stats_NumberText" text="56%"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_kills_val"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_assists_val"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_deaths_val"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_kdr_val"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_adr_val"/>
+          <Label class="HudSpecplayer__Stats_NumberText" text="#Scoreboard_hsp_val"/>
 
           <Label id="Stat_NumX_1" class="HudSpecplayer__Stats_NumberText" text=""/>
           <Label id="Stat_NumX_2" class="HudSpecplayer__Stats_NumberText" text=""/>
@@ -71,13 +71,13 @@
             <Panel class="HudSpecplayerBG__BottomStrip" />
                                                                                                                               
           </Panel>      
-          <Label id="PlayerName" class="HudSpecplayer__player-name" text="XXXXX"/>
+          <Label class="HudSpecplayer__player-name" text="{s:spec_player_name}"/>
           <Panel id="ItemContainer" class="HudSpecplayer__ItemContainer">
 
             <Panel id="ItemContainerBG" class="HudSpecplayer__ItemContainerBG">
               <Image id="WeaponImage" class="HudSpecplayer__Item" scaling="stretch-to-fit-preserve-aspect" />
             </Panel>
-            <Label id="WeaponName" html="true" class="HudSpecplayer__ItemName" text="XXXXX"/>
+            <Label id="WeaponName" html="true" class="HudSpecplayer__ItemName" text="{s:h:weapon_description}"/>
           </Panel>
         </Panel>
         <Image id="PlayerAvatarDefault" class="HudSpecplayerRoot__avatar HudSpecplayerRoot__avatardefault" src="file://{images}/hud/teamcounter/teamcounter_alivebgCT.png" />

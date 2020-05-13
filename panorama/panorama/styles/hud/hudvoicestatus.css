@@ -1,9 +1,9 @@
                                           
 
 @define AlertNoticeScrollInTime: 0.1s;
-@define StatusPanelHeight: 360px;
-@define MaxAlertHeight: 120px;
-@define VoicePanelYOffset: 240px;                                                            
+@define StatusPanelHeight: 300px;
+@define MaxAlertHeight: 116px;
+@define VoicePanelYOffset: 182px;                                                            
 @define AlertNoticeLifetime: 15.5s;
 @define SoundAnimTime: .4s;
 
@@ -19,7 +19,7 @@
 	width: 560px;
 	height: StatusPanelHeight;
 	overflow: clip;
-	margin-bottom: 10px;
+	margin-bottom: 2px;
 }
 
 .AlertPanel
@@ -45,13 +45,13 @@
 	text-align: left;
 	vertical-align: bottom;
 	color: white;
-	font-size: 20px;
+	font-size: 19px;
 	font-weight: medium;
 	letter-spacing: .2px;
 	padding-left: 28px;
 	padding-bottom: 0px;
 	text-shadow-fast: 1px 1px #00000055;
-    background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.5, #00000077 ) , color-stop(0.7, #00000077), color-stop( 0.9, #00000077 ), to( #00000000 ) );
+    background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.5, #000000A0 ) , color-stop(0.7, #000000A0), color-stop( 0.93, #000000A0 ), to( #00000000 ) );
 }
 
 .AlertPanel.AlertHidden 
@@ -111,18 +111,19 @@
 
 .VoicePanel
 {
-	position: 10px VoicePanelYOffset 0px;
+    transform: scale3d( 0.95, 0.95, 0.95 );
+	position: 0px VoicePanelYOffset 0px;
 	flow-children: down;
 }
 
 .VoiceNotice
 {
-	height: 26px;
+	height: 22px;
 	flow-children: right;
 	transition-property: opacity;
 	transition-duration: 0.2s;			
 	transition-timing-function: linear;
-	margin-left: 8px;
+	margin-left: 2px;
 }
 
 .VoiceNotice.Hidden
@@ -147,7 +148,7 @@
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
-	margin-left: 8px;
+	margin-left: 6px;
 }
 
 .SoundIcon1
@@ -287,14 +288,14 @@
 
 .AvatarPanel
 {
-	margin-left: -4px;
+	                    
 	vertical-align: middle;
 }
 
 .AvatarBG 
 {
-	width: 26px;
-	height: 26px;
+	width: 22px;
+	height: 22px;
 }
 
 .VoiceNotice.DefaultAvatarCT .AvatarPanel .AvatarBG 
@@ -315,8 +316,8 @@
 
 .SteamAvatar
 {
-	width: 26px;
-	height: 26px;
+	width: 22px;
+	height: 22px;
 	opacity: 0.0;
 }
 

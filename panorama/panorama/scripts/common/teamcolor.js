@@ -10,11 +10,11 @@ var TeamColor = (function(){
 	
 	var colorRGB = {
 		default: '100,100,100',
-		yellow: _GetColorString( GameInterfaceAPI.LookupConVarStringValue( "cl_teammate_color_1" )),
-		purple: _GetColorString( GameInterfaceAPI.LookupConVarStringValue( "cl_teammate_color_2" )),
-		green: _GetColorString( GameInterfaceAPI.LookupConVarStringValue( "cl_teammate_color_3" )),
-		blue: _GetColorString( GameInterfaceAPI.LookupConVarStringValue( "cl_teammate_color_4" )),
-		orange: _GetColorString( GameInterfaceAPI.LookupConVarStringValue( "cl_teammate_color_5" ))
+		yellow: _GetColorString( GameInterfaceAPI.GetSettingString( "cl_teammate_color_1" )),
+		purple: _GetColorString( GameInterfaceAPI.GetSettingString( "cl_teammate_color_2" )),
+		green: _GetColorString( GameInterfaceAPI.GetSettingString( "cl_teammate_color_3" )),
+		blue: _GetColorString( GameInterfaceAPI.GetSettingString( "cl_teammate_color_4" )),
+		orange: _GetColorString( GameInterfaceAPI.GetSettingString( "cl_teammate_color_5" ))
 	}
 	
 	var _GetTeamColor = function ( teamColorInx )
