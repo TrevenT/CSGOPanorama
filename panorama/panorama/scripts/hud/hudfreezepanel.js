@@ -60,30 +60,19 @@ var freezePanel = ( function() {
 			return '';
 		}
 
-		var flairId =  InventoryAPI.GetFlairItemId( xuid );
-		var isIdFromInventory = true;
+		var flairItemId = InventoryAPI.GetFlairItemId( xuid );
 
 		                                                                                   
-		if ( flairId === "0" || !flairId )
+		if ( flairItemId === "0" || !flairItemId )
 		{
-			isIdFromInventory = false;
-			flairId = FriendsListAPI.GetFriendDisplayItemDefFeatured( xuid );
-		}
+			var flairDefIdx = FriendsListAPI.GetFriendDisplayItemDefFeatured( xuid );
+			flairItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( flairDefIdx, 0 );
 
-		if( flairId === "0" || !flairId )
-		{
+			if ( flairItemId === "0" || !flairItemId )
 			return '';
 		}
 
-		var imagePath = '';
-		if( isIdFromInventory )
-		{
-			imagePath = InventoryAPI.GetItemInventoryImage( flairId );
-		}
-		else
-		{
-			imagePath = ItemDataAPI.GetItemInventoryImage( flairId );
-		}
+		var imagePath = InventoryAPI.GetItemInventoryImage( flairItemId );
 		
 		return imagePath;
 	}

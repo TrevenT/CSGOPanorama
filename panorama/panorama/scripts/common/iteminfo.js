@@ -118,7 +118,7 @@ var ItemInfo = ( function() {
 
 	var _IsLoadoutSlotSubPositionAWeapon = function( slotSubPosition )
 	{
-		return ItemDataAPI.IsLoadoutSlotSubPositionAWeapon( slotSubPosition );
+		return InventoryAPI.IsLoadoutSlotSubPositionAWeapon( slotSubPosition );
 	};	
 
 	var _GetTeam = function( id )

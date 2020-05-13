@@ -340,7 +340,8 @@
 						<Label text="#SFUI_Settings_MuteAllButFriends_Title" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_mute_all_but_friends_and_party" >
 							<Label text="#GameUI_No" value="0" id="muteothers0"/>
-							<Label text="#GameUI_Yes" value="1" id="muteothers1"/>
+							<Label text="#GameUI_MuteAllButFriendsExceptComp" value="1" id="muteothers1"/>
+							<Label text="#GameUI_MuteAllButFriendsAlways" value="2" id="muteothers2"/>
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>

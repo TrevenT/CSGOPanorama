@@ -140,8 +140,9 @@ var playerCard = ( function (){
 
 	var _SetPlayerBackground = function()
 	{
-		var flairId = FriendsListAPI.GetFriendDisplayItemDefFeatured( _m_xuid );
-		var imagePath = ItemDataAPI.GetItemInventoryImage( flairId );
+		var flairDefIdx = FriendsListAPI.GetFriendDisplayItemDefFeatured( _m_xuid );
+		var flairItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( flairDefIdx, 0 );
+		var imagePath = InventoryAPI.GetItemInventoryImage( flairItemId );
 		var elBgImage = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardBg' );
 		
 		elBgImage.style.backgroundImage =  ( imagePath ) ? 'url("file://{images_econ}' + imagePath + '_large.png")' : 'none';
@@ -498,7 +499,7 @@ var playerCard = ( function (){
 	{
 		                                                        
 		var flairItems = FriendsListAPI.GetFriendDisplayItemDefCount( _m_xuid );
-		var flairDefIndexList = [];
+		var flairItemIdList = [];
 		var elFlairPanal = $.GetContextPanel().FindChildInLayoutFile( 'FlairCarouselAndControls' );
 
 		if ( !flairItems )
@@ -509,20 +510,22 @@ var playerCard = ( function (){
 
 		for ( var i = 0; i < flairItems; i++ )
 		{
-			flairDefIndexList.push( FriendsListAPI.GetFriendDisplayItemDefByIndex( _m_xuid, i ) );
+			var flairDefIdx = FriendsListAPI.GetFriendDisplayItemDefByIndex( _m_xuid, i );
+			var flairItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( flairDefIdx, 0 );
+			flairItemIdList.push( flairItemId );
 		}
 
 		                                                                       
 		$.GetContextPanel().FindChildInLayoutFile( 'FlairCarousel' ).RemoveAndDeleteChildren();
-		_MakeFlairCarouselPages( elFlairPanal, flairDefIndexList );
+		_MakeFlairCarouselPages( elFlairPanal, flairItemIdList );
 
 		elFlairPanal.RemoveClass( 'hidden' );
 	};
 
-	var _MakeFlairCarouselPages = function( elFlairPanal, flairDefIndexList )
+	var _MakeFlairCarouselPages = function( elFlairPanal, flairItemIdList )
 	{
 		var flairsPerPage = 5;
-		var countFlairItems = flairDefIndexList.length;
+		var countFlairItems = flairItemIdList.length;
 		var elFlairCarousel = $.GetContextPanel().FindChildInLayoutFile( 'FlairCarousel' );
 		var elCarouselPage = null;
 
@@ -533,21 +536,21 @@ var playerCard = ( function (){
 				elCarouselPage = $.CreatePanel( 'Panel', elFlairCarousel, '', { class: 'playercard-flair-carousel__page' } );
 			}
 
-			var imagePath = ItemDataAPI.GetItemInventoryImage( flairDefIndexList[ i ] );
-			var idForFlair = _m_xuid + flairDefIndexList[ i ];
-			var elFlair = $.CreatePanel( 'Image', elCarouselPage, idForFlair, {
+			var imagePath = InventoryAPI.GetItemInventoryImage( flairItemIdList[ i ] );
+			var panelName = _m_xuid + flairItemIdList[ i ];
+			var elFlair = $.CreatePanel( 'Image', elCarouselPage, panelName, {
 				class: 'playercard-flair__icon',
 				src: 'file://{images_econ}' + imagePath + '_small.png',
 				scaling: 'stretch-to-fit-preserve-aspect'
 			} );
 
-			var onMouseOver = function( flairDefIndex, idForTooltipLocaation )
+			var onMouseOver = function( flairItemId, idForTooltipLocaation )
 			{
-				var tooltipText = ItemDataAPI.GetItemName( flairDefIndex );
+				var tooltipText = InventoryAPI.GetItemName( flairItemId );
 				UiToolkitAPI.ShowTextTooltip( idForTooltipLocaation, tooltipText );
 			};
 
-			elFlair.SetPanelEvent( 'onmouseover', onMouseOver.bind( undefined, flairDefIndexList[ i ], idForFlair ) );
+			elFlair.SetPanelEvent( 'onmouseover', onMouseOver.bind( undefined, flairItemIdList[ i ], panelName ) );
 			elFlair.SetPanelEvent( 'onmouseout', function()
 			{
 				UiToolkitAPI.HideTextTooltip();

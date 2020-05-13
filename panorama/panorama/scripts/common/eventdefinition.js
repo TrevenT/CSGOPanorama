@@ -38,7 +38,6 @@
     $.DefineEvent( 'MainMenuGoToCharacterLoadout', 1, 'team', '' );
 
               
-                                                                                              
                                                                                                                     
               
     $.DefineEvent( 'Scoreboard_UnborrowMusicKit', 0, '', "Cancel Music Kit borrowing" );

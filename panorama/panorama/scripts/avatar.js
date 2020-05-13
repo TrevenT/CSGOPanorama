@@ -47,27 +47,21 @@ var Avatar = ( function()
 
 		elFlair.RemoveClass( 'hidden' );
 
-		var flairId = InventoryAPI.GetFlairItemId( xuid );
+		var flairItemId = InventoryAPI.GetFlairItemId( xuid );
 
-		var isIdFromInventory = true;
 
 		                                                                                   
-		if ( flairId === "0" || !flairId )
+		if ( flairItemId === "0" || !flairItemId )
 		{
-			isIdFromInventory = false;
-			flairId = FriendsListAPI.GetFriendDisplayItemDefFeatured( xuid );
+			var flairDefIdx = FriendsListAPI.GetFriendDisplayItemDefFeatured( xuid );
+			flairItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( flairDefIdx, 0 );
+		
+			if ( flairItemId === "0" || !flairItemId )
+				return;
 		}
-		
-		if ( flairId === "0" || !flairId )
-			return;
 
-		var imagePath = "";
-		if ( isIdFromInventory )
-			imagePath = InventoryAPI.GetItemInventoryImage( flairId );
-		else
-			imagePath = ItemDataAPI.GetItemInventoryImage( flairId );
+		var imagePath = InventoryAPI.GetItemInventoryImage( flairItemId );
 
-		
 		elFlair.SetImage( 'file://{images_econ}' + imagePath + '_small.png' );
 	};
 

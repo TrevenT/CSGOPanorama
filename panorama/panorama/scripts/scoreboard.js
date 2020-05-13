@@ -1438,41 +1438,15 @@ var Scoreboard = ( function()
 
 					             
 					  
-					var elAvatarMuteImage = elPanel.FindChildTraverse( "mute-image" );
-					if ( elAvatarMuteImage && elAvatarMuteImage.IsValid() )
-					{
-						              
-						var isMuted = MockAdapter.IsSelectedPlayerMuted( oPlayer.m_xuid );
-						oPlayer.m_isMuted = isMuted;
-						
-						var isEnemyTeamMuted = GameInterfaceAPI.GetSettingString( "cl_mute_enemy_team" ) == "1";
-						var isEnemy = MockAdapter.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
+			  		                                                     
+					var isMuted = MockAdapter.IsSelectedPlayerMuted( oPlayer.m_xuid );
+					oPlayer.m_isMuted = isMuted;
 
-						elAvatarMuteImage.SetHasClass( 'hidden', !isMuted && !( isEnemy && isEnemyTeamMuted ) );
+					var isEnemyTeamMuted = GameInterfaceAPI.GetSettingString( "cl_mute_enemy_team" ) == "1";
+					var isEnemy = MockAdapter.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
 
-						          
-						             
-						                                                                           
+					oPlayer.m_elPlayer.SetHasClass( 'muted', isMuted || ( isEnemy && isEnemyTeamMuted ) );
 
-						                                                              
-						 
-							                                      
-
-							                   
-							 
-								                                               
-								                                          
-								                                                                   
-							 
-							    
-							 
-								                                                  
-								                                       
-							 
-						 
-						          
-
-					}
 				}
 				break;
 
@@ -1997,45 +1971,6 @@ var Scoreboard = ( function()
 			_m_hDenyInputToGame = null;
 		}
 	}
-
-	          
-	                                     
-	 
-		                                          
-			       
-
-		                                                                          
-		 
-			         
-				                                                                                        
-				                                                                                           
-				                                                                                           
-				      
-
-			         
-				                                                                                           
-				                                                                                        
-				                                                                                           
-				      
-
-			         
-				                                                                                           
-				                                                                                           
-				                                                                                        
-				      
-		 
-	 
-	          
-
-	          
-	                                
-	 
-		                                                                          
-
-		                            
-	 
-	          
-
 	function _UpdateMatchInfo ()
 	{
 
@@ -2078,10 +2013,6 @@ var Scoreboard = ( function()
 		if ( $( "#sb-meta__labels__map" ) )
 			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + MockAdapter.GetMapBSPName() + ".svg" );
 
-	              
-		                            
-		          
-		
 		let elCoopStats = $( '#CoopStats' );
 		if ( elCoopStats )
 		{
@@ -3626,10 +3557,6 @@ var Scoreboard = ( function()
 		ToggleSetCasterControlsXray:        _ToggleSetCasterControlsXray,
 		ToggleSetCasterControlsUI:          _ToggleSetCasterControlsUI,
 
-		          
-		                                
-		          
-
 		MuteVoice: _MuteVoice,
 		BlockUgc : _BlockUgc,
 
@@ -3675,10 +3602,6 @@ var Scoreboard = ( function()
 	$.RegisterForUnhandledEvent( "Scoreboard_ToggleSetCasterIsHeard", Scoreboard.ToggleSetCasterIsHeard );
 	$.RegisterForUnhandledEvent( "Scoreboard_ToggleSetCasterControlsXray", Scoreboard.ToggleSetCasterControlsXray );
 	$.RegisterForUnhandledEvent( "Scoreboard_ToggleSetCasterControlsUI", Scoreboard.ToggleSetCasterControlsUI );
-
-	          
-	                                                                                      
-	          
 
 	$.RegisterForUnhandledEvent( "GameState_RankRevealAll", Scoreboard.RankRevealAll );
 

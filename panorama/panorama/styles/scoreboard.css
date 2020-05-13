@@ -413,14 +413,6 @@ Button.sb-row__cell:hover {
 	height: 0px;
 }
 
-
-            
-                 
-
-	                   
- 
-            
-
                
  #id-sb-meta__musickit{
 
@@ -595,6 +587,10 @@ Button.sb-row__cell:hover {
 	                       
 
 
+}
+
+.sb-row.muted {
+	wash-color: #ff0000a0;
 }
 
 .sb-row--transition {
@@ -848,14 +844,23 @@ Label.sb-row__cell--ping__label--bot {
 }
 
 .sb-row__cell--avatar__muted{
+	visibility: collapse;
+
 	width: 80%;
 	height: 80%;
 	vertical-align: center;
 	horizontal-align: center;
 	opacity: 1;
-	background-color: #80808080;
+	background-color: #808080f0;
 
-	img-shadow:1px 1px 1px 1.0 #000000ff;
+  	                                     
+}
+
+
+.muted .sb-row__cell--avatar__muted{
+
+	visibility: visible;
+
 
 }
 
