@@ -35,6 +35,23 @@
                 <Image src="file://{images}/icons/ui/info.svg"/>
                 <Label text="#CSGO_Operation_Leaderboard_Type"/>
             </Button>
+            <Button id="JsTournamentLiveMatch" 
+                    class="FlatButton left-right-flow hidden" 
+                    onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsTournamentLiveMatch', '#CSGO_Watch_Info_gotv' );"
+					onmouseout="UiToolkitAPI.HideTextTooltip();">
+                <Panel class="pickem-live-dot" />
+                <Image id="JsTournamentLiveMatchTeam0" 
+                        texturewidth="32" 
+                        textureheight="32"
+                        class="vertical-center pickem-bracket-team__logo-shadow"
+                        src=""/>
+                <Label text="#WatchMenu_Tournament_Versus"/>
+                <Image id="JsTournamentLiveMatchTeam1" 
+                        texturewidth="32" 
+                        textureheight="32"
+                        class="vertical-center right-padding pickem-bracket-team__logo-shadow"
+                        src=""/>
+            </Button>
         </Panel>
     </Panel>
 

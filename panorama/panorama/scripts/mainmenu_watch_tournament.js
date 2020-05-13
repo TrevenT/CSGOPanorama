@@ -288,37 +288,8 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
-			var sectionsCount = PredictionsAPI.GetEventSectionsCount( tournament_id );
-			var activeSectionIndex = null;
-			for ( var i = 0; i < sectionsCount; i++ )
-			{
-				var sectionId = PredictionsAPI.GetEventSectionIDByIndex( tournament_id, i );
-				
-				if ( PredictionsAPI.GetSectionIsActive( tournament_id, sectionId ) )
-				{
-					activeSectionIndex = i;
-					break;
-				}
-			}
 
-			var tabIdToActivate = '';
-
-			if ( activeSectionIndex === 0 )
-			{
-				tabIdToActivate = 'id-nav-pick-prelims';
-			}
-			else if ( activeSectionIndex === 1 )
-			{
-				tabIdToActivate = 'id-nav-pick-group';
-			}
-			else if ( activeSectionIndex === 2 )
-			{
-				tabIdToActivate = 'id-nav-pick-playoffs';
-			}
-			else
-			{
-				tabIdToActivate = 'id-nav-pick-group';
-			}
+			var tabIdToActivate = 'id-nav-pick-group';
 
 			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );
 			

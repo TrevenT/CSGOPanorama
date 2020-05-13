@@ -269,6 +269,7 @@
 	height: fit-children;
 }
 
+.FlatButton,
 .pickem-group-team
 {
 	vertical-align: center;
@@ -557,7 +558,9 @@
 .pickem-item-not-owned.hidden,
 .pickem-bracket-team__logo.hidden,
 .pickem-bracket-team__name.hidden,
-.pickem-trophy-image.hidden
+.pickem-trophy-image.hidden,
+.IconButton.hidden,
+.FlatButton.hidden
 {
 	visibility: collapse;
 }
@@ -841,6 +844,11 @@
 	img-shadow: 0px 0px 4px #000000;
 }
 
+.pickem-bracket-team__logo-shadow
+{
+	img-shadow: 1px 1px 2px 2px #000000;
+}
+
 .pickem-bracket-team__name
 {
 	font-weight: medium;
@@ -869,4 +877,14 @@
 	box-shadow: 0px 0px 4px #000000;
 	horizontal-align: center;
 	font-size: 14px;
+}
+
+.pickem-live-dot
+{
+	vertical-align: center;
+	margin: 8px;
+	background-color: red;
+	border-radius: 50%;
+	width: 16px;
+	height: 16px;
 }

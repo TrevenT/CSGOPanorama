@@ -8,6 +8,7 @@ var PickEmInfoBar = ( function()
 		_SetUpLeaderboardButton( elPanel );
 		_UpdateTimer( elPanel );
 		_UpdateScore( elPanel );
+		_SetUpLiveButton( elPanel );
 	};
 
 	var _SetUpHowToPlayLink = function( elPanel )
@@ -186,6 +187,63 @@ var PickEmInfoBar = ( function()
 			elPointsNeeded.SetDialogVariable( 'plural', pluralString );
 		}
 	};
+
+	var _SetUpLiveButton = function ( elPanel )
+	{
+		var elParent = elPanel.FindChildTraverse( 'id-pickem-info' );
+		var elBtn = elParent.FindChildInLayoutFile( 'JsTournamentLiveMatch' );
+		var matchId = GetLiveMatchId( elPanel._oPickemData.oInitData.tournamentid );
+		
+		if( matchId )
+		{
+
+			for( var i = 0; i < 2; i ++ )
+			{
+				var teamId = MatchInfoAPI.GetMatchTournamentTeamID( matchId, i );
+				var teamTag = PredictionsAPI.GetTeamTag( teamId );
+				var iconFilename = 'file://{images}/tournaments/teams/' + teamTag + '.svg';
+				
+				elBtn.FindChildInLayoutFile( 'JsTournamentLiveMatchTeam' + i ).SetImage(  iconFilename );
+			}
+
+			elBtn.SetPanelEvent( 'onactivate', function (){
+				MatchInfoAPI.Watch( matchId );
+			});
+		}
+
+		elBtn.SetHasClass( 'hidden', matchId === '' );
+	};
+
+	function GetLiveMatchId( listerType )
+	{
+		var liveMatchesCount = 0;
+		
+		if ( MatchListAPI.GetCount( listerType ) != undefined )
+		{
+			liveMatchesCount = MatchListAPI.GetCount( listerType );
+		}
+		else
+		{
+			return '';
+		}
+		
+		if ( liveMatchesCount > 0 )
+		{
+			for ( var i = 0; i < liveMatchesCount; i++ )
+			{
+				var MatchId = MatchListAPI.GetMatchByIndex( listerType , i )
+				var TName = MatchInfoAPI.GetMatchTournamentName ( MatchId );
+				var Status = MatchInfoAPI.GetMatchState( MatchId );
+				
+				if (( TName != "" && TName != null && TName != undefined ) && Status == "live" )
+				{
+					return MatchId;
+				}
+			}
+		}
+		
+		return '';
+	}
 
 	var SetTrophyImage = function( elPanel, resultLevel )
 	{

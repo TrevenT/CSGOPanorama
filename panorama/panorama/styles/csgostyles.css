@@ -1415,7 +1415,8 @@ Button.PopupButton.Activated
 	background-color: positiveColor;
 }
 
-.PopupButton.Positive:hover
+.PopupButton.Positive:hover,
+.FlatButton.Positive:hover
 {
 	background-color: positiveColor;
 	brightness: 1.4;

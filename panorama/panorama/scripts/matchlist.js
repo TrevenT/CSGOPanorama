@@ -201,7 +201,21 @@ var matchList = ( function() {
             elSection.SetAttributeString('section_id', sectionDesc );
             elMatchlistDropdown.AddOption( elSection );
         }
-		elMatchlistDropdown.SetSelectedIndex( 0 );
+
+        var sectionsCount = PredictionsAPI.GetEventSectionsCount( tournamentId );
+        var activeIndex = sectionsCount - 1;
+        for ( var i = 0; i < sectionsCount; i++ )
+        {
+            var sectionId = PredictionsAPI.GetEventSectionIDByIndex( tournamentId, i );
+            if ( PredictionsAPI.GetSectionIsActive( tournamentId, sectionId ) )
+            {
+                activeIndex = i;
+                break;
+            }
+        }
+
+        elMatchlistDropdown.SetSelectedIndex( activeIndex );
+
         elMatchlistDropdown.RemoveClass( 'hide' );
         var elMatchList = elParentPanel.FindChildTraverse( "JsMatchList" );
         elMatchlistDropdown.SetPanelEvent( 'oninputsubmit', _OnTournamentSectionSelected.bind( undefined, elParentPanel, elMatchList, tournamentId ) );
