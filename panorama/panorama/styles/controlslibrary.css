@@ -510,6 +510,36 @@ Label.Orange
 	text-align: center;
 }
 
+.text-transform-none 
+{
+	font-size: 18px;
+	color: white;
+	text-transform: none;
+	overflow: noclip;
+}
+
+.text-transform-upper 
+{
+	font-size: 18px;
+	color: white;
+	text-transform: uppercase;
+	overflow: noclip;
+}
+
+.text-transform-lower 
+{
+	font-size: 18px;
+	color: white;
+	text-transform: lowercase;
+	overflow: noclip;
+}
+
+.dialogvar-case-test 
+{
+	font-size: 20px;
+	color: white;
+}
+
 .icon-test
 {
 	margin-top: 10px;

@@ -463,9 +463,16 @@
 						<Label text="Large text entry field" />
 						<TextEntry class="TestTextEntry" placeholder="Enter text here"/>
 					</Panel>
-					<Panel class="top-bottom-flow">
+					<Panel class="top-bottom-flow" onload="InitCaseTest()">
 						<Label class="scaled-text-scale3d" text="Scaled text using scale3d" />
 						<Label class="scaled-text-uiscale" text="Scaled text using ui-scale" />
+						<Label class="text-transform-none" text="Case Test:\t\tiİıI\tµ ŉ ſ ß\t\tϴ θ J̌ ǰ Ǆ ǆ ǅ Ǉ ǉ ǈ Ǌ ǌ ǋ Ǳ ǳ ǲ\t\tⒶⓐⒹⓓⒼⓖⒿⓙ" />
+						<Label class="text-transform-upper" text="Case Test:\tiİıI\tµ ŉ ſ ß\tϴ θ J̌ ǰ Ǆ ǆ ǅ Ǉ ǉ ǈ Ǌ ǌ ǋ Ǳ ǳ ǲ\tⒶⓐⒹⓓⒼⓖⒿⓙ" />
+						<Label class="text-transform-lower" text="Case Test:\t\tiİıI\tµ ŉ ſ ß\t\tϴ θ J̌ ǰ Ǆ ǆ ǅ Ǉ ǉ ǈ Ǌ ǌ ǋ Ǳ ǳ ǲ\t\t\tⒶⓐⒹⓓⒼⓖⒿⓙ" />
+						<Label id="CaseTest" class="dialogvar-case-test" text="{s:casetest} {s:u:casetest} {s:l:casetest}" />
+						<TextEntry class="text-transform-none" text="Test Text Entry"/>
+						<TextEntry class="text-transform-upper" text="Test Text Entry"/>
+						<TextEntry class="text-transform-lower" text="Test Text Entry"/>
 					</Panel>
 				</Panel>
 			</Panel>

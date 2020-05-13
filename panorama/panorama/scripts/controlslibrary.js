@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
                                                                                                     
           
@@ -275,6 +275,10 @@ function UpdateDialogVariables()
     $.Schedule( 1.0, UpdateDialogVariables );
 }
 
+function InitCaseTest()
+{
+	$("#CaseTest").SetDialogVariable("casetest", "iİıI");
+}
 
                                                                                                     
              
