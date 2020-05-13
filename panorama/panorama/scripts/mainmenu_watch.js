@@ -115,11 +115,11 @@ var mainmenu_watch = ( function() {
 			var pastTournamentPanel = elTournamentList.FindChildTraverse( "other-tournaments" );
 			
 			                                                                                                                      
-			var maxTournaments = g_ActiveTournamentInfo.eventid - 1;
+			                                                          
 			      
 
 			                                                                             
-			                                                      
+			var maxTournaments = g_ActiveTournamentInfo.eventid;
 			      
 
 			for (var i = maxTournaments; i >= 1; i--)
@@ -470,13 +470,14 @@ var mainmenu_watch = ( function() {
 		if ( restrictions === false )
 		{
 			                                                                                       
-			if ( true ) {
+			if ( false )
+			{
 				_InitResourceManagement( $( '#JsActiveTournament' ) );
 				_NavigateToTab( 'JsActiveTournament' );
 				$( '#WatchNavBarActiveTourament' ).checked = true;
+
+				return;
 			}
-			return;
-			
 		}
 		
 
@@ -487,7 +488,6 @@ var mainmenu_watch = ( function() {
 		                                                                            
 		                                
 		                                                  
-		
 	}
 
 	var _RunEveryTimeWatchIsShown = function()

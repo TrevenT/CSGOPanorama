@@ -10,7 +10,7 @@ var TournamentJournal = ( function()
                                                                                                                             
                                                          
                                                                                                                                    
-    var m_activeTournament = 16;
+    var m_activeTournament = 17;
     var m_tokenItemDefName = null;
     var m_scheduleHandle = null;
 
@@ -158,8 +158,9 @@ var TournamentJournal = ( function()
 
         var redeemed = InventoryAPI.GetItemAttributeValue( journalId, "operation drops awarded 0" );
         var redeemsAvailable = coinLevel - redeemed;
+        var redeemsEarned = ( coinLevel !== undefined ) ? coinLevel : 0;
 
-        $.GetContextPanel().SetDialogVariableInt( 'redeems_earned', ( coinLevel !== undefined ) ? coinLevel : 0 );
+        $.GetContextPanel().SetDialogVariableInt( 'redeems_earned', redeemsEarned );
         $.GetContextPanel().SetDialogVariableInt( 'redeems_remain', ( redeemsAvailable !== undefined ) ? redeemsAvailable : 0 );
 
                  
@@ -176,7 +177,7 @@ var TournamentJournal = ( function()
         
         var locStringModifier = tournamentId < 16 ? 'souvenir_v2' : 'token';
         
-        elLabel.text = redeemsAvailable === 1 ?
+        elLabel.text = redeemsEarned === 1?
             $.Localize( '#tournament_coin_earned_' + locStringModifier, elLabel ) :
             $.Localize( '#tournament_coin_earned_' + locStringModifier + '_multi', elLabel );
         
@@ -286,7 +287,11 @@ var TournamentJournal = ( function()
 
             elIcon.SetImage( iconPath );
             elChallenge.SetHasClass( 'complete', objData.value === 1 );
-            elChallenge.enabled = objData.value !== 1 && !m_isInMatch && m_activeTournament === tournamentId;
+
+                                                                                                          
+            var bForceEnablePlayContext = false;                                                                        
+
+            elChallenge.enabled = objData.value !== 1 && !m_isInMatch && ( m_activeTournament === tournamentId || bForceEnablePlayContext );
 
             if ( objData.context === "trophy" )
             {
@@ -458,7 +463,8 @@ var TournamentJournal = ( function()
     {
                                                                       
         var aData = [
-            { tournamentId: 15, team: 'astr', teamname: '#CSGO_TeamID_60', descString: '#CSGO_CollectibleCoin_Katowice2019_Champion' }
+            { tournamentId: 15, team: 'astr', teamname: '#CSGO_TeamID_60', descString: '#CSGO_CollectibleCoin_Katowice2019_Champion' },
+            { tournamentId: 16, team: 'astr', teamname: '#CSGO_TeamID_60', descString: '#CSGO_CollectibleCoin_berlin2019_Champion' }
                                       
         ];
 
@@ -493,7 +499,7 @@ var TournamentJournal = ( function()
                 '&' + 'asyncworkitemwarning=no' +
                 '&' + 'storeitemid=' + id,
                 'none'
-		);
+		        );
             } );
         }
     };
@@ -508,7 +514,7 @@ var TournamentJournal = ( function()
 			return;
 
         InventoryAPI.SetInventorySortAndFilters( 'inv_sort_age', false, 'item_definition:' + m_tokenItemDefName, '', '' );
-
+                                                            
         var count = InventoryAPI.GetInventoryCount();
         var aItemIds = [];
                                  

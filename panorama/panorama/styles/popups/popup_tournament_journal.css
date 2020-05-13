@@ -519,5 +519,15 @@
     visibility: collapse;
 }
 
+.tournament-over .tournament-journal__challenge:disabled:not(.complete) Label
+{
+    color: disabledColor;
+}
+
+.tournament-over .tournament-journal__challenge:disabled:not(.complete) Image
+{
+    wash-color: disabledColor;
+}
+
 
 

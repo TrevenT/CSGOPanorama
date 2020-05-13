@@ -27,6 +27,8 @@ var EOM_Voting = (function () {
 		{ 
 			return false;
 		}
+
+		$.RegisterForUnhandledEvent( 'EndOfMatch_Shutdown', _CancelUpdateJob );
 		
 		_m_pauseBeforeEnd = oTime[ "time" ];
 
@@ -164,6 +166,7 @@ var EOM_Voting = (function () {
 
 	var _UpdateVotes = function() {
 
+		_m_updateJob = undefined;
 		        
 
 		if ( !_m_cP || !_m_cP.IsValid() )
@@ -347,7 +350,19 @@ var EOM_Voting = (function () {
 
 	function _End() 
 	{
+		_CancelUpdateJob();
+		
 		$.DispatchEvent( 'EndOfMatch_ShowNext' );
+	}
+
+	function _CancelUpdateJob ()
+	{
+		if ( _m_updateJob != undefined )
+		{
+			$.CancelScheduled( _m_updateJob );
+			_m_updateJob = undefined;
+		}
+
 	}
 
 

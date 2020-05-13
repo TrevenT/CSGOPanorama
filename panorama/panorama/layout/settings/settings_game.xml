@@ -250,11 +250,11 @@
 					                                    
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_Identify_Teammates" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_teamid_overhead_always">
-							<Label text="#GameUI_Off" value="0" id="clteamidoverheadalways0"/>
-							<Label text="#GameUI_Settings_ShowLocation" value="1" id="clteamidoverheadalways1"/>
-							<Label text="#GameUI_Settings_ShowLocationAndEquipment" value="2" id="clteamidoverheadalways2"/>
-						</CSGOSettingsEnumDropDown>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_teamid_overhead_mode">
+              <Label text="#GameUI_Settings_ShowLocationAndEquipment" value="2" id="clteamidoverheadalways2"/>
+              <Label text="#GameUI_Settings_ShowLocation" value="1" id="clteamidoverheadalways1"/>
+              <Label text="#GameUI_Off" value="0" id="clteamidoverheadalways0"/>
+            </CSGOSettingsEnumDropDown>
 					</Panel>
 					<Panel class="horizontal-separator"/>
 

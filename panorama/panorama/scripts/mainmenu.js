@@ -591,7 +591,7 @@ var MainMenu = ( function() {
 		_ShowNewsAndStore();
 
 		                                     
-		_AddFeaturedPanel();
+		                      
 
 		_AddWatchNoticePanel();
 		
