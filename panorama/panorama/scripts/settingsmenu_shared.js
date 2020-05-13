@@ -5,6 +5,11 @@ var SettingsMenuShared = ( function () {
 
 	var _ResetControlsRecursive = function( panel )
 	{
+		if ( panel == null )
+		{
+			return;
+		}
+
 		if (panel.GetChildCount == undefined)
 		{
 			                                       
@@ -59,6 +64,11 @@ var SettingsMenuShared = ( function () {
 	
 	var _RefreshControlsRecursive = function( panel )
 	{
+		if ( panel == null )
+		{
+			return;
+		}
+
 		if ( panel.OnShow != undefined )
 		{
 			panel.OnShow();

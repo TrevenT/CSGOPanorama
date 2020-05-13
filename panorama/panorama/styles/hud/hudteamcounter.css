@@ -491,6 +491,35 @@ CSGOHudTeamCounter Label
     img-shadow: 0px 0px 1px 1.0 #000000CC;
 }
 
+.avatar-speaking
+{
+    width: 34px;
+    height: 34px;
+
+	horizontal-align: left;
+	vertical-align: bottom;
+	wash-color: #DDDDDD;
+
+    padding-left: 0px;
+    margin-left: 0px;
+	margin-bottom: 2px;
+}
+
+.avatar-s-speaking
+{
+    width: 20px;
+    height: 20px;
+
+	horizontal-align: center;
+	vertical-align: center;
+	wash-color: #BBBBBB;
+
+    padding-left: -5px;
+	padding-bottom: 2px;
+                         
+    opacity: 0.8;
+}
+
 .AvatarL__Sound
 {
     x: 20px;

@@ -5,7 +5,7 @@
 @define CrosshairPanelOffset: translate3d( 0.5px, 0.5px, 0px );
 
                              
-@define cppPipDefaultOffset: 8;                                                                          
+@define cppPipDefaultOffset: 7;                                                                          
                                                                                                
                                                       
 
@@ -124,6 +124,8 @@ CSGOHudReticle Label
 {
 	width: 1px;
 	height: 1px;
+
+                   
 
 	horizontal-align: center_nopixelsnap;
 	vertical-align: center_nopixelsnap;

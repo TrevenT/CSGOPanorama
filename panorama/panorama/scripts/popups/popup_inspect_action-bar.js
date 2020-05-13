@@ -309,7 +309,7 @@ var InspectActionBar = ( function (){
 	{
 		$.DispatchEvent( "PlaySoundEffect", "inventory_inspect_close", "MOUSE" );
 
-		if ( m_modelImagePanel.IsValid() )
+		if ( m_modelImagePanel && m_modelImagePanel.IsValid() )
 		{
 			InspectModelImage.CancelCharAnim( m_modelImagePanel );
 		}

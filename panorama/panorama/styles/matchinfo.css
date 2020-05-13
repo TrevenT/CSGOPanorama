@@ -472,7 +472,6 @@
 
 .sb-row__cell--name Label#name__label
 {
-	width: fit-children;
 	horizontal-align: left;
 }
 

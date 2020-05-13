@@ -2,6 +2,7 @@
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/hud/hudteamcounter.css" />
+    <include src="file://{resources}/styles/hud/hudvoicestatus.css" />
 	</styles>
 
 	<snippets>
@@ -39,22 +40,15 @@
 					<Image id="PlayerColor" class="AvatarL__PlayerColor" src="file://{images}/hud/teamcounter/teamcounter_playercolor.png"/>
 					<Label id="PlayerLetter" class="AvatarL__PlayerLetter"/>
 
-					                                                  
-					<Panel id="Sound" class="AvatarL__Sound">
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarL__SoundShadow--2 Avatar__Sound--2Animate" src="file://{images}/hud/teamcounter/teamcounter_sound-2.png"/>
-							<Image class="AvatarL__Sound--2 Avatar__Sound--2Animate" src="file://{images}/hud/teamcounter/teamcounter_sound-2.png"/>
-						</Panel>
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarL__SoundShadow--1 Avatar__Sound--1Animate" src="file://{images}/hud/teamcounter/teamcounter_sound-1.png"/>
-							<Image class="AvatarL__Sound--1 Avatar__Sound--1Animate" src="file://{images}/hud/teamcounter/teamcounter_sound-1.png"/>
-						</Panel>
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarL__SoundShadow--Off" src="file://{images}/hud/teamcounter/teamcounter_sound-off.png"/>
-							<Image class="AvatarL__Sound--Off" src="file://{images}/hud/teamcounter/teamcounter_sound-off.png"/>
-						</Panel>
-					</Panel>
-
+          <Panel id="Sound" class="avatar-speaking">
+            <Panel class="SoundAnim Looping">
+              <Panel class="SpeakerIcon" />
+              <Panel class="SoundIcon1"/>
+              <Panel class="SoundIcon2"/>
+              <Panel class="SoundIcon3"/>
+            </Panel>
+          </Panel>
+          
 				</Panel>                   
 
 			</Panel>
@@ -85,23 +79,15 @@
 
 					<Image id="Nemesis" class="AvatarS__Nemesis" src="file://{images}/icons/ui/nemesis.svg"/>
 
-					                                                  
-					<Panel id="Sound" class="AvatarS__Sound">
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarS__SoundShadow--Off" src="file://{images}/icons/ui/sound_off.svg"/>
-							<Image class="AvatarS__Sound--Off" src="file://{images}/icons/ui/sound_off.svg"/>
-						</Panel>
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarS__SoundShadow--1 Avatar__Sound--1Animate" src="file://{images}/icons/ui/sound_1.svg"/>
-							<Image class="AvatarS__Sound--1 Avatar__Sound--1Animate" src="file://{images}/icons/ui/sound_1.svg"/>
-						</Panel>
-						<Panel class="Avatar_SoundWithShadow">
-							<Image class="AvatarS__SoundShadow--2 Avatar__Sound--2Animate" src="file://{images}/icons/ui/sound_2.svg"/>
-							<Image class="AvatarS__Sound--2 Avatar__Sound--2Animate" src="file://{images}/icons/ui/sound_2.svg"/>
-						</Panel>
-						
-					</Panel>
-
+          <Panel id="Sound" class="avatar-s-speaking">
+            <Panel class="SoundAnim Looping">
+              <Panel class="SpeakerIcon" />
+              <Panel class="SoundIcon1"/>
+              <Panel class="SoundIcon2"/>
+              <Panel class="SoundIcon3"/>
+            </Panel>
+          </Panel>
+          
 				</Panel>                   
 
 			</Panel>

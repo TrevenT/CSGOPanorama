@@ -79,7 +79,7 @@ var MainMenuStore = ( function()
 				
 				itemsByCategory.keys.push( FauxItemId );
 			}
-			else if ( StoreAPI.IsBannerEntryMarketLink( i ) == 1 )
+			else if ( StoreAPI.IsBannerEntryMarketLink( i ) === true )
 			{
 				if ( !itemsByCategory.market )
 				{

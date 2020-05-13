@@ -432,8 +432,13 @@ var InventoryPanel = ( function (){
 	                                                                                                    
 	var _GetActiveCategoryLister = function( activePanel )
 	{
-		var elList = activePanel.FindChildInLayoutFile( _m_activeCategory + '-List' );
-		return ( elList ) ? elList : null;
+		if ( activePanel )
+		{
+			var elList = activePanel.FindChildInLayoutFile( _m_activeCategory + '-List' );
+			return ( elList ) ? elList : null;
+		}
+
+		return null;
 	};
 
 	var _GetSelectedSort = function( activePanel )

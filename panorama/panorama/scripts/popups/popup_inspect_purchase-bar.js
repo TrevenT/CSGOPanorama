@@ -58,6 +58,9 @@ var InpsectPurchaseBar = ( function()
 
 	var _UpdatePurchasePrice = function ()
 	{
+		if ( !m_elPanel.IsValid() )
+			return;
+		
 		var elBtn = m_elPanel.FindChildInLayoutFile( 'PurchaseBtn' );
 		var elDropdown = m_elPanel.FindChildInLayoutFile( 'PurchaseCountDropdown' );
 		var qty = 1;

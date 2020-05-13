@@ -200,9 +200,12 @@ var CapabilityNameable = ( function()
 
 	var _OnEntryChanged = function()
 	{
-		$.DispatchEvent( "PlaySoundEffect", "rename_teletype", "MOUSE" );
-		m_elNameDisplay.text = m_elTextEntry.text;
-		_UpdateAcceptState();
+		if ( m_elNameDisplay && m_elNameDisplay.IsValid() )
+		{
+			$.DispatchEvent( "PlaySoundEffect", "rename_teletype", "MOUSE" );
+			m_elNameDisplay.text = m_elTextEntry.text;
+			_UpdateAcceptState();
+		}
 	};
 
 	var _UpdateAcceptState = function()

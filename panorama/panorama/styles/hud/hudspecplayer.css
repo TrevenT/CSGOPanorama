@@ -14,13 +14,25 @@
 
 .HudSpecplayerRoot
 {
-	flow-children: up;
+    flow-children: none;
 	                      
+	                
+	               
+	height: 100%;
+	width: 100%;
+	horizontal-align: center;
+    vertical-align: center;
+	visibility: collapse;
+}
+
+.HudSpecplayerParentContainer
+{
 	height: 260px;
 	width: 642px;
 	horizontal-align: center;
     vertical-align: bottom;
-	visibility: collapse;
+
+	flow-children: up;
 }
 
 .HudSpecplayerRoot--visible
@@ -84,6 +96,29 @@
     text-overflow: shrink;
     color: white;
     white-space: nowrap;
+}
+
+.HudSpecplayer__Stats_DamageTaken
+{
+    width: HudSpecplayer_PanelWidth;
+    height: 22px;
+    horizontal-align: center;
+    background-color: gradient( linear, 50% 0%, 100% 0%, from( #000000EE ), to( #00000000 ) );
+                           
+    font-size: 16px;
+    padding-top: 1px;
+    padding-left: 6px;
+    text-align: left;
+    font-family: Stratum2, 'Arial Unicode MS';
+                          
+    text-shadow: 1px 1px 1px 1.0 black;
+    color: #DDDDDDFF;
+    text-overflow: shrink;
+}
+
+.HudSpecplayer__Stats_DamageTaken--Hidden
+{
+	visibility: collapse;
 }
 
 #HudSpecplayer__Stats
@@ -191,6 +226,55 @@
                                                                        
       
     background-color: #00000000;
+}
+
+.HudSpecplayer__ReplayPlayerTag
+{
+    width: 512px;
+	height: 256px;
+	                                  
+	transform-origin: 50% 100%;
+	x: -256px;	                   
+	y: -256px; 	                
+
+                                  
+
+    visibility: visible;
+}
+
+.HudSpecplayer__ReplayPlayerArrow
+{
+    horizontal-align: center_nopixelsnap;
+	vertical-align: bottom;
+                                       
+    width: 42px;
+    height: 42px;
+
+    wash-color: #555555FF;
+}
+
+.HudSpecplayer__ReplayPlayerText
+{
+    height: 48px;
+
+    border: 2px solid #555555FF;
+
+    font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 38px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px 2.0 black;
+    text-align: center;
+    color: #FFFFFFFF;
+
+    horizontal-align: center;
+    vertical-align: bottom;
+    margin-bottom: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    background-color: #222222FF;
+
+    visibility: visible;
 }
 
 .HudSpecplayer__SponserLogos

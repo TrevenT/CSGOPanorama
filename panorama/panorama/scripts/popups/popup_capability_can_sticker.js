@@ -403,7 +403,11 @@ var CapabilityCanSticker = ( function()
 
 	var _CancelWaitforCallBack = function()
 	{
-		_CancelHandleForTimeout();
+		                                                                              
+		                                                                                   
+		                                                                                 
+		                           
+		m_scheduleHandle = null;
 		_ClosePopUp();
 
 		UiToolkitAPI.ShowGenericPopupOk(

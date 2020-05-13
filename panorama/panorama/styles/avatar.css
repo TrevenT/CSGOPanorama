@@ -50,6 +50,15 @@
 	margin-left: 14px;
 }
 
+.avatar-lobby-speaking
+{
+	horizontal-align: left;
+	vertical-align: bottom;
+	wash-color: #FFD700;
+
+	margin-bottom: 5px;
+}
+
 .avatar--party .avatar-flair__icon
 {
 	height: 32px;
@@ -158,7 +167,8 @@
 .avatar-image__icon.hidden,
 .avatar-image__status.hidden,
 .avatar-teamcolor.hidden,
-.avatar-lobby-leader.hidden
+.avatar-lobby-leader.hidden,
+.avatar-lobby-speaking.hidden
 {
 	visibility: collapse;
 	opacity: 0;

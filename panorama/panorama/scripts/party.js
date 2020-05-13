@@ -295,14 +295,18 @@ var PartyMenu = ( function()
 		_RefreshPartyMembers();
 	};
 
-	var _UpdateLobbyMember = function( xuid )
+	var _PlayerActivityVoice = function( xuid )
 	{
 		var elPartyMembersList = $( '#PartyList' ).FindChildInLayoutFile( 'PartyMembers' );
 
-		elPartyMembersList.Children.forEach(element => {
+		elPartyMembersList.Children().forEach(element => {
 			if ( element.Data().xuid === xuid )
 			{
-				_UpdateExistingPartyMember( element, xuid );
+				var elAvatar = element.FindChildInLayoutFile( xuid );
+				if ( elAvatar )
+				{
+					Avatar.UpdateTalkingState( elAvatar, xuid );
+				}
 			}
 		});
 	};
@@ -338,7 +342,7 @@ var PartyMenu = ( function()
 		Init	: _Init,
 		SessionUpdate	: _SessionUpdate,
 		RefreshPartyMembers	:_RefreshPartyMembers,
-		UpdateLobbyMember:	_UpdateLobbyMember,
+		PlayerActivityVoice : _PlayerActivityVoice,
 	};
 } )();
 
@@ -353,5 +357,6 @@ var PartyMenu = ( function()
 	PartyMenu.Init();
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", PartyMenu.SessionUpdate );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_PlayerUpdated", PartyMenu.SessionUpdate );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_PartyList_PlayerActivityVoice", PartyMenu.PlayerActivityVoice );
 
 })();

@@ -77,8 +77,7 @@
 			<Panel id="RightArc" class="crosshair__arc crosshair__arc--vertical" />
 			<Panel id="BottomArc" class="crosshair__arc crosshair__arc--horizontal" />
 			<Panel id="LeftArc" class="crosshair__arc crosshair__arc--vertical" />
-		
-			<Image class="crosshair__dot" src="file://{images}/hud/reticle/reticle_centerdot.svg" textureheight="1"/>
+					
 			<Image id="FriendCrosshair" class="crosshair__friend" src="file://{images}/hud/reticle/reticlefriend.png" />
 
 			                                  
@@ -88,6 +87,8 @@
 			<Image id="LeftPipBlack" class="crosshair__pip crosshair__pip--black" src="file://{images}/hud/reticle/reticlepip.png" orientation="270" />
 
 			<Image class="crosshair__blackcircle" src="file://{images}/hud/reticle/reticlecircle.png" scaling="stretch" />
+
+      <Image class="crosshair__dot" src="file://{images}/hud/reticle/reticle_dot.png" textureheight="1"/>
 		</Panel>
 
 		                           

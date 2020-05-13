@@ -449,7 +449,10 @@ var CapabilityDecodable = ( function()
 		
 		for ( var i = 0; i < numTilesInScroll; i++ )
 		{
-			displayItemsList.push( GetItemBasedOnDisplayWeight( totalWeight, m_aItemsInLootlist ));
+			var itemToAdd = GetItemBasedOnDisplayWeight( totalWeight, m_aItemsInLootlist );
+			
+			if( itemToAdd )
+				displayItemsList.push( itemToAdd );
 		}
 		
 		lists.forEach( element =>
@@ -505,7 +508,7 @@ var CapabilityDecodable = ( function()
 			
 			if ( Random <= weightOfItem )
 				return aItemsInLootlist[ i ].id;
-		}	
+		}
 	};
 
 	                                                                                                    
@@ -539,6 +542,8 @@ var CapabilityDecodable = ( function()
 			}
 			else
 			{
+				$.DispatchEvent( "PlaySoundEffect", "container_countdown", "MOUSE" );
+
 				elCountdownLabel.text = counterVal;
 
 				elCountdownLabel.RemoveClass( 'popup-countdown-anim' );

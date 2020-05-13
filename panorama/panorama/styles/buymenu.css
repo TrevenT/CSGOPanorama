@@ -71,6 +71,7 @@
 .buymenu-timeleft
 {
 	horizontal-align: center;
+	vertical-align: center;
 	margin-left:12px;
 }
 
@@ -508,7 +509,8 @@
 	text-align: left;
 	horizontal-align: left;
 	font-size: 14px;
-	margin: 3px 0px 5px 0px;
+	margin: 3px 0px 3px 0px;
+	padding-bottom: 2px;
 	padding: 0px 12px;
 	font-family: Stratum2, 'Arial Unicode MS';
 	font-weight: medium;
@@ -520,7 +522,8 @@
 	horizontal-align: right;
 	padding-right: 12px;
 	font-size: 14px;
-	margin: 3px 0px 5px 0px;
+	margin: 3px 0px 3px 0px;
+	padding-bottom: 2px;
 	font-family: Stratum2, 'Arial Unicode MS';
 	font-weight: medium;
 }

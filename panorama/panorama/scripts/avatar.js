@@ -13,7 +13,7 @@ var Avatar = ( function()
 				_SetImage( elAvatar, xuid );
 				_SetFlair( elAvatar, xuid );
 				_SetTeamColor( elAvatar, xuid );
-				_SetLobbyLeader( elAvatar, xuid );
+				_SetLobbyLeader( elAvatar );
 				break;
 			default:
 				_SetImage( elAvatar, xuid );
@@ -93,7 +93,7 @@ var Avatar = ( function()
 		}
 	};
 
-	var _SetTeamLetter = function( elAvatar, xuid, nSlot )
+	var _SetTeamLetter = function( elAvatar, xuid )
 	{
 		var teamColor = PartyListAPI.GetPartyMemberSetting( xuid, 'game/teamcolor' );
 		var elTeamLetter = elAvatar.FindChildTraverse( 'JsAvatarTeamLetter' );
@@ -110,11 +110,13 @@ var Avatar = ( function()
 		var teamLetter = elTeamLetter._GetTeamColorLetter( Number( teamColor ) );
 		elTeamLetter.RemoveClass( 'hidden' );
 		elTeamLetter.text = teamLetter;
-
 	};
 
-	var _SetLobbyLeader = function( elAvatar, xuid )
+	var _SetLobbyLeader = function( elAvatar )
 	{
+		if ( !elAvatar.hasOwnProperty( "GetAttributeString" ) )
+			return;
+		
 		var show = elAvatar.GetAttributeString( 'showleader', '' );
 		var elLeader = elAvatar.FindChildTraverse( 'JsAvatarLeader' );
 		
@@ -127,8 +129,33 @@ var Avatar = ( function()
 		}
 	};
 
+	var _UpdateTalkingState = function( elAvatar, xuid, bCalledFromScheduledFunction )
+	{
+		if ( !elAvatar || !elAvatar.IsValid() )
+			return;
+
+		var elSpeaking = elAvatar.FindChildTraverse( 'JsAvatarSpeaking' );
+		if ( !elSpeaking )
+			return;
+
+		var bFriendIsTalking = PartyListAPI.GetFriendIsTalking( xuid );
+		elSpeaking.SetHasClass( 'hidden', !bFriendIsTalking );
+
+		if ( bFriendIsTalking && ( bCalledFromScheduledFunction || !elAvatar.GetAttributeString( 'updatetalkingstate', '' ) ) )
+		{
+			var schfn = $.Schedule( .1, _UpdateTalkingState.bind( this, elAvatar, xuid, true ) );
+			elAvatar.SetAttributeString( 'updatetalkingstate', '' + schfn );
+		}
+
+		if ( !bFriendIsTalking )
+		{
+			elAvatar.SetAttributeString( 'updatetalkingstate', '' );
+		}
+	};
+
 	return {
-		Init: _Init
+		Init: _Init,
+		UpdateTalkingState : _UpdateTalkingState
 	};
 })();
 

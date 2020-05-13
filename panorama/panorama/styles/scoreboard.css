@@ -249,6 +249,10 @@ Label {
 	horizontal-align: left;
 	margin-top: 6px;
 
+	max-height: 20px;
+	max-width: 500px;
+	text-overflow: ellipsis;
+
 	vertical-align: top;
 	position: 0px 50px 0px;
 
@@ -751,10 +755,7 @@ Label.sb-row__cell--ping__label--bot {
 
 .sb-row__cell--name {
 	width: 400px;
-}
-
-.sb-row__cell--name Label{
-	font-family: Stratum2, 'Arial Unicode MS';
+	flow-children: left;
 }
 
 .sb-clantag {
@@ -766,17 +767,22 @@ Label.sb-row__cell--ping__label--bot {
 
                                           
 .sb-row__cell--name Label {
+	font-family: Stratum2, 'Arial Unicode MS';
+
 	width: 100%;
 	text-align: left;
+	text-overflow: ellipsis;
+	max-height: 24px;
+
+	width: fill-parent-flow( 1.0 );
 
 	                                                                     
 	margin-top: 2px;
-	overflow: noclip;
 }
 
                              
 #id-sb-name__nameicons {
-	width: 100%;
+	width: fit-children;
 	height: 100%;
 
 	horizontal-align: right;

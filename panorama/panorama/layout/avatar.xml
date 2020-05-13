@@ -2,6 +2,7 @@
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/avatar.css" />
+		<include src="file://{resources}/styles/hud/hudvoicestatus.css" />
 	</styles>
 
 	<scripts>
@@ -39,6 +40,14 @@
 				</Panel>
 				<Panel id="JsAvatarLeader" class="avatar-lobby-leader hidden">
 					<Image class="avatar-flair__icon" src="file://{images}/icons/ui/leader.svg" scaling="stretch-to-fit-preserve-aspect" texturewidth="16" textureheight="-1"/>
+				</Panel>
+				<Panel id="JsAvatarSpeaking" class="avatar-lobby-speaking hidden">
+					<Panel class="SoundAnim Looping">
+						<Panel class="SpeakerIcon" />
+						<Panel class="SoundIcon1"/>
+						<Panel class="SoundIcon2"/>
+						<Panel class="SoundIcon3"/>
+					</Panel>
 				</Panel>
 			</Button>
 		</snippet>

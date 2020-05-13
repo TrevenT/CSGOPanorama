@@ -40,7 +40,11 @@ var ItemContextMenu = ( function (){
 	}
 	function GetMapTargets() 
 	{
-		var mapsInMapGroup = GameStateAPI.GetMapsInCurrentMapGroup().split( ',' );
+		var strMaps = GameStateAPI.GetMapsInCurrentMapGroup();
+		if ( strMaps === null || strMaps === "" )
+			return [];
+
+		var mapsInMapGroup = strMaps.split( ',' );
 		                            
 		return mapsInMapGroup.map( function ( curMap ) {
 			return { displayName: $.Localize( GetMapDisplayName( curMap ) ), voteParam: curMap };

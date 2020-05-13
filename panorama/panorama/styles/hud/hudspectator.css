@@ -890,6 +890,7 @@
                         
 
 	max-height: 27px;
+	max-width: 215px;
 	vertical-align: center;
 	overflow: squish noclip;
 	text-overflow: ellipsis;
@@ -911,7 +912,8 @@
     text-align: right;
                         
 
-    max-height: 27px;
+	max-height: 27px;
+	max-width: 215px;
 	vertical-align: center;
 	overflow: squish noclip;
 	text-overflow: ellipsis;

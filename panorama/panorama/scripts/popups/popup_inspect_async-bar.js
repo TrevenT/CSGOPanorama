@@ -199,7 +199,7 @@ var InspectAsyncActionBar = ( function()
 	};
 
 	var _OnAccept = function( elPanel, funcGetSettingCallback, funcCallbackOnAction )
-	{
+	{	
 		if ( m_scheduleHandle )
 		{
 			$.CancelScheduled( m_scheduleHandle );
@@ -215,6 +215,7 @@ var InspectAsyncActionBar = ( function()
 
 	var _ClosePopup = function()
 	{
+		_ResetTimeouthandle();
 		$.DispatchEvent( 'HideSelectItemForCapabilityPopup' );
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
 		$.DispatchEvent( 'CapabilityPopupIsOpen', false );
@@ -222,8 +223,11 @@ var InspectAsyncActionBar = ( function()
 
 	var _CancelWaitforCallBack = function( elPanel )
 	{
+		_ResetTimeouthandle();
+		
 		var elSpinner = elPanel.FindChildInLayoutFile( 'NameableSpinner' );
 		elSpinner.AddClass( 'hidden' );
+
 		_ClosePopup();
 
 		UiToolkitAPI.ShowGenericPopupOk(

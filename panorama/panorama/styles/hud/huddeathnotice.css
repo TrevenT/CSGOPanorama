@@ -147,6 +147,11 @@ CSGOHudDeathNotice Label
 	margin-bottom: 2px;
 	letter-spacing: 0.45px;
 	text-shadow-fast: 1px 1px #000000;
+
+	max-height: 30px;
+	max-width: 300px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .DeathNoticeCTColor

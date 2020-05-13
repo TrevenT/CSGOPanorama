@@ -53,7 +53,12 @@ var ItemTile = ( function()
 
 	var _SetItemRarity = function( id )
 	{
-		$.GetContextPanel().FindChildInLayoutFile( 'JsRarity' ).style.backgroundColor = ItemInfo.GetRarityColor( id );
+		var color = ItemInfo.GetRarityColor( id );
+
+		if ( !color )
+			return;
+		
+		$.GetContextPanel().FindChildInLayoutFile( 'JsRarity' ).style.backgroundColor = color;
 	};
 
 	var _SetEquippedState = function( id )

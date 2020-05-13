@@ -246,12 +246,12 @@
 	width: 6px;
 	height: 22px;
 	vertical-align: middle;
-	background-image: url( "file://{images}/icons/ui/sound_1.svg" );
+	background-image: url( "file://{images}/icons/ui/sound_3.svg" );
 	img-shadow: 1px 1px 1px #00000040;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
-	margin-left: 0px;
+	margin-left: -4px;
 }
 
 .SoundAnim.Looping .SoundIcon3

@@ -101,6 +101,8 @@ var Loadout = ( function() {
 		
 		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( itemId );
 		
+		InventoryAPI.PrecacheCustomMaterials( itemId );
+
 		                                                  
 		elModel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
 			modelPath,

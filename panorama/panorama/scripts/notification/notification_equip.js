@@ -4,6 +4,9 @@ var EquipNotification = ( function()
 {
 	var _ShowNotification = function( elPanel, slot, itemId )
 	{
+		if ( !elPanel || !InventoryAPI.IsItemInfoValid( itemId ) )
+			return;
+		
 		if ( elPanel.BHasClass( 'show' ) )
 		{
 			elPanel.RemoveClass( 'show' );

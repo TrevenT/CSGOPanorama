@@ -20,6 +20,8 @@
 				<CSGOHudDemolitionProgression id="HudDemolitionProgression" />
 			</Panel>
 
+      <CSGOHudSpecPlayer id="HudSpecPlayer"/>
+
 			<CSGOHudWinPanel id="HudWinPanel"/>
 
 			<Panel id="HudTopLeft">
@@ -39,7 +41,7 @@
 			<Panel id="HudBottomCenter">
 				<CSGOHudProgressBar id="HudProgressBar"/>
 				<CSGOHudHintText id="HudHintText"/>
-				<CSGOHudSpecPlayer id="HudSpecPlayer"/>
+				
 			</Panel>
 
 			<Panel id="HudLowerLeft">
