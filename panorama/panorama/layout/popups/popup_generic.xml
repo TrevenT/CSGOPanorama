@@ -14,7 +14,7 @@
                                                                                   
       </Panel>
 
-			<Label id="MessageLabel" html="true" allowrawtext="true" />	                             
+			<Label id="MessageLabel" allowrawtext="true" />	                             
 		</Panel>
     <Panel class="Confirmation" >
       <Label text="#GenericConfirmText_Label" />
