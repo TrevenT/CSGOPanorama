@@ -19,6 +19,11 @@
 	height: 130px;
 }
 
+.MatchTile.MatchTile--Redeem
+{
+    ui-scale: 150%;
+}
+
 .MatchTile--Collapse
 {
     height: 0px;
@@ -89,6 +94,11 @@
     text-align: left;
     vertical-align: center;
     color: #CCCCCC;
+}
+
+.MatchTile--Redeem .MatchInfo
+{
+    margin-left: 8px;
 }
 
 .MatchInfo__Stats

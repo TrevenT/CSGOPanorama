@@ -1409,12 +1409,19 @@ Button.PopupButton.Activated
 	sound: "UIPanorama.generic_button_press";
 }
 
-.PopupButton.Positive
+.PopupButton.Positive,
+.IconButton.Positive
 {
 	background-color: positiveColor;
 }
 
+.IconButton.Positive Image
+{
+	margin:12px;
+}
+
 .PopupButton.Positive:hover,
+.IconButton.Positive:hover,
 .FlatButton.Positive:hover
 {
 	background-color: positiveColor;
@@ -1546,6 +1553,7 @@ Button.PopupButton.Activated
 
 .PopupButton:disabled,
 .PopupButton.Positive:disabled,
+.IconButton.Positive:disabled
 {
 	wash-color: disabledColor;
 	brightness: 1;

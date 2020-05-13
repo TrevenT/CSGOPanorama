@@ -11,6 +11,7 @@ var InspectActionBar = ( function (){
 	var m_showEquip = true;
 	var m_showSave = true;
 	var m_showMaketLink = false;
+	var m_showCharSelect = true;
 
 	var m_previewingMusic = false;
 	
@@ -20,7 +21,7 @@ var InspectActionBar = ( function (){
 			return;
 		
 		elPanel.RemoveClass( 'hidden' );
-		
+
 		m_modelImagePanel = elItemModelImagePanel;
 		m_itemId = itemId;
 		m_callbackHandle = funcGetSettingCallbackInt( 'callback', -1 );
@@ -28,6 +29,7 @@ var InspectActionBar = ( function (){
 		m_showEquip = ( funcGetSettingCallback( 'showequip', 'true' ) === 'false' );
 		m_showSave = ( funcGetSettingCallback( 'allowsave', 'true' ) === 'true' );
 		m_showMaketLink = ( funcGetSettingCallback( 'showmarketlink', 'false' ) === 'true' );
+		m_showCharSelect = ( funcGetSettingCallback( 'showcharselect', 'true' ) === 'true' );
 		
 		_SetUpItemCertificate( elPanel, itemId );
 		_SetupEquipItemBtns( elPanel, itemId );
@@ -180,7 +182,13 @@ var InspectActionBar = ( function (){
 	                                                                                                    
 	var _ShowWeaponAndCharacterModelBtns = function ( elPanel, id )
 	{
+		if ( m_showCharSelect === false )
+		{
+			return;
+		}
+		
 		var list = _GetValidCharacterModels( id );
+
 		if ( ( list && list.length > 0 ) &&
 			!ItemInfo.IsEquippalbleButNotAWeapon( id ) &&
 			!ItemInfo.ItemMatchDefName( id, 'sticker' ) &&
@@ -194,11 +202,11 @@ var InspectActionBar = ( function (){
 							ItemInfo.GetSlotSubPosition(id),
 							ItemInfo.GetItemDefinitionName(id),
 							id
-						);
-			
+			);
+	
 			elPanel.FindChildInLayoutFile( 'InspectCharBtn' ).SetHasClass( 'hidden', !hasAnims );
 			elPanel.FindChildInLayoutFile( 'InspectWeaponBtn' ).SetHasClass( 'hidden', !hasAnims );
-
+			
 			if ( hasAnims )
 			{
 				_SetDropdown( elPanel, list, id );
@@ -229,10 +237,11 @@ var InspectActionBar = ( function (){
 			});
 	
 			elDropdown.AddOption( newEntry );
-		});
+		} );
+		
 
 		elDropdown.SetPanelEvent( 'oninputsubmit', InspectActionBar.OnUpdateCharModel.bind( undefined, false, elDropdown, id ));
-		elDropdown.SetSelected( vaildEntiresList[0].model );
+		elDropdown.SetSelected( vaildEntiresList[ 0 ].model );
 		elDropdown.SetPanelEvent( 'oninputsubmit', InspectActionBar.OnUpdateCharModel.bind( undefined, true, elDropdown, id ));
 	};
 

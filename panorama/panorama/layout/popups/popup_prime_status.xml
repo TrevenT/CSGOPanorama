@@ -41,7 +41,7 @@
 			</Panel>
 		</Panel>
 		<Panel id="ButtonPanel" class="prime-status__buttons">
-			<Panel id="LoadingProgress" class="prime-status__loading">
+			<Panel id="LoadingProgress" class="popupbuttonrow__status__loading">
 				<Panel id="Spinner" class="Spinner SpinnerVisible"/>
 				<Label id="LoadingText" html="true" text="" />
 			</Panel>

@@ -117,3 +117,18 @@
 {
 	color: #8BB2D5;
 }
+
+.popupbuttonrow__status__loading
+{
+	width: fit-children;
+	height: fit-children;
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children: right;
+}
+
+.popupbuttonrow__status__loading Label,
+.popupbuttonrow__status__loading .Spinner
+{
+	margin: 10px;
+}

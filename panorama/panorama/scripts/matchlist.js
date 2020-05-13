@@ -279,6 +279,8 @@ var matchList = ( function() {
             parentPanel.activeMatchInfoPanel.matchId = matchId;
             parentPanel.activeMatchInfoPanel.matchListDescriptor = matchListDescriptor;
             parentPanel.activeMatchInfoPanel.BLoadLayout( "file://{resources}/layout/matchinfo.xml", false, false );
+            parentPanel.activeMatchInfoPanel.tournament_id = parentPanel.tournament_id;
+            parentPanel.activeMatchInfoPanel.tournamentIndex = parentPanel.tournamentIndex;
         
             matchInfo.Init( parentPanel.activeMatchInfoPanel );
         }
@@ -394,6 +396,7 @@ var matchList = ( function() {
         if ( ( nCount > 0 ) && ( parentPanel.tournament_id ) )
         {
             tournamentIndex = parentPanel.tournament_id.split(':')[1];
+            parentPanel.tournamentIndex = tournamentIndex;
             if ( !parentPanel.matchListDropdownIsPopulated )
             {
                 if ( tournamentIndex > 3 )

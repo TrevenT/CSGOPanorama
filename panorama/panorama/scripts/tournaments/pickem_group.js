@@ -49,6 +49,7 @@ var PickEmGroup = ( function()
 			);
 
 			PickemCommon.UpdateCorrectPickState(
+				elPanel._oPickemData.oTournamentData.tournamentid,
 				oGroupData,
 				PredictionsAPI.GetGroupCorrectPicksByIndex( elPanel._oPickemData.oTournamentData.tournamentid, oGroupData.id, i ),
 				oGroupData.picks[i].localid,

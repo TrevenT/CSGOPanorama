@@ -119,13 +119,48 @@ var MainMenuTournamentPassStatus = ( function() {
 			return;
 
 		var elCountdown = elPanelParam.FindChildInLayoutFile( 'id-tournament-pass-status-game-countdown' );
-		if ( !elCountdown )
-			return;
-
 		var secRemaining = PredictionsAPI.GetGroupRemainingPredictionSeconds( "global" );
+		if ( !secRemaining )
+		{
+			_ShowStatus( elPanelParam );
+			return;
+		}
+
 		elCountdown.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( secRemaining ) );
 		elCountdown.SetHasClass( 'hidden', ( secRemaining > 0 ) ? false : true );
 		$.Schedule( 30, _Timer.bind( null, elPanelParam ) );
+	};
+
+	var _ShowStatus = function( elPanel )
+	{
+		var id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid );
+		var nCampaignID = parseInt( InventoryAPI.GetItemAttributeValue( id, "campaign id" ) );
+		var numTotalChallenges = InventoryAPI.GetCampaignNodeCount( nCampaignID );
+
+		var completedChallengesList = [];
+		for ( var jj = 0; jj < numTotalChallenges; ++jj )
+		{
+			var nMissionNodeID = InventoryAPI.GetCampaignNodeIDbyIndex( nCampaignID, jj );
+			var strNodeState = InventoryAPI.GetCampaignNodeState( nCampaignID, nMissionNodeID, id );
+
+			if ( strNodeState === "complete" )
+			{
+				completedChallengesList.push(nMissionNodeID);
+			}
+		}
+
+		var completedChallenges = completedChallengesList.length;
+		var elLabel = elPanel.FindChildInLayoutFile( 'id-tournament-pass-status-game-countdown' );
+
+		elLabel.SetHasClass( 'hidden', ( !completedChallenges || completedChallenges < 1 ) );
+		
+		if ( !completedChallenges || completedChallenges < 1 )
+		{
+			return;
+		}
+	
+		elLabel.SetDialogVariableInt( 'challenges', completedChallenges );
+		elLabel.text = $.Localize( '#tournament_coin_completed_challenges_int', elLabel );
 	};
 
 	var _PurchaseComplete = function( id )

@@ -128,6 +128,34 @@ var matchInfo = ( function() {
         UiToolkitAPI.ShowTextTooltipOnPanel( elShareLinkButton, $.Localize("#WatchMenu_Share_Link_Copied") );
     }
 
+    var _CanRedeem = function ( elParentPanel )
+    {
+        var id = InventoryAPI.GetActiveTournamentCoinItemId( elParentPanel.tournamentIndex );
+    
+        if( !id || id === '0' )
+        {
+            return false;
+        }
+        else
+        {
+            var coinLevel = InventoryAPI.GetItemAttributeValue( id, "upgrade level" );
+            var redeemed = InventoryAPI.GetItemAttributeValue( id, "operation drops awarded 0" );
+            var redeemsAvailable = coinLevel - redeemed;
+            
+            return redeemsAvailable > 0;
+        }
+    };
+
+    function _RedeemSouvenir( tournamentIndex, matchId )
+    {        
+        UiToolkitAPI.ShowCustomLayoutPopupParameters(
+            '',
+            'file://{resources}/layout/popups/popup_redeem_souvenir.xml',
+            'matchid=' + matchId + 
+            '&' + 'tournamentindex=' + tournamentIndex
+        );
+    }
+
     function _RefreshRoundWatchEnabled( elParentPanel )
     {
         var isLive = Boolean(MatchInfoAPI.IsLive(elParentPanel.matchId));
@@ -186,6 +214,7 @@ var matchInfo = ( function() {
         var elDownloadButton = elParentPanel.FindChildInLayoutFile( 'id-mi-download' );
         var elShareLinkButton = elParentPanel.FindChildInLayoutFile( 'id-mi-copy' );
         var elWatchButton = elParentPanel.FindChildInLayoutFile( 'id-mi-watch' );
+        var elSouvenirButton = elParentPanel.FindChildInLayoutFile( 'id-mi-souvenir' );
 		var elWatchHighlightsButton = elParentPanel.FindChildInLayoutFile( 'id-mi-watch-highlights' );
 		var elWatchLowlightsButton = elParentPanel.FindChildInLayoutFile( 'id-mi-watch-lowlights' );
         var elDeleteButton = elParentPanel.FindChildInLayoutFile( 'id-mi-delete' );
@@ -230,7 +259,12 @@ var matchInfo = ( function() {
 			_ShowButton( elWatchButton, canWatch );
 			_ShowButton( elWatchHighlightsButton, canWatch );
 			_ShowButton( elWatchLowlightsButton, canWatch );
-			_ShowButton( elDownloadButton, !canWatch );
+            _ShowButton( elDownloadButton, !canWatch );
+            _ShowButton( elSouvenirButton, _CanRedeem( elParentPanel ));
+
+            var szSouvenirButtonHint = '#popup_redeem_souvenir_title';
+            elSouvenirButton.SetPanelEvent( 'onmouseover', function(){ UiToolkitAPI.ShowTextTooltipOnPanel( elSouvenirButton, szSouvenirButtonHint ); } );
+            elSouvenirButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
 
 			if ( elParentPanel.matchListDescriptor != 'downloaded' )
             {
@@ -269,7 +303,7 @@ var matchInfo = ( function() {
                 
 				
 				elDownloadButton.SetPanelEvent( 'onmouseover', function(){ UiToolkitAPI.ShowTextTooltipOnPanel( elDownloadButton, szDownloadButtonHint ); } );
-				elDownloadButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
+                elDownloadButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
             }
             else
             {
@@ -299,6 +333,7 @@ var matchInfo = ( function() {
 			_ShowButton( elWatchLowlightsButton, false );
             _ShowButton( elShareLinkButton, false );
             _ShowButton( elDeleteButton, false );
+            _ShowButton( elSouvenirButton, false );
         }
 
         _RefreshRoundWatchEnabled( elParentPanel );
@@ -1034,6 +1069,8 @@ var matchInfo = ( function() {
         var elDeleteButton = elParentPanel.FindChildInLayoutFile( 'id-mi-delete' );
         var elDownloadingButton = elParentPanel.FindChildInLayoutFile( 'id-mi-downloading' );
         var elDownloadFailedButton = elParentPanel.FindChildInLayoutFile( 'id-mi-error-delete' );
+        var elSouvenirButton = elParentPanel.FindChildInLayoutFile( 'id-mi-souvenir' );
+
 
         if ( elWatchButton && ( elParentPanel.matchListDescriptor == 'live' ) )
         {
@@ -1057,8 +1094,10 @@ var matchInfo = ( function() {
         elDeleteButton.SetPanelEvent( 'onactivate', _DeleteDemo.bind( undefined, elParentPanel ) );
         elDeleteButton.SetPanelEvent( 'onmouseover', function(){ UiToolkitAPI.ShowTextTooltipOnPanel( elDeleteButton, $.Localize( '#WatchMenu_Delete') ); } );
         elDeleteButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );
-
         elDownloadFailedButton.SetPanelEvent( 'onactivate', _DownloadFailedNotify.bind( undefined, elParentPanel ) );
+        elSouvenirButton.SetPanelEvent( 'onactivate', _RedeemSouvenir.bind( undefined, elParentPanel.tournamentIndex, elParentPanel.matchId ) );
+
+        
 
         _Refresh( elParentPanel );
     }

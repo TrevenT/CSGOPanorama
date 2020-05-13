@@ -86,9 +86,16 @@ var TournamentJournal = ( function()
     {
         var threshold = InventoryAPI.GetItemAttributeValue( journalId, "upgrade threshold" );
         var completedChallenges = m_test_challenges.filter( function( entry ) { return entry.value === 1; } );
-        $.GetContextPanel().SetDialogVariableInt( 'challenges', ( threshold - completedChallenges.length ) );
 
         _SetPoints( completedChallenges );
+        if ( completedChallenges.length === m_test_challenges.length )
+        {
+            $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-remaining' ).visible = false;
+            return;
+        }
+
+        var challengesRemain = threshold - completedChallenges.length;
+        $.GetContextPanel().SetDialogVariableInt( 'challenges', challengesRemain );
     };
 
     var _SetPoints = function( completedChallenges )
@@ -98,8 +105,10 @@ var TournamentJournal = ( function()
 
     var _SouvenirsEarned = function( journalId, tournamentId )
     {
-        var redeems = InventoryAPI.GetItemAttributeValue( journalId, "operation drops awarded 0" );
-        $.GetContextPanel().SetDialogVariableInt( 'redeems_remain', ( redeems !== undefined ) ? redeems : 0 );
+        var coinLevel = InventoryAPI.GetItemAttributeValue( journalId, "upgrade level" );
+        var redeemed = InventoryAPI.GetItemAttributeValue( journalId, "operation drops awarded 0" );
+        var redeemsAvailable = coinLevel - redeemed;
+        $.GetContextPanel().SetDialogVariableInt( 'redeems_remain', ( redeemsAvailable !== undefined ) ? redeemsAvailable : 0 );
 
         var elImage = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-ticket-icon' );
         elImage.SetImage( 'file://{images}/tournaments/souvenir/souvenir_blank_tournament_' + tournamentId + '.png' );

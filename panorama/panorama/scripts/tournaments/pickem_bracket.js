@@ -11,6 +11,11 @@ var PickEmBracket = ( function()
 
 	var _UpdateAllSections = function ( elPickemPanel, showIdPickIsSaved )
 	{
+		if ( !elPickemPanel._oPickemData.oTournamentData || !elPickemPanel._oPickemData.oInitData )
+		{
+			return;
+		}
+		
 		var sectionCount = elPickemPanel._oPickemData.oTournamentData.sections.length;
 		var startIndex = elPickemPanel._oPickemData.oInitData.sectionindex;
 
@@ -109,6 +114,7 @@ var PickEmBracket = ( function()
 			);
 
 		PickemCommon.UpdateCorrectPickState(
+			elPickemPanel._oPickemData.oTournamentData.tournamentid,
 			oGroupInfoForUpdate.oGroupData,
 			PredictionsAPI.GetGroupCorrectPicksByIndex( elPickemPanel._oPickemData.oTournamentData.tournamentid, oGroupInfoForUpdate.oGroupData.id, 0 ),
 			localTeamId,
@@ -118,13 +124,17 @@ var PickEmBracket = ( function()
 
 		var isBracketActive = _SetIsLocked( elPickemPanel );
 
-		var notOwned = PickemCommon.ShowPickItemNotOwnedWarning(
-			isBracketActive,
-			oGroupInfoForUpdate.oGroupData,
-			oItemIdData,
-			elPick.FindChildInLayoutFile( 'id-pickem-not-owned' ),
-			oGroupInfoForUpdate.oGroupData.picks[0].localid 
-		);
+		                                                                                       
+		                                 
+		                                                           
+		   	                                                                           
+		   	           
+		   	            
+		   	                                                      
+		   	                            
+		     
+		     
+		var notOwned = false;
 
 		oGroupInfoForUpdate.oGroupData.picks[0].storedefindex = notOwned ? 
 			PickemCommon.GetTeamItemDefIndex( oGroupInfoForUpdate.oGroupData.picks[0].localid ):
@@ -298,6 +308,17 @@ var PickEmBracket = ( function()
 
 	var _EnableApply = function( elPickemPanel )
 	{
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPickemPanel._oPickemData.oInitData.tournamentid );
+
+		if ( tournamentNum >= 15 )
+		{
+			var id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum );
+			if ( !id || id === '0' )
+			{
+				return false;
+			}
+		}
+		
 		var sectionCount = elPickemPanel._oPickemData.oTournamentData.sections.length;
 		var startIndex = elPickemPanel._oPickemData.oInitData.sectionindex;
 

@@ -232,7 +232,7 @@ var PickemCommon = ( function()
 		elItemImage.SetHasClass( 'teamlogo', useSvg )
 	};
 
-	var _UpdateCorrectPickState = function ( oGroupData, correctPicks, localTeamId, elPointsEarned, showOnlyNumbers )
+	var _UpdateCorrectPickState = function ( tournamentId, oGroupData, correctPicks, localTeamId, elPointsEarned, showOnlyNumbers )
 	{
 		if ( correctPicks )
 		{
@@ -241,7 +241,14 @@ var PickemCommon = ( function()
 
 			if ( isCorrect )
 			{
-				if( showOnlyNumbers )
+				var tournamentNum = PickemCommon.GetTournamentIdNumFromString( tournamentId );
+				if ( tournamentNum >= 15 )
+				{
+					elPointsEarned.text = $.Localize( '#pickem_correct_pick' );
+					return;
+				}
+				
+				if ( showOnlyNumbers )
 				{
 					elPointsEarned.text = '+ ' + oGroupData.pickworth;
 					return;

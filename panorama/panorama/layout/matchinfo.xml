@@ -233,6 +233,9 @@
 						<Button id="id-mi-download" class="PopupButton Positive" style="tooltip-position: top;">
 							<Label text="#CSGO_Watch_Info_download"/>
 						</Button>
+                        <Button id="id-mi-souvenir" class="IconButton Positive" style="tooltip-position: top;">
+							<Image src="file://{images}/icons/ui/gift.svg"/>
+						</Button>
                         <Button id="id-mi-copy" class="IconButton" style="tooltip-position: top;">
                             <Image src="file://{images}/icons/ui/link.svg"/>
                         </Button>
