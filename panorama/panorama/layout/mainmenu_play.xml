@@ -111,6 +111,11 @@
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeCompetitive"/>
 					</RadioButton>
+					<RadioButton id='scrimcomp2v2'
+								group="gamemodes" >
+							<Label text="#SFUI_GameModeScrimComp2v2"/>
+					</RadioButton>
+					<Panel class="game-mode-selection-radios-spacer"></Panel>
 					<RadioButton id='casual' 
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeCasual"/>
@@ -122,10 +127,6 @@
 					<RadioButton id='skirmish'
 								group="gamemodes" >
 							<Label text="#SFUI_GameModeSkirmish"/>
-					</RadioButton>
-					<RadioButton id='scrimcomp2v2'
-								group="gamemodes" >
-							<Label text="#SFUI_GameModeScrimComp2v2"/>
 					</RadioButton>
 					            
 					<RadioButton id='survival'  

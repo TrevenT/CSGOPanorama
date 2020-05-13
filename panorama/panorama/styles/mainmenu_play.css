@@ -676,6 +676,15 @@ RadioButton .map-selection-info__new
     text-align: center;
 }
 
+.game-mode-selection-radios-spacer
+{
+	width: 15px;
+	height: 100%;
+	margin-left: 8px;
+	margin-right: 28px;
+	border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
 .workshop-search-textentry
 {
 	height: 54px;

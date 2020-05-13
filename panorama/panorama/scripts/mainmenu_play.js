@@ -216,22 +216,24 @@ var PlayMenu = ( function()
 			) )
 		{
 			                                  
+			                                                            
 			  
 			                                                          
 			                                                                             
 			  
-			var nNewPlayerCategory = MyPersonaAPI.GetAccountCategory( 'onramp' );
-			                                                                      
-		
-			switch ( Math.floor( nNewPlayerCategory / 10 ) )
-			{
-				case 1:                                                       
-					isAvailable = ( gameMode == GameInterfaceAPI.GetSettingString( "ui_playsettings_mode_" + serverType ) );
-					break;
-				case 2:                                                  
-					isAvailable = ( gameMode == 'deathmatch' || gameMode == 'casual' );
-					break;
-			}
+			                                                                        
+			                                                                         
+			   
+			                                                   
+			    
+			   	                                                              
+			   		                                                                                                        
+			   		      
+			   	                                                         
+			   		                                                                   
+			   		      
+			    
+			isAvailable = ( gameMode == 'deathmatch' || gameMode == 'casual' || gameMode == 'survival' || gameMode == 'skirmish' );
 		}
 		                                                                                          
 		_SetGameModeRadioButtonAvailableTooltip( gameMode, isAvailable, '#PlayMenu_unavailable_newuser' );
