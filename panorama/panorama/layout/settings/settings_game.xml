@@ -675,9 +675,14 @@
 					<CSGOSettingsSlider id="XhairFixedGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_fixedcrosshairgap"/>
 					<Panel class="horizontal-separator"/>
 					
-
-
-
+					                 
+					<Panel id="XhairTStyle" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_TStyle" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshair_t">
+								<Label text="#GameUI_Yes" value="1" id="tstyle0"/>
+								<Label text="#GameUI_No" value="0" id="tstyle1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
 
 					     
 					                                             

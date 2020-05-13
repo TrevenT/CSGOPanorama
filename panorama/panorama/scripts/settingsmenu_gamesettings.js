@@ -49,6 +49,7 @@ var SettingsMenuGameSettings = ( function() {
 		$( "#XhairColorBlue" ).visible = bEnableControls;
 		$( "#XhairAlpha" ).visible = bEnableControls;
 		$( "#XhairCenterDot" ).visible = bEnableControls;
+		$( "#XhairTStyle" ).visible = bEnableControls;
 
 		let bEnableSplitControls = nStyle === 2;
 		$( "#XhairSlitDist" ).visible = bEnableSplitControls;

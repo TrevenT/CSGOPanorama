@@ -17,7 +17,7 @@
 
 		<Panel class="popup-addfriend-entry horizontal-center">
 			<TextEntry id="Code"
-						style="width:380px;"
+						style="width:380px; text-transform:none;"
 						placeholder=""
 						onfocus=""
 						oncancel="UIPopupButtonClicked();"
