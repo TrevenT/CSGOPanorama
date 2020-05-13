@@ -9,6 +9,7 @@
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/popups/popup_acknowledge_item.js" />
+		<include src="file://{resources}/scripts/mainmenu_snow.js" />
 	</scripts>
 
 	<snippets>
@@ -59,7 +60,6 @@
 						                                                       
 						            
 						
-						            
 						<Panel id="MainMenuMovieParent">
 							                                                                                      
 						</Panel>
@@ -67,8 +67,8 @@
 						<Panel id="MainMenuVanityParent">
 							                                                 
 						</Panel>
+						<UICanvas id="MainMenuSnowCanvas" class="full-width full-height" allowDrawing="false" hittest="false"/>
 					</CSGOBlurTarget>
-
 					<Panel id="JsNewsContainer" class="mainmenu_news_container hidden MainMenuModeOnly" >
 						                                                       
 					</Panel >

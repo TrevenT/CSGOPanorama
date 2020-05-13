@@ -597,6 +597,10 @@
 					<Button id="" class="FlatButton" onactivate='ClearCanvas();'>
 						<Label  id="" text="Clear"/>
 					</Button>
+
+					<Button id="" class="FlatButton" onactivate='CanvasSnow();'>
+						<Label  id="" text="snow"/>
+					</Button>
 				</Panel>
 
 			</Panel>
