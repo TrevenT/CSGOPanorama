@@ -145,7 +145,7 @@ var contextmenuPlayerCard = ( function (){
 			name: 'message',
 			icon: 'message',
 			AvailableForItem: function ( id ) {	                                                                                           
-				return true;                                                                   
+				return !_IsSelf( id );                                                                   
 			},
 			OnSelected:  function ( id ) {
 				SteamOverlayAPI.StartChatWithUser( id );

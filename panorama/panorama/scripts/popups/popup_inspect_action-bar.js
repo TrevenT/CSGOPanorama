@@ -172,9 +172,9 @@ var InspectActionBar = ( function (){
 	                                                                                                    
 	var _ShowWeaponAndCharacterModelBtns = function ( elPanel, id )
 	{
-		if( !ItemInfo.IsEquippalbleButNotAWeapon( id ) && !ItemInfo.ItemMatchDefName(id, 'sticker' ) && !ItemInfo.IsSpraySealed( id ))
+		var list = _GetValidCharacterModels( id );
+		if( list && !ItemInfo.IsEquippalbleButNotAWeapon( id ) && !ItemInfo.ItemMatchDefName(id, 'sticker' ) && !ItemInfo.IsSpraySealed( id ))
 		{
-			var list = _GetValidCharacterModels( id );
 			var hasAnims = CharacterAnims.ItemHasCharacterAnims(
 							list[0].team,
 							ItemInfo.GetSlotSubPosition(id),
