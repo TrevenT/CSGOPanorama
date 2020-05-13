@@ -37,7 +37,7 @@ var friendLobby = ( function (){
 	{
 		var countryCode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/loc' );
 		var elFlagImg = elTile.FindChildTraverse( 'JsFriendLobbyFlag' );
-		elFlagImg.SetImage( 'file://{images}/icons/flags/'+ countryCode +'.png' );
+		elFlagImg.SetImage( 'file://{images}/flags/'+ countryCode +'.png' );
 	};
 
 	var _SetSkillGroup = function ( elTile, gameMode )

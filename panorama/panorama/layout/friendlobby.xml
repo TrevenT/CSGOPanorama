@@ -37,7 +37,7 @@
 				<Image id="JsFriendLobbyFlag" 
 						class="friendlobby__row__icon-flag" 
 						src=""
-						defaultsrc="file://{images}/icons/flags/us.svg"
+						defaultsrc=""
 						texturewidth="32" 
 						textureheight="20"/>
 				<Image id="JsFriendLobbySkillGroup"

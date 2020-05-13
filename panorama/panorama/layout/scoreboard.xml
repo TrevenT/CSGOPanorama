@@ -216,7 +216,7 @@
               <Image src="file://{images}/icons/ui/menu.svg"/>
             </Button>
           </Panel>
-          <Label id="id-sb-mouse-instructions" text="#Scoreboard_Mouse_Enable_Instruction" />
+          <Label id="id-sb-mouse-instructions" />
         </Panel>
         
 				

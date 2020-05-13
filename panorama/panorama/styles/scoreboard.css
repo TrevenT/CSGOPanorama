@@ -926,17 +926,16 @@ Label.sb-row__cell--mvps__count {
 	wash-color: #ffffff00;
 }
 
-.sb-player-status-dead {
+:not(.eom-scoreboard) .sb-player-status-dead,  {
 	opacity: 0.5;
-	                            
 	wash-color: #999;
-	background-color: gray;
-
-	                                
-	                         
-	                                       
-	                                
 }
+
+:not(.eom-scoreboard) .sb-player-status-dead .sb-row__cell,
+:not(.eom-scoreboard) .sb-row__cell--label {
+	background-color: #00000000;
+}
+
 
 @keyframes 'anim-pulse' {
 	0% 	{ brightness: 1; }

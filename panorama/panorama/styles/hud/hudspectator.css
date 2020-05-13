@@ -267,7 +267,8 @@
 .SpectatorScoreboardRootHudScale
 {
 	flow-children: none;
-    width: 1920px;
+                    
+    width: 100%; 
     height: 100%;
 	horizontal-align: center;
     vertical-align: top;

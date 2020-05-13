@@ -663,7 +663,8 @@ var Scoreboard = ( function()
 		'rank': 0,
 		'idx': -1,
 		                                                              
-		                                                                		
+		                                                                	
+		'money': 0,
 		'hsp': 0,
 		'kdr': 0,
 		'adr':0,
@@ -2102,6 +2103,26 @@ var Scoreboard = ( function()
 			if ( _m_oTeams[ localTeamName ] )
 				_m_oTeams[ localTeamName ].CalculateAllCommends();
 		}
+
+		                    
+
+		var bind = GameInterfaceAPI.LookupConVarStringValue( "cl_scoreboard_mouse_enable_binding" );
+
+		                                                                                 
+		if ( bind.charAt( 0 ) == '+' || bind.charAt( 0 ) == '-' )
+			bind = bind.substring( 1 );
+	
+		
+		var elMouseBinding = _m_cP.FindChildInLayoutFile( "id-sb-mouse-instructions" );
+		
+		bind = "{v:csgo_bind:bind_" + bind + "}";
+
+		bind = $.Localize( bind, elMouseBinding );
+
+
+		
+		elMouseBinding.SetDialogVariable( "scoreboard_mouse_enable_bind", bind );
+		elMouseBinding.text =  $.Localize( "#Scoreboard_Mouse_Enable_Instruction", elMouseBinding );
 	}
 
 	function _UpdateRound ( rnd )

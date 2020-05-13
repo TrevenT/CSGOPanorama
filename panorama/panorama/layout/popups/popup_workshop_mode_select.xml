@@ -11,7 +11,7 @@
 
 	<snippets>
 		<snippet name="workshop-mode-item">
-			<RadioButton group="workshop-mode-choice">
+			<RadioButton group="workshop-mode-choice" class="PopupButton Row">
 				<Label text="{s:workshop-mode-item-name}"/>
 			</RadioButton>
 		</snippet>

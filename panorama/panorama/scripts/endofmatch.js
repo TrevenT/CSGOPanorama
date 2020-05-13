@@ -129,6 +129,7 @@ var EndOfMatch = ( function () {
 			_m_cP.AddClass( "reveal" );
 
 			_m_cP.SetMouseCapture( true );
+			_m_cP.LatchPlayerData();
 
 			$.Schedule( 1.25, _ShowNextPanel );
 
