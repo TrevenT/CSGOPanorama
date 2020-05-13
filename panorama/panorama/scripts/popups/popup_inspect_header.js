@@ -26,7 +26,11 @@ var InspectHeader = ( function()
 	var _SetRarity = function( elPanel, itemId )
 	{
 		var rarityColor = ItemInfo.GetRarityColor( itemId );
-		elPanel.FindChildInLayoutFile( 'InspectBar' ).style.washColor = rarityColor;
+
+		if ( rarityColor )
+		{
+			elPanel.FindChildInLayoutFile( 'InspectBar' ).style.washColor = rarityColor;
+		}
 	};
 	
 	var _SetCollectionInfo = function( elPanel, itemId )

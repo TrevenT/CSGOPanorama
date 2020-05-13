@@ -265,7 +265,7 @@ var EOM_Rank = (function () {
 				$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.NewRank', 'eom-rank' );
 
 				                             
-				if ( elCurrentListerItem )
+				if ( elCurrentListerItem && elCurrentListerItem.IsValid() )
 				{
 					elCurrentListerItem.AddClass( "eom-rank__lister__item--old" );
 				}

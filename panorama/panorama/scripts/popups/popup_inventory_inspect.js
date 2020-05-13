@@ -133,7 +133,10 @@ var InventoryInspect = ( function()
 	var _ShowNotification = function( slotInt, slotString, prevEquippedItemId, newEquippedItemId )
 	{
 		var elNotification = $.GetContextPanel().FindChildInLayoutFile( 'InspectNotificationEquip' );
-		EquipNotification.ShowEquipNotification( elNotification, slotString, newEquippedItemId );
+		if ( elNotification && elNotification.IsVaild() )
+		{
+			EquipNotification.ShowEquipNotification( elNotification, slotString, newEquippedItemId );
+		}
 	};
 
 	var _ItemAcquired = function( ItemId )

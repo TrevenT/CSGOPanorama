@@ -324,6 +324,12 @@ var ItemInfo = ( function() {
 
 	var _GetModelPathFromJSONOrAPI = function( id )
 	{
+		                                
+		if ( id === '' || id === undefined || id === null )
+		{
+			return '';
+		}
+		
 		var pedistalModel = '';
 		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
 		var itemSchemaDef = JSON.parse( schemaString );
