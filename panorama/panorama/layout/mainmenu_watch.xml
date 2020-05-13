@@ -7,12 +7,12 @@
 		
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/watchtile.js" />
 		<include src="file://{resources}/scripts/mainmenu_watch.js" />
 		<include src="file://{resources}/scripts/matchlist.js" />
         <include src="file://{resources}/scripts/matchinfo.js" />
-		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
-		<include src="file://{resources}/scripts/common/licenseutil.js" />
 	</scripts>
 
 	<snippets>

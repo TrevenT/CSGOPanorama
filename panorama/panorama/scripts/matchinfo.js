@@ -149,7 +149,15 @@ var matchInfo = ( function() {
 				coinLevel += coinRedeemsPurchased;
 
             var redeemed = InventoryAPI.GetItemAttributeValue( id, "operation drops awarded 0" );
-            var redeemsAvailable = coinLevel - redeemed;
+			var redeemsAvailable = coinLevel - redeemed;
+			
+			                                                                                                             
+			if ( ( elParentPanel.tournamentIndex == g_ActiveTournamentInfo.eventid ) &&
+				g_ActiveTournamentInfo.itemid_charge &&
+				ItemInfo.GetStoreSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_charge, 0 ), 1, '' )
+			) {
+				++ redeemsAvailable;
+			}
 
             var tournamentName = MatchInfoAPI.GetMatchTournamentName( elParentPanel.matchId );
             return redeemsAvailable > 0 &&
@@ -271,7 +279,7 @@ var matchInfo = ( function() {
 			_ShowButton( elWatchHighlightsButton, canWatch );
 			_ShowButton( elWatchLowlightsButton, canWatch );
             _ShowButton( elDownloadButton, !canWatch );
-            _ShowButton( elSouvenirButton, _CanRedeem( elParentPanel ));
+            _ShowButton( elSouvenirButton, ( matchState !== "live" ) && _CanRedeem( elParentPanel ));
 
             var szSouvenirButtonHint = '#popup_redeem_souvenir_title';
             elSouvenirButton.SetPanelEvent( 'onmouseover', function(){ UiToolkitAPI.ShowTextTooltipOnPanel( elSouvenirButton, szSouvenirButtonHint ); } );

@@ -6,6 +6,8 @@
 		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
 	</styles>	
 	<scripts>		
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/watchtile.js" />
 		<include src="file://{resources}/scripts/matchlist.js" />
 		<include src="file://{resources}/scripts/matchinfo.js" />
@@ -15,8 +17,6 @@
 		<include src="file://{resources}/scripts/tournaments/pickem_group.js" />
 		<include src="file://{resources}/scripts/tournaments/pickem_bracket.js" />
 		<include src="file://{resources}/scripts/tournaments/pickem_info_bar.js" />
-		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
-		<include src="file://{resources}/scripts/common/licenseutil.js" />
 	</scripts>
 
 	<Panel class="full-width full-height top-bottom-flow" useglobalcontext="true">

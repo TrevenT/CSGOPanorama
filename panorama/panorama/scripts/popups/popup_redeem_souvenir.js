@@ -4,7 +4,8 @@ var PopupRedeemSouvenir = ( function()
 {
     var m_scheduleHandle = null;
     var m_tournamentIndex = null;
-    var m_matchId = '';
+	var m_matchId = '';
+	var m_redeemsAvailable = 0;
     
     var _Init = function()
 	{
@@ -55,7 +56,8 @@ var PopupRedeemSouvenir = ( function()
 			coinLevel += coinRedeemsPurchased;
 
         var redeemed = InventoryAPI.GetItemAttributeValue( coinId, "operation drops awarded 0" );
-        var redeemsAvailable = coinLevel - redeemed;
+		var redeemsAvailable = coinLevel - redeemed;
+		m_redeemsAvailable = redeemsAvailable;
 
         elLabel.SetDialogVariableInt( 'redeems', redeemsAvailable );
 
@@ -74,7 +76,20 @@ var PopupRedeemSouvenir = ( function()
         if ( !coinId || coinId === '0' || coinId === 0)
         {
             return;
-        }
+		}
+		
+		if ( m_redeemsAvailable <= 0 )
+		{	                                                                                      
+			_OnClose();
+
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'',
+				'file://{resources}/layout/popups/popup_tournament_journal.xml',
+				'journalid=' + coinId
+			);
+
+			return;
+		}
 
         m_scheduleHandle = $.Schedule( 5, _CancelWaitforCallBack.bind( undefined, $.GetContextPanel() ) );
         $.GetContextPanel().FindChildInLayoutFile( 'popup-redeem-spinner' ).visible = true;

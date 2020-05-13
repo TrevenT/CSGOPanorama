@@ -129,7 +129,7 @@ var TournamentJournal = ( function()
         var completedChallenges = m_test_challenges.filter( function( entry ) { return entry.value === 1; } );
 
         _SetPoints( completedChallenges );
-        if ( completedChallenges.length === m_test_challenges.length )
+        if ( !threshold || ( completedChallenges.length === m_test_challenges.length ) )
         {
             $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-remaining' ).visible = false;
             return;
