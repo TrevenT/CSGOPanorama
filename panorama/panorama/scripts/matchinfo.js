@@ -130,7 +130,9 @@ var matchInfo = ( function() {
 
     function _RefreshRoundWatchEnabled( elParentPanel )
     {
-        if ( elParentPanel.matchListDescriptor === 'live' )
+        var isLive = Boolean(MatchInfoAPI.IsLive(elParentPanel.matchId));
+        
+        if ( isLive )
         {
             return;
         }
@@ -774,6 +776,17 @@ var matchInfo = ( function() {
         _ShowMatchSpinner( false, elParentPanel );                           
         _SetMatchMessage( "", false, elParentPanel );                           
 
+                                                                                                                       
+        var currentTopPanelTeamId = MatchInfoAPI.GetMatchTournamentTeamID( elParentPanel.matchId, 0 );
+        if ( elParentPanel.teamsFilled )
+        {
+            if ( currentTopPanelTeamId != elParentPanel.cachedTopPanelTeamId )
+            {
+                elParentPanel.teamsFilled = false;
+            }
+        }
+        elParentPanel.cachedTopPanelTeamId = currentTopPanelTeamId;
+
         function Helper_FillTeamStats( teamId )
         {
             var elTeam = elParentPanel.FindChildInLayoutFile( 'players-table-' + TEAMS[teamId] );
@@ -797,6 +810,10 @@ var matchInfo = ( function() {
             for ( var i = 0; i < TEAMSIZE; i++ )
             {
                 var elPlayerRow = elTeam.GetChild( i );
+                if ( !elParentPanel.teamsFilled )
+                {
+                    elPlayerRow.playerXuid = MatchInfoAPI.GetMatchPlayerXuidByIndexForTeam( elParentPanel.matchId, teamId, i );
+                }
                 var playerXuid = elPlayerRow.playerXuid;
                 var elPlayerName = elPlayerRow.FindChildTraverse( 'name__label');
 				var elAvatarImage = elPlayerRow.FindChildTraverse( 'avatar' );

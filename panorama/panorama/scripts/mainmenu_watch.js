@@ -399,6 +399,7 @@ var mainmenu_watch = ( function() {
         }			
 
         $.RegisterEventHandler( 'PropertyTransitionEnd', elTab, elTab.OnPropertyTransitionEndEvent );
+        elTab.Data().elMainMenuRoot = $.GetContextPanel().Data().elMainMenuRoot;
     }
 
     function _InitTab( tab )
@@ -441,6 +442,8 @@ var mainmenu_watch = ( function() {
         _InitTab( 'JsLive' );
         _InitResourceManagement( $( '#JsTournaments' ) );
         _InitResourceManagement( $( '#JsActiveTournament' ) );
+        
+        $.GetContextPanel().Data().elMainMenuRoot;
 
 		                                   
 		if ( _m_bPerfectWorld )

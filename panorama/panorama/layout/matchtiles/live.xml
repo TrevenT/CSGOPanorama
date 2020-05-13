@@ -10,7 +10,7 @@
     <Panel class="MatchTile MatchTile--Collapse">
         <Panel class="MatchMap MatchTile--Spacing">
             <Image id="mapicon" class="MatchMap__Icon"/>
-            <Label id="mapname" class="MatchInfo__MapName" text="Map Name"/>
+            <Label id="mapname" class="MatchInfo__MapName--LiveTile" text="Map Name"/>
         </Panel>
         <Panel class="MatchInfoContainer MatchTile--Spacing">
             <Image id="skillgroup" class="skillgroup"
@@ -22,7 +22,8 @@
                 <Label id="vs" text="-"/>
                 <Label id="score_team1" class="MatchInfo__Score"/>
             </Panel>
-            <Label id="viewers" class="MatchInfo matchinfoviewers" text="Viewers"/>
+            <Label id="viewers" class="MatchInfo matchinfoviewers" text="#WatchMenu_Viewers_dv"/>
+            <Label id="single_viewer" class="MatchInfo matchinfoviewers hide" text="#WatchMenu_Viewer_dv"/>
         </Panel>
     </Panel>
 </root>

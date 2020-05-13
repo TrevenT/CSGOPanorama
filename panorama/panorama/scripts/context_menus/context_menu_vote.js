@@ -219,7 +219,7 @@ var ItemContextMenu = ( function (){
 						VoteIssues.push( new ConstructBaseVoteIssue( "PauseMatch", "#SFUI_Vote_pause_match" ) );
 				}
 
-				VoteIssues.push( new ConstructRoundBackupVoteIssue("LoadBackup", "#SFUI_Vote_loadbackup1", bIsPaused, GetBackupFilenames ) );
+				VoteIssues.push( new ConstructRoundBackupVoteIssue("LoadBackup", "#SFUI_Vote_loadbackup1", !bIsWarmup, GetBackupFilenames ) );
 			}
 		}
 

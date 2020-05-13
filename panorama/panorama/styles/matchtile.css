@@ -16,7 +16,7 @@
 
 .MatchTile.MatchTile--Tournament
 {
-	height: 120px;
+	height: 130px;
 }
 
 .MatchTile--Collapse
@@ -48,8 +48,8 @@
 
 .MatchTile.MatchTile--Tournament .MatchMap__Icon
 {
-	max-width: 40px;
-	max-height: 40px;
+	max-width: 50px;
+	max-height: 50px;
 }
 
 .TeamIcon
@@ -111,6 +111,17 @@
     text-align: left;
 }
 
+.MatchInfo__MapName--LiveTile
+{
+    font-size: 12px;
+    margin-left: 0px;
+    width:120px;
+    height:20px;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    text-align: center;
+}
+
 .MatchInfo__Score
 {
     font-family: stratum2, 'Arial Unicode MS';
@@ -129,7 +140,9 @@
 
 .MatchInfo__Tournament__SmallContainer
 {
-	margin-top: 5px;
+    margin-top: 5px;
+    width:fill-parent-flow(1);
+    margin-right: 28px;
 }
 
 .MatchInfo--Hide
@@ -229,6 +242,12 @@
 {
 	vertical-align: middle;
 	horizontal-align: center;
+}
+
+.matchinfoviewers--TournamentTile
+{
+    vertical-align: middle;
+    horizontal-align: left;
 }
 
 .skillgroup

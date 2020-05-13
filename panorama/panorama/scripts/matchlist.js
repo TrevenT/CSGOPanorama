@@ -477,8 +477,7 @@ var matchList = ( function() {
 			}
 			else
 			{
-				                                                      
-				watchTile.UpdateScore( elMatchButton );
+				watchTile.Refresh( elMatchButton );
 			}
             elMatchButton.markForDelete = false;
 
@@ -493,10 +492,8 @@ var matchList = ( function() {
                         var canWatch = Boolean( MatchInfoAPI.CanWatch( elBoundMatchButton.matchId ) );
                         var isLive = Boolean( MatchInfoAPI.IsLive( elBoundMatchButton.matchId ) );
                         elDownloadIndicator.SetHasClass( "download-animation", isDownloading );
-                        if ( isLive )
-                            elDownloadIndicator.SetHasClass( "watchlive", isLive );
-                        else if ( canWatch )
-                            elDownloadIndicator.SetHasClass( "downloaded", canWatch );
+                        elDownloadIndicator.SetHasClass( "watchlive", isLive );
+                        elDownloadIndicator.SetHasClass( "downloaded", canWatch && !isLive );
                     }
                 }
             }
