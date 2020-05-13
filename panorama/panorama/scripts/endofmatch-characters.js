@@ -318,8 +318,9 @@ var EOM_Characters = ( function()
 		                                           
 		if ( _m_localPlayer )
 		{
-			var localPlayerModel = _m_localPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) );	
-			var localPlayerCheer = localPlayerModel ? ItemInfo.GetDefaultCheer( localPlayerModel[0][ 'itemid'] ) : "";
+			var arrLocalPlayer = _m_localPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) );
+			var localPlayerModel = arrLocalPlayer.length > 0 ? arrLocalPlayer[0] : "";	
+			var localPlayerCheer = localPlayerModel ? ItemInfo.GetDefaultCheer( localPlayerModel[ 'itemid'] ) : "";
 			mapCheers[ localPlayerCheer ] = 1;
 		}
 
@@ -333,10 +334,10 @@ var EOM_Characters = ( function()
 
 			var cheer = "";
 
-			if ( 'items' in oPlayer )
+			if ( oPlayer && 'items' in oPlayer )
 			{
-				var playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) );
-				cheer = ItemInfo.GetDefaultCheer( playerModelItem[ 0 ][ 'itemid' ] );
+				var playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) )[ 0 ];
+				cheer = playerModelItem ? ItemInfo.GetDefaultCheer( playerModelItem[ 'itemid' ] ) : "";
 
 				if ( oPlayer != _m_localPlayer &&
 					mapCheers[ cheer ] == 1 )                                         

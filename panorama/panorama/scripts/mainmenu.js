@@ -430,7 +430,7 @@ var MainMenu = ( function() {
 		{
 			var panelToHide = $.GetContextPanel().FindChildInLayoutFile( _m_activeTab );
 			panelToHide.AddClass( 'mainmenu-content--hidden' );
-			                                        
+			                                       
 		}
 		
 		_m_activeTab = '';
@@ -685,12 +685,27 @@ var MainMenu = ( function() {
 	{
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );
 		elNews.SetHasClass( 'hidden', false );
+
+		var elVanityButton = $.FindChildInContext( '#VanityControls' );
+		if ( elVanityButton )
+		{
+			elVanityButton.visible = true;
+		}
+
 	};
 
 	var _HideNewsAndStore = function ()
 	{
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );
 		elNews.SetHasClass( 'hidden', true );
+
+		var elVanityButton = $.FindChildInContext( '#VanityControls' );
+
+		if ( elVanityButton )
+		{
+			elVanityButton.visible = false;
+		}
+
 	};
 
 	                                                                
@@ -1362,28 +1377,28 @@ var MainMenu = ( function() {
 	};
 
 	var _HideStoreStatusPanel = function () {
-	    if (_m_storePopupElement && _m_storePopupElement.IsValid()) {
-	        _m_storePopupElement.DeleteAsync(0);
-	    }
+		if (_m_storePopupElement && _m_storePopupElement.IsValid()) {
+			_m_storePopupElement.DeleteAsync(0);
+		}
 
-	    _m_storePopupElement = null;
+		_m_storePopupElement = null;
 	};
 
 	var _ShowStoreStatusPanel = function (strText, bAllowClose, bCancel, strOkCmd)
 	{
-	    _HideStoreStatusPanel();
+		_HideStoreStatusPanel();
 
-	    var paramclose = '0';
-	    if (bAllowClose) {
-	        paramclose = '1';
-	    }
+		var paramclose = '0';
+		if (bAllowClose) {
+			paramclose = '1';
+		}
 
-	    var paramcancel = '0';
-	    if (bCancel) {
-	        paramcancel = '1';
-	    }
+		var paramcancel = '0';
+		if (bCancel) {
+			paramcancel = '1';
+		}
 
-	    _m_storePopupElement = UiToolkitAPI.ShowCustomLayoutPopupParameters(
+		_m_storePopupElement = UiToolkitAPI.ShowCustomLayoutPopupParameters(
             'store_popup',
             'file://{resources}/layout/popups/popup_store_status.xml',
 			'text=' + $.UrlEncode( strText ) +

@@ -359,9 +359,9 @@ var TeamSelectMenu = ( function (){
 
 			$.RegisterEventHandler( 'PropertyTransitionEnd', elTeammate, elTeammate.OnPropertyTransitionEndEvent );
 
-			function OnMouseOver( team, xuid )
+			function OnMouseOver( team, charItemId, weaponItemId )
 			{
-				TeamSelectMenu.SetPlayerModel( team, xuid );
+				TeamSelectMenu.SetPlayerModel( team, charItemId, weaponItemId  );
 			};
 
 			function OnMouseOut( team )
@@ -369,7 +369,15 @@ var TeamSelectMenu = ( function (){
 				TeamSelectMenu.ResetModel( team );
 			};
 
-			elTeammate.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined, teamName, xuid ));
+			                                     
+			var bSameTeam = teamName != MockAdapter.GetPlayerTeamName( MockAdapter.GetLocalPlayerXuid() );
+			var weaponItemId = bSameTeam ? MockAdapter.GetPlayerActiveWeaponItemId( xuid ) : InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( teamName == "CT" ? 42 : 59, 0 );
+
+			elTeammate.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined,
+				teamName,
+				MockAdapter.GetPlayerCharacterItemID( xuid ),
+				weaponItemId) );
+			
 			elTeammate.SetPanelEvent( 'onmouseout', OnMouseOut.bind( undefined, teamName));
 
 		}
@@ -380,24 +388,10 @@ var TeamSelectMenu = ( function (){
 		}
 	}
 
-	function _SetPlayerModel( team, xuid )
+	function _SetPlayerModel( team, charItemId, weaponItemId )
 	{
 
 		var elChar = team == 'CT' ? $.GetContextPanel().FindChildInLayoutFile( 'TeamCharCT' ) : $.GetContextPanel().FindChildInLayoutFile( 'TeamCharT' );
-	
-		                               
-		var localPlayerTeamName = MockAdapter.GetPlayerTeamName( MockAdapter.GetLocalPlayerXuid() );
-
-		var itemId = "";
-
-		if ( team != localPlayerTeamName )
-		{
-			itemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( team == "CT" ? 42 : 59, 0 );
-		}
-		else
-		{
-			itemId = MockAdapter.GetPlayerActiveWeaponItemId( xuid );
-		}
 
 		var cameraPreset = team == 'CT' ? CAMERA_PRESET_CT : CAMERA_PRESET_T;
 
@@ -406,8 +400,8 @@ var TeamSelectMenu = ( function (){
 		{
 			panel:elChar,
 			team: team,
-			charItemId: MockAdapter.GetPlayerCharacterItemID( xuid ),
-			weaponItemId: itemId,
+			charItemId: charItemId,
+			weaponItemId: weaponItemId,
 			cameraPreset: cameraPreset,
 		}
 

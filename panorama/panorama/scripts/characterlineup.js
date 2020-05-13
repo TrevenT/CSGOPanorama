@@ -215,6 +215,10 @@ var CharacterLineUp = ( function()
 
 	function _ShowCharacter ( elCLU, xuid )
 	{
+		                                                              
+		if ( !elCLU.IsValid() )
+			return;
+
 		                         
 		var elPlayer = elCLU.FindChildTraverse( "id-charlineup__character-" + xuid );
 
