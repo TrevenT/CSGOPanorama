@@ -138,6 +138,16 @@ var MainMenuStore = ( function()
 		   	 
 			m_itemNewReleases = itemsByCategory.newstore[0];
 			delete itemsByCategory.newstore;
+
+			if ( bPerfectWorld )
+			{
+				if ( !itemsByCategory.store )
+				{
+					itemsByCategory.store = [];
+				}
+
+				itemsByCategory.store.unshift( m_itemNewReleases );
+			}
 		}
 		else
 		{
