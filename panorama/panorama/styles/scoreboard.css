@@ -4,7 +4,7 @@
 @define cell-background-light: #ffffff08;
 @define cell-background-lighter: #FFFFFF10;
 
-@define left-panel-width: 87px;
+@define left-panel-width: 80px;
 
 
 
@@ -495,7 +495,7 @@ Button.sb-row__cell:hover {
 #players-table-TERRORIST,
 #players-table-ANY {
 
-	min-height: 135px;                       
+	min-height: 120px;                       
 }
 
 #players-table-CT,
@@ -1125,6 +1125,7 @@ Label.sb-row__cell--mvps__count {
 	width: fit-children;
 	min-width: 1px; 
 	height: fit-children;
+	min-height: 100px;
 	flow-children: right;
 
 	horizontal-align: center;

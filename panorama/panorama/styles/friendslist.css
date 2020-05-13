@@ -520,8 +520,8 @@
 	transition-timing-function: ease-in-out;
 }
 
-.MainMenuRootPanel--PauseMenuMode .party-list
-{	                            
+.MainMenuRootPanel--PauseMenuMode .friendslist:not(.friendslist-party-searching) .party-list
+{	                                               
 	opacity: 0;
 	visibility: collapse;
 }
@@ -645,7 +645,7 @@
 }
 
 
-.MainMenuRootPanel--PauseMenuMode #JsLocalPlayercard.hidden
+.MainMenuRootPanel--PauseMenuMode .friendslist:not(.friendslist-party-searching) #JsLocalPlayercard.hidden
 {	                                                                  
 	opacity: 1;
 	visibility: visible;

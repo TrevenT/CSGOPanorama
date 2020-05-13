@@ -103,12 +103,6 @@ var EndOfMatch = ( function () {
 				elPanel.BLoadLayout( panelXML, true, false);
 	
 		} );
-		
-		             
-		var elBlur = _m_cP.GetParent().FindChildTraverse( "HudBlur" );
-		elBlur.RemoveClass( "eom-blur-fade-in" );
-
-		_m_cP.RemoveClass( "reveal" );
 	}
 
 
@@ -198,6 +192,12 @@ var EndOfMatch = ( function () {
 			if ( _m_arrPanelObjects[ i ].Shutdown )
 				_m_arrPanelObjects[ i ].Shutdown();
 		}	
+
+		             
+		var elBlur = _m_cP.GetParent().FindChildTraverse( "HudBlur" );
+		elBlur.RemoveClass( "eom-blur-fade-in" );
+
+		_m_cP.RemoveClass( "reveal" );
 	}
 
 

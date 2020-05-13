@@ -1589,13 +1589,16 @@ var Scoreboard = ( function()
 		                        
 		_m_cP.FindChildrenWithClassTraverse( 'sb-row__cell' ).forEach( function( el )
 		{
-			if ( el.BHasClass( 'sb-row__cell--'+ stat ) )
+			if ( el && el.IsValid() )
 			{
-				el.AddClass( 'sortstat' );
-			}
-			else
-			{
-				el.RemoveClass( 'sortstat' );
+				if ( el.BHasClass( 'sb-row__cell--' + stat ) )
+				{
+					el.AddClass( 'sortstat' );
+				}
+				else
+				{
+					el.RemoveClass( 'sortstat' );
+				}
 			}
 			
 		} );
@@ -2082,6 +2085,9 @@ var Scoreboard = ( function()
 
 	function _UpdateRound ( rnd, oScoreData, jsoTime )
 	{
+		if ( !_SupportsTimeline( jsoTime ) )
+			return;
+		
 		if ( !oScoreData )
 			return;
 		
@@ -2102,6 +2108,9 @@ var Scoreboard = ( function()
 		var elRndTop = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--top" );
 		var elRndBot = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--bot" );
 
+		var elTick = elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" );
+		elTick.SetHasClass( "hilite", rnd <= jsoTime[ "rounds_played" ] + 1 );
+		
 		                                                                               
 		if ( rnd > jsoTime[ "rounds_played" ] )
 		{
@@ -2115,9 +2124,6 @@ var Scoreboard = ( function()
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).RemoveClass( "sb-team--CT" );
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).RemoveClass( "sb-team--TERRORIST" );
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).RemoveClass( "sb-team--TERRORIST" );
-
-			               
-			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).RemoveClass( "hilite" );
 
 			var _ClearCasualties = function( elRnd )
 			{
@@ -2197,9 +2203,6 @@ var Scoreboard = ( function()
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).RemoveClass( "sb-team--CT" );
 		}
 
-		               
-		elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).RemoveClass( "hilite" );
-
 		                                             
 		var _UpdateCasualties = function( teamName, elRnd )
 		{
@@ -2241,9 +2244,9 @@ var Scoreboard = ( function()
 	}
 
 
-
-	function _Casualties_OnMouseOver ()
+	function _ShowSurvivors ( hide = false )
 	{
+		
 		var elTimeline = _m_cP.FindChildInLayoutFile( "id-sb-timeline__segments" );
 		if ( !elTimeline || !elTimeline.IsValid() )
 			return;
@@ -2264,31 +2267,24 @@ var Scoreboard = ( function()
 
 		elTimeline.Children().forEach( CollectPanelsToToggleTransparency );
 
-		arrPanelsToToggleTransparency.forEach( el => el.RemoveClass( "transparent" ) );
+		arrPanelsToToggleTransparency.forEach( el => el.SetHasClass( "transparent", hide ) );
+	}
+
+
+	function _Casualties_OnMouseOver ()
+	{
+		                                    
+		if ( GameInterfaceAPI.GetSettingString( "cl_scoreboard_survivors_always_on" ) == "0" )
+			_ShowSurvivors();
 
 		UiToolkitAPI.ShowCustomLayoutTooltipStyled( '1', 'id-tooltip-sb-casualties', 'file://{resources}/layout/tooltips/tooltip_scoreboard_casualties.xml', 'Tooltip_NoArrow' );
 	}
 
 	function _Casualties_OnMouseOut ()
 	{
-		var elTimeline = _m_cP.FindChildInLayoutFile( "id-sb-timeline__segments" );
-		if ( !elTimeline || !elTimeline.IsValid() )
-			return;
-
-		var arrPanelsToToggleTransparency = [];
-
-		function CollectPanelsToToggleTransparency ( el )
-		{
-			if ( el.Children() )
-				el.Children().forEach( CollectPanelsToToggleTransparency );
-
-			if ( el.GetAttributeString( "data-casualty-mouse-over-toggle-transparency", "false" ) == "true" )
-				arrPanelsToToggleTransparency.push( el );
-		}
-
-		elTimeline.Children().forEach( CollectPanelsToToggleTransparency );
-
-		arrPanelsToToggleTransparency.forEach( el => el.AddClass( "transparent" ) );
+		                                    
+		if ( GameInterfaceAPI.GetSettingString( "cl_scoreboard_survivors_always_on" ) == "0" )
+			_ShowSurvivors( true );
 
 		UiToolkitAPI.HideCustomLayoutTooltip( 'id-tooltip-sb-casualties' );
 	}
@@ -2387,8 +2383,9 @@ var Scoreboard = ( function()
 		if ( !oScoreData )
 			return;
 		
-		                           
-
+		if ( !_SupportsTimeline( jsoTime ) )
+			return;
+		
 		var lastRound;
 
 		if ( MatchStatsAPI.DoesSupportOvertimeStats() )
@@ -2404,26 +2401,6 @@ var Scoreboard = ( function()
 		{
 			_UpdateRound( rnd, oScoreData, jsoTime );
 		}
-		
-		var _HighlightCurrentTimelineRound = function()
-		{
-			var elTimeline = _m_cP.FindChildInLayoutFile( "id-sb-timeline__segments" );
-
-			if ( !elTimeline || !elTimeline.IsValid() )
-				return;
-
-			var jsoTime = GameStateAPI.GetTimeDataJSO();
-
-			var currentRound = jsoTime[ "rounds_played" ] + 1;
-
-			var elCurRnd = elTimeline.FindChildTraverse( currentRound );
-
-			if ( elCurRnd && elCurRnd.IsValid() )
-				elCurRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).AddClass( "hilite" );
-		}
-
-		_HighlightCurrentTimelineRound();
-
 	}
 
 	function _UpdateScore_Classic( bForceUpdate = false )
@@ -2488,6 +2465,17 @@ var Scoreboard = ( function()
 
 			_m_RoundUpdated[ currentRound ] = true;
 
+		}
+		else
+		{
+			                                            
+
+			var oScoreData = GameStateAPI.GetScoreDataJSO();
+
+			if ( oScoreData )
+			{
+				_UpdateRound( currentRound - 1, oScoreData, jsoTime );
+			}
 		}
 		
 	};
@@ -2650,6 +2638,9 @@ var Scoreboard = ( function()
 		}
 
 		_UpdateAllRounds();
+
+		if ( GameInterfaceAPI.GetSettingString( "cl_scoreboard_survivors_always_on" ) == "1" )
+			_ShowSurvivors();
 	};
 
 	function _UnborrowMusicKit ()
@@ -3064,6 +3055,8 @@ var Scoreboard = ( function()
 		_UpdateEverything();
 
 		_m_cP.FindChildrenWithClassTraverse( "timer" ).forEach( el => el.active = true );
+
+		_ShowSurvivors( ( GameInterfaceAPI.GetSettingString( "cl_scoreboard_survivors_always_on" ) == "0" ) );
 
 		if( !_m_updatePlayerHandler )
 		{

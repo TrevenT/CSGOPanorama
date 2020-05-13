@@ -164,8 +164,23 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 	width: 1920px;
 	height: 1080px;
 	overflow: noclip;
-
 }
+
+.AspectRatio4x3 .mainmenu-movie,
+.AspectRatio5x4 .mainmenu-movie,
+{
+	                                                                                                                                                               
+	transform: translateX( -17% );
+	overflow: noclip;
+}
+
+.AspectRatio16x10 .mainmenu-movie
+{
+	                                                                                                                                                               
+	transform: translateX( -10% );
+	overflow: noclip;
+}
+
 
 .AspectRatio21x9 .mainmenu-movie
 {
@@ -201,7 +216,7 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 	transform: translateX(0%) translateY(0);
 }
 
-.AspectRatio5x4 .mainmenu-vanity
+ .mainmenu-vanity
 {
 	transform: translateX(22%) translateY(0);
 	width: 1200px;

@@ -685,10 +685,8 @@ var PlayMenu = ( function()
 		                                                                               
 		if ( AreLobbyPlayersPrime() && _IsPlayingOnValveOfficial() )
 		{
-		    var strGameMode = m_gameModeSetting;
-
 			elPrimeButton.visible = true;
-			elPrimeButton.enabled = isEnabled && ( strGameMode === 'competitive' || strGameMode === 'scrimcomp2v2' );
+			elPrimeButton.enabled = isEnabled;
 			elPrimeButton.checked = isPrime;
 			tooltipText = isPrime ? '#tooltip_prime_only' : '#tooltip_prime_priority';
 
@@ -728,6 +726,9 @@ var PlayMenu = ( function()
 			elPrimeButton.visible = true;
 			elActiveButton = elPrimeButton;
 		}
+
+		                                           
+		elActiveButton.visible = SessionUtil.DoesGameModeHavePrimeQueue( m_gameModeSetting );
 
 		elActiveButton.SetPanelEvent( 'onmouseover', function() { UiToolkitAPI.ShowTextTooltip( elActiveButton.id, tooltipText ); } );
 		elActiveButton.SetPanelEvent( 'onmouseout', function() { UiToolkitAPI.HideTextTooltip(); } );

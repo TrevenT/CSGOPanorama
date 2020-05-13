@@ -28,14 +28,12 @@ var EOM_Voting = (function () {
 			return false;
 		}
 		
-
 		_m_pauseBeforeEnd = oTime[ "time" ];
 
 		                        
 		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
 
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.submenu_leveloptions_slidein', 'MOUSE' );
-
 
 		if ( !oMatchEndVoteData || !oMatchEndVoteData[ "voting_options" ] )
 		{
@@ -134,6 +132,7 @@ var EOM_Voting = (function () {
 				}
 
 				elVoteItem.FindChildTraverse( "MapGroupName" ).text = text;
+				elVoteItem.m_name = text;
 
 
 				                  
@@ -144,6 +143,8 @@ var EOM_Voting = (function () {
 					                       
 					elMapSelectionList.FindChildrenWithClassTraverse( "map-selection-btn" ).forEach( btn => btn.enabled = false );
 					$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.submenu_leveloptions_select', 'MOUSE' );
+
+					                                                                 
 				};
 
 				elVoteItem.SetPanelEvent( 'onactivate', onActivate.bind( undefined, elVoteItem ) );
@@ -154,6 +155,8 @@ var EOM_Voting = (function () {
 		});
 
 		_UpdateVotes();
+
+		_m_cP.SetFocus();
 
 		return true;
 
@@ -274,7 +277,9 @@ var EOM_Voting = (function () {
 
 					var elMapSelectionList = _m_cP.FindChildInLayoutFile( 'id-map-selection-list' );
 
-					var elVoteItem = elMapSelectionList.FindChildTraverse( "id-vote-item--" + arrWinners[ m_randIdx ] );
+					var voteidx = arrWinners[ m_randIdx ];
+
+					var elVoteItem = _m_elVoteItemPanels[ voteidx ];
 
 					if ( !elVoteItem || !elVoteItem.IsValid() )
 						return;
@@ -287,8 +292,6 @@ var EOM_Voting = (function () {
 					panelToHilite.RemoveClass( "map-selection-btn__gradient--whiteout" );
 					panelToHilite.AddClass( "map-selection-btn__gradient--whiteout" );
 					$.DispatchEvent('PlaySoundEffect', 'buymenu_select', elVoteItem.id );
-
-					return;
 				}
 			}
 			else

@@ -409,9 +409,6 @@
 						<Image id="casualty-4" class="hidden" src="file://{images}/icons/ui/dash-bold.svg"/>
 						<Image id="casualty-5" class="hidden" src="file://{images}/icons/ui/dash-bold.svg"/>
 					</Panel>	
-					<Panel id="casualties--number" data-casualty-mouse-over-toggle-transparency="true" class="sb-timeline__segment__round__casualties--number transparent">
-						<Label id="casualties--number__label" class="hidden"/>
-					</Panel>
 				</Panel>
 			</Panel>
 		</snippet>

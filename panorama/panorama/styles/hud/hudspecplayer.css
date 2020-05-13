@@ -193,7 +193,8 @@
 	width: fit-children;
     height: 30px;
     horizontal-align: center;
-	overflow: noclip;
+    overflow: noclip;
+    flow-children: right;
 	                                                                                           
     visibility: visible;
 }
@@ -207,8 +208,14 @@
     color: #BBBBBBFF;
     margin-top: 7px;
     vertical-align: top;
+    padding-left: 10px;
 	                    
 	                       
+}
+
+.HudSpecplayer__key-hints-text--hidden
+{
+    visibility: collapse;
 }
 
 .HudSpecplayer__Item

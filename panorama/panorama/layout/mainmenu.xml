@@ -16,11 +16,12 @@
 			<Panel>
 				<Movie class="mainmenu-movie MainMenuModeOnly" 
 					id="MainMenuMovie"
-					src="file://{resources}/videos/nuke.webm" 
-					sound="UIPanorama.BG_Nuke"
+					src="file://{resources}/videos/cbble.webm"
+					sound="UIPanorama.BG_Inferno"
 					controls="none" 
 					repeat="true"
-					hittest="false">
+					hittest="false"
+					data-type="cbble">
 				</Movie>
 			</Panel>
 		</snippet>
@@ -30,7 +31,7 @@
 								class="mainmenu-vanity hidden MainMenuModeOnly"
 								manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
 								item="models/player/custom_player/legacy/ctm_sas.mdl"
-								mouse_rotate="true"
+								mouse_rotate="false"
 								hittest="false">
 				</ItemPreviewPanel>
 			</Panel>

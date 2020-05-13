@@ -6,6 +6,7 @@
 
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/tooltips/tooltip_lobby_settings.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
 	</scripts>

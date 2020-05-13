@@ -199,12 +199,18 @@ var MatchmakingStatus = ( function()
 		_CancelSearchTimeUpdate();
 	};
 
+	var _OnShowMenu = function()
+	{
+		_UpdateMatchmakingStatus();
+	};
+
 	return {
 		Init										: _Init,
 		SessionUpdate								: _SessionUpdate,
 		ShowMatchAcceptPopUp						: _ShowMatchAcceptPopUp,
 		OnHideMainMenu								: _OnHideMainMenu,
-		OnHidePauseMenu								: _OnHidePauseMenu
+		OnHidePauseMenu								: _OnHidePauseMenu,
+		OnShowMenu									: _OnShowMenu
 	};
 
 })();
@@ -224,5 +230,7 @@ var MatchmakingStatus = ( function()
 	$.RegisterForUnhandledEvent( "ServerReserved", MatchmakingStatus.ShowMatchAcceptPopUp );
 	$.RegisterForUnhandledEvent( "CSGOHideMainMenu", MatchmakingStatus.OnHideMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOHidePauseMenu", MatchmakingStatus.OnHidePauseMenu );
+	$.RegisterForUnhandledEvent( "CSGOShowPauseMenu", MatchmakingStatus.OnShowMenu );
+	$.RegisterForUnhandledEvent( "CSGOShowMainMenu", MatchmakingStatus.OnShowMenu );
 
 })();

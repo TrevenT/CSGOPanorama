@@ -690,6 +690,8 @@ var MainMenu = ( function() {
 		loadout.playIntroAnim = true;
 		CharacterAnims.PlayAnimsOnPanel( loadout );
 
+		_SetVanityLightingBasedOnBackgroundMovie( vanityPanel );
+
 		if ( loadout.panel.BHasClass( 'hidden' ) ) {
 			loadout.panel.RemoveClass( 'hidden' );
 		}
@@ -703,6 +705,36 @@ var MainMenu = ( function() {
 		return loadoutsList[ randomEntry ];
 	};
 
+	var _SetVanityLightingBasedOnBackgroundMovie = function( vanityPanel )
+	{
+		var backgroundMap = $.GetContextPanel().FindChildInLayoutFile( 'MainMenuMovie' ).GetAttributeString( 'data-type', 'nuke' );
+
+		if ( backgroundMap === 'cbble' )
+		{
+			vanityPanel.SetFlashlightAmount( 1.0 );
+			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
+			vanityPanel.SetFlashlightPosition( 38.67, 40.11, 107.51 );
+			                                                           
+			vanityPanel.SetFlashlightColor( 0.81, 0.92, 1.00 );
+			vanityPanel.SetAmbientLightColor( 0.12, 0.21, 0.46 );
+
+			vanityPanel.SetDirectionalLightModify( 0 );
+			vanityPanel.SetDirectionalLightColor( 0.13, 0.14, 0.13 );
+			vanityPanel.SetDirectionalLightDirection( -0.81, 0.41, 0.43 );
+			
+			vanityPanel.SetDirectionalLightModify( 1 );
+			vanityPanel.SetDirectionalLightColor( 0.82, 0.19, 0.08);
+			vanityPanel.SetDirectionalLightDirection( 0.62, 0.74, -0.25 );
+			vanityPanel.SetDirectionalLightPulseFlicker( 0.25, 0.25, 0.25, 0.25 );
+
+			vanityPanel.SetDirectionalLightModify( 2 );
+			vanityPanel.SetDirectionalLightColor( 0.72, 1.40, 1.68);
+			vanityPanel.SetDirectionalLightDirection(0.50, -0.69, -0.52);
+
+			                                                   
+		}
+	};
+
 	                                                                           
 	var _OnEquipSlotChanged = function( slot, oldItemID, newItemID )
 	{
@@ -710,6 +742,10 @@ var MainMenu = ( function() {
 
 	var _OpenPlayMenu = function ()
 	{
+		                                                      
+		if ( MatchStatsAPI.GetUiExperienceType() )
+			return;
+
 		_InsureSessionCreated();
 		_NavigateToTab( 'JsPlay', 'mainmenu_play' );
 

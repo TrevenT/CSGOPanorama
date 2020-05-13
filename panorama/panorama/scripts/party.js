@@ -71,7 +71,8 @@ var PartyMenu = ( function()
 
 
 		                                                                                    
-		if ( numPlayersActuallyInParty >= PartyListAPI.GetPartySessionUiThreshold() || _IsSeaching() )
+		var bIsSearching = _IsSearching();
+		if ( numPlayersActuallyInParty >= PartyListAPI.GetPartySessionUiThreshold() || bIsSearching )
 		{
 			elPartyMembersList.RemoveAndDeleteChildren();
 			_UpdateMembersList( lobbySettings, numPlayersActuallyInParty );
@@ -83,6 +84,8 @@ var PartyMenu = ( function()
 			friendsList.HideLocalPlayer( false );
 		}
 
+		$( '#PartyList' ).GetParent().SetHasClass( 'friendslist-party-searching', bIsSearching );
+
 		_UpdateLeaveBtn( numPlayersActuallyInParty );
 	};
 
@@ -91,6 +94,7 @@ var PartyMenu = ( function()
 		if ( !LobbyAPI.IsSessionActive() )
 		{
 			$( '#PartyList' ).AddClass( 'hidden' );
+			$( '#PartyList' ).GetParent().SetHasClass( 'friendslist-party-searching', false );
 			friendsList.HideLocalPlayer( false );
 			return false;
 		}
@@ -205,7 +209,7 @@ var PartyMenu = ( function()
 		var elPanel = $( '#PartyList' ).FindChildInLayoutFile( 'PartyListHeader' );
 		var isSoloSearch = ( numPlayersActuallyInParty === 1 );
 
-		elPanel.FindChildInLayoutFile( 'PartyCancelBtn' ).visible = LobbyAPI.BIsHost() && _IsSeaching();
+		elPanel.FindChildInLayoutFile( 'PartyCancelBtn' ).visible = LobbyAPI.BIsHost() && _IsSearching();
 
 		var elCount = elPanel.FindChildInLayoutFile( 'PartyTitleAlertText' );
 		elCount.text = numPlayersActuallyInParty +'/' +numPlayersPossibleInMode;
@@ -331,7 +335,7 @@ var PartyMenu = ( function()
 		return LobbyAPI.GetMatchmakingStatusString();
 	};
 
-	var _IsSeaching = function()
+	var _IsSearching = function()
 	{
 		var StatusString = _GetSearchStatus();
 		return ( StatusString !== '' && StatusString !== null ) ? true : false;

@@ -322,6 +322,16 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 
+					                                     
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_ScoreboardSurvivorsAlwaysOn" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_scoreboard_survivors_always_on">
+							<Label text="#GameUI_Yes" value="1" id ="survivorsalwayson0"/>
+							<Label text="#GameUI_No" value="0" id ="survivorsalwayson1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
 					                                               
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Spec_InterpCamera_Info">
 						<Label text="#SFUI_Settings_Spec_InterpCamera" class="half-width"/>

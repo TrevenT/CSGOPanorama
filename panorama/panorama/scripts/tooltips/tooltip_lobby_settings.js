@@ -109,7 +109,9 @@ var TooltipLobby = ( function ()
 	var _SetPrimeStatus = function ()
 	{
 		var displayText = m_GameSettings.prime === 1 ? '#prime_only_label' : '#prime_priority_label';
-		$.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipPrime' ).text = $.Localize( displayText );
+		var elPrimeText = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipPrime' );
+		elPrimeText.text = $.Localize( displayText );
+		elPrimeText.GetParent().visible = SessionUtil.DoesGameModeHavePrimeQueue( m_GameSettings.mode );
 	}
 
 	var _Permissions = function ()
