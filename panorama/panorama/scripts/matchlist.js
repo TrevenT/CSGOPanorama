@@ -174,12 +174,34 @@ var matchList = ( function() {
         }
     }
 
-    var _OnTournamentSectionSelected = function( elParentPanel, elMatchList, matchListDescriptor )
+    var _OnTournamentTeamSelected = function( elParentPanel, elMatchList, matchListDescriptor )
     {
         elParentPanel.matchListIsPopulated = false;
         _UpdateMatchList( elParentPanel, elParentPanel.tournament_id );
         elMatchList.activeButton = undefined;
         _SelectFirstTile( elParentPanel, elMatchList, matchListDescriptor );
+    };
+
+    var _OnTournamentSectionSelected = function( elParentPanel, elMatchList, matchListDescriptor )
+    {
+                                                       
+        _PopulateMatchTeamsDropdown( elParentPanel, elParentPanel.tournament_id );
+        
+        elParentPanel.matchListIsPopulated = false;
+        _UpdateMatchList( elParentPanel, elParentPanel.tournament_id );
+        elMatchList.activeButton = undefined;
+        _SelectFirstTile( elParentPanel, elMatchList, matchListDescriptor );
+    };
+
+    function MakeDropDownEntry ( index, sectionDesc, sectionName, elMatchlistDropdown )
+    {
+        var elSection = $.CreatePanel( 'Label', elMatchlistDropdown, 'group_' + sectionDesc, { text: sectionName } );
+        elSection.AddClass( "DropDownMenu" );
+        elSection.AddClass( "Width-300" );
+        elSection.AddClass( "White" );
+        elSection.SetAttributeString( 'value', index );
+        elSection.SetAttributeString( 'section_id', sectionDesc );
+        elMatchlistDropdown.AddOption( elSection );
     }
 
     var _PopulateMatchlistDropdown = function( elParentPanel, tournamentId )
@@ -188,18 +210,13 @@ var matchList = ( function() {
         elMatchlistDropdown.ClearPanelEvent( 'oninputsubmit' );
         var nSections = PredictionsAPI.GetEventSectionsCount( tournamentId );
         elMatchlistDropdown.RemoveAllOptions();
+
         for ( var i = 0; i < nSections; i++ )
         {
             var sectionDesc = PredictionsAPI.GetEventSectionIDByIndex( tournamentId, i );
             var sectionName = PredictionsAPI.GetSectionName( tournamentId, sectionDesc );
-            sectionName = $.Localize( "#CSGO_MatchInfo_Stage_" + sectionName.replace(/\s+/g, '') );
-            var elSection = $.CreatePanel( 'Label', elMatchlistDropdown, 'group_' + sectionDesc, { text: sectionName } );
-            elSection.AddClass( "DropDownMenu" );
-            elSection.AddClass( "Width-300" );
-            elSection.AddClass( "White" );
-            elSection.SetAttributeString('value', i );
-            elSection.SetAttributeString('section_id', sectionDesc );
-            elMatchlistDropdown.AddOption( elSection );
+            sectionName = $.Localize( "#CSGO_MatchInfo_Stage_" + sectionName.replace( /\s+/g, '' ) );
+            MakeDropDownEntry( i, sectionDesc, sectionName, elMatchlistDropdown );
         }
 
         var sectionsCount = PredictionsAPI.GetEventSectionsCount( tournamentId );
@@ -219,7 +236,48 @@ var matchList = ( function() {
         elMatchlistDropdown.RemoveClass( 'hide' );
         var elMatchList = elParentPanel.FindChildTraverse( "JsMatchList" );
         elMatchlistDropdown.SetPanelEvent( 'oninputsubmit', _OnTournamentSectionSelected.bind( undefined, elParentPanel, elMatchList, tournamentId ) );
-    }
+    };
+
+    var _PopulateMatchTeamsDropdown = function( elParentPanel, tournamentId )
+    {
+        var elMatchistTeamDropdown = elParentPanel.FindChildTraverse( "id-match-list-selector-teams" );
+        elMatchistTeamDropdown.ClearPanelEvent( 'oninputsubmit' );
+        elMatchistTeamDropdown.RemoveAllOptions();
+
+        var elStageDropdown = elParentPanel.FindChildTraverse( "id-match-list-selector" );
+        var sectionId = elStageDropdown.GetSelected().GetAttributeString( 'section_id', 0 );
+        
+        var teamsList = [];
+        var numGroups = PredictionsAPI.GetSectionGroupsCount( tournamentId, sectionId );
+
+        MakeDropDownEntry( 0, 'allteams', '#Matchlist_Team_Selection', elMatchistTeamDropdown );
+        teamsList.push( 'allteams' );
+
+        for ( var j = 0; j < numGroups; j++ )
+        {
+            var numGroupId = PredictionsAPI.GetSectionGroupIDByIndex( tournamentId, sectionId, j );
+            var count = PredictionsAPI.GetGroupTeamsPickableCount( tournamentId, numGroupId );
+
+            for ( var h = 0; h < count; h++ )
+            {
+                var teamId = PredictionsAPI.GetGroupTeamIDByIndex( tournamentId, numGroupId, h );
+                
+                if ( teamsList.indexOf( teamId ) === -1 && teamId )
+                {
+                    teamsList.push( teamId );
+                    var teamName = PredictionsAPI.GetTeamName( teamId );
+                    MakeDropDownEntry( ( teamsList.length - 1 ), teamId, teamName, elMatchistTeamDropdown );
+                }
+            }
+        }
+
+        elMatchistTeamDropdown.SetSelectedIndex( teamsList.indexOf( 'allteams' ));
+
+        elMatchistTeamDropdown.RemoveClass( 'hide' );
+        elMatchistTeamDropdown.enabled = ( teamsList.length > 1 ) ;
+        var elMatchList = elParentPanel.FindChildTraverse( "JsMatchList" );
+        elMatchistTeamDropdown.SetPanelEvent( 'oninputsubmit', _OnTournamentTeamSelected.bind( undefined, elParentPanel, elMatchList, tournamentId ) );
+    };
 
     function _UpdateMatchList( elTab, matchListDescriptor, optbFromMatchListChangeEvent )
     {
@@ -389,11 +447,59 @@ var matchList = ( function() {
             $.CancelScheduled( parentPanel.downloadFailedHandler );
             parentPanel.downloadFailedHandler = undefined;
         }
-		var nCount = MatchListAPI.GetCount( matchListDescriptor );
+
+        function GetListOfMatchIds( tournament_id, tournamentIndex, unfilteredCount, sectionDesc, teamId = undefined )
+        {
+            var MatchIds= [];
+            
+            for ( var i = 0; i < unfilteredCount; i++ )
+            {
+                var matchId = '';
+                if ( tournamentIndex > 3 )
+                {
+                    matchId = PredictionsAPI.GetSectionMatchByIndex( tournament_id, sectionDesc, i );
+                }
+                else
+                {
+                    matchId = MatchListAPI.GetMatchByIndex( tournament_id, i );
+                }
+
+                if ( teamId && teamId != 0 )
+                {
+                    if ( IsTeamInMatch( teamId, matchId ) )
+                    {
+                        MatchIds.push( matchId );
+                    }
+                }
+                else
+                {
+                    MatchIds.push( matchId );
+                }
+            }
+
+            return MatchIds;
+        }
+
+        function IsTeamInMatch ( teamId, matchId )
+        {
+            for ( i = 0; i <= 1; i++ )
+            {   
+                if ( MatchInfoAPI.GetMatchTournamentTeamID( matchId, i ) === teamId )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        var unfilteredCount = MatchListAPI.GetCount( matchListDescriptor );
+        var nCount = 0;
 		                                                                                              
         var sectionDesc = 0;
         var tournamentIndex = 0;
-        if ( ( nCount > 0 ) && ( parentPanel.tournament_id ) )
+        var MatchIdsFiltered = [];
+
+        if ( ( unfilteredCount > 0 ) && ( parentPanel.tournament_id ) )
         {
             tournamentIndex = parentPanel.tournament_id.split(':')[1];
             parentPanel.tournamentIndex = tournamentIndex;
@@ -402,6 +508,7 @@ var matchList = ( function() {
                 if ( tournamentIndex > 3 )
                 {
                     _PopulateMatchlistDropdown( parentPanel, parentPanel.tournament_id );
+                    _PopulateMatchTeamsDropdown( parentPanel, parentPanel.tournament_id );
                 }
                 parentPanel.matchListDropdownIsPopulated = true;
             }
@@ -410,17 +517,27 @@ var matchList = ( function() {
             {
                 var elDropdown = parentPanel.FindChildTraverse( "id-match-list-selector" );
                 sectionDesc = elDropdown.GetSelected().GetAttributeString( 'section_id', 0 );
-                nCount = PredictionsAPI.GetSectionMatchesCount( parentPanel.tournament_id, sectionDesc );
+                unfilteredCount = PredictionsAPI.GetSectionMatchesCount( parentPanel.tournament_id, sectionDesc );
+
+                var elStageDropdown = parentPanel.FindChildTraverse( "id-match-list-selector-teams" );
+                var strTeamId =  elStageDropdown.GetSelected().GetAttributeString( 'section_id', 0 );
+                var nteamId = strTeamId === 'allteams' ? 0 : Number(strTeamId );
+
+                MatchIdsFiltered = GetListOfMatchIds( parentPanel.tournament_id, tournamentIndex, unfilteredCount, sectionDesc, nteamId );
+                nCount = MatchIdsFiltered.length;
             }
             else if ( tournamentIndex == 1 )
             {
-                nCount = nCount - 3;                                        
+                MatchIdsFiltered = GetListOfMatchIds( parentPanel.tournament_id, tournamentIndex, unfilteredCount, sectionDesc, undefined );
+                nCount = MatchIdsFiltered.length -3;                                       
             }
             else if ( tournamentIndex == 3 )
             {
-                nCount = nCount - 1;                   
+                MatchIdsFiltered = GetListOfMatchIds( parentPanel.tournament_id, tournamentIndex, unfilteredCount, sectionDesc, undefined );
+                nCount = MatchIdsFiltered.length - 1;                   
             }
         }
+
         _ShowListSpinner( false, parentPanel );
                                                      
         if ( nCount <= 0 )
@@ -522,15 +639,16 @@ var matchList = ( function() {
         {
             if  ( ( parentPanel.tournament_id ) && ( tournamentIndex > 3 ) )
             {
-                _CreateOrValidateMatchTile(  PredictionsAPI.GetSectionMatchByIndex( parentPanel.tournament_id, sectionDesc, i ) );
+                _CreateOrValidateMatchTile( MatchIdsFiltered[i] );
             }
             else
             {
 				var matchbyindex = MatchListAPI.GetMatchByIndex( matchListDescriptor, i );
-				                                                                            
-                _CreateOrValidateMatchTile( matchbyindex );
+				                                                                                   
+                _CreateOrValidateMatchTile( MatchIdsFiltered[i] );
             }
         }
+        
 
         if ( (matchListDescriptor === 'live' ) && elMatchList.FindChildInLayoutFile( "live_gotv" ) )
         {

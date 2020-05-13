@@ -54,8 +54,13 @@
 					<Panel class="no-flow full-width full-height">
 						<Panel class="left-right-flow full-width full-height">
 							<Panel id="id-match-list-container" class="MatchList subsection-content__background-color">
-								<DropDown id="id-match-list-selector" class="White MatchList--Selector hide" menuclass="DropDownMenu">
-								</DropDown>
+								<Panel class="left-right-flow full-width height-fit-children">
+									<DropDown id="id-match-list-selector" class="White MatchList--Selector hide" menuclass="DropDownMenu">
+									</DropDown>
+
+									<DropDown id="id-match-list-selector-teams" class="White MatchList--Selector hide" menuclass="DropDownMenu">
+									</DropDown>
+								</Panel>
 								<Panel id="JsMatchList" class="MatchList MatchList-scroll">
 									                                            
 								</Panel>

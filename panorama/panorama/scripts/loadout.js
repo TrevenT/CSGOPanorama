@@ -113,7 +113,12 @@ var Loadout = ( function() {
 		);
 
 		elTitle.text = ItemInfo.GetName( idForDisplay );
-		elRarity.style.backgroundColor = ItemInfo.GetRarityColor( itemId );
+		var rarityColor = ItemInfo.GetRarityColor( itemId );
+
+		if ( rarityColor )
+		{
+			elRarity.style.backgroundColor = rarityColor;
+		}
 	};
 
 	var _ShowFlairReset = function( loadoutSlot, noIdEquipped )

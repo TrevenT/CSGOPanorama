@@ -99,7 +99,12 @@ var EOM_Drops = (function () {
 
 				if ( elDropContainer.IsValid() )
 				{
-					$.Schedule( 0.5, function() { elDropContainer.AddClass( 'blendmode' ); } );
+					$.Schedule( 0.5, function(){
+						if ( elDropContainer && elDropContainer.IsValid())
+						{
+							elDropContainer.AddClass( 'blendmode' );
+						}
+					} );
 				}
 
 				var dropWidth = 220;

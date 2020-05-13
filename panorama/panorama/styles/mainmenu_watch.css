@@ -61,26 +61,36 @@
 	height: fit-children;
 	padding: 0%;
 	flow-children: down;
-	width: 100%;	
+	width: 50%;	
 	horizontal-align: left;
+	min-height: 64px;
+	margin: 0px;
 
 	transition-property:  opacity, blur, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
 
-  
-                          
- 
-	                
- 
-  
+.MatchList--Selector Label
+{
+	font-size: 14px;
+	text-overflow: shrink;
+}
 
 .MatchList--Selector:focus Label
 {
 	color: white;
 }
 
+.MatchList--Selector:disabled
+{
+	wash-color: disabledColor;
+}
+
+.MatchList--Selector:disabled:hover
+{
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000), color-stop( 1, #00000000 ), to( #00000000 ) );
+}
 
 .MatchList
 {
