@@ -82,7 +82,7 @@ var TournamentStore = ( function()
 
 		                                                      
 		var passItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
-		if ( StoreAPI.GetStoreItemSalePrice( passItemId, 1 ) )
+		if ( StoreAPI.GetStoreItemSalePrice( passItemId, 1, '' ) )
 		{
 			var elMegaBundle = $( '#MegaBundle' );
 			elMegaBundle.BLoadLayoutSnippet( "ItemCategory" );

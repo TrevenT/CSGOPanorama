@@ -534,7 +534,7 @@ var PickemCommon = ( function()
 			{
 				                                                               
 				id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
-				if ( !StoreAPI.GetStoreItemSalePrice( id, 1 ) )
+				if ( !StoreAPI.GetStoreItemSalePrice( id, 1, '' ) )
 				{
 					elPurchase.visible = false;
 					return;

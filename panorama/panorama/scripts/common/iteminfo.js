@@ -228,14 +228,20 @@ var ItemInfo = ( function() {
 		return LoadoutAPI.GetItemGamePrice( team, _GetSlotSubPosition( id ).toString() );
 	};
 
-	var _GetStoreOriginalPrice = function( id, count )
+	var _GetStoreOriginalPrice = function( id, count, rules )
 	{
-		return StoreAPI.GetStoreItemOriginalPrice( id, count );                                                 
+		                                                                      
+		                                                                            
+		                                                                                                   
+		return StoreAPI.GetStoreItemOriginalPrice( id, count, rules ? rules : '' );
 	};
 
-	var _GetStoreSalePrice = function( id, count )
+	var _GetStoreSalePrice = function( id, count, rules )
 	{
-		return StoreAPI.GetStoreItemSalePrice( id, count );                                                 
+		                                                                      
+		                                                                            
+		                                                                                                   
+		return StoreAPI.GetStoreItemSalePrice( id, count, rules ? rules : '' );
 	};
 
 	var _GetStoreSalePercentReduction = function( id, count )

@@ -422,7 +422,8 @@ var mainmenu_watch_eventsched = (function () {
 				
 				                                                                                                                           
 
-				elEvent.SetDialogVariable( 'eventsched_country', $.Localize( '#SFUI_Country_' + oEvent[ 'country_iso' ] ) );
+				                                                                                                                                      
+				elEvent.SetDialogVariable( 'eventsched_country', $.LocalizeSafe( '#SFUI_Country_' + oEvent[ 'country_iso' ] ) );
 			}
 			
 			       

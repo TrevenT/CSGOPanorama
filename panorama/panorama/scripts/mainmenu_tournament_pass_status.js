@@ -35,7 +35,7 @@ var MainMenuTournamentPassStatus = ( function() {
 			{
 				                                                               
 				id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
-				if ( !StoreAPI.GetStoreItemSalePrice( id, 1 ) )
+				if ( !StoreAPI.GetStoreItemSalePrice( id, 1, '' ) )
 				{
 					$.GetContextPanel().SetHasClass( 'hidden', true );
 					return;
