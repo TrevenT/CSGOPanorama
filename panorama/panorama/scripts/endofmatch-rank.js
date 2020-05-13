@@ -145,7 +145,7 @@ var EOM_Rank = (function () {
 				{
 					if ( elRankSegment.IsValid() )
 					{
-						elRankSegment.style.width = ( xp / xPPerLevel * 70 ) + '%;';                               
+						elRankSegment.style.width = ( xp / xPPerLevel * 70.8 ) + '%;';                               
 					}
 				} );
 				

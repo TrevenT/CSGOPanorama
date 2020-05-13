@@ -172,16 +172,36 @@ var PlayMenu = ( function()
 		_ApplySessionSettings();
 	};
 
+	var _SetGameModeRadioButtonAvailableTooltip = function( gameMode, isAvailable, txtTooltip )
+	{
+		var elGameModeSelectionRadios = $( '#GameModeSelectionRadios' );
+		var elTab = elGameModeSelectionRadios ? elGameModeSelectionRadios.FindChildInLayoutFile( gameMode ) : null;
+		if ( elTab )
+		{
+			if ( !isAvailable )
+			{
+				elTab.SetPanelEvent( 'onmouseover', function() {UiToolkitAPI.ShowTextTooltipOnPanel( elTab, txtTooltip );} );
+				elTab.SetPanelEvent( 'onmouseout', function() {UiToolkitAPI.HideTextTooltip();} );
+			}
+			else
+			{
+				elTab.SetPanelEvent( 'onmouseover', function() {} );
+				elTab.SetPanelEvent( 'onmouseout', function() {} );				
+			}
+		}
+	}
+
 	var _IsGameModeAvailable = function( serverType, gameMode )
 	{
-		       
-		if ( !_IsValveOfficialServer( serverType ) 
-			&& gameMode === "survival" 
-			)
+		var isAvailable = true;
+		
+		if ( gameMode === "survival" )
 		{
-			return false;
+			isAvailable = _IsValveOfficialServer( serverType );
+			_SetGameModeRadioButtonAvailableTooltip( gameMode, isAvailable, '#PlayMenu_dangerzone_onlineonly' );
+			if ( !isAvailable )
+				return false;
 		}
-		       
 
 		if ( gameMode === "cooperative" )
 		{
@@ -189,7 +209,33 @@ var PlayMenu = ( function()
 			return questID > 0 && MissionsAPI.GetQuestDefinitionField( questID, "gamemode" ) === "cooperative";
 		}
 
-		return true;
+		                                                                           
+		if ( _IsValveOfficialServer( serverType ) &&                                                                                              
+			LobbyAPI.BIsHost() && !(                                         
+			MyPersonaAPI.HasPrestige() || ( MyPersonaAPI.GetCurrentLevel() >= 2 )
+			) )
+		{
+			                                  
+			  
+			                                                          
+			                                                                             
+			  
+			var nNewPlayerCategory = MyPersonaAPI.GetAccountCategory( 'onramp' );
+			                                                                      
+		
+			switch ( Math.floor( nNewPlayerCategory / 10 ) )
+			{
+				case 1:                                                       
+					isAvailable = ( gameMode == GameInterfaceAPI.GetSettingString( "ui_playsettings_mode_" + serverType ) );
+					break;
+				case 2:                                                  
+					isAvailable = ( gameMode == 'deathmatch' || gameMode == 'casual' );
+					break;
+			}
+		}
+		                                                                                          
+		_SetGameModeRadioButtonAvailableTooltip( gameMode, isAvailable, '#PlayMenu_unavailable_newuser' );
+		return isAvailable;
 	}
 
 	var _GetTournamentOpponent = function ()
@@ -318,7 +364,7 @@ var PlayMenu = ( function()
 				}
 
 				                                                                                     
-				m_arrGameModeRadios[i].enabled = isEnabled && _IsGameModeAvailable( m_serverSetting, strGameModeForButton );
+				m_arrGameModeRadios[i].enabled = _IsGameModeAvailable( m_serverSetting, strGameModeForButton ) && isEnabled;
 			}
 
 			                                                                   
@@ -1360,10 +1406,33 @@ var PlayMenu = ( function()
 
 		if ( !_IsGameModeAvailable( m_serverSetting, m_gameModeSetting ) )
 		{
-			                                   
-			  
-			                                                   
-			m_gameModeSetting = "casual";
+			                                                                
+			m_gameModeSetting = GameInterfaceAPI.GetSettingString( "ui_playsettings_mode_" + m_serverSetting );
+			if ( !_IsGameModeAvailable( m_serverSetting, m_gameModeSetting ) )
+			{
+				                                                                                                                                            
+				  
+				                                                          
+				                                                                             
+				  
+				                                   
+				  
+				                                                                      
+				var modes = [
+					"deathmatch", "casual",
+					"survival", "skirmish",
+					"scrimcomp2v2", "competitive",
+					];
+				
+				for ( var i = 0; i < modes.length; i++ )
+				{
+					if ( _IsGameModeAvailable( m_serverSetting, modes[ i ] ) )
+					{
+						m_gameModeSetting = modes[ i ];
+						break;
+					}
+				}
+			}
 		}
 	};
 
