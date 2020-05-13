@@ -345,7 +345,7 @@ var mainmenu_watch_eventsched = ( function()
 			}
 
 
-
+			var elYearContainer;
 			var elMonthContainer;
 
 			if ( isOngoing )
@@ -368,14 +368,36 @@ var mainmenu_watch_eventsched = ( function()
 			}
 			else
 			{
-				                 
+				                
+				const ID_YEAR_PREFIX = 'eventsched__year__';
+				var idYear = ID_YEAR_PREFIX + startDate.getFullYear();
+
+				elYearContainer = _m_ElEventLister.FindChildTraverse( idYear );
+				if ( !elYearContainer || !elYearContainer.IsValid() )
+				{
+					elYearContainer = $.CreatePanel( 'Panel', _m_ElEventLister, idYear );
+					elYearContainer.BLoadLayoutSnippet( 'snippet_eventsched_year_container' );
+					var elYearHeader = elYearContainer.FindChildTraverse( "id-eventsched__year-container__header" );
+					if ( elYearHeader )
+					{
+						elYearHeader.text = startDate.getFullYear();
+
+						                           
+						if ( new Date().getFullYear() == startDate.getFullYear() )
+						{
+							elYearHeader.visible = false;
+						}
+					}
+				}				
+
+				                      
 				const ID_MONTH_PREFIX = 'eventsched__month__';
 				var idMonth = ID_MONTH_PREFIX + ( startDate.getMonth() + 1 );
 
-				elMonthContainer = _m_ElEventLister.FindChildTraverse( idMonth );
+				elMonthContainer = elYearContainer.FindChildTraverse( idMonth );
 				if ( !elMonthContainer || !elMonthContainer.IsValid() )
 				{
-					elMonthContainer = $.CreatePanel( 'Panel', _m_ElEventLister, idMonth );
+					elMonthContainer = $.CreatePanel( 'Panel', elYearContainer, idMonth );
 					elMonthContainer.BLoadLayoutSnippet( 'snippet_eventsched_month_container' );
 					var elMonthHeader = elMonthContainer.FindChildTraverse( "id-eventsched__month-container__header" );
 					if ( elMonthHeader )

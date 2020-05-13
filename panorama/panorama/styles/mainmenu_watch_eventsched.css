@@ -31,6 +31,25 @@
 	flow-children: down;
 }
 
+.eventsched__year-container{
+
+	flow-children: down;
+}
+
+Label.eventsched__year-container__header{
+
+	font-size: 50px;
+	font-weight: normal;
+	horizontal-align: left;
+	margin: 30px 0px 10px 10px;
+	text-transform: uppercase;
+	color: #ffffff;
+
+	horizontal-align: center;
+
+	margin-top: 100px;
+}
+
 .eventsched__month-container--ongoing{
 
 	margin-bottom: 30px;

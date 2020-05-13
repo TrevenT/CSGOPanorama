@@ -98,6 +98,13 @@
 			</Panel>
 		</snippet>
 
+		<snippet name="snippet_eventsched_year_container">
+			<Panel class="eventsched__year-container">
+				<Label id="id-eventsched__year-container__header" class="eventsched__year-container__header stratum-font"/>
+				<Panel id="id-eventsched__year-container__eventsched" clas="eventsched__year-container__eventsched"/>
+					                                                             
+			</Panel>
+		</snippet>
 
 		<snippet name="snippet_eventsched_month_container">
 			<Panel class="eventsched__month-container">
