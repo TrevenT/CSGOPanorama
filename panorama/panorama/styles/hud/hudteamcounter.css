@@ -951,6 +951,7 @@ CSGOHudTeamCounter Label
 .teamcounter_timer
 {
     margin-left: 2px;
+    margin-bottom: 4px;
     horizontal-align: middle;
     vertical-align: middle;
     text-align: center;

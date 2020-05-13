@@ -128,6 +128,55 @@ var matchInfo = ( function() {
         UiToolkitAPI.ShowTextTooltipOnPanel( elShareLinkButton, $.Localize("#WatchMenu_Share_Link_Copied") );
     }
 
+    function _RefreshRoundWatchEnabled( elParentPanel )
+    {
+        if ( elParentPanel.matchListDescriptor === 'live' )
+        {
+            return;
+        }
+
+        var elStatsContainer = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__container' );
+
+        var totalBars = elStatsContainer.Children().length;
+        
+        if ( totalBars == 0 )
+        {
+            return;
+        }
+
+        var canWatch = MatchInfoAPI.CanWatch( elParentPanel.matchId );
+
+        for ( var i = 1; i <= totalBars; i++ )
+        {
+            var elRoundStats = elStatsContainer.GetChild( i-1 );
+
+            if ( !canWatch ) 
+            {
+                elRoundStats.AddClass( 'no-hover' );
+            }
+            else
+            {
+                elRoundStats.RemoveClass( 'no-hover' );
+                elRoundStats.style.tooltipPosition = "bottom";
+                elRoundStats.style.tooltipBodyPosition = "50% 0%"
+                function _OnRoundMouseOver( elButton )
+                {
+                    UiToolkitAPI.ShowTextTooltipOnPanel( elButton, $.Localize( "#CSGO_Watch_Round" ) );
+                }
+
+                function _OnRoundActivate( nMatch, nRound )
+                {
+                    MatchInfoAPI.Watch( nMatch, nRound );
+                }
+
+                elRoundStats.SetPanelEvent( 'onmouseover', _OnRoundMouseOver.bind( undefined, elRoundStats ) );
+                elRoundStats.SetPanelEvent( 'onmouseout', function(){ UiToolkitAPI.HideTextTooltip(); } );
+                elRoundStats.SetPanelEvent( 'onactivate', _OnRoundActivate.bind( undefined, elParentPanel.matchId, i ) );
+                
+            }
+        }
+    }
+
     function _UpdateMatchMenu( elParentPanel )
     {   
         var matchState = MatchInfoAPI.GetMatchState( elParentPanel.matchId );
@@ -249,6 +298,8 @@ var matchInfo = ( function() {
             _ShowButton( elShareLinkButton, false );
             _ShowButton( elDeleteButton, false );
         }
+
+        _RefreshRoundWatchEnabled( elParentPanel );
     }
 
     function _Refresh( elParentPanel )
@@ -617,29 +668,7 @@ var matchInfo = ( function() {
             }
             else
             {
-                if ( !canWatch ) 
-                {
-                    elRoundStats.AddClass( 'no-hover' );
-                }
-                else
-                {
-                    elRoundStats.style.tooltipPosition = "bottom";
-                    elRoundStats.style.tooltipBodyPosition = "50% 0%"
-                    function _OnRoundMouseOver( elButton )
-                    {
-                        UiToolkitAPI.ShowTextTooltipOnPanel( elButton, $.Localize( "#CSGO_Watch_Round" ) );
-                    }
-
-                    function _OnRoundActivate( nMatch, nRound )
-                    {
-                        MatchInfoAPI.Watch( nMatch, nRound );
-                    }
-
-                    elRoundStats.SetPanelEvent( 'onmouseover', _OnRoundMouseOver.bind( undefined, elRoundStats ) );
-                    elRoundStats.SetPanelEvent( 'onmouseout', function(){ UiToolkitAPI.HideTextTooltip(); } );
-                    elRoundStats.SetPanelEvent( 'onactivate', _OnRoundActivate.bind( undefined, elParentPanel.matchId, i ) );
-                    
-                }
+                _RefreshRoundWatchEnabled( elParentPanel )
                 elIconContainer.RemoveClass( 'hide' );
 
                 var n = i-1;

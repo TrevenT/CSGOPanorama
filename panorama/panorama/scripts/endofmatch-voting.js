@@ -107,7 +107,6 @@ var EOM_Voting = (function () {
 				else if ( type == "map" )
 				{
 					var internalName = oMatchEndVoteData[ "voting_options" ][ key ][ "name" ];
-
 					var text = GameTypesAPI.GetFriendlyMapName( internalName );
 					
 					                                                           

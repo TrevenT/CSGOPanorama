@@ -17,7 +17,7 @@
 				<Frame id="WinPlayersAvatar" class='' src="file://{resources}/layout/avatar.xml" />
 				<Panel class="top-bottom-flow vertical-center left-right-padding">
 					<Label id="WinPlacement" class="eom-win__player_title stratum-font" text="#SFUI_WinPanel_arsenal_first"/>
-					<Label id="WinPlayerName" class="eom-win__player_name" html="true" text="Really long name here isn sdfdfsdf"/>
+					<Label id="WinPlayerName" class="eom-win__player_name" html="true" text="{s:winner_name}"/>
 				</Panel>
 			</Panel>
 		</snippet>

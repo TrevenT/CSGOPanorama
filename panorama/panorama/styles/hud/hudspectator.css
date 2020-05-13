@@ -1689,7 +1689,7 @@
 
     background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( 0.02, #00000000 ), color-stop( 0.20, #000000CC ), color-stop( 0.80, #000000CC ), color-stop( 0.98, #00000000 ), to( #00000000 ) );
 
-    visibility: visible;
+    visibility: collapse;
 }
 
 .PickemProgressbar
@@ -1777,7 +1777,7 @@
 
     background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( 0.02, #00000000 ), color-stop( 0.20, #000000CC ), color-stop( 0.80, #000000CC ), color-stop( 0.98, #00000000 ), to( #00000000 ) );
 
-    visibility: visible;
+    visibility: collapse;
 }
 
 #BestOfPipsText
@@ -2056,6 +2056,14 @@
     horizontal-align: right;
     x: 0px;
     width: 651px;
+}
+
+.AspectRatio4x3 .TeamScoreAndNameR,
+.AspectRatio5x4 .TeamScoreAndNameR,
+.AspectRatio4x3 .TeamScoreAndNameL,
+.AspectRatio5x4 .TeamScoreAndNameL
+{
+    width: 46.25%;
 }
 
 .TeamScoreL

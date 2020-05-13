@@ -100,7 +100,7 @@
 			<Panel class="sb-main">
 
 					                       
-					<Panel id="id-sb-meta"/>
+					<Frame snippet="snippet_sb-meta"/>
 
 					               
 					<Panel id="id-sb-players-table__labels-row" class="sb-row--labels sb-row no-hover" />

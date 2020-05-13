@@ -8,6 +8,14 @@
 		<include src="file://{resources}/scripts/controlslibrary.js" />
 	</scripts>
 
+	<snippets>
+		<snippet name="frame-snippet-example">
+			<Panel>
+				<Label text="This panel is loaded as a snippet via a 'Frame' element" />
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="mainmenu-content__container" >
 		<Panel class="content-navbar" >
 			<Panel class="content-navbar__tabs">
@@ -748,8 +756,9 @@
 						</Panel>
 					</Panel>
 
-					<Label class="fontSize-l fontWeight-Bold" text="Frame:" />
+					<Label class="fontSize-l fontWeight-Bold" text="Frames:" />
 					<Frame src="file://{resources}/layout/controlslibrary_frameexample.xml" />
+					<Frame snippet="frame-snippet-example" />
 				</Panel>
 			</Panel>
 

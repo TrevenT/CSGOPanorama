@@ -126,7 +126,7 @@ var EOM_Win = ( function () {
 			elAvatar.BLoadLayoutSnippet( 'AvatarPlayerCard' );
 
 			elPlayer.FindChildTraverse( 'WinPlacement' ).text = $.Localize( "#scoreboard_arsenal_" + i );
-			elPlayer.FindChildTraverse( 'WinPlayerName' ).text = GameStateAPI.GetPlayerName( _m_arrTopPlayerXuid[ i ] );
+			elPlayer.SetDialogVariable( 'winner_name', GameStateAPI.GetPlayerName( _m_arrTopPlayerXuid[ i ] ));
 
 			Avatar.Init( elAvatar, _m_arrTopPlayerXuid[ i ], 'playercard' );
 

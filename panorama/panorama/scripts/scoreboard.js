@@ -973,12 +973,13 @@ var Scoreboard = ( function()
 						return;
 					
 					var ownerXuid = oPlayer.m_xuid;
+					var isLocalPlayer = oPlayer.m_xuid == GetLocalPlayerId();
 					var isBorrowed = false;
 					var borrowedXuid = 0;
 
 					var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
 
-					if ( borrowedPlayerIndex != 0 )
+					if ( borrowedPlayerIndex != 0 && isLocalPlayer )
 					{
 						borrowedXuid = GameStateAPI.GetPlayerXuidStringFromEntIndex( borrowedPlayerIndex );
 
@@ -996,57 +997,37 @@ var Scoreboard = ( function()
 						oPlayer.m_oStats[ stat ] = newStatValue;
 
 						                                 
-						if ( oPlayer.m_xuid == GetLocalPlayerId() )
+						if ( isLocalPlayer )
 						{
-
 							var elMusicKit = $( '#id-sb-meta__musickit' );
 
 							if ( !elMusicKit || !elMusicKit.IsValid() )
 								return;
 
-							if ( newStatValue <= 0 )
+							var isValidMusicKit = newStatValue > 0;
+							elMusicKit.SetHasClass( 'hidden', !isValidMusicKit );
+							if ( isValidMusicKit )
 							{
-								elMusicKit.AddClass( "hidden" );
-							}
-							else
-							{
-
 								                          
-								if ( isBorrowed )
-								{
-									_m_cP.FindChildTraverse( "id-sb-meta__musickit-unborrow" ).RemoveClass( "hidden" );
-								}
-								else
-								{
-									_m_cP.FindChildTraverse( "id-sb-meta__musickit-unborrow" ).AddClass( "hidden" );
-								}	
+								_m_cP.FindChildTraverse( "id-sb-meta__musickit-unborrow" ).SetHasClass( 'hidden', !isBorrowed );
 
-								elMusicKit.RemoveClass( "hidden" );
 								var imagepath = "file://{images_econ}/" + InventoryAPI.GetItemInventoryImageFromMusicID( newStatValue ) + ".png";
 								$( '#id-sb-meta__musickit-image' ).SetImage( imagepath );
 								$( '#id-sb-meta__musickit-name' ).text = $.Localize( InventoryAPI.GetMusicNameFromMusicID( newStatValue ) );
 							}
 						}
-
-						var elPlayer = oPlayer.m_elPlayer;
-
-						if ( elPlayer && elPlayer.IsValid())
+					}
+					
+					var elPlayer = oPlayer.m_elPlayer;
+					if ( elPlayer && elPlayer.IsValid())
+					{
+						                                
+						                     
+						                                
+						var elMusicKitIcon = elPlayer.FindChildTraverse( "id-sb-name__musickit" );
+						if ( elMusicKitIcon && elMusicKitIcon.IsValid() )
 						{
-							                                
-							                     
-							                                
-							var elMusicKitIcon = elPlayer.FindChildTraverse( "id-sb-name__musickit" );
-							if ( elMusicKitIcon && elMusicKitIcon.IsValid() )
-							{
-								if ( newStatValue <= 1 )
-								{
-									elMusicKitIcon.AddClass( "hidden" );
-								}
-								else
-								{
-									elMusicKitIcon.RemoveClass( "hidden" );
-								}
-							}
+							elMusicKitIcon.SetHasClass( 'hidden', newStatValue <= 1 );
 						}
 					}
 				}
@@ -1056,11 +1037,9 @@ var Scoreboard = ( function()
 			case 'teamname':
 				fn = function( oPlayer, bSilent = false )
 				{
-
 					var newStatValue = GameStateAPI.GetPlayerTeamName( oPlayer.m_xuid );
 
 					_ChangeTeams( oPlayer, newStatValue );
-
 				}
 				break;
 

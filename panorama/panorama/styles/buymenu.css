@@ -794,6 +794,7 @@
 {
 	font-size: 18px;
 	overflow: squish squish;
+	text-overflow: shrink;
 	text-align: center;
 	horizontal-align: center;
 	width:180px;
