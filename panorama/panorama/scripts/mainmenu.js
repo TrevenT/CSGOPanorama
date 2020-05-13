@@ -582,7 +582,7 @@ var MainMenu = ( function() {
 		};
 
 		_ShowNewsAndStore();
-		_AddFeaturedPanel();
+		                      
 	};
 
 	var _AddStream = function()

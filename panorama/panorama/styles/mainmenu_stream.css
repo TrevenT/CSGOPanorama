@@ -43,6 +43,7 @@
 .news-panel-streamfeed .content-navbar__extra-buttons
 {
 	padding: 0px;
+	horizontal-align: right;
 }
 
 .news-panel-streamfeed .IconButton

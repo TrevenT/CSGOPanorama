@@ -40,12 +40,12 @@ var NewsPanel = (function () {
 
 	var _OnSteamIsPlaying = function()
 	{
-		$.GetContextPanel().SetHasClass( 'news-panel-style-video-playing', EmbeddedStreamAPI.IsVideoPlaying() );
+		$.GetContextPanel().SetHasClass( 'news-panel-style-short-entires', EmbeddedStreamAPI.IsVideoPlaying() );
 	};
 
 	var _ResetNewsEntryStyle = function()
 	{
-		$.GetContextPanel().RemoveClass( 'news-panel-style-video-playing' );
+		$.GetContextPanel().RemoveClass( 'news-panel-style-short-entires' );
 	};
 
 	return {
