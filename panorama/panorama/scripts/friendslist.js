@@ -70,6 +70,21 @@ var friendsList = (function() {
 		if ( btnLobbiesTabListFilters )
 		{	                                                                         
 			btnLobbiesTabListFilters.checked = true;
+
+			                                                                
+			var elParent = btnLobbiesTabListFilters.GetParent();
+			elParent.Children().forEach( child => {
+				if ( !child.BHasClass( 'friendslist-navbar-lobby-button' ) )
+					return;
+				
+				var strPrefix = 'JsFriendsList-lobbies-toolbar-button-';
+				if ( !child.id.startsWith( strPrefix ) )
+					return;
+				
+				var gamemodename = child.id.slice( strPrefix.length );
+				if ( !PartyListAPI.IsPlayerForHireAdvertisingEnabledForGameMode( gamemodename ) )
+					child.visible = false;
+			} );
 		}
 	};
 

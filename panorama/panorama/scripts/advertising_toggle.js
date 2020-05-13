@@ -56,7 +56,10 @@ var AdvertisingToggle = ( function()
 
         var items = [];
         gameModes.forEach( entry =>
-        {
+        {	                                                          
+			if ( !PartyListAPI.IsPlayerForHireAdvertisingEnabledForGameMode( entry.mode ) )
+				return;
+
             var labelLoc = entry.mode === advertisingMode ?
                 "<b><font color='#2aa32e'>" + $.Localize( '#advertising_for_hire_' + entry.mode ) + '</b></font>' :
                 $.Localize( '#advertising_for_hire_' + entry.mode );
