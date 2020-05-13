@@ -1142,7 +1142,6 @@ Label.sb-row__cell--mvps__count {
 }
 
 .sb-timeline__divider {
-
 	width: 2px;
 	height: 50%;
 	background-color: gray;
@@ -1153,12 +1152,43 @@ Label.sb-row__cell--mvps__count {
 }
 
 .sb-timeline__half-time-scores {
-
 	horizontal-align: center;
 	vertical-align: center;
 	flow-children:right;
 	width: left-panel-width; 
+}
 
+.sb-timeline__round-loss-bonus-money {
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children:right;
+	width: 68px;
+}
+
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--CT,
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--TERRORIST
+{
+	flow-children: right;
+}
+
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--CT,
+{
+	padding-top: 10px;
+	padding-bottom: 2px;
+}
+
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--TERRORIST
+{
+	padding-top: 2px;
+	padding-bottom: 10px;
+}
+
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--CT Image,
+.sb-timeline__round-loss-bonus-money .sb-timeline__score .sb-team--TERRORIST Image
+{
+	width: 14px;
+	height: 2px;
+	margin-right: 1px;
 }
 
 
@@ -1479,6 +1509,47 @@ Label.sb-row__cell--mvps__count {
 .sb-tournament-match #id-sb-skillgroup-image
 {
 	visibility: collapse;
+}
+
+
+.sb-timeline__round-loss-bonus-money .sb-team--CT .sb-timeline__round-loss-bonus-money__CT1,
+.sb-timeline__round-loss-bonus-money .sb-team--CT .sb-timeline__round-loss-bonus-money__CT2,
+.sb-timeline__round-loss-bonus-money .sb-team--CT .sb-timeline__round-loss-bonus-money__CT3,
+.sb-timeline__round-loss-bonus-money .sb-team--CT .sb-timeline__round-loss-bonus-money__CT4,
+.sb-timeline__round-loss-bonus-money .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST1,
+.sb-timeline__round-loss-bonus-money .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST2,
+.sb-timeline__round-loss-bonus-money .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST3,
+.sb-timeline__round-loss-bonus-money .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST4
+{
+	wash-color: #444444FF;
+}
+
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT1 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT2 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT3 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT4 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT2 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT3 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT4 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT3 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT3,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT4 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT3,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__CT4 .sb-team--CT .sb-timeline__round-loss-bonus-money__CT4
+{
+	wash-color: color-CT;
+}
+
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST1 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST2 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST3 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST4 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST1,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST2 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST3 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST4 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST2,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST3 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST3,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST4 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST3,
+.sb-timeline__round-loss-bonus-money.sb-timeline__round-loss-bonus-money__TERRORIST4 .sb-team--TERRORIST .sb-timeline__round-loss-bonus-money__TERRORIST4
+{
+	wash-color: color-T;
 }
 
 

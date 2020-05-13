@@ -44,7 +44,11 @@
     $.DefineEvent( 'Scoreboard_UnborrowMusicKit', 0, '', "Cancel Music Kit borrowing" );
 
     $.DefineEvent( 'Scoreboard_Casualties_OnMouseOver', 0, '', '' );
-    $.DefineEvent( 'Scoreboard_Casualties_OnMouseOut', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOut', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_RoundLossBonusMoney_OnMouseOver_CT', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_RoundLossBonusMoney_OnMouseOut_CT', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_RoundLossBonusMoney_OnMouseOver_TERRORIST', 0, '', '' );
+	$.DefineEvent( 'Scoreboard_RoundLossBonusMoney_OnMouseOut_TERRORIST', 0, '', '' );
     $.DefineEvent( 'ShowAcceptPopup', 1, 'popup', 'Fired when accept match popup is shown.' );
     $.DefineEvent( 'CloseAcceptPopup', 0, '', 'Fired when accept match popup Closes.' );
 

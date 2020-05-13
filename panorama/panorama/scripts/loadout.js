@@ -557,6 +557,6 @@ var Loadout = ( function() {
 	var elloadout = $.GetContextPanel().FindChildInLayoutFile( 'Loadout' );
 	$.RegisterEventHandler( 'ReadyForDisplay', $.GetContextPanel(), Loadout.OnReadyForDisplay );
 	$.RegisterEventHandler( 'UnreadyForDisplay', $.GetContextPanel(), Loadout.OnUnreadyForDisplay );
-	$.RegisterEventHandler( 'LoadoutWedgePressed', $.GetContextPanel(), Loadout.LoadoutWedgePressed );
+	$.RegisterForUnhandledEvent( 'LoadoutWedgePressed', Loadout.LoadoutWedgePressed );
 	$.RegisterForUnhandledEvent( 'ShowLoadoutForItem', Loadout.SetLoadoutToSlot );
 })();

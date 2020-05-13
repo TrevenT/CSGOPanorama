@@ -184,11 +184,14 @@
 
 				<Frame snippet="snippet_scoreboard-classic__half-time-scores" />
 
-				<Panel style="width:100%;">
+				<Panel style="width: fill-parent-flow( 1.0 );">
 					<Label id="id-sb-timeline__round-label" class="sb-timeline__round-label hidden" text="#scoreboard_timeline_ot" hittest="false"/>
 					<Panel hittest="true" id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="$.DispatchEvent('Scoreboard_Casualties_OnMouseOver')" onmouseout="$.DispatchEvent('Scoreboard_Casualties_OnMouseOut')"/>
 					                                            
 				</Panel>
+
+				<Frame snippet="snippet_scoreboard-classic__round-loss-bonus-money" id="id-sb-timeline__round-loss-bonus-money" />
+
 			</Panel>
 		</snippet>
 
@@ -314,6 +317,47 @@
 				<Frame snippet="snippet_scoreboard__classic-teams--Spectator" />
 
 				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet_scoreboard-classic__round-loss-bonus-money">
+			<Panel class="sb-timeline__round-loss-bonus-money hidden">
+
+				<Panel class="sb-timeline__score">
+
+					<Panel class="center sb-team--CT" hittest="true" onmouseover="$.DispatchEvent('Scoreboard_RoundLossBonusMoney_OnMouseOver_CT')" onmouseout="$.DispatchEvent('Scoreboard_RoundLossBonusMoney_OnMouseOut_CT')">
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__CT1" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__CT2" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__CT3" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__CT4" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+					</Panel>
+
+					<Label text="#Scoreboard_lossmoneybonus" class="sb-timeline__phase-label"/>
+
+					<Panel class="center sb-team--TERRORIST" hittest="true" onmouseover="$.DispatchEvent('Scoreboard_RoundLossBonusMoney_OnMouseOver_TERRORIST')" onmouseout="$.DispatchEvent('Scoreboard_RoundLossBonusMoney_OnMouseOut_TERRORIST')">
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__TERRORIST1" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__TERRORIST2" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__TERRORIST3" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+						<Image
+							class="sb-team-tint sb-timeline__round-loss-bonus-money__TERRORIST4" 
+							src="file://{images}/icons/ui/dash-bold.svg" />
+					</Panel>
+				</Panel>
 
 			</Panel>
 		</snippet>
