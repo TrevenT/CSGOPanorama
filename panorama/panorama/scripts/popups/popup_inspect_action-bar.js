@@ -47,6 +47,11 @@ var InspectActionBar = ( function (){
 	var _SetUpItemCertificate = function ( elPanel, id, funcGetSettingCallback )
 	{
 		var elCert = elPanel.FindChildInLayoutFile( 'InspectItemCert' );
+		if ( !elCert || !elCert.IsValid() )
+		{
+			return;
+		}
+		
 		var certData = InventoryAPI.GetItemCertificateInfo( id );
 
 		if( !certData || m_showCert )

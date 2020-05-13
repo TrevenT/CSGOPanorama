@@ -25,7 +25,7 @@ var PickemCommon = ( function()
 		elLoadingStatus.visible = true;
 		elPickemContent.visible = false;
 
-		                                 
+		                                             
 
 		if ( listState === 'none' )
         {
@@ -185,7 +185,6 @@ var PickemCommon = ( function()
 			elPanel._oPickemData.oInitData.oPickemType.PurchaseComplete.bind( undefined, elPanel )
 		);
 
-
 		if( PredictionsAPI.GetMyPredictionsLoaded( elPanel._oPickemData.oInitData.tournamentid ) )
 		{
 			elPanel._oPickemData.oInitData.oPickemType.UpdatePrediction( elPanel );
@@ -194,11 +193,19 @@ var PickemCommon = ( function()
 
 	var _UnreadyForDisplay = function( elPanel )
 	{
-		$.UnregisterForUnhandledEvent('PanoramaComponent_MatchList_StateChange', elPanel._oPickemData.eventhandle );
-		$.UnregisterForUnhandledEvent('PanoramaComponent_MatchList_PredictionUploaded', elPanel._oPickemData.eventhandleprediction );
-		$.UnregisterForUnhandledEvent( 'PanoramaComponent_Store_PurchaseCompleted', elPanel._oPickemData.eventhandlepurchaseUpdate );
-		$.UnregisterForUnhandledEvent('PanoramaComponent_MyPersona_InventoryUpdated', elPanel._oPickemData.eventhandleinventoryUpdate );
+		                                                                                
+		                                                                                                         
+		                                                                                                             
+		                                                             
+	};
 
+	var _UnregisterEvents = function( elPanel )
+	{
+		                                                                                                                                 
+		$.UnregisterForUnhandledEvent( 'PanoramaComponent_MatchList_StateChange', elPanel._oPickemData.eventhandle );
+		$.UnregisterForUnhandledEvent('PanoramaComponent_MatchList_PredictionUploaded', elPanel._oPickemData.eventhandleprediction );
+		$.UnregisterForUnhandledEvent('PanoramaComponent_Store_PurchaseCompleted', elPanel._oPickemData.eventhandlepurchaseUpdate );
+		$.UnregisterForUnhandledEvent('PanoramaComponent_MyPersona_InventoryUpdated', elPanel._oPickemData.eventhandleinventoryUpdate );
 	};
 
 	                         
@@ -617,6 +624,7 @@ var PickemCommon = ( function()
 		ReadyForDisplay: _ReadyForDisplay,
 		RefreshData: _RefreshData,
 		UnreadyForDisplay: _UnreadyForDisplay,
+		UnregisterEvents: _UnregisterEvents,
 		GetTournamentIdNumFromString: _GetTournamentIdNumFromString,
 		CheckIfTeamIsAlreadyPicked: _CheckIfTeamIsAlreadyPicked,
 		UpdateImageForPick: _UpdateImageForPick,

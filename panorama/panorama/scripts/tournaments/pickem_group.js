@@ -390,7 +390,14 @@ var PickEmGroup = ( function()
 		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
 		
 		                                        
-		var pickIndex = elPanel._odraggableData.dragtarget.GetAttributeString( 'data-pick-index', '' );
+		if ( elPanel._odraggableData.dragtarget && elPanel._odraggableData.dragtarget.IsValid() )
+		{
+			var pickIndex = elPanel._odraggableData.dragtarget.GetAttributeString( 'data-pick-index', '' );
+		}
+		else
+		{
+			return;
+		}
 
 		if( pickIndex )
 		{

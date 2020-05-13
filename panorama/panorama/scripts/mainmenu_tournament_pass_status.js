@@ -4,9 +4,11 @@ var MainMenuTournamentPassStatus = ( function() {
 	var _Init = function()
 	{
 		if ( !MyPersonaAPI.IsConnectedToGC() )
+		{
 			return;
+		}
 		
-		$.GetContextPanel().SetHasClass( 'hidden',false);
+		$.GetContextPanel().SetHasClass( 'hidden',false );
 		_SetImage();
 	};
 
@@ -20,7 +22,7 @@ var MainMenuTournamentPassStatus = ( function() {
 		var onActivate = null;
 
 		                                                                                                
-		var id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid  );
+		var id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid );
 		if( !id || id === '0' )
 		{
 			elDescLabel.SetHasClass( 'hidden', false );
@@ -130,7 +132,7 @@ var MainMenuTournamentPassStatus = ( function() {
 	{
 		if ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_') )
 		{
-			_SetImage();
+			_Init();
 		}
 	};
 

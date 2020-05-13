@@ -54,6 +54,14 @@ var mainmenu_watch_tournament = (function () {
 		{
 			if ( _m_activeTab )
 			{
+				                                                                     
+				                                                                                          
+				                          
+				if ( _m_activeTab._oPickemData )
+				{
+					PickemCommon.UnregisterEvents.bind( undefined, pressedTab );
+				}
+				
 				_m_activeTab.AddClass( 'tournament-content-container--hidden' );
 			}
 
@@ -93,7 +101,6 @@ var mainmenu_watch_tournament = (function () {
 	var _AddEventHandlers = function( elPanel )
 	{
 		$.RegisterEventHandler( 'ReadyForDisplay', elPanel, PickemCommon.ReadyForDisplay.bind( undefined, elPanel )  );
-		$.RegisterEventHandler( 'UnreadyForDisplay', elPanel, PickemCommon.UnreadyForDisplay.bind( undefined, elPanel )  );
 
 		                                                                          
 		                                                       
