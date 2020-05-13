@@ -367,9 +367,7 @@ var PickEmBracket = ( function()
 	};
 
 	var _SetUpIsDraggable = function( elPickemPanel, elTeam, oGroupData )
-	{
-		var startIndex = elPickemPanel._oPickemData.oInitData.sectionindex;
-		
+	{	
 		if ( !oGroupData.canpick )
 		{
 			elTeam.IsDraggable = false;
@@ -599,6 +597,11 @@ var PickEmBracket = ( function()
 	var _UpdatePrediction = function( elPickemPanel )
 	{
 		                                      
+
+		if( !elPickemPanel._oPickemData.oTournamentData )
+		{
+			return;
+		}
 
 		var sectionCount = elPickemPanel._oPickemData.oTournamentData.sections.length;
 

@@ -210,13 +210,13 @@ var PickEmGroup = ( function()
 
 			                                                                                                                     
 
-			if( isSectionActive && groupCanPick )
+			if( isSectionActive && groupCanPick && !isAlreadyPicked )
 			{
-				_SetUpDraggableEvents( elTeam, isAlreadyPicked );
+				_EnableDraggableEvents( elTeam );
 			}
 			else
 			{
-				elTeam.IsDraggable = false;
+				_DisableDraggable( elTeam );
 			}
 
 			_TeamTooltips( elTeam );
@@ -250,19 +250,14 @@ var PickEmGroup = ( function()
 		return isAlreadyPick;
 	};
 
-	var _SetUpDraggableEvents = function ( elTeam, isAlreadyPick ) 
+	var _EnableDraggableEvents = function ( elTeam )
 	{
-		if ( isAlreadyPick )
-		{
-			elTeam.IsDraggable = false;
-			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._oteamData.dragStartHandle );
-			return;
-		}
-
 		elTeam.IsDraggable = true;
+		elTeam.enabled = true;
 
-		if ( elTeam._oteamData.dragStartHandle ) {
-			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._oteamData.dragStartHandle );
+		if ( elTeam._oteamData.dragStartHandle ) 
+		{
+			return;
 		}
 
 		elTeam._oteamData.dragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function ( targetId, obj ) {
@@ -289,6 +284,12 @@ var PickEmGroup = ( function()
 			obj.AddClass( 'dragend' );
 			obj.DeleteAsync( 0.25 );
 		} );
+	};
+	
+	var _DisableDraggable = function ( elTeam )
+	{
+		elTeam.IsDraggable = false;
+		elTeam.enabled = false;
 	};
 
 	var _TeamTooltips = function( elTeam )
@@ -389,6 +390,12 @@ var PickEmGroup = ( function()
 		                                     
 
 		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+
+		if( !elPanel._oPickemData.oTournamentData )
+		{
+			return;
+		}
+
 		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
 
 		if ( !oGroupData )

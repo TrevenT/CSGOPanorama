@@ -76,6 +76,7 @@ var Scoreboard = ( function()
 	var _m_RoundUpdated;			                                                                                               
 
 	var _m_TopCommends;
+	var _m_overtime;
 
 	var _m_sortOrder;                                 
 
@@ -383,6 +384,7 @@ var Scoreboard = ( function()
 		_m_areTeamsSwapped = false;
 		_m_maxRounds = 0;
 		_m_sortOrder = undefined;
+		_m_overtime = 0;
 
 		_m_RoundUpdated = {};
 
@@ -915,7 +917,7 @@ var Scoreboard = ( function()
 			var allstats = MatchStatsAPI.GetPlayerStatsJSO( xuid );
 
 			if ( allstats )
-				return allstats[ stat ];
+				return ( allstats[ stat ] == -1 ) ? "-" : allstats[ stat ];
 		}
 
 		return _fn;
@@ -1081,14 +1083,37 @@ var Scoreboard = ( function()
 			case 'kdr':
 				fn = function( oPlayer, bSilent = false )
 				{
-					var kdrFn = _GetMatchStatFn( 'kdr' );
-					var kdr = kdrFn( oPlayer.m_xuid );
 
-					if ( kdr > 0 )
-						kdr = kdr / 100.0;
+					var kdr;
 
-					kdr = kdr.toFixed( 2 );
+					if ( _m_overtime == 0 )
+					{
+						                                                                        
+						                                                                    
+						var kdrFn = _GetMatchStatFn( 'kdr' );
+						kdr = kdrFn( oPlayer.m_xuid );
 
+						if ( typeof kdr == "number" && kdr > 0 )
+						{
+							kdr = kdr / 100.0;
+						}
+					}
+					else
+					{
+					  
+					                                                                      
+					                                                                 
+					                                                                                                          
+					  	
+						var denom = oPlayer.m_oStats[ 'deaths' ] > 0 ? oPlayer.m_oStats[ 'deaths' ] : 1;
+						kdr = oPlayer.m_oStats[ 'kills' ] / denom;
+					}
+
+					if ( typeof kdr == "number" )
+					{
+						kdr = kdr.toFixed( 2 );
+					}
+					
 					_GenericUpdateStat( oPlayer, stat, () => { return kdr; }, bSilent );
 				};
 				break;
@@ -1152,7 +1177,7 @@ var Scoreboard = ( function()
 							return;
 					
 						elPlayer.SetHasClass( "sb-player-status-dead", newStatValue === 1 );
-
+					
 						var elPanel = oPlayer.m_oElStats[ stat ];
 						if ( !elPanel || !elPanel.IsValid() )
 							return;
@@ -2418,6 +2443,8 @@ var Scoreboard = ( function()
 		
 		var currentRound = jsoTime[ "rounds_played" ] + 1;
 
+		_m_overtime = jsoTime[ "overtime" ];
+
 		_m_cP.SetDialogVariable( "match_phase", $.Localize( "gamephase_" + jsoTime[ "gamephase" ] ) );
 		_m_cP.SetDialogVariable( "rounds_remaining", jsoTime[ "rounds_remaining" ] );
 		_m_cP.SetDialogVariableInt( "scoreboard_ot", jsoTime[ "overtime" ] );
@@ -3012,6 +3039,8 @@ var Scoreboard = ( function()
 	                                                
 	function _CloseScoreboard ()
 	{
+		$.UnregisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
+
 		_CancelUpdateJob();
 
 		_m_cP.FindChildrenWithClassTraverse( "timer" ).forEach( el => el.active = false );
@@ -3028,6 +3057,8 @@ var Scoreboard = ( function()
 		_UpdateEverything();
 
 		_m_cP.FindChildrenWithClassTraverse( "timer" ).forEach( el => el.active = true );
+
+		$.RegisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
 	};
 
 	                                                
@@ -3201,8 +3232,6 @@ var Scoreboard = ( function()
 	       
 
 	$.RegisterForUnhandledEvent( "GameState_RankRevealAll", Scoreboard.RankRevealAll );
-
-	$.RegisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
 
 	$.RegisterForUnhandledEvent( "Scoreboard_UpdateHLTVViewers", Scoreboard.UpdateHLTVViewerNumber );
 

@@ -91,11 +91,16 @@
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #766300 ), to( #b19500 ) );
 }
 
+.pickem-trophy-image
+{
+	height: 64px;
+	vertical-align: center;
+}
+
 .pickem-score-container
 {
 	flow-children: right;
-	padding: 0px 16px;
-
+	padding: 0px 32px;
 }
 
 .pickem-trophy-container
@@ -551,7 +556,8 @@
 .pickem-remove-btn.hidden,
 .pickem-item-not-owned.hidden,
 .pickem-bracket-team__logo.hidden,
-.pickem-bracket-team__name.hidden
+.pickem-bracket-team__name.hidden,
+.pickem-trophy-image.hidden
 {
 	visibility: collapse;
 }
@@ -842,7 +848,7 @@
 	font-size: 16px;
 	color: white;
 	margin-left: 16px;
-	width: 115px;
+	width: 125px;
 	text-overflow: shrink;
 }
 

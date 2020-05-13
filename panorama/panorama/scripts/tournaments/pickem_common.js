@@ -22,15 +22,17 @@ var PickemCommon = ( function()
 		var elPickemContent = elPanel.FindChildInLayoutFile( 'id-pickem-content' );
 		_DefaultActionBarBtnsState(elPanel);
 
+		elLoadingStatus.visible = true;
+		elPickemContent.visible = false;
+
+		                                 
+
 		if ( listState === 'none' )
         {
 			MatchListAPI.Refresh( elPanel._oPickemData.oInitData.tournamentid  );
 			
 			_CancelMatchStatsLoadedTimeout( elPanel );
 			elPanel._oPickemData.timerhandle = $.Schedule( 5, _MatchStatsLoadedTimeout.bind( undefined, elPanel ) );
-
-			elLoadingStatus.visible = true;
-			elPickemContent.visible = false;
 
 			_UpdateLoadingStatusMessage( elPanel, $.Localize( '#CSGO_Watch_Loading_PickEm' ), true );
 			return false;
@@ -39,6 +41,9 @@ var PickemCommon = ( function()
 		{
 			var isLoaded = PredictionsAPI.GetMyPredictionsLoaded( elPanel._oPickemData.oInitData.tournamentid );
 			var sectionsCount = PredictionsAPI.GetEventSectionsCount( elPanel._oPickemData.oInitData.tournamentid );
+
+			                                              
+			                                                  
 		
 			if ( !isLoaded || !sectionsCount || elPanel._oPickemData.oInitData.sectionindex === -1 )
 			{

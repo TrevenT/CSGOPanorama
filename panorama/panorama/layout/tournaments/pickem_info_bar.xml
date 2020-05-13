@@ -9,6 +9,7 @@
 
     <Panel class="pickem-info-bar">
         <Panel class="pickem-score-container">
+            <Image id="id-pickem-trophy-image" scaling="stretch-to-fit-preserve-aspect" class="pickem-trophy-image hidden" />
             <Panel class="pickem-trophy-container">
                 <Image src="file://{images}/icons/wreath.vtf"/>
                 <Label id="id-pickem-your-points" class="pickem-score" text=""/>

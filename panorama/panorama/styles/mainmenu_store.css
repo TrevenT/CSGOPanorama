@@ -330,15 +330,13 @@
 	color: white;
 	font-weight: lighter;
 	font-size: 18px;
-	width: 70%;
+	width: 470px;
+	padding-left: 24px;
 	height: fit-children;
 
 	horizontal-align: left;
-	background-color: gradient( linear, 0% 100%, 0% 0%, from( rgb(0, 0, 0) ), to( rgba(0, 0, 0, 0) ));
 
-	padding: 0px 16px 20px 32px;
-	vertical-align: bottom;
-	font-family: Stratum2, 'Arial Unicode MS';
+	vertical-align: center;
 }
 
 .store-panel-license-banner__button

@@ -122,8 +122,7 @@ var PickEmInfoBar = ( function()
 		var bronzePoints = PredictionsAPI.GetRequiredPredictionsPointsBronze( elPanel._oPickemData.oInitData.tournamentid );
 		var silverPoints = PredictionsAPI.GetRequiredPredictionsPointsSilver( elPanel._oPickemData.oInitData.tournamentid );
 		var goldPoints = PredictionsAPI.GetRequiredPredictionsPointsGold( elPanel._oPickemData.oInitData.tournamentid );
-		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ elPanel._oPickemData.oInitData.sectionindex ].groups[ 0 ];
-		var canPick = PredictionsAPI.GetGroupCanPick( elPanel._oPickemData.oInitData.tournamentid, oGroupData.id );
+		var doesTournamentHaveAWinner = DoesTournamentHaveAWinner( elPanel._oPickemData.oInitData.tournamentid );
 
 		var elYourPoints = elPanel.FindChildTraverse( 'id-pickem-your-points' );
 		elYourPoints.text = ( pointsEarned && pointsEarned > 0 ) ? pointsEarned : '-';
@@ -136,65 +135,106 @@ var PickEmInfoBar = ( function()
 		var elPointsNeededLabel = elPointsNeeded.FindChildTraverse( 'id-pickem-points-needed-Label' );
 		var elPointsResultLabel = elPointsNeeded.FindChildTraverse( 'id-pickem-points-result-Label' );
 
-		if ( !canPick )
-		{
-
-			elPointsNeededLabel.visible = false;
-			elPointsResultLabel.visible = true;
-		
-			elPointsNeeded.SetDialogVariableInt( 'points', pointsEarned );
-		}
-		else
-		{
-			elPointsNeededLabel.visible = true;
-			elPointsResultLabel.visible = false;
-		}
-
 		if ( pointsEarned < bronzePoints )
 		{
-			nextLevel = $.Localize( '#pickem_level_bronze' );
+			nextLevel = 'bronze';
 			elPointsResultLabel.visible = false;
 			resultLevel = '';
 			pointsNeeded = bronzePoints - pointsEarned;
 		}
 		else if ( pointsEarned >= bronzePoints && pointsEarned < silverPoints )
 		{
-			nextLevel = $.Localize( '#pickem_level_silver' );
-			resultLevel = $.Localize( '#pickem_level_bronze' );
+			nextLevel = 'silver';
+			resultLevel = 'bronze';
 			pointsNeeded = silverPoints - pointsEarned;
-
-			if( !canPick )
-				elbar.AddClass( 'pickem-info-bar--bronze' );
 		}
 		else if ( pointsEarned < goldPoints )
 		{
-			nextLevel = $.Localize( '#pickem_level_gold' );
-			resultLevel = $.Localize( '#pickem_level_silver' );
-
-			if( !canPick )
-				elbar.AddClass( 'pickem-info-bar--silver' );
-			
+			nextLevel = 'gold';
+			resultLevel = 'silver';
 			pointsNeeded = goldPoints - pointsEarned;
 		}
 		else if ( pointsEarned >= goldPoints )
 		{
-			nextLevel = $.Localize( '#pickem_level_gold' );
-			resultLevel = $.Localize( '#pickem_level_gold' );
-
-			if( !canPick )
-				elbar.AddClass( 'pickem-info-bar--gold' );
-			
+			nextLevel = 'gold';
+			resultLevel = 'gold';
 			pointsNeeded = 0;
 		}
 
-		var pluralString = pointsNeeded === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
+		if ( doesTournamentHaveAWinner )
+		{
+			elPointsNeededLabel.visible = false;
+			elPointsResultLabel.visible = ( resultLevel !== '' ) ? true : false;
 
+			elbar.AddClass( 'pickem-info-bar--'+ resultLevel );
+			elPointsNeeded.SetDialogVariable( 'result-level', $.Localize( '#pickem_level_' + resultLevel ));
 
-		                                   
-		elPointsNeeded.SetDialogVariableInt( 'points', pointsNeeded );
-		elPointsNeeded.SetDialogVariable( 'plural', pluralString );
-		elPointsNeeded.SetDialogVariable( 'level', nextLevel );
-		elPointsNeeded.SetDialogVariable( 'result-level', resultLevel );
+			if( resultLevel )
+			{
+				SetTrophyImage( elPanel, resultLevel );
+			}
+		}
+		else
+		{
+			elPointsNeededLabel.visible = true;
+			elPointsResultLabel.visible = false;
+
+			elPointsNeeded.SetDialogVariable( 'level', $.Localize( '#pickem_level_' + nextLevel ));
+			elPointsNeeded.SetDialogVariableInt( 'points', pointsNeeded );
+			
+			var pluralString = pointsNeeded === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
+			elPointsNeeded.SetDialogVariable( 'plural', pluralString );
+		}
+	};
+
+	var SetTrophyImage = function( elPanel, resultLevel )
+	{
+		var tournamentId = elPanel._oPickemData.oInitData.tournamentid;
+		
+		function GetTrophyIconPath( tournamentId )
+		{
+			if ( tournamentId == "tournament:4" )
+				return "econ/status_icons/cologne_prediction_";
+			else if ( tournamentId == "tournament:5" )
+				return "econ/status_icons/dhw14_prediction_";
+			else if ( tournamentId == "tournament:6" )
+				return "econ/status_icons/kat_2015_prediction_";
+			else if ( tournamentId == "tournament:7" )
+				return "econ/status_icons/col_2015_prediction_";
+			else if ( tournamentId == "tournament:8" )
+				return "econ/status_icons/cluj_2015_prediction_";
+			else if ( tournamentId == "tournament:9" )
+				return "econ/status_icons/mlg_2016_pickem_";
+			else if ( tournamentId == "tournament:10" )
+				return "econ/status_icons/cologne_pickem_2016_";
+			else if ( tournamentId == "tournament:11" )
+				return "econ/status_icons/atlanta_pickem_2017_";
+			else if ( tournamentId == "tournament:12" )
+				return "econ/status_icons/krakow_pickem_2017_";
+			else if ( tournamentId == "tournament:13" )
+				return "econ/status_icons/boston_pickem_2018_";
+			else if ( tournamentId == "tournament:14" )
+				return "econ/status_icons/london_pickem_2018_";
+		}
+
+		var elTrophyImage = elPanel.FindChildTraverse( 'id-pickem-trophy-image' );
+		elTrophyImage.RemoveClass('hidden');
+		elTrophyImage.SetImage( 'file://{images_econ}/' + GetTrophyIconPath( tournamentId ) + resultLevel +'.png');
+	};
+
+	var DoesTournamentHaveAWinner = function ( tournamentId )
+	{
+		var numSections = PredictionsAPI.GetEventSectionsCount( tournamentId );
+		var numDayID = PredictionsAPI.GetEventSectionIDByIndex( tournamentId, numSections - 1 );
+		var numGroups = PredictionsAPI.GetSectionGroupsCount( tournamentId, numDayID );
+		var numGroupId = PredictionsAPI.GetSectionGroupIDByIndex( tournamentId, numDayID, numGroups - 1 );
+		var WinnerTeamId = PredictionsAPI.GetGroupCorrectPicksByIndex( tournamentId, numGroupId, 0 );
+		var srtTeamTag = PredictionsAPI.GetTeamTag( Number( WinnerTeamId ));
+		
+		if( srtTeamTag != undefined && srtTeamTag != "" && srtTeamTag != null )
+			return true;
+		else
+			return false;
 	};
 
 	return{
