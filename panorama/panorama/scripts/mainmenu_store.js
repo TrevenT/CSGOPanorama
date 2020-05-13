@@ -50,6 +50,8 @@ var MainMenuStore = ( function()
 							'itemid_megabundle'
 						];
 						var offset = 78;
+
+						_ShowSaleTag( g_ActiveTournamentInfo.itemid_sticker );
 						
 						for( var i = 0; i < randomItemsIndex.length ; i++ )
 						{
@@ -78,6 +80,15 @@ var MainMenuStore = ( function()
 								elImage.style.blur = 'gaussian( 4, 4,' + 1 +')';
 							}
 						}
+
+						function _ShowSaleTag ( storeDefIndx )
+						{
+							var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
+							var reduction = ItemInfo.GetStoreSalePercentReduction( storeDefIndx, 1 );
+
+							elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
+							elPrecent.text = reduction;
+						}
 						
 						elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
 						                                                                                       
@@ -92,7 +103,8 @@ var MainMenuStore = ( function()
 						elGoldTrophy.SetSceneIntroRotation( 5, 22, -1 );
 
 						var schfnUpdateCountdown = function ( elPanelParam )
-						{	                                    
+						{
+							                                    
 							if ( !elPanelParam || !elPanelParam.IsValid() )
 								return;
 
@@ -105,6 +117,7 @@ var MainMenuStore = ( function()
 							elCountdown.SetHasClass( 'hidden', ( secRemaining > 0 ) ? false : true );
 							$.Schedule( 30, schfnUpdateCountdown.bind( null, elPanelParam ) );
 						}
+
 						$.Schedule( 0.1, schfnUpdateCountdown.bind( null, elPanel ) );
 					}
 				},

@@ -133,6 +133,28 @@
 	opacity: 1;
 }
 
+.store-panel__tournament-saletag
+{
+	background-color: green;
+	horizontal-align: left;
+	margin-left: 16px;
+	margin-bottom: 52px;
+	border-radius: 2px;
+	vertical-align: bottom;
+
+	font-size: 18px;
+	padding: 8px;
+	text-align: center;
+	font-weight: medium;
+	font-family: Stratum2, 'Arial Unicode MS';
+	box-shadow: fill #0000005b 0px 0px 4px 4px;
+}
+
+.store-panel__tournament-saletag.hidden 
+{
+	visibility: collapse;
+}
+
 .PreviouslyLeft.store-panel__carousel-page:not(.Focused)
 {
 	transform: translatex( -100% );

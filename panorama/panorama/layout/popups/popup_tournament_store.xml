@@ -7,20 +7,23 @@
 	</styles>
 	
 	<scripts>
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/popups/popup_tournament_store.js" />
-		<include src="file://{resources}/scripts/common/iteminfo.js" />
 	</scripts>
 
 	<snippets>
 		<snippet name="ItemCategory">
 			<Panel class="item-category">
 				<Button id="CategoryButton" class ="item-category-button">
+					<Label class="item-category__label" id="CategoryLabel"/>
 					<Image texturewidth="68" textureheight="68" class="item-category__image" id="CategoryImage" scaling="stretch-to-fit-x-preserve-aspect" >
 						<Label class="item-category__cart-count only-visible-with-items" text="{d:num_in_cart}"/>
 					</Image>
-					<Label class="item-category__label" id="CategoryLabel"/>
 				</Button>
+				<Label id="SaleTagLabel"
+					class="item-category-saletag hidden" html="false"
+					text=""/>
 			</Panel>
 		</snippet>
 	</snippets>

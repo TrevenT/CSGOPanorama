@@ -63,6 +63,7 @@ var TournamentStore = ( function()
 		elOrgPanel.BLoadLayoutSnippet( "ItemCategory" );
 		elOrgPanel.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images_econ}/econ/stickers/' + g_ActiveTournamentInfo.location + '/'+ g_ActiveTournamentInfo.organization + '.png' );
 		elOrgPanel.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_" + g_ActiveTournamentInfo.organization );
+		_ShowSaleTag( elOrgPanel,  g_ActiveTournamentInfo.itemid_sticker );
 		SetItemsToOffer( elOrgPanel, g_ActiveTournamentInfo.itemid_sticker, g_ActiveTournamentInfo.itemid_graffiti );
 
 		if ( InventoryAPI.GetDecodeableRestriction( "capsule" ) !== "restricted" )
@@ -71,6 +72,7 @@ var TournamentStore = ( function()
 			elCapsules.BLoadLayoutSnippet( "ItemCategory" );
 			elCapsules.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images_econ}/econ/weapon_cases/crate_sticker_pack_london2018_legends.png' );
 			elCapsules.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_Store_Legends_Challengers" );
+			_ShowSaleTag( elCapsules,  g_ActiveTournamentCapsules[ 0 ] );
 			SetItemsToOffer.apply( undefined, [ elCapsules, ...g_ActiveTournamentCapsules ] );
 		}
 
@@ -78,7 +80,8 @@ var TournamentStore = ( function()
 		var elMegaBundle = $( '#MegaBundle' );
 		elMegaBundle.BLoadLayoutSnippet( "ItemCategory" );
 		elMegaBundle.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images_econ}/econ/weapon_cases/london2018_bundleofall.png' );
-		elMegaBundle.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_crate_"+ g_ActiveTournamentInfo.location +"_bundle_of_all" );
+		elMegaBundle.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_crate_" + g_ActiveTournamentInfo.location + "_bundle_of_all" );
+		_ShowSaleTag( elMegaBundle,  g_ActiveTournamentInfo.itemid_megabundle );
 		SetItemsToOffer( elMegaBundle, g_ActiveTournamentInfo.itemid_megabundle );
 
 		function SetupTeamPurchases( elRootPanel, arrTeamList )
@@ -89,6 +92,11 @@ var TournamentStore = ( function()
 				elTeamPanel.BLoadLayoutSnippet( "ItemCategory" );
 				elTeamPanel.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images}/tournaments/teams/' + teamInfo.team + '.svg' );
 				elTeamPanel.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TeamID_" + teamInfo.teamid );
+
+				elTeamPanel.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images}/tournaments/teams/' + teamInfo.team + '.svg' );
+				elTeamPanel.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TeamID_" + teamInfo.teamid );
+				_ShowSaleTag( elTeamPanel, teamInfo.itemid_sticker );
+				
 				SetItemsToOffer( elTeamPanel, teamInfo.itemid_sticker, teamInfo.itemid_graffiti );
 			} );
 		}
@@ -102,6 +110,15 @@ var TournamentStore = ( function()
 		$.GetContextPanel().SetDialogVariableInt( "num_items_in_cart", 0 );
 		$.DispatchEvent( "PlaySoundEffect", "inventory_inspect_weapon", "MOUSE" );
 	};
+
+	function _ShowSaleTag ( elPanel, storeDefIndx )
+	{
+		var elPrecent = elPanel.FindChildInLayoutFile( 'SaleTagLabel' );
+		var reduction = ItemInfo.GetStoreSalePercentReduction( storeDefIndx, 1 );
+
+		elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
+		elPrecent.text = reduction;
+	}
 
 	                                 
 	function GetTotalItemsInCart()
