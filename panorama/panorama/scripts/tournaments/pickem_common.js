@@ -177,13 +177,15 @@ var PickemCommon = ( function()
 	};
 
 	var _UpdateImageForPick = function( oItemIdData, elItemImage, localTeamId )
-	{	
-		if ( localTeamId )
+	{
+		var bValidTeamID = localTeamId ? ( oItemIdData.itemid ? true : false ) : false;
+
+		if ( bValidTeamID )
 		{
 			elItemImage.itemid = oItemIdData.itemid;
 		}
 
-		elItemImage.SetHasClass( 'hidden', localTeamId ? false : true );
+		elItemImage.SetHasClass( 'hidden', !bValidTeamID );
 	};
 
 	var _UpdateCorrectPickState = function ( oGroupData, correctPicks, localTeamId, elPointsEarned )

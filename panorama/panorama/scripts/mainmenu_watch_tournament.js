@@ -3,7 +3,7 @@
 var mainmenu_watch_tournament = (function () {
 
 	var _m_activeTab;
-	var _m_initalizeHandler;
+	var _m_bInitializedTournamentOnce = false;
 	var _m_matchesTab;
 
 	var _NavigateToTab = function( tab, tournament_id, oData = null )
@@ -230,10 +230,15 @@ var mainmenu_watch_tournament = (function () {
 	                                                                
 	var _InitializeTournamentsPage = function( tournament_id )
 	{
+		                                                                                                                            
+		if ( _m_bInitializedTournamentOnce )
+			return;
+
         var elParentPanel = _GetParentPanel(tournament_id);
         if ( !elParentPanel )
             return;
 
+		_m_bInitializedTournamentOnce = true;
 		elParentPanel.SetDialogVariable( 'tournament_name', $.Localize( "#CSGO_Tournament_Event_Name_" + tournament_id.split( ':' )[ 1 ] ) );
 			
 		                                                                                                      
@@ -242,8 +247,6 @@ var mainmenu_watch_tournament = (function () {
 		_PopulateTournamentNavBarButtons( tournament_id, elParentPanel );
 		elParentPanel.FindChildInLayoutFile( "JsTournamentMatches" ).tournament_id = tournament_id;
 		elParentPanel.isInitialized = true;
-		if ( _m_initalizeHandler )
-			$.UnregisterForUnhandledEvent( "InitializeTournamentsPage", _m_initalizeHandler );
 			
 		var tournamentNumber = PickemCommon.GetTournamentIdNumFromString( tournament_id );
 		var isCurrentTourament = ( tournamentNumber === g_ActiveTournamentInfo.eventid );
@@ -341,7 +344,7 @@ var mainmenu_watch_tournament = (function () {
 	function _Init()
 	{
 		_m_activeTab = undefined;
-		_m_initalizeHandler = $.RegisterForUnhandledEvent( "InitializeTournamentsPage", _InitializeTournamentsPage );
+		$.RegisterEventHandler( "InitializeTournamentsPage", $.GetContextPanel(), _InitializeTournamentsPage );
 		$.RegisterForUnhandledEvent( "RefreshPickemPage", _RefreshActivePage );
 		$.RegisterForUnhandledEvent( "PanoramaComponent_MatchList_StateChange", _UpdateMatchList );
 		$.RegisterForUnhandledEvent( "MainMenuTabShown", _Refresh );

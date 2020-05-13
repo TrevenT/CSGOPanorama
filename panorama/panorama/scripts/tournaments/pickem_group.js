@@ -226,45 +226,43 @@ var PickEmGroup = ( function()
 		return isAlreadyPick;
 	};
 
-	var _SetUpDraggableEvents = function( elTeam, isAlreadyPick )
+	var _SetUpDraggableEvents = function ( elTeam, isAlreadyPick ) 
 	{
-		if ( isAlreadyPick )
-		{
+		if ( isAlreadyPick  ) {
 			elTeam.IsDraggable = false;
-			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._DragStartHandle );
+			if ( elTeam._DragStartHandle )
+			{
+				$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._DragStartHandle );
+			}
 			return;
 		}
-		
+
 		elTeam.IsDraggable = true;
 
-		if ( elTeam._DragStartHandle )
-		{
+		if ( elTeam._DragStartHandle ) {
 			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._DragStartHandle );
 		}
-	
-			elTeam._DragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function( targetId, obj )
-			{
-				var elDraggable = $.CreatePanel( "Image", elTeam, 'draggable' + elTeam._teamid,
-					{
-						src: _GetTeamImage( elTeam ),
-						class: 'pickem-team-draggable',
-						textureheight: '128',
-						texturewidth: '128'
-					} );
-				
-				elDraggable._teamid = elTeam._teamid;
 
-				obj.displayPanel = elDraggable;
-				obj.removePositionBeforeDrop = false;
-				elDraggable.AddClass( 'dragstart' );
+		elTeam._DragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function ( targetId, obj ) {
+			var elDraggable = $.CreatePanel( "Image", elTeam, 'draggable' + elTeam._teamid, {
+				src: _GetTeamImage( elTeam ),
+				class: 'pickem-team-draggable',
+				textureheight: '128',
+				texturewidth: '128'
 			} );
 
-			elTeam._DragEndHandle = $.RegisterEventHandler( 'DragEnd', elTeam, function( targetId, obj )
-			{
-				obj.AddClass( 'dragend' );
-				obj.DeleteAsync( 0.25 );
-			} );
-	
+			elDraggable._teamid = elTeam._teamid;
+
+			obj.displayPanel = elDraggable;
+			obj.removePositionBeforeDrop = false;
+			elDraggable.AddClass( 'dragstart' );
+		} );
+
+		elTeam._DragEndHandle = $.RegisterEventHandler( 'DragEnd', elTeam, function ( targetId, obj ) {
+			obj.AddClass( 'dragend' );
+			obj.DeleteAsync( 0.25 );
+		} );
+
 	};
 
 	var _TeamTooltips = function( elTeam )
@@ -357,6 +355,15 @@ var PickEmGroup = ( function()
 		                                     
 
 		var oGroupData = elPanel._oGroupData;
+		if ( !oGroupData )
+		{
+			                                                                      
+			                                               
+			return;
+		}
+
+		if ( !oGroupData || !oGroupData.pickscount )
+			return;
 
 		                                                               
 		for ( var i = 0; i < oGroupData.pickscount; i++ )

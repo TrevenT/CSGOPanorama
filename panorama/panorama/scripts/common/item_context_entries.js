@@ -184,6 +184,8 @@ var ItemContextEntires = ( function (){
 		{
 			name: 'open_watch_panel_pickem',
 			AvailableForItem: function ( id ) {
+				if ( GameStateAPI.GetMapBSPName() )	                                           
+					return false;
 				var tournament = 'tournament:' + NewsAPI.GetActiveTournamentEventID();
 				return PredictionsAPI.GetMyPredictionItemIDEventSectionIndex( tournament, id ) != undefined;
 			},

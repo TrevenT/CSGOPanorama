@@ -170,7 +170,7 @@ var mainmenu_watch = ( function() {
                 _PopulateTournamentPage( elTab );
                 break;
             case "JsActiveTournament":
-                $.DispatchEvent( 'InitializeTournamentsPage',  'tournament:' + g_ActiveTournamentInfo.eventid );
+                $.DispatchEvent( 'InitializeTournamentsPage', elTab, 'tournament:' + g_ActiveTournamentInfo.eventid );
                 break;
             case "JsYourMatches":
             case "JsDownloaded":
@@ -245,7 +245,9 @@ var mainmenu_watch = ( function() {
 
     function _NavigateToTab( tab, xmlName, tournament_id=undefined, isSubTab=false, addToStack=false )
     {
-                                       
+		                               
+		
+		                                                                                                                   
 
                                  
         if ( isSubTab && addToStack)
@@ -293,8 +295,8 @@ var mainmenu_watch = ( function() {
 			
 			                                                                          
 			                                                       
-            _InitResourceManagement( newPanel );
-            $.DispatchEvent( 'InitializeTournamentsPage', tournament_id );
+			_InitResourceManagement( newPanel );
+			$.DispatchEvent( 'InitializeTournamentsPage', newPanel, tournament_id );
         }
         
         var pressedTab = $( '#' + tab );
@@ -328,6 +330,7 @@ var mainmenu_watch = ( function() {
                 
                 if ( !_m_activeTab )
                 {
+					                                                 
                     return;
                 }
                 _m_activeTab.RemoveClass( 'WatchMenu--Hide' );
@@ -340,6 +343,7 @@ var mainmenu_watch = ( function() {
                 
                 if ( !_m_activeTab )
                 {
+					                                                 
                     return;
                 }
                 _m_activeTab.RemoveClass( 'mainmenu-content--hidden' );
@@ -351,6 +355,7 @@ var mainmenu_watch = ( function() {
             }
         }
 
+		                                                                      
         _UpdateTab( _m_activeTab );
     }
 
