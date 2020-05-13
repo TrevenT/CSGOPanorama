@@ -195,6 +195,9 @@ var PlayMenu = ( function()
 
 	var _SyncDialogsFromSessionSettings = function( settings )
 	{
+		if ( !settings || !settings.game || !settings.system )
+			return;
+
 		m_allowNearbyUsersToJoinSetting = settings.game.nby;
 		m_serverSetting = settings.options.server;
 		m_steamGroupIdThatCanJoin = settings.game.clanid;
