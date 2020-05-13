@@ -166,12 +166,24 @@ var PopupAcceptMatch = ( function(){
 		if ( m_lobbySettings === undefined )
 			return;
 
-		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.mode );
 		var labelData = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchModeMap' );
+		var strLocalize = '#match_ready_match_data';
+
+		                                                                                                                                                 
+		
+		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.mode );
+
+		if ( ( m_lobbySettings.mode === 'competitive' ) &&
+			( GameTypesAPI.GetMapGroupAttribute( 'mg_'+map, 'competitivemod' ) === 'unranked' ) )
+		{
+			labelData.SetDialogVariable ( 'modifier', $.Localize( '#SFUI_RankType_Modifier_Unranked' ) );
+			strLocalize = '#match_ready_match_data_modifier';
+			$.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchWarning' ).RemoveClass( 'hidden' );
+		}
 
 		labelData.SetDialogVariable ( 'mode', mode );
 		labelData.SetDialogVariable ( 'map', $.Localize ( '#SFUI_Map_' + map ));
-		labelData.text = $.Localize( '#match_ready_match_data', labelData );
+		labelData.text = $.Localize( strLocalize, labelData );
 
 		var imgMap = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchMapImage' );		
 		imgMap.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + map + '.png")';

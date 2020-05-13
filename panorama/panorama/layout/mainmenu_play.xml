@@ -26,6 +26,7 @@
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
 						<Image id="ActiveGroupIcon" class="right-margin" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
 						<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
+						<Label id="MapGroupUnrankedTag" class="map-selection-info__new map-selection-info__unranked stratum-font hidden" text='#SFUI_RankType_Modifier_Unranked'/>
 					</Panel>
 					                           
 
@@ -60,6 +61,20 @@
 				</ToggleButton>
 			</Panel>
 		</snippet>
+
+
+		<snippet name="MapListSection" >
+			<Panel class="map-selection-list-section">
+				<Panel id="play-maps-section-header-container" class="map-selection-list-section__header">
+					<Label id="play-maps-section-header" class="map-selection-list-section-header__text" text=""/>
+					<Button id="play-maps-section-header-more-info" class="IconButton horizontal-align-right">
+						<Image class="right-margin-medium" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/info.svg" />
+					</Button>
+				</Panel>
+				                  
+			</Panel>
+		</snippet>
+
 	</snippets>
 
 	<Panel class="mainmenu-content__container" useglobalcontext="true" >
@@ -67,7 +82,7 @@
 			<Panel class="content-navbar">
 				<Label id="LobbyLeaderText" class="content-navbar__title" text="#SFUI_MainMenu_PlayButton"/>
 			</Panel>
-			<Panel class="content-navbar  content-navbar--short content-navbar--dropdown">
+			<Panel class="content-navbar content-navbar--short content-navbar--dropdown">
 				<Panel class="vertical-center left-right-flow">
 					<DropDown class="PopupButton" id="PlayTopNavDropdown" menuclass="DropDownMenu Width-300" oninputsubmit="PlayMenu.PlayTopNavDropdownChanged()">
 						<Label text="#play_setting_online" id="Play-official" data-type="official" value="1"/>

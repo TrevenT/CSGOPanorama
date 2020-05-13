@@ -25,6 +25,43 @@
 	box-shadow: none;
 }
 
+.accept-match-warning
+{
+	                             
+	horizontal-align:center;
+	background-color: rgb(16, 112, 19);
+	flow-children: right;
+	padding: 8px;
+	opacity: 1;
+	transform: translateY( 1% );
+	box-shadow: shadowOffset;
+	border: 3px solid #4CAF50;
+
+	transition-property: transform;
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in;
+}
+
+.accept-match-warning.hidden
+{
+	opacity: 0;
+	transform: translateY( 10% );
+
+	transition-property: transform;
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in;
+}
+
+.accept-match-warning--label
+{
+	                             
+	text-align: center;
+	font-size: 16px;
+	max-width: 650px;
+	text-overflow: shrink;
+	height: 20px;
+}
+
 .accept-match__bg
 {
 	width: fit-children;

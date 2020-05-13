@@ -5,15 +5,28 @@ var MuteSpinner = (function () {
 	var m_hFadeOutMuteBar = undefined;
 
 	function _ToggleMute ()
-	{
+	{	
+		var elSpinner = $.GetContextPanel().FindChildTraverse( 'id-mute-spinner' );
+		elSpinner.spinlock = false;
+
+		                              
+		                            
+		                                           
+
 		if ( 'xuid' in $.GetContextPanel().GetParent() )
 		{
 			var xuid = $.GetContextPanel().GetParent().xuid;
 
-			GameStateAPI.ToggleMute( xuid );
-	
-			_UpdateVolumeDisplay();			
+			if ( m_curVal == 0 )
+			{
+				                                             
+				elSpinner.value = 0.5;
+				GameStateAPI.SetPlayerVoiceVolume( xuid, 0.5 );
+			}
 
+			GameStateAPI.ToggleMute( xuid );
+
+			_UpdateVolumeDisplay();		
 		}
 	}
 
@@ -43,6 +56,11 @@ var MuteSpinner = (function () {
 
 			if ( m_curVal != newval )
 			{
+				if ( newval == 0 && !m_isMuted )
+				{
+					_ToggleMute();
+				}
+				
 				GameStateAPI.SetPlayerVoiceVolume( xuid, Number( newval ) );
 				_UpdateVolumeDisplay();
 
@@ -70,6 +88,9 @@ var MuteSpinner = (function () {
 	{
 		_GetCurrentValues();
 
+		                              
+		                            
+
 		$.GetContextPanel().SetDialogVariable( 'value', m_curVal );
 
 		var elSpinner = $.GetContextPanel().FindChildTraverse( 'id-mute-spinner' );
@@ -91,7 +112,6 @@ var MuteSpinner = (function () {
 			elMutedImage.RemoveClass( "hidden" );
 			elSpinnerLabel.AddClass( "hidden" );
 			elSpinnerBar.AddClass( "hidden" );
-			elSpinner.spinlock = true;
 			elSpinner.AddClass( 'muted' );
 
 		}
@@ -100,7 +120,6 @@ var MuteSpinner = (function () {
 			elMutedImage.AddClass( "hidden" );
 			elSpinnerLabel.RemoveClass( "hidden" );
 			elSpinnerBar.RemoveClass( "hidden" );
-			elSpinner.spinlock = false;
 			elSpinner.RemoveClass( 'muted' );
 	
 		}

@@ -2017,7 +2017,13 @@ var Scoreboard = ( function()
 			}
 			else
 			{
-				elMapLabel.text =  $.Localize( "{s:gamemode_name} | {s:map_name}", _m_cP );
+				var strLocalizeScoreboardTitle = "{s:gamemode_name} | {s:map_name}";
+				if ( ( GameStateAPI.GetGameModeInternalName( true ) === 'competitive' ) &&
+					( GameTypesAPI.GetMapGroupAttribute( 'mg_'+GameStateAPI.GetMapBSPName(), 'competitivemod' ) === 'unranked' ) )
+				{
+					strLocalizeScoreboardTitle = "{s:gamemode_name} | " + $.Localize( '#SFUI_RankType_Modifier_Unranked', _m_cP ) + " | {s:map_name}";
+				}
+				elMapLabel.text =  $.Localize( strLocalizeScoreboardTitle, _m_cP );
 			}
 		}
 
