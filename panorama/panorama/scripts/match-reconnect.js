@@ -45,7 +45,7 @@ var MatchmakingReconnect = ( function()
 			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
 		} );
 
-		var btnAbandon = _m_elStatusPanel.FindChildInLayoutFile( 'MatchmakingAbandon' );
+		var btnAbandon = $.GetContextPanel().FindChildInLayoutFile( 'MatchmakingAbandon' );
 		btnAbandon.SetPanelEvent( 'onactivate', function()
 		{
 			CompetitiveMatchAPI.ActionAbandonOngoingMatch();
@@ -61,6 +61,8 @@ var MatchmakingReconnect = ( function()
 
 ( function()
 {
+	MatchmakingReconnect.Init();
+
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", MatchmakingReconnect.UpdateState );
 	
 	                                                                                                                             

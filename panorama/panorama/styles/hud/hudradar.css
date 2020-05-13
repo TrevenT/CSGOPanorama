@@ -574,7 +574,7 @@ CSGOHudRadar Label
 
 	opacity: 0.08;
 
-    -s2-mix-blend-mode: opaque;
+    -s2-mix-blend-mode: normal;
 }
 
                                                                                

@@ -126,8 +126,17 @@ var EOM_Skillgroup = (function () {
 		{
 			var elModel = _m_cP.FindChildInLayoutFile( "id-eom-skillgroup-model" );
 
+			var mode = GameStateAPI.GetGameModeInternalName( true );
+									
+			var imagePath = "skillgroup";
+
+			                                          
+			                                
+			   	                      
+			
+
 			elModel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
-			'models/inventory_items/skillgroups/skillgroup' + newRank + '.mdl',
+			'models/inventory_items/skillgroups/' + imagePath + newRank + '.mdl',
 				false
 			);
 

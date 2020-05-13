@@ -15,7 +15,7 @@
 				<Label class="match-status-ongoingmatch--subtitle" text="#SFUI_MainMenu_Reconnect_Info"/>
 			</Panel>
             
-            <Panel class="left-right-flow vertical-center horizontal-align-left">
+            <Panel class="left-right-flow vertical-center horizontal-center">
 				<TextButton id="MatchmakingReconnect" class="PopupButton vertical-center Positive match-status-ongoingmatch-reconnect" text="#SFUI_MainMenu_Reconnect" />
 				<TextButton id="MatchmakingAbandon" class="PopupButton vertical-center" text="#SFUI_MainMenu_Abandon" />
 			</Panel>

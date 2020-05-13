@@ -268,6 +268,10 @@ var PlayMenu = ( function()
 
 	var _GetAvailableMapGroups = function( gameMode, isPlayingOnValveOfficial )
 	{
+		                                   
+		if ( m_gameModeConfigs[ gameMode ] === undefined )
+			return [];
+
 		if ( isPlayingOnValveOfficial )
 		{
 			return Object.keys( m_gameModeConfigs[ gameMode ].mapgroupsMP );
@@ -974,7 +978,7 @@ var PlayMenu = ( function()
 	    }
 
                            
-	    var tooltip = mapInfo.desc ? $.HTMLEscape( mapInfo.desc ) : '';
+	    var tooltip = mapInfo.desc ? $.HTMLEscape( mapInfo.desc, true ) : '';
 
 	    if ( modes.length > 0 )
 	    {

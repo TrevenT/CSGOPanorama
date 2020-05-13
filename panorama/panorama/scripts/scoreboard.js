@@ -645,16 +645,21 @@ var Scoreboard = ( function()
 
 	function _UpdateSpectatorButtons()
 	{
+	    var elButtonPanel = $( "#spec-button-group" );
+	    if ( !elButtonPanel ) 
+	        return;
+
 	    var nCameraMan = parseInt( GameInterfaceAPI.LookupConVarStringValue( "spec_autodirector_cameraman" ) );
 	    var bQ = ( GameStateAPI.IsLocalPlayerHLTV() && nCameraMan > -1 )
+
 	    if ( bQ )
 	    {
-	        $( "#spec-button-group" ).visible = true;
+	        elButtonPanel.visible = true;
 	        UpdateCasterButtons();
 	    }
 	    else
 	    {
-	        $( "#spec-button-group" ).visible = false;
+	        elButtonPanel.visible = false;
 	    }  
 	}
 
@@ -1586,7 +1591,14 @@ var Scoreboard = ( function()
 
 								if ( newStatValue > 0 )
 								{
-									imagepath = "file://{images}/icons/skillgroups/skillgroup" + newStatValue + ".svg";
+									var mode = GameStateAPI.GetGameModeInternalName( true );
+									
+									var imagePath = "skillgroup";
+
+									if ( mode == "scrimcomp2v2" )
+										imagePath = "wingman";
+									
+									imagepath = "file://{images}/icons/skillgroups/" + imagePath + newStatValue + ".svg";
 									elSkillGroupImage.RemoveClass( "hidden" );
 								}
 								else

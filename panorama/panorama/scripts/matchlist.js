@@ -329,7 +329,7 @@ var matchList = ( function() {
 		                                                                                              
         var sectionDesc = 0;
         var tournamentIndex = 0;
-        if ( parentPanel.tournament_id )
+        if ( ( nCount > 0 ) && ( parentPanel.tournament_id ) )
         {
             tournamentIndex = parentPanel.tournament_id.split(':')[1];
             if ( !parentPanel.matchListDropdownIsPopulated )

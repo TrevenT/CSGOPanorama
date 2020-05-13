@@ -177,3 +177,14 @@
 	padding-bottom: 5px;
 	margin-top: 30%;
 }
+
+#StoreNaveBarWalletBalance
+{
+	horizontal-align: right;
+	margin: 0px;
+}
+
+#StoreNaveBarWalletBalance.hidden
+{
+	visibility: collapse;
+}

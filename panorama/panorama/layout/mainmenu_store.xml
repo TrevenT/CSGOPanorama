@@ -58,6 +58,10 @@
 		</Panel>
 		<Panel id="StoreNaveBar" class="news-panel-navbar">
 			                         
+			<TextButton id="StoreNaveBarWalletBalance" class="hidden news-panel-navbar-btn"
+				onactivate="StoreAPI.OpenAccountWalletAddFundsURL();"
+				selected="false"
+				text="#Store_Wallet_Balance_dv"/>
 		</Panel>
 		<Panel id="StoreCarouselContiner" class="store-panel__carousels" hittest="false">
 			                         

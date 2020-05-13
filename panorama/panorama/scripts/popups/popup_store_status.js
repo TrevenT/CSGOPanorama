@@ -9,7 +9,7 @@ var SetupPopup = function()
     var strMsg = $.UrlDecode( ctx.GetAttributeString('text', '') );
     var strClose = $.UrlDecode( ctx.GetAttributeString('close', '0') );
     var strCancel = $.UrlDecode( ctx.GetAttributeString('cancel', '0') );
-    _strStoreStatusOkCmd = $.UrlDecode( ctx.GetAttributeString('cmd', '') );
+    _strStoreStatusOkCmd = $.UrlDecode( ctx.GetAttributeString('okcmd', '') );
 
     ctx.SetDialogVariable("message", $.Localize(strMsg));
     

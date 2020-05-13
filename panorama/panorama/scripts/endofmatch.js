@@ -128,6 +128,8 @@ var EndOfMatch = ( function () {
 	
 			_m_cP.AddClass( "reveal" );
 
+			_m_cP.SetMouseCapture( true );
+
 			$.Schedule( 1.25, _ShowNextPanel );
 
 			_m_jobStart = undefined;

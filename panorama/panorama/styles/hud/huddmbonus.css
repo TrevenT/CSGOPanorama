@@ -132,9 +132,8 @@
     font-size: 26px;
     font-weight: medium;
     text-shadow: 1px 1px 1px 1.0 #000000;  
-    vertical-align: middle;
+    vertical-align: bottom;
     text-align: center;
-    margin-top: 32px;
 }
 
 .bonuspanel-timer {

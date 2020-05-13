@@ -145,10 +145,6 @@ var EOM_Win = ( function () {
 
 	function _DisplayMe() 
 	{
-		if ( GameStateAPI.IsDemoOrHltv() )
-		{
-			return false;
-		}
 
    		                                                                        
 		  
