@@ -15,6 +15,7 @@ var InspectActionBar = ( function (){
 	var m_showCharSelect = true;
 	var m_blurOperationPanel = false;
 	var m_previewingMusic = false;
+	var m_schfnMusicMvpPreviewEnd = null;
 	
 	var _Init = function( elPanel, itemId, funcGetSettingCallback, funcGetSettingCallbackInt, elItemModelImagePanel )
 	{
@@ -44,8 +45,13 @@ var InspectActionBar = ( function (){
 		var slot = ItemInfo.GetSlot( itemId );
 		if ( slot == "musickit" )
 		{
-			InventoryAPI.PlayItemPreviewMusic( null, itemId );
+			                                                                        
+			InventoryAPI.PlayItemPreviewMusic( itemId );
 			m_previewingMusic = true;
+
+			                                                              
+			var elMusicBtn = elPanel.FindChildInLayoutFile( 'InspectPlayMvpBtn' );
+			elMusicBtn.SetHasClass( 'hidden', ( InventoryAPI.GetItemRarity( itemId ) <= 0 ) );                                      
 		}
 	};
 
@@ -340,6 +346,31 @@ var InspectActionBar = ( function (){
 		$.GetContextPanel().FindChildTraverse( 'InspectCharModelsControls' ).SetHasClass( 'hidden', type !== 'InspectModelChar' );
 	};
 
+	var _InspectPlayMusic = function ( type )
+	{
+		                                                        
+		if ( !m_previewingMusic )
+			return;
+
+		if ( type === 'mvp' )
+		{
+			if ( m_schfnMusicMvpPreviewEnd )
+				return;	                                                                    
+
+			InventoryAPI.StopItemPreviewMusic();
+			InventoryAPI.PlayItemPreviewMusic( m_itemId, 'roundmvpanthem_01.mp3' );
+
+			                                                                                         
+			m_schfnMusicMvpPreviewEnd = $.Schedule( 6.8, InspectActionBar.InspectPlayMusic.bind( null, 'schfn' ) );
+		}
+		else if ( type === 'schfn' )
+		{
+			m_schfnMusicMvpPreviewEnd = null;
+			InventoryAPI.StopItemPreviewMusic();
+			InventoryAPI.PlayItemPreviewMusic( m_itemId );
+		}
+	}
+
 	var _ShowContextMenu = function ()
 	{
 		var elBtn = $.GetContextPanel().FindChildTraverse( 'InspectActionsButton' );
@@ -392,6 +423,12 @@ var InspectActionBar = ( function (){
 		{
 			InventoryAPI.StopItemPreviewMusic();
 			m_previewingMusic = false;
+
+			if ( m_schfnMusicMvpPreviewEnd )
+			{
+				$.CancelScheduled( m_schfnMusicMvpPreviewEnd );
+				m_schfnMusicMvpPreviewEnd = null;
+			}
 		}
 	};
 
@@ -400,6 +437,7 @@ var InspectActionBar = ( function (){
 		ShowContextMenu: _ShowContextMenu,
 		CloseBtnAction: _CloseBtnAction,
 		NavigateModelPanel: _NavigateModelPanel,
+		InspectPlayMusic: _InspectPlayMusic,
 		OnUpdateCharModel: _OnUpdateCharModel
 	};
 } )();

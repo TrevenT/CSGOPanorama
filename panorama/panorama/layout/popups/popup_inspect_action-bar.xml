@@ -40,6 +40,13 @@
 					onmouseout="UiToolkitAPI.HideTextTooltip();">
 					<Image class="" src="file://{images}/icons/ui/ct_silhouette.svg" />
 			</Button>
+			<Button id="InspectPlayMvpBtn"
+					class="IconButton hidden"
+					onactivate="InspectActionBar.InspectPlayMusic('mvp');"
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'InspectPlayMvpBtn', '#tooltip_inspect_play_mvp_anthem' );"
+					onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image class="" src="file://{images}/icons/ui/unmuted.svg" />
+			</Button>
 
 			<Panel id="InspectCharModelsControls" class="popup-char-model-controls hidden" >
 				<DropDown id="InspectDropdownCharModels" class="PopupButton horizontal-align-left" menuclass="DropDownMenu Width-250" >

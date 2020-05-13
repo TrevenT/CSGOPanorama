@@ -20,6 +20,11 @@
 					<Label text="#GameUI_Undo_Changes" />
 				</Button>
 			</TooltipPanel>
+			<TooltipPanel class="xhair-ctrl-btn" tooltip="#GameUI_Xhair_Reset_Tooltip">
+				<Button id="Reset">
+					<Label text="#settings_reset" />
+				</Button>
+			</TooltipPanel>
 		</Panel>
 		<Panel class="horizontal-align-left left-right-flow dynamic-xhair-buttons">
 			<TooltipPanel class="xhair-ctrl-btn" tooltip="#GameUI_Xhair_Moving_Tooltip">

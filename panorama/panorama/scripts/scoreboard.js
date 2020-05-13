@@ -3536,6 +3536,17 @@ var Scoreboard = ( function()
 	    return bQ;
 	}
 
+	function _ApplyPlayerCrosshairCode( panel, xuid )
+	{
+		UiToolkitAPI.ShowGenericPopupYesNo(
+			$.Localize( "#tooltip_copycrosshair" ),
+			$.Localize( "#GameUI_Xhair_Copy_Code_Confirm" ),
+			'',
+			function () { let code = GameStateAPI.GetCrosshairCode( xuid ); MyPersonaAPI.BApplyCrosshairCode( code ); },
+			function () {}
+		)
+	}
+
 	                      
 	return {
 		OpenScoreboard: 					_OpenScoreboard,
@@ -3572,6 +3583,7 @@ var Scoreboard = ( function()
 		RankRevealAll: _RankRevealAll,
 		UpdateLeaderboard : _UpdateLeaderboard,
 		OnFinalCoopScore: _OnFinalCoopScore,
+		ApplyPlayerCrosshairCode	    : _ApplyPlayerCrosshairCode,
 
           		
 		                        	 		                         
@@ -3632,6 +3644,7 @@ var Scoreboard = ( function()
 	
 	$.RegisterForUnhandledEvent( "Scoreboard_MuteVoice", Scoreboard.MuteVoice );
 	$.RegisterForUnhandledEvent( "Scoreboard_BlockUgc", Scoreboard.BlockUgc );
+	$.RegisterForUnhandledEvent( 'Scoreboard_ApplyPlayerCrosshairCode',  Scoreboard.ApplyPlayerCrosshairCode );
 
           	
 	                                                                                            

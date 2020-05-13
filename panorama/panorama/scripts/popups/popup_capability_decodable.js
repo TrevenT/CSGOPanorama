@@ -191,7 +191,7 @@ var CapabilityDecodable = ( function()
 			var slot = ItemInfo.GetSlot( m_caseId );
 			if ( slot == "musickit" )
 			{
-				InventoryAPI.PlayItemPreviewMusic( null, m_caseId );
+				InventoryAPI.PlayItemPreviewMusic( m_caseId );
 			}
 		}
 

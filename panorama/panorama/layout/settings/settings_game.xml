@@ -657,7 +657,7 @@
 					<CSGOSettingsSlider id="XhairLength" text="#GameUI_CrosshairLength" displayprecision="1" max="10.0" min="0.0" convar="cl_crosshairsize"/>
 					<Panel class="horizontal-separator"/>
 
-					<CSGOSettingsSlider id="XhairThickness" text="#GameUI_CrosshairThickness" displayprecision="1" max="10" min="0.1" convar="cl_crosshairthickness"/>
+					<CSGOSettingsSlider id="XhairThickness" text="#GameUI_CrosshairThickness" displayprecision="1" max="6" min="0.1" convar="cl_crosshairthickness"/>
 					<Panel class="horizontal-separator"/>
 
 					<CSGOSettingsSlider id="XhairGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_crosshairgap"/>
@@ -703,6 +703,30 @@
 								<Label text="#GameUI_No" value="0" id="tstyle1"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_ShowWeaponGap_Tooltip">
+					<Panel id="XhairUseWeaponGap" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_ShowWeaponGap" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshairgap_useweaponvalue">
+								<Label text="#GameUI_No" value="0" id="weapongap0"/>
+								<Label text="#GameUI_Yes" value="1" id="weapongap1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_ShowObserverCrosshair_Tooltip">
+					<Panel id="XhairShowObserverCrosshair" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_ShowObserverCrosshair" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_show_observer_crosshair">
+								<Label text="#GameUI_No" value="0" id="showobs0"/>
+								<Label text="#GameUI_ShowObserverCrosshair_Friends" value="1" id="showobs1"/>
+								<Label text="#GameUI_Everyone" value="2" id="showobs2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
 
 					     
 					                                             

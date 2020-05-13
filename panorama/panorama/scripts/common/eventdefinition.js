@@ -97,6 +97,8 @@
 
 	$.DefinePanelEvent( "MainMenu_PromotedSettingsViewed", 0, "", "Fired when user views new settings." )
 
+	$.DefinePanelEvent( "Scoreboard_ApplyPlayerCrosshairCode", 1, "xuid", "Fired to handle confirmation popup when copying player crosshair codes" )
+
 	
 
 } )();

@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+	    id: "XhairShowObserverCrosshair",
+	    loc_name: "#GameUI_ShowObserverCrosshair",
+	    loc_desc: "#GameUI_ShowObserverCrosshair_Tooltip",
+		section: "GameSettings",
+		start_date: new Date( 'April 15, 2020' ), 
+		end_date: new Date( 'May 1, 2020' )
+	},
+	{
 		id: "SettingsCrosshair",
 		loc_name: "#settings_crosshair",
 		loc_desc: "#settings_crosshair_info",
