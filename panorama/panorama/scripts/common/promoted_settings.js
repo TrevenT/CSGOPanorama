@@ -20,16 +20,14 @@ var g_PromotedSettings = [
 		                                                                                                              
 					                                    
 	  
-	          
-	 
-		                
-		                               
-		                                       
-		                              
-		                                              
-		                                        
-	  
-	          	
+	{
+		id: "ClutchKey",
+		loc_name: "#GameUI_Clutch_Key",
+		loc_desc: "#GameUI_Clutch_Key_Tooltip",
+		section: "KeybdMouseSettings",
+		start_date: new Date( 'September 21, 2019' ), 
+		end_date: new Date( 'January 30, 2020' )
+	},
 	{
 		id: "id-friendlyfirecrosshair",
 		loc_name: "#GameUI_FriendlyWarning",

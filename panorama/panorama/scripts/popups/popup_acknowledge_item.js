@@ -4,11 +4,11 @@ var AcknowledgeItems = ( function()
 {
 	var m_isCapabliltyPopupOpen = false;
 
-	var _OnLoad = function ()
+	var _OnLoad = function()
 	{
 		$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', AcknowledgeItems.Init );
 		_Init();
-	}
+	};
 
 	var _Init = function()
 	{
@@ -42,6 +42,7 @@ var AcknowledgeItems = ( function()
 
 	var _MakeItemPanel = function( item, index, numItems, elParent )
 	{
+		var isOperationReward = item.pickuptype === 'quest_reward';
 		var elItemTile = $.CreatePanel( 'Panel', elParent, item.id );
 		elItemTile.BLoadLayoutSnippet( 'Item' );
 
@@ -50,25 +51,45 @@ var AcknowledgeItems = ( function()
 		var elLabel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemLabel' );
 		elLabel.text = ItemInfo.GetName( item.id );
 
-		var rarityColor = ItemInfo.GetRarityColor( item.id );
-
 		var elTitle = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemTitle' );
-		elTitle.text = $.Localize( '#popup_title_' + item.type );
+		var titleSuffex = isOperationReward ? 'quest_reward' : item.type;
+		elTitle.text = $.Localize( '#popup_title_' + titleSuffex );
+
+		if ( isOperationReward )
+		{
+			var tier = ItemInfo.GetRewardTier( item.id );
+			
+			if ( tier && tier > 0 )
+			{
+				elItemTile.FindChildInLayoutFile( 'AcknowledgeItemOperationTier' ).SetHasClass( 'hide', false );
+				elItemTile.SetDialogVariableInt( 'reward_tier', ( tier + 1 ) );
+			}
+		}
+
+		var rarityColor = ItemInfo.GetRarityColor( item.id );
 		elTitle.style.washColor = rarityColor;
 
 		var elMovie = elItemTile.FindChildInLayoutFile( 'AcknowledgeMovie' );
-		elMovie.style.washColor = rarityColor;
+		elMovie.SetHasClass( 'operation', isOperationReward );
+		_WashColorBackGroundMovie( elMovie, isOperationReward ? 'none' : rarityColor );
 
 		var elBar = elItemTile.FindChildInLayoutFile( 'AcknowledgeBar' );
 		elBar.style.washColor = rarityColor;
 
-		var elInfoBlock = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemInfo' );
-
 		_ShowGiftPanel( elItemTile, item.id );
-		_ShowQuestPanel( elItemTile, item.id );
 		_ShowSetPanel( elItemTile, item.id );
 		_ItemCount( elItemTile, index, numItems );
+
+		                 
+		                                                                               
+		                                         
 		                                   
+		               
+	};
+
+	var _WashColorBackGroundMovie = function( elMovie, rarityColor )
+	{
+		elMovie.style.washColor = rarityColor;
 	};
 
 	var _ShowModelOrItem = function( elItemTile, id )
@@ -90,6 +111,26 @@ var AcknowledgeItems = ( function()
 				modelPath,
 				false
 			);
+
+			if ( ItemInfo.IsCharacter( id) )
+			{
+				var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( id );
+				settings.panel = elModel;
+	
+				CharacterAnims.PlayAnimsOnPanel( settings );
+	
+				elModel.SetSceneIntroFOV( 1., 50000 );
+				elModel.SetCameraPosition( 305.60, -7.43, 85.19 );
+				elModel.SetCameraAngles( 4.81, 178.85, 0.00 );
+
+				elModel.SetFlashlightColor( 4.16, 4.06, 5.20 );
+				elModel.SetFlashlightFOV( 60 );
+				elModel.SetFlashlightAmount( 5 );
+				elModel.SetDirectionalLightModify( 1 );
+				elModel.SetDirectionalLightDirection( 66.83, -23.02, 121.82);
+				elModel.SetDirectionalLightColor(0.29, 0.09, 0.63);
+				elModel.SetAmbientLightColor(0.12, 0.14, 0.19);
+			}
 		}
 		else
 		{
@@ -115,6 +156,16 @@ var AcknowledgeItems = ( function()
 	{
 		var elPanel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemQuest' );
 		elPanel.SetHasClass( 'hidden', 'quest_reward' !== ItemInfo.GetItemPickUpMethod( id ) );
+
+		                                                    
+		var nTierReward = ItemInfo.GetRewardTier( id );
+		var bPremium = ItemInfo.BIsRewardPremium( id );
+		elPanel.SetHasClass( "tier-reward", nTierReward > 0 );
+		elPanel.SetHasClass( "premium", bPremium );
+		if ( nTierReward > 0 )
+		{
+			elPanel.SetDialogVariableInt( "tier_num", nTierReward );
+		}
 	};
 
 	var _ShowSetPanel = function( elItemTile, id )
@@ -123,16 +174,23 @@ var AcknowledgeItems = ( function()
 		var strSetName = InventoryAPI.GetTag( id, 'ItemSet' );
 		if ( !strSetName || strSetName === '0' )
 		{
-		    elPanel.SetHasClass( 'hidden', true );
-		    return;
+			elPanel.SetHasClass( 'hide', true );
+			return;
+		}
+
+		var setName = InventoryAPI.GetTagString( strSetName );
+		if ( !setName )
+		{
+			elPanel.SetHasClass( 'hide', true );
+			return;
 		}
 
 		var elLabel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemSetLabel' );
-		elLabel.text = InventoryAPI.GetTagString( strSetName );
+		elLabel.text = setName;
 
 		var elImage = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemSetImage' );
 		elImage.SetImage( 'file://{images_econ}/econ/set_icons/' + strSetName + '_small.png' );
-		elPanel.SetHasClass( 'hidden', false );
+		elPanel.SetHasClass( 'hide', false );
 	};
 
 	var _ItemCount = function( elItemTile, index, numItems )
@@ -168,22 +226,26 @@ var AcknowledgeItems = ( function()
 		for ( var i = 0; i < itemCount; i++ )
 		{
 			var itemId = InventoryAPI.GetUnacknowledgeItemByIndex( i );
-			var item = { type: 'acknowledge', id: itemId };
+			var pickUpType = ItemInfo.GetItemPickUpMethod( itemId );
+			var item = { type: 'acknowledge', id: itemId, pickuptype: pickUpType  };
 
-			                                                          
 			if ( _ItemstoAcknowlegeRightAway( itemId ) )
 				InventoryAPI.AcknowledgeNewItembyItemID( itemId );
 			else
-				newItems.push( item );
+				newItems.unshift( item );
 		}
 
 		var getUpdateItem = _GetUpdatedItem();
-		if ( getUpdateItem )
+		if ( getUpdateItem && newItems.filter( item => item.id === getUpdateItem.id ).length < 1 )
 		{
 			newItems.push( getUpdateItem );
 		}
 
-		return newItems;
+		                         
+		var rewardItems = newItems.filter( item => item.pickuptype === "quest_reward" );
+		var otherItems = newItems.filter( item => item.pickuptype !== "quest_reward" );
+	
+		return rewardItems.concat( otherItems );;
 	};
 
 	var _GetItemsByType = function( afilters, bShouldAcknowledgeItems )
@@ -217,7 +279,7 @@ var AcknowledgeItems = ( function()
 
 		var itemidExplicitAcknowledge = $.GetContextPanel().GetAttributeString( "ackitemid", '' );
 		if ( itemidExplicitAcknowledge === '' )
-			return false;
+			return null;
 		
 		return {
 			id: itemidExplicitAcknowledge,
@@ -257,6 +319,8 @@ var AcknowledgeItems = ( function()
 		{
 			itemsToSave.forEach( function( item )
 			{
+				InventoryAPI.SetItemSessionPropertyValue( item.id, 'item_pickup_method', ItemInfo.GetItemPickUpMethod( item.id ) );                       
+
 				if ( item.type === 'acknowledge' )
 				{
 					InventoryAPI.SetItemSessionPropertyValue( item.id, 'recent', '1' );
@@ -275,7 +339,7 @@ var AcknowledgeItems = ( function()
 			_AcknowledgeItems();
 
 			                                          
-			                                     
+			                                      
 			InventoryAPI.AcknowledgeNewBaseItems();
 
 			var callbackResetAcknowlegePopupHandle = $.GetContextPanel().GetAttributeInt( "callback", -1 );

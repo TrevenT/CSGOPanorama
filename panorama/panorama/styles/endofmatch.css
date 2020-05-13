@@ -7,10 +7,27 @@
 	opacity: 0;
 }
 
+.eom-spacebar
+{
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-bottom: 10px;
+   	                    
+
+	font-size: 16px;
+	color: gray;
+}
+
 .eom.eom--reveal
 {
-    background-color: rgba(20, 20, 20, 0.9);
-    opacity: 1.0;
+                                                  
+	opacity: 1.0;
+	
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( rgba(0, 0, 0, 1) ), 
+	color-stop( 0.2, rgba(0, 0, 0, 0.9) ), 
+	color-stop( 0.9, rgba(39, 39, 39, 0.9) ), 
+	to( rgba(54, 54, 54, 0.9)) );
+
 }
 
 @keyframes 'eom-background-fade-in'
@@ -39,7 +56,8 @@
 .eom-layout {
 	width: 100%;
 	height: 100%;
-
+	z-index: 10;
+	
 	horizontal-align: center;
 	vertical-align: top;
 }
@@ -48,11 +66,13 @@
 #id-eom-chat-and-score {
 
 	width: 100%;
-	height: 850px;
+	height: 100%;                          
 
 	vertical-align: bottom;
 
 }
+
+
 #id-eom-chat-container {
 
 	horizontal-align: left;
@@ -94,8 +114,10 @@
 
 #id-eom-layout{
 
-	height: 256px;
+	height: 300px;
 	width: 100%;
+	z-index: 10;
+	vertical-align: top;
 
 	                                    
 }
@@ -107,7 +129,7 @@
 
 .content-navbar{
 
-	height: fit-children;
+	height: 96px;
 	flow-children: none;
 }
 
@@ -134,7 +156,7 @@
     horizontal-align: center;
     vertical-align: top;
     width: 100%;
-    height: 512px;
+    height: 100%;
                                      
                                         
     opacity: 0;
@@ -244,4 +266,31 @@
 	transition-property:  opacity;
 	transition-duration: 1s;
 	transition-timing-function: ease-in-out;
+}
+
+#id-display-timer-progress-bar-container {
+	horizontal-align: left;
+	width: 100%;
+}
+
+#id-eom-scoreboard-container{
+	opacity:0;
+
+	transition-property: opacity;
+	transition-duration: 0.2s;
+
+	position: 0px 280px 0px;
+}
+
+.scoreboard-visible #id-eom-scoreboard-container{
+	opacity:1;
+}
+
+.WindowRoot_TripleMonitor #id-display-timer-progress-bar-container,
+.WindowRoot_TripleMonitor #id-eom-chat-and-score,
+.WindowRoot_TripleMonitor #id-eom-layout,
+.WindowRoot_TripleMonitor .content-navbar
+{
+	horizontal-align: center;
+	width: 33%;
 }

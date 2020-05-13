@@ -4,9 +4,32 @@
 	height: 820px;
 }
 
+.popup-leaderboard-title-bar
+{
+	width: 100%;
+	height: fit-children;
+}
+
 #id-popup-leaderboard-title
 {
 	margin-bottom: 0px;
+	width: fill-parent-flow( 1 );
+}
+
+#id-popup-leaderboard-refresh-button.IconButton Image
+{
+	wash-color: #CCCCCC;
+}
+
+#id-popup-leaderboard-refresh-button
+{
+	horizontal-align: right;
+	visibility: collapse;
+}
+
+.leaderboard_embedded #id-popup-leaderboard-refresh-button
+{
+	visibility: visible;
 }
 
 .PopupButtonRow
@@ -97,7 +120,7 @@
 
 .popup-leaderboard__list__column.points
 {
-	width: fill-parent-flow( 1.5 );
+	width: fill-parent-flow( 2 );
 }
 
 .popup-leaderboard__list__column.rank
@@ -159,9 +182,12 @@
 
 .PopupPanel.leaderboard_embedded.play_menu_survival
 {
-	margin: 24px 28px 16px 0px;
-	height: 650px;
+	margin: 24px 0px 16px 0px;
+	height: 615px;
+	horizontal-align: right;
 	background-color: #00000000;
+	border: 1px black;
+	box-shadow: fill #00000055 0px 0px 8px 4px;
 }
 
 .leaderboard_embedded.play_menu_survival .popup-leaderboard__list__column.rank

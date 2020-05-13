@@ -22,6 +22,11 @@
                                
   
 
+.guardianpanel.guardianpanel.mission-complete
+{
+	sound: "UI.ArmsRace.BecomeMatchLeader";
+}
+
 .guardianpanel.mission-complete Label
 {
 	                 
@@ -68,9 +73,12 @@
 .guardianpanel-header
 {
 	flow-children: right;
+	vertical-align: center;
 	                           
 	                     
-	padding-top: 6px;
+	                   
+	                      
+	
 }
 
 Label.guardianpanel-header__text 
@@ -110,6 +118,7 @@ Label.guardianpanel-header__text
 	vertical-align: center;
 	horizontal-align: left;
 	text-shadow-fast: 1px 1px #000000; 
+	
 }
 
 .guardianpanel-body__goal
@@ -118,7 +127,7 @@ Label.guardianpanel-header__text
 	font-size: 15px;
 	font-weight: bold;
 	               
-	vertical-align: center;
+	vertical-align: center; 
 	text-shadow-fast: 1px 1px #000000;
 }
 
@@ -168,15 +177,29 @@ Label.guardianpanel-header__text
 		opacity: 0;
 	}
 }
-.competitive .guardianpanel.progress-made,
-.scrimcomp2v2 .guardianpanel.progress-made
-{
-    animation-name: hide-for-competitive;
-    animation-duration: 14s;
-    animation-timing-function: ease-in-out;
-		animation-iteration-count: 1;
+  
+                                          
+                                          
+ 
+                                         
+                            
+                                           
+		                             
 
-	opacity: 0;
+	           
+ 
+  
+
+                                                                    
+.coopmission
+{
+	visibility: collapse;
+}
+
+.guardianpanel-header .InlineImage
+{
+	width: 24px;
+	height: 24px;	
 }
 
 .Icon {

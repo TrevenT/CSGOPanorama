@@ -25,6 +25,7 @@ var ItemTile = ( function()
 		_SetRecentLabel( id );
 		_TintSprayImage( id );
 		_DisableTile( id );
+		_SetBackground( id );
 
 		                                                               
 		                                                       
@@ -46,6 +47,35 @@ var ItemTile = ( function()
 	    var fmtName = ItemInfo.GetFormattedName( id );
 	    fmtName.SetOnLabel( $( '#JsItemName' ) );
 	};
+
+	function _SetBackground ( id )
+	{
+		var elTeamTile = $.GetContextPanel().FindChildInLayoutFile( 'ItemTileTeam' );
+
+		var subSlot = ItemInfo.GetSlotSubPosition( id );
+		if ( subSlot == 'customplayer' )
+		{
+			elTeamTile.visible = true;
+
+			var isCT = ItemInfo.IsItemCt( id );
+
+			if ( isCT )
+			{
+				elTeamTile.SetImage( "file://{images}/icons/ui/ct_logo_1c.svg" );
+				elTeamTile.style.washColor = '#B5D4EE';
+
+			}
+			else
+			{
+				elTeamTile.SetImage( "file://{images}/icons/ui/t_logo_1c.svg" );
+				elTeamTile.style.washColor = '#EAD18A';
+			}
+		}
+		else
+		{
+			elTeamTile.visible = false;
+		}
+	}
 
 	                             
 	    
@@ -133,7 +163,21 @@ var ItemTile = ( function()
 
 		if ( isUpdatedValue === '1' || isRecentValue === '1' )
 		{
-			var locString = ( isRecentValue === '1' ) ? '#inv_session_prop_recent' : '#inv_session_prop_updated';
+			var locString = '#inv_session_prop_recent';
+			if ( isRecentValue === '1' )
+			{	                               
+				                                                                                                     
+				                                                                                                                                             
+				var strItemPickupMethod = InventoryAPI.GetItemSessionPropertyValue( id, 'item_pickup_method' );
+				if ( strItemPickupMethod === 'quest_reward' )
+				{
+					locString = '#inv_session_prop_quest_reward';
+				}
+			}
+			else
+			{	                                                 
+				locString = '#inv_session_prop_updated';
+			}
 			
 			elPanel.RemoveClass( 'hidden' );
 			elPanel.text = $.Localize( locString );

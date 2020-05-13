@@ -115,6 +115,32 @@ function OnPopupCustomLayoutSurvivalEndOfMatch()
                                         
 }
 
+function OnPopupCustomLayoutXpGrant()
+{
+	UiToolkitAPI.ShowCustomLayoutPopupParameters( 
+		'',
+		'file://{resources}/layout/popups/popup_acknowledge_xpgrant.xml',
+		'none'
+	);
+}
+
+function OnPopupCustomLayoutOperationHub ( startPage )
+{
+	var nActiveSeason = GameTypesAPI.GetActiveSeasionIndexValue();
+	if ( nActiveSeason < 0 )
+		return;
+
+    var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/operation/operation_main.xml',
+		'none'
+	);
+
+	elPanel.SetAttributeInt( "season_access", nActiveSeason );
+	if ( startPage )
+		elPanel.SetAttributeInt( "start_page", startPage );
+}
+
 function OnPopupCustomLayoutLoadingScreen()
 {
     ClearPopupsText();
@@ -182,6 +208,212 @@ function VideoPlayNextTrailer()
     videoPlayer.SetMovie( "file://{resources}/videos/trailer_" + g_VideoCurrentTrailer + ".webm" );
     videoPlayer.SetTitle( "Trailer " + g_VideoCurrentTrailer );
     videoPlayer.Play();
+}
+
+                                                                                                    
+        
+                                                                                                    
+
+var g_sceneanimsList = [
+
+
+'cu_ct_pose01',
+'cu_ct_pose02',
+'cu_ct_pose03',
+'cu_ct_pose04',
+'cu_t_pose01',
+'cu_t_pose02',
+'cu_t_pose03',
+'cu_t_pose04',
+
+                               
+                              
+                              
+                             
+                             
+                                  
+                               
+                                           
+                                            
+                                     
+                                   
+                                    
+                              
+                                
+                              
+                               
+                                
+                                
+                               
+                                
+                             
+                                
+                             
+                              
+                             
+                               
+                            
+                              
+                                   
+                            
+                              
+                              
+                                   
+                                   
+                                          
+                                     
+                                
+                                   
+                                
+                                 
+                                      
+                                      
+                                  
+];
+var g_sceneanimindex = 0;
+
+var g_maxsceneitemcontext = 5;
+var g_sceneitemcontext = 0;
+
+function InitScenePanel()
+{
+    g_sceneanimindex = 0;
+
+    var charT = LoadoutAPI.GetItemID( 'ct', 'customplayer' );
+                                                             
+
+    var model = ItemInfo.GetModelPlayer( charT );
+
+    var playerPanel = $( "#Player1" );
+    playerPanel.ResetAnimation( false );
+    playerPanel.SetSceneAngles( 0, 0, 0 );
+    playerPanel.SetPlayerModel( model );
+    playerPanel.PlaySequence( g_sceneanimsList[g_sceneanimindex], true );
+    playerPanel.SetCameraPreset( 6, false );
+}
+
+function SceneNextAnimSequence()
+{
+    g_sceneanimindex++;
+    if ( g_sceneanimindex >= g_sceneanimsList.length )
+    {
+        g_sceneanimindex = 0;
+    }
+
+    var playerPanel = $( "#Player1" );
+ 
+    playerPanel.ResetAnimation( false );
+    playerPanel.PlaySequence( g_sceneanimsList[g_sceneanimindex], true );
+}
+
+function ScenePrevAnimSequence()
+{
+    g_sceneanimindex--;
+    if ( g_sceneanimindex < 0 )
+    {
+        g_sceneanimindex = g_sceneanimsList.length - 1;
+    }
+
+    var playerPanel = $( "#Player1" );
+    
+    playerPanel.ResetAnimation( false );
+    playerPanel.PlaySequence( g_sceneanimsList[g_sceneanimindex], true );
+}
+
+function GenerateInventoryImages()
+{
+    $( "#Player1" ).GenerateInventoryImages();
+}
+
+function InitSceneWithContextsPanel()
+{
+    var charT = LoadoutAPI.GetItemID( 't', 'customplayer' );
+    var shortTeam = 't';
+
+    var model = ItemInfo.GetModelPlayer( charT );
+
+    var playerPanel = $( "#MultiPlayer" );
+    playerPanel.ResetAnimation( false );
+    playerPanel.SetSceneAngles( 0, 11.5, 0 );
+    playerPanel.SetSceneOffset( 11.08, -18.14, 0.0 );
+    playerPanel.SetPlayerModel( model );
+    playerPanel.PlaySequence( g_sceneanimsList[23], true );
+    playerPanel.SetCameraPreset( 6, false );
+    var id = LoadoutAPI.GetItemID( shortTeam, 'melee' )
+    playerPanel.EquipPlayerWithItem( id );
+
+    playerPanel.CreateSceneContexts( g_maxsceneitemcontext );
+   
+    playerPanel.SetActiveSceneContext( 1 );
+    playerPanel.SetSceneAngles( 0, 13, 0 );
+    playerPanel.SetSceneOffset( -8.96, 1.41, 0.0 );
+    playerPanel.SetPlayerModel( "models/player/custom_player/legacy/tm_balkan_variante.mdl" );
+    playerPanel.PlaySequence( g_sceneanimsList[25], true );
+    id = LoadoutAPI.GetItemID( shortTeam, 'secondary0' )
+    playerPanel.EquipPlayerWithItem( id );
+
+    playerPanel.SetActiveSceneContext( 2 );
+    playerPanel.SetSceneAngles( 0, -9.5, 0 );
+    playerPanel.SetSceneOffset( 14.32, 7.58, 0.0 );
+    playerPanel.SetPlayerModel( "models/player/custom_player/legacy/tm_jumpsuit_variantc.mdl" );
+    playerPanel.PlaySequence( g_sceneanimsList[27], true );
+    id = LoadoutAPI.GetItemID( shortTeam, 'smg3' )
+    playerPanel.EquipPlayerWithItem( id );
+
+    playerPanel.SetActiveSceneContext( 3 );
+    playerPanel.SetSceneAngles( 0, 13, 0 );
+    playerPanel.SetSceneOffset( 22.9, -43.94, 0.0 );
+    playerPanel.SetPlayerModel( "models/player/custom_player/legacy/tm_balkan_varianta.mdl" );
+    playerPanel.PlaySequence( g_sceneanimsList[28], true );
+    id = LoadoutAPI.GetItemID( shortTeam, 'heavy0' )
+    playerPanel.EquipPlayerWithItem( id );
+
+    playerPanel.SetActiveSceneContext( 4 );
+    playerPanel.SetSceneAngles( 0, -183.5, 0 );
+    playerPanel.SetSceneOffset( 27.59, 19.69, 0.0 );
+    playerPanel.SetPlayerModel( "models/player/custom_player/legacy/tm_separatist_variantd.mdl" );
+    playerPanel.PlaySequence( g_sceneanimsList[36], true );
+    id = LoadoutAPI.GetItemID( shortTeam, 'rifle2' )
+    playerPanel.EquipPlayerWithItem( id );
+
+    playerPanel.SetActiveSceneContext( 0 );
+
+                                             
+                                          
+                                                                           
+
+}
+
+function SceneNextItemContext()
+{
+    g_sceneitemcontext++;
+    if ( g_sceneitemcontext >= g_maxsceneitemcontext )
+    {
+        g_sceneitemcontext = 0;
+    }
+
+    var playerPanel = $( "#MultiPlayer" );
+    
+    playerPanel.SetActiveSceneContext( g_sceneitemcontext );
+
+                                          
+                                                                           
+}
+
+function ScenePrevItemContext()
+{
+    g_sceneitemcontext--;
+    if ( g_sceneitemcontext < 0 )
+    {
+        g_sceneitemcontext = g_maxsceneitemcontext - 1;
+    }
+
+    var playerPanel = $( "#MultiPlayer" );
+ 
+    playerPanel.SetActiveSceneContext( g_sceneitemcontext );
+    
+                                          
+                                                                           
 }
 
                                                                                                     

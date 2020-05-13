@@ -19,7 +19,9 @@
 			onmouseout="ItemTile.HideTooltip()"
 			antialias="true"
 			useglobalcontext="true">
-		<Panel id="ItemTileBg" class="item-tile__bg"/>
+		<Panel id="ItemTileBg" class="item-tile__bg">
+			<Image id="ItemTileTeam" class="item-tile__team"/>
+		</Panel>
 		<ItemImage class="item-tile__image" id="ItemImage"  scaling="stretch-to-fit-preserve-aspect"/>
 		<Label html="true" id="JsItemName" class="item-tile__name"/>
 		<Panel class="item-tile__rarity" id="JsRarity"/>

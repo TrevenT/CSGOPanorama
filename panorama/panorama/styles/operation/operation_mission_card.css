@@ -1,0 +1,377 @@
+.op-mission-card
+{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+
+    transition-property: opacity;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card VerticalScrollBar
+{
+    wash-color: opAccentColorLight;
+}
+
+.op-mission-card.show
+{
+    opacity: 1;
+
+    transition-property: opacity;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card__bg
+{
+    width: 100%;
+    opacity: 0;
+    brightness: 0.05;
+    opacity-mask: url( "file://{images}/masks/top-bottom-fade.png" );
+    vertical-align: top;
+
+    transition-property: opacity;
+	transition-duration: 5s;
+	transition-timing-function: ease-in-out;
+}
+
+.show .op-mission-card__bg
+{
+    opacity: 1;
+
+    transition-property: opacity;
+	transition-duration: 0s;
+	transition-timing-function: ease-in-out;
+}
+
+.card-missions-locked .op-mission-card__bg
+{
+    brightness: 0.8;
+    opacity-mask: url( "file://{images}/masks/top-bottom-fade.png" );
+}
+
+.op-mission-card-contents
+{
+    width: 100%;
+    flow-children: down;
+    min-height: 100%;
+}
+
+.op-mainmenu__missions .op-mission-card-contents
+{
+    margin-top:128px;
+}
+
+.op-mission-card-contents__info
+{
+    flow-children: right;
+    vertical-align: top;
+    margin-left: op-missions-left-padding;
+    -s2-mix-blend-mode: SRGBadditive;
+
+                                                           
+}
+
+
+.card-missions-locked #id-mission-card-tag-missions-max,
+.card-missions-locked #id-mission-card-tag,
+.card-missions-locked #id-mission-card-tag-xp
+{
+    visibility: collapse;
+}
+
+.op-mission-card-contents__info__containter
+{
+    flow-children: right;
+    
+                                                    
+}
+
+.op-mission-card-contents__info__containter.hidden
+{
+    visibility: collapse;
+}
+
+.op-mission-card-contents__info__desc
+{
+    color: opAccentColorLight;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+                               
+    visibility: visible;
+    vertical-align: center;
+    letter-spacing: 2px;
+}
+
+.complete-tag .op-mission-card-contents__info__desc
+{
+    color: positiveColor;
+    font-weight: bold;
+}
+
+.op-mission-card-contents__info__stars-container
+{
+    flow-children: right;
+    horizontal-align: right;
+    padding-right: op-missions-right-padding;
+    vertical-align: center;
+}
+
+.op-mission-card-contents__info__star
+{
+    wash-color: opAccentColorLight;
+    vertical-align: center;
+    margin: 0px 3px;
+}
+
+.op-mission-card__title
+{
+    padding: 8px;
+    margin: 8px 8px; 
+    background-color: rgba(0, 0, 0, 0.603);
+    border-radius: 50%;
+    border: 1px solid grey;
+    wash-color: opAccentColorLight;
+    visibility: visible;
+}
+
+.op-mission-card__missions-container
+{
+    flow-children: down;
+    overflow: squish scroll;
+    width: 100%;
+    padding: 8px 0px;
+    opacity-mask: url( "file://{images}/masks/fade-both-top-bottom.png" );
+}
+
+.op-mission-card__mission
+{
+    width: 100%;
+    flow-children: right;
+    vertical-align: center;
+    border-bottom: 1px solid opAccentColorLightAlpha;
+    margin-left: op-missions-left-padding;
+    margin-right: op-missions-right-padding;
+
+    transition-property: brightness;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card__mission:hover
+{
+	sound: "UIPanorama.mainmenu_rollover";
+}
+
+.op-mission-card__mission:hover:not(:disabled)
+{
+    brightness: 2;
+    transition-property: brightness;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card__mission__info
+{
+    width: fill-parent-flow( 1 );
+    flow-children: down;
+    vertical-align: center;
+    margin-right: 16px;
+}
+
+.complete .op-mission-card__mission__icon-container,
+.complete .op-mission-card__mission__star-count,
+.complete .op-mission-card__mission__info
+{
+    brightness: .3;
+}
+
+.op-mission-card__mission__icon
+{
+    visibility: visible;
+    vertical-align: center;
+    horizontal-align: center;
+    padding: 6px;
+    wash-color: opAccentColorLight;
+
+    transition-property: transform, brightness;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card__mission__icon.no-padding
+{
+    padding: 0px;
+}
+
+.complete .op-mission-card__mission__icon--empty-star
+{
+    visibility: collapse;
+}
+
+.op-mission-card__mission__icon--filled-star
+{
+    visibility: collapse;
+}
+
+.complete .op-mission-card__mission__icon--filled-star
+{
+    visibility: visible;
+}
+
+.op-mission-card__mission:hover:not(:disabled) .op-mission-card__mission__icon
+{
+                                                
+                                                            
+                                            
+    img-shadow: 0px 0px 2px rgba(209, 209, 209, 0.555); 
+    brightness: 1.1;
+
+    transition-property: transform, brightness, img-shadow;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mission-card__mission__star-count
+{
+    flow-children: right;
+    vertical-align: center;
+    margin: 12px 0px;
+    height: 54px;
+    width: 72px;
+}
+
+.card-complete .op-mission-card__mission:not(.complete) .op-mission-card__mission__star-count
+{
+    width: 0px;
+}
+
+.op-mission-card__mission__seperator
+{
+    height: 60%;
+    vertical-align: center;
+    width: 1px;
+    background-color: opAccentColorLightAlpha;
+}
+
+.complete-tag .op-mission-card__mission__icon
+{
+    wash-color: positiveColor;
+}
+
+.op_mission-card__mission_name
+{
+    color: opAccentColorLight;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+    font-weight: bold;
+    visibility: visible;
+}
+
+.op_mission-card__mission_body
+{
+    color: opAccentColorLight;
+	font-family: notosans, 'Arial Unicode MS';
+    font-size: 12px;
+    height: 18px;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.op_mission-card__mission_info
+{
+    color: opAccentColorLight;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+    font-weight: medium;
+    horizontal-align: right;
+}
+
+.complete .op_mission-card__mission_info
+{
+                                                              
+    font-weight: bold;
+}
+
+.op-mission-card__mission__bar-container
+{
+    width: fill-parent-flow( 1 );
+    flow-children: down;
+    vertical-align: center;
+    margin-right: 8px;
+}
+
+.op_mission-card__bar
+{
+	width: 100%;
+	horizontal-align: center;
+	background-color: opAccentColorBlack;
+    height: 4px;
+    margin: 4px 0px;
+}
+
+.complete .op_mission-card__bar
+{
+                                                                  
+    height: 4px;
+}
+
+.op_mission-card__bar__inner
+{
+	width: 0%;
+	background-color: opAccentColorLight;
+	height: 100%;
+}
+
+.no-mission-warning .op-mainmenu__missions__warning
+{
+    visibility: visible;
+}
+
+.op-mainmenu__missions__warning
+{
+    visibility: collapse;
+    flow-children: right;
+    horizontal-align: center;
+    background-color: rgba(0, 0, 0, 0.80);
+    padding: 0px 8px;
+}
+
+.op-mainmenu__missions__warning Label
+{
+    color: warningColor;
+    text-align: center;
+}
+
+.op-mainmenu__missions__warning Image
+{
+    wash-color: warningColor;
+}
+
+.card-missions-locked-container
+{
+	visibility: collapse;
+    horizontal-align: center;
+    height: 100%;
+}
+
+.card-missions-locked .card-missions-locked-container
+{
+	visibility: visible;
+}
+
+.card-missions-locked-container Label
+{
+	font-size: 20px;
+}
+
+#id-mission-card-tag-timer
+{
+    visibility: collapse;
+}
+
+.hastimer #id-mission-card-tag-timer
+{
+    visibility: visible;
+}

@@ -31,12 +31,15 @@ var ItemContextMenu = ( function (){
 			UiToolkitAPI.ShowTextTooltip( location, displayText );
 		};
 
+		var hasEntries = false;
 		var lastButtonAdded = null;
+	
 		for( var i = 0; i < validEntries.length; i++ )
 		{
 			var entry = validEntries[ i ];
-			
-			if ( entry.AvailableForItem(id) ) {
+		
+			if ( entry.AvailableForItem( id ) ) 
+			{
 				var elButton = $.CreatePanel( 'Button', elParent, 'ContextMenuItem' + i );
 				lastButtonAdded = elButton;
 
@@ -54,6 +57,8 @@ var ItemContextMenu = ( function (){
 
 				elLabel.text = '#inv_context_' + displayName;
 
+				hasEntries = true;
+
 				if( entry.style && populateFilterText === "(not found)" )
 				{
 					var strStyleToAdd = entry.style(id);
@@ -62,9 +67,12 @@ var ItemContextMenu = ( function (){
 
 				var handler = entry.OnSelected.bind(this, id);
 
-				elButton.SetPanelEvent( 'onactivate', function(event_handler) {
+				elButton.SetPanelEvent( 'onactivate', function( event_handler ) 
+				{
 					$.DispatchEvent( 'PlaySoundEffect', 'inventory_item_popupSelect', 'MOUSE' );
+
 					event_handler();
+
 				}.bind(this, handler));
 
 				if( entry.CustomName )
@@ -81,11 +89,21 @@ var ItemContextMenu = ( function (){
 				}
 			}
 		}
+
 		if ( lastButtonAdded )
 		{	                                                  
 			lastButtonAdded.RemoveClass( 'BottomSeparator' );
 		}
 
+		                                              
+		if ( !hasEntries )
+		{
+			var elButton = $.CreatePanel( 'Button', elParent, 'ContextMenuItem' );
+			var elLabel = $.CreatePanel( 'Label', elButton, '', {html: 'true'} );
+			elLabel.text = '#inv_context_no_valid_actions';
+
+			elButton.SetPanelEvent( 'onactivate', _ => $.DispatchEvent( 'ContextMenuEvent', '' ) );
+		}
 	};
 
 	return {

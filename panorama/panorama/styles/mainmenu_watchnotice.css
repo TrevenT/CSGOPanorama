@@ -5,40 +5,34 @@
 	visibility: collapse;
 }
 
-.news-panel-style-feature-panel-visible .news-panel-watchnotice,
+.mainmenu-news-container-stream-active .news-panel-watchnotice
+{
+	height: 0px;
+	visibility: collapse;
+}
+
 .news-panel-watchnotice
 {
 	height: fit-children;
-	max-height: 140px;                                                             
+	max-height: 136px;                                                             
 	width: 100%;
 	flow-children: down;
 	background-color: blurBackgroundColor, #00000026;
-
-	transition-property: height;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
 }
 
-.mainmenu-news-container-stream-active .news-panel-watchnotice
+.news-panel-style-feature-panel-visible .news-panel-watchnotice
 {
-	height: 0;
-	margin-bottom: 0px;
-
-	transition-property: height;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
+	max-height: 90px;
 }
 
-.watchnotice-events__main {
-
-	                           
+.watchnotice-events__main
+{
 	width: 100%;
 	height: fit-children;
 
 	max-height: 178px;
 	overflow: clip scroll;
 }
-
 
 .watchnotice-events-container
 {
@@ -47,7 +41,6 @@
 
 	flow-children:down;
 }
-
 
 .img-shadow {
 	img-shadow: 1px 1px 1px #000000ff;
@@ -59,7 +52,6 @@
 	width: 50%;
 	horizontal-align: right;
 }
-
 
                                                                                               
 .watchnotice__matches-carousel {
@@ -479,7 +471,7 @@ RadioButton:hover {
 
 
 .eventsched-featured{
-	background-color: rgba(255, 217, 0, 0.2);
+	background-color: rgba(255, 217, 0, 0.06);
 }
 
 .eventsched-featured,

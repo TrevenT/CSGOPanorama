@@ -33,6 +33,8 @@
 		<Label text="" />
 		<Label text="ctrl + c - copy lights to clipboard" />
 		<Label text="('all lights' mode copies for manifest, 'selected' mode copies for JS)" />
+		<Label text="" />
+		<Label text="alt + left-click + drag - reposition debug panel" />
 	</Panel>
 
 </root>

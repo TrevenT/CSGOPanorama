@@ -1,7 +1,10 @@
 function setupTooltip()
 {
     var ctx = $.GetContextPanel();
-    var id = ctx.GetAttributeString("itemid", "0");
+	var id = ctx.GetAttributeString("itemid", "0");
+	
+	                          
+	var bThisIsFauxItemID = InventoryAPI.IsFauxItemID( id );
 
            
     ctx.SetDialogVariable('name', InventoryAPI.GetItemName(id));
@@ -51,7 +54,7 @@ function setupTooltip()
 	}
 
                               
-	var numWear = InventoryAPI.GetWear(id);
+	var numWear = bThisIsFauxItemID ? undefined : InventoryAPI.GetWear(id);
 	if (numWear != undefined && numWear >= 0)
 	{
 	    ctx.AddClass('tooltip-inventory-item__has-grade');

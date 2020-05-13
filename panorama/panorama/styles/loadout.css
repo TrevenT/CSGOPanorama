@@ -148,11 +148,28 @@ ItemImage Label
 
 .loadout-item-list-container
 {
-	width: 40%;
+
+	width: 450px;
 	height: 100%;
 	flow-children: down;
 	background-color: contentPanelBackground;
 }
+
+.AspectRatio16x9 .loadout-item-list-container
+{
+	width: 890px;
+}
+
+.AspectRatio16x10 .loadout-item-list-container
+{
+	width: 700px;
+}
+
+.AspectRatio4x3 .loadout-item-list-container
+{
+	width: 450px;
+}
+
 
 .loadout-sort
 {
@@ -164,10 +181,17 @@ ItemImage Label
 
 .loadout-team-selector-container
 {
-	Width: 60%;
+	Width: 800px;
 	height: 100%;
 	background-color: contentPanelBackground;
 	border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.loadout-team-selector-spacer
+{
+	width: fill-parent-flow( 1.0 );
+	height: 100%;
+	background-color: contentPanelBackground;
 }
 
 .loadout-single-item-container
@@ -177,6 +201,15 @@ ItemImage Label
 	flow-children: down;
 	vertical-align: center;
 	horizontal-align: center;
+
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.loadout-single-item-container.extra-tall
+{
+	height: 100%;
 }
 
 .loadout-single-item-bg
@@ -187,11 +220,43 @@ ItemImage Label
 	opacity: 0.25;
 }
 
+.loadout-single-item-bg--localagent--CT
+{
+	wash-color: color-CT;
+	opacity: 0.1;
+	width: 80%;
+	height: 50%;
+}
+
+.loadout-single-item-bg--localagent--TERRORIST
+{
+	wash-color: color-T;
+	opacity: 0.1;
+	width: 80%;
+	height: 50%;
+}
+
+
 .loadout-single-item
 {
 	width: 100%;
 	height: 100%;
 	background-color: contentPanelBackground;
+}
+
+.loadout-single-item-title
+{
+	font-size: 24px;
+	text-align: center;
+	width: 100%;
+	font-weight: medium;
+	font-family: Stratum2, 'Noto Sans';
+	margin: 15px 0px;
+	width: 400px;
+	height: 26px;
+
+	horizontal-align:center;
+	text-overflow: shrink;
 }
 
 .loadout-single-item-rarity
@@ -201,12 +266,41 @@ ItemImage Label
 	box-shadow: shadowOffset;
 }
 
-.loadout-single-item-container.hidden,
-.radial-menu-container.hidden,
-#LoadoutEmptyLister.hidden,
-.loadout-single-item-rarity.hidden,
-.loadout-single-item.hidden,
-.IconButton.hidden
+                                               
+
+.border-right-white {
+	border-right: 1px solid #ffffff22;
+}
+
+.margin-right-20 {
+	padding-right: 20px;
+}
+
+#LoadoutSingleItemModelWeaponChoice {
+	min-width: 350px;
+  	                      
+}
+
+
+.popup-button-row
+{
+	width: 90%;
+	border-top: 1px solid rgba(145, 145, 145, 0.5);
+	vertical-align: bottom;
+	horizontal-align: center;
+	padding: 8px 0px 8px 0px;
+}
+
+.loadout-character-controls .IconButton Image
+{
+	height: 36px;
+}
+
+#LoadoutCharacterControls {
+	vertical-align: center;
+}
+
+.hidden
 {
 	visibility: collapse;
 }
@@ -216,7 +310,7 @@ ItemImage Label
 	flow-children: left;
 	horizontal-align: right;
 	vertical-align: top;
-	margin: 8px 16px;
+	margin: 3px 16px;
 }
 
 .loadout-team-selector .RadioBox

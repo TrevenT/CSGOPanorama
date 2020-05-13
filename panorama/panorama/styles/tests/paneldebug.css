@@ -71,3 +71,32 @@
 }
 
 
+.debug-tester--max
+{
+    width:100%;
+    height:100%;
+    flow-children:down;
+}
+
+.debug-tester--max .debug-tester-controls
+{
+    height:3%;
+}
+
+.debug-tester--max .debug-tester-panelholder
+{
+    width:100%;
+    height:97%;
+    border:1px solid black;
+}
+
+
+.debug-tester--max .debug-tester-controls-list
+{
+    flow-children:right-wrap;
+}
+
+.debug-tester--max .debug-tester-control-arguments
+{
+    margin-right:10px;
+}

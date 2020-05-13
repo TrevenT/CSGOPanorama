@@ -25,11 +25,70 @@
 	transition-timing-function: ease-in-out;
 }
 
+.map-selection-list-coop
+{
+	width: 80%; 
+	height: fit-children;
+	flow-children: down;
+	opacity: 1;
+	visibility: visible;
+	horizontal-align: center;
+
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.coop-mission-controls
+{
+	flow-children: right;
+	width: 100%;
+}
+
+.coop-mission__control
+{
+	width: fit-children;
+	height: 48px;
+	padding-left: 16px;
+	padding-right: 20px;
+	horizontal-align: left;
+}
+
+.coop-mission__desc
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 370px;
+	z-index: 1;
+	color: white;
+	text-align: center;
+	margin-top: 48px;
+}
+
+.coop-mission__icon-container
+{
+	horizontal-align: center;
+	vertical-align: bottom;
+	width: fit-children;
+	padding: 12px 12px 12px 12px;
+	z-index: 1;
+	flow-children: right;
+}
+
+.coop-mission__icon
+{
+	horizontal-align: center;
+	vertical-align: center;
+	width: 64px;
+	height: 64px;
+	z-index: 1;
+	margin: 0px 12px 0px 12px;
+}
 
 .map-selection-list-all
 {
 	width: 100%;
-	height: fill-parent-flow ( 0.5 ); 
+	height: fill-parent-flow ( 0.5 );
 	flow-children: none;
 	horizontal-align: center;
 	overflow: clip squish;
@@ -71,7 +130,7 @@
 	flow-children: right-wrap;
 	overflow: clip noclip;
 	padding: 0px 16px;
-	border-right: 1px solid rgba(255, 255, 255, 0.25);
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .AspectRatio16x9 .map-selection-list-section:not(.map-selection-list-section--single-column)
@@ -90,7 +149,7 @@
 .map-selection-list-section__header
 {
 	width: 100%;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .map-selection-list-section-header__text
@@ -163,16 +222,9 @@
 
 .map-selection-btn.coop-map-tile
 {
-	height: 100%;
+	height: 615px;
 	width: height-percentage(70%);
 }
-
-.map-selection-btn.coop-map-tile
-{
-	height: 100%;
-	width: height-percentage(70%);
-}
-
 
 .map-selection-btn--large
 {
@@ -189,29 +241,11 @@
 	margin: 20px;
 }
 
-.AspectRatio4x3 .map-selection-btn--full
+.map-selection-btn--full
 {
-	width: 1010px;
-	height: width-percentage( 64% );
-}
-
-.AspectRatio5x4 .map-selection-btn--full
-{
-	width: 965px;
-	height: width-percentage( 68% );
-}
-
-.AspectRatio16x9 .map-selection-btn--full
-{
-	width: 1360px;
-	height: width-percentage( 47.5% );
-}
-
-.map-selection-btn--full,
-.AspectRatio16x10 .map-selection-btn--full
-{
-	width: 1250px;
-	height: width-percentage( 52% );
+	width: 100%;
+	height: 100%;
+	margin: 0px;
 }
 
 .map-selection-btn__screenshot
@@ -298,6 +332,20 @@
 	horizontal-align: middle;
 	flow-children: down;
 	margin: 0px 0px 20px 0px;
+}
+
+.map-selection-btn__groupmap-icons.map-selection-btn__groupmap-icons-2x
+{
+	width: 184px;
+}
+
+.map-selection-btn__groupmap-icons-subcontainer
+{
+	flow-children: right;
+	horizontal-align: middle;
+	width: fit-children;
+	height: fit-children;
+	margin: 0px;
 }
 
 .map-selection-btn__map-icon
@@ -536,7 +584,7 @@ RadioButton .map-selection-info__new
 	height: 96px;
 	padding-left: 64px;
 	vertical-align: bottom;
-	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .play-menu-controls-actions-bar__right
@@ -679,10 +727,11 @@ RadioButton .map-selection-info__new
 .game-mode-selection-radios-spacer
 {
 	width: 15px;
-	height: 100%;
+	height: 60%;
 	margin-left: 8px;
-	margin-right: 28px;
-	border-left: 1px solid rgba(255, 255, 255, 0.25);
+	margin-right: 8px;
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+	vertical-align: center;
 }
 
 .workshop-search-textentry
@@ -772,11 +821,20 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
+.play-menu-mapandlbs-container
+{
+	flow-children: right;
+	horizontal-align: right;
+	margin-right: 16px;
+	width: 100%;
+}
+
 .play-menu-svl-auto-squad-toggle-container
 {
 	flow-children: right;
 	vertical-align: bottom;
 	horizontal-align: right;
+	margin-left: 16px;
 	margin-right: 16px;
 	width: 100%;
 }

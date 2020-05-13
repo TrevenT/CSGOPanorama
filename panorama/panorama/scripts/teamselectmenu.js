@@ -16,7 +16,7 @@ var TeamSelectMenu = ( function (){
 			return;
 
 		var elBackgroundImage = $.GetContextPanel().FindChildInLayoutFile( 'BackgroundMapImage' );
-		var mapName = GameStateAPI.GetMapBSPName();
+		var mapName = MockAdapter.GetMapBSPName();
 
 		elBackgroundImage.SetImage( 'file://{images}/map_icons/screenshots/1080p/' + mapName +'.png' );
 		_GetAnimInfo();
@@ -36,30 +36,50 @@ var TeamSelectMenu = ( function (){
 		m_highlightedTeam = 0;
 	}
 
-	function _HighlightPanel( elModelPanel, layerSequence )
+	function _ShowPanelTest ( mockdata )
 	{
-		elModelPanel.SetHasClass( 'highlight', true );
+		MockAdapter.SetMockData( mockdata );
 
-		elModelPanel.LayerSequence( layerSequence, false, false );
+		_ShowPanel();
+	}
+	function _HighlightPanel( elModelPanel )
+	{
+		elModelPanel.GetParent().SetHasClass( 'highlight', true );
 
-		elModelPanel.SetFlashlightAmount( 2.0 );
+		elModelPanel.ResetActivityModifiers();
+		if ( elModelPanel.id === 'TeamCharT' )
+		{
+			elModelPanel.ApplyActivityModifier( 'terrorist' );
+		}
+		else
+		{
+			elModelPanel.ApplyActivityModifier( 'ct' );
+		}
+		elModelPanel.PlayActivity( 'ACT_CSGO_UIPLAYER_CONFIRM', true );
 	}
 
 	function _UnhighlightPanel( elModelPanel )
 	{
-		elModelPanel.SetHasClass( 'highlight', false );
-
-		elModelPanel.SetFlashlightAmount( 1.0 );
+		if ( !elModelPanel || !elModelPanel.IsValid() )
+			return;
+			
+		elModelPanel.GetParent().SetHasClass( 'highlight', false );
 
 		if ( elModelPanel.id === 'TeamCharT' )
 		{
-			elModelPanel.LayerSequence( 't_loadout_pistol_idle' , true, false );
+			elModelPanel.ApplyActivityModifier( 'terrorist' );
 		}
+		else
+		{
+			elModelPanel.ApplyActivityModifier( 'ct' );
+		}
+		elModelPanel.ApplyActivityModifier( 'Pistol' );
+		elModelPanel.PlayActivity( 'ACT_CSGO_UIPLAYER_IDLE', true );
 	}
 
 	function _SelectTeam( team )
 	{
-		var currentTeamNumber = GameStateAPI.GetPlayerTeamNumber( MyPersonaAPI.GetXuid());
+		var currentTeamNumber = MockAdapter.GetPlayerTeamNumber( MyPersonaAPI.GetXuid());
 
 		if( team !== "0" && currentTeamNumber.toString() === team )
 		{
@@ -79,42 +99,47 @@ var TeamSelectMenu = ( function (){
 	function _HighlightTTeam()
 	{
 		var elBtnTeamT = $( '#BtnSelectTeam-TERRORIST' );
-		var elBtnTeamCT = $( '#BtnSelectTeam-CT' );
-
 		elBtnTeamT.SetHasClass( 'team-select-icon-title-highlight', true );
-		elBtnTeamCT.SetHasClass( 'team-select-icon-title-highlight', false );
 
-		var elCtModel = $( '#TeamCharCT' );
 		var elTModel = $( '#TeamCharT' );
 
-		_HighlightPanel( elTModel, 't_loadout_pistol_idle_alt_loop01' );
-		_UnhighlightPanel( elCtModel );
+		_HighlightPanel( elTModel );
 		m_highlightedTeam = '2';
 		elBtnTeamT.SetFocus();
 	}
 
-	function _HighlightCTTeam()
+	function _UnhighlightTTeam ()
 	{
 		var elBtnTeamT = $( '#BtnSelectTeam-TERRORIST' );
-		var elBtnTeamCT = $( '#BtnSelectTeam-CT' );
-
 		elBtnTeamT.SetHasClass( 'team-select-icon-title-highlight', false );
-		elBtnTeamCT.SetHasClass( 'team-select-icon-title-highlight', true );
 
-		var elCtModel = $( '#TeamCharCT' );
 		var elTModel = $( '#TeamCharT' );
-
-		_HighlightPanel( elCtModel, 'ct_loadout_pistol_idle_alt_intro01' );
 		_UnhighlightPanel( elTModel );
+	}
+
+	function _HighlightCTTeam()
+	{
+		var elBtnTeamCT = $( '#BtnSelectTeam-CT' );
+		elBtnTeamCT.SetHasClass( 'team-select-icon-title-highlight', true );
+		var elCtModel = $( '#TeamCharCT' );
+
+		_HighlightPanel( elCtModel );
 		m_highlightedTeam = '3';
 		elBtnTeamCT.SetFocus();
 	}
 
+	function _UnhighlightCTTeam ()
+	{
+		var elBtnTeamCT = $( '#BtnSelectTeam-CT' );
+		elBtnTeamCT.SetHasClass( 'team-select-icon-title-highlight', false );
+
+		var elCtModel = $( '#TeamCharCT' );
+
+		_UnhighlightPanel( elCtModel );
+	}
+
 	function _SetUpTeamSelectBtns()
 	{
-		var elCtModel = $( '#TeamCharCT' );
-		var elTModel = $( '#TeamCharT' );
-
 		var onActivate = function ( team )
 		{
 			_SelectTeam( team );
@@ -122,10 +147,12 @@ var TeamSelectMenu = ( function (){
 
 		var elBtnTeamT = $( '#BtnSelectTeam-TERRORIST' );
 		elBtnTeamT.SetPanelEvent( 'onmouseover', _HighlightTTeam );
+		elBtnTeamT.SetPanelEvent( 'onmouseout', _UnhighlightTTeam );
 		elBtnTeamT.SetPanelEvent( 'onactivate', onActivate.bind( undefined, '2' ) );
 
 		var elBtnTeamCT = $( '#BtnSelectTeam-CT' );
 		elBtnTeamCT.SetPanelEvent( 'onmouseover', _HighlightCTTeam );
+		elBtnTeamCT.SetPanelEvent( 'onmouseout', _UnhighlightCTTeam );
 		elBtnTeamCT.SetPanelEvent( 'onactivate', onActivate.bind( undefined, '3' ) );
 
 		var elBtnSpectate = $( '#TeamSelectSpectate' );
@@ -133,6 +160,10 @@ var TeamSelectMenu = ( function (){
 
 		var elBtnSpectate = $( '#TeamSelectAuto' );
 		elBtnSpectate.SetPanelEvent( 'onactivate', onActivate.bind( undefined, '0' ) );
+		
+		_UnhighlightCTTeam();
+		_UnhighlightTTeam();
+		
 	}
 
 	var _SetTeam= function ( team )
@@ -158,50 +189,62 @@ var TeamSelectMenu = ( function (){
 
 	var _GetAnimInfo = function ()
 	{
-		var elCharRight = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharCT' );
-		var elCharLeft = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharT' );
-
-		                                      
-		                                     
-
-		var anims = {
-			cameraPreset: 0 ,
-			idle : 'ct_loadout_pistol_idle_alt_loop01'
-		};
-
-		_SetCharacterAnim( elCharRight,
-			{
-				team: 'ct',
-				model: $.GetContextPanel().GetPlayerModelCT(),
-				anims: anims 
-			}
-		);
-
-		anims = {
-			cameraPreset: 2 ,
-			idle : 't_loadout_pistol_idle'
-		};
-		_SetCharacterAnim( elCharLeft,
-			{
-				team: 't',
-				model: $.GetContextPanel().GetPlayerModelTerrorist(),
-				anims: anims 
-			}
-		);
+		_ResetModel( 'TERRORIST' );
+		_ResetModel( 'CT' );
 	}
 
-	var _SetCharacterAnim = function ( elPanel, settings )
+	const CAMERA_PRESET_T = 1;
+	const CAMERA_PRESET_CT = 2;
+
+	function _ResetModel ( team )
 	{
-		elPanel.ResetAnimation( false );
-		elPanel.SetScene( 'resource/ui/econ/ItemModelPanelCharMainMenu.res', settings.model, false );
-		
-		elPanel.EquipPlayerFromLoadout( settings.team, 'secondary0' );
-		elPanel.EquipPlayerFromLoadout( settings.team, 'clothing_hands' );
+		var elChar;
 
-		elPanel.LayerSequence( settings.anims.idle , true, false );
-		elPanel.SetCameraPreset( settings.anims.cameraPreset, false );
+		if ( team == "CT" )
+		{
+			elChar = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharCT' );
 
-		elPanel.Pause( false );
+			_SetCharacterAnim( elChar,
+				{
+					team: 'ct',
+					cameraPreset: CAMERA_PRESET_CT,
+				}
+			);
+		}
+		else if ( team == "TERRORIST" )
+		{
+			elChar = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharT' );
+
+			_SetCharacterAnim( elChar,
+				{
+					team: 't',
+					cameraPreset: CAMERA_PRESET_T,
+				}
+			);
+		}
+
+		elChar.GetParent().TriggerClass( 'highlit-player' );
+
+		              
+	}
+
+	var _SetCharacterAnim = function( playerPanel, paramsettings )
+	{
+		                                                      
+		var teamstring = CharacterAnims.NormalizeTeamName( paramsettings.team, true );
+		var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( LoadoutAPI.GetItemID( teamstring, 'customplayer' ) );
+		settings.panel = playerPanel;
+		settings.cameraPreset = paramsettings.cameraPreset;
+		settings.weaponItemId = LoadoutAPI.GetItemID( teamstring, "secondary0" );
+		if ( settings.charItemId === LoadoutAPI.GetDefaultItem( teamstring, 'customplayer' ) )
+		{
+			settings.modelOverride = ( teamstring == 'ct' )
+				? MockAdapter.GetPlayerItemCT( $.GetContextPanel() )
+				: MockAdapter.GetPlayerItemTerrorist( $.GetContextPanel() );
+			settings.charItemId = undefined;
+		}
+
+		CharacterAnims.PlayAnimsOnPanel( settings );
 	}
 
 	var _PopulatePlayerList = function( )
@@ -214,7 +257,7 @@ var TeamSelectMenu = ( function (){
 	                                 
 
 		                       
-		var oPlayerList = GameStateAPI.GetPlayerDataJSO();
+		var oPlayerList = MockAdapter.GetPlayerDataJSO();
 
 		                                                            
 		var teamNames = ['TERRORIST', 'CT'];
@@ -238,7 +281,7 @@ var TeamSelectMenu = ( function (){
 		        _UpdatePlayer( xuid, teamName );
 		        xuidsOnTeam.push( xuid );
 
-		        if( GameStateAPI.IsFakePlayer(xuid ))
+		        if( MockAdapter.IsFakePlayer(xuid ))
 		            countBots++;
 		    }
 
@@ -251,8 +294,8 @@ var TeamSelectMenu = ( function (){
 			var listOfTeammatesPanels = elTeammates.Children();
 			listOfTeammatesPanels.forEach( function( element ) {
 				if ( xuidsOnTeam.indexOf( element.id ) === -1 ||
-					!GameStateAPI.IsPlayerConnected( element.id ) || 
-					teamName !== GameStateAPI.GetPlayerTeamName( element.id )) {
+					!MockAdapter.IsPlayerConnected( element.id ) || 
+					teamName !== MockAdapter.GetPlayerTeamName( element.id )) {
 
 					element.AddClass('hidden');
 				}
@@ -280,11 +323,11 @@ var TeamSelectMenu = ( function (){
 
 			var elName = elTeammate.FindChildInLayoutFile( 'TeamSelectTeammateName' );
 
-			var clanTag = GameStateAPI.GetPlayerClanTag(xuid);
-			var playerName = GameStateAPI.GetPlayerNameWithNoHTMLEscapes(xuid);
+			var clanTag = MockAdapter.GetPlayerClanTag(xuid);
+			var playerName = MockAdapter.GetPlayerNameWithNoHTMLEscapes(xuid);
 			elName.text = clanTag + " " + playerName;               
 	
-			var elAvatar = $.CreatePanel( 'Panel', elTeammate, xuid, { hittest:'false' } );
+			var elAvatar = $.CreatePanel( 'Panel', elTeammate, xuid, { hittest:'true' } );
 			elAvatar.SetAttributeString( 'xuid', xuid );
 			elAvatar.BLoadLayout('file://{resources}/layout/avatar.xml', false, false );
 			elAvatar.BLoadLayoutSnippet( 'AvatarParty' );
@@ -315,12 +358,63 @@ var TeamSelectMenu = ( function (){
 			}
 
 			$.RegisterEventHandler( 'PropertyTransitionEnd', elTeammate, elTeammate.OnPropertyTransitionEndEvent );
+
+			function OnMouseOver( team, xuid )
+			{
+				TeamSelectMenu.SetPlayerModel( team, xuid );
+			};
+
+			function OnMouseOut( team )
+			{
+				TeamSelectMenu.ResetModel( team );
+			};
+
+			elTeammate.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined, teamName, xuid ));
+			elTeammate.SetPanelEvent( 'onmouseout', OnMouseOut.bind( undefined, teamName));
+
 		}
 		else
 		{
 			Avatar.Init( elTeammate.FindChild( xuid ), xuid, "PlayerCard" );
 			                                                                           
 		}
+	}
+
+	function _SetPlayerModel( team, xuid )
+	{
+
+		var elChar = team == 'CT' ? $.GetContextPanel().FindChildInLayoutFile( 'TeamCharCT' ) : $.GetContextPanel().FindChildInLayoutFile( 'TeamCharT' );
+	
+		                               
+		var localPlayerTeamName = MockAdapter.GetPlayerTeamName( MockAdapter.GetLocalPlayerXuid() );
+
+		var itemId = "";
+
+		if ( team != localPlayerTeamName )
+		{
+			itemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( team == "CT" ? 42 : 59, 0 );
+		}
+		else
+		{
+			itemId = MockAdapter.GetPlayerActiveWeaponItemId( xuid );
+		}
+
+		var cameraPreset = team == 'CT' ? CAMERA_PRESET_CT : CAMERA_PRESET_T;
+
+		               
+		var settings =
+		{
+			panel:elChar,
+			team: team,
+			charItemId: MockAdapter.GetPlayerCharacterItemID( xuid ),
+			weaponItemId: itemId,
+			cameraPreset: cameraPreset,
+		}
+
+		CharacterAnims.PlayAnimsOnPanel( settings );
+
+		var elParent = elChar.GetParent();
+		elParent.TriggerClass( 'highlit-player' );
 	}
 
 	var _UpdateBotPlayerCount = function( countBots, countPlayers, team )
@@ -377,11 +471,15 @@ var TeamSelectMenu = ( function (){
 		SetTeamCT				: _SetTeamCT,
 		SetTeamT				: _SetTeamT,
 		ShowPanel				: _ShowPanel,
+		ShowPanel_Test			: _ShowPanelTest,
 		HidePanel				: _HidePanel,
 		ShowError				: _ShowError,
 		HighlightTTeam			: _HighlightTTeam,
 		HighlightCTTeam			: _HighlightCTTeam,
-		SelectHighlightedTeam	: _SelectHighlightedTeam
+		SelectHighlightedTeam	: _SelectHighlightedTeam,
+		SetPlayerModel 			: _SetPlayerModel,
+		ResetModels				: _GetAnimInfo,
+		ResetModel				: _ResetModel,
 	 }
 })();
 
@@ -393,6 +491,7 @@ var TeamSelectMenu = ( function (){
 	TeamSelectMenu.Init();
 	                             
 	$.RegisterForUnhandledEvent( 'CSGOShowTeamSelectMenu', TeamSelectMenu.ShowPanel );
+	$.RegisterForUnhandledEvent( 'CSGOShowTeamSelectMenu_Test', TeamSelectMenu.ShowPanel_Test );
 
 	                                                     
 	                                                                                             
@@ -401,11 +500,17 @@ var TeamSelectMenu = ( function (){
 	$.RegisterForUnhandledEvent( 'ServerForcingTeamJoin', TeamSelectMenu.ShowCancelButton );
 	$.RegisterForUnhandledEvent( 'TeamJoinFailed', TeamSelectMenu.ShowError );
 	
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_escape', TeamSelectMenu.HidePanel );
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_2', TeamSelectMenu.SetTeamCT );
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_1', TeamSelectMenu.SetTeamT );
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_left', TeamSelectMenu.HighlightTTeam );
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_right', TeamSelectMenu.HighlightCTTeam );
-	$.RegisterKeyBind( $( '#TeamSelectMenu' ), 'key_space', TeamSelectMenu.SelectHighlightedTeam );
+	var _m_cP = $( '#TeamSelectMenu' );
+
+	                                                                        
+	if ( !_m_cP )
+		_m_cP = $( "#PanelToTest" );
+	
+	$.RegisterKeyBind( _m_cP, 'key_escape', TeamSelectMenu.HidePanel );
+	$.RegisterKeyBind( _m_cP, 'key_2', TeamSelectMenu.SetTeamCT );
+	$.RegisterKeyBind( _m_cP, 'key_1', TeamSelectMenu.SetTeamT );
+	$.RegisterKeyBind( _m_cP, 'key_down', TeamSelectMenu.HighlightTTeam );
+	$.RegisterKeyBind( _m_cP, 'key_up', TeamSelectMenu.HighlightCTTeam );
+	$.RegisterKeyBind( _m_cP, 'key_space', TeamSelectMenu.SelectHighlightedTeam );
 	
 })();

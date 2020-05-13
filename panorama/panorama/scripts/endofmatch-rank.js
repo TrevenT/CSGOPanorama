@@ -20,7 +20,7 @@ var EOM_Rank = (function () {
 		   	             
 		    
 
-		if ( !_m_cP.bXpDataReady )
+		if ( !_m_cP.bXpDataReady && !MockAdapter.GetMockData() )
 		{
 		                                                           
 			return false;
@@ -41,7 +41,11 @@ var EOM_Rank = (function () {
 			}
 		} );
 
-		var oXpData = _m_cP.XpDataJSO;
+		var oXpData = MockAdapter.XPDataJSO( _m_cP );
+
+		if ( !oXpData )
+			return false;
+		
 		var elProgress = _m_cP.FindChildInLayoutFile( "id-eom-rank__bar-container" );
 		var elNew = _m_cP.FindChildInLayoutFile( "id-eom-rank__new-reveal" );
 		var elCurrent = _m_cP.FindChildInLayoutFile( "id-eom-rank__current" );
@@ -94,7 +98,7 @@ var EOM_Rank = (function () {
 				$.Schedule( animTime + t, function()
 				{
 					$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.Ticker', 'eom-rank' );
-				});
+				} );
 			}
 
 			$.Schedule( animTime, function()
@@ -143,7 +147,7 @@ var EOM_Rank = (function () {
 
 				$.Schedule( 0.0, function()
 				{
-					if ( elRankSegment.IsValid() )
+					if ( elRankSegment && elRankSegment.IsValid() )
 					{
 						elRankSegment.style.width = ( xp / xPPerLevel * 70.8 ) + '%;';                               
 					}
@@ -223,9 +227,10 @@ var EOM_Rank = (function () {
 		  
 		  
 
-		var _AnimSequenceNext = function( func, duration = 0 )
+		function _AnimSequenceNext( func, duration = 0 )
 		{
 			$.Schedule( animTime, func );
+
 			animTime += duration;
 		}
 
@@ -287,7 +292,13 @@ var EOM_Rank = (function () {
 			                                     
 			_AnimSequenceNext( function()
 			{
-
+				if ( !elProgress || !elProgress.IsValid() || 
+					!elCurrent || !elCurrent.IsValid() ||
+					!elBar || !elBar.IsValid() ||
+					!elNew || !elNew.IsValid() ||
+					!elCurrent || !elCurrent.IsValid() )
+					return;						
+				
 				elProgress.AddClass( "subdue" );
 				elCurrent.AddClass( "subdue" );
 
@@ -297,6 +308,7 @@ var EOM_Rank = (function () {
 				elNew.RemoveClass( "hidden" );
 
 				elNew.Children().forEach( entry => entry.AddClass( "appear" ) );
+				
 				$.Schedule( 0.5, _PlayParticles );
 
 				                                                                 
@@ -313,6 +325,13 @@ var EOM_Rank = (function () {
 
 			_AnimSequenceNext( function()
 			{
+				if ( !elProgress || !elProgress.IsValid() || 
+					!elCurrent || !elCurrent.IsValid() ||
+					!elBar || !elBar.IsValid() ||
+					!elNew || !elNew.IsValid() ||
+					!elCurrent || !elCurrent.IsValid() )
+					return;	
+				
 				elProgress.RemoveClass( "subdue" );
 				elNew.FindChildInLayoutFile( 'id-eom-rank__new-reveal__emblem' ).AddClass( 'move-to-current-rank' );
 				elNew.AddClass( "eom-rank__new-reveal--fade" );
@@ -341,6 +360,8 @@ var EOM_Rank = (function () {
 		function _PlayParticles ()
 		{
 			var elModel = _m_cP.FindChildTraverse( 'RankParticleModel' );
+			if ( !elModel || !elModel.IsValid() )
+				return;
 
 			elModel.RemoveClass( 'hidden' );
 			elModel.SetCameraPosition( -15.10, 0.00, 0.00 );
@@ -360,6 +381,12 @@ var EOM_Rank = (function () {
   
 	function _Start() 
 	{
+		if ( MockAdapter.GetMockData() && !MockAdapter.GetMockData().includes( 'RANK' ) )
+		{
+			_End();
+			return;
+		}
+		
 		if ( _DisplayMe() )
 		{
 			EndOfMatch.SwitchToPanel( 'eom-rank' );
@@ -370,18 +397,18 @@ var EOM_Rank = (function () {
 		else
 		{
 			_End();
+			return;
 		}	
 	}
 
 	function _End() 
 	{
-		$.DispatchEvent( 'EndOfMatch_ShowNext' );
+		EndOfMatch.ShowNextPanel();
 	}
 
 	function _Shutdown()
 	{
 	}
-
 
 	                      
 	return {

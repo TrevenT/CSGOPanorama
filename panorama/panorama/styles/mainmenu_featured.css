@@ -22,6 +22,79 @@
 	transition-timing-function: ease-in-out;
 }
 
+.featured-parent.operation
+{
+    background-color: blurBackgroundColor;
+}
+
+.featured-parent.operation .op-title
+{
+    z-index: 0;
+    width: 100%;
+    height: 600px;
+    padding: 16px 8px 8px 8px;
+    opacity-mask: url( "file://{images}/masks/top-bottom-fade-3.png" );
+
+    background-image: url( "file://{resources}/videos/tiers_bg.webm" );
+	background-repeat: no-repeat;
+	background-size: clip_then_cover;
+	background-position: 10% 50%;
+                                   
+}
+
+.featured-parent.operation .op-nextitem
+{
+    flow-children: right;
+    horizontal-align: right;
+    padding: 4px 24px;
+                                                                 
+
+    border-radius: 12px;
+    background-color: opAccentColorGrey;
+
+    transition-property: brightness;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-nextitem:hover
+{
+    brightness: 1.4;
+    box-shadow: #000000bd -3px -2px 8px 4px;
+
+    transition-property: brightness;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-nextitem__label
+{
+    margin: 0px;
+	font-size: 16px;
+	font-weight: lighter;
+	color: white;
+	vertical-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.op-nextitem__label-item
+{
+    margin: 0px;
+	font-size: 16px;
+	font-weight: medium;
+	color: white;
+	vertical-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.featured-parent.operation .op-icon
+{
+    vertical-align: center;
+    horizontal-align: left;
+    wash-color: opAccentColor;
+    opacity: 0.5;
+}
+
 .featured__survival-movie
 {
     width: height-percentage( 100% );

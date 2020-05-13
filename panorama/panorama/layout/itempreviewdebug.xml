@@ -21,6 +21,14 @@
 										 onmouseover="UiToolkitAPI.ShowCustomLayoutTooltip( 'ToggleDebugModeLabelLights', 'TestTooltipLights', 'file://{resources}/layout/tooltips/tooltip_model_panel_instructions_lights.xml' )"
 										 onmouseout="UiToolkitAPI.HideCustomLayoutTooltip( 'TestTooltipLights' )"
 										 allowrawtext="true" text="Mode : LIGHTS"/>
+            	<Label id="ToggleDebugModeLabelScene" class="fontSize-m fontWeight-light"
+										 onmouseover="UiToolkitAPI.ShowCustomLayoutTooltip( 'ToggleDebugModeLabelScene', 'TestTooltipScene', 'file://{resources}/layout/tooltips/tooltip_model_panel_instructions_scene.xml' )"
+										 onmouseout="UiToolkitAPI.HideCustomLayoutTooltip( 'TestTooltipScene' )"
+										 allowrawtext="true" text="Mode : SCENE"/>
+            	<Label id="ToggleDebugModeLabelInfo" class="fontSize-m fontWeight-light"
+										 onmouseover="UiToolkitAPI.ShowCustomLayoutTooltip( 'ToggleDebugModeLabelInfo', 'TestTooltipInfo', 'file://{resources}/layout/tooltips/tooltip_model_panel_instructions_info.xml' )"
+										 onmouseout="UiToolkitAPI.HideCustomLayoutTooltip( 'TestTooltipInfo' )"
+										 allowrawtext="true" text="Mode : INFO"/>
             </Button>
 
 			<Panel id="LightMode" class="debug-background"  >
@@ -147,19 +155,57 @@
 				</Panel>
 			</Panel>
 
-            <Button class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelCopyToClipboard()">
+			<Panel id="SceneContextSelection" class="ItemPreviewDebugSceneContextSelect">
+	            <Button id="ItemPreviewPrevContext" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelPrevSceneContext()">
+	            	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Prev"/>
+    	        </Button>
+	            <Button id="ItemPreviewNextContext" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelNextSceneContext()">
+	            	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Next"/>
+    	        </Button>
+			</Panel>
+
+            <Button id="ItemPreviewCopySceneData" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelCopySceneToClipboard()">
+            	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Copy Scene Contexts to Clipboard"/>
+            </Button>
+
+            <Button id="ItemPreviewCopyManifestButton" class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelCopyToClipboard()">
             	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Copy to Clipboard"/>
             </Button>
             <Button id="ItemPreviewCopyAsPresetButton" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelCopyPresetToClipboard()">
             	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Copy as Preset to Clipboard"/>
             </Button>
-                                                                                                                                                          
-            	                                                                                                       
-                       
+            <Button id="ItemPreviewCopyAsInventoryImageData" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelCopyInventoryImageDataToClipboard()">
+            	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Copy IconData to Clipboard"/>
+            </Button>
+            <Button id="ItemPreviewGenerateInventoryImages" class="ItemPreviewDebugButton" onactivate="UIItemPreviewPanelGenerateInventoryImages()">
+            	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Generate Icon Images"/>
+            </Button>
             <Button id="EnabledLightsToggleButton" class="ItemPreviewDebugButton2" onactivate="UIItemPreviewPanelToggleEnabledLights()">
             	<Label id="ToggleLightsLabelAll" class="fontSize-m fontWeight-light" allowrawtext="true" text="Enabled: All"/>
             	<Label id="ToggleLightsLabelSelected" class="fontSize-m fontWeight-light" allowrawtext="true" text="Enabled : Selected"/>
             </Button>
+
+			<Panel id="ItemPreviewInfoText" class="ItemPreviewInfo">
+				<Label id="InfoManifestName" class="fontSize-s fontWeight-light" allowrawtest="true" text="manifest: "/>
+				<Label id="InfoManifestRule" class="fontSize-s fontWeight-light" allowrawtest="true" text="rule: "/>
+				<Label class="fontSize-s fontWeight-light" allowrawtest="true" text=""/>
+				<Label id="InfoItemName" class="fontSize-s fontWeight-light" allowrawtest="true" text="item: "/>
+				<Label id="InfoItemPos" class="fontSize-s fontWeight-light" allowrawtest="true" text="pos: "/>
+				<Label id="InfoItemAng" class="fontSize-s fontWeight-light" allowrawtest="true" text="ang: "/>
+				<Label id="InfoItemEquip" class="fontSize-s fontWeight-light" allowrawtest="true" text="equipped: "/>
+				<Label class="fontSize-s fontWeight-light" allowrawtest="true" text=""/>
+				<Label id="InfoAnimSeq" class="fontSize-s fontWeight-light" allowrawtest="true" text="anim seq (0): "/>
+				<Label id="InfoNumSeqLayers" class="fontSize-s fontWeight-light" allowrawtest="true" text="num seq layers: "/>
+				<Label class="fontSize-s fontWeight-light" allowrawtest="true" text=""/>
+				<Label id="InfoCamPreset" class="fontSize-s fontWeight-light" allowrawtest="true" text="cam preset: "/>
+				<Label id="InfoPivot" class="fontSize-s fontWeight-light" allowrawtest="true" text="pivot: "/>
+				<Label id="InfoCamPos" class="fontSize-s fontWeight-light" allowrawtest="true" text="pos: "/>
+				<Label id="InfoCamAng" class="fontSize-s fontWeight-light" allowrawtest="true" text="ang: "/>
+				<Label class="fontSize-s fontWeight-light" allowrawtest="true" text=""/>
+				<Label id="InfoPaused" class="fontSize-s fontWeight-light" allowrawtest="true" text="paused: "/>
+				<Label class="fontSize-s fontWeight-light" allowrawtest="true" text=""/>
+				<Label id="InfoPlayer" class="fontSize-s fontWeight-light" allowrawtest="true" text="player: "/>
+			</Panel>
 
             <Button class="ItemPreviewDebugButton3" onactivate="UIItemPreviewPanelSceneReload()">
             	<Label class="fontSize-m fontWeight-light" allowrawtext="true" text="Reload Manifest"/>

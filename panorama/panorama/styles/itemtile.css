@@ -1,4 +1,4 @@
-@define imageheight: 128px;
+@define imageheight: 121px;
 
 .item-tile
 {
@@ -87,6 +87,22 @@
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+
+.item-tile__team
+{
+	width:height-percentage( 120%);
+	height: 40%;
+
+	vertical-align:top;
+	horizontal-align:left;
+
+	position: 5% 5% 0px;
+
+	padding-left: 6px;
+
+	opacity: 0.2;
+}
+
 
 .item-tile:hover:not(.item-tile:disabled) .item-tile__bg
 {

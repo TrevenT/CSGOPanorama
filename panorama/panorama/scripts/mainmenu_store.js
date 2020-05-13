@@ -222,6 +222,32 @@ var MainMenuStore = ( function()
 		}
 	}
 
+	var _BAllowDisplayingItemInStore = function( FauxItemId )
+	{
+		                                                                                                       
+		var idToCheckForRestrictions = FauxItemId;
+		                                                                     
+		var bIsCouponCrate = InventoryAPI.IsCouponCrate( idToCheckForRestrictions );
+		if( bIsCouponCrate && ItemInfo.GetLootListCount( idToCheckForRestrictions ) > 0 )
+		{
+			idToCheckForRestrictions = InventoryAPI.GetLootListItemIdByIndex( idToCheckForRestrictions, 0 );
+		}
+		                         
+		var sDefinitionName = InventoryAPI.GetItemDefinitionName( idToCheckForRestrictions );
+		if ( sDefinitionName === "crate_stattrak_swap_tool" )
+			return true;
+		                       
+		var bIsDecodable = ItemInfo.ItemHasCapability( idToCheckForRestrictions, 'decodable' );
+		var sRestriction = bIsDecodable ? InventoryAPI.GetDecodeableRestriction( idToCheckForRestrictions ) : null;
+		if ( sRestriction === "restricted" || sRestriction === "xray" )
+		{
+			                                                                                                                                                              
+			return false;
+		}
+		                                
+		return true;
+	}
+
 	var _GetStoreItems = function( itemsByCategory )
 	{
 		var count = StoreAPI.GetBannerEntryCount();
@@ -264,18 +290,8 @@ var MainMenuStore = ( function()
 			}
 			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "new" )
 			{
-				                                                                                        
-				var idToCheckForRestrictions = FauxItemId;
-				if( ItemInfo.GetLootListCount( idToCheckForRestrictions ) > 0 )
-				{
-					idToCheckForRestrictions = InventoryAPI.GetLootListItemIdByIndex( idToCheckForRestrictions, 0 );
-				}
-				var sRestriction = InventoryAPI.GetDecodeableRestriction( idToCheckForRestrictions );
-				if ( sRestriction === "restricted" || sRestriction === "xray" )
-				{
-					                                                                                                                                                                          
+				if ( !_BAllowDisplayingItemInStore( FauxItemId ) )
 					continue;
-				}
 
 				if ( !itemsByCategory.newstore )
 				{
@@ -286,6 +302,9 @@ var MainMenuStore = ( function()
 			}
 			else
 			{
+				if ( !_BAllowDisplayingItemInStore( FauxItemId ) )
+					continue;
+
 				if ( !itemsByCategory.store )
 				{
 					itemsByCategory.store = [];

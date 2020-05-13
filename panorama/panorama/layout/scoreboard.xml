@@ -7,6 +7,7 @@
 		<include src="file://{resources}/scripts/scoreboard.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
 		<include src="file://{resources}/scripts/common/gamerules_constants.js" />
+		<include src="file://{resources}/scripts/mock_adapter.js" />
 	</scripts>
 
 	<snippets>
@@ -25,19 +26,17 @@
 
 		<snippet name="snippet_sb-meta">
 			<Panel class="sb-meta">
-				<Panel class="left-right-flow vertical-top top-padding">
-					<Image id="id-sb-meta__mode__image" textureheight="58" texturewidth="-1" src="file://{images}/icons/ui/casual.svg"/>
-					<Panel class="top-bottom-flow">
+				<Panel class="left-right-flow">
+					<Image id="id-sb-meta__mode__image" textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/casual.svg"/>
+					<Panel class="left-right-flow">
 						<Label id="id-sb-meta__labels__mode-map" text="" />
-						<Label id="id-sb-meta__labels__server" text="{s:server_name}" />
 						<Label id="id-viewers" class="hidden" text="#Scoreboard_Viewers" />
 					</Panel>
 				</Panel>
 
 				              
-				<Panel class="time_container top-padding">
+				<Panel class="time_container">
 					<CSGOGameTimeLabel id="id-gametime__time" text="{s:s_gametime_time}" />
-					<CSGOGameTimeLabel id="id-gametime__desc" class="stratum-font" text="{s:s_gametime_desc}" />
 				</Panel>
 
 				                  
@@ -57,9 +56,27 @@
 
 					                    
 					<Panel class="sb-meta__button-panel__group">
-						<Button id="id-sb-meta__cycle" class="sb-meta__button-panel__group sb-meta__button-panel__btn hidden" onactivate="$.DispatchEvent('Scoreboard_CycleStats');">
-							<Label text="#scoreboard_cyclestats_button" />
-						</Button>
+						<TooltipPanel tooltip="#scoreboard_cyclestats_button_tooltip">
+							<Button id="id-sb-meta__cycle" class="sb-meta__button-panel__btn hidden" onactivate="$.DispatchEvent('Scoreboard_CycleStats');">
+								<Image src="file://{images}/icons/ui/stats.svg" textureheight='20' texturewidth='-1'/>
+							</Button>
+						</TooltipPanel>	
+					</Panel>
+
+					<Panel class="sb-meta__button-panel__group">
+						<TooltipPanel tooltip="#scoreboard_mutevoice_button_tooltip">
+							<Button id="id-sb-meta__mutevoice" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_MuteVoice');">
+								<Image id="id-sb-meta__mutevoice__image" src="" textureheight='20' texturewidth='-1'/>
+							</Button>
+						</TooltipPanel>
+					</Panel>
+
+					<Panel class="sb-meta__button-panel__group">
+						<TooltipPanel tooltip="#scoreboard_blockugc_button_tooltip">
+							<Button id="id-sb-meta__blockugc" class="sb-meta__button-panel__btn" onactivate="$.DispatchEvent('Scoreboard_BlockUgc');">
+								<Image id="id-sb-meta__blockugc__image" src="" textureheight='20' texturewidth='-1' />
+							</Button>
+						</TooltipPanel>
 					</Panel>
 
 					               
@@ -125,6 +142,177 @@
 			</Panel>
 		</snippet>
 
+
+		                               
+
+		<snippet name="snippet_scoreboard--cooperative">
+			<Panel class="sb-main">
+
+				                       
+				<Frame snippet="snippet_sb-meta"/>
+
+				               
+				<Panel id="id-sb-players-table__labels-row" class="sb-row--labels sb-row no-hover" />
+
+				                    
+				<Panel class="sb-team__data sb-team__data--ANY" cachepaintcmdlist="true">
+					<Panel id="players-table-ANY" class="sb-players-table" />
+				</Panel>
+
+				<Panel id="CoopStats" class="sb-coop-mission-info" >
+					<Panel class="coop-mission-instructions">
+						<Label html="true" text="#Quest_Guardian_Desc_op09" />
+					</Panel>
+					<Panel class="coop-mission-stats">
+						<Label class="stats-header-previous" text="#SFUI_CoopSB_Rating_Prev"/>
+						<Label class="stats-header-endgame" text="#SFUI_CoopSB_Rating"/>
+						<Panel class="sb-coop-stats__row oddrow">
+							<Label class="sb-coop-stat-name" text="#SFUI_Scoreboard_Coop_MissionCompletion"/>
+							<Label class="sb-coop-stat-value" text=""/>
+							<Label class="sb-coop-stat-score" text="10,000"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row evenrow">
+							<Label class="sb-coop-stat-name" text="{s:statname1}"/>
+							<Label class="sb-coop-stat-value" text="{d:statval1}%"/>
+							<Label class="sb-coop-stat-score" text="{d:statscore1}"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row oddrow">
+							<Label class="sb-coop-stat-name" text="{s:statname2}"/>
+							<Label class="sb-coop-stat-value" text="{d:statval2}%"/>
+							<Label class="sb-coop-stat-score" text="{d:statscore2}"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row evenrow">
+							<Label class="sb-coop-stat-name" text="{s:statname0}"/>
+							<Label class="sb-coop-stat-value" text="{s:statval0}%"/>
+							<Label class="sb-coop-stat-score" text="-{d:statscore0}"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row oddrow">
+							<Label class="sb-coop-stat-name" text="{s:statname3}"/>
+							<Label class="sb-coop-stat-value" text="{d:statval3}"/>
+							<Label class="sb-coop-stat-score" text="{d:statscore3}"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row evenrow">
+							<Label class="sb-coop-stat-name" text="{s:bonusname0}"/>
+							<Label class="sb-coop-stat-value" text=""/>
+							<Label class="sb-coop-stat-score" text="{d:bonusscore0}"/>
+						</Panel>
+						<Panel class="sb-coop-stats__row sb-coop-stats__total">
+							<Label class="sb-coop-stat-name" text="#SFUI_CoopSB_Total"/>
+							<Label class="sb-coop-stat-value" text=""/>                                
+							<Label class="sb-coop-stat-score" text="{d:total_score}"/>
+						</Panel>
+					</Panel>
+				</Panel>
+
+				               
+				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
+
+		
+		                               
+
+		<snippet name="snippet_scoreboard--coopmission">
+			<Panel class="sb-main">
+
+				                       
+				<Frame snippet="snippet_sb-meta"/>
+
+				               
+				<Panel id="id-sb-players-table__labels-row" class="sb-row--labels sb-row no-hover" />
+
+				                    
+				<Panel class="sb-team__data sb-team__data--ANY" cachepaintcmdlist="true">
+					<Panel id="players-table-ANY" class="sb-players-table" />
+				</Panel>
+
+				<Panel id="CoopStats" class="sb-coop-mission-info" >
+					<Panel class="coop-mission-instructions">
+						<Label html="true" text="#Quest_op09_coopmission" />
+					</Panel>
+					<Panel class="coop-mission-stats">
+						<Label class="stats-header-previous" text="#SFUI_CoopSB_Rating_Prev"/>
+						<Label class="stats-header-endgame" text="#SFUI_CoopSB_Rating"/>
+						<Panel class="left-right-flow full-width">
+							<Panel class="coop-mission-stats-left">
+								<Panel class="sb-coop-stats__row oddrow">
+									<Label class="sb-coop-stat-name" text="{s:statname0}"/>
+									<Label class="sb-coop-stat-value" text="{t:d:statval0}"/>
+									<Label class="sb-coop-stat-score" text="{d:statscore0}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row evenrow">
+									<Label class="sb-coop-stat-name" text="{s:statname1}"/>
+									<Label class="sb-coop-stat-value" text="{d:statval1}%"/>
+									<Label class="sb-coop-stat-score" text="{d:statscore1}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row oddrow">
+									<Label class="sb-coop-stat-name" text="{s:statname2}"/>
+									<Label class="sb-coop-stat-value" text="{d:statval2}%"/>
+									<Label class="sb-coop-stat-score" text="{d:statscore2}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row evenrow">
+									<Label class="sb-coop-stat-name" text="{s:statname3}"/>
+									<Label class="sb-coop-stat-value" text="{d:statval3}"/>
+									<Label class="sb-coop-stat-score" text="{d:statscore3}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row">
+									<Label class="sb-coop-stat-name" text=""/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text=""/>
+								</Panel>
+								<Panel class="sb-coop-stats__row">
+									<Label class="sb-coop-stat-name" text="#SFUI_CoopSB_Total"/>
+									<Label class="sb-coop-stat-value" text=""/> 
+									<Label class="sb-coop-stat-score" text="{d:score}"/>
+								</Panel>
+							</Panel>
+							<Panel class="coop-mission-stats-right">
+								<Panel class="sb-coop-stats__row oddrow">
+									<Label class="sb-coop-stat-name" text="{s:bonusname0}"/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text="{d:bonusscore0}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row evenrow">
+									<Label class="sb-coop-stat-name" text="{s:bonusname1}"/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text="{d:bonusscore1}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row oddrow">
+									<Label class="sb-coop-stat-name" text="{s:bonusname2}"/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text="{d:bonusscore2}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row evenrow">
+									<Label class="sb-coop-stat-name" text="{s:bonusname3}"/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text="{d:bonusscore3}"/>
+								</Panel>
+								<Panel class="sb-coop-stats__row">
+									<Label class="sb-coop-stat-name" text=""/>
+									<Label class="sb-coop-stat-value" text=""/>
+									<Label class="sb-coop-stat-score" text=""/>
+								</Panel>
+								<Panel class="sb-coop-stats__row">
+									<Label class="sb-coop-stat-name" text="#SFUI_CoopSB_Total"/>
+									<Label class="sb-coop-stat-value" text=""/> 
+									<Label class="sb-coop-stat-score" text="{d:bonus_score}"/>
+								</Panel>
+							</Panel>
+						</Panel>
+						<Panel class="sb-coop-stats__row sb-coop-stats__total">
+							<Label class="sb-coop-stat-name" text="#SFUI_CoopSB_FinalScore"/>
+							<Label class="sb-coop-stat-value" text=""/> 
+							<Label class="sb-coop-stat-score" text="{d:total_score}"/>
+						</Panel>
+					</Panel>
+				</Panel>
+
+				               
+				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
 
 		                                       
 
@@ -705,6 +893,25 @@
 				<Frame	snippet="stat--KDR"/>				
 				<Frame	snippet="stat--ADR"/>				
 				<Frame	snippet="stat--MVPS" />
+				<Frame	snippet="stat--SCORE" />
+			</Panel>
+		</snippet>
+
+		
+
+		                                 
+		<snippet name="snippet_scoreboard__row--cooperative">
+			<Panel class="sb-row" cachepaintcmdlist="true">
+				<Frame	snippet="stat--STATUS" />
+				<Frame	snippet="stat--PING" />
+				<Frame	snippet="stat--RANK" />
+				<Frame	snippet="stat--AVATAR"/>
+				<Frame	snippet="stat--NAME"/>
+				<Frame	snippet="stat--FLAIR" />	
+				<Frame	snippet="stat--MONEY" />	
+				<Frame	snippet="stat--KILLS" />
+				<Frame	snippet="stat--ASSISTS" />
+				<Frame	snippet="stat--DEATHS" />
 				<Frame	snippet="stat--SCORE" />
 			</Panel>
 		</snippet>

@@ -1,0 +1,202 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/operation/operation_shared.css" />
+		<include src="file://{resources}/styles/operation/operation_mainmenu.css" />
+		<include src="file://{resources}/styles/operation/operation_mission_card.css" />
+		<include src="file://{resources}/styles/flip_panel_anim.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/common/formattext.js" />
+		<include src="file://{resources}/scripts/common/flip_panel_anim.js" />
+		<include src="file://{resources}/scripts/operation/operation_mission_card.js" />
+		<include src="file://{resources}/scripts/operation/operation_util.js" />
+		<include src="file://{resources}/scripts/operation/operation_mainmenu.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="snippet-reward-name">
+			<Panel class="op-mission-reward-name" >
+				<Panel class="op-mainmenu__missions__name__container bottom-margin">
+					<Label class="op-mission-reward-name__text week" text="{d:reward_idx}"/>
+					<Label class="op-mission-reward-name__text" text="{s:reward_name}"/>
+				</Panel>
+				<Panel class="left-right-flow" >
+					<TooltipPanel id="id-op-reward-image-containter-tag" class="op-mission-card-contents__info__containter complete-tag right-margin-medium"  tooltip="#op_rewards_next_tooltip" style='tooltip-position: bottom;'>
+						<Image id="" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/gift.svg" textureheight="18" texturewidth="-1"/>
+						<Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text="#op_rewards_next"/>
+					</TooltipPanel>
+					<Panel id="id-op-reward-status-tag" class="op-mission-card-contents__info__containter right-margin-medium" style='tooltip-position: bottom;'>
+						<Image id="id-op-reward-status-icon" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/locked.svg" textureheight="18" texturewidth="-1"/>
+						<Label id="id-op-reward-status-text" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet-mission-name">
+			<Panel class="op-mission-reward-name">
+				<Panel class="op-mainmenu__missions__name__container">
+					<Label class="op-mission-reward-name__text week" text="#op_mission_week"/>
+					<Label class="op-mission-reward-name__text" html="true" text="{s:h:mission_name}"/>
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet-reward-image">
+			<Panel class="op-mainmenu_item-image down-show">
+				<Panel id="id-op-reward-image-item-image-container" class="">
+					<ItemImage id="id-op-reward-image-item-image" class="op-mainmenu_item-image__item-image" scaling="stretch-to-fit-preserve-aspect"/>
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="op-mainmenu hidden MainMenuModeOnly" onload="">
+		<Panel id="id-op-mainmenu-upsell" class="op-mainmenu__upsell-container" hittest="true" onactivate="">
+			<Panel id="id-op-mainmenu-upsell-bg" class="full-width full-height" blurrects="id-op-mainmenu-upsell-btns-container">
+				<Movie class="op-mainmenu__upsell__movie" src="file://{resources}/videos/op9_mainmenu.webm" controls="none" repeat="true" autoplay="onload" />
+			</Panel>
+			<Panel class="op-mainmenu__title-container ">
+				<Label class="op-mainmenu__title__prefix" text="#XP_Bonus_RankUp_9"/>
+				<Frame src="file://{resources}/layout/operation/operation_title.xml" class="full-width"/>
+			</Panel>
+			<Panel id="id-op-mainmenu-upsell-btns-container" class="op-mainmenu__title__prefix--btn-container">
+				<Panel>
+					<ItemImage id="id-op-mainmenu-upsell-store-image" class="horizontal-center" scaling="stretch-to-fit-preserve-aspect"/>
+					<TextButton id="id-op-mainmenu-upsell-store" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_get_premium"/>
+				</Panel>
+				<TextButton id="id-op-mainmenu-upsell-preview" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_preview_rewards"/>
+				<TextButton id="id-op-mainmenu-mission_select" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_select_mission_card"/>
+			</Panel>
+		</Panel>
+
+		<Panel id="id-op-mainmenu-status" class="op-mainmenu__status-container" hittest="true" onactivate="">
+
+			<Panel id="id-op-mainmenu-missions" class="op-mainmenu__missions hide" hittest="true" onactivate="">
+					<Panel class="op-mainmenu__operation-bg op-mainmenu__operation-bg--missions" hittest="false"/>
+					<Panel id="id-op-mainmenu-mission-card" class="full-width full-height">
+						                          
+					</Panel>
+
+					<Panel class="full-width top-bottom-flow">
+						<Panel class="op-mainmenu__header-container">
+							<Label class="op-mainmenu__header" text="#op_mission_title"/>
+							<Button id="" class="op-mainmenu__btn horizontal-align-right">
+								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+							</Button>
+						</Panel>
+
+						<Panel class="op-header" >
+							<Panel class="left-right-flow full-width right-margin-medium" >
+								<Panel class="horizontal-center">
+									<Image class="op-header__stars-bg" texturewidth="48" textureheight="-1" src="file://{images}/operations/banner.svg" />
+									<Label class="vertical-center horizontal-center op-header__num" text="{d:total_missions}"/>
+								</Panel>
+								<Panel class="top-bottom-flow vertical-center left-margin" >
+									<Label id="op-main-header" class="vertical-center op-header__text" text="#op_mission_title_main"/>
+									<TooltipPanel id="id-mission-card-tag-xp" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_xp_tooltip" style='tooltip-position: bottom;'>
+										<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/xp_rank.svg" textureheight="18" texturewidth="-1"/>
+										<Label id="id-mission-card-xp-progress" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
+									</TooltipPanel>
+								</Panel>
+
+								<Panel class="vertical-center horizontal-align-right right-margin-medium left-right-flow">
+									<TooltipPanel id="" class="op-mainmenu__btn right-margin" tooltip="#op_missions_tooltip" style="tooltip-position: bottom;"> 
+										<Image texturewidth="26" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
+									</TooltipPanel>
+									<TooltipPanel tooltip="#op_faq_link" style="tooltip-position: bottom;">
+										<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/shatteredweb/' );" >
+											<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+										</Button>
+									</TooltipPanel>
+								</Panel>
+							</Panel>
+						</Panel>
+
+						<Panel class="top-bottom-flow left-margin-32 top-padding-medium">
+							<Panel class="op-mainmenu__content__selector vertical-center" >
+							<Panel class="op-mainmenu__content__info" >
+								<Frame id="id-op-mission-name-1" class="down-show" snippet="snippet-mission-name"/>
+								<Frame id="id-op-mission-name-2"  class="down-hidden" snippet="snippet-mission-name"/>
+							</Panel>
+							<Button id="id-op-mission-prev" class="op-mainmenu__arrow_btn horizontal-center vertical-center">
+								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg"/>
+							</Button>
+							<Button id="id-op-mission-next" class="op-mainmenu__arrow_btn down horizontal-center vertical-center">
+								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg" />
+							</Button>
+						</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			<Panel id="id-op-mainmenu-rewards" class="op-mainmenu__rewards hide" hittest="true" onactivate="">
+				<Panel class="op-mainmenu__operation-bg" hittest="false"/>
+				<Panel class="full-width top-bottom-flow full-height">
+					<Panel class="op-mainmenu__header-container">
+						<Label class="op-mainmenu__header" text="#op_rewards_title"/>
+						<Button id="" class="op-mainmenu__btn horizontal-align-right">
+							<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+						</Button>
+					</Panel>
+	
+					<Panel class="op-header" >
+						<Panel class="left-right-flow full-width" >
+							<Panel class="horizontal-center">
+								<Image id="" class="op-header__stars-bg " src="file://{images}/icons/ui/icon_star_empty.svg" textureheight="48" texturewidth="-1"/>
+								<Label class="vertical-center horizontal-center op-header__num" text="{d:total_reward}"/>
+							</Panel>
+							<Label id="op-main-header" class="vertical-center op-header__text" text="#op_rewards_title_main"/>
+							<Panel class="vertical-center horizontal-align-right right-margin-medium left-right-flow">
+								                                                                                                                      
+									                                                                                              
+								                        
+								                                                                                                                          
+								<Button id="id-op-reward-open-operation-hub" class="PopupButton">
+									                                                                                              
+									<Label id="id-op-reward-open-operation-hub-text" text="#op_view_rewards"/>
+								</Button>
+								<Button id="id-op-reward-upsell" class="op-main-btn small">
+									<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/ticket.svg"/>
+									<Label id="id-op-reward-open-operation-hub-text" text="#op_get_premium"/>
+								</Button>
+								                        
+							</Panel>
+						</Panel>
+					</Panel>
+					<Panel class="left-right-flow" >
+						<Panel class="top-bottom-flow left-margin-32 right-margin-medium vertical-center">
+							<Panel class="op-mainmenu__content__selector vertical-center" >
+								<Panel class="op-mainmenu__content__info" >
+									<Frame id="id-op-reward-name-1" class="flip-panel-anim-down-show" snippet="snippet-reward-name"/>
+									<Frame id="id-op-reward-name-2"  class="flip-panel-anim-down-hidden" snippet="snippet-reward-name"/>
+								</Panel>
+								<Button id="id-op-reward-prev" class="op-mainmenu__arrow_btn horizontal-center">
+									<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg"/>
+								</Button>
+								<Button id="id-op-reward-next" class="op-mainmenu__arrow_btn down horizontal-center">
+									<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg" />
+								</Button>
+							</Panel>
+						</Panel>
+						<Panel class="op-mission-card__mission__seperator" />
+						<Button id="id-op-reward-image-containter" class="op-mainmenu_item-image-container" >
+							<Frame id="id-op-reward-image-1" class="flip-panel-anim-down-show" snippet="snippet-reward-image"/>
+							<Frame id="id-op-reward-image-2" class="flip-panel-anim-down-hidden" snippet="snippet-reward-image"/>
+						</Button>
+					</Panel>
+					<Button id="id-op-reward-footer" class="op-mainmenu__content__upsell__btn hide">
+					<Panel class="op-mainmenu__content__upsell">
+						<Image class="op-mainmenu__content__upsell__image" texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/ticket.svg"/>
+					</Panel>
+					<Label id="id-op-reward-footer-label" class="op-missions-text-m" html="true" text="#op_get_reward"/>
+				</Button>
+				</Panel>
+				                                                                                                                                               
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

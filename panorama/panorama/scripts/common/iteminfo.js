@@ -116,6 +116,11 @@ var ItemInfo = ( function() {
 		return InventoryAPI.GetSlotSubPosition( id );
 	};
 
+	var _IsLoadoutSlotSubPositionAWeapon = function( slotSubPosition )
+	{
+		return ItemDataAPI.IsLoadoutSlotSubPositionAWeapon( slotSubPosition );
+	};	
+
 	var _GetTeam = function( id )
 	{
 		return InventoryAPI.GetItemTeam( id );
@@ -221,6 +226,150 @@ var ItemInfo = ( function() {
 		return { case: xrayCaseId, reward: xrayRewardId };
 	};
 
+	var _GetLoadoutWeapons = function( team )
+	{
+		team =	CharacterAnims.NormalizeTeamName( team, true );
+
+		var list = [];
+
+		var slotStrings = LoadoutAPI.GetLoadoutSlotNames( false );
+		var slots = JSON.parse( slotStrings );
+
+		slots.forEach( slot => 
+		{
+			var weaponItemId = LoadoutAPI.GetItemID( team, slot );
+
+			var bIsWeapon = ItemInfo.IsWeapon( weaponItemId );
+
+			if ( bIsWeapon )
+			{
+				list.push( weaponItemId );
+			}
+		} );
+
+		return list;
+	}
+
+	var _DeepCopyVanityCharacterSettings = function( inVanityCharacterSettings )
+	{
+		var modelRenderSettingsOneOffTempCopy =                                                                     
+			JSON.parse( JSON.stringify( inVanityCharacterSettings ) );
+		modelRenderSettingsOneOffTempCopy.panel = inVanityCharacterSettings.panel;
+		return modelRenderSettingsOneOffTempCopy;
+	}
+
+	var _PrecacheVanityCharacterSettings = function( inVanityCharacterSettings )
+	{
+		if ( inVanityCharacterSettings.weaponItemId )
+			InventoryAPI.PrecacheCustomMaterials( inVanityCharacterSettings.weaponItemId );
+		if ( inVanityCharacterSettings.glovesItemId )
+			InventoryAPI.PrecacheCustomMaterials( inVanityCharacterSettings.glovesItemId );
+	}
+
+	var _GetOrUpdateVanityCharacterSettings = function( optionalCharacterItemId, optionalState )
+	{
+		var oSettings = {
+			panel: '',
+			activity: '',                                                        
+			team: '',
+			charItemId: '',
+			loadoutSlot: '',
+			weaponItemId: '',
+			glovesItemId: '',
+			cameraPreset: '',
+			arrModifiers:  [],
+		};
+
+		  
+		                                              
+		  
+		if ( optionalCharacterItemId && InventoryAPI.IsValidItemID( optionalCharacterItemId ) )
+		{
+			var charTeam = ItemInfo.GetTeam( optionalCharacterItemId );
+			if ( charTeam.search( 'Team_CT' ) !== -1 )
+				oSettings.team = 'ct';
+			else if ( charTeam.search( 'Team_T' ) !== -1 )
+				oSettings.team = 't';
+
+			if ( oSettings.team )
+				oSettings.charItemId = optionalCharacterItemId;
+		}
+
+		  
+		                                          
+		                                                                   
+		  
+		if ( !oSettings.team )
+		{
+			oSettings.team = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' );
+			if ( oSettings.team !== 'ct' && oSettings.team !== 't' )
+			{
+				oSettings.team = ( Math.round( Math.random() ) > 0 ) ? 'ct' : 't';
+				                                                   
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', oSettings.team );
+			}
+		}
+
+		var _fnRollRandomLoadoutSlotAndWeapon = function( strTeam ) {
+			var myResult = {
+				loadoutSlot: '',
+				weaponItemId: ''
+			};
+			var slots = JSON.parse( LoadoutAPI.GetLoadoutSlotNames( false ) );
+			while ( slots.length > 0 )
+			{
+				var nRandomSlotIndex = Math.floor( Math.random() * slots.length );
+				myResult.loadoutSlot = slots.splice( nRandomSlotIndex, 1 )[ 0 ];                                     
+				myResult.weaponItemId = LoadoutAPI.GetItemID( strTeam, myResult.loadoutSlot );
+				if ( ItemInfo.IsWeapon( myResult.weaponItemId ) )
+					break;	                                                                  
+			}
+			return myResult;
+		}
+
+		  
+		                                                    
+		  
+		oSettings.loadoutSlot = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_loadoutslot_' + oSettings.team );
+		oSettings.weaponItemId = LoadoutAPI.GetItemID( oSettings.team, oSettings.loadoutSlot );
+		if ( !ItemInfo.IsWeapon( oSettings.weaponItemId ) )
+		{	                                                                                              
+			                                      
+			var randomResult = _fnRollRandomLoadoutSlotAndWeapon( oSettings.team );
+			oSettings.loadoutSlot = randomResult.loadoutSlot;
+			oSettings.weaponItemId = randomResult.weaponItemId;
+			                                                                                                
+			                                                          
+			GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot_' + oSettings.team, oSettings.loadoutSlot );
+		}
+
+		  
+		                  
+		  
+		oSettings.glovesItemId = LoadoutAPI.GetItemID( oSettings.team, 'clothing_hands' );
+
+		  
+		                                                                   
+		  
+		if ( !oSettings.charItemId )
+			oSettings.charItemId = LoadoutAPI.GetItemID( oSettings.team, 'customplayer' );
+
+		  
+		                                                       
+		                                                         
+		                                        
+		  
+		if ( optionalState && optionalState === 'unowned' )
+		{
+			var randomResult = _fnRollRandomLoadoutSlotAndWeapon( oSettings.team );
+			oSettings.loadoutSlot = randomResult.loadoutSlot;
+			oSettings.weaponItemId = LoadoutAPI.GetDefaultItem( oSettings.team, oSettings.loadoutSlot );
+			oSettings.glovesItemId = LoadoutAPI.GetDefaultItem( oSettings.team, 'clothing_hands' );
+		}
+
+		return oSettings;
+	}
+
 	var _GetStickerSlotCount = function( id )
 	{
 		return InventoryAPI.GetItemStickerSlotCount( id );
@@ -308,8 +457,31 @@ var ItemInfo = ( function() {
 	var _IsEquippalbleButNotAWeapon = function( id )
 	{
 		var subSlot = _GetSlotSubPosition( id );
+		return ( subSlot === "flair0" || subSlot === "musickit" || subSlot === "spray0" || subSlot === "customplayer" );
+	};
+
+	var _IsEquippableThroughContextMenu = function( id )
+	{
+		var subSlot = _GetSlotSubPosition( id );
 		return ( subSlot === "flair0" || subSlot === "musickit" || subSlot === "spray0" );
 	};
+
+	var _IsWeapon = function( id )
+	{
+		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
+
+		if ( !schemaString )
+			return false;
+		
+		var itemSchemaDef = JSON.parse( schemaString );	
+		
+		return ( itemSchemaDef[ "craft_class" ] === "weapon" );
+	};
+
+	var _IsCharacter = function( id )
+	{
+		return ( _GetSlotSubPosition( id ) === "customplayer" );
+	}
 
 	var _IsItemCt = function( id )
 	{
@@ -413,7 +585,7 @@ var ItemInfo = ( function() {
 		var isSpray = itemSchemaDef.name === 'spraypaint';
 		var isSprayPaint = itemSchemaDef.name === 'spray';
 		var isFanTokenOrShieldItem = itemSchemaDef.name && itemSchemaDef.name.indexOf( 'tournament_journal_' ) != -1;
-		
+	
 		                                                                    
 		                                                       
 		if ( isSpray || isSprayPaint || isFanTokenOrShieldItem )
@@ -423,6 +595,37 @@ var ItemInfo = ( function() {
 		else if ( itemSchemaDef.hasOwnProperty( "model_player" ) || isMusicKit || issMusicKitDefault )
 			return 'img://inventory_' + id;
 	};
+
+	                                                                        
+	var _GetModelPlayer = function( id )
+	{
+		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
+		var itemSchemaDef = JSON.parse( schemaString );		
+
+		var modelPlayer = itemSchemaDef[ "model_player" ];
+
+		return modelPlayer;
+
+	}
+
+	var _GetDefaultCheer = function( id )
+	{
+		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
+		var itemSchemaDef = JSON.parse( schemaString );		
+
+		if ( itemSchemaDef[ "default_cheer" ] )
+			return itemSchemaDef[ "default_cheer" ]
+		else
+			return "";
+	}
+
+	var _GetVoPrefix = function( id )
+	{
+		var schemaString = InventoryAPI.BuildItemSchemaDefJSON( id );
+		var itemSchemaDef = JSON.parse( schemaString );		
+
+		return itemSchemaDef[ "vo_prefix" ];
+	}
 
 	var _GetModelPathFromJSONOrAPI = function( id )
 	{
@@ -475,17 +678,32 @@ var ItemInfo = ( function() {
 		return InventoryAPI.GetToolType( id );
 	};
 
+	function _IsDefaultCharacter ( id )
+	{
+		var defaultTItem = LoadoutAPI.GetDefaultItem( 't', 'customplayer' );
+		var defaultCTItem = LoadoutAPI.GetDefaultItem( 'ct', 'customplayer' );
+		return id == defaultTItem || id == defaultCTItem;
+	}
+
+	function _IsPreviewable ( id )
+	{
+		return ( ItemInfo.GetSlotSubPosition( id ) || ItemInfo.ItemMatchDefName( id, 'sticker' ) || ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
+			!ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' ) &&                                                       
+			!_IsDefaultCharacter( id );
+	}
+
 	return {
 		GetRarityColor					: _GetRarityColor,
 		GetName							: _GetName,
 		GetFauxReplacementItemID		: _GetFauxReplacementItemID,
 		GetFauxItemIdForGraffiti		: _GetFauxItemIdForGraffiti,
-        GetFormattedName                : _GetFormattedName,                                 
+		GetFormattedName				: _GetFormattedName,                                 
 		IsEquipped						: _IsEquipped,
 		IsEquippedForCT					: _IsEquippedForCT,
 		IsEquippedForT					: _IsEquippedForT,
 		IsEquippedForNoTeam				: _IsEquippedForNoTeam,
 		IsEquippalbleButNotAWeapon		: _IsEquippalbleButNotAWeapon,
+		IsEquippableThroughContextMenu  : _IsEquippableThroughContextMenu,
 		AddItemToShuffle				: _AddItemToShuffle,
 		RemoveItemFromShuffle			: _RemoveItemFromShuffle,
 		IsItemInShuffleForTeam			: _IsItemInShuffleForTeam,
@@ -503,6 +721,8 @@ var ItemInfo = ( function() {
 		IsTradeUpContract				: _IsTradeUpContract,
 		GetSprayTintColor				: _GetSprayTintColor,
 		IsTool							: _IsTool,
+		IsWeapon						: _IsWeapon,
+		IsCharacter						: _IsCharacter,
 		GetCapabilitybyIndex			: _GetCapabilitybyIndex,
 		GetCapabilityCount				: _GetCapabilityCount,
 		ItemHasCapability				: _ItemHasCapability,
@@ -512,6 +732,8 @@ var ItemInfo = ( function() {
 		GetStickerCount					: _GetStickerCount,
 		GetitemStickerList				: _GetitemStickerList,
 		GetItemPickUpMethod				: _GetItemPickUpMethod,
+		BIsRewardPremium				: function( id ) { return InventoryAPI.BIsRewardPremium( id ) },
+		GetRewardTier					: function( id ) { return InventoryAPI.GetRewardTier( id ) },
 		GetLoadoutPrice					: _GetLoadoutPrice,
 		GetStoreOriginalPrice			: _GetStoreOriginalPrice,
 		GetStoreSalePrice				: _GetStoreSalePrice,
@@ -528,14 +750,24 @@ var ItemInfo = ( function() {
 		GetGifter						: _GetGifter,
 		GetSet							: _GetSet,
 		GetModelPath					: _GetModelPath,
-		GetModelPathFromJSONOrAPI		: _GetModelPathFromJSONOrAPI,
+		GetModelPathFromJSONOrAPI       : _GetModelPathFromJSONOrAPI,
+		GetModelPlayer                  : _GetModelPlayer,
 		GetLootListCount				: _GetLootListCount,
 		GetLootListItemByIndex			: _GetLootListItemByIndex,
 		IsStatTrak						: _IsStatTrak,
 		GetToolType						: _GetToolType,
 		GetMarketLinkForLootlistItem	: _GetMarketLinkForLootlistItem,
-		GetItemIdForItemEquippedInLoadoutSlot : _GetItemIdForItemEquippedInLoadoutSlot,           
+		GetItemIdForItemEquippedInLoadoutSlot: _GetItemIdForItemEquippedInLoadoutSlot,           
+		IsLoadoutSlotSubPositionAWeapon	: _IsLoadoutSlotSubPositionAWeapon,
+		GetDefaultCheer					: _GetDefaultCheer,
+		GetVoPrefix						: _GetVoPrefix,
+		IsPreviewable					: _IsPreviewable,
+		IsDefaultCharacter				: _IsDefaultCharacter,
 		GetKeyForCaseInXray				: _GetKeyForCaseInXray,
-		GetItemsInXray					: _GetItemsInXray
+		GetItemsInXray					: _GetItemsInXray,
+		GetOrUpdateVanityCharacterSettings: _GetOrUpdateVanityCharacterSettings,
+		DeepCopyVanityCharacterSettings : _DeepCopyVanityCharacterSettings,
+		PrecacheVanityCharacterSettings : _PrecacheVanityCharacterSettings,
+		GetLoadoutWeapons				: _GetLoadoutWeapons
 	};
 })();

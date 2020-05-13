@@ -75,6 +75,11 @@
 	flow-children: right;
 }
 
+.team-select-teammate .avatar--party .avatar-image
+{
+	margin: 12px 6px 12px 6px;
+}
+
 .avatar--party .avatar-image
 {
 	margin-left: 24px;

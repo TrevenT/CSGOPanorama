@@ -1,24 +1,116 @@
 'use strict';
 
-var CharacterAnims = ( function ()
+var CharacterAnims = ( function()
 {
-	  
-	                                        
-	               
-		      
-		      
-		       
-		        
-		             
-		               
-		               
-	  
 
-	var _PlayAnimsOnPanel = function ( settings )
+
+	function _AddModifiersFromWeaponItemId ( itemId, arrModifiers )
 	{
-		if ( settings === null ) {
+		  		                                             
+		  		                                 
+
+		  		                                                                   
+		  		                                            
+
+		var weaponName = ItemInfo.GetItemDefinitionName( itemId );
+		arrModifiers.push( weaponName );
+
+		var weaponType = InventoryAPI.GetWeaponTypeString( itemId );
+		arrModifiers.push( weaponType );
+	}
+
+	function _NormalizeTeamName ( team, bShort = false )
+	{
+		team = String(team).toLowerCase();
+		
+		switch ( team )
+		{
+			case '2':
+			case 't':
+			case 'terrorist':
+			case 'team_t':
+				
+				return bShort? 't' : 'terrorist';
+			
+			case '3':
+			case 'ct':
+			case 'counter-terrorist':
+			case 'team_ct':
+				return 'ct';
+			
+			default:
+				return '';
+			
+		}
+	}
+
+	function _TeamForEquip ( team )
+	{
+		team = team.toLowerCase();
+		
+		switch ( team )
+		{
+			case '2':
+			case 't':
+			case 'terrorist':
+			case 'team_t':
+				
+				return 't';
+			
+			case '3':
+			case 'ct':
+			case 'counter-terrorist':
+			case 'team_ct':
+				return 'ct';
+			
+			default:
+				return '';
+			
+		}		
+
+	}
+	
+
+	var _PlayAnimsOnPanel = function ( importedSettings )
+	{
+		  
+		                                                       
+		                                                   
+		  
+		
+		if ( settings === null ) 
+		{
 			return;
 		}
+
+		var settings = ItemInfo.DeepCopyVanityCharacterSettings( importedSettings );
+
+		if ( !settings.team || settings.team == "" )
+			settings.team = 'ct';
+		
+		settings.team = _NormalizeTeamName( settings.team );
+
+		if ( settings.modelOverride ) {
+			settings.model = settings.modelOverride;
+			          
+			                            
+				                                                                        
+			 
+			          
+		} else {
+			                                                      
+			settings.model = ItemInfo.GetModelPlayer( settings.charItemId );
+			                                                               
+			if ( !settings.model )
+			{
+				if ( settings.team == 'ct' )
+					settings.model = "models/player/custom_player/legacy/ctm_sas.mdl";
+				else
+					settings.model = "models/player/custom_player/legacy/tm_phoenix.mdl";
+			}
+		}
+
+		var wid = settings.weaponItemId;
 		
 		var playerPanel = settings.panel;
 		_CancelScheduledAnim( playerPanel );
@@ -26,74 +118,72 @@ var CharacterAnims = ( function ()
 		
 		playerPanel.ResetAnimation( false );
 		playerPanel.SetSceneAngles( 0, 0, 0 );
+
+		if ( settings.manifest )
+			playerPanel.SetScene( settings.manifest, settings.model, false );
+
 		playerPanel.SetPlayerModel( settings.model );
-		playerPanel.EquipPlayerWithItem( settings.itemId );
-		playerPanel.EquipPlayerFromLoadout( settings.team, 'clothing_hands' );
+		playerPanel.EquipPlayerWithItem( wid );
+		playerPanel.EquipPlayerWithItem( settings.glovesItemId );
 
-		var anims = _GetAnims(
-						settings.team,
-						settings.loadoutSlot,
-						settings.selectedWeapon,
-						settings.itemId
-					);
+		playerPanel.ResetActivityModifiers();
 		
-		if ( settings.playIntroAnim ) {
-			playerPanel.LayerSequence( anims.intro, false, false );
-		}
+		playerPanel.ApplyActivityModifier( settings.team );
 
-		playerPanel.LayerSequence( anims.idle , true, true );
-		playerPanel.SetCameraPreset( anims.cameraPreset, false );
-
-		settings.anims = anims;
-		_playRandomAnim( settings );
-	};
-
-	var _playRandomAnim = function ( settings )
-	{
-		var playerPanel = settings.panel;
-		var anims = settings.anims;
-
-		if ( !playerPanel.IsValid() )
+		if ( !( 'arrModifiers' in settings ) )
 		{
-			return;
+			settings.arrModifiers = [];
 		}
 
-		                          
-		if ( anims.animsList !== undefined )
+		_AddModifiersFromWeaponItemId( wid, settings.arrModifiers );
+
+		settings.arrModifiers.forEach( mod => playerPanel.ApplyActivityModifier( mod ) );
+		
+		if ( !('activity' in settings ) || settings.activity == "" )
 		{
-			playerPanel.Data().lastRandomAnim = _RandomNumberWithBoundsDontRepeatPrevious(
-													0,
-													anims.animsList.length - 1,
-													playerPanel.Data().lastRandomAnim 
-												);
-
-			                                                                                                          
-			playerPanel.LayerSequence( anims.animsList[ playerPanel.Data().lastRandomAnim], false, true );
+			settings.activity = 'ACT_CSGO_UIPLAYER_IDLE';
+		}
+		
+  		                                                  
+		
+		if ( !( 'immediate' in settings ) || settings.immediate == "" )
+		{
+			settings.immediate = true;
 		}
 
-		                                                                   
-		playerPanel.Data().handle = $.Schedule(
-										_RandomNumberWithBounds( 15, 18 ),
-										_playRandomAnim.bind( undefined, settings )
-									);
-	};
+		playerPanel.PlayActivity( settings.activity, settings.immediate );
 
-	var _RandomNumberWithBounds = function ( min, max )
-	{
-		return Math.floor( Math.random() * ( max - min + 1 ) + min );
-	};
+		var cam = 0;
 
-	                                                
-	var _RandomNumberWithBoundsDontRepeatPrevious = function ( min, max, prev )
-	{
-		var randomNum;
+		if ( 'cameraPreset' in settings && settings.cameraPreset != "" )
+		{
+			cam = settings.cameraPreset;
+			                                               
+		}
+		else
+		{
+			cam = _GetCameraPreset( settings.team, ItemInfo.GetSlot( wid ), ItemInfo.GetItemDefinitionName( wid ) );
 
-		do {
-			randomNum = Math.floor( Math.random() * ( max - min + 1 ) + min );
+			          
+			                         
+			                                                        
+			                                                    
+			                                          
 
-		} while ( randomNum == prev );
+			                                                                                
+			                    
+			 
+				                                                                            
+				                                                                                                        
 
-		return randomNum;
+				                                                                                      
+				                                                                                   
+				                                                                      
+			 
+			          
+		}
+
+		playerPanel.SetCameraPreset( Number( cam ), false );
 	};
 
 	var _CancelScheduledAnim = function ( playerPanel )
@@ -113,80 +203,172 @@ var CharacterAnims = ( function ()
 		}
 	};
 
-	                                                                                                    
-	                                                          
-	                                                                                                    
-	var _SaveModelPanelSettingsToConvars = ( function ()
-	{
-		var settingsToSave = null;
-
-		var _SetSettings = function ( settings )
-		{
-			settingsToSave = settings;
-		};
-		
-		var _SaveSettings = function () 
-		{
-			if( settingsToSave )
-			{
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', settingsToSave.team );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', settingsToSave.model );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', settingsToSave.loadoutSlot );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', settingsToSave.itemId );
-			}
-			settingsToSave = null;
-		};
-
-		return {
-			SaveSettings : _SaveSettings,
-			SetSettings : _SetSettings,
-		};
-
-	})();
-	
-
 	var _ItemHasCharacterAnims = function( team, loadoutSlot, selectedWeapon, itemId )
 	{
 		                                                                                      
 		var hasAnims = _GetAnims( team, loadoutSlot, selectedWeapon, itemId ) !== undefined ? true : false;
 
-		                                                 
+  		                                                 
 		return hasAnims;
 	};
 
-	var _GetValidCharacterModels = function()
+	var _GetValidCharacterModels = function( bUniquePerTeamModelsOnly )
 	{
-		                                                                            
-		
-		var dropdownEntries = [
-			{ label: '#faction_sas', model: "models/player/custom_player/legacy/ctm_sas.mdl", team: "ct", loadoutSlot: 'rifle1' },
-			{ label: '#faction_fbi_a', model: "models/player/custom_player/legacy/ctm_fbi_varianta.mdl", team: "ct", loadoutSlot: 'rifle1' },
-			{ label: '#faction_fbi_c', model: "models/player/custom_player/legacy/ctm_fbi_variantc.mdl", team: "ct", loadoutSlot: 'secondary1' },
-			{ label: '#faction_fbi_d', model: "models/player/custom_player/legacy/ctm_fbi_variantd.mdl", team: "ct", loadoutSlot: 'secondary1' },
-			{ label: '#faction_fbi_e', model: "models/player/custom_player/legacy/ctm_fbi.mdl", team: "ct", loadoutSlot: 'rifle1'},
-			                                                                                                         
-			                                                                                                       
-			{ label: '#faction_elite_a', model: "models/player/custom_player/legacy/tm_leet_varianta.mdl", team: "t", loadoutSlot: 'rifle1' },
-			{ label: '#faction_elite_b', model:"models/player/custom_player/legacy/tm_leet_variantb.mdl", team:"t", loadoutSlot: 'secondary1' },
-			{ label: '#faction_elite_c', model:"models/player/custom_player/legacy/tm_leet_variantc.mdl", team:"t", loadoutSlot: 'secondary1' },
-			{ label: '#faction_elite_d', model:"models/player/custom_player/legacy/tm_leet_variantd.mdl", team:"t", loadoutSlot: 'rifle1' },
-			                                                                                                                 
-			                                                                                                           
-			                                                                                                                   
-			{ label: '#faction_phoenix', model: "models/player/custom_player/legacy/tm_phoenix.mdl", team: "t", loadoutSlot: 'secondary1' },
-			{ label: '#faction_survival_a', model: "models/player/custom_player/legacy/tm_jumpsuit_varianta.mdl", team: "any", loadoutSlot: 'secondary1' },
-			{ label: '#faction_survival_b', model: "models/player/custom_player/legacy/tm_jumpsuit_variantb.mdl", team: "any", loadoutSlot: 'secondary1' },
-			{ label: '#faction_survival_c', model:"models/player/custom_player/legacy/tm_jumpsuit_variantc.mdl", team:"any", loadoutSlot: 'secondary1' }
-		];
-		return dropdownEntries;
+
+		InventoryAPI.SetInventorySortAndFilters ( 'inv_sort_rarity', false, 'customplayer', '', '' );
+		var count = InventoryAPI.GetInventoryCount();
+		var itemsList = [];
+		var uniqueTracker = {};
+
+		for( var i = 0 ; i < count ; i++ )
+		{
+			var itemId = InventoryAPI.GetInventoryItemIDByIndex( i );
+			
+			var modelplayer = ItemInfo.GetModelPlayer( itemId );
+			if ( !modelplayer )
+				continue;
+
+			var team = ( ItemInfo.GetTeam( itemId ).search( 'Team_T' ) === -1 ) ? 'ct' : 't';
+			if ( bUniquePerTeamModelsOnly )
+			{	                                           
+				if ( uniqueTracker.hasOwnProperty( team + modelplayer ) )
+					continue;
+				uniqueTracker[ team + modelplayer ] = 1;
+			}
+
+			var label = ItemInfo.GetName( itemId );
+			var entry = {
+				label: label,
+				team: team,
+				itemId: itemId
+			};
+
+			itemsList.push( entry );
+		}
+
+		return itemsList;
+
+
 	};
 
 	                                                                                                    
 	                                                                                                      
 	                                                               
 	                                                                                                    
-	var _GetAnims = function ( team, loadoutSlot, weapon, itemId )
+	var _GetCameraPreset = function ( team, slot, weapon )
 	{	
+		team = team.toLowerCase();
+		slot = slot.toLowerCase();
+		weapon = weapon.toLowerCase();
+
+		switch ( team )
+		{
+			case 'ct':
+				switch ( slot )
+				{
+					case 'melee':
+						return 1;
+					
+					case 'secondary':
+					case 'smg':
+						switch ( weapon )
+						{
+							case 'weapon_elite':
+								return 1;
+							
+							case 'weapon_p90':
+							case 'weapon_mp9':
+							case 'weapon_ump45':
+							case 'weapon_bizon':
+							case 'weapon_mp5sd':
+								return 2;
+							
+							case 'weapon_mp7':
+								return 4;	
+							
+							default:
+								return 0;
+						}
+
+					case 'rifle':
+						switch ( weapon )
+						{
+							case 'weapon_famas':
+							case 'weapon_aug':
+								return 2;
+							
+							default:
+								return 1;
+						}
+
+					case 'heavy':
+						switch ( weapon )
+						{
+							case 'weapon_nova':
+							case 'weapon_xm1014':
+							case 'weapon_mag7':
+								return 2;
+						}	
+						
+					default:
+						switch ( weapon )
+						{
+							case 'weapon_flashbang':
+							case 'weapon_decoy':
+							case 'weapon_smokegrenade':
+							case 'weapon_incgrenade':
+							case 'weapon_hegrenade':
+								return 0;
+									
+							default:
+								return 3;
+						}
+				}
+
+			case 'terrorist':
+				switch ( slot )
+				{
+					case 'melee':
+						return 1;
+					
+					case 'secondary':
+					case 'smg':
+						switch ( weapon )
+						{
+							case 'weapon_elite':
+							case 'weapon_mp5sd':
+							case 'weapon_mac10':
+								return 1;
+							
+							case 'weapon_ump45':
+								return 4;
+							
+							default:
+								return 2;
+						}
+
+					case 'heavy':
+					case 'rifle':
+						return 1;
+				
+					default:
+						switch ( weapon )
+						{
+							case 'weapon_c4':
+							case 'weapon_flashbang':
+							case 'weapon_decoy':	
+							case 'weapon_smokegrenade':
+							case 'weapon_incgrenade':
+							case 'weapon_hegrenade':
+							case 'weapon_molotov':
+								return 0;
+						}	
+				}
+		}
+	};
+
+	var _GetAnims = function( team, loadoutSlot, weapon, itemId )
+	{
 		if ( !loadoutSlot )
 		{
 			if ( team == 'ct' )
@@ -225,17 +407,17 @@ var CharacterAnims = ( function ()
 						't_loadout_knife_flipandslice'
 					]
 				};
-			}	
+			}
 		}
 
 
-		if( team == 'ct' )
+		if ( team == 'ct' )
 		{
-			if( loadoutSlot.indexOf( 'melee' ) !== -1 )
+			if ( loadoutSlot.indexOf( 'melee' ) !== -1 )
 			{
 				              
 				var defName = InventoryAPI.GetItemDefinitionName( itemId );
-				if( defName.indexOf( 'push' ) !== -1 )
+				if ( defName.indexOf( 'push' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -252,7 +434,7 @@ var CharacterAnims = ( function ()
 				}
 				                
 				defName = InventoryAPI.GetItemDefinitionName( itemId );
-				if( defName.indexOf( 'karambit' ) !== -1 )
+				if ( defName.indexOf( 'karambit' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -282,15 +464,15 @@ var CharacterAnims = ( function ()
 						'ct_loadout_knife_flip01',
 						'ct_loadout_knife_slicedice01',
 						'ct_loadout_knife_slicedice02',
-						'ct_loadout_knife_backflip'					
-						]
-					};
-			}		
+						'ct_loadout_knife_backflip'
+					]
+				};
+			}
 			           
-			if( loadoutSlot.indexOf( 'secondary') !== -1 || loadoutSlot.indexOf( 'smg') !== -1 )
-			{	
+			if ( loadoutSlot.indexOf( 'secondary' ) !== -1 || loadoutSlot.indexOf( 'smg' ) !== -1 )
+			{
 				               
-				if( weapon.indexOf( 'elite' ) !== -1 )
+				if ( weapon.indexOf( 'elite' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -306,7 +488,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				      
-				if( weapon.indexOf( 'p90' ) !== -1 )
+				if ( weapon.indexOf( 'p90' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -321,7 +503,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				      
-				if( weapon.indexOf( 'mp9' ) !== -1 )
+				if ( weapon.indexOf( 'mp9' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -336,7 +518,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				        
-				if( weapon.indexOf( 'ump45' ) !== -1 )
+				if ( weapon.indexOf( 'ump45' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -351,7 +533,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				        
-				if( weapon.indexOf( 'bizon' ) !== -1 )
+				if ( weapon.indexOf( 'bizon' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -366,7 +548,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				      
-				if( weapon.indexOf( 'mp7' ) !== -1 )
+				if ( weapon.indexOf( 'mp7' ) !== -1 )
 				{
 					return {
 						cameraPreset: 4,
@@ -382,7 +564,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				        
-				if( weapon.indexOf( 'mp5sd' ) !== -1 )
+				if ( weapon.indexOf( 'mp5sd' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -411,80 +593,80 @@ var CharacterAnims = ( function ()
 				};
 			}
 			
-			if( loadoutSlot.indexOf( 'rifle' ) !== -1 )
+			if ( loadoutSlot.indexOf( 'rifle' ) !== -1 )
 			{
-				if( weapon.indexOf( 'famas' ) !== -1  )
+				if ( weapon.indexOf( 'famas' ) !== -1 )
 				{
-					                 
+					  					                 
 					return {
 						cameraPreset: 2,
 						intro: 'ct_loadout_famas_walkup',
 						idle: 'ct_loadout_famas_idle',
 						animsList: [
-								'ct_loadout_famas_weightshift01',
-								'ct_loadout_famas_lookbehind01',
-								'ct_loadout_famas_lookatwatch',
-								'ct_loadout_famas_lookbehind02'
+							'ct_loadout_famas_weightshift01',
+							'ct_loadout_famas_lookbehind01',
+							'ct_loadout_famas_lookatwatch',
+							'ct_loadout_famas_lookbehind02'
 						]
 					};
 					
 				}
 				
-				if( weapon.indexOf( 'm4a1' ) !== -1 || weapon.indexOf( 'm4a1_silencer') !== -1   )
+				if ( weapon.indexOf( 'm4a1' ) !== -1 || weapon.indexOf( 'm4a1_silencer' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
 						intro: 'ct_loadout_rifle_walkup_handrepo_m4',
 						idle: 'ct_loadout_rifle_idle_handrepo_m4',
 						animsList: [
-								'ct_loadout_rifle_lookat_handrepo_m4',
-								'ct_loadout_rifle_shouldershrug_handrepo_m4',
-								'ct_loadout_rifle_weightshift_handrepo_m4'
+							'ct_loadout_rifle_lookat_handrepo_m4',
+							'ct_loadout_rifle_shouldershrug_handrepo_m4',
+							'ct_loadout_rifle_weightshift_handrepo_m4'
 						]
 					};
 				}
-				if( weapon.indexOf( 'aug' ) !== -1  )
+				if ( weapon.indexOf( 'aug' ) !== -1 )
 				{
-					               
+					  					               
 					return {
 						cameraPreset: 2,
 						intro: 'ct_loadout_rifle_walkup_handrepo_aug',
 						idle: 'ct_loadout_rifle_idle_handrepo_aug',
 						animsList: [
-								'ct_loadout_rifle_weightshift01_handrepo_aug',
-								'ct_loadout_rifle_lookbehind01_handrepo_aug',
-								'ct_loadout_rifle_lookatwatch_handrepo_aug',
-								'ct_loadout_rifle_lookbehind02_handrepo_aug'
+							'ct_loadout_rifle_weightshift01_handrepo_aug',
+							'ct_loadout_rifle_lookbehind01_handrepo_aug',
+							'ct_loadout_rifle_lookatwatch_handrepo_aug',
+							'ct_loadout_rifle_lookbehind02_handrepo_aug'
 						]
 					};
 					
 				}
-				if( weapon.indexOf( 'ssg08' ) !== -1  )
+				if ( weapon.indexOf( 'ssg08' ) !== -1 )
 				{
-					                 
+					  					                 
 					return {
 						cameraPreset: 1,
 						intro: 'ct_loadout_rifle_ssg08_walkup',
 						idle: 'ct_loadout_rifle_ssg08_idle',
 						animsList: [
-								'ct_loadout_rifle_ssg08_lookat',
-								'ct_loadout_rifle_ssg08_shouldershrug',
-								'ct_loadout_rifle_ssg08_weightshift'
+							'ct_loadout_rifle_ssg08_lookat',
+							'ct_loadout_rifle_ssg08_shouldershrug',
+							'ct_loadout_rifle_ssg08_weightshift'
 						]
 					};
 					
 				}
-				if( weapon.indexOf( 'awp' ) !== -1  )
+				if ( weapon.indexOf( 'awp' ) !== -1 )
 				{
-					               
+					  					               
 					return {
 						cameraPreset: 1,
 						intro: 'ct_loadout_rifle_awp_walkup',
 						idle: 'ct_loadout_rifle_awp_idle',
 						animsList: [
-								'ct_loadout_rifle_awp_lookat',
-								'ct_loadout_rifle_awp_shouldershrug',
-								'ct_loadout_rifle_awp_weightshift'
+							'ct_loadout_rifle_awp_lookat',
+							'ct_loadout_rifle_awp_shouldershrug',
+							'ct_loadout_rifle_awp_weightshift'
 						]
 					};
 					
@@ -504,9 +686,9 @@ var CharacterAnims = ( function ()
 				
 			}
 
-			if( loadoutSlot.indexOf( 'heavy' ) !== -1 )
+			if ( loadoutSlot.indexOf( 'heavy' ) !== -1 )
 			{
-				if( weapon.indexOf( 'nova' ) !== -1  )
+				if ( weapon.indexOf( 'nova' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -521,7 +703,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if (weapon.indexOf( 'xm1014' ) !== -1  )
+				if ( weapon.indexOf( 'xm1014' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -536,22 +718,22 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'mag7' ) !== -1  )
+				if ( weapon.indexOf( 'mag7' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
 						intro: 'ct_loadout_mag7_walkup',
 						idle: 'ct_loadout_mag7_idle',
 						animsList: [
-								'ct_loadout_mag7_weightshift01',
-								'ct_loadout_mag7_lookbehind01',
-								'ct_loadout_mag7_lookatwatch',
-								'ct_loadout_mag7_lookbehind02'
+							'ct_loadout_mag7_weightshift01',
+							'ct_loadout_mag7_lookbehind01',
+							'ct_loadout_mag7_lookatwatch',
+							'ct_loadout_mag7_lookbehind02'
 						]
 					};
 					
 				}
-				if( weapon.indexOf( 'negev' ) !== -1  )
+				if ( weapon.indexOf( 'negev' ) !== -1 )
 				{
 					return {
 						cameraPreset: 3,
@@ -564,6 +746,7 @@ var CharacterAnims = ( function ()
 							'ct_loadout_negev_lift01',
 							'ct_loadout_negev_lift02',
 							'ct_loadout_negev_weightshift'
+							  							                      
 						]
 					};
 				}
@@ -613,6 +796,7 @@ var CharacterAnims = ( function ()
 						'ct_loadout_heavy_lift01',
 						'ct_loadout_heavy_lift02',
 						'ct_loadout_heavy_weightshift'
+						  						                      
 					]
 				};
 			}
@@ -636,7 +820,7 @@ var CharacterAnims = ( function ()
 				};
 			}
 
-			if ( loadoutSlot.indexOf( 'flashbang' ) !== -1 || loadoutSlot.indexOf( 'decoy') !== -1 )
+			if ( loadoutSlot.indexOf( 'flashbang' ) !== -1 || loadoutSlot.indexOf( 'decoy' ) !== -1 )
 			{
 				                              
 				return {
@@ -652,7 +836,7 @@ var CharacterAnims = ( function ()
 				};
 			}
 			
-			if ( loadoutSlot.indexOf( 'smokegrenade' ) !== -1 || loadoutSlot.indexOf( 'incgrenade') !== -1 || loadoutSlot.indexOf( 'hegrenade') !== -1 )
+			if ( loadoutSlot.indexOf( 'smokegrenade' ) !== -1 || loadoutSlot.indexOf( 'incgrenade' ) !== -1 || loadoutSlot.indexOf( 'hegrenade' ) !== -1 )
 			{
 				                                  
 				return {
@@ -684,11 +868,11 @@ var CharacterAnims = ( function ()
 				};
 			}
 			
-			if( loadoutSlot.indexOf( 'melee' ) !== -1 )
+			if ( loadoutSlot.indexOf( 'melee' ) !== -1 )
 			{
 				             
 				var defName = InventoryAPI.GetItemDefinitionName( itemId );
-				if( defName.indexOf( 'push' ) !== -1 )
+				if ( defName.indexOf( 'push' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -706,7 +890,7 @@ var CharacterAnims = ( function ()
 				}
 				                
 				defName = InventoryAPI.GetItemDefinitionName( itemId );
-				if( defName.indexOf( 'karambit' ) !== -1 )
+				if ( defName.indexOf( 'karambit' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -723,7 +907,7 @@ var CharacterAnims = ( function ()
 							't_loadout_knife_flipandslice'
 						]
 					};
-				}	
+				}
 				          
 				return {
 					cameraPreset: 1,
@@ -741,10 +925,10 @@ var CharacterAnims = ( function ()
 						't_loadout_knife_flipandslice'
 					]
 				};
-			}	
-			if( loadoutSlot.indexOf( 'secondary') !== -1 ||  loadoutSlot.indexOf( 'smg') !== -1)
+			}
+			if ( loadoutSlot.indexOf( 'secondary' ) !== -1 || loadoutSlot.indexOf( 'smg' ) !== -1 )
 			{
-				if( weapon.indexOf( 'elite' ) !== -1 )
+				if ( weapon.indexOf( 'elite' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -760,7 +944,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				
-				if( weapon.indexOf( 'revolver' ) !== -1 )
+				if ( weapon.indexOf( 'revolver' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -775,7 +959,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'p90' ) !== -1 )
+				if ( weapon.indexOf( 'p90' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -791,7 +975,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'ump45' ) !== -1 )
+				if ( weapon.indexOf( 'ump45' ) !== -1 )
 				{
 					return {
 						cameraPreset: 4,
@@ -807,7 +991,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'mp5sd' ) !== -1 )
+				if ( weapon.indexOf( 'mp5sd' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -824,7 +1008,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'mp7' ) !== -1 )
+				if ( weapon.indexOf( 'mp7' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -840,7 +1024,7 @@ var CharacterAnims = ( function ()
 						]
 					};
 				}
-				if( weapon.indexOf( 'bizon' ) !== -1 )
+				if ( weapon.indexOf( 'bizon' ) !== -1 )
 				{
 					return {
 						cameraPreset: 2,
@@ -857,7 +1041,7 @@ var CharacterAnims = ( function ()
 					};
 				}
 				         
-				if( weapon.indexOf( 'mac10' ) !== -1 )
+				if ( weapon.indexOf( 'mac10' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
@@ -889,57 +1073,57 @@ var CharacterAnims = ( function ()
 				};
 			}
 
-			if( loadoutSlot.indexOf( 'heavy') !== -1 )
+			if ( loadoutSlot.indexOf( 'heavy' ) !== -1 )
 			{
-				if( weapon.indexOf( 'negev' ) !== -1 )
+				if ( weapon.indexOf( 'negev' ) !== -1 )
 				{
-				return {
-					cameraPreset: 1,
-					intro: 't_loadout_heavy_walkup',
-					idle: 't_loadout_heavy_idle',
-					animsList: [
-						't_loadout_heavy_lookaround01',
-						't_loadout_heavy_lookleft',
-						't_loadout_heavy_lookaround02',
-						't_loadout_heavy_hoist',
-						't_loadout_heavy_lookatgun01',
-						't_loadout_heavy_lookaround03'
-					]
-				};
-			}
-				if( weapon.indexOf( 'm249' ) !== -1 )
+					return {
+						cameraPreset: 1,
+						intro: 't_loadout_heavy_walkup',
+						idle: 't_loadout_heavy_idle',
+						animsList: [
+							't_loadout_heavy_lookaround01',
+							't_loadout_heavy_lookleft',
+							't_loadout_heavy_lookaround02',
+							't_loadout_heavy_hoist',
+							't_loadout_heavy_lookatgun01',
+							't_loadout_heavy_lookaround03'
+						]
+					};
+				}
+				if ( weapon.indexOf( 'm249' ) !== -1 )
 				{
-				return {
-					cameraPreset: 1,
-					intro: 't_loadout_heavy_m249_walkup',
-					idle: 't_loadout_heavy_m249_idle',
-					animsList: [
-						't_loadout_heavy_m249_lookaround01',
-						't_loadout_heavy_m249_lookleft',
-						't_loadout_heavy_m249_lookaround02',
-						't_loadout_heavy_m249_hoist',
-						't_loadout_heavy_m249_lookatgun01',
-						't_loadout_heavy_m249_lookaround03'
-					]
-				};
-			}
-				if( weapon.indexOf( 'xm1014' ) !== -1 )
+					return {
+						cameraPreset: 1,
+						intro: 't_loadout_heavy_m249_walkup',
+						idle: 't_loadout_heavy_m249_idle',
+						animsList: [
+							't_loadout_heavy_m249_lookaround01',
+							't_loadout_heavy_m249_lookleft',
+							't_loadout_heavy_m249_lookaround02',
+							't_loadout_heavy_m249_hoist',
+							't_loadout_heavy_m249_lookatgun01',
+							't_loadout_heavy_m249_lookaround03'
+						]
+					};
+				}
+				if ( weapon.indexOf( 'xm1014' ) !== -1 )
 				{
-				return {
-					cameraPreset: 1,
-					intro: 't_loadout_shotgun_xm_walkup',
-					idle: 't_loadout_shotgun_xm_idle',
-					animsList: [
-						't_loadout_shotgun_xm_weightshift',
-						't_loadout_shotgun_xm_lookat01',
-						't_loadout_shotgun_xm_shrug',
-						't_loadout_shotgun_xm_headcock',
-						't_loadout_shotgun_xm_headgrab',
-						't_loadout_shotgun_xm_bellyscratch',
-						't_loadout_shotgun_xm_lookback'
-					]
-				};
-			}			
+					return {
+						cameraPreset: 1,
+						intro: 't_loadout_shotgun_xm_walkup',
+						idle: 't_loadout_shotgun_xm_idle',
+						animsList: [
+							't_loadout_shotgun_xm_weightshift',
+							't_loadout_shotgun_xm_lookat01',
+							't_loadout_shotgun_xm_shrug',
+							't_loadout_shotgun_xm_headcock',
+							't_loadout_shotgun_xm_headgrab',
+							't_loadout_shotgun_xm_bellyscratch',
+							't_loadout_shotgun_xm_lookback'
+						]
+					};
+				}
 				                           
 				return {
 					cameraPreset: 1,
@@ -956,26 +1140,42 @@ var CharacterAnims = ( function ()
 					]
 				};
 			}
-			if( loadoutSlot.indexOf( 'rifle') !== -1 )
+			if ( loadoutSlot.indexOf( 'rifle' ) !== -1 )
 			{
-				if( weapon.indexOf( 'awp' ) !== -1  || weapon.indexOf( 'galilar' ) !== -1  )
+				if ( weapon.indexOf( 'awp' ) !== -1 )
 				{
 					return {
 						cameraPreset: 1,
-						intro: 't_loadout_rifle02_walkup_awp_galil',
-						idle: 't_loadout_rifle02_idle_awp_galil',
+						intro: 't_loadout_rifle02_walkup_awp',
+						idle: 't_loadout_rifle02_idle_awp',
 						animsList: [
-							't_loadout_rifle02_weightshift_awp_galil',
-							't_loadout_rifle02_lookback_awp_galil',
-							't_loadout_rifle02_lookaround_awp_galil',
-							't_loadout_rifle02_lookback02_awp_galil',
-							't_loadout_rifle02_lookbatgun_awp_galil'
-							]
-						};
-			    }
+							't_loadout_rifle02_weightshift_awp',
+							't_loadout_rifle02_lookback_awp',
+							't_loadout_rifle02_lookaround_awp',
+							't_loadout_rifle02_lookback02_awp',
+							't_loadout_rifle02_lookbatgun_awp'
+						]
+					};
+				}
 				
-				if( weapon.indexOf( 'g3sg1' ) !== -1  ) 
-				{				
+				if ( weapon.indexOf( 'galilar' ) !== -1 )
+				{
+					return {
+						cameraPreset: 1,
+						intro: 't_loadout_rifle02_walkup_galil',
+						idle: 't_loadout_rifle02_idle_galil',
+						animsList: [
+							't_loadout_rifle02_weightshift_galil',
+							't_loadout_rifle02_lookback_galil',
+							't_loadout_rifle02_lookaround_galil',
+							't_loadout_rifle02_lookback02_galil',
+							't_loadout_rifle02_lookbatgun_galil'
+						]
+					};
+				}
+				
+				if ( weapon.indexOf( 'g3sg1' ) !== -1 ) 
+				{
 					return {
 						cameraPreset: 1,
 						intro: 't_loadout_rifle02_walkup_g3sg',
@@ -986,8 +1186,8 @@ var CharacterAnims = ( function ()
 							't_loadout_rifle02_lookaround_g3sg',
 							't_loadout_rifle02_lookback02_g3sg',
 							't_loadout_rifle02_lookbatgun_g3sg'
-							]
-						};
+						]
+					};
 				}
 				
 				          
@@ -1001,19 +1201,19 @@ var CharacterAnims = ( function ()
 						't_loadout_rifle02_lookaround',
 						't_loadout_rifle02_lookback02',
 						't_loadout_rifle02_lookatgun'
-						]
+						  						                             
+					]
 				};
 			}
 		}
 	};
 
 	return {
-		SaveModelPanelSettingsToConvars : _SaveModelPanelSettingsToConvars.SaveSettings,
-		StoreModelPanelSettingsForSaving : _SaveModelPanelSettingsToConvars.SetSettings,
 		PlayAnimsOnPanel			: _PlayAnimsOnPanel,
 		CancelScheduledAnim			: _CancelScheduledAnim,
 		ItemHasCharacterAnims		: _ItemHasCharacterAnims,
 		GetAnims					: _GetAnims,
-		GetValidCharacterModels		: _GetValidCharacterModels
+		GetValidCharacterModels		: _GetValidCharacterModels,
+		NormalizeTeamName			: _NormalizeTeamName
 	};
 })();

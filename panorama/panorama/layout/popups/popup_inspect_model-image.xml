@@ -21,6 +21,7 @@
 							manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
 							item="img://inventory_17293822569102704700"
 							mouse_rotate="true"
+							enable_floorshadow="true"
 							sound="weapon"/>
 			<ItemImage id="InspectItemImage" large="true" class="popup-inspect-image hidden"/>
 		</Panel>
@@ -29,6 +30,7 @@
 							class="full-width full-height"
 							manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
 							item="models/player/custom_player/legacy/ctm_sas.mdl"
+							enable_floorshadow="true"
 							mouse_rotate="true"/>
 		</Panel>
 	</Panel>

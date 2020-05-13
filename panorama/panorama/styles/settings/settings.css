@@ -147,7 +147,6 @@ CSGOSettingsEnumDropDown:hover
     tooltip-position: bottom;
 }
 
-
                         
 
                                     
@@ -182,6 +181,8 @@ CSGOSettingsEnumDropDown:hover
 {
 	horizontal-align: right;
 	flow-children: right;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
                                                                                                    
@@ -189,4 +190,40 @@ CSGOSettingsEnumDropDown:hover
 {
 	margin: 2px 8px 2px 8px;
 	text-align: center;
+}
+
+.map-background-carousel
+{
+	width: 100%;
+	height: 100%;
+}
+
+.map-background
+{
+	width: 100%;
+	height: 100%;
+}
+
+.bkg-dust2
+{
+	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_dust2.png" );
+	background-position: left 0px top -350px;
+}
+
+.bkg-aztec
+{
+	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_aztec.png" );
+	background-position: left 0px top -350px;
+}
+
+.bkg-mirage
+{
+	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_aztec.png" );
+	background-position: left 0px top -350px;
+}
+
+.bkg-office
+{
+	background-image: url( "file://{images}/map_icons/screenshots/1080p/cs_office.png" );
+	background-position: left 0px top -350px;
 }

@@ -174,12 +174,23 @@ var Loadout = ( function() {
 
 		_ShowFlairReset( loadoutSlot, noIdEquipped );
 
+		var elSingleItemPanel = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSingleItem' );
+		elSingleItemPanel.SetHasClass( 'extra-tall', loadoutSlot === 'customplayer' );
+	
+		                                                                                   
+		var elCharControls = $.GetContextPanel().FindChildInLayoutFile( 'id-character-buttons-container' );
+		elCharControls.SetHasClass( 'hidden', true );
+		
+		elModel.visible = !noIdEquipped;
+		
 		if ( noIdEquipped )
 		{
 			elTitle.text = $.Localize( '#inv_empty_loadout_slot' );
 			return;
 		}
-		
+	
+		var elBackground = $.GetContextPanel().FindChildInLayoutFile( 'loadout-single-item__bg' );
+
 		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( idForDisplay );
 		InventoryAPI.PrecacheCustomMaterials( idForDisplay );
 
@@ -188,6 +199,11 @@ var Loadout = ( function() {
 			modelPath,
 			false
 		);
+
+	
+		elBackground.SetImage( "file://{images}/backgrounds/inspect.svg" );
+		
+		_InitCharacterItemPanel( itemId );
 
 		elTitle.text = ItemInfo.GetName( idForDisplay );
 		var rarityColor = ItemInfo.GetRarityColor( itemId );
@@ -198,6 +214,25 @@ var Loadout = ( function() {
 		}
 	};
 
+	var _InitCharacterItemPanel = function( charItemId )
+	{
+		$( '#id-character-buttons-container' ).SetHasClass( 'hidden', !ItemInfo.IsCharacter( charItemId ) );
+
+		if ( !ItemInfo.IsCharacter( charItemId ) )
+			return;
+	
+		                                                                                 
+
+		var characterToolbarButtonSettings = {
+			charItemId: charItemId,
+			cameraPresetUnzoomed: 5,
+			cameraPresetZoomed: 6,
+		};
+
+		CharacterButtons.InitCharacterButtons( $('#id-character-buttons'), $('#LoadoutSingleItemModel'), characterToolbarButtonSettings );
+	}
+
+	
 	var _ShowFlairReset = function( loadoutSlot, noIdEquipped )
 	{
 		var elClearBtn = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutResetFlair' );
@@ -224,7 +259,7 @@ var Loadout = ( function() {
 		var elListerToUpdate = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutItemList' );
 		var elDropdown = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSortDropdown' );
 		var elShuffle = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutShuffleToggle' );
-		var sortType = elDropdown.GetSelected().id;
+		var sortType = elDropdown.GetSelected() ? elDropdown.GetSelected().id : "";
 
 		var defName= _GetUsesWedges() && elShuffle.checked ? InventoryAPI.GetItemDefinitionName( _GetItemIdFromSelectedWedge() ) : '';
 
@@ -431,8 +466,12 @@ var Loadout = ( function() {
 		}
 	};
 
-	var _UpdateForSingleSlotItems = function()
+	var _UpdateForSingleSlotItems = function( pos, subslot, oldItemId, newItemId)
 	{
+		                         
+		if ( oldItemId == newItemId )
+			return;
+		
 		if ( _GetUsesWedges() )
 		{
 			var loadoutSlot = _GetSelectededLoadoutSlot();
@@ -530,20 +569,20 @@ var Loadout = ( function() {
 
                           
     return {
-		Init: _Init,
-		ShowRadialLoadout: _ShowRadialLoadout,
-		ShowSingleSlotLoadout: _ShowSingleSlotLoadout,
-		ShowItemsForSelectedSlot: _ShowItemsForSelectedSlot,
-		OnReadyForDisplay: _OnReadyForDisplay,
-		OnUnreadyForDisplay: _OnUnreadyForDisplay,
-		LoadoutWedgePressed: _LoadoutWedgePressed,
-		UpdateForSingleSlotItems: _UpdateForSingleSlotItems,
-		ResetFlair: _ResetFlair,
-		UpdateItemLister: _UpdateItemList,
-		OnShuffleToggle: _OnShuffleToggle,
-		SetLoadoutToSlot: _SetLoadoutToSlot,
-		ToggleTeam: _ToggleTeam,
-		ShowShuffleContextMenu: _ShowShuffleContextMenu
+		Init								: _Init,
+		ShowRadialLoadout					: _ShowRadialLoadout,
+		ShowSingleSlotLoadout				: _ShowSingleSlotLoadout,
+		ShowItemsForSelectedSlot			: _ShowItemsForSelectedSlot,
+		OnReadyForDisplay					: _OnReadyForDisplay,
+		OnUnreadyForDisplay					: _OnUnreadyForDisplay,
+		LoadoutWedgePressed					: _LoadoutWedgePressed,
+		UpdateForSingleSlotItems			: _UpdateForSingleSlotItems,
+		ResetFlair							: _ResetFlair,
+		UpdateItemLister					: _UpdateItemList,
+		OnShuffleToggle						: _OnShuffleToggle,
+		SetLoadoutToSlot					: _SetLoadoutToSlot,
+		ToggleTeam							: _ToggleTeam,
+		ShowShuffleContextMenu				: _ShowShuffleContextMenu,
     };
 
 } )();

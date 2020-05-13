@@ -5,6 +5,7 @@
 		<include src="file://{resources}/styles/controlslibrary.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/controlslibrary.js" />
 	</scripts>
 
@@ -42,6 +43,9 @@
 				</RadioButton>
 				<RadioButton id="JsControlScene" group="nav" onactivate="NavigateToTab('ControlsLibScenePanel','JsControlScene');">
 					<Label text="Scene"/>
+				</RadioButton>
+				<RadioButton id="JsControlScene2" group="nav" onactivate="NavigateToTab('ControlsLibMultiScenePanel','JsControlScene2');">
+					<Label text="Scene2"/>
 				</RadioButton>
 				<RadioButton id="JsControlCanvas" group="nav" onactivate="NavigateToTab('ControlsLibCanvas','JsControlCanvas');">
 					<Label text="Canvas"/>
@@ -250,6 +254,12 @@
 						</Button>
 						<Button class="PopupButton" onactivate="OnPopupCustomLayoutSurvivalEndOfMatch()">
 							<Label text="Survival End Of Match"/>
+						</Button>
+						<Button class="PopupButton" onactivate="OnPopupCustomLayoutXpGrant()">
+							<Label text="Xp Grant"/>
+						</Button>
+						<Button class="PopupButton" onactivate="OnPopupCustomLayoutOperationHub()">
+							<Label text="Operation Hub"/>
 						</Button>
 					</Panel>
 					
@@ -516,78 +526,46 @@
 			</Panel>
 
 			                       
-			<Panel id="ControlsLibScenePanel" class="ControlsLib">
-
+			<Panel id="ControlsLibScenePanel" class="ControlsLib" onload="InitScenePanel()">
 				<Panel class="left-right-flow" acceptsinput="true">
 					<Panel class="top-bottom-flow">
-						<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest - player"/>
-						<Label class="fontSize-m fontWeight-light" text="Left or right-click player rotate"/>
-						<Label class="fontSize-m fontWeight-light" text="middle-click debug camera"/>
-						<ItemPreviewPanel id="Player1" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res" item="img://inventory_4295003481" mouse_rotate="true"/> 
-						                                                                                                                                                                                                                                      
+						<ItemPreviewPanel id="Player1" class="ItemPreviewPanelForBuildingInventoryImages" manifest="resource/ui/econ/CharacterIcon.res" item="models/player/custom_player/legacy/ctm_gsg9.mdl" mouse_rotate="true"> 
+							<Panel id="ItemPreviewPanelForBuildingInventoryImages__SafeFrame"/>
+						</ItemPreviewPanel>
 					</Panel>
-						                                                                                                                                                                       
-					<Panel class="left-right-flow">
-						<Panel class="top-bottom-flow">
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest"/>
-							<Label class="fontSize-m fontWeight-light" text="Empty root mdl, left or right-click mdl rotate"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="img://inventory_18446744069414584384" mouse_rotate="true"/>
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest - gloves"/>
-							<Label class="fontSize-m fontWeight-light" text="Transform and border"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeSpinningBorder" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="img://inventory_18446744069414589348" mouse_rotate="true"/> 
-						</Panel>
-						<Panel class="top-bottom-flow" style="overflow: scroll;">
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest - knife"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeWide" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="img://inventory_18446744069414584379" mouse_rotate="true"/> 
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest"/>
-							<Label class="fontSize-m fontWeight-light" text="Animate wash-color"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeWidePulseWash" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest.res" item="img://inventory_18446744069414584336" mouse_rotate="true"/>
-							<Label class="fontSize-m fontWeight-light" text="Workshop preview manifest"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeWide" manifest="resource/ui/econ/ItemModelPanelWorkshopWeaponPreview_temp_panorama.res" item="img://inventory_18446744069414584353" mouse_rotate="true"/>
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest - music kit"/>
-							<Label class="fontSize-m fontWeight-light" text="Animate blur"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeWidePulseBlur" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest.res" item="img://inventory_4295015865" mouse_rotate="false"/>
-							<Label class="fontSize-m fontWeight-light" text="Weapon preview manifest - beanie"/>
-							<Label class="fontSize-m fontWeight-light" text="Animate saturation"/>
-							<ItemPreviewPanel class="ItemPreviewPanelLargeWidePulseSaturation" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="img://inventory_18446744069414589330" mouse_rotate="true"/>
-						</Panel>
+
+					<Panel class="top-bottom-flow">
+						<Button id="" class="FlatButton" onactivate='SceneNextAnimSequence();'>
+							<Label  id="" text="Next Anim Sequence"/>
+						</Button>
+						<Button id="" class="FlatButton" onactivate='ScenePrevAnimSequence();'> 
+							<Label  id="" text="Prev Anim Sequence"/>
+						</Button>
+						<Button id="" class="FlatButton" onactivate='GenerateInventoryImages();'>
+							<Label  id="" text="Generate Inventory Images"/>
+						</Button>
 					</Panel>
+
 				</Panel>
-
 			</Panel>
 
-			                                    
-			<Panel id="ControlsLibCharacterCTPanel" class="ControlsLib">
-				                                  
-					                                                           
-					                                                                                                                                                                                                                             
-					                                                           
-					                                                                                                                                                                                                                                
-				          
+			                             
+			<Panel id="ControlsLibMultiScenePanel" class="ControlsLib" onload="InitSceneWithContextsPanel()">
+				<Panel class="left-right-flow" acceptsinput="true">
+					<Panel class="top-bottom-flow">
+						<ItemPreviewPanel id="MultiPlayer" class="ItemPreviewPanelForBuildingInventoryImages" manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res" item="models/player/custom_player/legacy/ctm_sas.mdl" mouse_rotate="true" enable_floorshadow="true"/> 
+					</Panel>
 
-					<ItemPreviewPanel id="Player1" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/ctm_swat.mdl" mouse_rotate="true"/> 
-					<ItemPreviewPanel id="Player2" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/ctm_gsg9_variantd.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player4" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/ctm_fbi_variantd.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player5" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/ctm_sas.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player3" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/ctm_st6_variantd.mdl" mouse_rotate="true"/>
-					
-			</Panel>
+					<Panel class="top-bottom-flow">
+						<Button id="" class="FlatButton" onactivate='SceneNextItemContext();'>
+							<Label  id="" text="Next Scene Context"/>
+						</Button>
+						<Button id="" class="FlatButton" onactivate='ScenePrevItemContext();'> 
+							<Label  id="" text="Prev Scene Context"/>
+						</Button>
+					</Panel>
 
-			                                   
-			<Panel id="ControlsLibCharacterTPanel" class="ControlsLib">
-				                                  
-					                                                           
-					                                                                                                                                                                                                                             
-					                                                           
-					                                                                                                                                                                                                                                
-				          
-
-					<ItemPreviewPanel id="Player1" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/tm_balkan_varianta.mdl" mouse_rotate="true"/> 
-					<ItemPreviewPanel id="Player2" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/tm_phoenix.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player4" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/tm_professional.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player5" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/tm_pirate_variantc.mdl" mouse_rotate="true"/>
-					<ItemPreviewPanel id="Player3" class="ItemPreviewPanelPlayerLarge" manifest="resource/ui/econ/ItemModelPanelWeaponPreviewManifest_temp_panorama.res" item="models/player/custom_player/legacy/tm_leet_variante.mdl" mouse_rotate="true"/>
-					
+				</Panel>
 			</Panel>
 
 			                   
@@ -785,6 +763,16 @@
 					<Label class="fontSize-l fontWeight-Bold" text="Frames:" />
 					<Frame src="file://{resources}/layout/controlslibrary_frameexample.xml" />
 					<Frame snippet="frame-snippet-example" />
+
+					<Label class="fontSize-l fontWeight-Bold" text="Persepective:" />
+					<Panel class="TestCssPerspectiveParent">
+			
+						<Panel class="TestCssPerspectiveChild"/>
+					</Panel>
+					<Panel>
+						<ItemPreviewPanel id="Player1" class="ItemPreviewPanelLargeSpinningBorder" manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res" item="models/player/custom_player/legacy/ctm_sas.mdl" mouse_rotate="true"/> 
+					</Panel>
+					
 				</Panel>
 			</Panel>
 

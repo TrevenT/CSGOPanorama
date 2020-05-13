@@ -44,8 +44,8 @@
 
 					<Image id="Flashed" src="file://{images}/hud/radar/mapoverview/icon-flashed.png"/>
 
-					<Label id="PlayerNumber" class="PI_Text PI_Text_Number"/>
-					<Label id="PlayerName" class="PI_Text PI_TextName"/>
+					<Label id="PlayerNumber" class="PI_Text PI_Text_Number" />
+					<Label id="PlayerName" class="PI_Text PI_TextName" />
 				</Panel>
 
 			</Panel>
@@ -92,12 +92,8 @@
 				<Panel id="PlantedBomb"/>
 				<Panel id="DroppedBomb"/>
 
-				                                                                                              
-				                                                                                             
-			
 				<Image id="BombAbove" class="PI_Above" src="file://{images}/hud/radar/icon-radar-bomb-above.png"/>
 				<Image id="BombBelow" class="PI_Below" src="file://{images}/hud/radar/icon-radar-bomb-below.png"/>
-				                                                                                      
         <Image id="CreateBombPack" textureheight="12" texturewidth="16" src="file://{images}/hud/radar/C4_sml.png"/>
 
 				<Image id="DefuserIconDropped" src="file://{images}/hud/radar/icon-defuse-dropped.png"/>

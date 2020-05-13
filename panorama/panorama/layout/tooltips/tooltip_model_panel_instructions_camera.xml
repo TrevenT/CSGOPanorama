@@ -15,15 +15,8 @@
 		<Label allowrawtext="true" text="" />
 		<Label allowrawtext="true" text="ctrl + c - copy camera to clipboard" />
 		<Label allowrawtext="true" text="p - copy camera 'preset' to clipboard" />
+		<Label text="" />
+		<Label text="alt + left-click + drag - reposition debug panel" />
 	</Panel>
-
-	                                                           
-		                                                                    
-		                                     
-		                                                                          
-		                                                                                  
-		                                     
-		                                                                        
-	          
 
 </root>

@@ -113,7 +113,7 @@
 {
     transform: scale3d( 0.95, 0.95, 0.95 );
 	position: 0px VoicePanelYOffset 0px;
-	flow-children: down;
+	flow-children: none;
 }
 
 .VoiceNotice
@@ -376,4 +376,34 @@ CSGOAvatarImage.SteamAvatar .AvatarImage
 	color: #7099DA;
 	letter-spacing: 0px;
 	text-shadow-fast: 1px 1px black;
+}
+
+
+.voice-disabled-indicator
+{
+	flow-children: right;
+	width: fit-children;
+	height: 24px;
+	visibility: collapse;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), color-stop( 0.3, #00000055 ) , color-stop(0.7, #00000077), color-stop( 0.9, #00000055 ), to( #00000000 ) );
+	vertical-align: bottom;
+}
+
+.voice-disabled .voice-disabled-indicator,
+.clutch-mode .voice-disabled-indicator,
+{
+	visibility: visible;
+}
+
+.voice-disabled-indicator-label
+{
+	font-size: 12px;
+	font-weight: lighter;
+	color: white;
+	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
+}
+
+.voice-disabled-indicator-icon
+{
+	opacity: 0.7;
 }

@@ -130,16 +130,18 @@ var SettingsMenu = ( function () {
         }
     }
 
-    
-	var _OnSettingsMenuHidden = function ()
-	{
-                                           
-        GameInterfaceAPI.ConsoleCommand( "host_writeconfig");
-        
+    var _OnSettingsMenuShown = function ()
+    {
                                                                                      
                                                                                            
                                                        
         SettingsMenuShared.NewTabOpened( activeTab );
+    }
+    
+	var _OnSettingsMenuHidden = function ()
+	{
+                                           
+        GameInterfaceAPI.ConsoleCommand( "host_writeconfig" );
 	}
 
 	var _NavigateToSetting = function ( tab, id )
@@ -154,6 +156,7 @@ var SettingsMenu = ( function () {
         NavigateToTab	                : _NavigateToTab,
         NavigateToSetting	            : _NavigateToSetting,
         AccountPrivacySettingsChanged   : _AccountPrivacySettingsChanged,
+        OnSettingsMenuShown             : _OnSettingsMenuShown,
         OnSettingsMenuHidden            : _OnSettingsMenuHidden
     };
     
@@ -181,6 +184,7 @@ var SettingsMenu = ( function () {
     $.RegisterForUnhandledEvent( "PanoramaComponent_MyPersona_AccountPrivacySettingsChanged", 
         SettingsMenu.AccountPrivacySettingsChanged );
 
+    $.RegisterEventHandler( 'ReadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuShown );
 	$.RegisterEventHandler( 'UnreadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuHidden );
 	$.RegisterForUnhandledEvent( 'SettingsMenu_NavigateToSetting',  SettingsMenu.NavigateToSetting );
 	

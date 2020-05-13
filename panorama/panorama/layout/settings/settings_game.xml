@@ -489,6 +489,16 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 
+					                                    
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#Cstrike_Delay_Unzoom_Sniper" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_sniper_delay_unscope">
+							<Label text="#GameUI_Yes" value="1" id ="delayunzoomsniper0"/>
+							<Label text="#GameUI_No" value="0" id ="delayunzoomsniper1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+					
 					                         
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_ViewmodelPos" class="half-width"/>

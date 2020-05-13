@@ -21,7 +21,7 @@ var EOM_Voting = (function () {
 		}
 
 		       
-		var oTime = GameStateAPI.GetTimeDataJSO();
+		var oTime = MockAdapter.GetTimeDataJSO();
 
 		if ( !oTime )
 		{ 
@@ -33,7 +33,7 @@ var EOM_Voting = (function () {
 		_m_pauseBeforeEnd = oTime[ "time" ];
 
 		                        
-		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
+		var oMatchEndVoteData = MockAdapter.NextMatchVotingData( _m_cP );
 
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.submenu_leveloptions_slidein', 'MOUSE' );
 
@@ -172,7 +172,7 @@ var EOM_Voting = (function () {
 		if ( !_m_cP || !_m_cP.IsValid() )
 			return;
 		
-		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
+		var oMatchEndVoteData = MockAdapter.NextMatchVotingData( _m_cP );
 
 		if ( !oMatchEndVoteData )
 		{	
@@ -332,9 +332,14 @@ var EOM_Voting = (function () {
   
   
 
-	function _Start() 
+	function _Start()  
 	{
-			
+		if ( MockAdapter.GetMockData() && !MockAdapter.GetMockData().includes( 'VOTING' ) )
+		{
+			_End();
+			return;
+		}
+
 		if ( _DisplayMe() )
 		{
 			EndOfMatch.SwitchToPanel( 'eom-voting' );
@@ -352,7 +357,7 @@ var EOM_Voting = (function () {
 	{
 		_CancelUpdateJob();
 		
-		$.DispatchEvent( 'EndOfMatch_ShowNext' );
+		EndOfMatch.ShowNextPanel();
 	}
 
 	function _CancelUpdateJob ()

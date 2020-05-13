@@ -25,14 +25,18 @@ InventoryItemList
 
 .AspectRatio16x10 .mainmenu-content__container InventoryItemList
 {
-	padding: 32px 88px;
+	padding: 32px 50px;
 }
 
 .AspectRatio16x9 .mainmenu-content__container InventoryItemList,
 .AspectRatio21x9 .mainmenu-content__container InventoryItemList,
-.AspectRatio16x10 .mainmenu-content__container .loadout--visible InventoryItemList
 {
 	padding: 32px 96px;
+}
+
+.AspectRatio16x10 .mainmenu-content__container .loadout--visible InventoryItemList
+{
+	padding: 32px 50px;
 }
 
 .AspectRatio5x4 .mainmenu-content__container  InventoryItemList
@@ -42,7 +46,7 @@ InventoryItemList
 
 .AspectRatio4x3 .mainmenu-content__container InventoryItemList
 {
-	padding: 32px 46px;
+	padding: 32px 24px;
 }
 
 .AspectRatio4x3 .mainmenu-content__container .crafting-items InventoryItemList

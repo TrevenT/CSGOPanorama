@@ -106,9 +106,8 @@ var friendLobby = ( function (){
 		if ( gameMode === 'cooperative' )
 		{
 			var questId = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/questid' );
-			var questItemId = InventoryAPI.GetQuestItemIDFromQuestID( questId );
-	
-			return InventoryAPI.GetItemName( '', questItemId );
+			if ( questId && questId != '0' )
+				return $.Localize( MissionsAPI.GetQuestDefinitionField( parseInt( questId ), "loc_name" ) );
 		}
 
 		if( !mapGroups)

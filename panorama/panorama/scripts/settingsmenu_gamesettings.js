@@ -2,6 +2,7 @@
 
 var SettingsMenuGameSettings = ( function() {
 
+
     var _InitSteamClanTagsPanel = function () {   
         var clanTagDropdown = $('#ClanTagsEnum');
         clanTagDropdown.RemoveAllOptions();
@@ -31,11 +32,10 @@ var SettingsMenuGameSettings = ( function() {
         }
 
         clanTagDropdown.RefreshDisplay();
-    };
+	};
 
     return {
-
-        InitSteamClanTagsPanel : _InitSteamClanTagsPanel
+        InitSteamClanTagsPanel : _InitSteamClanTagsPanel,
     };
 
 })();
@@ -43,5 +43,6 @@ var SettingsMenuGameSettings = ( function() {
               
 (function ()
 {
-    SettingsMenuGameSettings.InitSteamClanTagsPanel();
+	SettingsMenuGameSettings.InitSteamClanTagsPanel();
+
 })();

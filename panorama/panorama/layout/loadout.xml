@@ -1,5 +1,6 @@
 <root>
 	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/mainmenu.css"/>
 		<include src="file://{resources}/styles/buymenu.css" />
@@ -9,6 +10,8 @@
 	<scripts>
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/loadout.js" />
+		<include src="file://{resources}/scripts/common/characteranims.js" />
+		<include src="file://{resources}/scripts/characterbuttons.js" />
 	</scripts>
 
 	<snippets>
@@ -124,6 +127,10 @@
 				<RadioButton onactivate="Loadout.ShowItemsForSelectedSlot()" group="LoadoutSlots" data-slot="flair0">
 					<Label class="" text="#LoadoutSlot_Flair"/>
 				</RadioButton>
+
+				<RadioButton onactivate="Loadout.ShowItemsForSelectedSlot()" group="LoadoutSlots" data-slot="customplayer">
+					<Label class="" text="#LoadoutSlot_customplayer"/>
+				</RadioButton>
 			</Panel>
 
 			<Panel class="horizontal-align-right vertical-center left-right-padding">	
@@ -148,19 +155,34 @@
 				</Panel>
 
 				<Panel id="LoadoutSingleItem" class="loadout-single-item-container">
-					<Label id="LoadoutSingleItemLabel" class="bottom-padding stratum-font fontSize-xl text-align-center full-width fontWeight-Medium" text=""/>
+		
+					<Label id="LoadoutSingleItemLabel" class="loadout-single-item-title" text=""/>
 					<Panel id="LoadoutSingleItemRarity" class="loadout-single-item-rarity"/>
 						<Panel class="full-width full-height">
-							<Image class="loadout-single-item-bg" 
+							                                                                                                                                                
+							<Image id="loadout-single-item__bg"
+									class="loadout-single-item-bg" 
 									textureheight="768"
 									texturewidth="-1"
 									src="file://{images}/backgrounds/inspect.svg"
 									scaling="stretch-to-fit-y-preserve-aspect" />
-							<ItemPreviewPanel id="LoadoutSingleItemModel"
-									class="loadout-single-item"
-									manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
-									item="img://inventory_4295015926"
-									mouse_rotate="true"/>
+
+							<Panel class="full-width full-height">
+								<ItemPreviewPanel id="LoadoutSingleItemModel"
+										class="loadout-single-item"
+										manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+										item="img://inventory_4295015926"
+										enable_floorshadow="true"
+										mouse_rotate="true">
+									
+								</ItemPreviewPanel>
+								                                             
+								<Panel id="id-character-buttons-container" class="popup-button-row">
+									<Frame id="id-character-buttons" src="file://{resources}/layout/characterbuttons.xml"/>
+								</Panel>
+							</Panel>
+
+
 							<Button id="LoadoutResetFlair" 
 									class="IconButton vertical-align-top horizontal-align-right" 
 									onactivate="Loadout.ResetFlair();"
@@ -171,6 +193,8 @@
 						</Panel>
 				</Panel>
 
+				                                      
+
 				<Panel id="LoadoutSelectTeam" class="loadout-team-selector">
 					<RadioButton id="LoadoutTeamCt" onactivate="Loadout.ShowItemsForSelectedSlot();" group="LoadoutTeam" class="PopupButton" data-team="3">
 						<Image texturewidth="42" textureheight="-1" src="file://{images}/icons/ct_logo.svg"/>
@@ -180,7 +204,9 @@
 						<Image texturewidth="42" textureheight="-1" src="file://{images}/icons/t_logo.svg"/>
 					</RadioButton>
 				</Panel>
+
 			</Panel>
+			<Panel class="loadout-team-selector-spacer"/>
 			<Panel id="LoadoutItemListerContainer" class="loadout-item-list-container">
 				<Panel id="LoadoutEmptyLister" class="full-width full-height mainmenu-content__background-color hidden">
 					<Panel class="left-right-flow horizontal-center vertical-center">

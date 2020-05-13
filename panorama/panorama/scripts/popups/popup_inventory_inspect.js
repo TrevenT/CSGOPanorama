@@ -45,7 +45,6 @@ var InventoryInspect = ( function()
 		InpsectPurchaseBar.Init( elPurchasePanel, itemId, _GetSettingCallback );
 
 		PlayShowPanelSound( itemId );
-		
 		_SetDescription( itemId );
 		_LoadEquipNotification();
 
@@ -54,6 +53,18 @@ var InventoryInspect = ( function()
 		{
 			var elPopUpInspectFullScreenHostContainer = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectFullScreenHostContainer' );
 			elPopUpInspectFullScreenHostContainer.AddClass( styleforPopUpInspectFullScreenHostContainer );
+		}
+
+		var blurOperationPanel = ( $.GetContextPanel().GetAttributeString( 'bluroperationpanel', 'false' ) === 'true' ) ? true : false;
+		if ( blurOperationPanel )
+		{
+			$.DispatchEvent( 'BlurOperationPanel' );
+		}
+
+		var defIdx = InventoryAPI.GetItemDefinitionIndex( itemId );
+		if ( defIdx > 0 )
+		{
+			StoreAPI.RecordUIEvent( "Inventory_Inspect", defIdx );
 		}
 	};
 
@@ -144,6 +155,32 @@ var InventoryInspect = ( function()
 		var storeItemId = $.GetContextPanel().GetAttributeString( "storeitemid", "" );
 		if( storeItemId )
 		{
+			var storeItemSeasonAccess = InventoryAPI.GetItemAttributeValue( storeItemId, 'season access' );
+			var acquiredItemSeasonAccess = InventoryAPI.GetItemAttributeValue( ItemId, 'season access' );
+			if( storeItemSeasonAccess === acquiredItemSeasonAccess )
+			{
+				var nSeasonAccess = GameTypesAPI.GetActiveSeasionIndexValue();
+				var nCoinRank = MyPersonaAPI.GetMyMedalRankByType( ( nSeasonAccess + 1 ) + "Operation$OperationCoin" );
+
+				                                                                    
+				if( nCoinRank === 1 && nSeasonAccess === acquiredItemSeasonAccess )
+				{
+					_ClosePopup();
+					$.DispatchEvent( 'HideStoreStatusPanel', '' );
+	
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+						'itemid=' + ItemId +
+						'&' + 'asyncworktype=useitem' + 
+						'&' + 'seasonpass=true' +
+						'&' + 'bluroperationpanel=true'
+					);
+	
+					return;
+				}
+			}
+
 			var defName = ItemInfo.GetItemDefinitionName(  InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_charge, 0 ));
 			if ( ItemInfo.ItemMatchDefName( storeItemId, defName ) &&
 				ItemInfo.ItemMatchDefName( ItemId, defName ) )

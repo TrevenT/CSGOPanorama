@@ -350,6 +350,23 @@ Label.Orange
 	saturation: 1.0;
 }
 
+.ItemPreviewPanelForBuildingInventoryImages
+{ 
+	horizontal-align: middle;
+	width: 880px;
+	height: 880px;
+	border: 1.0px solid white;
+	blur: gaussian( 0 );
+	saturation: 1.0;
+}
+
+#ItemPreviewPanelForBuildingInventoryImages__SafeFrame
+{
+	width: 100%;
+	height: width-percentage(75%);
+	border: 4.0px solid red;
+}
+
 #Player1
 {
     transform: translateX(0px);
@@ -1120,4 +1137,26 @@ Label.Orange
 {
 	height: 100px;
 	padding: 5px;
+}
+
+.TestCssPerspectiveParent
+{
+	perspective: 100px;
+	perspective-origin : 25% 50%;
+	transform-origin: 50% 0%;
+	width: 128px;
+	height: 128px;
+	border: 1px solid white;
+}
+
+
+.TestCssPerspectiveChild
+{
+	transform-origin: 50% 0%;
+	width: 100px;
+	height: 100px;
+	transform: rotateX( 45deg );
+	background-color: red;
+	horizontal-align: center;
+	vertical-align: center;
 }

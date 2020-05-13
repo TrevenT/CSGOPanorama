@@ -25,6 +25,11 @@ CSGOHudChat
 	padding-bottom: 23px;
 }
 
+.WindowRoot_TripleMonitor .EndOfMatchChat > #ChatContainer{
+	horizontal-align: center;
+	width: 33%;
+}
+
 .ChatLabelClass
 {
     background-color: black;

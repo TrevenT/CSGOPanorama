@@ -321,3 +321,52 @@ ItemPreviewSlider #Slider #SliderTrackProgress
 	height: 4px;
 	border-radius: 0px;
 }
+
+.ItemPreviewDebugSceneContextSelect
+{
+	flow-children: right;
+	horizontal-align: middle;
+	width: 150px;
+}
+
+.ItemPreviewInfo
+{
+	flow-children: down;
+	horizontal-align: left;
+	width: fit-children;
+}
+
+.ItemPreviewInfo_AnimSeq
+{
+	wash-color: white;
+  	             
+}
+
+.ItemPreviewInfo_AnimSeqWarn
+{
+	wash-color: #ff000000;
+
+	animation-name: animseq-pulse; 
+	animation-duration: 0.5s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+
+}
+
+@keyframes 'animseq-pulse'
+{
+	0%
+	{
+		wash-color: #ff000000;
+	}
+
+	50%
+	{
+		wash-color: #ff0000ff;
+	}
+
+	100%
+	{
+		wash-color: #ff000000;
+	}
+}

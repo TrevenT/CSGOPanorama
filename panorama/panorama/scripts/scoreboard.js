@@ -25,7 +25,7 @@ var Scoreboard = ( function()
 		return function()
 		{
 			if ( _m_LocalPlayerID == "" )
-				_m_LocalPlayerID = GameStateAPI.GetLocalPlayerXuid();
+				_m_LocalPlayerID = MockAdapter.GetLocalPlayerXuid();
 			return _m_LocalPlayerID;
 		}
 	}();
@@ -79,11 +79,9 @@ var Scoreboard = ( function()
 		function _CalculateAllCommends ()
 		{
 
-			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
-
 			[ 'leader', 'teacher', 'friendly' ].forEach( function( stat )
 			{
-				                                                                                 
+				                                                                                
 				                                                        
 
 				_SortCommendLeaderboard( stat );
@@ -240,9 +238,10 @@ var Scoreboard = ( function()
 
 		function _AddPlayer ( xuid )
 		{
+
 			var newPlayer = new player_t( xuid );
 
-			var teamName = GameStateAPI.GetPlayerTeamName( xuid );
+			var teamName = MockAdapter.GetPlayerTeamName( xuid );
 
 			if ( IsTeamASpecTeam( teamName ) )
 				teamName = "Spectator";
@@ -319,7 +318,7 @@ var Scoreboard = ( function()
 			{
 				var xuid = _m_arrPlayers[ i ].m_xuid;
 
-				if ( !GameStateAPI.IsPlayerConnected( xuid ) )
+				if ( !MockAdapter.IsPlayerConnected( xuid ) )
 				{
 					_DeletePlayerByXuid( xuid );
 				}
@@ -390,7 +389,7 @@ var Scoreboard = ( function()
 		  		                                        
 
 		                      
-		var oPlayerList = GameStateAPI.GetPlayerDataJSO();
+		var oPlayerList = MockAdapter.GetPlayerDataJSO();
 
 		if ( !oPlayerList || Object.keys( oPlayerList ).length === 0 )
 		{
@@ -407,6 +406,9 @@ var Scoreboard = ( function()
 			                                                                         
 
 			if ( !_m_oTeams[ teamName ] )
+			{
+				CreateTeam( teamName );
+			}
 				_m_oTeams[ teamName ] = new team_t( teamName );
 
 			for ( var j in oPlayerList[ teamName ] )
@@ -414,6 +416,9 @@ var Scoreboard = ( function()
 				var xuid = oPlayerList[ teamName ][ j ];
 
 				if ( xuid == 0 )
+					continue;
+
+				if ( !ShouldCreateTeamForMode( teamName ) )
 					continue;
 
 				var oPlayer = _m_oPlayers.GetPlayerByXuid( xuid );
@@ -431,17 +436,38 @@ var Scoreboard = ( function()
 		}
 
 		                                                                  
-		if ( !_m_oTeams[ "CT" ] )
-		{
-			_m_oTeams[ "CT" ] = new team_t( "CT" );
-		}
-
-		if ( !_m_oTeams[ "TERRORIST" ] )
-		{
-			_m_oTeams[ "TERRORIST" ] = new team_t( "TERRORIST" );
-		}
+		CreateTeams();
 
 		return true;
+
+		function CreateTeams()
+		{
+			CreateTeam("CT");
+			CreateTeam("TERRORIST");
+
+		}
+		
+		
+		function CreateTeam( team )
+		{
+			if ( !ShouldCreateTeamForMode( team ) )
+				return;	
+
+			if ( !_m_oTeams.team )
+			{
+				_m_oTeams.team = new team_t( team );
+			}
+		}
+
+		function ShouldCreateTeamForMode( team )
+		{
+			var mode = MockAdapter.GetGameModeInternalName( false );
+			if ( mode == "cooperative" || mode == "coopmission" )
+			{
+				return team.toUpperCase() === MockAdapter.GetCooperativePlayerTeamName().toUpperCase();
+			}
+			return true;
+		}
 	}
 
 	function _ChangeTeams ( oPlayer, newTeam )
@@ -478,7 +504,7 @@ var Scoreboard = ( function()
 		elPlayer.AddClass( "sb-team--" + newTeam );
 		
 		                                        
-		if ( IsTeamASpecTeam( newTeam ) && MatchStatsAPI.IsTournamentMatch() )
+		if ( IsTeamASpecTeam( newTeam ) && MockAdapter.IsTournamentMatch() )
 		{
 			elPlayer.AddClass( 'hidden' );
 			
@@ -636,14 +662,14 @@ var Scoreboard = ( function()
 		
 		var xuid = oPlayer.m_xuid;
 
-		oPlayer.m_oMatchStats = MatchStatsAPI.GetPlayerStatsJSO( xuid );
+		oPlayer.m_oMatchStats = MockAdapter.GetPlayerStatsJSO( xuid );
 
 		                    
 		    
 		   	       
 		    
 
-		if ( !GameStateAPI.IsPlayerConnected( xuid ) )
+		if ( !MockAdapter.IsPlayerConnected( xuid ) )
 		{
 			_m_oPlayers.DeletePlayerByXuid( xuid );
 		}
@@ -663,7 +689,7 @@ var Scoreboard = ( function()
 	        return;
 
 	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
-	    var bQ = ( GameStateAPI.IsLocalPlayerHLTV() && nCameraMan > -1 )
+	    var bQ = ( MockAdapter.IsLocalPlayerHLTV() && nCameraMan > -1 )
 
 	    if ( bQ )
 	    {
@@ -816,13 +842,13 @@ var Scoreboard = ( function()
 
 						elTeam.MoveChildBefore( elPlayer, children[ i ] );
 
-					   	                                                             
+					   	                                                            
 					   		     
 					   		      
 					   		     
 					   		        
 					   		       
-					   		                                                    
+					   		                                                   
 					   		     
 					   		      
 					   		     
@@ -835,13 +861,13 @@ var Scoreboard = ( function()
 				else if ( _lessthan(p1stat, p2stat) )
 				{
 
-					                                                         
+					                                                        
 					   	     
 					   	      
 					   	     
 					   	        
 					   	       
-					   	                                                    
+					   	                                                   
 					   	     
 					   	      
 					   	     
@@ -872,7 +898,7 @@ var Scoreboard = ( function()
 
 		for ( var stat in _m_oUpdateStatFns )
 		{
-
+			                                                                                                    
 			if ( typeof ( _m_oUpdateStatFns[ stat ] ) === 'function' )
 			{
 				_m_oUpdateStatFns[ stat ]( oPlayer, bSilent );
@@ -892,20 +918,23 @@ var Scoreboard = ( function()
 		
 		var elLabel = elPanel.FindChildTraverse( 'label' );
 
-		if ( !elLabel || !elLabel.IsValid() )
-			return;
-
 		var newStatValue = fnGetStat( oPlayer.m_xuid );
 		if ( newStatValue !== oPlayer.m_oStats[ stat ] )
 		{
 			if ( !bSilent )
 			{
-				_Pulse( elLabel );
+				if ( elLabel && elLabel.IsValid() )
+				{
+					_Pulse( elLabel );
+				}
 			}
 
 			oPlayer.m_oStats[ stat ] = newStatValue;
 
-			elLabel.text = newStatValue;
+			if ( elLabel && elLabel.IsValid() )
+			{
+				elLabel.text = newStatValue;
+			}
 		}
 	};
 
@@ -940,7 +969,7 @@ var Scoreboard = ( function()
 				fn = function( oPlayer, bSilent = false )
 				{
 
-					if ( GameStateAPI.IsFakePlayer( oPlayer.m_xuid ) )
+					if ( MockAdapter.IsFakePlayer( oPlayer.m_xuid ) )
 						return;
 					
 					var ownerXuid = oPlayer.m_xuid;
@@ -954,7 +983,7 @@ var Scoreboard = ( function()
 					{
 						borrowedXuid = GameStateAPI.GetPlayerXuidStringFromEntIndex( borrowedPlayerIndex );
 
-						if ( GameStateAPI.IsPlayerConnected( borrowedXuid ) )
+						if ( MockAdapter.IsPlayerConnected( borrowedXuid ) )
 						{
 							ownerXuid = borrowedXuid;
 							isBorrowed = true;
@@ -1008,7 +1037,7 @@ var Scoreboard = ( function()
 			case 'teamname':
 				fn = function( oPlayer, bSilent = false )
 				{
-					var newStatValue = GameStateAPI.GetPlayerTeamName( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerTeamName( oPlayer.m_xuid );
 
 					_ChangeTeams( oPlayer, newStatValue );
 				}
@@ -1039,7 +1068,7 @@ var Scoreboard = ( function()
 					}
 					else
 					{
-						_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerPing.bind( GameStateAPI ), true );
+						_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerPing, true );
 					}
 					
 					
@@ -1049,21 +1078,21 @@ var Scoreboard = ( function()
 			case 'kills':
 				fn = function( oPlayer, bSilent = false )
 				{
-					_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerKills.bind( GameStateAPI ), bSilent, 10.0 );
+					_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerKills, bSilent, 10.0 );
 				};
 				break;
 
 			case 'assists':
 				fn = function( oPlayer, bSilent = false )
 				{
-					_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerAssists.bind( GameStateAPI ), bSilent );
+					_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerAssists, bSilent );
 				};
 				break;
 
 			case 'deaths':
 				fn = function( oPlayer, bSilent = false )
 				{
-					_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerDeaths.bind( GameStateAPI ), bSilent );
+					_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerDeaths, bSilent );
 				};
 				break;
 
@@ -1123,7 +1152,7 @@ var Scoreboard = ( function()
 				fn = function( oPlayer, bSilent = false )
 				{
 
-					var newStatValue = GameStateAPI.GetPlayerMVPs( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerMVPs( oPlayer.m_xuid );
 					if ( newStatValue !== oPlayer.m_oStats[ stat ] )
 					{
 
@@ -1166,7 +1195,7 @@ var Scoreboard = ( function()
 			case 'status':
 				fn = function( oPlayer, bSilent )
 				{
-					var newStatValue = GameStateAPI.GetPlayerStatus( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerStatus( oPlayer.m_xuid );
 					if ( newStatValue !== oPlayer.m_oStats[ stat ] )
 					{
 						oPlayer.m_oStats[ stat ] = newStatValue;
@@ -1195,7 +1224,7 @@ var Scoreboard = ( function()
 			case 'score':
 				fn = function( oPlayer, bSilent = false )
 				{
-					_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerScore.bind( GameStateAPI ) );
+					_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerScore );
 				};
 				break;
 
@@ -1216,7 +1245,7 @@ var Scoreboard = ( function()
 					if ( !elLabel || !elLabel.IsValid() )
 						return;
 
-					var newStatValue = GameStateAPI.GetPlayerMoney( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerMoney( oPlayer.m_xuid );
 
 					oPlayer.m_oStats[ stat ] = newStatValue;
 
@@ -1248,21 +1277,31 @@ var Scoreboard = ( function()
 					                                
 					       
 					                                
+
+					oPlayer.m_oStats[ stat ] = MockAdapter.GetPlayerName( oPlayer.m_xuid );
+
 					var elNameLabel = elPanel.FindChildTraverse( "name" );
 					if ( !elNameLabel || !elNameLabel.IsValid() )
 						return;
 
-					elNameLabel.SetDialogVariable( 'player_name', GameStateAPI.GetPlayerName( oPlayer.m_xuid ) );
+					elNameLabel.SetDialogVariable( 'player_name', MockAdapter.GetPlayerName( oPlayer.m_xuid ) );
 
-					if ( GameStateAPI.GetPlayerClanTag( oPlayer.m_xuid ) != "" )
+					if ( MockAdapter.GetPlayerClanTag( oPlayer.m_xuid ) != "" )
 					{
-						elNameLabel.SetDialogVariable( 'player_clan', GameStateAPI.GetPlayerClanTag( oPlayer.m_xuid ) );
+						elNameLabel.SetDialogVariable( 'player_clan', MockAdapter.GetPlayerClanTag( oPlayer.m_xuid ) );
 						elNameLabel.text = "#Scoreboard_Player_Name_Clan";
 					}
 					else
 					{
 						elNameLabel.text = "#Scoreboard_Player_Name";
 					}
+
+					                                                   
+					          
+  					                                                         
+  					                         
+					          
+
 				}
 				break;
 			
@@ -1273,10 +1312,10 @@ var Scoreboard = ( function()
 				{
 					var newStatValue;
 
-					if (  GameStateAPI.IsDemoOrHltv() || IsTeamASpecTeam( GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() ) ) )
+					if (  MockAdapter.IsDemoOrHltv() || IsTeamASpecTeam( MockAdapter.GetPlayerTeamName( GetLocalPlayerId() ) ) )
 					return;
 				
-					if ( !GameStateAPI.IsXuidValid( oPlayer.m_xuid ) )
+					if ( !MockAdapter.IsXuidValid( oPlayer.m_xuid ) )
 					{
 						if ( 0 )                                                              
 							newStatValue = oPlayer.m_xuid;
@@ -1287,9 +1326,9 @@ var Scoreboard = ( function()
 					{
 						switch (stat)
 						{
-							case 'leader': newStatValue = GameStateAPI.GetPlayerCommendsLeader( oPlayer.m_xuid ); break;
-							case 'teacher': newStatValue = GameStateAPI.GetPlayerCommendsTeacher( oPlayer.m_xuid ); break;
-							case 'friendly': newStatValue = GameStateAPI.GetPlayerCommendsFriendly( oPlayer.m_xuid ); break;
+							case 'leader': newStatValue = MockAdapter.GetPlayerCommendsLeader( oPlayer.m_xuid ); break;
+							case 'teacher': newStatValue = MockAdapter.GetPlayerCommendsTeacher( oPlayer.m_xuid ); break;
+							case 'friendly': newStatValue = MockAdapter.GetPlayerCommendsFriendly( oPlayer.m_xuid ); break;
 						}						
 					}
 
@@ -1354,14 +1393,14 @@ var Scoreboard = ( function()
 						return;
 
 					         
-					if ( GameStateAPI.IsXuidValid( oPlayer.m_xuid ) )
+					if ( MockAdapter.IsXuidValid( oPlayer.m_xuid ) )
 					{
 						if ( elAvatarImage.steamid !== oPlayer.m_xuid )
 							elAvatarImage.steamid = oPlayer.m_xuid;
 					}
 					else
 					{
-						var team = GameStateAPI.GetPlayerTeamName( oPlayer.m_xuid );
+						var team = MockAdapter.GetPlayerTeamName( oPlayer.m_xuid );
 
 						                               
 						if ( elAvatarImage.m_team != team )
@@ -1381,7 +1420,7 @@ var Scoreboard = ( function()
 					var elPlayerColor = elAvatarImage.FindChildTraverse( 'player-color' );
 					if ( elPlayerColor && elPlayerColor.IsValid() )
 					{
-						var teamColor = GameStateAPI.GetPlayerColor( oPlayer.m_xuid );
+						var teamColor = MockAdapter.GetPlayerColor( oPlayer.m_xuid );
 						if ( teamColor !== "" )
 						{
 							elPlayerColor.style.borderColor = teamColor;
@@ -1401,17 +1440,17 @@ var Scoreboard = ( function()
 					if ( elAvatarMuteImage && elAvatarMuteImage.IsValid() )
 					{
 						              
-						var isMuted = GameStateAPI.IsSelectedPlayerMuted( oPlayer.m_xuid );
+						var isMuted = MockAdapter.IsSelectedPlayerMuted( oPlayer.m_xuid );
 						oPlayer.m_isMuted = isMuted;
 						
 						var isEnemyTeamMuted = GameInterfaceAPI.GetSettingString( "cl_mute_enemy_team" ) == "1";
-						var isEnemy = GameStateAPI.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
+						var isEnemy = MockAdapter.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
 
 						elAvatarMuteImage.SetHasClass( 'hidden', !isMuted && !( isEnemy && isEnemyTeamMuted ) );
 
 						          
 						             
-						                                                                            
+						                                                                           
 
 						                                                              
 						 
@@ -1440,7 +1479,7 @@ var Scoreboard = ( function()
 				fn = function( oPlayer, bSilent = false )
 				{
 				
-					var newStatValue = GameStateAPI.GetPlayerCompetitiveRanking( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerCompetitiveRanking( oPlayer.m_xuid );
 
 					if ( oPlayer.m_oStats[ stat ] !== newStatValue )
 					{
@@ -1460,7 +1499,7 @@ var Scoreboard = ( function()
 
 								if ( newStatValue > 0 )
 								{
-									var mode = GameStateAPI.GetGameModeInternalName( false );
+									var mode = MockAdapter.GetGameModeInternalName( false );
 									
 									var imagePath = "skillgroup";
 
@@ -1486,7 +1525,7 @@ var Scoreboard = ( function()
 			case 'rank':
 				fn = function( oPlayer, bSilent = false )
 				{
-					var newStatValue = GameStateAPI.GetPlayerXpLevel( oPlayer.m_xuid );
+					var newStatValue = MockAdapter.GetPlayerXpLevel( oPlayer.m_xuid );
 
 					if ( oPlayer.m_oStats[ stat ] !== newStatValue )
 					{
@@ -1515,7 +1554,7 @@ var Scoreboard = ( function()
 			case 'ggleader':
 				fn = function( oPlayer, bSilent = false )
 				{
-					var isGGLeader = GameStateAPI.GetTeamGungameLeaderXuid( oPlayer.m_oStats[ 'teamname' ] ) == oPlayer.m_xuid ? 1 : 0;
+					var isGGLeader = MockAdapter.GetTeamGungameLeaderXuid( oPlayer.m_oStats[ 'teamname' ] ) == oPlayer.m_xuid ? 1 : 0;
 
 					_GenericUpdateStat( oPlayer, stat, () => { return isGGLeader; } );
 				}
@@ -1524,7 +1563,7 @@ var Scoreboard = ( function()
 			case 'gglevel':
 				fn = function( oPlayer, bSilent = false )
 				{
-					_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerGungameLevel.bind( GameStateAPI ) );
+					_GenericUpdateStat( oPlayer, stat, MockAdapter.GetPlayerGungameLevel );
 				}
 				break;
 
@@ -1542,8 +1581,8 @@ var Scoreboard = ( function()
 
 	function _GetPlayerRowForGameMode ()
 	{
-		var mode = GameStateAPI.GetGameModeInternalName( false );
-		var skirmish = GameStateAPI.GetGameModeInternalName( true );
+		var mode = MockAdapter.GetGameModeInternalName( false );
+		var skirmish = MockAdapter.GetGameModeInternalName( true );
 
 		switch ( mode )
 		{
@@ -1564,6 +1603,10 @@ var Scoreboard = ( function()
 
 			case "gungametrbomb":
 				return "snippet_scoreboard__row--demolition";
+
+			case "coopmission":
+			case "cooperative":
+				return "snippet_scoreboard__row--cooperative";
 
 			case "casual":
 				if ( skirmish == "flyingscoutsman" )
@@ -1730,7 +1773,7 @@ var Scoreboard = ( function()
 				var newSortOrder = {};
 
 				                                              
-				var modeDefaultSortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName( false ) );
+				var modeDefaultSortOrder = _GetSortOrderForMode( MockAdapter.GetGameModeInternalName( false ) );
 
 				                                             
 				                                 
@@ -1769,7 +1812,7 @@ var Scoreboard = ( function()
           
 	                                     
 	 
-		                                                                                        
+		                                                                                       
 		                                  
 			                                 
 		    
@@ -1783,11 +1826,11 @@ var Scoreboard = ( function()
 		var szCustomLabel = null;
 		if ( stat === 'ping' )
 		{
-			if ( GameStateAPI.IsFakePlayer( xuid ) )
+			if ( MockAdapter.IsFakePlayer( xuid ) )
 			{
 				szCustomLabel = "#SFUI_scoreboard_lbl_bot";
 			}
-			else if ( IsTeamASpecTeam( GameStateAPI.GetPlayerTeamName( xuid ) ) )
+			else if ( IsTeamASpecTeam( MockAdapter.GetPlayerTeamName( xuid ) ) )
 			{
 				szCustomLabel = "#SFUI_scoreboard_lbl_spec";
 			}
@@ -1902,7 +1945,7 @@ var Scoreboard = ( function()
 
 		oPlayer.m_oStats = {};                       
 
-		oPlayer.m_oStats[ 'idx' ] = GameStateAPI.GetPlayerIndex( oPlayer.m_xuid );
+		oPlayer.m_oStats[ 'idx' ] = MockAdapter.GetPlayerIndex( oPlayer.m_xuid );
 
 		               
 
@@ -1916,7 +1959,7 @@ var Scoreboard = ( function()
 			_m_arrSortingPausedRefGetCounter--;
 		} );
 
-		if ( GameStateAPI.IsXuidValid( oPlayer.m_xuid ) )
+		if ( MockAdapter.IsXuidValid( oPlayer.m_xuid ) )
 		{
 			oPlayer.m_elPlayer.SetPanelEvent( 'onactivate', function()
 			{
@@ -2002,10 +2045,10 @@ var Scoreboard = ( function()
 		                                            
 
 
-		_m_cP.SetDialogVariable( "server_name", GameStateAPI.GetServerName() );
-		_m_cP.SetDialogVariable( "map_name", GameStateAPI.GetMapName() );
-		_m_cP.SetDialogVariable( "gamemode_name", GameStateAPI.GetGameModeName( true ) );
-		_m_cP.SetDialogVariable( "tournament_stage", GameStateAPI.GetTournamentEventStage() );
+		_m_cP.SetDialogVariable( "server_name", MockAdapter.GetServerName() );
+		_m_cP.SetDialogVariable( "map_name", MockAdapter.GetMapName() );
+		_m_cP.SetDialogVariable( "gamemode_name", MockAdapter.GetGameModeName( true ) );
+		_m_cP.SetDialogVariable( "tournament_stage", MockAdapter.GetTournamentEventStage() );
 
 		var elMapLabel = _m_cP.FindChildTraverse( "id-sb-meta__labels__mode-map" );
 
@@ -2018,28 +2061,47 @@ var Scoreboard = ( function()
 			else
 			{
 				var strLocalizeScoreboardTitle = "{s:gamemode_name} | {s:map_name}";
+
 				if ( ( GameStateAPI.GetGameModeInternalName( true ) === 'competitive' ) &&
 					( GameTypesAPI.GetMapGroupAttribute( 'mg_'+GameStateAPI.GetMapBSPName(), 'competitivemod' ) === 'unranked' ) )
 				{
 					strLocalizeScoreboardTitle = "{s:gamemode_name} | " + $.Localize( '#SFUI_RankType_Modifier_Unranked', _m_cP ) + " | {s:map_name}";
 				}
+				
+				if ( MockAdapter.GetServerName() != "" )
+				{
+					strLocalizeScoreboardTitle += " | {s:server_name}"
+
+				}
+				
 				elMapLabel.text =  $.Localize( strLocalizeScoreboardTitle, _m_cP );
 			}
 		}
 
 		if ( $( "#id-sb-meta__mode__image" ) )
-		    $( "#id-sb-meta__mode__image" ).SetImage( GameStateAPI.GetGameModeImagePath() );
+		    $( "#id-sb-meta__mode__image" ).SetImage( MockAdapter.GetGameModeImagePath() );
 
 		if ( $( "#sb-meta__labels__map" ) )
-			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + GameStateAPI.GetMapBSPName() + ".svg" );
+			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + MockAdapter.GetMapBSPName() + ".svg" );
 
 	              
 		                            
-	              
-
-		if ( !GameStateAPI.IsDemoOrHltv() )
+		          
+		
+		let elCoopStats = $( '#CoopStats' );
+		if ( elCoopStats )
 		{
-			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
+			let questID = GameStateAPI.GetActiveQuestID(); 
+			if ( questID > 0 )
+			{
+				elCoopStats.AddClass( "show-mission-desc" );
+				MissionsAPI.ApplyQuestDialogVarsToPanelJS( questID, elCoopStats );
+			}
+		}
+
+		if ( !MockAdapter.IsDemoOrHltv() )
+		{
+			var localTeamName = MockAdapter.GetPlayerTeamName( GetLocalPlayerId() );
 			if ( _m_oTeams[ localTeamName ] )
 				_m_oTeams[ localTeamName ].CalculateAllCommends();
 		}
@@ -2211,7 +2273,7 @@ var Scoreboard = ( function()
 
 		var bFlippedSides = false;
 
-		if ( GameStateAPI.AreTeamsPlayingSwitchedSides() !== GameStateAPI.AreTeamsPlayingSwitchedSidesInRound( rnd ) )
+		if ( MockAdapter.AreTeamsPlayingSwitchedSides() !== MockAdapter.AreTeamsPlayingSwitchedSidesInRound( rnd ) )
 		{
 			bFlippedSides = true;
 			var elTemp = elRndTop;
@@ -2285,7 +2347,7 @@ var Scoreboard = ( function()
 
 				var nPlayers = 5;
 
-				if ( GameStateAPI.GetGameModeInternalName( false ) == "scrimcomp2v2" )
+				if ( MockAdapter.GetGameModeInternalName( false ) == "scrimcomp2v2" )
 					nPlayers = 2;
 
 				for ( var i = 1; i <= nPlayers; i++ )
@@ -2363,7 +2425,7 @@ var Scoreboard = ( function()
 
 	function _RoundLossBonusMoneyForTeam( teamname )
 	{
-		var nLossAmount = GameStateAPI.GetTeamNextRoundLossBonus( teamname );
+		var nLossAmount = MockAdapter.GetTeamNextRoundLossBonus( teamname );
 		var nMaxLoss = parseInt( GameInterfaceAPI.GetSettingString( "mp_consecutive_loss_max" ) );
 		if ( nLossAmount > nMaxLoss ) { nLossAmount = nMaxLoss; }
 		if ( nLossAmount < 0 ) { nLossAmount = 0; }
@@ -2406,13 +2468,13 @@ var Scoreboard = ( function()
 		}	
 
 		       
-		_m_oTeams[ team ].m_teamClanName = GameStateAPI.GetTeamClanName( team );
+		_m_oTeams[ team ].m_teamClanName = MockAdapter.GetTeamClanName( team );
 		_m_cP.SetDialogVariable( "sb_team_name--" + team, _m_oTeams[ team ].m_teamClanName );
 
-		if ( GameStateAPI.GetTeamLogoImagePath( team ) != "" )
+		if ( MockAdapter.GetTeamLogoImagePath( team ) != "" )
 		{
 			       
-			_m_oTeams[ team ].m_teamLogoImagePath = GameStateAPI.GetTeamLogoImagePath( team );
+			_m_oTeams[ team ].m_teamLogoImagePath = MockAdapter.GetTeamLogoImagePath( team );
 
 			_m_cP.FindChildrenWithClassTraverse( "sb-team-logo-background--" + team ).forEach( function( el )
 			{
@@ -2423,13 +2485,13 @@ var Scoreboard = ( function()
 
 		          
 
-		_m_cP.SetDialogVariableInt( team + '_alive', GameStateAPI.GetTeamLivingPlayerCount( team ) );
-		_m_cP.SetDialogVariableInt( team + '_total', GameStateAPI.GetTeamTotalPlayerCount( team ) );
+		_m_cP.SetDialogVariableInt( team + '_alive', MockAdapter.GetTeamLivingPlayerCount( team ) );
+		_m_cP.SetDialogVariableInt( team + '_total', MockAdapter.GetTeamTotalPlayerCount( team ) );
 
 	}
 	function _UpdateTeams ()
 	{
-		var oScoreData = GameStateAPI.GetScoreDataJSO();
+		var oScoreData = MockAdapter.GetScoreDataJSO();
 
 		                        
 		for ( var team in _m_oTeams )
@@ -2484,8 +2546,8 @@ var Scoreboard = ( function()
 
 	function _UpdateAllRounds ()
 	{
-		var jsoTime = GameStateAPI.GetTimeDataJSO();
-		var oScoreData = GameStateAPI.GetScoreDataJSO();
+		var jsoTime = MockAdapter.GetTimeDataJSO();
+		var oScoreData = MockAdapter.GetScoreDataJSO();
 
 		if ( !jsoTime )
 			return;
@@ -2537,7 +2599,7 @@ var Scoreboard = ( function()
 
 
 		             
-		var jsoTime = GameStateAPI.GetTimeDataJSO();
+		var jsoTime = MockAdapter.GetTimeDataJSO();
 
 		if ( !jsoTime )
 			return;
@@ -2560,10 +2622,10 @@ var Scoreboard = ( function()
 			_m_maxRounds = jsoTime[ "maxrounds_this_period" ];
 		}
 		
-		if ( _m_areTeamsSwapped !== GameStateAPI.AreTeamsPlayingSwitchedSides() )
+		if ( _m_areTeamsSwapped !== MockAdapter.AreTeamsPlayingSwitchedSides() )
 		{
 			bResetTimeline = true;
-			_m_areTeamsSwapped = GameStateAPI.AreTeamsPlayingSwitchedSides();
+			_m_areTeamsSwapped = MockAdapter.AreTeamsPlayingSwitchedSides();
 		}
 
 		if ( !_SupportsTimeline( jsoTime ) )
@@ -2595,7 +2657,7 @@ var Scoreboard = ( function()
 		{
 			                                            
 
-			var oScoreData = GameStateAPI.GetScoreDataJSO();
+			var oScoreData = MockAdapter.GetScoreDataJSO();
 
 			if ( oScoreData )
 			{
@@ -2667,7 +2729,7 @@ var Scoreboard = ( function()
 		}
 
 		                                  
-		if ( GameStateAPI.AreTeamsPlayingSwitchedSides() !== GameStateAPI.AreTeamsPlayingSwitchedSidesInRound( endRound ) )
+		if ( MockAdapter.AreTeamsPlayingSwitchedSides() !== MockAdapter.AreTeamsPlayingSwitchedSidesInRound( endRound ) )
 		{
 			var elCTScore = elSegment.FindChildTraverse( "id-sb-timeline__segment__score__ct" );
 			var elTScore = elSegment.FindChildTraverse( "id-sb-timeline__segment__score__t" );
@@ -2689,7 +2751,7 @@ var Scoreboard = ( function()
 	function _SupportsTimeline ( jsoTime )
 	{
 		if ( jsoTime == undefined )
-			jsoTime = GameStateAPI.GetTimeDataJSO();
+			jsoTime = MockAdapter.GetTimeDataJSO();
 
 		var roundCountToEvaluate;
 
@@ -2717,8 +2779,8 @@ var Scoreboard = ( function()
 				parseInt( GameInterfaceAPI.GetSettingString( "mp_consecutive_loss_max" ) ) > 0 &&
 				parseInt( GameInterfaceAPI.GetSettingString( "cash_team_loser_bonus_consecutive_rounds" ) ) > 0
 			) {
-				var nLossT = GameStateAPI.GetTeamNextRoundLossBonus( "TERRORIST" );
-				var nLossCT = GameStateAPI.GetTeamNextRoundLossBonus( "CT" );
+				var nLossT = MockAdapter.GetTeamNextRoundLossBonus( "TERRORIST" );
+				var nLossCT = MockAdapter.GetTeamNextRoundLossBonus( "CT" );
 				if ( nLossT >= 0 && nLossCT >= 0 )
 				{
 					elRoundLossBonusMoney.RemoveClass( 'hidden' );
@@ -2752,7 +2814,7 @@ var Scoreboard = ( function()
 		                     
 		elTimeline.RemoveAndDeleteChildren();
 
-		var jsoTime = GameStateAPI.GetTimeDataJSO();
+		var jsoTime = MockAdapter.GetTimeDataJSO();
 		if ( !jsoTime )
 			return;
 		
@@ -2786,7 +2848,7 @@ var Scoreboard = ( function()
 		midRound = firstRound + Math.ceil( ( lastRound - firstRound ) / 2 ) - 1; 	
 
 		
-		if ( GameStateAPI.HasHalfTime() )
+		if ( MockAdapter.HasHalfTime() )
 		{
 			_InitTimelineSegment( firstRound, midRound, "first-half" );
 			_InsertTimelineDivider();
@@ -2983,6 +3045,79 @@ var Scoreboard = ( function()
 				}
 			}	
 		}
+
+		StoreAPI.RecordUIEvent( "ScoreboardMoreStatsToggle" );
+	}
+
+	function _MuteVoice ()
+	{
+		GameInterfaceAPI.ConsoleCommand( 'voice_enable_toggle' );
+
+		$.Schedule( 0.1, _UpdateMuteVoiceState );
+	}
+
+	function _UpdateMuteVoiceState ()
+	{
+		StoreAPI.RecordUIEvent( "ScoreboardMuteVoiceToggle" );
+
+		var muteState = GameInterfaceAPI.GetSettingString( 'voice_enable' ) === '1';
+
+		var elMuteImage = _m_cP.FindChildInLayoutFile( 'id-sb-meta__mutevoice__image' );
+		if ( !elMuteImage )
+			return;
+		
+		if ( muteState )
+		{
+			elMuteImage.SetImage( "file://{images}/icons/ui/unmuted.svg" );
+		}
+		else
+		{
+			elMuteImage.SetImage( "file://{images}/icons/ui/muted.svg" );
+		}
+
+	}
+
+	function _BlockUgc ()
+	{
+		StoreAPI.RecordUIEvent( "ScoreboardBlockUgcToggle" );
+
+		var ugcBlockState = GameInterfaceAPI.GetSettingString( 'cl_hide_avatar_images' ) !== '0' ||
+			GameInterfaceAPI.GetSettingString( 'cl_sanitize_player_names' ) !== '0';
+		
+		if ( ugcBlockState )
+		{
+			GameInterfaceAPI.SetSettingString( 'cl_sanitize_player_names', '0' );
+			GameInterfaceAPI.SetSettingString( 'cl_hide_avatar_images', '0' );	
+
+
+		}
+		else
+		{
+			GameInterfaceAPI.SetSettingString( 'cl_sanitize_player_names', '1' );
+			GameInterfaceAPI.SetSettingString( 'cl_hide_avatar_images', '2' );		
+		}
+
+		$.Schedule( 0.1, _UpdateUgcState );
+	}
+
+	function _UpdateUgcState ()
+	{
+		var ugcBlockState = GameInterfaceAPI.GetSettingString( 'cl_hide_avatar_images' ) !== '0' ||
+		GameInterfaceAPI.GetSettingString( 'cl_sanitize_player_names' ) !== '0';
+
+		var elBlockUgcImage = _m_cP.FindChildInLayoutFile( 'id-sb-meta__blockugc__image' );
+		if ( !elBlockUgcImage )
+			return;
+		
+		if ( ugcBlockState )
+		{
+			elBlockUgcImage.SetImage( "file://{images}/icons/ui/votekick.svg" );
+		}
+		else
+		{
+			elBlockUgcImage.SetImage( "file://{images}/icons/ui/player.svg" );
+		}
+
 	}
 
 	function _CreateLabelsForRow ( el )
@@ -3026,14 +3161,14 @@ var Scoreboard = ( function()
 
 		_Reset();
 
-		var jsoTime = GameStateAPI.GetTimeDataJSO();
+		var jsoTime = MockAdapter.GetTimeDataJSO();
 		if ( !jsoTime )
 			return;
 		
 		var scoreboardTemplate;
 
-		var mode = GameStateAPI.GetGameModeInternalName( false );
-		var skirmish = GameStateAPI.GetGameModeInternalName( true );
+		var mode = MockAdapter.GetGameModeInternalName( false );
+		var skirmish = MockAdapter.GetGameModeInternalName( true );
 
 		       
 		if ( mode === 'survival' )
@@ -3057,6 +3192,14 @@ var Scoreboard = ( function()
 			case "gungameprogressive":
 				scoreboardTemplate = "snippet_scoreboard--no-teams";
 				break;
+			
+			case "cooperative":
+				scoreboardTemplate = "snippet_scoreboard--cooperative";
+				break;
+
+			case "coopmission":
+				scoreboardTemplate = "snippet_scoreboard--coopmission";
+				break;
 
 			case "casual":
 				if ( skirmish == "flyingscoutsman" )
@@ -3076,11 +3219,10 @@ var Scoreboard = ( function()
 
 		_Helper_LoadSnippet( _m_cP, scoreboardTemplate );
 
-
 		                                                                               
 		  
 		  
-		if ( GameStateAPI.IsDemoOrHltv() )
+		if ( MockAdapter.IsDemoOrHltv() )
 			_m_cP.AddClass( "IsDemoOrHltv" );
 		
 		if ( MatchStatsAPI.IsTournamentMatch() )
@@ -3089,7 +3231,7 @@ var Scoreboard = ( function()
 		
 		                                          
 
-		_m_sortOrder = _GetSortOrderForMode( GameStateAPI.GetGameModeInternalName( false ) );
+		_m_sortOrder = _GetSortOrderForMode( mode );
 
 
 		             
@@ -3107,6 +3249,8 @@ var Scoreboard = ( function()
 		_m_bInit = true;
 
 		_UpdateMatchInfo();
+
+
 	};
 
 	function _RankRevealAll ()
@@ -3123,7 +3267,7 @@ var Scoreboard = ( function()
 
 	function _UpdateScore ( bForce ) 
 	{
-		switch ( GameStateAPI.GetGameModeInternalName( false ) )
+		switch ( MockAdapter.GetGameModeInternalName( false ) )
 		{
 			case "competitive":
 				_UpdateScore_Classic( bForce );
@@ -3156,10 +3300,14 @@ var Scoreboard = ( function()
 			_Initialize();
 		}
 
+		_UpdateMuteVoiceState();
+		_UpdateUgcState();
+
 		_UpdateMatchInfo();
 		_UpdateScore();
 		_UpdateAllPlayers_delayed( true );
 		_UpdateSpectatorButtons();
+		_UpdateLeaderboard();
 
 	};
 
@@ -3228,26 +3376,28 @@ var Scoreboard = ( function()
 		_OpenScoreboard();
 	};
 
-	function _GetFreeForAllTopThreePlayers ( winner )
+	function _GetFreeForAllTopThreePlayers ()
 	{
 		_UpdateEverything();
 
-		var elTeam = _m_cP.FindChildInLayoutFile( "players-table-ANY" );
+		var p1, p2, p3;
+
+		if ( !$( "#Scoreboard" ) )
+			return;
+		
+		var elTeam = $( "#Scoreboard").FindChildInLayoutFile( "players-table-ANY" );
 
 		if ( elTeam && elTeam.IsValid() )
 		{
-			var playerXuid_1 = elTeam.Children()[ 0 ] ? elTeam.Children()[ 0 ].m_xuid : '0';
-			var playerXuid_2 = elTeam.Children()[ 1 ] ? elTeam.Children()[ 1 ].m_xuid : '0';
-			var playerXuid_3 = elTeam.Children()[ 2 ] ? elTeam.Children()[ 2 ].m_xuid : '0';
-
-			$.DispatchEvent( 'EndOfMatch_GetFreeForAllTopThreePlayers_Response', playerXuid_1, playerXuid_2, playerXuid_3 );
+			p1 = elTeam.Children()[ 0 ] ? elTeam.Children()[ 0 ].m_xuid : '0';
+			p2 = elTeam.Children()[ 1 ] ? elTeam.Children()[ 1 ].m_xuid : '0';
+			p3 = elTeam.Children()[ 2 ] ? elTeam.Children()[ 2 ].m_xuid : '0';
 		}
-		else
-		{
-			$.DispatchEvent( 'EndOfMatch_GetFreeForAllTopThreePlayers_Response', 0, 0, 0 );
-		}	
 
+		return [ p1, p2, p3 ];
 	};
+
+
 
 	function _GetFreeForAllPlayerPosition ( xuid )
 	{
@@ -3269,11 +3419,134 @@ var Scoreboard = ( function()
 
 	}
 
+	function _UpdateLeaderboard( strLBname )
+	{
+		var mode = MockAdapter.GetGameModeInternalName( false );
+		if ( mode !== "cooperative" && mode !== "coopmission" )
+		{
+			return;
+		}
+
+		var elLeaderboardStats = _m_cP.FindChildInLayoutFile( "CoopStats" );
+		if ( !elLeaderboardStats )
+			return;		
+
+		                                                                                                  
+		                                    
+		elLeaderboardStats.RemoveClass( "show-mission-stats" ); 
+
+		                                                                 
+		var hPrevDetails = LeaderboardsAPI.GetLeaderboardDetailsHandleForCoop(); 
+		var activeQuestID = GameStateAPI.GetActiveQuestID();
+		if (  activeQuestID > 0 && LeaderboardsAPI.GetDetailsQuestID( hPrevDetails ) === activeQuestID )
+		{
+			UpdateCoopScores( hPrevDetails );
+			return;
+		}
+
+		                                                            
+		if ( strLBname === undefined ) {
+			if ( activeQuestID === 0 )
+				return; 
+
+			strLBname = "official_leaderboard_quest_" + activeQuestID;
+		}
+
+		                                      
+		var lbState = LeaderboardsAPI.GetState( strLBname );
+		if ( lbState === "none" ) {
+			LeaderboardsAPI.Refresh( strLBname );
+		} else if ( lbState === "ready" ) {
+			                                                                   
+			var cacheTimeMinutes = LeaderboardsAPI.HowManyMinutesAgoCached( strLBname );
+			if ( cacheTimeMinutes > 3 ) {
+				LeaderboardsAPI.Refresh( strLBname );
+			} else {
+				var hDetails = LeaderboardsAPI.GetEntryDetailsHandleByXuid( strLBname, MyPersonaAPI.GetXuid() );
+				if ( hDetails )
+					UpdateCoopScores( hDetails );
+			}
+		}
+	}
+
+	function _OnFinalCoopScore()
+	{
+		var hDetailHandle = LeaderboardsAPI.GetLeaderboardDetailsHandleForCoop(); 
+		_m_cP.AddClass( "coop-finalscore" );                                                                                          
+		UpdateCoopScores( hDetailHandle );
+	}
+
+	function UpdateCoopScores( hDetailHandle )
+	{
+		var elLeaderboardStats = _m_cP.FindChildInLayoutFile( "CoopStats" );
+		if ( !elLeaderboardStats )
+			return;
+
+		var mode = MockAdapter.GetGameModeInternalName( false );
+		if ( mode !== "cooperative" && mode !== "coopmission" )
+		{
+			return;
+		}
+
+		elLeaderboardStats.AddClass( "show-mission-stats" );                                                        
+		var nScoreCount = LeaderboardsAPI.GetDetailsMatchScoreboardStatsCount( hDetailHandle, "score" );
+		for ( let i = 0; i < nScoreCount; ++i )
+		{
+			                                                                                                    
+			var strNameToken = LeaderboardsAPI.GetDetailsMatchScoreboardStatNameByIndex( hDetailHandle, "score", i );
+			elLeaderboardStats.SetDialogVariable( "statname" + i, $.Localize( strNameToken ) );
+			FormatStatValueDialogVar();
+			FormatStatScoreDialogVar();
+
+			                                             
+			                                                                
+			                                                      
+			function FormatStatValueDialogVar()
+			{
+				var stat = LeaderboardsAPI.GetDetailsMatchScoreboardStatValueByIndex( hDetailHandle, "score", i ) 
+				var funcName = "SetDialogVariableInt";
+				if ( strNameToken === "#SFUI_Scoreboard_Coop_DmgToEnemyRatio" )
+				{
+					stat = ( 100 - stat / 100 ).toFixed( 1 );
+					funcName = "SetDialogVariable";
+				} else if ( strNameToken === "#SFUI_Scoreboard_Coop_TeamAccuracy" ||
+					strNameToken === "#SFUI_Scoreboard_Coop_Headshots" ) {
+					stat = stat / 100;
+				} else if ( strNameToken === "#SFUI_Scoreboard_Coop_TimeLeft" )
+					funcName = "SetDialogVariableTime";
+
+				elLeaderboardStats[ funcName ]( "statval" + i, stat );
+			}
+
+			function FormatStatScoreDialogVar()
+			{
+				var score = LeaderboardsAPI.GetDetailsMatchScoreboardStatScoreByIndex( hDetailHandle, "score", i );
+				if ( strNameToken === "#SFUI_Scoreboard_Coop_DmgToEnemyRatio" )
+					score = 10000 - score;
+				elLeaderboardStats.SetDialogVariableInt( "statscore" + i, score );
+			}
+		}
+		var nBonusCount = LeaderboardsAPI.GetDetailsMatchScoreboardStatsCount( hDetailHandle, "bonus" );
+		for ( let i = 0; i < nBonusCount; ++i )
+		{
+			elLeaderboardStats.SetDialogVariable( "bonusname" + i, $.Localize( LeaderboardsAPI.GetDetailsMatchScoreboardStatNameByIndex( hDetailHandle, "bonus", i ) ) );
+			elLeaderboardStats.SetDialogVariableInt( "bonusval" + i, LeaderboardsAPI.GetDetailsMatchScoreboardStatValueByIndex( hDetailHandle, "bonus", i ) );
+			elLeaderboardStats.SetDialogVariableInt( "bonusscore" + i, LeaderboardsAPI.GetDetailsMatchScoreboardStatScoreByIndex( hDetailHandle, "bonus", i ) );
+		}
+
+		var nBonus = LeaderboardsAPI.GetDetailsMatchScoreboardStatScoreTotal( hDetailHandle, "bonus" );
+		elLeaderboardStats.SetDialogVariableInt( "bonus_score", nBonus );
+		var nScore = LeaderboardsAPI.GetDetailsMatchScoreboardStatScoreTotal( hDetailHandle, "score" );
+		elLeaderboardStats.SetDialogVariableInt( "score", nScore );
+		var nTotalScore = LeaderboardsAPI.GetDetailsMatchScoreboardStatScoreTotal( hDetailHandle, "all" );
+		elLeaderboardStats.SetDialogVariableInt( "total_score", nTotalScore );
+	}
+
 	function GetCasterIsCameraman()
 	{
 	    var nCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_autodirector_cameraman" ) );
 
-	    var bQ = ( GameStateAPI.IsDemoOrHltv() && nCameraMan != 0 && GameStateAPI.IsHLTVAutodirectorOn() )
+	    var bQ = ( MockAdapter.IsDemoOrHltv() && nCameraMan != 0 && MockAdapter.IsHLTVAutodirectorOn() )
 
 	    return bQ;
 	}
@@ -3282,7 +3555,7 @@ var Scoreboard = ( function()
 	{
 	    var bQ = false;
 
-	    if ( GameStateAPI.IsDemoOrHltv() )
+	    if ( MockAdapter.IsDemoOrHltv() )
 	    {
 	        var bVoiceCaster = parseInt( GameInterfaceAPI.GetSettingString( "voice_caster_enable" ) );
 	        bQ = bVoiceCaster;
@@ -3295,14 +3568,14 @@ var Scoreboard = ( function()
 	{
 	    var bDisableWithControl = parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_disable_with_user_control" ) );
 
-	    var bQ = ( GameStateAPI.IsDemoOrHltv() && bDisableWithControl && GameStateAPI.IsHLTVAutodirectorOn() == false );
+	    var bQ = ( MockAdapter.IsDemoOrHltv() && bDisableWithControl && MockAdapter.IsHLTVAutodirectorOn() == false );
 
 	    return bQ;
 	}
 
 	function GetCasterControlsXray()
 	{
-	    var bXRay = GameStateAPI.IsDemoOrHltv() && parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_xray" ) );
+	    var bXRay = MockAdapter.IsDemoOrHltv() && parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_xray" ) );
 
 	    return bXRay;
 	}
@@ -3311,7 +3584,7 @@ var Scoreboard = ( function()
 	{
 	    var bSpecCameraMan = parseInt( GameInterfaceAPI.GetSettingString( "spec_cameraman_ui" ) );
 
-	    var bQ = ( GameStateAPI.IsDemoOrHltv() && bSpecCameraMan );
+	    var bQ = ( MockAdapter.IsDemoOrHltv() && bSpecCameraMan );
 
 	    return bQ;
 	}
@@ -3350,7 +3623,12 @@ var Scoreboard = ( function()
 		                                
 		          
 
+		MuteVoice: _MuteVoice,
+		BlockUgc : _BlockUgc,
+
 		RankRevealAll: _RankRevealAll,
+		UpdateLeaderboard : _UpdateLeaderboard,
+		OnFinalCoopScore: _OnFinalCoopScore,
 
           		
 		                        	 		                         
@@ -3383,8 +3661,6 @@ var Scoreboard = ( function()
 
 	$.RegisterForUnhandledEvent( "Scoreboard_OnEndOfMatch", Scoreboard.OnEndOfMatch );
 
-	$.RegisterForUnhandledEvent( "Scoreboard_GetFreeForAllTopThreePlayers", Scoreboard.GetFreeForAllTopThreePlayers );
-	$.RegisterForUnhandledEvent( "Scoreboard_GetFreeForAllPlayerPosition", Scoreboard.GetFreeForAllPlayerPosition );
 
 	$.RegisterForUnhandledEvent( "Scoreboard_UnborrowMusicKit", Scoreboard.UnborrowMusicKit );
 
@@ -3408,6 +3684,15 @@ var Scoreboard = ( function()
 	$.RegisterForUnhandledEvent( "Scoreboard_RoundLossBonusMoney_OnMouseOut_CT", Scoreboard.RoundLossBonusMoney_OnMouseOut_CT );
 	$.RegisterForUnhandledEvent( "Scoreboard_RoundLossBonusMoney_OnMouseOver_TERRORIST", Scoreboard.RoundLossBonusMoney_OnMouseOver_TERRORIST );
 	$.RegisterForUnhandledEvent( "Scoreboard_RoundLossBonusMoney_OnMouseOut_TERRORIST", Scoreboard.RoundLossBonusMoney_OnMouseOut_TERRORIST );
+
+	$.RegisterForUnhandledEvent( "PanoramaComponent_Leaderboards_StateChange", Scoreboard.UpdateLeaderboard );
+	$.RegisterForUnhandledEvent( "CoopScoreReceived", Scoreboard.OnFinalCoopScore );
+	$.RegisterForUnhandledEvent( "GameState_OnMatchStart", function () {
+		$.Schedule( 0.1, Scoreboard.UpdateLeaderboard );
+	} );
+	
+	$.RegisterForUnhandledEvent( "Scoreboard_MuteVoice", Scoreboard.MuteVoice );
+	$.RegisterForUnhandledEvent( "Scoreboard_BlockUgc", Scoreboard.BlockUgc );
 
           	
 	                                                                                            

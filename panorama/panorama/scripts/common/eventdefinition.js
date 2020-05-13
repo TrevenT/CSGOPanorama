@@ -23,27 +23,29 @@
     $.DefineEvent( 'HideContentPanel', 0, 'no args', 'Hide all the content panels and show the default home dashboard' );
     $.DefineEvent( 'ShowContentPanel', 0, 'no args', 'Show a content panel' );
     $.DefineEvent( 'InitAvatar', 2, 'xuid, type of panel', 'Update the avatar panel data for a xuid' );
-    $.DefineEvent( 'UpdateVanityModelData', 0, 'no args', 'Update the vanity model with list of anims and model panel from updated settings' );
+    $.DefineEvent( 'ForceRestartVanity', 0, '' );
     $.DefineEvent( 'OpenPlayMenu', 0, 'no args', 'opens the play menu from anywhere. EXAMPLE from party menu settings button from client' );
     $.DefineEvent( 'OpenInventory', 0, 'no args', 'opens the inventory menu from anywhere.' );
     $.DefineEvent( 'OpenWatchMenu', 0, 'no args', 'opens the watch menu from anywhere.' );
     $.DefineEvent( 'OpenSidebarPanel', 1, 'auto close', 'open the sidebar from a abutton click from anywhere pass setting if you wasnt it to autoclose' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
-
-    $.DefineEvent( 'EndOfMatch_ShowNext', 0, '', "Notify the EndOfMatch controller to proceed to the next panel." );
+    $.DefineEvent( 'HideMainMenuNewsPanel', 0, 'no args', 'hide mainmenu news panel' )
     $.DefineEvent( 'StreamPanelClosed', 0, '', "Notify that user has closed stream panel" );
 
     $.DefineEvent( 'Scoreboard_CycleStats', 0, '', "Cycle the stats." );
+    
+    $.DefineEvent( 'MainMenuSwitchVanity', 1, 'team', '' );
+    $.DefineEvent( 'MainMenuGoToCharacterLoadout', 1, 'team', '' );
 
-    $.DefineEvent( 'Scoreboard_GetFreeForAllTopThreePlayers', 0, '', "Returns top three players on team 'ANY'" );
-    $.DefineEvent( 'EndOfMatch_GetFreeForAllTopThreePlayers_Response', 3, 'first, second, third', "Callback for Scoreboard_GetFreeForAllTopThreePlayers" );
-    $.DefineEvent( 'Scoreboard_GetFreeForAllPlayerPosition', 1, 'xuid', "Given a player index and an xuid, returns top three players on that player's team" );
-    $.DefineEvent( 'EndOfMatch_GetFreeForAllPlayerPosition_Response', 1, 'position', "Callback for Scoreboard_GetFreeForAllPlayerPosition" );
               
                                                                                               
+                                                                                                                    
               
     $.DefineEvent( 'Scoreboard_UnborrowMusicKit', 0, '', "Cancel Music Kit borrowing" );
 
+    $.DefineEvent( 'Scoreboard_MuteVoice', 0, '', "Toggle voice_enable" );
+    $.DefineEvent( 'Scoreboard_BlockUgc', 0, '', "Toggle avatar anonymity" );
+    
     $.DefineEvent( 'Scoreboard_Casualties_OnMouseOver', 0, '', '' );
 	$.DefineEvent( 'Scoreboard_Casualties_OnMouseOut', 0, '', '' );
 	$.DefineEvent( 'Scoreboard_RoundLossBonusMoney_OnMouseOver_CT', 0, '', '' );
@@ -83,6 +85,16 @@
     $.DefineEvent( 'ShowTradeUpPanel', 0, '', 'Show trade up panel' );
     $.DefineEvent( 'UpdateTradeUpPanel', 0, '', 'Update trade up panel' );
     $.DefineEvent( 'MainMenuTabShown', 1, 'tabid', 'Alert main menu tabs when they are shown, in case there is a data update needed' );
+    $.DefineEvent( 'CloseOperationHub', 0, '', 'Closes Operation Hub' );
+    $.DefineEvent( 'BlurOperationPanel', 0, '', 'Fires we want to blur the operation panel' );
+    $.DefineEvent( 'UnblurOperationPanel', 0, '', 'Fires when other popup panels close to unblur the operation panel' );
+
+    $.DefineEvent( 'MainMenu_OnGoToCharacterLoadoutPressed', 0, '', '' );
+    $.DefineEvent( 'MainMenu_OnLockVanityModelToggle', 0, '', '' );
 	$.DefineEvent( 'SettingsMenu_NavigateToSetting', 2, 'category, settingPanelID', 'Takes cateogry eg "GAME" or "KBMOUSE" and contained setting ID, opens that category and scrolls to the settting matching the id.' );
+
 	$.DefinePanelEvent( "MainMenu_PromotedSettingsViewed", 0, "", "Fired when user views new settings." )
+
+	
+
 } )();

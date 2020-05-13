@@ -19,12 +19,12 @@ var EOM_Skillgroup = (function () {
 		   	             
 		    
 
-		if ( !_m_cP.bSkillgroupDataReady )
+		if ( !_m_cP.bSkillgroupDataReady && !MockAdapter.GetMockData() )
 		{
 			return false;
 		}
 
-		var oSkillgroupData = _m_cP.SkillgroupDataJSO;
+		var oSkillgroupData = MockAdapter.SkillgroupDataJSO( _m_cP );
 
 		var compWins = oSkillgroupData[ "num_wins" ];
 		var oldRank = oSkillgroupData[ "old_rank" ];
@@ -36,14 +36,14 @@ var EOM_Skillgroup = (function () {
 			compWins: compWins,
 			rankInfo: '',
 			rankDesc: '',
-			mode: GameStateAPI.GetGameModeInternalName( true ),
+			mode: MockAdapter.GetGameModeInternalName( true ),
 			model: '',
 			image: ''
 		};
 
 		var winsNeededForRank = SessionUtil.GetNumWinsNeededForRank( oData.mode );
 
-		_m_cP.SetDialogVariable( 'eom_mode', GameStateAPI.GetGameModeName( true ) );
+		_m_cP.SetDialogVariable( 'eom_mode', MockAdapter.GetGameModeName( true ) );
 
 		if ( oData.mode === 'survival' && currentRank < 1 )
 		{	                                                
@@ -135,20 +135,26 @@ var EOM_Skillgroup = (function () {
 			return;
 		
 		var elModel = _m_cP.FindChildTraverse( 'id-eom-skillgroup-model' );
+		if ( !elModel || !elModel.IsValid() )
+			return;
+		
 		elModel.AddClass( 'eom-skillgroup__model-reveal' );
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.NewSkillGroup', 'MOUSE' );
+		
 	}
 
 	function _PlayParticles ()
 	{
 		var elModel = _m_cP.FindChildTraverse( 'SkillGroupParticles' );
+		if ( !elModel || !elModel.IsValid() )
+			return;
 
 		elModel.RemoveClass( 'hidden' );
 		elModel.SetCameraPosition( -15.10, 0.00, 0.00 );
 		elModel.SetCameraAngles( 0.00,  0.00,  0.00 );
 		elModel.AddParticleSystem( 'nuke_sparks1_glow', '', false );
 		elModel.AddParticleSystem( 'nuke_sparks1_core', '', false );
-		
+
 		function hide ( panel )
 		{
 			if ( !panel || !panel.IsValid() )
@@ -202,7 +208,13 @@ var EOM_Skillgroup = (function () {
 
 	function _Start() 
 	{
-				
+
+		if ( MockAdapter.GetMockData() && !MockAdapter.GetMockData().includes( 'SKILLGROUP' ) )
+		{
+			_End();
+			return;
+		}
+		
 		if ( _DisplayMe() )
 		{
 			EndOfMatch.SwitchToPanel( 'eom-skillgroup' );
@@ -213,12 +225,13 @@ var EOM_Skillgroup = (function () {
 		else
 		{
 			_End();
+			return;
 		}
 	}
 
 	function _End() 
 	{
-		$.DispatchEvent( 'EndOfMatch_ShowNext' );
+		EndOfMatch.ShowNextPanel();
 	}
 
 	function _Shutdown()

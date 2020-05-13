@@ -20,7 +20,9 @@ CSGOSettingsSlider
 
 
 #SliderTrackProgress:parentdisabled,
-#SliderThumb:parentdisabled
+#SliderThumb:parentdisabled,
+.setting-disabled #SliderThumb,
+.setting-disabled #SliderTrackProgress
 {
 	visibility: collapse;
 }
@@ -54,6 +56,19 @@ TextEntry#Value:focus
 TextEntry#Value:parentdisabled
 {
 	visibility: collapse;
+}
+
+
+.setting-toggle
+{
+	visibility: collapse;
+	padding-right: 10px;
+	vertical-align: center;
+}
+
+.setting-toggle:selected .TickBox
+{
+	position: 0px 0px 0px;
 }
 
              

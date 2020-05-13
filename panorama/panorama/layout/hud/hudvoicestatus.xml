@@ -31,11 +31,18 @@
 	</snippets>
 
 	<CSGOHudVoiceStatus hittest="false" >
+
 		<Panel class="StatusPanel" id ="StatusPanel" clampfractionalpixelpositions="false">
 			                                                   
 		</Panel>
-		<Panel class="VoicePanel" id ="VoicePanel">
-			                                                     
+		<Panel class="VoicePanel">
+			<Panel id="VoicePanel" class="top-bottom-flow">
+				                                                     
+			</Panel>
+			<Panel class="voice-disabled-indicator">
+				<Image textureheight="32" texturewidth="32" class="voice-disabled-indicator-icon" src="file://{images}/icons/ui/muted.svg"/>
+				<Label class="voice-disabled-indicator-label cl-hud-wash-color" text="#GameUI_Voice_Disabled"/>
+			</Panel>
 		</Panel>
 	</CSGOHudVoiceStatus>
 </root>

@@ -48,6 +48,12 @@
     opacity:1;
 }
 
+                                
+.coopmission .hud-radar
+{
+	opacity: 0;
+}
+
 CSGOHudRadar Label
 {
 	font-family: Stratum2, 'Arial Unicode MS';
@@ -616,11 +622,11 @@ CSGOHudRadar Label
 
 #DirectionalIndicator
 {
-	height: 7px;
+	height: 20px;
     width: 11px;
 
 	horizontal-align: center;
-	y: 42px;                                            
+	y: 32px;                                            
 	x: 0px;
 
 }

@@ -20,6 +20,11 @@ var PopupLeaderboards = ( function()
 		_SetPointsTitle();
 		_MakeTabs( aTypes );
 		_ShowGlobalRank();
+
+		$( '#id-popup-leaderboard-refresh-button' ).SetPanelEvent(
+			'onactivate',
+			function( lbType ) { LeaderboardsAPI.Refresh( lbType ); }.bind( undefined, type )
+		);
 	};
 
 	var _SetTitle = function( type )
@@ -155,11 +160,16 @@ var PopupLeaderboards = ( function()
 			elAvatar.SetPanelEvent( "oncontextmenu", openCard.bind( undefined, xuid ) );
 		}
 
+		var strThousandsSeparator = $.Localize( '#csgo_thousands_separator' );
 		for ( var i = 0; i < count; i++ )
 		{
 			var xuid = LeaderboardsAPI.GetEntryXuidByIndex( type, i );
 			var score = LeaderboardsAPI.GetEntryScoreByIndex( type, i );
 			var rank = LeaderboardsAPI.GetEntryGlobalPctByIndex( type, i );
+
+			                                                                                            
+			                                                                     
+			score = score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, strThousandsSeparator);
 
 			var elEntry = $.CreatePanel( "Panel", elParent, xuid );
 			elEntry.BLoadLayoutSnippet( "leaderboard-entry" );

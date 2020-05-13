@@ -539,18 +539,7 @@ var mainmenu_watch = ( function()
 
 		$.GetContextPanel().Data().elMainMenuRoot;
 
-		                                             
-		if ( _m_bPerfectWorld )
-		{
-			var elWatchNavBarButtonStreams = $( '#WatchNavBarButtonStreams' );
-			if ( elWatchNavBarButtonStreams )
-				elWatchNavBarButtonStreams.DeleteAsync( .0 );
-		}
-		else
-		{
-			_InitResourceManagement( $( '#JsStreams' ) );
-		}
-
+		_InitResourceManagement( $( '#JsStreams' ) );
 		_InitTab( 'JsEvents' );
 
 		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();

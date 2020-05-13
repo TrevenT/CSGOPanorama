@@ -14,7 +14,7 @@ var EOM_Drops = (function () {
 	var _DisplayMe = function()
 	{
 
-		var oDropList = _m_cP.DropListJSO;
+		var oDropList = MockAdapter.DropListJSO( _m_cP );
 		var numDrops = Object.keys( oDropList ).length;
 
 		if ( numDrops === 0 )
@@ -134,9 +134,14 @@ var EOM_Drops = (function () {
 	  
 	  
 
-	function _Start() 
+	function _Start()  
 	{
-				
+		if ( MockAdapter.GetMockData() && !MockAdapter.GetMockData().includes( 'DROPS' ) )
+		{
+			_End();
+			return;
+		}
+
 		if ( _DisplayMe() )
 		{
 			EndOfMatch.SwitchToPanel( 'eom-drops' );
@@ -147,12 +152,13 @@ var EOM_Drops = (function () {
 		else
 		{
 			_End();
+			return;
 		}	
 	}
 
 	function _End() 
 	{
-		$.DispatchEvent( 'EndOfMatch_ShowNext' );
+		EndOfMatch.ShowNextPanel();
 	}
 
 	function _Shutdown()

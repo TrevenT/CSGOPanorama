@@ -1,12 +1,17 @@
 
 
-.news-panel--store-container,
-.mainmenu-news-container-stream-active .news-panel.news-panel--store-container,
-.news-panel-style-feature-panel-visible .news-panel.news-panel--store-container
+.news-panel--store-container
 {
-	                           
-	height: 288px;
+	                                                                       
+	max-height: 288px;
+	height: fill-parent-flow( .4 );
 	margin-bottom: 0px;
+}
+
+.news-panel-style-feature-panel-visible .news-panel--store-container,
+.mainmenu-news-container-stream-active .news-panel--store-container
+{
+	height: fill-parent-flow( .5 );
 }
 
 .store-panel__carousels
@@ -54,6 +59,7 @@
 .store-panel__carousel__item
 {
 	width: 172px;
+	padding-bottom: 8px;
 	flow-children: down;
 	vertical-align: top;
 	transform-origin: 50% 50%;
@@ -131,7 +137,9 @@
 
 .store-panel__carousel__item__image
 {
-	height: 160px;
+	height: fill-parent-flow( 1 );
+	padding-top: 4px;
+	horizontal-align: center;
 
 	transition-property: brightness, transform;
 	transition-duration: .20s;
@@ -198,16 +206,16 @@
 {
 	vertical-align: bottom;
 	margin-left: 8px;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: medium;
 	horizontal-align: left;
 	text-overflow: ellipsis;
-	height: 20px;
+	height: 18px;
 }
 
 .store-panel__carousel__item__name.saleprice
 {
-	font-size: 14px;
+	font-size: 12px;
 	color: rgb(141, 141, 141);
 	font-weight: medium;
 	text-decoration: line-through;
@@ -215,7 +223,7 @@
 
 .store-panel__carousel__item__name.price
 {
-	font-size: 14px;
+	font-size: 12px;
 	margin-bottom: 0px;
 	color: positiveColor;
 }
@@ -428,10 +436,11 @@
 
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
-	background-size: 100%;
+	background-size: 50%;
+	background-size: cover;
 	flow-children: right;
 	background-image: url( "file://{images}/store/pw_linking_bg.png" );
-	box-shadow: fill #000000aa 0px 0px 8px 4px;
+	                                                 
 }
 
 .store-panel-license-banner.hidden

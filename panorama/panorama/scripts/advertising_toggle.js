@@ -50,7 +50,8 @@ var AdvertisingToggle = ( function()
         var gameModes = [
             { mode: 'competitive' },
             { mode:'scrimcomp2v2' },
-            { mode:'survival' }
+			{ mode:'survival' },
+			{ mode:'cooperative' },
         ];
 
         var items = [];

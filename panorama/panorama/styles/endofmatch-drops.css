@@ -9,7 +9,7 @@
 	overflow: scroll clip;
 	margin: 0px 16px;
 
-	transition-property: width, opacity;
+	transition-property: width, opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -18,7 +18,7 @@
 {
 	opacity: 0;
 
-	transition-property: opacity;
+	transition-property: opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }

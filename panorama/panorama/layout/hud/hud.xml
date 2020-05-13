@@ -101,7 +101,7 @@
 		                                                                
 		<CSGOHudFreezePanel id="HudFreezePanel" hittest="false" hittestchildren="false" />
 
-		<CSGOHudBlurTarget id="HudBlur" blurrects="Scoreboard EndOfMatch BuyMenu" class="HudBlur" hittest="false" hittestchildren="false">
+		<CSGOHudBlurTarget id="HudBlur" blurrects="Scoreboard EndOfMatch BuyMenu sliding-panel--TERRORIST sliding-panel--CT" class="HudBlur" hittest="false" hittestchildren="false">
 			<CSGOBackbufferImagePanel class="full-width full-height" />
 		</CSGOHudBlurTarget>
 
@@ -128,6 +128,8 @@
 		            
 		<CSGOSurvivalSpawnSelect id="SurvivalSpawnSelect"/>
 		            
+
+		<Frame id="Versus" src="file://{resources}/layout/versus.xml"/>
 		
 		                                                       
 		<CSGOHudChat id="HudChat"/>

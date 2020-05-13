@@ -29,13 +29,24 @@
 		</snippet>
 		<snippet name="MainMenuVanitySnippet">
 			<Panel>
-				<ItemPreviewPanel id="JsMainmenu_Vanity"
-								class="mainmenu-vanity hidden MainMenuModeOnly"
-								manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
-								item="models/player/custom_player/legacy/ctm_sas.mdl"
-								mouse_rotate="false"
-								hittest="false">
-				</ItemPreviewPanel>
+				<Panel id="JsMainmenu_Vanity-Container" class="mainmenu-vanity MainMenuModeOnly">
+					<ItemPreviewPanel id="JsMainmenu_Vanity"
+									class="full-width full-height hidden"
+									manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
+									item="models/player/custom_player/legacy/ctm_sas.mdl"
+									mouse_rotate="false"
+									hittest="false">
+						<Panel id="id-mainmenu-vanity-hover" hittest="true"/>
+					</ItemPreviewPanel>
+
+					<Panel id="VanityControls" hittest="true">
+						<Button id="VanityPanelGoToCharacterLoadout"
+							onactivate="$.DispatchEvent( 'MainMenu_OnGoToCharacterLoadoutPressed' )"> >
+							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/tune.svg" />
+						</Button>
+					</Panel>
+				</Panel>
+
 			</Panel>
 		</snippet>
 	</snippets>
@@ -51,7 +62,7 @@
 			<Panel id="MainMenuInput">                                              
 				
 				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatLinesContainerBg mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
-					<CSGOBlurTarget id="MainMenuBackground" blurrects= "mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel">
+					<CSGOBlurTarget id="MainMenuBackground" blurrects="id-mainmenu-mission-card-bg id-op-mainmenu-top mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel id-op-mainmenu-rewards id-op-mainmenu-missions">
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      
 						<CSGOBackbufferImagePanel class="full-width full-height PauseMenuModeOnly" />
@@ -68,9 +79,10 @@
 						<Panel id="MainMenuVanityParent">
 							                                                 
 						</Panel>
+
 					</CSGOBlurTarget>
 
-					<Panel id="JsNewsContainer" class="mainmenu_news_container hidden MainMenuModeOnly" >
+					<Panel id="JsNewsContainer" class="mainmenu_news_container hidden" >
 						                                                       
 					</Panel >
 

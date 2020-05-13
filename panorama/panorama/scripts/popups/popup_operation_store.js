@@ -16,13 +16,36 @@ var CapabilityOperationStore = ( function()
 
 		StarsShoppingCart.Init();
 
+		var blurOperationPanel = ( $.GetContextPanel().GetAttributeString( 'bluroperationpanel', 'false' ) === 'true' ) ? true : false;
+		if ( blurOperationPanel )
+		{
+			$.DispatchEvent( 'BlurOperationPanel' );
+		}
+
+		var oldStarItemIdsToActivate = $.GetContextPanel().GetAttributeString( 'oldstarstoactivate', '' );
+		if ( oldStarItemIdsToActivate )
+		{
+			var oldStarsValue = $.GetContextPanel().GetAttributeInt( 'oldstarstoactivatevalue', 0 );
+			StarsShoppingCart.SetNewStarsTotalDialogVar( oldStarsValue );
+			StarsShoppingCart.SetOldStarItemIdsForApply( oldStarItemIdsToActivate );
+			
+			SetCurrrentStars();
+			return;
+		}
+
 		               
 		$.GetContextPanel().SetDialogVariableInt( 'after_purchase_stars', OperationUtil.GetOperationInfo().nCoinRank );
-
 		SetCurrrentStars();
+
+		                                                                                             
 		                          
+		      
+
 		StarsShoppingCart.SelectStoreTab();
-		StarsShoppingCart.SetYourRankIndicator();
+
+		                                                                                             
+		                                            
+		      
 	};
 
 	var SetCurrrentStars = function( )
@@ -56,8 +79,9 @@ var CapabilityOperationStore = ( function()
 
 	var _ClosePopup = function()
 	{
-		$.DispatchEvent( 'OnOperationStoreClosed', '' );
+		$.DispatchEvent( 'UnblurOperationPanel' );
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.mainmenu_press_home', 'MOUSE' );
 		StarsShoppingCart.ResetTimeouthandle();
 	};
 
@@ -73,22 +97,26 @@ var StarsShoppingCart = ( function()
 	var ARRAY_STORE_ITEMS = [
 		{
 			rank_restriction: 2,
-			storeids: [ 4609, 4610 ],
+			storeids: [ 4671, 4672, 4673 ],
 			coinid: 4550
-		},
-		{
-			rank_restriction: 3,
-			storeids: [ 4614, 4615 ],
-			coinid: 4551
-		},
-		{
-			rank_restriction: 4,
-			storeids: [ 4616, 4617 ],
-			coinid: 4552
-		},
+		}
+		           
+		                             
+		    
+		   	                    
+		   	                         
+		   	            
+		     
+		    
+		   	                    
+		   	                         
+		   	            
+		     
+		          
 	];
 
-	var MAX_QUANTITY = 50;
+	var MAX_QUANTITY = StoreAPI.GetStoreCartItemLimit();
+	var MAX_QUANTITY_EACH = 9;
 	var _nStarsInCart = 0;
 	var m_scheduleHandle = null;
 	var m_aCartItemIds = [];
@@ -104,83 +132,95 @@ var StarsShoppingCart = ( function()
 		var elApply = $.GetContextPanel().FindChildInLayoutFile( 'AsyncItemWorkUseItem' );
 		elApply.SetPanelEvent( 'onactivate', _OnActivate.bind( undefined, elApply, 'useitem' ) );
 
-		_GetPricingDiscounts();
+		                                                                                     
+		                          
 	};
 
-	var _GetPricingDiscounts = function()
-	{
-		var priceForEachRankPerStar = {};
-		var elContainer = $.GetContextPanel().FindChildInLayoutFile( 'popup-operation-store-subtitle-container' );
-		var currentRank = OperationUtil.GetOperationInfo().nCoinRank;
 
-		ARRAY_STORE_ITEMS.forEach( function( rank )
-		{
-			var elLabel = elContainer.Children().find( element => element.GetAttributeInt( 'data-rank', 0 ) === rank.rank_restriction );
+	                                                                                     
+	          
+	                                     
+	 
+		                                 
+		                                                                                                          
+		                                                             
 
-			rank.storeids.forEach( function( defIndex )
-			{
-				var fauxItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex.toString(), 0 );
-				var nPriceIOfItem = parseInt( ItemInfo.GetStoreSalePrice( fauxItemId, 1, '#' ));
+		                                           
+		 
+			                                                                                                                            
+
+			                                           
+			 
+				                                                                                          
+				                                                                                
 
 				                                   
-				var starsInItem = InventoryAPI.GetItemAttributeValue( fauxItemId, 'upgrade level' );
-				var nPricePerStar = nPriceIOfItem / starsInItem;
+				                                                                                    
+				                                                
 				
-				if ( !priceForEachRankPerStar[ 'price_for_rank' + rank.rank_restriction ] )
-				{
-					priceForEachRankPerStar[ 'price_for_rank' + rank.rank_restriction ] = 0;
-				}
+				                                                                           
+				 
+					                                                                        
+				 
 
-				priceForEachRankPerStar[ 'price_for_rank' + rank.rank_restriction ] += nPricePerStar;
-			} );
+				                                                                                     
+			    
 
-			var baseRankPricePerItemCombined = priceForEachRankPerStar[ 'price_for_rank' + ARRAY_STORE_ITEMS[ 0 ].rank_restriction ];
-			var RankPricePerItemCombined = priceForEachRankPerStar[ 'price_for_rank' + rank.rank_restriction ];
-			var difference = baseRankPricePerItemCombined - RankPricePerItemCombined;
-			var average = ( baseRankPricePerItemCombined + RankPricePerItemCombined ) / 2;
-			var percentDiscount = Math.floor( ( difference / average ) * 100 );
-			elLabel.SetDialogVariableInt( 'discount_per_star', percentDiscount );
+			                                                                                                                         
+			                                                                                                   
+			                                                                         
+			                                                                              
+			                                                                   
+			                                                                     
 			
-			if ( rank.rank_restriction > currentRank )
-			{
-				var fauxCoinId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( rank.coinid.toString(), 0 );
-				var missionsThreshold = InventoryAPI.GetItemAttributeValue( fauxCoinId, 'upgrade threshold' );
-				elLabel.SetDialogVariableInt( 'missions_remaining', ( missionsThreshold - OperationUtil.GetOperationInfo().nMissionsCompleted ) );
-				elLabel.SetDialogVariable( 'coin_type', $.Localize( '#op_store_coin_type_' + rank.rank_restriction ) );
+			                                          
+			 
+				                                                                                             
+				                                                                                              
+				                                                                                                                                  
+				                                                                                                       
 
-				elLabel.text = $.Localize( '#op_store_rank_discounts', elLabel );
-			}
-			else if ( rank.rank_restriction === currentRank || ( rank.rank_restriction === 4 && currentRank > 4 ))
-			{
-				elLabel.SetDialogVariable( 'coin_type', $.Localize( '#op_store_coin_type_' + currentRank ) );
-				elLabel.text = currentRank > 2 ? $.Localize( '#op_store_rank_discounts_current', elLabel ) :
-					$.Localize( '#op_store_your_coin', elLabel );
-			}
-			else 
-			{
-				elLabel.visible = false;
-			}
-		} );
-	};
-
+				                                                                 
+			 
+			                                                                                                      
+			 
+				                                                                                             
+				                                                                                            
+					                                             
+			 
+			     
+			 
+				                        
+			 
+		    
+	  
+	          
 
 	var _SelectStoreTab = function()
 	{
-		var nRank = OperationUtil.GetOperationInfo().nCoinRank;
+		                                                                                                
+		var nRank = OperationUtil.GetOperationInfo().nCoinRank > 1 ? 2 : 0;
 		
-		$.GetContextPanel().FindChildInLayoutFile( 'popup-operation-store-rank-' + nRank ).checked = true;
+		                                                                                             
+		                                                                                                     
+		      
+
 		_UpdateStoreBasedOnCoinRank( nRank );
+		_PreFillCart();
 	};
 
-	var _SetYourRankIndicator = function()
-	{
-		var ChildrenList = $.GetContextPanel().FindChildInLayoutFile( 'popup-operation-current-rank' ).Children();
+	                                                                                     
+	          
+	                                      
+	 
+		                                                                                                          
 		
-		ChildrenList.filter( entry => Number( entry.GetAttributeString( 'data-rank', '' )) <= OperationUtil.GetOperationInfo().nCoinRank ).forEach(
-			element => {
-				element.AddClass( 'popup-operation-coin-progress-fill' );
-		});
-	};
+		                                                                                                                                           
+			            
+				                                                         
+		   
+	  
+	          
 
 	var _UpdateStoreBasedOnCoinRank = function( nRank, bIsPreview = false )
 	{
@@ -234,9 +274,19 @@ var StarsShoppingCart = ( function()
 	
 	var _AddItem = function( elRow )
 	{
-		if ( elRow.Data().quantity + 1 > MAX_QUANTITY )
-		{
+		if ( elRow.Data().quantity + 1 > ( MAX_QUANTITY / elRow.Data().starsCount) )
 			return;
+		if ( elRow.Data().quantity + 1 > MAX_QUANTITY_EACH )
+			return;
+
+		if ( elRow.Data().starsCount == MAX_QUANTITY )
+		{	                                                     
+			elRow.GetParent().Children().forEach( elOtherRow => {
+				if ( elOtherRow.Data() && elOtherRow.Data().starsCount ) {
+					while ( elOtherRow.Data().quantity > 0 )
+						_RemoveItem( elOtherRow );
+				}
+			} );
 		}
 		
 		elRow.Data().quantity = ++elRow.Data().quantity;
@@ -264,14 +314,23 @@ var StarsShoppingCart = ( function()
 		
 		elRow.SetDialogVariable( 'store-item-purchase-price', price );
 		elRow.SetDialogVariable( 'store-item-stars-quantity', dispQuantity );
-		_UpdateRowBtnState( elRow );
-		_UpdateTotals();
+		
+		                                 
+		var totalStarCount = _UpdateTotals();
+		elRow.GetParent().Children().forEach( elOtherRow => {
+			if ( elOtherRow.Data() && elOtherRow.Data().starsCount ) {
+				_UpdateRowBtnState( elOtherRow, totalStarCount );
+			}
+		} );
 	};
 
-	var _UpdateRowBtnState = function( elRow )
+	var _UpdateRowBtnState = function( elRow, totalStarCount )
 	{
 		elRow.FindChildInLayoutFile( 'popup-operation-store-count-decrement' ).enabled = elRow.Data().quantity > 0;
-		elRow.FindChildInLayoutFile( 'popup-operation-store-count-increment' ).enabled = elRow.Data().quantity < MAX_QUANTITY;
+		elRow.FindChildInLayoutFile( 'popup-operation-store-count-increment' ).enabled =
+			( elRow.Data().quantity < ( MAX_QUANTITY / elRow.Data().starsCount) ) &&
+			( elRow.Data().quantity < MAX_QUANTITY_EACH ) &&
+			( totalStarCount < MAX_QUANTITY );
 	};
 
 	var _UpdateTotals = function()
@@ -284,11 +343,18 @@ var StarsShoppingCart = ( function()
 		var dispPrice = !totalStarCount  ? '-' : _GetTotalPriceOfItems( m_aCartItemIds );
 
 		$.GetContextPanel().SetDialogVariable( 'store-item-price-total', dispPrice );
-		$.GetContextPanel().SetDialogVariable( 'store-item-stars-total', dispTotalStarCount );
+		_SetNewStarsTotalDialogVar( dispTotalStarCount );
 		CapabilityOperationStore.SetStarsLevelsAfterPurchase( totalStarCount );
 
 		var elOK = $.GetContextPanel().FindChildInLayoutFile( 'AsyncItemWorkAcceptConfirm' );
 		elOK.enabled = m_aCartItemIds.length > 0;
+
+		return totalStarCount;
+	};
+
+	var _SetNewStarsTotalDialogVar = function( count )
+	{
+		$.GetContextPanel().SetDialogVariable( 'store-item-stars-total', count );
 	};
 
 	var _GetCartItems = function( rows )
@@ -418,7 +484,7 @@ var StarsShoppingCart = ( function()
 			                
 			_ResetTimeouthandle();
 
-			$.DispatchEvent( 'HideStoreStatusPanel', '' );
+			$.DispatchEvent( 'HideStoreStatusPanel' );
 			_AcknowlegeStars( aDefNames );
 			_SetApplyStarsStyles();
 		}
@@ -436,12 +502,74 @@ var StarsShoppingCart = ( function()
 		}
 	};
 
+	var _SetOldStarItemIdsForApply = function( ids )
+	{
+		m_NewItemsList = ids.split( ',' );
+		_SetApplyStarsStyles();
+		_UpdateApplyDialogLabels( true );
+	};
+
 	var _SetApplyStarsStyles = function()
 	{
 		$.GetContextPanel().AddClass( 'popup-operation-store-apply-stars' );
 		$.GetContextPanel().FindChildInLayoutFile( 'op-Store-spinner' ).AddClass( 'hidden' );
 		$.GetContextPanel().FindChildInLayoutFile( 'AsyncItemWorkUseItem' ).RemoveClass( 'hidden' );
 		$.GetContextPanel().FindChildInLayoutFile( 'AsyncItemWorkAcceptConfirm' ).AddClass( 'hidden' );
+		_UpdateApplyDialogLabels( false );
+	};
+
+	var _UpdateApplyDialogLabels = function( bhasUnused, bNewStars )
+	{
+		if ( bNewStars )
+		{
+			$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_title' ).text = '#CSGO_PickEm_Trophy_Status_Gold';
+			$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_desc' ).text = '#op_store_stars_applied';
+		}
+		else
+		{
+			$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_title' ).text = bhasUnused ? '#op_store_apply_stars_unused' : '#op_store_apply_stars';
+			$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_desc' ).text = bhasUnused ? '#op_store_apply_stars_desc_unused' : '#op_store_apply_stars_desc';
+		}
+	
+		$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_type_desc' ).text = bhasUnused ? '#op_store_new_stars_unused' : '#op_store_new_stars';
+
+		$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-apply_warning' ).visible = !bNewStars;
+	};
+	
+	var _PreFillCart = function()
+	{
+		var nStarsNeeded = $.GetContextPanel().GetAttributeInt( 'starsneeded', 0 );
+
+		                                      
+		if ( nStarsNeeded < 1 )
+		{
+			return;
+		}
+
+		var elRows = $.GetContextPanel().FindChildInLayoutFile( 'popup-operation-store-rows' ).Children();
+		elRows.sort( function( a, b ) { return b.Data().starsCount - a.Data().starsCount } );
+		var amount = nStarsNeeded;
+
+		elRows.forEach( row =>
+		{
+			                                                                          
+			amount = amount / row.Data().starsCount;
+
+			if ( Math.floor( amount ) > 0 )
+			{
+				                                             
+				for ( var i = 0; i < Math.floor( amount ); i++ )
+				{
+					_AddItem( row );
+				}
+
+				amount = nStarsNeeded % row.Data().starsCount;
+			}
+			else if( amount !== 0 )
+			{
+				amount = nStarsNeeded;
+			}
+		} );
 	};
 
 	var _OnInventoryUpdate = function()
@@ -459,6 +587,7 @@ var StarsShoppingCart = ( function()
 			$.GetContextPanel().FindChildInLayoutFile( 'id-operation-store-progress-apply' ).AddClass( 'popup-operation-apply-stars' );
 			$.GetContextPanel().AddClass( 'popup-operation-store-reveal-new-stars' );
 			$.GetContextPanel().FindChildInLayoutFile( 'op-Store-spinner' ).AddClass( 'hidden' );
+			_UpdateApplyDialogLabels( false, true );
 		}
 	};
 
@@ -466,11 +595,15 @@ var StarsShoppingCart = ( function()
 		Init: _Init,
 		nStarsInCart: _nStarsInCart,
 		SelectStoreTab: _SelectStoreTab,
-		SetYourRankIndicator: _SetYourRankIndicator,
+	          
+		                                            
+	          
 		UpdateStoreBasedOnCoinRank: _UpdateStoreBasedOnCoinRank,
 		ResetTimeouthandle: _ResetTimeouthandle,
 		ItemAcquired: _ItemAcquired,
-		OnInventoryUpdate: _OnInventoryUpdate
+		OnInventoryUpdate: _OnInventoryUpdate,
+		SetOldStarItemIdsForApply: _SetOldStarItemIdsForApply,
+		SetNewStarsTotalDialogVar: _SetNewStarsTotalDialogVar
 	};
 
 } )();

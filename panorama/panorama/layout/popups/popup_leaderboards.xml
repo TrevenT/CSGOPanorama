@@ -22,11 +22,11 @@
 				</Panel>
 
 				<Panel  class="popup-leaderboard__list__column points">
-					<Label id="popup-leaderboard-entry-points" text="#99" class="popup-leaderboard__list__column__title"/>
+					<Label id="popup-leaderboard-entry-points" text=" " class="popup-leaderboard__list__column__title"/>
 				</Panel>
 
 				<Panel  class="popup-leaderboard__list__column rank" >
-					<Label id="popup-leaderboard-entry-rank" text="#100%" class="popup-leaderboard__list__column__title"/>
+					<Label id="popup-leaderboard-entry-rank" text=" " class="popup-leaderboard__list__column__title"/>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -42,7 +42,12 @@
 						popupbackground="dim"
 						onload="PopupLeaderboards.Init();"
 						oncancel="PopupLeaderboards.Close();">
-		<Label id="id-popup-leaderboard-title" class="PopupTitle" text="" />
+		<Panel class="popup-leaderboard-title-bar">	
+			<Label html="true" id="id-popup-leaderboard-title" class="PopupTitle" text="" />
+			<Button id="id-popup-leaderboard-refresh-button" class="IconButton" >
+				<Image src = "file://{images}/icons/ui/refresh.svg"/>
+			</Button>
+		</Panel>
 
 		<Panel class="popup-leaderboard__contents">
 			<Panel id="id-popup-leaderboard-navbar" class="content-navbar content-navbar--short hidden">

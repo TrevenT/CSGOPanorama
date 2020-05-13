@@ -23,7 +23,7 @@ var InspectModelImage = ( function (){
 
 		if ( model )
 		{
-			_SetModelScene( elPanel, model );
+			_SetModelScene( elPanel, model, itemId );
 		}
 		else
 		{
@@ -31,7 +31,7 @@ var InspectModelImage = ( function (){
 		}
 	};
 
-	var _SetModelScene = function ( elParent, model )
+	var _SetModelScene = function ( elParent, model, itemId = 0 )
 	{
 		                                              
 
@@ -40,6 +40,18 @@ var InspectModelImage = ( function (){
 			model,
 			false
 		);
+
+		if ( ItemInfo.IsCharacter( itemId) )
+		{
+			var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( itemId );
+			settings.panel = elPanel;
+
+			CharacterAnims.PlayAnimsOnPanel( settings );
+
+			elPanel.SetCameraPreset( 7, false );
+			elPanel.GetParent().AddClass( 'constrain' );
+			
+		}
 
 		elPanel.RemoveClass( 'hidden' );
 	};
@@ -58,22 +70,16 @@ var InspectModelImage = ( function (){
 		TintSprayIcon.CheckIsSprayAndTint( id, elImage );
 	};
 
-	var _SetCharScene = function ( elParent, id, selectedModel, selectedTeam )
+	var _SetCharScene = function ( elParent, characterItemId, weaponItemId )
 	{
 		var elPanel = elParent.FindChildInLayoutFile( 'InspectModelChar' );
 
-		var settings = {
-			panel: elPanel,
-			team: selectedTeam,
-			model: selectedModel,
-			itemId: id,
-			loadoutSlot: ItemInfo.GetSlotSubPosition( id ),
-			playIntroAnim: false,
-			selectedWeapon: ItemInfo.GetItemDefinitionName ( id )
-		};
+		var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( characterItemId );
+		settings.panel = elPanel;
+		settings.weaponItemId = weaponItemId;
+		settings.cameraPreset = 1;
 	
 		CharacterAnims.PlayAnimsOnPanel( settings );
-		CharacterAnims.StoreModelPanelSettingsForSaving( settings );
 	};
 
 	var _CancelCharAnim = function( elParent )

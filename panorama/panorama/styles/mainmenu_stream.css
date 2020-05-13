@@ -6,7 +6,7 @@
 .news-panel-streamfeed
 {
 	width: 100%;
-	height: fill-parent-flow( .60 );
+	height: 512px;
 	background-color: blurBackgroundColor;
 	margin-bottom: 16px;
 	flow-children: down;

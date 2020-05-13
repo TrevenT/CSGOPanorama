@@ -129,13 +129,19 @@ var MainmenuWatchNotice = (function () {
 
 			watchEventLiveExample_03[ 'is_featured' ] = true;
 
-			_m_arrEvents.unshift( watchEventLiveExample_01 );
-			_m_arrEvents.unshift( watchEventLiveExample_02 );
-			_m_arrEvents.unshift( watchEventLiveExample_03 );
+			if ( _m_arrEvents )
+			{
+				_m_arrEvents.unshift( watchEventLiveExample_01 );
+				_m_arrEvents.unshift( watchEventLiveExample_02 );
+				_m_arrEvents.unshift( watchEventLiveExample_03 );
+			}
 
-			_m_arrFavorites.unshift( Number( watchEventLiveExample_01[ 'event_id' ] ) );
-			_m_arrFavorites.unshift( Number( watchEventLiveExample_02[ 'event_id' ] ));
-			_m_arrFavorites.unshift( Number( watchEventLiveExample_03[ 'event_id' ] ));
+			if ( _m_arrFavorites )
+			{
+				_m_arrFavorites.unshift( Number( watchEventLiveExample_01[ 'event_id' ] ) );
+				_m_arrFavorites.unshift( Number( watchEventLiveExample_02[ 'event_id' ] ) );
+				_m_arrFavorites.unshift( Number( watchEventLiveExample_03[ 'event_id' ] ) );
+			}
 		}
 
 		                          

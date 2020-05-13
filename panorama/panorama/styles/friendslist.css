@@ -454,18 +454,18 @@
 	background-image: url( "file://{resources}/videos/search.webm" );
 	background-repeat: no-repeat;
 
-	                                                         
-	                                 
-	                                 
+  	                                                       
+  	                                 
+  	                              
 
 	                                                         
 	background-size: clip_then_cover;
 	background-position: 0% 50%;
 	background-img-opacity: 0.12;
 
-	                                                             
-	                       
-	                                 
+  	                                                           
+  	                       
+  	                              
 
 	transition-property: wash-color, background-img-opacity;
 	transition-duration: .25s;

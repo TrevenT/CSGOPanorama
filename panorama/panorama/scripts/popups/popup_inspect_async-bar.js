@@ -13,6 +13,8 @@ var InspectAsyncActionBar = ( function()
 	var m_showAsyncActionDesc = false;
 	var m_isXrayMode = false;
 	var m_allowXrayClaim = false;
+	var m_inspectOnly = false;
+	var m_isSeasonPass = false;
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback, funcCallbackOnAction )
 	{
@@ -24,7 +26,9 @@ var InspectAsyncActionBar = ( function()
 		m_showAsyncActionDesc = ( funcGetSettingCallback( 'asyncactiondescription', 'no' ) === 'yes' ) ? true : false;
 		m_isXrayMode = ( funcGetSettingCallback( "isxraymode", "no" ) === 'yes' ) ? true : false;
 		m_allowXrayClaim = ( funcGetSettingCallback( "allowxrayclaim", "no" ) === 'yes' ) ? true : false;
-
+		m_inspectOnly = ( funcGetSettingCallback( 'inspectonly', 'false' ) === 'true' ) ? true : false;
+		m_isSeasonPass = ( funcGetSettingCallback( 'seasonpass', 'false' ) === 'true' ) ? true : false;
+  
 		                                      
 		                               
 		                               
@@ -66,7 +70,7 @@ var InspectAsyncActionBar = ( function()
 		if ( m_worktype === 'decodeable' )
 		{
 			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
-			if ( sRestriction === 'restricted' || ( sRestriction === 'xray' && !m_isXrayMode ))
+			if ( sRestriction === 'restricted' || ( sRestriction === 'xray' && !m_isXrayMode ) ||  m_inspectOnly )
 				return false;
 
 			return ( !m_toolid && !m_isDecodeableKeyless );
@@ -177,7 +181,7 @@ var InspectAsyncActionBar = ( function()
 				return;
 			}
 
-			if ( sRestriction === 'xray' )
+			if ( sRestriction === 'xray' && !m_inspectOnly )
 			{
 				                                         
 				elOK.visible = true;
@@ -308,9 +312,15 @@ var InspectAsyncActionBar = ( function()
 		);
 	};
 
-	var _OnEventToClose = function()
+	var _OnEventToClose = function( bCloseForLootlistPreview = false )
 	{
 		_ResetTimeouthandle();
+
+		if( !bCloseForLootlistPreview )
+		{
+			$.DispatchEvent( 'UnblurOperationPanel' );
+		}
+	
 		_ClosePopup();
 	};
 
@@ -342,6 +352,11 @@ var InspectAsyncActionBar = ( function()
 
 	var _OnMyPersonaInventoryUpdated = function()
 	{
+		if( m_isSeasonPass && InventoryAPI.IsValidItemID( m_itemid ))
+		{
+			return;
+		}
+		
 		_OnEventToClose();
 	};
 

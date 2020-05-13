@@ -218,6 +218,17 @@
 							<Label text="#SFUI_MotionBlur_Enabled" value="1" id="motionblur1"/>
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Triple_Monitor_Info">
+						<Label text="#SFUI_Settings_Triple_Monitor" class="half-width"/>
+						<CSGOSettingsEnumDropDown convar="triple_monitor_mode" class="PopupButton White" id ="MotionBlur">
+							<Label text="#SFUI_Settings_Disabled" value="0" id="triplemonitor0" />
+							<Label text="#SFUI_Settings_Enabled" value="1" id="triplemonitor1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+
 				</Panel>
 			</Panel>
 		</CSGOVideoSettings>

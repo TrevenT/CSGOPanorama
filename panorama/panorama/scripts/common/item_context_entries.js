@@ -53,11 +53,7 @@ var ItemContextEntires = ( function (){
 			},
 			AvailableForItem: function ( id ) {
 				                                                                 
-				return ( ( ItemInfo.GetSlotSubPosition( id ) ||
-					ItemInfo.ItemMatchDefName( id, 'sticker' ) ||
-					ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
-					!ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' )                                                      
-				);
+				return ItemInfo.IsPreviewable( id );
 			},
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'ContextMenuEvent', '' );
@@ -271,7 +267,7 @@ var ItemContextEntires = ( function (){
 		},
 		                                                           
 		    
-			                        
+		   	                        
 		   	                              
 		   	                                       
 		   	                                   
@@ -798,7 +794,40 @@ var ItemContextEntires = ( function (){
 		if ( slot === null || slot === undefined || slot === '' )
 			slot = ItemInfo.GetSlotSubPosition( id );                                                   
 		
+		var teamShownOnMainMenu = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' );
 		team.forEach( element => LoadoutAPI.EquipItemInSlot( element, id, slot ) );
+
+		                                               
+		var bNeedToRestartMainMenuVanity = false;
+		if ( ItemInfo.IsCharacter( id ) )
+		{
+			var teamOfCharacter = ( ItemInfo.GetTeam( id ).search( 'Team_T' ) === -1 ) ? 'ct' : 't';
+			if ( teamOfCharacter !== teamShownOnMainMenu ) {                                                      
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', teamOfCharacter );
+			}
+			                                                
+			bNeedToRestartMainMenuVanity = true;
+		}
+		else
+		{
+			                                                       
+			                                                            
+			                                                    
+			team.filter( function( e ) { return e === teamShownOnMainMenu } );
+			if ( team.length > 0 ) {
+				if ( ( slot === 'clothing_hands' ) ||
+					( slot === GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_loadoutslot_' + teamShownOnMainMenu ) )
+					) {
+					bNeedToRestartMainMenuVanity = true;
+				}
+			}
+		}
+
+		                                         
+		if ( bNeedToRestartMainMenuVanity )
+		{
+			$.DispatchEvent( 'ForceRestartVanity' );
+		}
 	};
 
 	var _DoesNotHaveChosenActionItems = function( id, capability )
@@ -835,7 +864,7 @@ var ItemContextEntires = ( function (){
 
 	var _CanEquipItem = function( itemID )
 	{
-		return ItemInfo.GetSlotSubPosition( itemID ) && !ItemInfo.IsEquippalbleButNotAWeapon( itemID ) && LoadoutAPI.IsLoadoutAllowed();
+		return ItemInfo.GetSlotSubPosition( itemID ) && !ItemInfo.IsEquippableThroughContextMenu( itemID ) && LoadoutAPI.IsLoadoutAllowed();
 	};
 
 	var _IsKeyForXrayItem = function( id )

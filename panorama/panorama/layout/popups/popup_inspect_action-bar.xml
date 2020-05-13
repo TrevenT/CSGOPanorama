@@ -10,6 +10,7 @@
 	<scripts>
         <include src="file://{resources}/scripts/common/item_context_entries.js" />
         <include src="file://{resources}/scripts/popups/popup_inspect_action-bar.js" />
+		<include src="file://{resources}/scripts/characterbuttons.js" />
 	</scripts>
 
 	<Panel class="popup-capability__button-row" useglobalcontext="true">
@@ -21,6 +22,7 @@
 			<TextButton id="SingleAction"
 					class="PopupButton hidden"
 					text="#Action"
+					html="true"
 					onactivate=""/>
 		</Panel>
 		<Panel class="horizontal-align-left left-right-flow">
@@ -43,14 +45,13 @@
 				<DropDown id="InspectDropdownCharModels" class="PopupButton horizontal-align-left" menuclass="DropDownMenu Width-250" >
 					                                
 				</DropDown>
-				<Button id="PopupInspectSaveModel"
-					class="IconButton"
-					onactivate="InspectActionBar.SaveCharacterModelForVanity();"
-					onmouseover="UiToolkitAPI.ShowTextTooltip( 'PopupInspectSaveModel', '#tooltip_save_vanity_model' );"
-					onmouseout="UiToolkitAPI.HideTextTooltip();">
-					<Image class="" src="file://{images}/icons/ui/picture.svg" />
-				</Button>
 			</Panel>
+
+			                                             
+			<Panel id="id-character-button-container" class="hidden">
+				<Frame id="id-character-buttons" src="file://{resources}/layout/characterbuttons.xml"/>
+			</Panel>
+
 			<Button id="InspectItemCert"
 					class="IconButton"
 					onactivate="">

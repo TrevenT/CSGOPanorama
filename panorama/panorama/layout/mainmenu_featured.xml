@@ -15,8 +15,8 @@
         <Panel class="featured__survival-title-parent">
             <Label class="featured__survival-desc stratum-font" text="#SurvivalPromotion_Desc_Sirocco"/>
             <Panel class="horizontal-center">
-                <Label class="featured__survival-title featured__survival-title-red stratum-font" text="#SFUI_GameMode_Survival" />
-                <Label class="featured__survival-title featured__survival-title-dark stratum-font" text="#SFUI_GameMode_Survival" />
+                <Label class="featured__survival-title featured__survival-title-red stratum-font" text="#OPERATION 9" />
+                <Label class="featured__survival-title featured__survival-title-dark stratum-font" text="#OPERATION 9" />
                 <Label class="featured__survival-title stratum-font" text="#SFUI_GameMode_Survival" />
             </Panel>
             <Label class="featured__survival-play stratum-font" text="#SFUI_Play"/>

@@ -68,21 +68,34 @@ HorizontalScrollBar .ScrollThumb
   
           
    
-TextTooltip
+DebugTextTooltip
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( white ), to( #e4e5f0 ) );
 	border-radius: 2.5px;
-	border: 1px solid #767676;
+	border: 1px solid #767676ff;
 	box-shadow: #80808090 4px 4px 4px 0px;
 	padding: 4px;
 	max-width: 600px;
 	font-family: platformfont;
-	font-size: 12px;
-	line-height: 18px;
-
+	font-size: 18px;
 	color: #111111ff;
+
+    visibility: collapse;
 }
 
+DebugTextTooltip.TooltipVisible
+{
+    visibility: visible;
+}
+
+DebugTextTooltip Label
+{
+	horizontal-align: left;
+	color: black;
+	transform: translatex(0px);
+	padding-left: 0px;
+	text-overflow: ellipsis;
+}
 
   
            
@@ -99,8 +112,7 @@ Debugger
 	flow-children: down;
 	font-family: Tahoma;
 	color: black;
-	font-size: 12;
-
+	font-size: 18px;
 }
 
 .DebugBody
@@ -146,7 +158,7 @@ HorizontalSplitter
 	height: fill-parent-flow( 1.0 );
 	background-color: white;
 	color: #000000ff;
-	font-size: 12px;
+	font-size: 18px;
 	font-family: Courier New;
 	width: 100%;
 
@@ -229,6 +241,12 @@ HorizontalSplitter
 	flow-children: right;
 }
 
+#DebugSize
+{
+	flow-children: right;
+	margin-left: 15px;
+	margin-right: 15px;
+}
 
   
                     
@@ -352,8 +370,8 @@ DebugPanelParents
 	width: 100%;
 	padding: 5px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #ECF2F9 ), to( #9DBCDE ) );
-	flow-children: right;
-	font-size: 14;
+	flow-children: right-wrap;
+	font-size: 16px;
 }
 
 DebugPanelParents #SelectedPanelName

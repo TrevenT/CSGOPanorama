@@ -64,7 +64,7 @@ var MainMenu = ( function() {
 		var defaultMovie = 'nuke';
 
 		                                                                 
-		var overrideMovie = 'sirocco';
+		var overrideMovie = 'sirocco_night';
 		var backgroundMovie = overrideMovie;
 
 		                                                            
@@ -104,6 +104,7 @@ var MainMenu = ( function() {
 
 		_UpdateNotifications();
 		_ShowWeaponUpdatePopup();
+		_UpdateInventoryBtnAlert();
 
 		                              
 		_GcLogonNotificationReceived();
@@ -113,7 +114,6 @@ var MainMenu = ( function() {
 
 		                                                               
 		_ShowHideAlertForNewEventForWatchBtn();
-
 	};
 
 	var _TournamentDraftUpdate = function ()
@@ -263,6 +263,7 @@ var MainMenu = ( function() {
 
 		                                                                                           
 		$( '#MainMenuNavBarShowCommunityServerBrowser' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', !bIsCommunityServer );
+		
 
 		                                                            
 		_UpdateSurvivalEndOfMatchInstance();
@@ -589,11 +590,14 @@ var MainMenu = ( function() {
 
 	var _InitNewsAndStore = function ()
 	{	
+		                             
 		_AddStream();
 		
+		                             
 		var elNews = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsNewsPanel' );
 		elNews.BLoadLayout( 'file://{resources}/layout/mainmenu_news.xml', false, false );
 		
+		                             
 		var elStore = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsStorePanel' );
 		elStore.BLoadLayout( 'file://{resources}/layout/mainmenu_store.xml', false, false );
 
@@ -614,13 +618,17 @@ var MainMenu = ( function() {
 			return false;
 		};
 
-		_ShowNewsAndStore();
-
-		                                     
-		                      
-
-		_AddWatchNoticePanel();
+		                            
+		var bFeaturedPanelIsActive = true;
 		
+		if ( bFeaturedPanelIsActive )
+		{
+			_AddFeaturedPanel();
+		}
+		
+		_AddWatchNoticePanel();	                             
+
+		_ShowNewsAndStore();
 	};
 
 	var _AddStream = function()
@@ -631,19 +639,39 @@ var MainMenu = ( function() {
 
 	var _AddFeaturedPanel = function()
 	{
-		                 
-		                                                                                 
-		                                                                      
-		var featuredXML = 'file://{resources}/layout/mainmenu_tournament_pass_status.xml';
+		                        
+		                                                                       
+		                                                                                     
+		      
 
+		                  
+		var featuredXML = 'file://{resources}/layout/operation/operation_mainmenu.xml';
 		var elPanel = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsFeaturedPanel' );
 		elPanel.BLoadLayout( featuredXML, false, false );
 
 		$.FindChildInContext( '#JsNewsContainer' ).MoveChildBefore( elPanel, $.FindChildInContext( '#JsNewsPanel' ) );
 
 		                                                                                                 
-		$.FindChildInContext( '#JsNewsContainer' ).AddClass( 'news-panel-style-feature-panel-visible' );
+		var overrideStyle = ( featuredXML.indexOf( 'tournament' ) !== -1 || featuredXML.indexOf( 'operation' ) !== -1 ) ? 
+			'' : 
+			'news-panel-style-feature-panel-visible';
+
+		if( overrideStyle !== '' )
+		{
+			$.FindChildInContext( '#JsNewsContainer' ).SetHasClass( overrideStyle, true );
+		}
 	};
+
+	var _HideMainMenuNewsPanel = function()
+	{
+		var elNews = $.FindChildInContext( '#JsNewsContainer' );
+		elNews.SetHasClass( 'news-panel--hide-news-panel', true );
+
+		if( elNews.BHasClass( 'news-panel-style-feature-panel-visible') )
+		{
+			elNews.RemoveClass( 'news-panel-style-feature-panel-visible', true );
+		}
+	}
 
 	var _AddWatchNoticePanel = function()
 	{
@@ -696,7 +724,42 @@ var MainMenu = ( function() {
 		_m_bVanityAnimationAlreadyStarted = false;
 		_InitVanity();
 	};
-	
+
+	                                                                 
+	function _RigVanityHover ( vanityPanel )
+	{
+		if ( !vanityPanel || !vanityPanel.IsValid() )
+			return;
+		
+		var elHover = $( "#id-mainmenu-vanity-hover" );
+
+		if ( !elHover || !elHover.IsValid )
+			return;
+		
+		                                                                       
+
+		                                                                         
+		
+		var OnMouseOver = function()
+        {
+			if ( $( '#VanityControls' ) )
+			{
+				$( '#VanityControls' ).AddClass( 'pulse-vanity-controls')
+			}
+		};
+		
+		var OnMouseOut = function()
+        {
+			if ( $( '#VanityControls' ) )
+			{
+				$( '#VanityControls' ).RemoveClass( 'pulse-vanity-controls')
+			}
+        };
+        
+		elHover.SetPanelEvent( 'onmouseover', OnMouseOver );
+		elHover.SetPanelEvent( 'onmouseout', OnMouseOut );
+	}
+
 	var _InitVanity = function()
 	{
 		                               
@@ -709,83 +772,12 @@ var MainMenu = ( function() {
 			return;
 		}
 
-		var loadout = {
-			itemId: GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_itemid' ),
-			model: '',
-			team: '',
-			loadoutSlot: ''
-		};
-
-		var i = 0;
-		for ( i = 0; i < 2; ++ i )
-		{	                                                                 
-			if ( !loadout.itemId )
-			{	                                                    
-				loadout = _DefaultModelLoadouts();
-				loadout.itemId = LoadoutAPI.GetItemID( loadout.team, loadout.loadoutSlot );
-				                                          
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', loadout.itemId );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', loadout.model );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', loadout.team );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', loadout.loadoutSlot );
-				                                                                                                                      
-			}
-			else
-			{	                             
-				loadout.model = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_model' );
-				loadout.team = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' );
-				loadout.loadoutSlot = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_loadoutslot' );
-
-				                                            
-				                                         
-				var arrModels = CharacterAnims.GetValidCharacterModels();
-				if ( arrModels.filter( function( entry )
-					{
-						return entry.model === loadout.model && ( entry.team === loadout.team || entry.team === 'any' );
-					} ).length <= 0 )
-				{
-					                                                                                                                 
-					loadout.itemId = null;
-					continue;
-				}
-				if ( !InventoryAPI.IsValidItemID( loadout.itemId ) || !InventoryAPI.IsItemInfoValid( loadout.itemId ) )
-				{
-					loadout.itemId = LoadoutAPI.GetItemID( loadout.team, loadout.loadoutSlot );
-					                                                                                                                    
-				}
-				else
-				{
-					                                                        
-					if ( !loadout.loadoutSlot || ( ItemInfo.GetSlotSubPosition( loadout.itemId ) !== loadout.loadoutSlot ) )
-					{
-						                                                                                                                   
-						loadout.itemId = null;
-						continue;
-					}
-					
-					                                            
-					if ( !( ItemInfo.IsItemAnyTeam( loadout.itemId ) ||
-						(ItemInfo.IsItemCt( loadout.itemId ) && loadout.team === 'ct') ||
-						(ItemInfo.IsItemT( loadout.itemId ) && loadout.team === 't') ) )
-					{
-						                                                                                                            
-						loadout.itemId = null;
-						continue;
-					}
-
-					                                                                                                                        
-				}
-			}
-			if ( InventoryAPI.IsValidItemID( loadout.itemId ) && InventoryAPI.IsItemInfoValid( loadout.itemId ) )
-			{
-				break;
-			}
-		}
-		if ( !InventoryAPI.IsValidItemID( loadout.itemId ) || !InventoryAPI.IsItemInfoValid( loadout.itemId ) )
-		{
-			                                                              
-			return;
-		}
+		  
+		                                                      
+		  
+		var oSettings = ItemInfo.GetOrUpdateVanityCharacterSettings();
+		oSettings.activity = 'ACT_CSGO_UIPLAYER_WALKUP';
+		oSettings.arrModifiers.push( 'vanity' );
 
 		var vanityPanel = $( '#JsMainmenu_Vanity' );
 		if ( !vanityPanel )
@@ -793,44 +785,26 @@ var MainMenu = ( function() {
 			                                                                 
 			return;
 		}
+		oSettings.panel = vanityPanel;
 
 		  
 		                               
 		  
 		                                                        
 		_m_bVanityAnimationAlreadyStarted = true;
-		loadout.panel = vanityPanel;
-		loadout.selectedWeapon = ItemInfo.GetItemDefinitionName( loadout.itemId );
-		loadout.playIntroAnim = true;
-		CharacterAnims.PlayAnimsOnPanel( loadout );
+		
+		CharacterAnims.PlayAnimsOnPanel( oSettings );
 
 		_SetVanityLightingBasedOnBackgroundMovie( vanityPanel );
 
-		if ( loadout.panel.BHasClass( 'hidden' ) ) {
-			loadout.panel.RemoveClass( 'hidden' );
+		if ( oSettings.panel.BHasClass( 'hidden' ) ) {
+			oSettings.panel.RemoveClass( 'hidden' );
 		}
+
+		_RigVanityHover( vanityPanel );
+
 	};
 
-	var _DefaultModelLoadouts = function()
-	{
-		var loadoutsList = CharacterAnims.GetValidCharacterModels();
-		var randomEntry = Math.floor( Math.random() * loadoutsList.length );
-		
-		                                                                 
-		var result = Object.assign( {}, loadoutsList[ randomEntry ] );
-
-		                                                                                                 
-		if ( result.team === 'any' )
-			result.team = 't';
-
-		  
-		                                                       
-		  
-		var survivalRandomEntry = loadoutsList.length - 3 + Math.floor( Math.random()*3 );
-		result.model = loadoutsList[ survivalRandomEntry ].model;
-
-		return result;
-	};
 
 	var _SetVanityLightingBasedOnBackgroundMovie = function( vanityPanel )
 	{
@@ -860,7 +834,7 @@ var MainMenu = ( function() {
 
 			                                                   
 		}
-		else if ( 'blacksite' )
+		else if ( backgroundMap === 'blacksite' )
 		{
 			vanityPanel.SetFlashlightAmount( 1 );
 			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
@@ -881,6 +855,29 @@ var MainMenu = ( function() {
 			vanityPanel.SetDirectionalLightColor( 0.75, 1.20, 1.94 );
 			vanityPanel.SetDirectionalLightDirection( 0.76, 0.48, -0.44 );
 		}
+		else if ( backgroundMap === 'sirocco_night' )
+		{
+			vanityPanel.SetFlashlightAmount( 2 );
+			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
+			vanityPanel.SetFlashlightPosition( 17.57, -171.50, 0.00 );
+			vanityPanel.SetFlashlightAngle( 97.38, 16.46, 85.98);
+			vanityPanel.SetFlashlightFOV( 45 );
+			                                                            
+			vanityPanel.SetFlashlightColor( 1.8, 1.8, 2 );
+			vanityPanel.SetAmbientLightColor( 0.13, 0.17, 0.29 );
+			
+			vanityPanel.SetDirectionalLightModify( 0 );
+			vanityPanel.SetDirectionalLightColor(0.00, 0.19, 0.38 );
+			vanityPanel.SetDirectionalLightDirection( 0.22, 0.67, -0.71 );
+			
+			vanityPanel.SetDirectionalLightModify( 1 );
+			vanityPanel.SetDirectionalLightColor( 0.05, 0.09, 0.21) ;
+			vanityPanel.SetDirectionalLightDirection(-0.86, -0.18, -0.47 );
+
+			vanityPanel.SetDirectionalLightModify( 2 );
+			vanityPanel.SetDirectionalLightColor( 0.0, 0.0, 0.0 );
+			vanityPanel.SetDirectionalLightDirection( 0.76, 0.48, -0.44 );
+		}
 	};
 
 	                                                                           
@@ -898,7 +895,7 @@ var MainMenu = ( function() {
 		_NavigateToTab( 'JsPlay', 'mainmenu_play' );
 
 		                                           	
-		_PauseMainMenuCharacter();
+		_PauseMainMenuCharacter();		
 	};
 
 	var _OpenWatchMenu = function()
@@ -913,7 +910,6 @@ var MainMenu = ( function() {
 		_PauseMainMenuCharacter();
 
 		_NavigateToTab( 'JsInventory', 'mainmenu_inventory' );
-
 	};
 
 	var _InsureSessionCreated = function()
@@ -951,7 +947,16 @@ var MainMenu = ( function() {
 
 	var _UpdateInventoryBtnAlert = function()
 	{
-		var count = AcknowledgeItems.GetItems().length;
+		var aNewItems = AcknowledgeItems.GetItems();
+		var aOperationItems = aNewItems.filter( item => 'quest_reward' === ItemInfo.GetItemPickUpMethod( item.id ) );
+
+		                                                                            
+		if ( aOperationItems.length > 0 && !GameStateAPI.IsConnectedOrConnectingToServer() )
+		{
+			_ShowAcknowledgePopup( '', '' );
+		}
+		
+		var count = aNewItems.length;
 		var elNavBar = $.GetContextPanel().FindChildInLayoutFile('JsMainMenuNavBar'),
 		elAlert = elNavBar.FindChildInLayoutFile('MainMenuInvAlert');
 
@@ -994,14 +999,17 @@ var MainMenu = ( function() {
 			UiToolkitAPI.UnregisterJSCallback( JsInspectCallback );
 			JsInspectCallback = -1;
 		}
-
+		                            
 		var ParamsList = params.split( ',' );
 		var keyId = ParamsList[ 0 ];
 		var caseId = ParamsList[ 1 ];
 		var storeId = ParamsList[ 2 ];
+		var blurOperationPanel = ParamsList[ 3 ];
+		                                                                                    
+		var aParamsForCallback = ParamsList.slice( 4 );
 		var showMarketLinkDefault = _m_bPerfectWorld ? 'false' : 'true';
 
-		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( _OpenDecodeAfterInspect.bind( undefined, keyId, caseId, storeId ) );
+		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( _OpenDecodeAfterInspect.bind( undefined, keyId, caseId, storeId, aParamsForCallback ) );
 
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -1011,13 +1019,14 @@ var MainMenu = ( function() {
 			'&' + 'allowsave=false' +
 			'&' + 'showequip=false' +
 			'&' + 'showitemcert=false' +
-			'&' + 'showmarketlink='+ showMarketLinkDefault +
+			'&' + blurOperationPanel +
+			'&' + 'showmarketlink=' + showMarketLinkDefault +
 			'&' + 'callback=' + JsInspectCallback,
 			'none'
 		);
 	};
 
-	var _OpenDecodeAfterInspect = function( keyId, caseId, storeId )
+	var _OpenDecodeAfterInspect = function( keyId, caseId, storeId, aParamsForCallback )
 	{
 		                                                                                                               
 		                                                                                    
@@ -1028,12 +1037,17 @@ var MainMenu = ( function() {
 			'&' + 'storeitemid=' + storeId :
 			'';
 
+		var backtodecodeparams = aParamsForCallback.length > 0 ?
+		'&' + aParamsForCallback.join( '&' ) : 
+		'';
+
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
 			'key-and-case=' + keyId + ',' + caseId +
 			'&' + 'asyncworktype=decodeable' +
-			backtostoreiteminspectsettings
+			backtostoreiteminspectsettings +
+			backtodecodeparams
 		);
 	};
 
@@ -1088,7 +1102,8 @@ var MainMenu = ( function() {
 			title: "",
 			msg: "",
 			color_class: "NotificationYellow",
-			callback: function() {}
+			callback: function() {},
+			html: false
 		};
 		
 		var nBanRemaining = CompetitiveMatchAPI.GetCooldownSecondsRemaining();
@@ -1097,6 +1112,7 @@ var MainMenu = ( function() {
 			popupNotification.title = "#SFUI_MainMenu_Competitive_Ban_Confirm_Title";
 			popupNotification.msg = $.Localize( "#SFUI_CooldownExplanationReason_Expired_Cooldown" ) + $.Localize( CompetitiveMatchAPI.GetCooldownReason() );
 			popupNotification.callback = _AcknowledgePenaltyNotificationsCallback;
+			popupNotification.html = true;
 
 			return popupNotification;
 		}
@@ -1132,14 +1148,18 @@ var MainMenu = ( function() {
 			var popupNotification = _GetPopupNotification();
 			if ( popupNotification != null )
 			{
-				UiToolkitAPI.ShowGenericPopupOneOption(
+				var elPopup = UiToolkitAPI.ShowGenericPopupOneOption(
 					popupNotification.title,
 					popupNotification.msg,
 					popupNotification.color_class,
 					'#SFUI_MainMenu_ConfirmBan',
 					popupNotification.callback
 				);
-		
+				
+				                                                       
+				if ( popupNotification.html )
+					elPopup.EnableHTML();
+
 				_m_bHasPopupNotification = true;
 			}
 		}
@@ -1273,7 +1293,6 @@ var MainMenu = ( function() {
 		_m_notificationSchedule = $.Schedule( 1.0, _UpdateNotifications );
 
 		_UpdatePopupnotification();
-
 		_UpdateNotificationBar();
 	};
 
@@ -1282,8 +1301,19 @@ var MainMenu = ( function() {
 	                    
 	                                                                                                    
 	var _m_acknowledgePopupHandler = null;
-	var _ShowAcknowledgePopup = function( type, itemid )
+	var _ShowAcknowledgePopup = function( type = '', itemid = '' )
 	{
+		if ( type === 'xpgrant' )
+		{	                                                 
+			UiToolkitAPI.ShowCustomLayoutPopupParameters( 
+				'',
+				'file://{resources}/layout/popups/popup_acknowledge_xpgrant.xml',
+				'none'
+			);
+			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.inventory_new_item', 'MOUSE' );
+			return;
+		}
+
 		var updatedItemTypeAndItemid = '';
 		if ( itemid && type )
 			updatedItemTypeAndItemid = 'ackitemid=' + itemid + '&acktype=' + type;
@@ -1473,6 +1503,50 @@ var MainMenu = ( function() {
 		_ShowHideAlertForNewEventForWatchBtn();
 	};
 
+	function _SwitchVanity ( team )
+	{
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
+		GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', team );	
+		_ForceRestartVanity();
+	}
+
+	function _GoToCharacterLoadout ( team )
+	{
+		_OpenInventory();
+
+		$.DispatchEvent( "ShowLoadoutForItem", 'customplayer', 'customplayer', team );
+	}
+
+	                                                                                                    
+	function _OnGoToCharacterLoadoutPressed ()
+	{
+		if ( !MyPersonaAPI.IsInventoryValid() || !MyPersonaAPI.IsConnectedToGC() )
+		{
+			                                       
+			UiToolkitAPI.ShowGenericPopupOk(
+				$.Localize( '#SFUI_SteamConnectionErrorTitle' ),
+				$.Localize( '#SFUI_Steam_Error_LinkUnexpected' ),
+				'',
+				function() {},
+				function() {}
+			);
+			return;
+		}
+
+		var team = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' ) == 't' ? 2 : 3;
+
+		var elVanityContextMenu = UiToolkitAPI.ShowCustomLayoutContextMenuParametersDismissEvent(
+			'id-vanity-contextmenu',
+			'',
+			'file://{resources}/layout/context_menus/context_menu_mainmenu_vanity.xml', 
+			'team=' + team,
+			function(){}
+		)
+
+		elVanityContextMenu.AddClass( "ContextMenu_NoArrow" );
+	}
+
+
 	return {
 		OnInitFadeUp						: _OnInitFadeUp,
 		OnShowMainMenu						: _OnShowMainMenu,
@@ -1516,9 +1590,13 @@ var MainMenu = ( function() {
 		ShowTournamentStore					: _ShowTournamentStore,
 		TournamentDraftUpdate				: _TournamentDraftUpdate,
 		ResetSurvivalEndOfMatch				: _ResetSurvivalEndOfMatch,
+		OnGoToCharacterLoadoutPressed		: _OnGoToCharacterLoadoutPressed,
 		ResetNewsEntryStyle					: _ResetNewsEntryStyle,
 		OnSteamIsPlaying					: _OnSteamIsPlaying,
-		WatchBtnPressedUpdateAlert			: _WatchBtnPressedUpdateAlert
+		WatchBtnPressedUpdateAlert			: _WatchBtnPressedUpdateAlert,
+		HideMainMenuNewsPanel				: _HideMainMenuNewsPanel,
+		SwitchVanity						: _SwitchVanity,
+		GoToCharacterLoadout				: _GoToCharacterLoadout,
 	};
 })();
 
@@ -1530,7 +1608,7 @@ var MainMenu = ( function() {
 {
 	$.RegisterForUnhandledEvent( 'HideContentPanel', MainMenu.OnHideContentPanel );
 	$.RegisterForUnhandledEvent( 'SidebarContextMenuActive', MainMenu.OnSideBarElementContextMenuActive );
-	$.RegisterForUnhandledEvent( 'UpdateVanityModelData', MainMenu.ForceRestartVanity );
+
 	$.RegisterForUnhandledEvent( 'OpenPlayMenu', MainMenu.OpenPlayMenu );
 	$.RegisterForUnhandledEvent( 'OpenInventory', MainMenu.OpenInventory );
 	$.RegisterForUnhandledEvent( 'OpenWatchMenu', MainMenu.OpenWatchMenu );
@@ -1558,9 +1636,15 @@ var MainMenu = ( function() {
   	                                                                                     
 	$.RegisterForUnhandledEvent( 'UnloadLoadingScreenAndReinit', MainMenu.ResetSurvivalEndOfMatch );
 
+	$.RegisterForUnhandledEvent( 'MainMenu_OnGoToCharacterLoadoutPressed', MainMenu.OnGoToCharacterLoadoutPressed );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_EmbeddedStream_VideoPlaying", MainMenu.OnSteamIsPlaying );
 	$.RegisterForUnhandledEvent( "StreamPanelClosed", MainMenu.ResetNewsEntryStyle );
-	
+	$.RegisterForUnhandledEvent( "HideMainMenuNewsPanel", MainMenu.HideMainMenuNewsPanel );
+
+	$.RegisterForUnhandledEvent( "ForceRestartVanity", MainMenu.ForceRestartVanity );
+
+	$.RegisterForUnhandledEvent( "MainMenuSwitchVanity", MainMenu.SwitchVanity );
+	$.RegisterForUnhandledEvent( "MainMenuGoToCharacterLoadout", MainMenu.GoToCharacterLoadout );
 	
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitVanity();

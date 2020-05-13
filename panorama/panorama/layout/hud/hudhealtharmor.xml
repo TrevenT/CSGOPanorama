@@ -47,9 +47,7 @@
 				<ProgressBar id="ArmorBar" class="hud-HA-bar hud-HA-bar--armor cl-hud-wash-color" />
 
 			</Panel>
-			            
 			<CSGOHudPassiveItems id="HudPassiveItems"/>
-			            
 		</Panel>
 
 	</CSGOHudHealthArmor>

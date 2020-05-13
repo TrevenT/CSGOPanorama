@@ -9,11 +9,13 @@ var InpsectPurchaseBar = ( function()
 	var m_isXrayMode = false;
 	var m_allowXrayPurchase = false;
 	var m_bOverridePurchaseMultiple = false;
+	var m_blurOperationPanel = false;
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback )
 	{
 		m_storeItemid = funcGetSettingCallback( "storeitemid", "" );
 		m_bOverridePurchaseMultiple = ( funcGetSettingCallback( "overridepurchasemultiple", "" ) === '1' ) ? true : false;
+		m_blurOperationPanel = ( $.GetContextPanel().GetAttributeString( 'bluroperationpanel', 'false' ) === 'true' ) ? true : false;
 		
 		                                                     
 		                                          
@@ -70,11 +72,11 @@ var InpsectPurchaseBar = ( function()
 		}
 		else if ( !m_storeItemid && m_showToolUpsell )
 		{
-		    elDesc.text = "#popup_capability_upsell";
+			elDesc.text = "#popup_capability_upsell";
 		}
 		else
 		{
-		    elDesc.text = "#popup_capability_use";
+			elDesc.text = "#popup_capability_use";
 		}
 
 		elDesc.SetHasClass( 'popup-capability-faded', m_isXrayMode && !m_allowXrayPurchase );
@@ -89,7 +91,7 @@ var InpsectPurchaseBar = ( function()
 		var elDropdown = m_elPanel.FindChildInLayoutFile( 'PurchaseCountDropdown' );
 		var qty = 1;
 
-		var bCanShowQuantityDropdown = !m_isXrayMode && ( m_bOverridePurchaseMultiple || !_isCoupon() );
+		var bCanShowQuantityDropdown = !m_isXrayMode && ( m_bOverridePurchaseMultiple || !_isCouponOrPass() );
 		elDropdown.visible = bCanShowQuantityDropdown;
 		if( bCanShowQuantityDropdown )
 		{
@@ -102,11 +104,12 @@ var InpsectPurchaseBar = ( function()
 		_UpdateSalePrice( ItemInfo.GetStoreOriginalPrice( m_itemid, qty ) );
 	};
 
-	var _isCoupon = function()
+	var _isCouponOrPass = function()
 	{
 		var itemType = InventoryAPI.GetItemTypeFromEnum( m_itemid );
+		var attValue = InventoryAPI.GetItemAttributeValue( m_itemid, 'season access' );
 		                                 
-		return ( itemType === 'coupon' || itemType === 'coupon_crate' ) ? true : false;
+		return ( itemType === 'coupon' || itemType === 'coupon_crate'|| attValue ) ? true : false;
 	};
 
 	var _SetUpPurchaseBtn = function ( elPanel )
@@ -159,6 +162,11 @@ var InpsectPurchaseBar = ( function()
 	var _ClosePopup = function()
 	{
 		InventoryAPI.StopItemPreviewMusic();
+
+		if( m_blurOperationPanel )
+		{
+			$.DispatchEvent( 'UnblurOperationPanel' );
+		}
 
 		$.DispatchEvent( 'HideSelectItemForCapabilityPopup' );
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );

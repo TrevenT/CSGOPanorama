@@ -10,7 +10,10 @@
 		<include src="file://{resources}/scripts/common/icon.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/common/sessionutil.js" />
+		<include src="file://{resources}/scripts/operation/operation_util.js" />
 		<include src="file://{resources}/scripts/mainmenu_play.js" />
+		<include src="file://{resources}/scripts/controlslibrary.js" />
+		<include src="file://{resources}/scripts/operation/operation_main.js" />
 	</scripts>
 
 	                                                  
@@ -49,19 +52,56 @@
 			</Panel>
 		</snippet>
 
-		<snippet name="SurvivalAutoSquad" >
-			<Panel class="play-menu-svl-auto-squad-toggle-container">
-				<Panel id="PlayMenuMapRotationTimer" class="play-menu-map-rotation-timer hidden">
-					<Image class="right-padding" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/clock.svg" />
-					<Label class="play-menu-map-rotation-timer-label" html="true" text="#rotating_map_timer"/>
+		<snippet name="MapSelectionContainer_official_cooperative" >
+			<Panel class="map-selection-list-coop hidden">
+				<Panel class="play-menu-mapandlbs-container">
+					<Panel id="MapTile" class="coop-map-tile">
+						<Label html="true" id="MissionDesc" class="coop-mission__desc"/> 
+						<Panel id="GameElementIcons" class="coop-mission__icon-container">
+							                                                                   
+						</Panel>
+					</Panel>
+					<Panel id="FriendLeaderboards"/>
 				</Panel>
-				<ToggleButton id="SurvivalAutoSquadToggle" class="PopupButton">
-					<Image class="" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/lobby.svg" />
-					<Label id="SurvivalAutoSquadToggleLabel" text="#SFUI_DANGERZONE_AUTO_FILL" html="true"/>
-				</ToggleButton>
+				                                        
+					                                                                                                                                
+				          
 			</Panel>
 		</snippet>
 
+		<snippet name="MapSelectionContainer_official_coopmission" >
+			<Panel class="map-selection-list-coop hidden">
+				<Panel class="play-menu-mapandlbs-container">
+					<Panel id="MapTile" class="coop-map-tile">
+						<Label html="true" id="MissionDesc" class="coop-mission__desc" text="#Quest_CoopMission_Desc_op09"/> 
+					</Panel>
+					<Panel id="FriendLeaderboards"/>
+				</Panel>
+				                                        
+					                                                                                                                                
+				          
+			</Panel>
+		</snippet>
+
+		<snippet name="MapSelectionContainer_official_survival" >
+			<Panel class="map-selection-list-coop hidden">
+				<Panel class="play-menu-mapandlbs-container">
+					<Panel id="MapTile" class="coop-map-tile">
+					</Panel>
+					<Panel id="FriendLeaderboards"/>
+				</Panel>
+				<Panel class="play-menu-svl-auto-squad-toggle-container">
+					<Panel id="PlayMenuMapRotationTimer" class="play-menu-map-rotation-timer hidden">
+						<Image class="right-padding" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/clock.svg" />
+						<Label class="play-menu-map-rotation-timer-label" html="true" text="#rotating_map_timer"/>
+					</Panel>
+					<ToggleButton id="SurvivalAutoSquadToggle" class="PopupButton">
+						<Image class="" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/lobby.svg" />
+						<Label id="SurvivalAutoSquadToggleLabel" text="#SFUI_DANGERZONE_AUTO_FILL" html="true"/>
+					</ToggleButton>
+				</Panel>
+			</Panel>
+		</snippet>
 
 		<snippet name="MapListSection" >
 			<Panel class="map-selection-list-section">
@@ -128,12 +168,22 @@
 								group="gamemodes" >
 							<Label text="#SFUI_GameModeSkirmish"/>
 					</RadioButton>
-					            
 					<RadioButton id='survival'  
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeSurvival"/>
 					</RadioButton>
-					            
+					<RadioButton id='cooperative'  
+								group="gamemodes" >
+						<Label text="#SFUI_GameModeCooperative"
+						onmouseover="UiToolkitAPI.ShowTextTooltip( 'cooperative', '#PlayMenu_guardian_tooltip' );"
+						onmouseout="UiToolkitAPI.HideTextTooltip();"/>
+					</RadioButton>
+					<RadioButton id='coopmission'  
+								group="gamemodes" >
+						<Label text="#SFUI_GameModeCoopMission"
+						onmouseover="UiToolkitAPI.ShowTextTooltip( 'coopmission', '#PlayMenu_guardian_tooltip' );"
+						onmouseout="UiToolkitAPI.HideTextTooltip();"/>
+					</RadioButton>
 				</Panel>
 
 				<Panel id="WorkshopSearchBar" class="content-navbar__tabs">

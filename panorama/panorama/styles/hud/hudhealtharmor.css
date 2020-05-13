@@ -56,7 +56,7 @@ CSGOHudHealthArmor Label
 
 .hud-HA
 {
-    width: 410px;
+    width: fit-children;
     height: 53px;
 	vertical-align: bottom;
     opacity: 0.0;
@@ -116,7 +116,7 @@ CSGOHudHealthArmor Label
 .hud-HA-main
 {
     height: 100%;
-    width: 100%;
+    width: fit-children;
 
                                        	
                                    

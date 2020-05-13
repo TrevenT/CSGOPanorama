@@ -32,7 +32,7 @@
 
 		<snippet name="StoreEntry" class="">
 			<Panel class="store-panel__carousel__item"  hittest="true">
-				<ItemImage id="StoreItemImage" class="store-panel__carousel__item__image" scaling="stretch-to-fit-x-preserve-aspect"  >
+				<ItemImage id="StoreItemImage" class="store-panel__carousel__item__image" scaling="stretch-to-fit-preserve-aspect"  >
 					<Label id="StoreItemStattrak" class="store-panel__carousel__item__stattrak hidden" text="#CSGO_KillEater_Hud"/>
 					<Label id="StoreItemNew" class="store-panel__carousel__item__stattrak hidden" text="#Store_Price_New"/>
 				</ItemImage>
@@ -174,7 +174,7 @@
 
 	</snippets>
 
-	<Panel class="news-panel news-panel--store-container" useglobalcontext="true">
+	<Panel class="news-panel news-panel--store-container MainMenuModeOnly" useglobalcontext="true">
 		<Panel class="store-panel-license-banner hidden" id="StorePanelLicenseBanner">
 			<Label class="store-panel-license-banner__text" id="StorePanelLicenseBannerText"
 				html="true" text="#SFUI_LoginLicenseAssist_NoOnlineLicense"/>

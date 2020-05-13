@@ -29,6 +29,12 @@
 	height: 100%;
 }
 
+.WindowRoot_TripleMonitor .buymenu
+{
+	horizontal-align: center;
+	width: 33%;
+}
+
 .buymenu__fullscreen
 {
 	flow-children:none;

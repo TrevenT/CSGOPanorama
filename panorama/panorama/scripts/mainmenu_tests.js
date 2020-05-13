@@ -39,18 +39,19 @@ function PanelTypeTab( panelType, layoutType )
     g_activeTab = container;
 }
 
-function LayoutTab( testName )
+function LayoutTab( testName, xml )
 {
     DestroyActiveTab();
 
                            
     var panelId = "LayoutPanel_" + testName;
-    var newPanel = $.CreatePanel("Panel", $.FindChildInContext('#TestContent'), panelId);
+    var newPanel = $.CreatePanel( "Panel", $.FindChildInContext( '#TestContent' ), panelId );
+    var xml = ( xml == "" || xml == undefined ) ? "file://{resources}/layout/tests/" + testName + ".xml" : xml;
 
     if (newPanel)
     {
         g_activeTab = panelId;
-        newPanel.BLoadLayout("file://{resources}/layout/tests/" + testName + ".xml", false, false);
+        newPanel.BLoadLayout( xml, false, false);
     }
 }
 

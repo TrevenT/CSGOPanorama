@@ -20,6 +20,7 @@ var CapabilityDecodable = ( function()
 	var m_showInspectScheduleHandle = null;
 	var m_isAllowedToInteractWithLootlistItems = true;
 	var m_isXrayMode = false;
+	var m_blurOperationPanel = false;
 	
 	var _Init = function()
 	{
@@ -41,6 +42,12 @@ var CapabilityDecodable = ( function()
 		
 		m_isXrayMode = $.GetContextPanel().GetAttributeString( "isxraymode", "no" ) === 'yes' ? true : false;
 		m_isAllowedToInteractWithLootlistItems = ( $.GetContextPanel().GetAttributeString( 'allowtointeractwithlootlistitems', 'true' ) === 'true' ) ? true : false;
+		m_blurOperationPanel = ( $.GetContextPanel().GetAttributeString( 'bluroperationpanel', 'false' ) === 'true' ) ? true : false;
+
+		if ( m_blurOperationPanel )
+		{
+			$.DispatchEvent( 'BlurOperationPanel' );
+		}
 
 		if ( m_isXrayMode )
 		{
@@ -203,7 +210,7 @@ var CapabilityDecodable = ( function()
 
 			if ( !ItemInfo.ItemMatchDefName( m_caseId, 'spray' ) && !ItemInfo.ItemDefinitionNameSubstrMatch( m_caseId, 'tournament_pass_' ) )
 			{
-			_PlayCaseModelAnim( 'fall', 'idle' );
+				_PlayCaseModelAnim( 'fall' );
 				_PlayContainerSound( m_caseId, 'fall' );
 			}
 
@@ -247,11 +254,10 @@ var CapabilityDecodable = ( function()
 		InspectModelImage.Init( elItemModelImagePanel, caseId, _GetSettingCallback );
 	};
 
-	var _PlayCaseModelAnim = function( anim, idle )
+	var _PlayCaseModelAnim = function( anim )
 	{
 		var elModel = InspectModelImage.GetModelPanel();
-		elModel.QueueSequence( anim, true );
-		elModel.QueueSequence( idle , false );
+		elModel.PlaySequence( anim, true );
 	};
 
 	var _SetCaseModelCamera = function( preset, shouldTransition )
@@ -349,12 +355,22 @@ var CapabilityDecodable = ( function()
 			$.DispatchEvent( 'ContextMenuEvent', '' );
 			_ClosePopUp();
 
-			var additionalParams = ( m_storeItemId ) ? m_storeItemId : '';
+			var storeid = ( m_storeItemId ) ? m_storeItemId : '';
+			var bluroperationpanel = m_blurOperationPanel ? 'bluroperationpanel=true' : '';
+
+			                                                                
+			var additionalParams = _GetSettingCallback( 'inspectonly', 'false' ) === 'true' ? 'inspectonly=true,' : '';
+			additionalParams = _GetSettingCallback( 'asyncworkbtnstyle', 'positive' ) === 'hidden' ? additionalParams + 'asyncworkbtnstyle=hidden' : '';
+			additionalParams = m_blurOperationPanel ? additionalParams + ','+'bluroperationpanel=true' : '';
 			
 			$.DispatchEvent(
 				"LootlistItemPreview",
 				itemid,
-				keyId + ',' + caseId + ',' + additionalParams
+				keyId +
+				',' + caseId +
+				',' + storeid +
+				',' + bluroperationpanel +
+				',' + additionalParams
 			);
 		};
 
@@ -441,7 +457,7 @@ var CapabilityDecodable = ( function()
 		}
 		else
 		{
-			$.Schedule( 1, _PlayCaseModelAnim.bind( undefined, 'open', 'openidle' ) );
+			$.Schedule( 1, _PlayCaseModelAnim.bind( undefined, 'open' ) );
 			_SetCaseModelCamera( 3, true );
 			
 			elCase = InspectModelImage.GetModelPanel();
@@ -1067,14 +1083,14 @@ var CapabilityDecodable = ( function()
 				$.CancelScheduled( m_showInspectScheduleHandle );
 				m_showInspectScheduleHandle = null;
 			}
-			
+
 			var elAsyncActionBarPanel = m_Inspectpanel.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 			var elPurchase = m_Inspectpanel.FindChildInLayoutFile( 'PopUpInspectPurchaseBar' );
 			if ( !elAsyncActionBarPanel.BHasClass( 'hidden' ) )
 			{
 				InspectAsyncActionBar.OnEventToClose();
 			}
-			else if ( !elPurchase.BHasClass( 'hidden' ) ) 
+			else if ( !elPurchase.BHasClass( 'hidden' ) )
 			{
 				InpsectPurchaseBar.ClosePopup();
 			}

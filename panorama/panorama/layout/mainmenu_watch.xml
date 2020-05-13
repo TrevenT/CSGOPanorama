@@ -73,9 +73,6 @@
 						</RadioButton>						
 						<RadioButton id="WatchNavBarButtonLive" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsLive', 'live menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_LiveMatches"/>
-						</RadioButton>
-						<RadioButton id="WatchNavBarButtonTournaments" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
-							<Label class="" text="#CSGO_Watch_Cat_Majors"/>
 						</RadioButton>											
 						<RadioButton id="WatchNavBarButtonStreams" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsStreams', 'streams menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Streams"/>

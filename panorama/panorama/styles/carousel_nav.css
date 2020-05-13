@@ -17,6 +17,7 @@ CarouselNav:disabled
 	margin-right: 5px;
 }
 
+
 .OverMaxPips #ItemButtons
 {
 	visibility: collapse;
@@ -34,7 +35,6 @@ CarouselNav:disabled
 {
 	visibility: collapse;
 }
-
 
                                                                                           
 .OverlayPips #PreviousItemButton, .OverlayPips #NextItemButton
@@ -76,6 +76,15 @@ CarouselNav:disabled
 .player-card-row__name CarouselNav #ItemPips
 {
 	visibility: collapse;
+}
+
+.op-tier__reward-container CarouselNav
+{
+	vertical-align: bottom;
+	transform: rotateZ(90deg);
+	horizontal-align: right;
+	margin-bottom: 20px;
+	ui-scale: 75%;
 }
 
                                                                   

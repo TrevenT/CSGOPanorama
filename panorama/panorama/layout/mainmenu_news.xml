@@ -33,7 +33,7 @@
 	</snippets>
 
 
-	<Panel class="news-panel">
+	<Panel class="news-panel MainMenuModeOnly">
 		<Panel class="news-panel-navbar">
 			<Label html="false" text="#SFUI_MainMenu_News_Title" />
 		</Panel>

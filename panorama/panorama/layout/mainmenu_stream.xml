@@ -62,7 +62,7 @@
 
 	</snippets>
 
-	<Panel class="news-panel-streamfeed hidden">                           
+	<Panel class="news-panel-streamfeed hidden MainMenuModeOnly">                           
 		                                          
 	</Panel>
 </root>

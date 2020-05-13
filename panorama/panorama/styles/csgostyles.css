@@ -9,6 +9,7 @@
 @define negativeColor: #c21b1b;
 @define warningColor: #b1af2d;
 @define positiveColor: #4caf50;
+@define opAccentColor: rgb(129, 41, 211);
 @define contentPanelBackground: rgba(20, 20, 20, 0.4);
 @define blurBackgroundColor: rgba(40, 40, 40, 0.3);
 @define tileBlurBackgroundColor: rgba(0, 0, 0, 0.5);
@@ -197,12 +198,28 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
 	text-align: center;
 }
 
+.text-align-right
+{
+	text-align: right;
+}
+
+.text-uppercase
+{
+	text-transform: uppercase;
+}
+
+
                                                                                
                                      				                           
                                                                                
 .positiveColor
 {
 	wash-color: positiveColor;
+}
+
+.operationColor
+{
+	wash-color: opAccentColor;
 }
 
 .negativeColor
@@ -897,6 +914,8 @@ ToggleButton:selected .TickBox
 
 }
 
+
+
                                                                   
 ToggleButton .Capsule
 {
@@ -1019,6 +1038,7 @@ ToggleButton.ExpandCollapseToggleButton
     transition-property: transform;
     transition-duration: 0.2s;
 }
+
 
                                                                                
                                       				                           
@@ -1441,6 +1461,42 @@ Button.PopupButton.Activated
 	transition-timing-function: ease-in-out;
 }
 
+.PopupButton.Operation
+{
+	background-color: opAccentColor;
+	height: fit-children;
+}
+
+.PopupButton.Operation:active
+{
+	sound: "UIPanorama.generic_button_press";
+}
+
+
+.PopupButton.Operation:hover
+{
+	background-color: opAccentColor;
+	brightness: 1.4;
+
+	transition-property: brightness;
+	transition-duration: 0s;
+	transition-timing-function: ease-in-out;
+}
+
+.IconButton.Operation
+{
+	background-color: none;
+}
+
+.IconButton.Operation:hover
+{
+	brightness: 1.4;
+	background-color: none;
+	transition-property: brightness;
+	transition-duration: 0s;
+	transition-timing-function: ease-in-out;
+}
+
 .PopupButton.Warning
 {
 	background-color: warningColor;
@@ -1452,7 +1508,8 @@ Button.PopupButton.Activated
 }
 
 .PopupButton .TickBox,
-.map-selection-btn .TickBox
+.map-selection-btn .TickBox,
+.setting-toggle .TickBox
 {
 	                                                                     
 	                                                                        
@@ -1474,11 +1531,42 @@ Button.PopupButton.Activated
 }
 
 .PopupButton:selected .TickBox,
-.map-selection-btn:selected .TickBox
+.map-selection-btn:selected .TickBox,
+.setting-toggle:selected .TickBox
 {
 	height: 24px;
 	background-image: url("file://{images}/icons/ui/checkbox.svg");
 	background-size: 24px 24px;
+	background-color: None;
+	box-shadow: #00000000 0px 0px 3px 0px;
+
+	transition-property: wash-color, background-color;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.PopupButton.Zoom .TickBox
+{
+	width: 36px;
+	height: 36px;
+	margin: 8px;
+	background-image: url("file://{images}/icons/ui/zoom_in.svg");
+	background-repeat: no-repeat;
+	background-size: 36px 36px;
+	box-shadow: #00000000 -2px -2px 2px 4px;
+	border: 0px solid white;
+
+	transition-property: background-color, wash-color;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.PopupButton.Zoom:selected .TickBox
+{
+
+	background-image: url("file://{images}/icons/ui/zoom_out.svg");
+	background-repeat: no-repeat;
+	background-size: 36px 36px;
 	background-color: None;
 	box-shadow: #00000000 0px 0px 3px 0px;
 
@@ -2682,7 +2770,6 @@ EdgeScrollBar.Vertical #MaxButton
 	margin: 2px;
 }
 
-
 .PaginationArrow:enabled:hover
 {
 	brightness: 4;
@@ -2705,6 +2792,7 @@ EdgeScrollBar.Vertical #MaxButton
 	opacity: 1;
 	border-radius: 50%;
 }
+
 
 @keyframes 'OpacityPulse'
 {
@@ -3010,6 +3098,11 @@ EdgeScrollBar.Vertical #MaxButton
 	margin-right: 16px;
 }
 
+.right-margin-32
+{
+	margin-right: 32px;
+}
+
 .left-margin
 {
 	margin-left: 8px;
@@ -3018,6 +3111,11 @@ EdgeScrollBar.Vertical #MaxButton
 .left-margin-medium
 {
 	margin-left: 16px;
+}
+
+.left-margin-32
+{
+	margin-left: 32px;
 }
 
 .z-index-2

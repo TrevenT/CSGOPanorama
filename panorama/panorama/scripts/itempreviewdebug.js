@@ -83,14 +83,14 @@ function TestJS()
                                                                                                                         
                                                                                  
                                                                                                                                 
-                                                                         
+                                                                        
 
                                                                                
                                                                                
                                    
                                                                                                        
                                                                                                                                                                                                                          
-                                                                                           
+                                                                        
 
                                                                                   
                                                                                     
@@ -112,8 +112,8 @@ function TestJS()
                                                                          
     parent.EquipPlayerFromLoadout( 'ct', 'rifle3' );
 
-    parent.QueueSequence( 'loadout_rifl_spawn_02', true );
-    parent.QueueSequence( 'loadout_rifl_idle_long', false );
+    parent.ResetActivityModifiers();
+    parent.PlayActivity( 'ACT_CSGO_UIPLAYER_WALKUP', true );
 }
 
 function TestJSTwitch()
@@ -122,9 +122,8 @@ function TestJSTwitch()
     var parent = $.GetContextPanel().GetParent();
 
     parent.ResetAnimation( false );
-    parent.QueueSequence( 'default', true );
-    parent.LayerSequence( 'loadout_rifl_spawn_01', false, false );
-    parent.LayerSequence( 'loadout_rifl_idle_looking', true, true );
+    parent.ResetActivityModifiers();
+    parent.PlayActivity( 'ACT_CSGO_UIPLAYER_WALKUP', true );
 }
 
 function ParticleTest()

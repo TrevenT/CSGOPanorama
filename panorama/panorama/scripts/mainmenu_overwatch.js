@@ -6,7 +6,7 @@ var mainmenu_overwatch = ( function()
 	var _m_btnReview;
 	var _m_panError;
 	var _m_lblErrorText;
-    var _m_downloadingProgressBar;
+	var _m_downloadingProgressBar;
 
     function _Init()
     {
@@ -70,9 +70,14 @@ var mainmenu_overwatch = ( function()
         OverwatchAPI.PlaybackEvidence();
     }
 
-    function _ShowVerdictPopup()
+	var _m_overwatchPopupPanel = null;
+	
+	function _ShowVerdictPopup ()
     {
-        UiToolkitAPI.ShowGlobalCustomLayoutPopup( 'PopupVerdict', 'file://{resources}/layout/popups/popup_mainmenu_overwatch_verdict.xml', '' );
+		if ( !_m_overwatchPopupPanel || !_m_overwatchPopupPanel.IsValid())
+		{
+			_m_overwatchPopupPanel = UiToolkitAPI.ShowGlobalCustomLayoutPopup( 'PopupVerdict', 'file://{resources}/layout/popups/popup_mainmenu_overwatch_verdict.xml', '' );
+		}
     }
 
                           

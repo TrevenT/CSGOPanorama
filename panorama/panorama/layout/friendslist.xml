@@ -221,6 +221,13 @@
 								onmouseout="UiToolkitAPI.HideTextTooltip();">
 								<Image src="file://{images}/icons/ui/survival.svg"/>
 							</RadioButton>
+							<RadioButton id="JsFriendsList-lobbies-toolbar-button-cooperative"
+								group="JsFriendsList-lobbies-toolbar-button-modegroup"
+								class="IconButton friendslist-navbar-lobby-button" onactivate="friendsList.SetLobbiesTabListFilters( 'cooperative' );"
+								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-cooperative', '#SFUI_GameMode_cooperative' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+								<Image src="file://{images}/icons/ui/shattered_web.svg"/>
+							</RadioButton>
 							<Panel class="friendslist-navbar-spacer-fit-width"/>
 							<Button id="JsFriendsList-lobbies-toolbar-button-refresh"
 								class="IconButton" onactivate="friendsList.RefreshLobbyListings();"
