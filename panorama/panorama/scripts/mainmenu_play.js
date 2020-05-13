@@ -866,7 +866,7 @@ var PlayMenu = ( function()
 			                                    
 			if ( ( m_gameModeSetting === 'competitive' || m_gameModeSetting === 'scrimcomp2v2' ) && _IsPlayingOnValveOfficial() )
 			{
-				_UpdateWaitTime( m_mapSelectionButtonContainers[panelID] );
+				_UpdateWaitTime( _GetMapListForServerTypeAndGameMode(  panelID ) );
 			}
 
 			_SetEnabledStateForMapBtns( m_mapSelectionButtonContainers[ panelID ], isSearching, isHost );
@@ -1100,7 +1100,7 @@ var PlayMenu = ( function()
 
 	var _UpdateWaitTime = function( elMapList )
 	{
-		var childrenList = elMapList.Children();
+		var childrenList = elMapList;
 
 		for ( var i = 0; i < childrenList.length; i++ )
 		{
