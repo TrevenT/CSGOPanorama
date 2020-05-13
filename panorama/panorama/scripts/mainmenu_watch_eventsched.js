@@ -242,6 +242,13 @@ var mainmenu_watch_eventsched = ( function()
 		{
 			_m_arrEvents = JSON.parse( eventsAsString );
 			_m_arrEvents.sort( _StartDateCompareFunction );
+
+			_m_arrEvents.forEach( oEvent => 
+			{
+				if ( arrListOfOfficialEventIds.includes( oEvent.event_id ) || arrListOfOfficialEventIds.includes( Number(oEvent.event_id )) )
+					oEvent.is_official = true;
+			} );
+
 		}
 
 		if ( ADD_DEBUG_EVENT == 1 )
@@ -427,7 +434,17 @@ var mainmenu_watch_eventsched = ( function()
 
 			           
 
-			if ( 'is_featured' in oEvent && oEvent[ 'is_featured' ] == true )
+			
+			if ( 'is_official' in oEvent && oEvent[ 'is_official'] == true )
+			{
+				var elEventBtn = elEvent.FindChildTraverse( 'id-eventsched__capsule__main__btn' );
+
+				elEventBtn.SetPanelEvent( 'onmouseover', _OnMouseOverTextTooltip.bind( undefined, elEvent.id, $.Localize( "eventsched_official" ) ) );
+				elEventBtn.SetPanelEvent( 'onmouseout', _OnMouseOutTextTooltip );
+
+				elEvent.AddClass( 'eventsched-official' );
+			}
+			else if ( 'is_featured' in oEvent && oEvent[ 'is_featured' ] == true )
 			{
 				elEvent.AddClass( 'eventsched-featured' );
 

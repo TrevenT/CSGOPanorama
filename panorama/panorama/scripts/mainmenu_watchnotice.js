@@ -89,6 +89,12 @@ var MainmenuWatchNotice = (function () {
 		{
 			_m_arrEvents = JSON.parse( eventsAsString );
 			_m_arrEvents.sort( _StartDateCompareFunction );
+
+			_m_arrEvents.forEach( oEvent => 
+				{
+					if ( arrListOfOfficialEventIds.includes( oEvent.event_id ) || arrListOfOfficialEventIds.includes( Number(oEvent.event_id )) )
+						oEvent.is_official = true;
+				} );
 		}
 	}
 	
@@ -126,8 +132,6 @@ var MainmenuWatchNotice = (function () {
 			watchEventLiveExample_01[ 'DEBUG_IGNORE_DATES_FORCE_SHOW' ] = true;
 			watchEventLiveExample_02[ 'DEBUG_IGNORE_DATES_FORCE_SHOW' ] = true;
 			watchEventLiveExample_03[ 'DEBUG_IGNORE_DATES_FORCE_SHOW' ] = true;
-
-			watchEventLiveExample_03[ 'is_featured' ] = true;
 
 			if ( _m_arrEvents )
 			{
@@ -270,7 +274,13 @@ var MainmenuWatchNotice = (function () {
 
 		var locReason = "";
 
-		if ( 'is_featured' in oEvent && oEvent[ 'is_featured'] == true )
+		if ( 'is_official' in oEvent && oEvent[ 'is_official'] == true )
+		{
+			locReason = '#WatchNotice_Reason_Official';
+
+			elEvent.AddClass( 'eventsched-official' );
+		}
+		else if ( 'is_featured' in oEvent && oEvent[ 'is_featured'] == true )
 		{
 			locReason = '#WatchNotice_Reason_Community';
 

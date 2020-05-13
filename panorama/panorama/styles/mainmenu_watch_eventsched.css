@@ -333,7 +333,13 @@ Label.eventsched-match__datum--vs{
 
 .eventsched__capsule.eventsched-featured:not(.eventsched-favorite)
  {
-	background-color: #8d853f90;
+	background-color: rgba(35, 115, 117, 0.4);
+
+ }
+
+ .eventsched__capsule.eventsched-official:not(.eventsched-favorite)
+ {
+	background-color: rgba(124, 105, 0, 0.4);
 
  }
 
@@ -413,19 +419,32 @@ Label.eventsched-match__datum--vs{
 }
 
 .eventsched-featured{
-	background-color: rgba(255, 217, 0, 0.2);
+	background-color: rgba(207, 232, 233, 0.2);
 }
 
 .eventsched-favorite.eventsched-featured{
-	box-shadow: inset 4px 4px 0.5px 7px gold;
+	box-shadow: inset 4px 4px 0.5px 7px rgb(207, 232, 233);
 }
 
 .eventsched-featured,
 .eventsched-featured Label,
 .eventsched-featured Label.wmt__datum{
-	color: gold;
+	color: rgb(207, 232, 233);
 }
 
+.eventsched-official{
+	background-color: rgba(248, 223, 0, 0.2);
+}
+
+.eventsched-favorite.eventsched-official{
+	box-shadow: inset 4px 4px 0.5px 7px rgb(248, 223, 0);
+}
+
+.eventsched-official,
+.eventsched-official Label,
+.eventsched-official Label.wmt__datum{
+	color: rgb(248, 223, 0);
+}
 
 .eventsched-favorite:not(.eventsched__capsule--online)
  {
@@ -802,8 +821,14 @@ ToggleButton.favorite-star .TickBox
 
 .eventsched-featured ToggleButton.favorite-star{
 
-	wash-color:gold;
+	wash-color: #ccfdff;
 }
+
+.eventsched-official ToggleButton.favorite-star{
+
+	wash-color: rgb(248, 223, 0);
+}
+
 
 .eventsched-controls__hltv {
 	font-size: 12px;
