@@ -180,11 +180,11 @@
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>
 					<TooltipPanel id="spawnselect-equipment-equip_armor" class="spawnselect-equipment__tooltip" tooltip="#CSGO_Item_Desc_Survival_VestHelm">
-						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_armor' );" >
+						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_armorhelmet' );" >
 							<Panel class="spawnselect-equipment__btn__image">
-								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/equipment/armor.svg"/>
+								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/equipment/armor_helmet.svg"/>
 							</Panel>
-							<Label  id="" text="#Survival_SpawnEquip_armor"/>
+							<Label  id="" text="#Survival_SpawnEquip_armorhelmet"/>
 						</RadioButton>
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>

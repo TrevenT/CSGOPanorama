@@ -259,9 +259,11 @@ var MainmenuWatchNotice = (function () {
 
 		var locReason = "";
 
-		if ( _m_arrFeatured && _m_arrFeatured.includes( Number( oEvent[ 'event_id' ] ) ) )
+		if ( 'is_featured' in oEvent && oEvent[ 'is_featured'] == true )
 		{
 			locReason = '#WatchNotice_Reason_Community';
+
+			elEvent.AddClass( 'eventsched-featured' );
 		}
 		else if ( _m_arrFavorites && _m_arrFavorites.includes( Number( oEvent[ 'event_id' ] ) ) )
 		{

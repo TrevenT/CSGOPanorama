@@ -277,7 +277,9 @@ var PlayMenu = ( function()
 	var _SyncDialogsFromSessionSettings = function( settings )
 	{
 		if ( !settings || !settings.game || !settings.system )
+		{
 			return;
+		}
 
 		m_serverSetting = settings.options.server;
 		m_permissions = settings.system.access;
@@ -315,6 +317,18 @@ var PlayMenu = ( function()
 
 			                                                                   
 			_UpdateMapGroupButtons( isEnabled, isSearching, isHost );
+
+			                                                   
+			if ( settings.game.mode === "survival" )
+			{
+				_CancelRotatingMapGroupSchedule();
+				_GetRotatingMapGroupStatus( m_gameModeSetting, settings.game.mapgroupname );
+			}
+			else
+			{
+				_CancelRotatingMapGroupSchedule();
+			}
+
 			_SelectMapButtonsFromSettings( settings );
 		}
 		else
@@ -429,7 +443,7 @@ var PlayMenu = ( function()
 		$( '#WorkshopVisitButton' ).enabled = SteamOverlayAPI.IsEnabled();
 	}
 
-	var _LazyCreateMapListPanel = function ( serverType, gameMode )
+	var _LazyCreateMapListPanel = function( serverType, gameMode )
 	{
 		                                                                
 
@@ -443,150 +457,20 @@ var PlayMenu = ( function()
 			class: 'map-selection-list hidden'
 		} );
 
-		m_mapSelectionButtonContainers[panelID] = container;
-
-		                             
-		var OnMouseOver = function ( id, tooltipText, mapsList ) {
-			tooltipText = $.Localize( tooltipText );
-
-			var mapNamesList = [];
-
-			if ( mapsList.length > 1 )
-			{
-				mapsList.forEach( function ( element ) {
-					mapNamesList.push( $.Localize( 'SFUI_Map_' + element ) );
-				} );
-
-				var mapGroupsText = mapNamesList.join( ', ' );
-				tooltipText = tooltipText + '<br><br>' + mapGroupsText;
-			}
-
-			UiToolkitAPI.ShowTextTooltip( id, tooltipText );
-		};
-
-		var OnMouseOut = function () {
-			UiToolkitAPI.HideTextTooltip();
-		};
+		m_mapSelectionButtonContainers[ panelID ] = container;
 
 		var isPlayingOnValveOfficial = _IsValveOfficialServer( serverType );
 		var arrMapGroups = _GetAvailableMapGroups( gameMode, isPlayingOnValveOfficial );
-		var bIsCompetitive = gameMode === 'competitive';
-		var bIsSkirmish = gameMode === 'skirmish';
-		var bIsWingman = gameMode === 'scrimcomp2v2';
-		var panelType = ( ( ( bIsCompetitive || bIsSkirmish || bIsWingman ) && isPlayingOnValveOfficial ) ? "ToggleButton" : "RadioButton" );
+		var panelType = _GetPanelTypeForMapGroupTile( gameMode );
 		
 		for ( var k in arrMapGroups )
 		{
-			var mapName = arrMapGroups[k];
-			var mg = GetMGDetails( mapName );
-			var p = $.CreatePanel( panelType, container, panelID + mapName );
-			p.BLoadLayoutSnippet( "MapGroupSelection" );
-			if ( panelType === "RadioButton" )
-				p.group = "radiogroup_" + panelID;
-
-			p.SetAttributeString( "mapname", mapName );
-			p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
-
-			p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = mg.grouptype === 'active';
-			p.FindChildInLayoutFile( 'MapGroupName' ).text = $.Localize( mg.nameID );
-
-			var keysList = Object.keys( mg.maps );
-			var mapIcon = null;
-			var mapImage = null;
-			                                          
-			if ( keysList.length > 1 )
-			{
-				p.AddClass( 'map-selection-btn--large' );
-				p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
-			p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
-			}
-			else
-			{
-				if ( gameMode === 'survival' && isPlayingOnValveOfficial )
-				{
-					container.AddClass( 'flow-down' );
-					
-					p.AddClass( 'map-selection-btn--full' );
-
-					if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
-					{
-						p.FindChildInLayoutFile( 'MapGroupBetaTag' ).RemoveClass( 'hidden' );
-					}
-
-					var elAutoSquadToggle = $.CreatePanel( 'Panel', container, panelID + mapName );
-					elAutoSquadToggle.BLoadLayoutSnippet( "SurvivalAutoSquad" );
-				}
-				
-				var iconPath = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
-				var iconSize = gameMode === 'survival' ? '256' : '116';
-				var mapGroupIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapSelectionButton' ), 'MapGroupCollectionIcon', {
-					defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
-					texturewidth: iconSize,
-					textureheight: iconSize,
-					src: iconPath,
-					class: 'map-selection-btn__map-icon'
-				} );
-
-				p.FindChildInLayoutFile( 'MapSelectionButton' ).MoveChildBefore( mapGroupIcon, p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ) );
-			}
-
-			if ( mapName === 'random' )
-			{
-				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
-				mapImage.AddClass( 'map-selection-btn__screenshot' );
-
-				mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
-				mapImage.style.backgroundPosition = '50% 0%';
-				mapImage.style.backgroundSize = 'auto 100%';
-			}
-			
-			_SetNewMapElement( mapName, p );
-
-			                              
-			for ( var i = 0; i < keysList.length; i++ )
-			{
-				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
-				mapImage.AddClass( 'map-selection-btn__screenshot' );
-				
-				if ( gameMode === 'survival' )
-				{
-					mapImage.style.backgroundImage = 'url("file://{resources}/videos/' + keysList[i] + '_preview.webm")';
-				}
-				else
-				{
-					mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[i] + '.png")';
-				}
-				mapImage.style.backgroundPosition = '50% 0%';
-				mapImage.style.backgroundSize = 'auto 100%';
-
-				                               
-				if ( keysList.length > 1 )
-				{
-					                                   
-
-					mapIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ), 'MapIcon' + i, {
-						defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
-						texturewidth: '72',
-						textureheight: '72',
-						src: 'file://{images}/map_icons/map_icon_' + keysList[i] + '.svg'
-					} );
-					mapIcon.AddClass( 'map-selection-btn__map-icon' );
-					mapIcon.AddClass( 'map-selection-btn__map-icon-small' );
-
-					IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/map_icons/map_icon_' + keysList[i] );
-				}
-			}
-
-			          
-			if ( mg.tooltipID )
-			{
-				p.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined, p.id, mg.tooltipID, keysList ) );
-				p.SetPanelEvent( 'onmouseout', OnMouseOut );
-			}
+			_UpdateOrCreateMapGroupTile( arrMapGroups[k], panelType, container, panelID, gameMode );
 		}
 
 		                                                                          
-		container.OnPropertyTransitionEndEvent = function ( panelName, propertyName ) {
+		container.OnPropertyTransitionEndEvent = function( panelName, propertyName )
+		{
 			if ( container.id === panelName && propertyName === 'opacity' )
 			{
 				                                         
@@ -602,7 +486,265 @@ var PlayMenu = ( function()
 		$.RegisterEventHandler( 'PropertyTransitionEnd', container, container.OnPropertyTransitionEndEvent );
 
 		return panelID;
-	}
+	};
+
+	var _GetPanelTypeForMapGroupTile = function( gameMode )
+	{
+		var bIsCompetitive = gameMode === 'competitive';
+		var bIsSkirmish = gameMode === 'skirmish';
+		var bIsWingman = gameMode === 'scrimcomp2v2';
+
+		return ( ( ( bIsCompetitive || bIsSkirmish || bIsWingman ) && _IsValveOfficialServer( m_serverSetting ) ) ? "ToggleButton" : "RadioButton" );
+	};
+
+	var _UpdateOrCreateMapGroupTile = function( mapName, panelType, container, panelID, gameMode )
+	{
+		var mg = GetMGDetails( mapName );
+		var p = container.FindChildInLayoutFile( panelID + mapName );
+
+		if ( !p )
+		{
+			p = $.CreatePanel( panelType, container, panelID + mapName );
+			p.BLoadLayoutSnippet( "MapGroupSelection" );
+			if ( panelType === "RadioButton" )
+			{
+				p.group = "radiogroup_" + panelID;
+			}
+		}
+
+		p.SetAttributeString( "mapname", mapName );
+		p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
+
+		p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = mg.grouptype === 'active';
+		p.FindChildInLayoutFile( 'MapGroupName' ).text = $.Localize( mg.nameID );
+
+		var keysList = Object.keys( mg.maps );
+		var mapIcon = null;
+		var mapImage = null;
+
+		                                           
+		if ( keysList.length > 1 )
+		{
+			p.AddClass( 'map-selection-btn--large' );
+			p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
+			p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
+		}
+		else
+		{
+			if ( gameMode === 'survival' && _IsValveOfficialServer( m_serverSetting ) )
+			{
+				container.AddClass( 'flow-down' );
+				
+				p.AddClass( 'map-selection-btn--full' );
+
+				if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
+				{
+					p.FindChildInLayoutFile( 'MapGroupBetaTag' ).RemoveClass( 'hidden' );
+				}
+
+				var elAutoSquadToggle = container.FindChildInLayoutFile( panelID + mapName + 'autosquad' );
+				if ( !elAutoSquadToggle )
+				{
+					var elAutoSquadToggle = $.CreatePanel( 'Panel', container, panelID + mapName + 'autosquad' );
+					elAutoSquadToggle.BLoadLayoutSnippet( "SurvivalAutoSquad" );	
+				}
+			}
+			
+			var iconPath = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
+			var iconSize = gameMode === 'survival' ? '256' : '116';
+			var mapGroupIcon = p.FindChildInLayoutFile( 'MapSelectionButton' ).FindChildInLayoutFile( 'MapGroupCollectionIcon' );
+
+			if ( !mapGroupIcon )
+			{
+					mapGroupIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapSelectionButton' ), 'MapGroupCollectionIcon', {
+					defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
+					texturewidth: iconSize,
+					textureheight: iconSize,
+					src: iconPath,
+					class: 'map-selection-btn__map-icon'
+				} );
+			}
+
+			p.FindChildInLayoutFile( 'MapSelectionButton' ).MoveChildBefore( mapGroupIcon, p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ) );
+			
+		}
+
+		if ( mapName === 'random' )
+		{
+			mapImage = p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ).FindChildInLayoutFile( 'MapSelectionScreenshot' );
+
+			if ( !mapImage )
+			{
+				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
+				mapImage.AddClass( 'map-selection-btn__screenshot' );
+			}
+
+			mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
+			mapImage.style.backgroundPosition = '50% 0%';
+			mapImage.style.backgroundSize = 'auto 100%';
+		}
+		
+		_SetNewMapElement( mapName, p );
+
+		                              
+		for ( var i = 0; i < keysList.length; i++ )
+		{
+			mapImage = p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ).FindChildInLayoutFile( 'MapSelectionScreenshot' + i );
+			if ( !mapImage )
+			{
+				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
+				mapImage.AddClass( 'map-selection-btn__screenshot' );
+			}
+			
+			if ( gameMode === 'survival' )
+			{
+				mapImage.style.backgroundImage = 'url("file://{resources}/videos/' + keysList[ i ] + '_preview.webm")';
+			}
+			else
+			{
+				mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[ i ] + '.png")';
+			}
+			mapImage.style.backgroundPosition = '50% 0%';
+			mapImage.style.backgroundSize = 'auto 100%';
+
+			                               
+			if ( keysList.length > 1 )
+			{
+				                                   
+
+				mapIcon = p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ).FindChildInLayoutFile( 'MapIcon' + i );
+				if ( !mapIcon )
+				{
+					mapIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ), 'MapIcon' + i, {
+						defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
+						texturewidth: '72',
+						textureheight: '72',
+						src: 'file://{images}/map_icons/map_icon_' + keysList[ i ] + '.svg'
+					} );
+						
+				}
+
+				mapIcon.AddClass( 'map-selection-btn__map-icon' );
+				mapIcon.AddClass( 'map-selection-btn__map-icon-small' );
+
+				IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/map_icons/map_icon_' + keysList[ i ] );
+			}
+		}
+
+		          
+		if ( mg.tooltipID )
+		{
+			p.SetPanelEvent( 'onmouseover', OnMouseOverMapTile.bind( undefined, p.id, mg.tooltipID, keysList ) );
+			p.SetPanelEvent( 'onmouseout', OnMouseOutMapTile );
+		}
+
+		return p;
+	};
+
+	var OnMouseOverMapTile = function( id, tooltipText, mapsList )
+	{
+		tooltipText = $.Localize( tooltipText );
+
+		var mapNamesList = [];
+
+		if ( mapsList.length > 1 )
+		{
+			mapsList.forEach( function( element )
+			{
+				mapNamesList.push( $.Localize( 'SFUI_Map_' + element ) );
+			} );
+
+			var mapGroupsText = mapNamesList.join( ', ' );
+			tooltipText = tooltipText + '<br><br>' + mapGroupsText;
+		}
+
+		UiToolkitAPI.ShowTextTooltip( id, tooltipText );
+	};
+
+	var OnMouseOutMapTile = function()
+	{
+		UiToolkitAPI.HideTextTooltip();
+	};
+
+	var m_timerMapGroupHandler = null;
+
+	var _GetRotatingMapGroupStatus = function( gameMode, mapgroupname )
+	{
+		var strSchedule = CompetitiveMatchAPI.GetRotatingOfficialMapGroupCurrentState( gameMode, mapgroupname );
+		var elTimer = m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ].FindChildInLayoutFile( 'PlayMenuMapRotationTimer' );
+
+		if ( elTimer )
+		{
+			if ( strSchedule )
+			{
+				var strCurrentMapGroup = strSchedule.split( "+" )[ 0 ];
+				var numSecondsRemaining = strSchedule.split( "+" )[ 1 ].split( "=" )[ 0 ];
+				var strNextMapGroup = strSchedule.split( "=" )[ 1 ];
+				var numWait = FormatText.SecondsToDDHHMMSSWithSymbolSeperator( numSecondsRemaining );
+
+				if ( !numWait )
+				{
+					elTimer.SetHasClass( 'hidden' );
+					return;
+				}
+
+				elTimer.RemoveClass( 'hidden' );
+				elTimer.SetDialogVariable( 'map-rotate-timer', numWait );
+
+				var mg = GetMGDetails( strNextMapGroup );
+				elTimer.SetDialogVariable( 'next-mapname', $.Localize( mg.nameID ) );	
+
+				                               
+				                                                                                                 
+				var mapGroupPanelID = _GetMapGroupPanelID( m_serverSetting, gameMode );
+				var mapGroupContainer = m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ];
+
+				var mapGroupPanel = mapGroupContainer.FindChildInLayoutFile( mapGroupPanelID + strCurrentMapGroup );
+				if ( !mapGroupPanel )
+				{
+					mapGroupContainer.RemoveAndDeleteChildren();
+					var btnMapGroup = _UpdateOrCreateMapGroupTile( strCurrentMapGroup, _GetPanelTypeForMapGroupTile( gameMode ), mapGroupContainer, mapGroupPanelID, gameMode );
+					
+					                                                                            
+					btnMapGroup.checked = true;
+					_UpdateSurvivalAutoFillSquadBtn( m_gameModeSetting );
+				}
+
+				m_timerMapGroupHandler = $.Schedule( 1, _GetRotatingMapGroupStatus.bind( undefined, gameMode, mapgroupname ) );
+				
+				                                                                                                                                                                                                     
+			}
+			else
+			{
+				elTimer.SetHasClass( 'hidden' );
+			}
+		}
+	};
+
+	var _StartRotatingMapGroupTimer = function()
+	{
+		if ( m_gameModeSetting && m_gameModeSetting === "survival" )
+		{
+			var btnSelectedMapGroup = m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ].Children().filter( entry => entry.GetAttributeString( 'mapname', '' ) !== '' );
+
+			var mapSelectedGroupName = btnSelectedMapGroup[0].GetAttributeString( 'mapname', '' );
+			if ( mapSelectedGroupName )
+			{
+				_CancelRotatingMapGroupSchedule();
+				_GetRotatingMapGroupStatus( m_gameModeSetting, mapSelectedGroupName );
+			}
+		}
+	};
+
+	var _CancelRotatingMapGroupSchedule = function()
+	{
+		if ( m_timerMapGroupHandler )
+		{
+			$.CancelScheduled( m_timerMapGroupHandler );
+			                                                                        
+			m_timerMapGroupHandler = null;
+		}
+	};
 
 	var _SetNewMapElement = function( mapName, elMapPanel )
 	{
@@ -638,6 +780,7 @@ var PlayMenu = ( function()
 			                                                                      
 			var mapName = e.GetAttributeString( "mapname", "invalid" );
 			e.checked = mapsGroups.includes( mapName );
+
 		} );
 	};
 
@@ -914,6 +1057,12 @@ var PlayMenu = ( function()
 			}
 		}
 
+		                                                                   
+		if ( serverType === 'official' && gameMode === 'survival' )
+		{	                                                    
+			return GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_' + serverType + '_' + gameMode );
+		}
+
 		var selectedMaps = mapContainer.Children().filter( function( e )
 		{
 			                                                         
@@ -1122,7 +1271,12 @@ var PlayMenu = ( function()
 
 	var _ReadyForDisplay = function()
 	{
-		return;
+		_StartRotatingMapGroupTimer();
+	};
+
+	var _UnreadyForDisplay = function()
+	{
+		_CancelRotatingMapGroupSchedule();
 	};
 
 	var _OnHideMainMenu = function()
@@ -1134,7 +1288,7 @@ var PlayMenu = ( function()
 	};
 
 	var _OnShowMainMenu = function()
-	{
+	{	
 		$( '#MapSelectionList' ).FindChildrenWithClassTraverse( "map-selection-btn__carousel" ).forEach( function( entry )
 		{
 			entry.SetAutoScrollEnabled( true );
@@ -1530,6 +1684,7 @@ var PlayMenu = ( function()
 		Init: _Init,
 		SessionSettingsUpdate		: _SessionSettingsUpdate,
 		ReadyForDisplay				: _ReadyForDisplay,
+		UnreadyForDisplay 			: _UnreadyForDisplay,
 		OnHideMainMenu				: _OnHideMainMenu,
 		OnShowMainMenu				: _OnShowMainMenu,
 		PlayTopNavDropdownChanged	: _PlayTopNavDropdownChanged,
@@ -1546,8 +1701,8 @@ var PlayMenu = ( function()
 ( function()
 {
 	PlayMenu.Init();
-	$.GetContextPanel().RegisterForReadyEvents( true );
 	$.RegisterEventHandler( "ReadyForDisplay", $.GetContextPanel(), PlayMenu.ReadyForDisplay );
+	$.RegisterEventHandler( "UnreadyForDisplay", $.GetContextPanel(), PlayMenu.UnreadyForDisplay );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", PlayMenu.SessionSettingsUpdate );
 	$.RegisterForUnhandledEvent( "CSGOHideMainMenu", PlayMenu.OnHideMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOHidePauseMenu", PlayMenu.OnHideMainMenu );

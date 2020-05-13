@@ -649,6 +649,7 @@ RadioButton .map-selection-info__new
 	vertical-align: bottom;
 	horizontal-align: right;
 	margin-right: 16px;
+	width: 100%;
 }
 
 #SurvivalAutoSquadToggle.PopupButton:not(.PopupButton:disabled):selected
@@ -661,6 +662,24 @@ RadioButton .map-selection-info__new
 	wash-color: warningColor;
 }
 
+.play-menu-map-rotation-timer
+{
+	flow-children: right;
+	vertical-align: center;
+	visibility: visible;
+}
+
+.play-menu-map-rotation-timer.hidden
+{
+	visibility: collapse;
+}
+
+.play-menu-map-rotation-timer-label
+{
+	font-family: stratum2Font;
+	font-weight: lighter;
+	font-size: 20px;
+}
 
 .active .play-menu-primestatus
 {

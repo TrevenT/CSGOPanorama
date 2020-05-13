@@ -552,6 +552,15 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 	transition-timing-function: ease-in-out;
 }
 
+.mainmenu-content__container--nopadding
+{
+	padding-right:0px;
+	padding-left: 0px;
+
+	transition-property: none;
+	transition-duration: 0.0s;
+}
+
 CSGOEndOfMatch.mainmenu-content__container
 {
 	padding-right: 0px;

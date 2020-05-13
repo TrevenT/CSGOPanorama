@@ -50,6 +50,10 @@
 
 		<snippet name="SurvivalAutoSquad" >
 			<Panel class="play-menu-svl-auto-squad-toggle-container">
+				<Panel id="PlayMenuMapRotationTimer" class="play-menu-map-rotation-timer hidden">
+					<Image class="right-padding" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/clock.svg" />
+					<Label class="play-menu-map-rotation-timer-label" html="true" text="#rotating_map_timer"/>
+				</Panel>
 				<ToggleButton id="SurvivalAutoSquadToggle" class="PopupButton">
 					<Image class="" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/lobby.svg" />
 					<Label id="SurvivalAutoSquadToggleLabel" text="#SFUI_DANGERZONE_AUTO_FILL" html="true"/>
@@ -58,8 +62,8 @@
 		</snippet>
 	</snippets>
 
-	<Panel class="full-width full-height">
-		<Panel class="mainmenu-content__container" useglobalcontext="true">
+	<Panel class="mainmenu-content__container" useglobalcontext="true" >
+		<Panel class="mainmenu-content__container mainmenu-content__container--nopadding">
 			<Panel class="content-navbar">
 				<Label id="LobbyLeaderText" class="content-navbar__title" text="#SFUI_MainMenu_PlayButton"/>
 			</Panel>

@@ -850,7 +850,7 @@ var MainMenu = ( function() {
 		_NavigateToTab( 'JsPlay', 'mainmenu_play' );
 
 		                                           	
-		_PauseMainMenuCharacter();		
+		_PauseMainMenuCharacter();
 	};
 
 	var _OpenWatchMenu = function()
