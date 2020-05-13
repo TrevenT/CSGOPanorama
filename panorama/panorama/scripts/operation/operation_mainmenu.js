@@ -134,16 +134,30 @@ var OperationMainMenu = ( function()
 		btnPremium.SetPanelEvent( 'onactivate',
 			OperationUtil.OpenUpSell.bind( undefined )
 		);
+
+		var sUserOwnedOperationPassItemID = InventoryAPI.GetActiveSeasonPassItemId();
+		var sFauxPassItemID = OperationUtil.GetPassFauxId();
 		
-		btnPremium.text = InventoryAPI.GetActiveSeasonPassItemId() ? '#SFUI_ConfirmBtn_ActivatePassNow' : '#op_get_premium';
+		btnPremium.text = sUserOwnedOperationPassItemID ? '#SFUI_ConfirmBtn_ActivatePassNow' : '#op_get_premium';
 		
-		elUpsell.FindChildInLayoutFile( 'id-op-mainmenu-upsell-store-image' ).itemid = OperationUtil.GetPassFauxId();
+		elUpsell.FindChildInLayoutFile( 'id-op-mainmenu-upsell-store-image' ).itemid = sFauxPassItemID;
 
 		var elPreview = $.GetContextPanel().FindChildInLayoutFile( 'id-op-mainmenu-upsell-preview' );
 		elPreview.SetPanelEvent( 'onactivate', _OpenOperationHub );
 
 		var elMissions = $.GetContextPanel().FindChildInLayoutFile( 'id-op-mainmenu-mission_select' );
 		elMissions.SetPanelEvent( 'onactivate', onMissionSelect );
+
+		  
+		                               
+		  
+		var elPassSaleDiscount = elUpsell.FindChildInLayoutFile( 'id-op-mainmenu-upsell-store-passsalediscount' );
+		elPassSaleDiscount.visible = sUserOwnedOperationPassItemID ? false : true;
+		var sPctReduction = StoreAPI.GetStoreItemPercentReduction( sFauxPassItemID );
+		if ( sPctReduction && sPctReduction !== '-0%' )
+			elPassSaleDiscount.text = sPctReduction;
+		else
+			elPassSaleDiscount.visible = false;
 	};
 
 	var _OnMissionSelectPopupBtnPress = function( msg )
@@ -507,8 +521,10 @@ var OperationMainMenu = ( function()
 		var rewardsBtn = _m_cp.FindChildInLayoutFile( 'id-op-reward-open-operation-hub' );
 		var upsellBtn = _m_cp.FindChildInLayoutFile( 'id-op-reward-upsell' );
 
-		rewardsBtn.visible = OperationUtil.GetOperationInfo().bPremiumUser;
-		upsellBtn.visible = !OperationUtil.GetOperationInfo().bPremiumUser;
+		var bPremiumUser = OperationUtil.GetOperationInfo().bPremiumUser;
+
+		rewardsBtn.visible = bPremiumUser;
+		upsellBtn.visible = !bPremiumUser;
 
 		rewardsBtn.SetPanelEvent( 'onactivate', function()
 		{
@@ -525,6 +541,25 @@ var OperationMainMenu = ( function()
 		{
 			_OpenOperationHub( _m_oNamesFlipModule.oData.oCallbackData[ _m_oNamesFlipModule.ActiveIndex ].idx );
 		} );
+
+		if ( !bPremiumUser )
+		{
+			var sUserOwnedOperationPassItemID = InventoryAPI.GetActiveSeasonPassItemId();
+			var sFauxPassItemID = OperationUtil.GetPassFauxId();
+			
+			upsellBtn.FindChildInLayoutFile('id-op-reward-open-operation-hub-text').text = $.Localize( sUserOwnedOperationPassItemID ? '#SFUI_ConfirmBtn_ActivatePassNow' : '#op_get_premium' ).toUpperCase();
+
+			  
+			                               
+			  
+			var elPassSaleDiscount = upsellBtn.FindChildInLayoutFile( 'id-op-reward-open-operation-hub-passsalediscount' );
+			elPassSaleDiscount.visible = sUserOwnedOperationPassItemID ? false : true;
+			var sPctReduction = StoreAPI.GetStoreItemPercentReduction( sFauxPassItemID );
+			if ( sPctReduction && sPctReduction !== '-0%' )
+				elPassSaleDiscount.text = sPctReduction;
+			else
+				elPassSaleDiscount.visible = false;
+		}
 	};
 
 	var _OpenOperationHub = function( rewardIndexToOpenTo = -1 )

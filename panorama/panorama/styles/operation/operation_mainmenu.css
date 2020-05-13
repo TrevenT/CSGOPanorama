@@ -121,6 +121,27 @@
 	transition-timing-function: ease-in-out;
 }
 
+.op-mainmenu__title__salediscount
+{
+	vertical-align: bottom;
+	horizontal-align: right;
+	letter-spacing: 2px;
+	margin-bottom: 16px;
+	margin-right: 60px;
+	padding-left: 5px;
+	padding-right: 4px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3a863d ), to( #2d682f ) );
+	color: White;
+}
+
+.op-main-btn .op-mainmenu__getpassbutton__salediscount
+{
+	vertical-align: center;
+	padding-left: 5px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3a863d ), to( #2d682f ) );
+	color: White;
+}
+
 #id-op-mainmenu-upsell-store-image
 {
 	height: 96px;

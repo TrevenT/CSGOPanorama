@@ -99,16 +99,67 @@ var OperationMain = ( function()
 	{
 		var elUpSell = $.GetContextPanel().FindChildInLayoutFile( 'op-main-upsell' );
 
-		elUpSell.FindChildInLayoutFile( 'op-main-upsell-label' ).text = OperationUtil.GetOperationInfo().bPremiumUser ?
-			$.Localize( '#op_get_more_stars' ) : InventoryAPI.GetActiveSeasonPassItemId() ? 
-			$.Localize( '#SFUI_ConfirmBtn_ActivatePassNow') : $.Localize( '#op_get_premium' );
+		var bPremiumUser = OperationUtil.GetOperationInfo().bPremiumUser;
+		var sUserOwnedOperationPassItemID = InventoryAPI.GetActiveSeasonPassItemId();
+		var sFauxPassItemID = OperationUtil.GetPassFauxId();
 
-		var imgPath = OperationUtil.GetOperationInfo().bPremiumUser ?
+		elUpSell.FindChildInLayoutFile( 'op-main-upsell-label' ).text = $.Localize( bPremiumUser ?
+			'#op_get_more_stars' : sUserOwnedOperationPassItemID ? 
+			'#SFUI_ConfirmBtn_ActivatePassNow' : '#op_get_premium'
+			).toUpperCase();
+
+		var imgPath = bPremiumUser ?
 			'file://{images}/icons/ui/shoppingcart.svg' :
 			'file://{images}/icons/ui/ticket.svg';
 		
 		elUpSell.FindChildInLayoutFile( 'op-main-upsell-image' ).SetImage( imgPath );
 		elUpSell.SetPanelEvent( 'onactivate', OperationUtil.OpenUpSell.bind( undefined ) );
+
+		  
+		                               
+		  
+		var elPassSaleDiscount = elUpSell.FindChildInLayoutFile( 'id-op-reward-open-operation-hub-passsalediscount' );
+		elPassSaleDiscount.visible = ( !bPremiumUser && sUserOwnedOperationPassItemID ) ? false : true;
+		var sPctReduction = StoreAPI.GetStoreItemPercentReduction( sFauxPassItemID );
+		if ( bPremiumUser )
+		{
+			sPctReduction = '';
+			var minDiscount, maxDiscount;
+			var storeids = OperationUtil.GetOperationStarDefIdxArray();
+			storeids.forEach( function( defIndex )
+			{
+				var sPctReductionPerStar = StoreAPI.GetStoreItemPercentReduction(
+					InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex.toString(), 0 )
+					);
+				if ( sPctReductionPerStar && sPctReductionPerStar !== '-0%' )
+				{
+					var numericStarDiscount = parseInt( sPctReductionPerStar );
+					if ( sPctReduction )
+					{
+						sPctReduction += ' / ';
+					}
+					else
+					{
+						minDiscount = numericStarDiscount;
+						maxDiscount = numericStarDiscount;
+					}
+					sPctReduction += sPctReductionPerStar;
+
+					if ( numericStarDiscount < minDiscount ) minDiscount = numericStarDiscount;
+					if ( numericStarDiscount > maxDiscount ) maxDiscount = numericStarDiscount;
+				}
+			} );
+			
+			if ( sPctReduction )
+			{
+				elPassSaleDiscount.SetDialogVariable( 'salediscount', ''+minDiscount+'%' );
+				sPctReduction = $.Localize( '#Store_Price_UpToSale', elPassSaleDiscount ).toUpperCase();
+			}
+		}
+		if ( sPctReduction && sPctReduction !== '-0%' )
+			elPassSaleDiscount.text = sPctReduction;
+		else
+			elPassSaleDiscount.visible = false;
 	};
 
 	var _UpdateDefaultProgressData = function( oStatus, openToRewardIndex )

@@ -97,7 +97,7 @@ var StarsShoppingCart = ( function()
 	var ARRAY_STORE_ITEMS = [
 		{
 			rank_restriction: 2,
-			storeids: [ 4671, 4672, 4673 ],
+			storeids: OperationUtil.GetOperationStarDefIdxArray(),
 			coinid: 4550
 		}
 		           

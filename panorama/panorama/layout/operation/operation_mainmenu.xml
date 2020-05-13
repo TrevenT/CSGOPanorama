@@ -68,6 +68,7 @@
 			<Panel id="id-op-mainmenu-upsell-btns-container" class="op-mainmenu__title__prefix--btn-container">
 				<Panel>
 					<ItemImage id="id-op-mainmenu-upsell-store-image" class="horizontal-center" scaling="stretch-to-fit-preserve-aspect"/>
+					<Label id="id-op-mainmenu-upsell-store-passsalediscount" class="op-mainmenu__title__prefix op-mainmenu__title__salediscount" text=""/>
 					<TextButton id="id-op-mainmenu-upsell-store" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_get_premium"/>
 				</Panel>
 				<TextButton id="id-op-mainmenu-upsell-preview" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_preview_rewards"/>
@@ -165,6 +166,7 @@
 									<Label id="id-op-reward-open-operation-hub-text" text="#op_view_rewards"/>
 								</Button>
 								<Button id="id-op-reward-upsell" class="op-main-btn small">
+									<Label id="id-op-reward-open-operation-hub-passsalediscount" class="op-mainmenu__getpassbutton__salediscount" text=""/>
 									<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/ticket.svg"/>
 									<Label id="id-op-reward-open-operation-hub-text" text="#op_get_premium"/>
 								</Button>

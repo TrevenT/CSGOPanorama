@@ -266,6 +266,11 @@ var OperationUtil = ( function () {
 		return  InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( '4549', 0 );
 	}
 
+	var _GetOperationStarDefIdxArray = function()
+	{
+		return [ 4671, 4672, 4673 ];
+	}
+
 	var _UpdateOldStars = function()
 	{
 		var oDefNames = [
@@ -342,7 +347,8 @@ var OperationUtil = ( function () {
 		OpenUpSell: _OpenUpSell,
 		GetQuestGameElements: _GetQuestGameElements,
 		UpdateOldStars: _UpdateOldStars,
-		GetPassFauxId: _GetPassFauxId
+		GetPassFauxId: _GetPassFauxId,
+		GetOperationStarDefIdxArray: _GetOperationStarDefIdxArray
 	};
 
 })();

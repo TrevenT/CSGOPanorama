@@ -104,6 +104,7 @@
 
 				<Panel class="vertical-center horizontal-align-right op-main-topbar--padding-right left-right-flow">
 					<Button id="op-main-upsell" class="op-main-btn">
+						<Label id="id-op-reward-open-operation-hub-passsalediscount" class="op-mainmenu__getpassbutton__salediscount" text=""/>
 						<Image id="op-main-upsell-image" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/shoppingcart.svg"/>
 						<Label id="op-main-upsell-label" text="#Purchase Button"/>
 					</Button>
