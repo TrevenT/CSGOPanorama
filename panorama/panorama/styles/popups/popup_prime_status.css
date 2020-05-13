@@ -34,8 +34,6 @@
 	margin-left: 15px;
 	margin-right: 15px;
 	margin-bottom: 5px;
-
-	background-color: #00000020;
 	padding-bottom: 0px;
 
 	transition-property: background-color;
@@ -47,22 +45,27 @@
 {
 	text-align: left;
 	font-size: 28px;
+	padding: 0px 32px 16px 32px;
 }
 
 .prime-status__faq
 {
-	width: 80%;
 	horizontal-align: center;
+	width: 640px;
 	flow-children: down;
 	margin-top: 5px;
+	background-color: rgba(0, 0, 0, 0.171);
+	Padding: 32px;
+
 }
 
 .prime-status__faq .faq_title
 {
 	horizontal-align: center;
 	text-align: center;
-	font-size: 16px;
-	margin: 15px;
+	font-size: 24px;
+	padding-bottom: 16px;
+	font-weight: light;
 }
 
 .prime-status__faq .faq_desc
@@ -141,8 +144,8 @@
 .prime-status__buttons
 {
 	width: fit-children;
-	height: 50px;
-	horizontal-align: center;
+	padding-right: 32px;
+	horizontal-align: right;
 	vertical-align: center;
 	flow-children: right;
 }

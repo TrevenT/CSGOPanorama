@@ -181,6 +181,8 @@ var CapabilityCanSticker = ( function()
 					elSticker.BLoadLayoutSnippet( 'ScrapeStickerBtn' );
 					elSticker.FindChildInLayoutFile( 'ScrapeStickerImage' ).SetImage( 'file://{images_econ}' + imagePath + '_large.png' );
 					elSticker.SetPanelEvent( 'onactivate', _OnScratchSticker.bind( undefined, elSticker, itemId, i ) );
+					elSticker.SetPanelEvent( 'onmouseover', _HighlightStickerBySlot.bind( undefined, i ) ); 
+					elSticker.SetPanelEvent( 'onmouseout', _HighlightStickerBySlot.bind( undefined, -1 ) );
 				}
 			}
 		}
@@ -286,7 +288,7 @@ var CapabilityCanSticker = ( function()
 			m_SlotSelectedForScratch = slotIndex;
 	
 			_CameraAnim( slotIndex, true );
-			InventoryAPI.HighlightStickerBySlot( slotIndex );
+			_HighlightStickerBySlot( slotIndex );
 			InventoryAPI.WearItemSticker( itemId, slotIndex );
 			
 			m_scheduleHandle = $.Schedule( 5, _CancelWaitforCallBack );
@@ -295,6 +297,11 @@ var CapabilityCanSticker = ( function()
 			var panelsList = $.GetContextPanel().FindChildInLayoutFile( 'StickersToRemove' ).Children();
 			panelsList.forEach( element => element.enabled = false );
 		}
+	};
+
+	var _HighlightStickerBySlot = function( slotIndex )
+	{
+		InventoryAPI.HighlightStickerBySlot( slotIndex );
 	};
 
 	                                                                                                    

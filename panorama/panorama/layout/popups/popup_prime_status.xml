@@ -26,7 +26,6 @@
 					<Label id="PrimeStatusDesc" text="" />
 				</Panel>
 				<Panel class="prime-status__faq">
-					<Panel class="horizontal-separator"/>
 					<Label class="faq_title fontWeight-Bold" text="#SFUI_Elevated_Status_Faq_Title" />
 				             
 				                                      
@@ -36,7 +35,7 @@
 			<Panel class="prime-status__status_container" >
 				<Panel class="horizontal-separator"/>
 				<Panel id="PrimeStatus" class="prime-status__status">
-					<Image id="PrimeStatusImage" texturewidth="-1" textureheight="18" src="file://{images}/icons/ui/info.svg" />
+					<Image id="PrimeStatusImage" texturewidth="-1" textureheight="18" class="vertical-center" src="file://{images}/icons/ui/info.svg" />
 					<Label id="PrimeStatusText" html="true" text="" />
 				</Panel>
 			</Panel>
