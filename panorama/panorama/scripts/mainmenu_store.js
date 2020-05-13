@@ -3,6 +3,7 @@
 var MainMenuStore = ( function()
 {
 	var m_activeTab = null;
+	var m_itemNewReleases = null;
 	var m_elStore = $.GetContextPanel();
 	var m_pendingItemsToPopulateByTab = {};
 	var m_pendingItemsToPopulateScheduled = {};
@@ -123,9 +124,28 @@ var MainMenuStore = ( function()
 				     
 			];
 		}
-		itemsByCategory = _GetCoupons( itemsByCategory );
+		
+		                                                             
 		itemsByCategory = _GetStoreItems( itemsByCategory );
 
+		                                                                             
+		if ( itemsByCategory.newstore && itemsByCategory.newstore.length < 2 )
+		{
+		   	                                          
+		   	                                                                                                       
+		   	 
+		   		                                                          
+		   	 
+			m_itemNewReleases = itemsByCategory.newstore[0];
+			delete itemsByCategory.newstore;
+		}
+		else
+		{
+			m_itemNewReleases = null;
+		}
+
+		                      
+		itemsByCategory = _GetCoupons( itemsByCategory );
 
 		_MakeCarousel( itemsByCategory );
 		_SortTabs();
@@ -268,9 +288,17 @@ var MainMenuStore = ( function()
 				if ( !itemsByCategory.coupons )
 				{
 					itemsByCategory.coupons = [];
+
+					if ( m_itemNewReleases )
+					{
+						itemsByCategory.coupons.push( m_itemNewReleases );
+					}
 				}
 				
 				itemsByCategory.coupons.push( CouponId );
+
+				                                                
+				if ( itemsByCategory.coupons.length >= 4 ) break;
 			}
 		}
 
@@ -420,6 +448,10 @@ var MainMenuStore = ( function()
 			elItem.BLoadLayoutSnippet( 'StoreEntryPrimeStatus' );
 			_PrimeStoreItem( elItem, itemList[ i ], type );
 		}
+		else if ( itemList[ i ] === 'spacer' )
+		{
+			elItem.BLoadLayoutSnippet( 'StoreEntrySpacer' );
+		}
 		else if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
 		{
 			elItem.BLoadLayoutSnippet( 'StoreEntry' );
@@ -455,6 +487,9 @@ var MainMenuStore = ( function()
 		
 		var elStattrak = elImage.FindChildInLayoutFile( 'StoreItemStattrak' );
 		elStattrak.SetHasClass( 'hidden', !ItemInfo.IsStatTrak( id ) );
+
+		var elNewHighlight = elImage.FindChildInLayoutFile( 'StoreItemNew' );
+		elNewHighlight.SetHasClass( 'hidden', !m_itemNewReleases || id !== m_itemNewReleases );
 
 		var elSale = elItem.FindChildInLayoutFile( 'StoreItemSalePrice' );
 		var elPrecent = elItem.FindChildInLayoutFile( 'StoreItemPercent' );
