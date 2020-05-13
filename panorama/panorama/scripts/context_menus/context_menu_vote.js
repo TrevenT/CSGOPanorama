@@ -61,7 +61,7 @@ var ItemContextMenu = ( function (){
 	function _Event_BackupFileNamesReceived( elPopup, objFileNames ) {
 		var voteFunc = function ( param )
 		{
-			GameInterfaceAPI.ConsoleCommand( 'callvote loadbackup' + param );
+			GameInterfaceAPI.ConsoleCommand( 'callvote loadbackup ' + param );
 		}
 		var arrDisplayNames = objFileNames.display_names.split( ',' );
 		var arrFileNames = objFileNames.file_names.split( ',' );

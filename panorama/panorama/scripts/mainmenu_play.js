@@ -133,8 +133,14 @@ var PlayMenu = ( function()
 
 			if ( m_isWorkshop )
 			    _DisplayWorkshopModePopup();
-            else
-			    LobbyAPI.StartMatchmaking();
+			else
+			{
+				LobbyAPI.StartMatchmaking(	MyPersonaAPI.GetMyOfficialTournamentName(),
+											MyPersonaAPI.GetMyOfficialTeamName(),
+											_GetTournamentOpponent(),
+											_GetTournamentStage()
+										 );
+			}
 		} );
 
 		var btnCancel = $.GetContextPanel().FindChildInLayoutFile( 'PartyCancelBtn' );
@@ -193,6 +199,109 @@ var PlayMenu = ( function()
 		return true;
 	}
 
+	var _GetTournamentOpponent = function ()
+	{
+		var elTeamDropdown = $.GetContextPanel().FindChildInLayoutFile( 'TournamentTeamDropdown' );
+		if ( elTeamDropdown.GetSelected() === null )
+			return '';
+		return elTeamDropdown.GetSelected().GetAttributeString( 'data', '' );
+	}
+
+	var _GetTournamentStage = function ()
+	{
+		var elStageDropdown = $.GetContextPanel().FindChildInLayoutFile( 'TournamentStageDropdown' );
+		if ( elStageDropdown.GetSelected() === null )
+			return '';
+		return elStageDropdown.GetSelected().GetAttributeString( 'data', '' );
+	}
+
+	var _UpdateStartSearchBtn = function ( isSearchingForTournament )
+	{
+		var btnStartSearch = $.GetContextPanel().FindChildInLayoutFile( 'StartMatchBtn' );
+		btnStartSearch.enabled = isSearchingForTournament ? ( _GetTournamentOpponent() != '' && _GetTournamentStage() != '' ) : true;
+	}
+
+	var m_TournamentPickBanPopup = null;
+	var _TournamentDraftUpdate = function ()
+	{
+		if ( !m_TournamentPickBanPopup || !m_TournamentPickBanPopup.IsValid() )
+		{
+			m_TournamentPickBanPopup = UiToolkitAPI.ShowCustomLayoutPopup( 'tournament_pickban_popup', 'file://{resources}/layout/popups/popup_tournament_pickban.xml' );
+		}
+	}
+
+	var _UpdateTournamentButton = function( isHost, isSearching )
+	{
+		var bIsOfficialCompetitive = m_gameModeSetting === "competitive" && _IsPlayingOnValveOfficial();
+		var strTeamName = MyPersonaAPI.GetMyOfficialTeamName();
+		var strTournament = MyPersonaAPI.GetMyOfficialTournamentName();
+		var isInTournament = isHost && strTeamName != "" && strTournament != "";
+		$.GetContextPanel().SetHasClass( "play-menu__tournament", isInTournament );
+
+		var isSearchingForTournament = bIsOfficialCompetitive && isInTournament;
+
+		var elTeamDropdown = $.GetContextPanel().FindChildInLayoutFile( 'TournamentTeamDropdown' );
+		var elStageDropdown = $.GetContextPanel().FindChildInLayoutFile( 'TournamentStageDropdown' );
+		
+		if ( isInTournament )
+		{
+			function AddDropdownOption( elDropdown, entryID, strText, strData, strSelectedData )
+			{
+				var newEntry = $.CreatePanel( 'Label', elDropdown, entryID, { data: strData } );
+				newEntry.text = strText;
+				elDropdown.AddOption( newEntry );
+
+				               
+				if ( strSelectedData === strData )
+				{
+					elDropdown.SetSelected( entryID );
+				}
+			}
+
+			var strCurrentOpponent = _GetTournamentOpponent();
+			var strCurrentStage = _GetTournamentStage();
+
+			                         
+			elTeamDropdown.RemoveAllOptions();
+			AddDropdownOption( elTeamDropdown, 'PickOpponent', $.Localize( '#SFUI_Tournament_Pick_Opponent' ), '', strCurrentOpponent );
+			var teamCount = CompetitiveMatchAPI.GetTournamentTeamCount( strTournament );
+			for ( var i = 0; i < teamCount; i++ )
+			{
+				var strTeam = CompetitiveMatchAPI.GetTournamentTeamNameByIndex( strTournament, i );
+
+				                                  
+				if ( strTeamName === strTeam )
+					continue;
+				
+				AddDropdownOption( elTeamDropdown, 'team_' + i, strTeam, strTeam, strCurrentOpponent );
+			}
+			elTeamDropdown.SetPanelEvent( 'oninputsubmit', _UpdateStartSearchBtn.bind( undefined, isSearchingForTournament ) );
+
+			                          
+			elStageDropdown.RemoveAllOptions();
+			AddDropdownOption( elStageDropdown, 'PickStage', $.Localize( '#SFUI_Tournament_Stage' ), '', strCurrentStage );
+			var stageCount = CompetitiveMatchAPI.GetTournamentStageCount( strTournament );
+			for ( var i = 0; i < stageCount; i++ )
+			{
+				var strStage = CompetitiveMatchAPI.GetTournamentStageNameByIndex( strTournament, i );
+				AddDropdownOption( elStageDropdown, 'stage_' + i, strStage, strStage, strCurrentStage );
+			}
+			elStageDropdown.SetPanelEvent( 'oninputsubmit', _UpdateStartSearchBtn.bind( undefined, isSearchingForTournament ) );
+		}
+		
+		elTeamDropdown.enabled = isSearchingForTournament;
+		elStageDropdown.enabled = isSearchingForTournament;
+
+		_UpdateStartSearchBtn( isSearchingForTournament );
+		_ShowActiveMapSelectionTab( !isSearchingForTournament );
+
+		                                                     
+		if ( !isSearching && m_TournamentPickBanPopup && m_TournamentPickBanPopup.IsValid() )
+		{
+			$.DispatchEvent( 'UIPopupButtonClicked', m_TournamentPickBanPopup, '' );
+		}
+	}
+
 	var _SyncDialogsFromSessionSettings = function( settings )
 	{
 		if ( !settings || !settings.game || !settings.system )
@@ -249,6 +358,9 @@ var PlayMenu = ( function()
 
 		_ShowHideStartSearchBtn( isEnabled );
 		_ShowCancelSearchButton( isSearching, isHost );
+
+		                           
+		_UpdateTournamentButton( isHost, isSearching );
 
 	                       
 		_UpdatePrimeBtn( settings.game.prime === 1 ? true : false, isEnabled );
@@ -1341,7 +1453,8 @@ var PlayMenu = ( function()
 		OnShowMainMenu				: _OnShowMainMenu,
 		PlayTopNavDropdownChanged	: _PlayTopNavDropdownChanged,
 		BotDifficultyChanged		: _BotDifficultyChanged,
-        WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged,
+		WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged,
+		TournamentDraftUpdate		: _TournamentDraftUpdate
 	};
 
 } )();
@@ -1360,4 +1473,5 @@ var PlayMenu = ( function()
 	$.RegisterForUnhandledEvent( "CSGOShowMainMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOShowPauseMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOWorkshopSubscriptionsChanged", PlayMenu.WorkshopSubscriptionsChanged );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_TournamentMatch_DraftUpdate", PlayMenu.TournamentDraftUpdate );
 } )();

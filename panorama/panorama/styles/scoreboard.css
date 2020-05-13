@@ -1092,7 +1092,7 @@ Label.sb-row__cell--mvps__count {
 
 .sb-timeline__bumper {
 
-	width:50px;
+	width: left-panel-width;
 }
 
 .sb-team-spacer {
@@ -1122,12 +1122,42 @@ Label.sb-row__cell--mvps__count {
 	flow-children: right;
 
 	horizontal-align: center;
+
+	padding-left: 10px;
 }
 
-.sb-timeline__segment {
+.sb-timeline__segment,
+.sb-timeline__round-container {
 
 	width: fit-children; 
 	flow-children: right;
+	vertical-align: center;
+}
+
+.sb-timeline__divider {
+
+	width: 2px;
+	height: 50%;
+	background-color: gray;
+	opacity: 0.1;
+	vertical-align:center;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.sb-timeline__half-time-scores {
+
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children:right;
+	width: left-panel-width; 
+
+}
+
+
+.sb-timeline__segment_ot_spacer {
+
+	width: 100px;
 }
 
                                                                                  
@@ -1188,28 +1218,41 @@ Label.sb-row__cell--mvps__count {
 
 }
 
-.sb-timeline__segment__score{
+.sb-timeline__score{
 	flow-children: down;
 	horizontal-align: center;
-	width: fit-children; 
+	width: fill-parent-flow( 1.0 );
 	height: fit-children;
 	vertical-align: center;
 
-	margin-left: 10px;
-	margin-right: 10px;
-
 	                              
+
+	transition-property: opacity, position;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
 }
 
-.sb-timeline__segment__phase-label{
+.sb-timeline__phase-label{
 	font-size: 12px;
 	horizontal-align: center;
 	vertical-align: middle;
 	margin-top: 4px;
 	margin-bottom: 4px;
+
 }
 
-.sb-timeline__segment__score__label{
+.sb-timeline__round-label {
+
+	horizontal-align: center;
+	text-align: center;
+	font-size: 70px;
+	letter-spacing: 2px;
+	opacity: 0.03;
+	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
+	color: gray;
+}
+
+.sb-timeline__score__label{
 	font-size: 24px;
 	height: 24px;
 	width: 24px;
@@ -1220,7 +1263,6 @@ Label.sb-row__cell--mvps__count {
 	horizontal-align: center;
 
 	text-shadow-fast:1px 1px 1px 1.0 #000000;
-
 
 }
 
@@ -1393,6 +1435,12 @@ Label.sb-row__cell--mvps__count {
 	opacity: 1.0;
 }
 
+                                                            
+.sb-tournament-match .sb-row__cell--rank,
+.sb-tournament-match #id-sb-skillgroup-image
+{
+	visibility: collapse;
+}
 
 
 

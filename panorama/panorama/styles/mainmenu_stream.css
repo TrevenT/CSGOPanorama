@@ -51,6 +51,39 @@
 	brightness: .7;
 }
 
+.news-panel-streamfeed .IconButton.hidden,
+.news-panel-streamfeed Label.hidden
+{
+	visibility: collapse;
+}
+
+.news-panel-streamfeed .IconButton.ExternalStreamButton
+{
+	margin-left: 15px;
+}
+
+.news-panel-streamfeed .IconButton Image.WideLogoSteamTV
+{
+	width: height-percentage( 503% );
+}
+
+.news-panel-streamfeed .IconButton.TextFullbright
+{
+	border: 1px solid #FFFFFF88;
+	padding: 2px 4px 2px 10px;
+	brightness: .85;
+}
+
+.news-panel-streamfeed .IconButton Image.WideLogoTwitchTV
+{
+	width: height-percentage( 265% );
+}
+
+.news-panel-streamfeed .IconButton Image.WideLogoStreamGOTV
+{
+	width: height-percentage( 176% );
+}
+
 .news-panel-streamfeed .IconButton:Hover
 {
 	background-color: none;

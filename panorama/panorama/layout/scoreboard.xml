@@ -178,13 +178,26 @@
 			</Panel>
 		</snippet>
 
-		<snippet name="snippet_scoreboard__classic-timeline">
-			<Panel class="sb-timeline" hittest="true" >
+		<snippet name="snippet_scoreboard__classic-timeline--half-time-scores">
+			<Panel class="sb-timeline">
 
-				<Panel class="sb-timeline__bumper" />
+				<Frame snippet="snippet_scoreboard-classic__half-time-scores" />
 
 				<Panel style="width:100%;">
-					<Panel id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="$.DispatchEvent('Scoreboard_Casualties_OnMouseOver')" onmouseout="$.DispatchEvent('Scoreboard_Casualties_OnMouseOut')"/>
+					<Label id="id-sb-timeline__round-label" class="sb-timeline__round-label hidden" text="#scoreboard_timeline_ot" hittest="false"/>
+					<Panel hittest="true" id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="$.DispatchEvent('Scoreboard_Casualties_OnMouseOver')" onmouseout="$.DispatchEvent('Scoreboard_Casualties_OnMouseOut')"/>
+					                                            
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet_scoreboard__classic-timeline--no-half-time-scores">
+			<Panel class="sb-timeline">
+
+				<Frame snippet="snippet_scoreboard-classic__no-half-time-scores" />
+
+				<Panel style="width:100%;">
+					<Panel hittest="true" id="id-sb-timeline__segments" class="sb-timeline__segments" onmouseover="$.DispatchEvent('Scoreboard_Casualties_OnMouseOver')" onmouseout="$.DispatchEvent('Scoreboard_Casualties_OnMouseOut')"/>
 					                                            
 				</Panel>
 			</Panel>
@@ -248,14 +261,33 @@
 		
 
 		                                          
-		<snippet name="snippet_scoreboard-classic--with-timeline">
+		<snippet name="snippet_scoreboard-classic--with-timeline--half-times">
 			<Panel class="sb-main">
 
 				<Frame snippet="snippet_sb-meta"/>
 
 				<Frame snippet="snippet_scoreboard__classic-teams--CT" />
 
-				<Frame snippet="snippet_scoreboard__classic-timeline" />
+				<Frame snippet="snippet_scoreboard__classic-timeline--half-time-scores" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--TERRORIST" />
+
+				<Frame snippet="snippet_scoreboard__classic-teams--Spectator" />
+
+				<Frame snippet="snippet_sb-footer"/>
+
+			</Panel>
+		</snippet>
+
+		                                          
+		<snippet name="snippet_scoreboard-classic--with-timeline--no-half-times">
+			<Panel class="sb-main">
+
+				<Frame snippet="snippet_sb-meta"/>
+
+				<Frame snippet="snippet_scoreboard__classic-teams--CT" />
+
+				<Frame snippet="snippet_scoreboard__classic-timeline--no-half-time-scores" />
 
 				<Frame snippet="snippet_scoreboard__classic-teams--TERRORIST" />
 
@@ -285,56 +317,67 @@
 			</Panel>
 		</snippet>
 
+		<snippet name="snippet_scoreboard-classic__half-time-scores">
+			<Panel class="sb-timeline__half-time-scores">
 
-		                                   
-		<snippet name="snippet_scoreboard-classic__timeline__segment--1">
-			<Panel class="sb-timeline__segment">
-				                                                                                          
-			</Panel>
-		</snippet>
+		                   
+				<Panel id="id-sb-timeline__score_1h" class="sb-timeline__score">
 
-		                                        
-		<snippet name="snippet_scoreboard-classic__timeline__segment--2">
-			<Panel class="sb-timeline__segment">
-				
-
-				                                                                                          
-
-				<Panel id="id-sb-timeline__segment__score" class="sb-timeline__segment__score">
-
-					<Panel id="id-sb-timeline__segment__score__ct" class="center sb-color--CT">
-						<Label  class="sb-timeline__segment__score__label" text="{d:sb_team_score_2--CT}" />
+					<Panel id="id-sb-timeline__score__ct" class="center sb-color--CT">
+						<Label  class="sb-timeline__score__label" text="{d:sb_team_score_2--CT}" />
 					</Panel>
 
-					<Label text="#gamephase_2_short" class="sb-timeline__segment__phase-label"/>
+					<Label text="#gamephase_2_short" class="sb-timeline__phase-label"/>
 
-					<Panel id="id-sb-timeline__segment__score__t" class="center sb-color--TERRORIST">
-						<Label  class="sb-timeline__segment__score__label" text="{d:sb_team_score_2--TERRORIST}" />
+					<Panel id="id-sb-timeline__score__t" class="center sb-color--TERRORIST">
+						<Label  class="sb-timeline__score__label" text="{d:sb_team_score_2--TERRORIST}" />
 					</Panel>
 				</Panel>
-			</Panel>
-		</snippet>
 
-		                                         
-		<snippet name="snippet_scoreboard-classic__timeline__segment--3">
-			<Panel class="sb-timeline__segment">
-				
+		                    
+				<Panel id="id-sb-timeline__score_2h" class="sb-timeline__score">
 
-				                                                                                          
-				
-				<Panel id="id-sb-timeline__segment__score" class="sb-timeline__segment__score">
-
-					<Panel id="id-sb-timeline__segment__score__ct" class="center sb-color--CT">
-						<Label class="sb-timeline__segment__score__label" text="{d:sb_team_score_3--CT}"/>
+					<Panel id="id-sb-timeline__score__ct" class="center sb-color--CT">
+						<Label class="sb-timeline__score__label" text="{d:sb_team_score_3--CT}"/>
 					</Panel>
 
-					<Label text="#gamephase_3_short" class="sb-timeline__segment__phase-label"/>
+					<Label text="#gamephase_3_short" class="sb-timeline__phase-label"/>
 
-					<Panel id="id-sb-timeline__segment__score__t" class="center sb-color--TERRORIST">						
-						<Label class="sb-timeline__segment__score__label" text="{d:sb_team_score_3--TERRORIST}"/>
+					<Panel id="id-sb-timeline__score__t" class="center sb-color--TERRORIST">						
+						<Label class="sb-timeline__score__label" text="{d:sb_team_score_3--TERRORIST}"/>
 					</Panel>
 
 				</Panel>
+
+		                 
+				<Panel id="id-sb-timeline__score_ot" class="sb-timeline__score fade hidden">
+
+					<Panel id="id-sb-timeline__score__ct" class="center sb-color--CT">
+						<Label class="sb-timeline__score__label" text="{d:sb_team_score_ot--CT}"/>
+					</Panel>
+
+					<Label text="#gamephase_ot_short" class="sb-timeline__phase-label"/>
+
+					<Panel id="id-sb-timeline__score__t" class="center sb-color--TERRORIST">						
+						<Label class="sb-timeline__score__label" text="{d:sb_team_score_ot--TERRORIST}"/>
+					</Panel>
+
+				</Panel>
+
+			</Panel>
+		</snippet>
+
+		<snippet name="snippet_scoreboard-classic__no-half-time-scores">
+			<Panel>
+				<Panel class="sb-timeline__bumper" />
+			</Panel>
+		</snippet>
+
+
+		<snippet name="snippet_scoreboard-classic__timeline__segment">
+			<Panel class="sb-timeline__segment">
+				<Panel id="id-sb-timeline__round-container" class="sb-timeline__round-container"/>
+				                                                                                          
 			</Panel>
 		</snippet>
 

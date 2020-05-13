@@ -389,6 +389,12 @@
 	transition-timing-function: ease-in-out;
 }
 
+.play-menu__playbtn--startsearch:disabled
+{
+	box-shadow: none;
+	wash-color: disabledColor;
+}
+
 .play-menu__playbtn--stopsearch
 {
 	transform: translateY( 0% );
@@ -469,4 +475,14 @@
 	color: rgb(221, 221, 221);
 	font-size: 20px;
 	height: 64px;
+}
+
+.play-menu__tournament-only
+{
+	visibility: collapse;
+}
+
+.play-menu__tournament .play-menu__tournament-only
+{
+	visibility: visible;
 }

@@ -248,8 +248,8 @@ CSGOHudWinPanel Label
 
 .TeamBG__TeamLogo
 {
-	width: 90px;
-	height: 90px;
+	width: 94px;
+	height: 94px;
 	horizontal-align: center;
 	vertical-align: top;
 	margin-top: -84px;
@@ -258,6 +258,7 @@ CSGOHudWinPanel Label
 	background-repeat: no-repeat;
 	z-index: 10;
 	visibility: collapse;
+    img-shadow: 0px 0px 1px 1.5 #000000AA;
 }
 
 .WinPanelRoot--ShowTeamLogo .TeamBG__TeamLogo

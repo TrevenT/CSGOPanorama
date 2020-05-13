@@ -544,7 +544,11 @@ var matchInfo = ( function() {
         elPlayerRow.AddClass( 'no-hover' );
         elParentPanel.activePlayerRow = elPlayerRow;
 
-        elParentPanel.FindChildInLayoutFile( 'id-mi-player-stats' ).RemoveClass( 'mi-player-stats__collapse' );
+        var isLive = Boolean(MatchInfoAPI.IsLive(elParentPanel.matchId));
+        if (isLive == false)
+        {
+            elParentPanel.FindChildInLayoutFile('id-mi-player-stats').RemoveClass('mi-player-stats__collapse');
+        }
 
         var elStatsContainer = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__container' );
         var elTickLabels = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__tick-labels' );

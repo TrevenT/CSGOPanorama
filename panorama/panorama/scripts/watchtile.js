@@ -40,8 +40,8 @@ var watchTile = ( function() {
 
         if ( elTile.id == 'live_gotv' ) matchTileDescriptor = 'gotv';
 
+        var isLive = Boolean(MatchInfoAPI.IsLive(elTile.matchId));
         var tournamentName = MatchInfoAPI.GetMatchTournamentName( elTile.matchId );
-        var matchState =  MatchInfoAPI.GetMatchState( elTile.matchId );
         if ( ( tournamentName != undefined ) && ( tournamentName != "" ) )
         {
             matchTileDescriptor = 'tournament';
@@ -101,7 +101,7 @@ var watchTile = ( function() {
         var elViewersLabel = elTile.FindChildInLayoutFile('viewers');
         var elOutcomeLabel = elTile.FindChildInLayoutFile('outcome');
         var elTimestampLabel = elTile.FindChildInLayoutFile('timestamp');
-        
+
         if ( elMatchMapLabel )
         {
             var mapLabelText = "SFUI_Map_"+mapName;
@@ -147,7 +147,8 @@ var watchTile = ( function() {
 
             
             if ( elTournamentTeam0Icon ) elTournamentTeam0Icon.SetImage( icon0Filename );
-            if ( elTournamentTeam1Icon ) elTournamentTeam1Icon.SetImage( icon1Filename );
+            if (elTournamentTeam1Icon) elTournamentTeam1Icon.SetImage(icon1Filename);
+
         }
 
         if ( elScore0Label )
@@ -222,7 +223,10 @@ var watchTile = ( function() {
 
         if ( elTimestampLabel )
         {
-            elTimestampLabel.text = MatchInfoAPI.GetMatchTimestamp( elTile.matchId );
+            if (isLive)
+                elTimestampLabel.text = $.Localize( "CSGO_Watch_Cat_LiveMatches" );
+            else
+                elTimestampLabel.text = MatchInfoAPI.GetMatchTimestamp( elTile.matchId );
         }
         
         var setDefaultMapImage = function ( mapIcon )

@@ -177,6 +177,23 @@ var StreamPanel = (function () {
 				{
 					elTitle.text = $.Localize( '#SFUI_MajorEventVenue_StreamTitle_' + NewsAPI.GetActiveTournamentEventID() + '_' + EmbeddedStreamAPI.GetStreamEventVenueID() );
 				}
+
+				  
+				                                     
+				  
+				                                                   
+				                                                                                                                                                                          
+				  
+				var elNavBarWatchExternalExtraButtons = m_elSteamPanel.FindChildInLayoutFile( "NavBarWatchExternalExtraButtons" );
+				var sSupportedStreamTypes = EmbeddedStreamAPI.GetStreamExternalLinkTypes();
+				var sChildrenWithTypeName = "NavBarWatchExternal";
+				elNavBarWatchExternalExtraButtons.Children().forEach( function( elchild ) {
+					if ( elchild.id.startsWith( sChildrenWithTypeName ) )
+					{
+						var chrLookupTypeCharacter = elchild.id.substring( sChildrenWithTypeName.length, sChildrenWithTypeName.length + 1 );
+						elchild.SetHasClass( 'hidden', sSupportedStreamTypes.indexOf( chrLookupTypeCharacter ) < 0 );
+					}
+				} );
 			}
 			else
 			{

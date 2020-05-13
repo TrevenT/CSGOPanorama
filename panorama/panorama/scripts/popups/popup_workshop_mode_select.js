@@ -112,7 +112,7 @@ var PopupWorkshopModeSelect = ( function () {
 
 	    $.DispatchEvent( 'UIPopupButtonClicked', '' );
 	    LobbyAPI.UpdateSessionSettings( settings );
-	    LobbyAPI.StartMatchmaking();
+	    LobbyAPI.StartMatchmaking( "", "", "", "" );
 	};
 
 	var _Cancel = function () {

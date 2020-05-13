@@ -103,12 +103,12 @@
 .MatchInfo__MapName
 {
     font-size: 12px;
-    margin-left: 0px;
-    width:100%;
-    height:22px;
+    margin-left: 8px;
+    width:120px;
+    height:20px;
     text-overflow: ellipsis;
     vertical-align: top;
-    text-align: center;
+    text-align: left;
 }
 
 .MatchInfo__Score
@@ -267,4 +267,12 @@
 {
     opacity-mask: url( "file://{images}/icons/ui/check.svg" );
     background-color:positiveColor;
+}
+
+.watchlive
+{
+    opacity-mask: url( "file://{images}/icons/ui/map_onmap.svg" );
+    background-color:#ee0000;
+    width: 12px;
+    height: 12px;
 }

@@ -486,8 +486,12 @@ var matchList = ( function() {
                     {
                         var isDownloading = Boolean( ( MatchInfoAPI.GetMatchState( elBoundMatchButton.matchId ) === "downloading" ) );
                         var canWatch = Boolean( MatchInfoAPI.CanWatch( elBoundMatchButton.matchId ) );
+                        var isLive = Boolean( MatchInfoAPI.IsLive( elBoundMatchButton.matchId ) );
                         elDownloadIndicator.SetHasClass( "download-animation", isDownloading );
-                        elDownloadIndicator.SetHasClass( "downloaded", canWatch );
+                        if ( isLive )
+                            elDownloadIndicator.SetHasClass( "watchlive", isLive );
+                        else if ( canWatch )
+                            elDownloadIndicator.SetHasClass( "downloaded", canWatch );
                     }
                 }
             }

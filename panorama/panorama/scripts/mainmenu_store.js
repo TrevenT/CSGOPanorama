@@ -93,7 +93,7 @@ var MainMenuStore = ( function()
 
 						var schfnUpdateCountdown = function ( elPanelParam )
 						{	                                    
-							if ( !elPanelParam )
+							if ( !elPanelParam || !elPanelParam.IsValid() )
 								return;
 
 							var elCountdown = elPanelParam.FindChildInLayoutFile( 'StorePanelTournamentGameCountdown' );

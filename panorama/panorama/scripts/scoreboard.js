@@ -42,8 +42,6 @@ var arrStatsNotToTeamColorize = [
 	"ping"
 ]
 
-
-
 var Scoreboard = ( function()
 {
 
@@ -72,8 +70,9 @@ var Scoreboard = ( function()
 	var _m_dataSetGetCount;
 
 	var _m_areTeamsSwapped;
-	var _m_maxRounds;
 	var _m_oPlayers;				                               
+
+	var _m_RoundUpdated;			                                                                                               
 
 	var _m_TopCommends;
 
@@ -377,13 +376,13 @@ var Scoreboard = ( function()
 		_m_updatePlayerIndex = 0;
 		_m_oTeams = {};
 		_m_arrSortingPausedRefGetCounter = 0;
-		_m_stateGetCounter = 0;
 		_m_hDenyInputToGame = null;
 		_m_dataSetCurrent = 0;
 		_m_dataSetGetCount = 0;
 		_m_areTeamsSwapped = false;
-		_m_maxRounds = 0;
 		_m_sortOrder = undefined;
+
+		_m_RoundUpdated = {};
 
 		_m_TopCommends = {
 			'leader': 0,
@@ -2119,13 +2118,25 @@ var Scoreboard = ( function()
 		elRndTop.AddClass( "sb-team--CT" );
 		elRndBot.AddClass( "sb-team--TERRORIST" );
 
-		if ( typeof oScoreData[ "rounddata" ][ rnd ] !== "object" )
+		var idx;
+
+		if ( MatchStatsAPI.DoesSupportOvertimeStats() )
+		{
+			idx = rnd - jsoTime[ "first_round_this_period" ] + 1;
+		}
+		else
+		{
+			idx = rnd;
+		}
+
+
+		if ( typeof oScoreData[ "rounddata" ][ idx ] !== "object" )
 			return;
 
-		var result = oScoreData[ "rounddata" ][ rnd ][ "result" ].replace( /^(ct_|t_)/, "" );
+		var result = oScoreData[ "rounddata" ][ idx ][ "result" ].replace( /^(ct_|t_)/, "" );
 
 		                
-		if ( oScoreData[ "rounddata" ][ rnd ][ "result" ].charAt( 0 ) === "c" )
+		if ( oScoreData[ "rounddata" ][ idx ][ "result" ].charAt( 0 ) === "c" )
 		{
 			elRndTop.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ result ] );
 			elRndTop.FindChildTraverse( "result" ).AddClass( "sb-timeline__segment__round--active" );
@@ -2139,7 +2150,7 @@ var Scoreboard = ( function()
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).RemoveClass( "sb-team--TERRORIST" );
 
 		}
-		else if ( oScoreData[ "rounddata" ][ rnd ][ "result" ].charAt( 0 ) === "t" )
+		else if ( oScoreData[ "rounddata" ][ idx ][ "result" ].charAt( 0 ) === "t" )
 		{
 			elRndBot.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ result ] );
 			elRndBot.FindChildTraverse( "result" ).AddClass( "sb-timeline__segment__round--active" );
@@ -2162,7 +2173,7 @@ var Scoreboard = ( function()
 
 			if ( _m_oTeams[ teamName ] )
 			{
-				var livingCount = oScoreData[ "rounddata" ][ rnd ][ "players_alive_" + teamName ];
+				var livingCount = oScoreData[ "rounddata" ][ idx ][ "players_alive_" + teamName ];
 
 				var nPlayers = 5;
 
@@ -2313,6 +2324,19 @@ var Scoreboard = ( function()
 			{
 				_m_cP.SetDialogVariableInt( "sb_team_score_3--" + team, oScoreData[ "teamdata" ][ team ][ "score_2h" ] );
 			}
+
+			if ( "score_ot" in oScoreData[ "teamdata" ][ team ] )
+			{
+				_m_cP.SetDialogVariableInt( "sb_team_score_ot--" + team, oScoreData[ "teamdata" ][ team ][ "score_ot" ] );
+			}
+
+			var elOTScore = _m_cP.FindChildTraverse( "id-sb-timeline__score_ot" )
+			if ( elOTScore && elOTScore.IsValid() )
+			{
+				elOTScore.SetHasClass( "hidden", !( "score_ot" in oScoreData[ "teamdata" ][ team ] ) );
+				elOTScore.SetHasClass( "fade", !( "score_ot" in oScoreData[ "teamdata" ][ team ] ) );
+			}
+
 		}
 	}
 
@@ -2322,61 +2346,35 @@ var Scoreboard = ( function()
 		_UpdateTeamInfo( "CT" );
 	}
 
-	function _UpdateScore_Classic ()
+	function _UpdateAllRounds ()
 	{
-
-		                                                                                    
-		if ( Object.keys( _m_oTeams ).length === 0 )
-		{
-			_InitClassicTeams();
-		}	
-
-		_UpdateTeams();
-
-
-		             
 		var jsoTime = GameStateAPI.GetTimeDataJSO();
 		var oScoreData = GameStateAPI.GetScoreDataJSO();
 
 		if ( !jsoTime )
 			return;
-
-		_m_cP.SetDialogVariable( "match_phase", $.Localize( "gamephase_" + jsoTime[ "gamephase" ] ) );
-		_m_cP.SetDialogVariable( "rounds_remaining", jsoTime[ "rounds_remaining" ] );
-
-
-		                                                                                               
-
-		var bResetTimelines = false;
+		
+		if ( !oScoreData )
+			return;
+		
 		                           
 
-		if ( _m_areTeamsSwapped !== GameStateAPI.AreTeamsPlayingSwitchedSides() )
+		var lastRound;
+
+		if ( MatchStatsAPI.DoesSupportOvertimeStats() )
 		{
-			bResetTimelines = true;
-			                      
-			_m_areTeamsSwapped = GameStateAPI.AreTeamsPlayingSwitchedSides()
+			lastRound = jsoTime[ "last_round_this_period" ];
+		}
+		else
+		{
+			lastRound = jsoTime[ "maxrounds" ];
 		}
 
-		if ( _m_maxRounds != jsoTime[ "maxrounds" ] )
+		for ( var rnd = 1; rnd <= lastRound; rnd++ )
 		{
-			bResetTimelines = true;
-			_m_maxRounds = jsoTime[ "maxrounds" ];
+			_UpdateRound( rnd, oScoreData, jsoTime );
 		}
-
-		if ( bResetTimelines )
-		{
-			_ResetTimeline();
-		}
-
-		if ( _SupportsTimeline( jsoTime ) )
-		{
-			                                             
-			for ( var rnd = 1; rnd <= jsoTime[ "maxrounds" ]; rnd++ )
-			{
-				_UpdateRound( rnd, oScoreData, jsoTime);
-			}
-		}
-
+		
 		var _HighlightCurrentTimelineRound = function()
 		{
 			var elTimeline = _m_cP.FindChildInLayoutFile( "id-sb-timeline__segments" );
@@ -2395,7 +2393,79 @@ var Scoreboard = ( function()
 		}
 
 		_HighlightCurrentTimelineRound();
+
+	}
+
+	function _UpdateScore_Classic()
+	{
+
+		                                                                                    
+		if ( Object.keys( _m_oTeams ).length === 0 )
+		{
+			_InitClassicTeams();
+		}	
+
+		_UpdateTeams();
+
+
+		             
+		var jsoTime = GameStateAPI.GetTimeDataJSO();
+
+		if ( !jsoTime )
+			return;
+		
+		var currentRound = jsoTime[ "rounds_played" ] + 1;
+
+		_m_cP.SetDialogVariable( "match_phase", $.Localize( "gamephase_" + jsoTime[ "gamephase" ] ) );
+		_m_cP.SetDialogVariable( "rounds_remaining", jsoTime[ "rounds_remaining" ] );
+		_m_cP.SetDialogVariableInt( "scoreboard_ot", jsoTime[ "overtime" ] );
+
+		_m_cP.SetHasClass( "sb-tournament-match", MatchStatsAPI.IsTournamentMatch() );
+
+		                                                                                               
+			
+		var bResetTimeline = false;
+
+		if ( _m_areTeamsSwapped !== GameStateAPI.AreTeamsPlayingSwitchedSides() )
+		{
+			bResetTimeline = true;
+			_m_areTeamsSwapped = GameStateAPI.AreTeamsPlayingSwitchedSides();
+		}
+
+		                               
+		if ( bResetTimeline || !( currentRound in _m_RoundUpdated ) )
+		{
+
+			                              
+			if ( MatchStatsAPI.DoesSupportOvertimeStats() && currentRound == jsoTime[ "first_round_this_period" ] )
+			{
+				bResetTimeline = true;
+			}
+
+			if ( !_SupportsTimeline( jsoTime ) || bResetTimeline )
+			{
+				_ResetTimeline();
+			}
+
+			_UpdateAllRounds();
+
+			_m_RoundUpdated[ currentRound ] = true;
+
+		}
+		
 	};
+
+	function _InsertTimelineDivider ()
+	{
+		var elTimeline = _m_cP.FindChildInLayoutFile( "id-sb-timeline__segments" );
+
+		if ( !elTimeline || !elTimeline.IsValid() )
+			return;
+
+		var elDivider = $.CreatePanel( "Panel", elTimeline, "id-sb-timeline__divider" );
+		elDivider.AddClass( "sb-timeline__divider" );
+	}
+
 
 	function _InitTimelineSegment ( startRound, endRound, phase )
 	{
@@ -2413,34 +2483,33 @@ var Scoreboard = ( function()
 		if ( !elSegment || !elSegment.IsValid() )
 		{
 			elSegment = $.CreatePanel( "Panel", elTimeline, id );
-			elSegment.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment--" + phase );
+			elSegment.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment");
 		}
 
-		                    
-		for ( var rnd = startRound; rnd <= endRound; rnd++ )
+		var elRoundContainer = elSegment.FindChildTraverse( "id-sb-timeline__round-container" );
+		if ( elRoundContainer && elRoundContainer.IsValid() )
 		{
-			var elRnd = elSegment.FindChildTraverse( rnd );
-			if ( !elRnd || !elRnd.IsValid() )
+			                    
+			for ( var rnd = startRound; rnd <= endRound; rnd++ )
 			{
-				elRnd = $.CreatePanel( "Panel", elSegment, rnd );
-				var elScoreContainer = elSegment.FindChildTraverse( "id-sb-timeline__segment__score" );
-				if ( elScoreContainer && elScoreContainer.IsValid() )
+				var elRnd = elSegment.FindChildTraverse( rnd );
+				if ( !elRnd || !elRnd.IsValid() )
 				{
-					elSegment.MoveChildBefore( elRnd, elScoreContainer );
-				}
+					elRnd = $.CreatePanel( "Panel", elRoundContainer, rnd );
 
-				elRnd.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round" );
+					elRnd.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round" );
 
-				var elTop = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--top" );
-				elTop.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round__data" );
+					var elTop = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--top" );
+					elTop.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round__data" );
 
-				var elBot = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--bot" );
-				elBot.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round__data" );
+					var elBot = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--bot" );
+					elBot.BLoadLayoutSnippet( "snippet_scoreboard-classic__timeline__segment__round__data" );
 
-				                                 
-				if ( ( rnd - startRound + 1 ) % 5 == 0 )
-				{
-					elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).text = rnd - startRound + 1;
+					                                 
+					if ( rnd % 5 == 0 )
+					{
+						elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).text = rnd;
+					}
 				}
 			}
 		}
@@ -2470,7 +2539,19 @@ var Scoreboard = ( function()
 		if ( jsoTime == undefined )
 			jsoTime = GameStateAPI.GetTimeDataJSO();
 
-		return ( jsoTime[ "maxrounds" ] <= 30 );
+		var roundCountToEvaluate;
+
+		if ( MatchStatsAPI.DoesSupportOvertimeStats() )
+		{
+			roundCountToEvaluate = jsoTime[ "maxrounds_this_period" ];
+		}
+		else
+		{
+			roundCountToEvaluate = jsoTime[ "maxrounds" ];
+
+		}
+		
+		return ( roundCountToEvaluate <= 30 );
 	}
 
 	function _ResetTimeline ()
@@ -2492,19 +2573,46 @@ var Scoreboard = ( function()
 		if ( !_SupportsTimeline( jsoTime ) )
 			return;
 		
+
+		                                           
+
+		var firstRound;
+		var lastRound;
+		var midRound; 
+
+		if ( MatchStatsAPI.DoesSupportOvertimeStats() )
+		{
+			firstRound = jsoTime[ "first_round_this_period" ];
+			lastRound = jsoTime[ "last_round_this_period" ];	
+			
+			var elLabel = _m_cP.FindChildTraverse( "id-sb-timeline__round-label" );
+			if ( elLabel && elLabel.IsValid() )
+			{
+				elLabel.SetHasClass( 'hidden', jsoTime[ "overtime" ] == 0 );
+			}
+		}
+		else
+		{
+			firstRound = 1;
+			lastRound = jsoTime[ "maxrounds" ];
+		}
+
+		midRound = firstRound + Math.ceil( ( lastRound - firstRound ) / 2 ) - 1; 	
+
+		
 		if ( GameStateAPI.HasHalfTime() )
 		{
-			var midRound = Math.ceil( jsoTime[ "maxrounds" ] / 2 );
-			var lastRound = jsoTime[ "maxrounds" ];
-
-			_InitTimelineSegment( 1, midRound, "2" );                  
-			_InitTimelineSegment( midRound + 1, lastRound, "3" );                   
+			_InitTimelineSegment( firstRound, midRound, "first-half" );
+			_InsertTimelineDivider();
+			_InitTimelineSegment( midRound + 1, lastRound, "second-half" );
 
 		}
 		else                     
 		{
-			_InitTimelineSegment( 1, jsoTime[ "maxrounds" ], "1" );                
+			_InitTimelineSegment( firstRound, lastRound, "no-halves" );
 		}
+
+		_UpdateAllRounds();
 	};
 
 	function _UnborrowMusicKit ()
@@ -2747,7 +2855,7 @@ var Scoreboard = ( function()
 			case "competitive":
 			case "gungametrbomb":
 			case "scrimcomp2v2":
-				scoreboardTemplate = "snippet_scoreboard-classic--with-timeline";
+				scoreboardTemplate = "snippet_scoreboard-classic--with-timeline--half-times";
 				break;
 			
 			case "training":
@@ -2765,7 +2873,7 @@ var Scoreboard = ( function()
 			case "casual":
 				if ( skirmish == "flyingscoutsman" )
 				{
-					scoreboardTemplate = "snippet_scoreboard-classic--with-timeline";
+					scoreboardTemplate = "snippet_scoreboard-classic--with-timeline--no-half-times";
 				}
 				else
 				{
@@ -2850,26 +2958,9 @@ var Scoreboard = ( function()
 
 	function _UpdateJob () 
 	{
-
-		var GetCount = _m_stateGetCounter;
-
-		if ( GetCount == 0 )
-		{
-			_UpdateMatchInfo();
-		}
-		else if ( GetCount == 1 )
-		{
-			_UpdateScore();
-		}
-		else
-		{
-			_UpdateNextPlayer();
-		}
-
-		if ( _m_stateGetCounter++ >= _m_oPlayers.GetCount() + 2 )
-		{
-			_m_stateGetCounter = 0;
-		}
+		_UpdateMatchInfo();
+		_UpdateScore();
+		_UpdateNextPlayer();
 	};
 
 	function _UpdateEverything ()
@@ -2881,11 +2972,8 @@ var Scoreboard = ( function()
 		}
 
 		_UpdateMatchInfo();
-
 		_UpdateScore();
-
 		_UpdateAllPlayers_delayed( true );
-
 		_UpdateSpectatorButtons();
 
 	};
