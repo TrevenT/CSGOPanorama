@@ -20,8 +20,7 @@ var NewsPanel = (function () {
 		feed[ 'items' ].forEach( function( item, i )
 		{
 			var elEntry = $.CreatePanel( 'Panel', elLister, 'NewEntry' + i, {
-				acceptsinput: true,
-				onactivate: 'SteamOverlayAPI.OpenURL( "' + item.link + '" );'
+				acceptsinput: true
 			} );
 			elEntry.BLoadLayoutSnippet( 'news-full-entry' );
 			elEntry.FindChildInLayoutFile( 'NewsHeaderImage' ).SetImage( item.imageUrl );
@@ -35,6 +34,8 @@ var NewsPanel = (function () {
 
 			         
 			elEntry.FindChildInLayoutFile( 'NewsEntryBlurTarget' ).AddBlurPanel( elEntryInfo );
+
+			elEntry.SetPanelEvent( "onactivate", SteamOverlayAPI.OpenURL.bind( SteamOverlayAPI, item.link ) );
 		} );
 	};
 
