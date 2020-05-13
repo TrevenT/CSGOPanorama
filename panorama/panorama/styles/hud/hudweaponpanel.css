@@ -331,12 +331,23 @@ CSGOHudWeaponPanel Label
 	opacity: 0.9;
 }
 
+.WeaponPanel--Simple .Ammo__Burst
+{
+    visibility: collapse;
+}
+
                                             
 
 .AmmoAnim
 {
 	width: 95px;
 	height: 100%;
+}
+
+.WeaponPanel--Simple .AmmoAnim
+{
+    opacity: 0;
+    margin-right: -60px;
 }
 
 .AmmoAnim__Bullets
@@ -506,20 +517,6 @@ CSGOHudWeaponPanel Label
 }
 
 .AmmoAnim_GrenadeIcon--Hidden
-{
-	visibility: collapse;
-}
-
-.AmmoAnim__HealthshotIcon
-{
-	height: 48px;
-	transform: rotateZ( 20deg );
-	wash-color-fast: defaultColor;
-	horizontal-align: center;
-	vertical-align: center;
-}
-
-.AmmoAnim_HealthshotIcon--Hidden
 {
 	visibility: collapse;
 }

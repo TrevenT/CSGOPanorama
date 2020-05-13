@@ -81,7 +81,6 @@
 						<Image class="AmmoAnim_GrenadeIcon" src="file://{images}/icons/equipment/hegrenade.svg" scaling="stretch-to-fit-preserve-aspect" />
 						<Image class="AmmoAnim_GrenadeIcon" src="file://{images}/icons/equipment/hegrenade.svg" scaling="stretch-to-fit-preserve-aspect" />
 					</Panel>
-					<Image id="AmmoAnimHealthshot" class="AmmoAnim__HealthshotIcon" src="file://{images}/hud/weaponpanel/healthshotammo.png" scaling="stretch-to-fit-preserve-aspect" />
 				</Panel>
 			</Panel>
 		</Panel>
