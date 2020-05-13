@@ -3,6 +3,16 @@
     flow-children: right;
 }
 
+#ContextMenuBody Button.vote-option
+{
+	max-width: 400px;
+}
+
+#ContextMenuBody Button.vote-option Label
+{
+	text-overflow: shrink;
+}
+
 .vote-option__icon
 {
 

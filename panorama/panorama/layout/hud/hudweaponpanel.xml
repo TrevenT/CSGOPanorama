@@ -29,7 +29,7 @@
 						</Panel>
 						<Panel id="KillCountText" class="Kills__Count">
 							<Panel id="KillCountTextIcon" class="Kills__Icon" />
-							<Label id="KillCount" class="Kills__Text" text="x88" />
+							<Label id="KillCount" class="Kills__Text" />
 						</Panel>
 					</Panel>
 					<Panel id="KillEaterContent" class="Kills__KillEater WeaponPanel-apply-hud-color">

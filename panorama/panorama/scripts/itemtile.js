@@ -37,8 +37,8 @@ var ItemTile = ( function()
 	                                                                                                    
 	var _SetItemName = function( id )
 	{
-		var name = ItemInfo.GetName( id );
-		$( '#JsItemName' ).text = FormatText.GetInventoryDisplayStringFromName( name );
+	    var fmtName = ItemInfo.GetFormattedName( id );
+	    fmtName.SetOnLabel( $( '#JsItemName' ) );
 	};
 
 	                             

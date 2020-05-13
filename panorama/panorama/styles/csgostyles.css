@@ -139,7 +139,10 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
                                                                                
                                                                                
                                                                                
-
+.fontSize-xxxl
+{
+	font-size: 64px; 
+}
 .fontSize-xxl
 {
 	font-size: 40px; 

@@ -15,8 +15,8 @@
 	</script>
 	
 	<Panel class="TestContents" ontooltiploaded="setupTooltip()">
-		<Label text="Hello" />
-		<Label text="How are you doing?" />
-		<Label id="DynamicLabel" />
+		<Label allowrawtext="true" text="Hello" />
+		<Label allowrawtext="true" text="How are you doing?" />
+		<Label allowrawtext="true" id="DynamicLabel" />
 	</Panel>
 </root>

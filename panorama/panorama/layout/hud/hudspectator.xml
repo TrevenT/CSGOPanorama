@@ -17,11 +17,11 @@
               <Label id="KAD_K" class="PlayerPanel_ED_KAD_HeaderText" text="#SFUI_SpecStat_type_kills"/>
             </Panel>            
             <Panel id="PlayerPanelED_KAD_Numbers" class="PlayerPanel_ED_KAD_Numbers_L">
-              <Label id="KAD_NumD" class="PlayerPanel_ED_KAD_NumberText" text="99"/>  
-              <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="3"/>
-              <Label id="KAD_NumK" class="PlayerPanel_ED_KAD_NumberText" text="12"/>
+              <Label id="KAD_NumD" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>  
+              <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="X"/>
+              <Label id="KAD_NumK" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>
             </Panel>  
-            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText" text="-$3200"/>
+            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText" text="-$XXXX"/>
           </Panel>
                                                                                                                                                              
 
@@ -32,18 +32,18 @@
                   <ProgressBar id="PlayerPanelHealthBar_Left" class="PlayerPanel__HealthBar_L_CT"/>
 
                   <Panel id="PlayerPanelHealthBarContainer_Left" class="PlayerPanel__HealthBarContainer_L">
-                    <Label id="HealthText" class="PlayerPanel__HealthText" text="100"/>
-                    <Label id="PlayerName" class="PlayerPanel__PlayerName_L" text="King Lob Globble"/>
+                    <Label id="HealthText" class="PlayerPanel__HealthText" text="XXX"/>
+                    <Label id="PlayerName" class="PlayerPanel__PlayerName_L" text="XXXX XXX XXXXXX"/>
                   </Panel>
                   <Image id="KillIcon" class="PlayerPanel__KillIcon_L" src="file://{images}/hud/weaponpanel/kill_icon.png" textureheight="18" scaling="stretch-to-fit-x-preserve-aspect" />
-                  <Label id="KillText" class="PlayerPanel__KillText_L" text="2x"/>
+                  <Label id="KillText" class="PlayerPanel__KillText_L" text="XX"/>
                 
                   <Panel id="PlayerPanelBottomBar" class="PlayerPanel__BottomBar_L">
                     <Panel id="ArmorIcons" class="Armor_Container_L">
                       <Image id="ArmorIcon" class="Armor_Icon" textureheight="19" src="file://{images}/icons/ui/elimination.svg" scaling="stretch-to-fit-x-preserve-aspect" />
                       <Image id="C4DefuserIcon" class="Armor_Icon" src="file://{images}/hud/deathnotice/icon-defuser.png" scaling="stretch-to-fit-x-preserve-aspect" />
                     </Panel>
-                    <Label id="MoneyText" class="PlayerPanel__MoneyText_L" text="16000"/>
+                    <Label id="MoneyText" class="PlayerPanel__MoneyText_L" text="XXXXX"/>
                   </Panel>
                 
                   <Panel id="PlayerPanelWeaponBar" class="PlayerPanel__WeaponBar_L">
@@ -87,11 +87,11 @@
               <Label id="KAD_D" class="PlayerPanel_ED_KAD_HeaderText" text="#SFUI_SpecStat_type_deaths"/>
             </Panel>            
             <Panel id="PlayerPanelED_KAD_Numbers" class="PlayerPanel_ED_KAD_Numbers_R">
-              <Label id="KAD_NumK" class="PlayerPanel_ED_KAD_NumberText" text="12"/>
-              <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="3"/>
-              <Label id="KAD_NumD" class="PlayerPanel_ED_KAD_NumberText" text="99"/>  
+              <Label id="KAD_NumK" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>
+              <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="X"/>
+              <Label id="KAD_NumD" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>  
             </Panel>  
-            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText_R" text="-$3200"/>
+            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText_R" text="-$XXXX"/>
           </Panel>
             
                                                                                                                                                              
@@ -105,18 +105,18 @@
                                                            
                            
                 <Panel id="PlayerPanelHealthBarContainer_Right" class="PlayerPanel__HealthBarContainer_R">
-                  <Label id="HealthText" class="PlayerPanel__HealthText" text="100"/>
-                  <Label id="PlayerName" class="PlayerPanel__PlayerName_R" text="King Lob Globble"/>
+                  <Label id="HealthText" class="PlayerPanel__HealthText" text="XXX"/>
+                  <Label id="PlayerName" class="PlayerPanel__PlayerName_R" text="XXXX XXX XXXXXXX"/>
                 </Panel>
                 <Image id="KillIcon" class="PlayerPanel__KillIcon_R" src="file://{images}/hud/weaponpanel/kill_icon.png" textureheight="18" scaling="stretch-to-fit-x-preserve-aspect" />
-                <Label id="KillText" class="PlayerPanel__KillText_R" text="x2"/>
+                <Label id="KillText" class="PlayerPanel__KillText_R" text="XX"/>
               
                 <Panel id="PlayerPanelBottomBar" class="PlayerPanel__BottomBar_R">
                   <Panel id="ArmorIcons" class="Armor_Container_R">
                     <Image id="ArmorIcon" class="Armor_Icon" textureheight="19" src="file://{images}/hud/healtharmor/icon-shield.png" scaling="stretch-to-fit-x-preserve-aspect" />
                     <Image id="C4DefuserIcon" class="Armor_Icon" src="file://{images}/hud/deathnotice/icon-defuser.png" scaling="stretch-to-fit-x-preserve-aspect" />
                   </Panel>
-                  <Label id="MoneyText" class="PlayerPanel__MoneyText_R" text="16000"/>
+                  <Label id="MoneyText" class="PlayerPanel__MoneyText_R" text="XXXXX"/>
                 </Panel>
               
                 <Panel id="PlayerPanelWeaponBar" class="PlayerPanel__WeaponBar_R">
@@ -190,16 +190,16 @@
             <Image id="BombDefused" src="file://{images}/hud/teamcounter/teamcounter_bomb-planted-defused.svg" texturewidth="256" textureheight="-1" />
           </Panel>     
         </Panel>
-        <Label id="RoundNumber" text="Round 9/15"/>
+        <Label id="RoundNumber" text="XXXXX X/XX"/>
         
-        <Panel id="ScoreAndNameL" class="TeamScoreAndNameL" text="10">
-          <Label id="ScoreL" class="TeamScoreL TeamScore" text="10"/>
+        <Panel id="ScoreAndNameL" class="TeamScoreAndNameL" text="XX">
+          <Label id="ScoreL" class="TeamScoreL TeamScore" text="XX"/>
           <Image id="TeamLogoL" class="SpecTeamLogo" src=""/>
           <Label id="TeamNameL" html="true" class="SpecTeamNameL" text=""/>
         </Panel>
 
-        <Panel id="ScoreAndNameR" class="TeamScoreAndNameR" text="10">
-          <Label id="ScoreR" class="TeamScoreR TeamScore" text="10"/>
+        <Panel id="ScoreAndNameR" class="TeamScoreAndNameR" text="XX">
+          <Label id="ScoreR" class="TeamScoreR TeamScore" text="XX"/>
           <Image id="TeamLogoR" class="SpecTeamLogo" src=""/>
           <Label id="TeamNameR" html="true" class="SpecTeamNameR" text=""/>
         </Panel>
@@ -233,8 +233,8 @@
         
         <ProgressBar id="PickemBar" class="PickemProgressbar"/>
         <Label id="PickemText" text="#SFUIHUD_Spectate_Predictions"/>
-        <Label id="PickemPercentL" class="PickemPercent_L" text="35%"/>
-        <Label id="PickemPercentR" class="PickemPercent_R" text="65%"/>
+        <Label id="PickemPercentL" class="PickemPercent_L" text="XX%"/>
+        <Label id="PickemPercentR" class="PickemPercent_R" text="XX%"/>
       </Panel>
     </Panel>
     <Panel id="SpectatorScoreboardHudScale" class="SpectatorScoreboardRootHudScale">
@@ -243,7 +243,7 @@
           <Image id="EventLogoImage" class="EventLogo_Image" src="" textureheight="64" scaling="stretch-to-fit-x-preserve-aspect"/>
         </Panel>
         <Panel id="ViewersPanel" class="SpecViewers">
-          <Label id="ViewersText" class="SpecViewers_Text" text="Viewers: 843,980"/>
+          <Label id="ViewersText" class="SpecViewers_Text" text="XXXXXX: XXX,XXX"/>
         </Panel>
         <Panel id="ItemDropPanel">
           <ItemImage id="ItemDropPanel_Item" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="360" texturewidth="165" scaling="stretch-to-fit-preserve-aspect" />
@@ -256,9 +256,9 @@
       <Panel class="TeamSpecPanel_PlayerPanels">
         <Panel id="TeamMoney_L" class="TeamSpecPanel_TeamMoney">
           <Label id="TeamMoneyHeader_L" class="TeamSpecPanel_MoneyHeader_L" text="#SFUIHUD_Spectate_TeamMoney"/>
-          <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="$80000"/>
+          <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="$XXXXX"/>
           <Label id="TeamEQValueHeader_L" class="TeamSpecPanel_EQValueHeader_L" text="#SFUIHUD_Spectate_TeamEQValue"/>
-          <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="$56000"/>
+          <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="$XXXXX"/>
                                                                
         </Panel>
         <Panel id="TeamSpec_L" class="TeamSpecPanel">
@@ -269,9 +269,9 @@
         <Image id="EventLogo_R" class="EventLogo_Right" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" scaling="stretch-to-fit-preserve-aspect" />
         <Panel id="TeamMoney_R" class="TeamSpecPanel_TeamMoney TeamSpecPanel_TeamMoney_R">
           <Label id="TeamMoneyHeader_R" class="TeamSpecPanel_MoneyHeader_R" text="#SFUIHUD_Spectate_TeamMoney"/>
-          <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="$80000"/>
+          <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="$XXXXX"/>
           <Label id="TeamEQValueHeader_R" class="TeamSpecPanel_EQValueHeader_R" text="#SFUIHUD_Spectate_TeamEQValue"/>
-          <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="$56000"/>
+          <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="$XXXXX"/>
                                                                
         </Panel>
         <Panel id="TeamSpec_R" class="TeamSpecPanel TeamSpecPanel_Right">

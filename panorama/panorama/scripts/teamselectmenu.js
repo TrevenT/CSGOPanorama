@@ -281,7 +281,7 @@ var TeamSelectMenu = ( function (){
 
 			var clanTag = GameStateAPI.GetPlayerClanTag(xuid);
 			var playerName = GameStateAPI.GetPlayerNameWithNoHTMLEscapes(xuid);
-			elName.text = clanTag + " " + playerName;
+			elName.text = clanTag + " " + playerName;               
 	
 			var elAvatar = $.CreatePanel( 'Panel', elTeammate, xuid, { hittest:'false' } );
 			elAvatar.SetAttributeString( 'xuid', xuid );

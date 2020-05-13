@@ -206,7 +206,7 @@
 .OtherTournaments {
 	width: fit-children;
 	height: fit-children;
-	overflow: squish scroll;
+	overflow: squish noclip;
 	flow-children: right-wrap;
 	horizontal-align: center;
 }
@@ -460,3 +460,9 @@
 	height:100%;
 	blur: fastgaussian( 8, 8, 5);
 }
+
+.content-navbar__tabs RadioButton.hidden
+{
+	visibility: collapse;
+}
+

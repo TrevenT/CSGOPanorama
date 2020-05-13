@@ -1,0 +1,39 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
+	</styles>
+	<scripts>
+                                                                                
+	</scripts>
+
+    <Panel class="pickem-info-bar">
+        <Panel class="pickem-score-container">
+            <Panel class="pickem-trophy-container">
+                <Image src="file://{images}/icons/wreath.vtf"/>
+                <Label id="id-pickem-your-points" class="pickem-score" text=""/>
+            </Panel>
+             <Panel id="" class="left-right-padding top-bottom-flow vertical-center">
+                <Panel id="id-pickem-points-needed" class="left-right-flow vertical-center">
+                    <Label class="pickem-header__title" text="#pickem_points_earned"/>
+                    <Label class="pickem-header__subtitle left-padding" text="#pickem_points_needed_next_level" html="true"/>
+                </Panel>
+                <Panel id="id-pickem-status" class="pickem-header-status">
+                    <Image id="id-pickem-lock-status-icon" textureheight="20" texturewidth="-1" class="vertical-center right-margin" src="file://{images}/icons/ui/clock.svg"/>
+                    <Label id="id-pickem-lock-status" class="pickem-header__subtitle" text=""/>
+                </Panel>
+            </Panel>
+        </Panel>
+        <Panel class="horizontal-align-right vertical-center left-right-padding right-left-flow">
+            <Button id="id-pickem-how-to-play" class="PopupButton left-right-flow" >
+                <Image src="file://{images}/icons/ui/info.svg"/>
+                <Label text="#CSGO_Watch_Tournament_Info_info"/>
+            </Button>
+            <Button id="id-pickem-leaderboards" class="PopupButton left-right-flow" >
+                <Image src="file://{images}/icons/ui/info.svg"/>
+                <Label text="#CSGO_Operation_Leaderboard_Type"/>
+            </Button>
+        </Panel>
+    </Panel>
+
+</root>

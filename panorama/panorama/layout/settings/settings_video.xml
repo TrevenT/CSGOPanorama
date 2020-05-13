@@ -64,7 +64,7 @@
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_Resolution" class="half-width"/>
 						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id="ResolutionEnum" oninputsubmit="CSGOResolutionSelectionChanged()" >
-							<Label text="NOT USED. DYNAMIC" value="0" id="resolution0" />
+							<Label value="0" id="resolution0" />
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 					<Panel class="horizontal-separator"/>
@@ -161,8 +161,8 @@
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Antialiasing_Info">
 						<Label text="#SFUI_Settings_Antialiasing_Mode" class="half-width"/>
 						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id="AAMode">
-							<Label text="NOT USED. DYNAMIC" value="0" id="antialisaing0" />
-							<Label text="NOT USED. DYNAMIC" value="1" id="antialiasing1"/>
+							<Label value="0" id="antialisaing0" />
+							<Label value="1" id="antialiasing1"/>
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>

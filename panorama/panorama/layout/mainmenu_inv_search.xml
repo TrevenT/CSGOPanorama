@@ -20,7 +20,7 @@
                 <ItemImage id="SuggestedImage" 
                         class="inv-search__suggestions_entry__image" 
                         scaling="stretch-to-fit-preserve-aspect"/>
-				<Label id="SuggestedLabel" html="true" text="" class="stratum-font fontWeight-Medium left-right-padding bottom-padding"/>
+				<Label html="true" text="{s:suggestion_text}" class="stratum-font fontWeight-Medium left-right-padding bottom-padding"/>
                  </Panel>
 			</Button>
 		</snippet>
@@ -37,7 +37,7 @@
             </Panel>
 
             <Panel class="inv-popup-title">
-                <Label class="mainmenu-content--popuptab__title" text="inv_nav_search"/>
+                <Label class="mainmenu-content--popuptab__title" text="#inv_nav_search"/>
             </Panel>
          </Panel>
 
@@ -58,7 +58,7 @@
             <InventoryItemList id="InvSearchPanel-List" />
 
             <Panel id="InvSearchSuggestions" class="inv-search__suggestions">
-                <Label html="true" text="inv_search_popular" class="bottom-padding-medium fontWeight-Medium stratum-font fontSize-xl"/>
+                <Label html="true" text="#inv_search_popular" class="bottom-padding-medium fontWeight-Medium stratum-font fontSize-xl"/>
                 <Panel id="InvSearchSuggestionsList" class="left-right-flow-wrap"/>
             </Panel>
         </Panel>

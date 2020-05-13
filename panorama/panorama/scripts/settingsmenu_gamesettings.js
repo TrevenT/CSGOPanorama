@@ -24,7 +24,8 @@ var SettingsMenuGameSettings = ( function() {
             var clanIDForCvar = MyPersonaAPI.GetMyClanId32BitByIndex(i);
 
             id = 'clantagoption' + i.toString();
-            optionLabel = $.CreatePanel('Label', clanTagDropdown, id, { text: clanTag });
+            optionLabel = $.CreatePanel( 'Label', clanTagDropdown, id, { text: '{s:clanTag}' } );
+            optionLabel.SetDialogVariable( 'clanTag', clanTag );
             optionLabel.SetAttributeString('value', clanIDForCvar.toString() );
             clanTagDropdown.AddOption(optionLabel);
         }

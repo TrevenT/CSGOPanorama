@@ -5,6 +5,6 @@
 	
 	<DebugInheritedStylesHeader>
 		<Label text="#Debugger_InheritedStyleHeader" />
-		<Label id="ParentWithProperties" class="StyleLink" />
+		<Label allowrawtext="true" id="ParentWithProperties" class="StyleLink" />
 	</DebugInheritedStylesHeader>	
 </root>

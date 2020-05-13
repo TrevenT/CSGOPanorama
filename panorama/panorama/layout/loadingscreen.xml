@@ -47,7 +47,7 @@
               <Panel class="loading-screen-content__titles">
                 <Label id="LoadingScreenMapName"
                   class="loading-screen-content__info__text-title"
-                  text="Dust II"/>
+                  text="XXXX XX"/>
                 <Panel class="loading-screen-content__info__gamemode">
                   <Image id="LoadingScreenGameModeIcon"
 						      class="loading-screen-content__info__modeicon"

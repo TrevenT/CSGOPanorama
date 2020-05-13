@@ -60,14 +60,14 @@
 						<Label text="#SFUI_Settings_Audio_Device" class="half-width"/>
 						<CSGOSettingsEnumDropDown id ="DeviceConfigurationEnum" class="PopupButton White" convar="sound_device_override" oninputsubmit="CSGOAudioDeviceConfigurationChanged()">
 							                                                                               
-							<Label text="Device 1" id="audiodeviceconfig1"/>
-							<Label text="Device 2" id="audiodeviceconfig2"/>
-							<Label text="Device 3" id="audiodeviceconfig3"/>
-							<Label text="Device 4" id="audiodeviceconfig4"/>
-							<Label text="Device 5" id="audiodeviceconfig5"/>
-							<Label text="Device 6" id="audiodeviceconfig6"/>
-							<Label text="Device 7" id="audiodeviceconfig7"/>
-							<Label text="Device 8" id="audiodeviceconfig8"/>
+							<Label text="XXXXXX 1" id="audiodeviceconfig1"/>
+							<Label text="XXXXXX 2" id="audiodeviceconfig2"/>
+							<Label text="XXXXXX 3" id="audiodeviceconfig3"/>
+							<Label text="XXXXXX 4" id="audiodeviceconfig4"/>
+							<Label text="XXXXXX 5" id="audiodeviceconfig5"/>
+							<Label text="XXXXXX 6" id="audiodeviceconfig6"/>
+							<Label text="XXXXXX 7" id="audiodeviceconfig7"/>
+							<Label text="XXXXXX 8" id="audiodeviceconfig8"/>
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 

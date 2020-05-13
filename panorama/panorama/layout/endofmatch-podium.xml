@@ -20,7 +20,7 @@
 			<Panel class="eom-podium__podium__player">
 
 				<Panel id="id-eom-podium__podium__player__commend">
-					<TextButton id="id-eom-podium__podium__player__commend--text" class="hidden" text="Commend" />
+					<TextButton id="id-eom-podium__podium__player__commend--text" class="hidden" text="#SFUI_PlayerDetails_Commend" />
 				</Panel>
 				
 				<Panel id="id-eom-podium__podium__player__plaque">

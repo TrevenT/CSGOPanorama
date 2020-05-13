@@ -654,12 +654,12 @@
 }
 
                                                                                      
-.steam-license-restricted .friendslist-navbar,
 .steam-license-restricted .friendslist-incominginvites,
-.steam-license-restricted .friendslist__seperator,
-.steam-license-restricted .friendslist-lists
+.GameClientConnectingToGC #JsFriendsTab-lobbies,
+.steam-license-restricted #JsFriendsTab-lobbies,
+.GameClientConnectingToGC #JsFriendsTab-recents,
+.steam-license-restricted #JsFriendsTab-recents
 {
 	visibility: collapse;
 }
-
 

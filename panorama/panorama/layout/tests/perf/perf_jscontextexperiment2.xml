@@ -9,7 +9,7 @@
 
     <Panel onloaded="OnLoadedC();">
         <Button class="PopupButton" onactivate="ButtonActivatedC();">
-            <Label text="ButtonC" class="MonoNumbersFont"/>
+            <Label allowrawtext="true" text="ButtonC" class="MonoNumbersFont"/>
         </Button>
     </Panel>
 

@@ -89,11 +89,17 @@ var MainMenu = ( function() {
 			}
 			else if ( strFatalError === "ShowGameLicenseNoOnlineLicensePW" )
 			{
-				_OnGcLogonNotificationReceived_ShowLicenseYesNoBox( "#SFUI_LoginLicenseAssist_NoOnlineLicense_PW", "https://community.csgo.com.cn/join/pwlink_csgo" );
+				                                                                                 
+				                                                                                     
+				                                 
+				                                                                                                                                                           
 			}
 			else if ( strFatalError === "ShowGameLicenseNoOnlineLicense" )
 			{
-				_OnGcLogonNotificationReceived_ShowLicenseYesNoBox( "#SFUI_LoginLicenseAssist_NoOnlineLicense", "https://store.steampowered.com/app/730/" );
+				                                                                                 
+				                                                                                     
+				                                 
+				                                                                                                                                                 
 			}
 			else
 			{
@@ -208,7 +214,7 @@ var MainMenu = ( function() {
 
 	var _BCheckTabCanBeOpenedRightNow = function( tab )
 	{
-		if ( tab === 'JsInventory' || tab === 'JsWatch' )
+		if ( tab === 'JsInventory' )
 		{
 			var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
 			if ( restrictions !== false )
@@ -318,6 +324,10 @@ var MainMenu = ( function() {
 			activePanel.visible = true;
 			activePanel.SetReadyForDisplay( true );
 			                                      
+
+
+			                                           	
+			_PauseMainMenuCharacter();
 		}
 
 		_ShowContentPanel();
@@ -466,6 +476,13 @@ var MainMenu = ( function() {
 	function _OnHomeButtonPressed()
 	{
 		$.DispatchEvent( 'HideContentPanel' );
+
+		                                            	
+		var vanityPanel = $( '#JsMainmenu_Vanity' );
+		if ( vanityPanel )
+		{
+			vanityPanel.Pause( false );
+		}
 	}
 
 	function _OnQuitButtonPressed()
@@ -706,11 +723,24 @@ var MainMenu = ( function() {
 	{
 		_InsureSessionCreated();
 		_NavigateToTab( 'JsPlay', 'mainmenu_play' );
+
+		                                           	
+		_PauseMainMenuCharacter();		
 	};
+
+	var _OpenWatchMenu = function()
+	{
+		_PauseMainMenuCharacter();
+		_NavigateToTab( 'JsWatch', 'mainmenu_watch' );
+	}
 
 	var _OpenInventory = function ()
 	{
+		                                           	
+		_PauseMainMenuCharacter();
+
 		_NavigateToTab( 'JsInventory', 'mainmenu_inventory' );
+
 	};
 
 	var _InsureSessionCreated = function()
@@ -1147,6 +1177,7 @@ var MainMenu = ( function() {
 
 	var _ShowWeaponUpdatePopup = function()
 	{
+		return;                                                         
 		var setVersionTo = '1';
 		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
 
@@ -1169,6 +1200,26 @@ var MainMenu = ( function() {
 		}
 	};
 
+	var _PauseMainMenuCharacter = function()
+	{
+		var vanityPanel = $( '#JsMainmenu_Vanity' );
+
+		if ( vanityPanel && UiToolkitAPI.IsPanoramaInECOMode() )
+		{
+			vanityPanel.Pause( true );
+		}
+	}
+
+	var _ShowTournamentStore = function () 
+	{
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'',
+			'file://{resources}/layout/popups/popup_tournament_store.xml',
+			'',
+			'none'
+		);
+	}
+
 	return {
 		OnInitFadeUp						: _OnInitFadeUp,
 		OnShowMainMenu						: _OnShowMainMenu,
@@ -1189,6 +1240,7 @@ var MainMenu = ( function() {
 		ForceRestartVanity	 				: _ForceRestartVanity,
 		OnEquipSlotChanged	 				: _OnEquipSlotChanged,
 		OpenPlayMenu						: _OpenPlayMenu,
+		OpenWatchMenu						: _OpenWatchMenu,
 		OpenInventory						: _OpenInventory,
 		OnHomeButtonPressed					: _OnHomeButtonPressed,
 		OnQuitButtonPressed					: _OnQuitButtonPressed,
@@ -1205,7 +1257,9 @@ var MainMenu = ( function() {
 		ShowNotificationBarTooltip			: _ShowNotificationBarTooltip,
 		ShowVote 							: _ShowVote,
 		ShowStoreStatusPanel				: _ShowStoreStatusPanel,
-		HideStoreStatusPanel				: _HideStoreStatusPanel
+		HideStoreStatusPanel				: _HideStoreStatusPanel,
+		PauseMainMenuCharacter				: _PauseMainMenuCharacter,
+		ShowTournamentStore					: _ShowTournamentStore
 	};
 })();
 
@@ -1220,6 +1274,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'UpdateVanityModelData', MainMenu.ForceRestartVanity );
 	$.RegisterForUnhandledEvent( 'OpenPlayMenu', MainMenu.OpenPlayMenu );
 	$.RegisterForUnhandledEvent( 'OpenInventory', MainMenu.OpenInventory );
+	$.RegisterForUnhandledEvent( 'OpenWatchMenu', MainMenu.OpenWatchMenu );
 	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', MainMenu.OnShowMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOHideMainMenu', MainMenu.OnHideMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOShowPauseMenu', MainMenu.OnShowPauseMenu);
@@ -1237,6 +1292,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'HideStoreStatusPanel', MainMenu.HideStoreStatusPanel );
 
 	$.RegisterForUnhandledEvent( 'ShowVoteContextMenu', MainMenu.ShowVote );
+	$.RegisterForUnhandledEvent( 'ShowTournamentStore', MainMenu.ShowTournamentStore );
 	
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitVanity();

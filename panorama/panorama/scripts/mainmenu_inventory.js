@@ -16,6 +16,14 @@ var InventoryPanel = ( function (){
 		_RunEveryTimeInventoryIsShown();
 		_CreateCategoriesNavBar();
 		_LoadEquipNotification();
+
+		                                           	
+		var vanityPanel = $( '#JsMainmenu_Vanity' );
+		if ( vanityPanel && UiToolkitAPI.IsPanoramaInECOMode() )
+		{
+			vanityPanel.Pause( true );
+		}
+				
 	};
 
 	var _RunEveryTimeInventoryIsShown = function()
@@ -158,7 +166,7 @@ var InventoryPanel = ( function (){
 			if ( nameToken )
 			{
 				$.CreatePanel( 'Label', elButton, '', {
-					text: nameToken
+					text: '#' + nameToken
 				} );
 			}
 			else
@@ -629,6 +637,13 @@ var InventoryPanel = ( function (){
 		_RunEveryTimeInventoryIsShown();
 		_UpdateActiveInventoryList();
 		_UpdateLoadoutButtonState();
+
+		                                           	
+		var vanityPanel = $( '#JsMainmenu_Vanity' );
+		if ( vanityPanel && UiToolkitAPI.IsPanoramaInECOMode() )
+		{
+			vanityPanel.Pause( true );
+		}
 	};
 
 	var _InventoryUpdated = function()

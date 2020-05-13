@@ -25,6 +25,11 @@ CSGOMainMenu,
 	-s2-mix-blend-mode: opaque;
 }
 
+CSGOMainMenu.PopupBackgroundBlur #MainMenuCore
+{
+	blur: none;
+}
+
 #MainMenuInput
 {
 	transition-property: blur;
@@ -486,10 +491,7 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 
 .mainmenu-content--offscreen
 {
-	                                                                                              
-	                                                             
-
-	position: -99.9% 0% 0px;
+	position: -100% 0% 0px;
 	sound-trans: "";
 
 	transition-property: position, clip;

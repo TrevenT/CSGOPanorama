@@ -85,7 +85,7 @@ var mainmenu_watch = ( function() {
                 elStreamPanel.FindChildInLayoutFile( 'stream-button__blur-target' ).AddBlurPanel( elStreamText );
 
                                         
-                elStreamPanel.FindChildTraverse('Stream-text').text = StreamsAPI.GetStreamTextDescriptionByName(streamName);
+                elStreamPanel.SetDialogVariable( 'streamText', StreamsAPI.GetStreamTextDescriptionByName(streamName) );
                 elStreamPanel.SetDialogVariable( "numberOfViewers", StreamsAPI.GetStreamViewersByName(streamName) );
                 elStreamPanel.SetDialogVariable( "channel", StreamsAPI.GetStreamDisplayNameByName(streamName) );
                 
@@ -115,8 +115,9 @@ var mainmenu_watch = ( function() {
                                                                                            
                                                                                                                                                                                                 
             var pastTournamentPanel = elTournamentList.FindChildTraverse("other-tournaments");
+            var maxTournaments = g_ActiveTournamentInfo.eventid - 1;
 
-            for (var i = 13; i >= 1; i--)
+            for (var i = maxTournaments; i >= 1; i--)
             {
                 if ( i == 2 ) continue;
                                                          
@@ -124,9 +125,7 @@ var mainmenu_watch = ( function() {
                              
                 elTournamentPanel.BLoadLayoutSnippet( "tournament_tile" );
 
-                var input = $.Localize("#CSGO_Tournament_Event_NameShort_" + i);
-                var fields = input.split(' ');
-                elTournamentPanel.FindChildTraverse('title').text = fields[fields.length - 1] + " " + fields[0];
+                elTournamentPanel.FindChildTraverse('title').SetLocalizationString( '#CSGO_Tournament_Event_Location_' + i );
 
                 var iconSource =  'file://{images}/tournaments/events/tournament_logo_' + i + '.svg';
 
@@ -157,7 +156,7 @@ var mainmenu_watch = ( function() {
                                
                                                                                                                                                                          
 
-    function _UpdateTab( elTab )
+    function _UpdateTab( elTab, optbFromMatchListChangeEvent )
     {
         elTab.SetReadyForDisplay( true );
         elTab.visible = true;
@@ -170,10 +169,13 @@ var mainmenu_watch = ( function() {
             case "JsTournaments":
                 _PopulateTournamentPage( elTab );
                 break;
+            case "JsActiveTournament":
+                $.DispatchEvent( 'InitializeTournamentsPage',  'tournament:' + g_ActiveTournamentInfo.eventid );
+                break;
             case "JsYourMatches":
             case "JsDownloaded":
             case "JsLive":
-                matchList.UpdateMatchList( elTab, MATCHLISTDESCRIPTOR[elTab.id] );
+                matchList.UpdateMatchList( elTab, MATCHLISTDESCRIPTOR[elTab.id], optbFromMatchListChangeEvent );
                 if ( _m_activeTab.activeMatchInfoPanel )
                 {
                     matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
@@ -216,20 +218,30 @@ var mainmenu_watch = ( function() {
     {
         if ( _m_activeTab )
         {
+            if( _m_activeTab.id === 'JsActiveTournament' )
+            {
+                $.DispatchEvent( 'RefreshPickemPage', 'tournament:' + g_ActiveTournamentInfo.eventid );
+                return;
+            }
+            
             _UpdateTab( _m_activeTab );
         }
     }
 
-    function _UpdateMatchList( listId )
+    function _UpdateMatchList( listId, optbFromMatchListChangeEvent )
     {
 		                                                  
 		var tabbyid = MATCHLISTTABBYNAME[ listId ];
 		if ( tabbyid )
 		{
 			                                                          
-			_UpdateTab( $( "#" + tabbyid ) );
+			_UpdateTab( $( "#" + tabbyid ), optbFromMatchListChangeEvent );
 		}
-    }
+	}
+	function _UpdateMatchListFromMatchListChangeEvent( listId )
+	{
+		_UpdateMatchList( listId, true );
+	}
 
     function _NavigateToTab( tab, xmlName, tournament_id=undefined, isSubTab=false, addToStack=false )
     {
@@ -415,14 +427,15 @@ var mainmenu_watch = ( function() {
     {
         _m_activeTab = undefined;
         _m_contextPanel = $( "#main-content" );
-        $.RegisterForUnhandledEvent( "PanoramaComponent_MatchList_StateChange", _UpdateMatchList );
+        $.RegisterForUnhandledEvent( "PanoramaComponent_MatchList_StateChange", _UpdateMatchListFromMatchListChangeEvent );
         $.RegisterForUnhandledEvent( "CloseSubMenuContent", _CloseSubMenuContent );
         $.RegisterForUnhandledEvent( "NavigateToTab", _NavigateToTab );
         $.RegisterForUnhandledEvent( "MainMenuTabShown", _Refresh );
         _InitTab( 'JsYourMatches' );
         _InitTab( 'JsDownloaded')
         _InitTab( 'JsLive' );
-		_InitResourceManagement( $( '#JsTournaments' ) );
+        _InitResourceManagement( $( '#JsTournaments' ) );
+        _InitResourceManagement( $( '#JsActiveTournament' ) );
 
 		                                   
 		if ( _m_bPerfectWorld )
@@ -436,8 +449,47 @@ var mainmenu_watch = ( function() {
 			_InitResourceManagement( $( '#JsStreams' ) );
 		}
 
-        _NavigateToTab( 'JsYourMatches' );
+		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
+		if ( restrictions === false )
+		{
+			_NavigateToTab( 'JsActiveTournament' );
+			$( '#WatchNavBarActiveTourament' ).checked = true;
+		}
+		else
+		{
+			_NavigateToTab( 'JsLive' );
+			$( '#WatchNavBarButtonLive' ).checked = true;
+		}
     }
+
+    var _RunEveryTimeWatchIsShown = function()
+	{
+		                                                                                               
+		                                                                                             
+		                               
+
+		if ( !MyPersonaAPI.IsInventoryValid() || !MyPersonaAPI.IsConnectedToGC() )
+		{
+			                                       
+			UiToolkitAPI.ShowGenericPopupOk(
+				$.Localize( '#SFUI_SteamConnectionErrorTitle' ),
+				$.Localize( '#SFUI_Steam_Error_LinkUnexpected' ),
+				'',
+				function()
+				{
+					$.DispatchEvent( 'HideContentPanel' );
+				},
+				function()
+				{
+				}
+			);
+		}
+    };
+    
+    var _OnReadyForDisplay = function ()
+	{
+	};
+
 
                           
 	return {
@@ -445,7 +497,8 @@ var mainmenu_watch = ( function() {
         UpdateActiveTab         : _UpdateActiveTab,
                                                        
         InitMainWatchPanel      : _InitMainWatchPanel,
-        CloseSubMenuContent     : _CloseSubMenuContent
+        CloseSubMenuContent     : _CloseSubMenuContent,
+        OnReadyForDisplay      : _OnReadyForDisplay
     };
 
 })();
@@ -456,6 +509,8 @@ var mainmenu_watch = ( function() {
 (function()
 {
     $.RegisterEventHandler( 'Cancelled', $('#JsWatch'), mainmenu_watch.CloseSubMenuContent );
+    $.RegisterEventHandler( 'ReadyForDisplay', $('#JsWatch'), mainmenu_watch.OnReadyForDisplay );
+
 })();
 
 

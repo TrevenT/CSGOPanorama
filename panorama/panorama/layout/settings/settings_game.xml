@@ -237,7 +237,7 @@
 						<Label text="#SFUI_Settings_ClanTag_Title" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_clanid" id="ClanTagsEnum" >
 							                                                         
-							<Label text="DUMMY"/>
+							<Label text="XXXXX"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 					<Panel class="horizontal-separator"/>

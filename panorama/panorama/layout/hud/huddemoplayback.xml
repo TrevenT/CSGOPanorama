@@ -8,25 +8,25 @@
   <CSGOHudDemoPlayback class="demoplayback">
     <Panel class="demoplayback-control-row">
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Round', -9999)">
-        <Label class="demoplayback-control-label" text="Restart"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Restart"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Round', -1)">
-        <Label class="demoplayback-control-label" text="Back"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Back"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Play', 0)">
-        <Label class="demoplayback-control-label" text="Paws"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Pause"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Play', 0.25)">
-        <Label class="demoplayback-control-label" text="Slow"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Slow"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Play', 1.0)">
-        <Label class="demoplayback-control-label" text="Play"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Play"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Play', 4.0)">
-        <Label class="demoplayback-control-label" text="Fast"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Fast"/>
       </Button>
       <Button class="demoplayback-control" onactivate="DemoPlaybackControl('Round', 1)">
-        <Label class="demoplayback-control-label" text="Next"/>
+        <Label class="demoplayback-control-label" text="#DemoPlayback_Next"/>
       </Button>
     </Panel>
     <Panel class="demoplayback-timer-row">

@@ -2,19 +2,22 @@
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
         <include src="file://{resources}/styles/mainmenu_news.css" />
 		<include src="file://{resources}/styles/mainmenu_store.css" />
+
 
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/mainmenu_store.js" />
 	</scripts>
 
 	<snippets>
 		<snippet name="StoreCarousel" class="">
-			<Carousel class="vertical-center full-width full-height" panels-visible="1" hittest="false">
+			<Carousel class="vertical-center full-width full-height" autoscroll-delay="7s, 10s" panels-visible="1" hittest="false">
 
 				                          
 
@@ -37,7 +40,7 @@
 				<Panel class='left-right-flow full-width'>
 					<Label id="StoreItemPercent" class="store-sale-tag__text" text=""/>
 					<Panel  class='top-bottom-flow'>
-						<Label id="StoreItemPrice" class="store-panel__carousel__item__name price" text="$9.99"/>
+						<Label id="StoreItemPrice" class="store-panel__carousel__item__name price" text="$X.XX"/>
 						<Label id="StoreItemSalePrice" class="store-panel__carousel__item__name saleprice" html="true" text=""/>
 					</Panel>
 				</Panel>
@@ -50,6 +53,83 @@
 				<Label id="StoreTabLabel" text=""/>
 			</RadioButton>
 		</snippet>
+
+		<snippet name="TournamentStore">
+			<Button class="store-panel__tournament-banner store-panel__tournament-banner__buyitems"
+				onactivate="$.DispatchEvent( 'ShowTournamentStore' )">
+				<Panel id="id-store-tournament-items-container" class="full-width full-height">
+					<ItemImage id="id-store-tournament-item0" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item1" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item2" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item3" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item4" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item5" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+					<ItemImage id="id-store-tournament-item6" 
+						class="store-panel__tournament-image" 
+						large="true" 
+						scaling="stretch-to-fit-preserve-aspect" />
+				</Panel>
+
+				<Label id="StorePanelTournamentLabel"
+					class="store-panel__tournament-label" html="true"
+					text="#CSGO_PickEm_Buy_Items"/>
+			</Button>
+		</snippet>
+
+		<snippet name="TournamentGame">
+			<Button class="store-panel__tournament-banner store-panel__tournament-banner__pickemgame"
+					onactivate="$.DispatchEvent( 'OpenWatchMenu' )">
+				<Panel class="store-panel-tournament-trophy-container">
+					<ItemPreviewPanel id=""
+						class="store-panel-tournament-trophy bronze"
+						manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+						item="models/inventory_items/london_pickem_2018_bronze.mdl"
+						mouse_rotate="false"
+						sound=""/>
+					<ItemPreviewPanel id=""
+						class="store-panel-tournament-trophy silver"
+						manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+						item="models/inventory_items/london_pickem_2018_silver.mdl"
+						mouse_rotate="false"
+						sound=""/>
+
+					<ItemPreviewPanel id="StoreTournamentTrophyGold"
+						class="store-panel-tournament-trophy"
+						manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+						item="models/inventory_items/london_pickem_2018_gold.mdl"
+						hittest="false"
+						mouse_rotate="true"
+						sound=""/>
+				</Panel>
+
+				<Label id="StorePanelTournamentGameCountdown"
+					class="store-panel__tournament-label countdown hidden" html="true"
+					text="#pickem_timer"/>
+
+				<Label id="StorePanelTournamentGameLabel"
+					class="store-panel__tournament-label game" html="true"
+					text="#CSGO_PickEm_Watch_Tab"/>
+			</Button>
+		</snippet>
+
 	</snippets>
 
 	<Panel class="news-panel news-panel--store-container" useglobalcontext="true">

@@ -58,11 +58,11 @@
 			<Panel class="content-navbar  content-navbar--short content-navbar--dropdown">
 				<Panel class="vertical-center left-right-flow">
 					<DropDown class="PopupButton" id="PlayTopNavDropdown" menuclass="DropDownMenu Width-300" oninputsubmit="PlayMenu.PlayTopNavDropdownChanged()">
-						<Label html="true" text="play_setting_online" id="Play-official" data-type="official" value="1"/>
-						<Label html="true" text="play_setting_offline" id="Play-listen" data-type="listen" value="2"/>
-						<Label html="true" text="play_setting_training_course" id="PlayTraining" data-type="training" value="3"/>
-						<Label html="true" text="play_setting_workshop" id="PlayWorkshop" data-type="workshop" value="4"/>
-						<Label html="true" text="play_setting_community" id="PlayCommunity" data-type="community" value="5"/>
+						<Label html="true" text="#play_setting_online" id="Play-official" data-type="official" value="1"/>
+						<Label html="true" text="#play_setting_offline" id="Play-listen" data-type="listen" value="2"/>
+						<Label html="true" text="#play_setting_training_course" id="PlayTraining" data-type="training" value="3"/>
+						<Label html="true" text="#play_setting_workshop" id="PlayWorkshop" data-type="workshop" value="4"/>
+						<Label html="true" text="#play_setting_community" id="PlayCommunity" data-type="community" value="5"/>
 					</DropDown>
 				</Panel>
 			</Panel>

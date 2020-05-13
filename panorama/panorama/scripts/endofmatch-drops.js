@@ -49,13 +49,13 @@ var EOM_Drops = (function () {
 				elDropContainer.FindChildInLayoutFile( 'id-item-image' ).itemid = itemId;
 
 				            
-				var name = ItemInfo.GetName( itemId );
-				elDropContainer.FindChildInLayoutFile( 'id-item-name' ).text = FormatText.GetInventoryDisplayStringFromName( name );
+				var fmtName = ItemInfo.GetFormattedName( itemId );
+				fmtName.SetOnLabel( elDropContainer.FindChildInLayoutFile( 'id-item-name' ) );
 
 				              
 				var elOwnerLabel = elDropContainer.FindChildInLayoutFile( "id-item-owner-name" );
 				elOwnerLabel.AddClass( "eom-drops__item__owner" );
-				elOwnerLabel.SetDialogVariable( 'user_name', GameStateAPI.GetPlayerNameWithNoHTMLEscapes( oDropList[ key ].owner_xuid ) );
+				elOwnerLabel.SetDialogVariable( 'user_name', GameStateAPI.GetPlayerName( oDropList[ key ].owner_xuid ) );
 				
 				if ( oDropList[ key ].is_local )
 				{

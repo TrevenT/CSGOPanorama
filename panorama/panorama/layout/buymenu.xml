@@ -65,8 +65,8 @@
 		<snippet name="CategoryWedge">
 			<Panel class="buywheel-button">
 				<Panel class="buywheel-category__contents">
-					<Label class="buywheel-category__title" id="CategoryName" text="TITLE"/>
-					<Label class="buywheel-button__key" id="WedgeKeybinding" text="N"/>
+					<Label class="buywheel-category__title" id="CategoryName" text="XXXXX"/>
+					<Label class="buywheel-button__key" id="WedgeKeybinding" text="X"/>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -74,7 +74,7 @@
 		                             
 		<snippet name="ItemWedge">
 			<Panel class="buywheel-button">
-				<Label class="buywheel-button__key" id="WedgeKeybinding" text="N"/>
+				<Label class="buywheel-button__key" id="WedgeKeybinding" text="X"/>
 				<Panel class="buywheel-item__textbox">
 					                                                                     
 					<Label id="ItemName" class="buywheel-item__name"/>
@@ -195,35 +195,35 @@
 								<TooltipPanel class="no-flow full-width" tooltip="#buymenu_tooltip_damage">
 									<ProgressBar id="DmgProgress" class="stat-display__row" min="0" max="100"/>
 										<Label class="stat-display__name" text="#SFUI_BuyMenu_Damage"/>	
-										<Label class="stat-display__value" text="{d:r:damage}"/>
+										<Label class="stat-display__value" text="#Pano_BuyMenu_Damage_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="no-flow full-width" tooltip="#buymenu_tooltip_firerate">
 									<ProgressBar id="FireRateProgress" class="stat-display__row" min="0" max="15"/>
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_FireRate"/>
-									<Label class="stat-display__value" text="{d:r:fire_rate}"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_FireRate_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="no-flow full-width" tooltip="#buymenu_tooltip_accuracy">
 									<ProgressBar id="AccuracyProgress" class="stat-display__row" min="0" max="100"/>
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_Accuracy"/>	
-									<Label class="stat-display__value" text="{d:r:accuracy}"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_Accuracy_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="no-flow full-width" tooltip="#buymenu_tooltip_range">
 									<ProgressBar id="RangeProgress" class="stat-display__row" min="0" max="76"/>
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_Range"/>	
-									<Label class="stat-display__value" text="{d:r:range}m"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_Range_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="no-flow full-width" tooltip="#buymenu_tooltip_armorpen">
 									<ProgressBar id="ArmorPenProgress" class="stat-display__row" min="90" max="200"/>
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_ArmorPen"/>
-									<Label class="stat-display__value" text="{d:r:armor_pen}"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_ArmorPen_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="stat-display__row" id="Penetration" tooltip="#buymenu_tooltip_penetration">
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_Penetration"/>	
-									<Label class="stat-display__value" text="{d:r:penetration_power}"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_Penetration_val"/>
 								</TooltipPanel>
 								<TooltipPanel class="stat-display__row" id="Tagging" tooltip="#buymenu_tooltip_tagging">
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_Tagging"/>
-									<Label class="stat-display__value" text="{d:r:tagging}"/>
+									<Label class="stat-display__value" text="#Pano_BuyMenu_Tagging_val"/>
 								</TooltipPanel>
 							</Panel>
 							<Label id="ItemDesc" class="stat-display__desc" text="{s:desc}"/> 

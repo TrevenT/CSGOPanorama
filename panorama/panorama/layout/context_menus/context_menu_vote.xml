@@ -12,8 +12,8 @@
 		<snippet name="VoteOption" >
 			<Button class="vote-option">
 				<Image id="VoteOptionIcon" class="vote-option__icon"/>
-				<Label id="VoteOptionName" class="vote-option__label" text="Vote Option Name"/>
-				<Countdown id="VoteOptionTimeAvail" text="Available In {t:d:timeleft}"/>
+				<Label id="VoteOptionName" class="vote-option__label" text="XXXX XXXXXX XXXX" />
+				<Countdown id="VoteOptionTimeAvail" text="XXXXXXXX XX {t:d:timeleft}" />
 			</Button>
 		</snippet>
 	</snippets>

@@ -24,7 +24,7 @@ var friendLobby = ( function (){
 	{
 		var xuidLobbyLeader = PartyBrowserAPI.GetPartyMemberXuid( _m_xuid, 0 );
 
-		elTile.SetDialogVariable( 'friendname', $.HTMLEscape( FriendsListAPI.GetFriendName( xuidLobbyLeader ) ) );
+		elTile.SetDialogVariable( 'friendname', FriendsListAPI.GetFriendName( xuidLobbyLeader ) );
 
 		var nameString = ( lobbyType === 'invited' ) ? '#tooltip_friend_invited_you' : "#tooltip_lobby_leader_name";
 		elTile.FindChildTraverse( 'JsFriendLobbyLeaderName' ).text = nameString;

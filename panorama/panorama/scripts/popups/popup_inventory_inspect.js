@@ -48,6 +48,13 @@ var InventoryInspect = ( function()
 		
 		_SetDescription( itemId );
 		_LoadEquipNotification();
+
+		var styleforPopUpInspectFullScreenHostContainer = $.GetContextPanel().GetAttributeString( 'extrapopupfullscreenstyle', null );
+		if ( styleforPopUpInspectFullScreenHostContainer )
+		{
+			var elPopUpInspectFullScreenHostContainer = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectFullScreenHostContainer' );
+			elPopUpInspectFullScreenHostContainer.AddClass( styleforPopUpInspectFullScreenHostContainer );
+		}
 	};
 
 	var m_Inspectpanel = $.GetContextPanel();
@@ -99,6 +106,8 @@ var InventoryInspect = ( function()
 
 	var _SetDescription = function (id)
 	{
+	    $.GetContextPanel().SetDialogVariable( 'item_description', '' );
+
 		if ( !InventoryAPI.IsValidItemID( id ) )
 		{
 			return;
@@ -108,8 +117,8 @@ var InventoryInspect = ( function()
 		var descText = InventoryAPI.GetItemDescription( id );
 
 		                                           
-		var shortString = descText.substring (0, descText.indexOf( "</font></b><br><font color='#9da1a9'>" ));
-		elDesc.text = shortString === '' ? descText : shortString;
+		var shortString = descText.substring( 0, descText.indexOf( "</font></b><br><font color='#9da1a9'>" ) );
+		$.GetContextPanel().SetDialogVariable( 'item_description', shortString === '' ? descText : shortString );
 	};
 
 	                                                                                                    

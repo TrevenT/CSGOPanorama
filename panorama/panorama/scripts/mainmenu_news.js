@@ -29,9 +29,9 @@ var NewsPanel = (function () {
 			var elEntryInfo = $.CreatePanel( 'Panel', elEntry, 'NewsInfo' + i );
 			elEntryInfo.BLoadLayoutSnippet( 'news-info' );
 
-			elEntryInfo.FindChildInLayoutFile( 'Date' ).text = item.date;
-			elEntryInfo.FindChildInLayoutFile( 'Title' ).text = item.title;
-			elEntryInfo.FindChildInLayoutFile( 'BodyText' ).text = item.description;
+			elEntryInfo.SetDialogVariable( 'news_item_date', item.date );
+			elEntryInfo.SetDialogVariable( 'news_item_title', item.title );
+			elEntryInfo.SetDialogVariable( 'news_item_body', item.description );
 
 			         
 			elEntry.FindChildInLayoutFile( 'NewsEntryBlurTarget' ).AddBlurPanel( elEntryInfo );

@@ -150,8 +150,7 @@ var InventorySearch = ( function (){
 			_TextEntrySettings.UpdateText( itemName );
 		} );
 		
-		var elLabel = elEntry.FindChildInLayoutFile( 'SuggestedLabel' );
-		elLabel.text = itemName;
+		elEntry.SetDialogVariable( 'suggestion_text', itemName );
 
 		var elImage = elEntry.FindChildInLayoutFile( 'SuggestedImage' );
 		elImage.itemid = id;

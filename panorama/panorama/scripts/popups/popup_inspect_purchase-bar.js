@@ -9,7 +9,7 @@ var InpsectPurchaseBar = ( function()
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback )
 	{
-		m_storeItemid= funcGetSettingCallback( "storeitemid", "" );
+		m_storeItemid = funcGetSettingCallback( "storeitemid", "" );
 		
 		                                                     
 		                                          
@@ -44,15 +44,13 @@ var InpsectPurchaseBar = ( function()
 	var _UpdateDecString = function ( ePanel )
 	{
 		var elDesc = m_elPanel.FindChildInLayoutFile( 'PurchaseItemName' );
-		if ( m_storeItemid )
+		if ( !m_storeItemid && m_showToolUpsell )
 		{
-			elDesc.text = ItemInfo.GetName( m_itemid );
-		}
-		else
-		{
-			elDesc.text = m_showToolUpsell ?
-				$.Localize( '#popup_capability_upsell', m_elPanel ) :
-				ItemInfo.GetName( m_itemid );
+		    elDesc.text = "#popup_capability_upsell";
+        }
+        else
+        {
+		    elDesc.text = "#popup_capability_use";
 		}
 	};
 

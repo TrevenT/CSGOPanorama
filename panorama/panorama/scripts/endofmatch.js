@@ -125,9 +125,6 @@ var EndOfMatch = ( function () {
 			                   
 			var elBlur = _m_cP.GetParent().FindChildTraverse( "HudBlur" );
 			elBlur.AddClass( "eom-blur-fade-in" );
-
-			                                                                                  
-			$.DispatchEvent( 'Scoreboard_OnEndOfMatch' );
 	
 			_m_cP.AddClass( "reveal" );
 

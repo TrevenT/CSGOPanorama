@@ -7,17 +7,17 @@
 		<snippet name="PanelStart">
 			<Panel class="DebugLabelPanelRow" acceptsfocus="true">
 				<Panel id="Indent">
-					<ToggleButton id="DebugLabelToggle" selected="true" />					
+					<ToggleButton allowrawtext="true" id="DebugLabelToggle" selected="true" />					
 				</Panel>
-				<Label id="DebugLayoutPanelOpen" acceptsfocus="true" />
-				<Label id="StyleLink" class="StyleLink" />
+				<Label allowrawtext="true" id="DebugLayoutPanelOpen" acceptsfocus="true" />
+				<Label allowrawtext="true" id="StyleLink" class="StyleLink" />
 			</Panel>
 		</snippet>
 
 		<snippet name="PanelClose">
 			<Panel class="DebugLabelPanelRow" acceptsfocus="true">
 				<Panel id="Indent" />
-				<Label id="DebugLayoutPanelClose" />
+				<Label allowrawtext="true" id="DebugLayoutPanelClose" />
 			</Panel>
 		</snippet>
 	</snippets>

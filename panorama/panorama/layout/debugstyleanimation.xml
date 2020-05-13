@@ -6,14 +6,14 @@
 	<DebugStyleAnimation>
 		<Panel class="DebugKeyFrameSection">
 			<Panel class="DebugKeyFrameRow">
-				<Label text="@keyframes '" />
+				<Label allowrawtext="true" text="@keyframes '" />
 				<TextEntry id="AnimationName" tabindex="0" undohistory="enabled" />
-				<Label text="'" />
+				<Label allowrawtext="true" text="'" />
 			</Panel>
 			<Label text="{" />
 			<Panel id="FrameSection" class="DebugPropertySection" tabindex="1" />
 			<Label text="}" />
 		</Panel>
-		<Label id="StyleLink" class="StyleLink" text="" />
+		<Label allowrawtext="true" id="StyleLink" class="StyleLink" text="" />
 	</DebugStyleAnimation>	
 </root>

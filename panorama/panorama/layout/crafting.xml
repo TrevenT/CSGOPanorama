@@ -21,7 +21,7 @@
                 </Button>
             </Panel>
             <Panel class="inv-popup-title">
-                <Label class="mainmenu-content--popuptab__title" text="inv_nav_tradeup"/>
+                <Label class="mainmenu-content--popuptab__title" text="#inv_nav_tradeup"/>
             </Panel>
 
         </Panel>
@@ -31,33 +31,33 @@
                 texturewidth="32"
                 textureheight="32"
                 />
-            <Label text="CSGO_Recipe_TradeUp_Desc_html" class="vertical-center" html="true"/>
+            <Label text="#CSGO_Recipe_TradeUp_Desc_html" class="vertical-center" html="true"/>
 		</Panel>
         <Panel id="TradeUp" class="crafting-container">
             <Panel class="crafting-items crafting-border">
                 <Panel class="crafting-item-count-container">
-                    <Label id="CraftingItemsText" class="crafting-item-count" text="CSGO_Recipe_TradeUp_Items_Inv" html="true"/>
+                    <Label id="CraftingItemsText" class="crafting-item-count" text="#CSGO_Recipe_TradeUp_Items_Inv" html="true"/>
                     <DropDown class="PopupButton White" id="CraftingSortDropdown" menuclass="DropDownMenu" oninputsubmit="Crafting.UpdateItemList()"/>
 				</Panel>
                 <InventoryItemList id="Crafting-Items" item_context_menu_filter="tradeup_items" spacersize="0px" spacerperiod="0" registerforreadyevents="true" readyfordisplay="false" sendchildscrolledintoviewevents="true" />
             </Panel>
             <Panel class="crafting-items">
                 <Panel class="crafting-item-count-container">
-                    <Label id="CraftingIngredientsText" class="crafting-item-count" text="CSGO_Recipe_TradeUp_Items_Remain" html="true"/>
+                    <Label id="CraftingIngredientsText" class="crafting-item-count" text="#CSGO_Recipe_TradeUp_Items_Remain" html="true"/>
                 </Panel>
                 <Panel class="full-width full-height">
                     <InventoryItemList id="Crafting-Ingredients" item_context_menu_filter="tradeup_ingredients" spacersize="0px" spacerperiod="0" registerforreadyevents="true" readyfordisplay="false"/>
-                    <ToggleButton id="TradeUpConfirmBtn" class="PopupButton White crafting-toggle-margin" onactivate="Crafting.UpdateButtons();" text="CSGO_Recipe_TradeUp_Items_Confirm" />
+                    <ToggleButton id="TradeUpConfirmBtn" class="PopupButton White crafting-toggle-margin" onactivate="Crafting.UpdateButtons();" text="#CSGO_Recipe_TradeUp_Items_Confirm" />
                 </Panel>
             </Panel>
         </Panel>
         <Panel class="content-controls-actions-bar">
             <Panel class="crafting-action-buttons-container">
                 <Button id="ClearIngredientsBtn" class="PopupButton White" onactivate="InventoryAPI.ClearCraftIngredients();" >
-                    <Label text="SFUI_Crafting_Remove_Goods" />
+                    <Label text="#SFUI_Crafting_Remove_Goods" />
                 </Button>
                 <Button id="CraftItemBtn" class="PopupButton Positive" onactivate="InventoryAPI.CraftIngredients(); InventoryPanel.UpdateCraftingPanelVisibility( false );" >
-                    <Label text="SFUI_Crafting_Exchange" />
+                    <Label text="#SFUI_Crafting_Exchange" />
                 </Button>
             </Panel>
         </Panel>

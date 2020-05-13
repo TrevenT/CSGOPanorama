@@ -11,7 +11,7 @@ var LoadingScreen = ( function() {
 		                                                                  
 
 		$('#LoadingScreenMapName').text = "";
-		$('#LoadingScreenGameMode').text = $.Localize("#SFUI_LOADING");
+		$( '#LoadingScreenGameMode' ).SetLocalizationString( "#SFUI_LOADING" );
 		$('#LoadingScreenModeDesc').text = "";
 		$('#LoadingScreenGameModeIcon').SetImage("");
 
@@ -57,10 +57,10 @@ var LoadingScreen = ( function() {
 			$( '#LoadingScreenIcon' ).AddClass('show');
 			elBackgroundImage.AddClass('show');
 
-			if (prettyMapName != "")
-			    $('#LoadingScreenMapName').text = prettyMapName;
-            else
-			    $('#LoadingScreenMapName').text = $.Localize( GameStateAPI.GetMapDisplayNameToken(mapName) );	
+			if ( prettyMapName != "" )
+			    $( '#LoadingScreenMapName' ).SetProceduralTextThatIPromiseIsLocalizedAndEscaped( prettyMapName, false );
+			else
+			    $( '#LoadingScreenMapName' ).SetLocalizationString( GameStateAPI.GetMapDisplayNameToken( mapName ) );
 		}
 
 		var elInfoBlock = $('#LoadingScreenInfo' );
@@ -68,17 +68,17 @@ var LoadingScreen = ( function() {
 		if( gameMode )
 		{
 		    elInfoBlock.RemoveClass('hidden');
-		    if (prettyGameModeName != "")
-		        $('#LoadingScreenGameMode').text = prettyGameModeName;
+		    if ( prettyGameModeName != "" )
+		        $( '#LoadingScreenGameMode' ).SetProceduralTextThatIPromiseIsLocalizedAndEscaped( prettyGameModeName, false );
 		    else
-		        $('#LoadingScreenGameMode').text = $.Localize('#sfui_gamemode_' + gameMode);
+		        $( '#LoadingScreenGameMode' ).SetLocalizationString( '#sfui_gamemode_' + gameMode );
 			
 			$('#LoadingScreenGameModeIcon').SetImage('file://{images}/icons/ui/' + gameMode + '.svg');
 
-			if (descriptionText != "")
-			    $('#LoadingScreenModeDesc').text = descriptionText;
+			if ( descriptionText != "" )
+			    $( '#LoadingScreenModeDesc' ).SetProceduralTextThatIPromiseIsLocalizedAndEscaped( descriptionText, false );
 			else
-			    $('#LoadingScreenModeDesc').text = "";                                                
+			    $( '#LoadingScreenModeDesc' ).SetLocalizationString( "" );                                                 
 		}
 		else
 			elInfoBlock.AddClass( 'hidden' );
@@ -171,10 +171,8 @@ var LoadingScreen = ( function() {
 	$.RegisterForUnhandledEvent( 'PopulateLoadingScreen', LoadingScreen.UpdateLoadingScreenInfo );
 	$.RegisterForUnhandledEvent( 'QueueConnectToServer', LoadingScreen.Init );
 	$.RegisterForUnhandledEvent( 'OnMapConfigLoaded', LoadingScreen.OnMapConfigLoaded );
-	$.RegisterForUnhandledEvent('UnloadLoadingScreenAndReinit', LoadingScreen.Init);
+	$.RegisterForUnhandledEvent( 'UnloadLoadingScreenAndReinit', LoadingScreen.Init );
 		
-
 	              
 	                                                                                            
-
 })();

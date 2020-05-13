@@ -11,6 +11,8 @@
 		<include src="file://{resources}/scripts/mainmenu_watch.js" />
 		<include src="file://{resources}/scripts/matchlist.js" />
         <include src="file://{resources}/scripts/matchinfo.js" />
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 	</scripts>
 
 	<snippets>
@@ -54,13 +56,16 @@
 
 				<Panel id="watch-navbar" class="content-navbar content-navbar--short">
 					<Panel class="content-navbar__tabs">
-						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
+						<RadioButton id="WatchNavBarActiveTourament" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsActiveTournament', 'active tournament menu button');">
+							<Label class="" text="#CSGO_Tournament_Event_NameShort_14"/>
+						</RadioButton>
+						<RadioButton id="WatchNavBarButtonTournaments" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Tournament_0"/>
 						</RadioButton>
-						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsYourMatches', 'yourmatches menu button');" selected="true">
+						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsYourMatches', 'yourmatches menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_YourMatches"/>
 						</RadioButton>
-						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsLive', 'live menu button');">
+						<RadioButton id="WatchNavBarButtonLive" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsLive', 'live menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_LiveMatches"/>
 						</RadioButton>
 						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsDownloaded', 'downloaded menu button');">
@@ -82,8 +87,9 @@
 					<Panel id="JsLive" class="WatchMenu WatchMenu--Hide"/>
 					<Panel id="JsYourMatches" class="WatchMenu WatchMenu--Hide"/>
 					<Panel id="JsTournaments" class="WatchMenu WatchMenu--Hide left-right-padding WatchMenu--Streams subsection-content__background-color">
-						<Panel id="JsTournamentList" class="horizontal-center top-bottom-flow full-width full-height"/>
+						<Panel id="JsTournamentList" class="horizontal-center top-bottom-flow full-width full-height vscroll"/>
 					</Panel>
+					<Frame id="JsActiveTournament" src="file://{resources}/layout/mainmenu_watch_tournament.xml" class="WatchMenu WatchMenu--Hide" />
 					<Panel id="JsStreams" class="WatchMenu WatchMenu--Streams WatchMenu--Hide subsection-content__background-color no-flow">
 						<Panel id="JsStreamList" class="map-selection-list horizontal-center left-right-padding"/>
 						<Label id="Message" class="Info-Message horizontal-center"/>

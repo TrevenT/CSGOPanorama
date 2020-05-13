@@ -17,7 +17,7 @@
     </script>
 
     <Panel class="left-right-flow" onload="Setup()">
-        <Label text="Panel registered from javascript. MyCustomProp='" />
+        <Label allowrawtext="true" text="Panel registered from javascript. MyCustomProp='" />
         <Label id="MyLabel" text='{s:mycustompropvalue}' />
         <Label text="'" />
     </Panel>

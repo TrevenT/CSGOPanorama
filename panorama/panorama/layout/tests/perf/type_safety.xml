@@ -8,8 +8,8 @@
   </scripts>
 
 	<Panel class="top-bottom-flow full-width full-height" hittest="false">
-		<Label class="fontSize-l fontWeight-Bold horizontal-center" text="TypeSafetyTest"/>
-		<Label id ="Info" text="Test of type safety on C++ callbacks."/>
+		<Label class="fontSize-l fontWeight-Bold horizontal-center" allowrawtext="true" text="TypeSafetyTest"/>
+		<Label id ="Info" allowrawtext="true" text="Test of type safety on C++ callbacks."/>
 
 		<Panel id="JsContent" style="padding-top:20px;flow-children: right-wrap;overflow:squish scroll;">
       <CSGOPanelTest1 id="Test1" />

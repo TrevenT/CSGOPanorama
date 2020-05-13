@@ -5,7 +5,7 @@
 	
 	<Panel>
         <Button class="PopupButton">
-            <Label id="buttonText" class="MonoNumbersFont" text="PanelTest2" />
+            <Label id="buttonText" class="MonoNumbersFont" allowrawtext="true" text="PanelTest2" />
         </Button>
 	</Panel>
 </root>

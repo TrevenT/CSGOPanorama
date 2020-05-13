@@ -24,9 +24,9 @@
 
 		<snippet name="news-info">
 				<Panel class="news-entry__info">
-					<Label id="Date" html="true" class="news-entry__details stratum-font" text="" />
-					<Label id="Title" html="true" class="news-entry__title stratum-font" text="" />
-					<Label id="BodyText" html="true" class="news-entry__body" text="" />
+					<Label html="true" class="news-entry__details stratum-font" text="{s:news_item_date}" />
+					<Label html="true" class="news-entry__title stratum-font" text="{s:news_item_title}" />
+					<Label html="true" class="news-entry__body" text="{s:h:news_item_body}" />
 				</Panel>
 		</snippet>
 
@@ -35,7 +35,7 @@
 
 	<Panel class="news-panel">
 		<Panel class="news-panel-navbar">
-			<Label id="Title" html="false" text="#SFUI_MainMenu_News_Title" />
+			<Label html="false" text="#SFUI_MainMenu_News_Title" />
 		</Panel>
 		<Panel id="NewsPanelLister" class="news-panel__list vscroll">
 			

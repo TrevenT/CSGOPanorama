@@ -5,6 +5,11 @@
 	transition-timing-function: ease-in-out;
 }
 
+#PopUpInspectFullScreenHostContainer.solidbkgnd
+{
+	background-color: #000000EE;
+}
+
 .popup-decodable-lootlist-container
 {
 	width: 100%;

@@ -95,7 +95,7 @@
 		<Image id="CrosshairObserver" class="crosshair__observer" src="file://{images}/hud/reticle/reticleobserver.svg" textureheight="25" />
 
 		                  
-		<Label id="TargetID" class="targetid" html="true" text="Enemy: BOT Calvin" />
+		<Label id="TargetID" class="targetid" html="true" />
 
 		                        
 		<Panel id="VisiblePlayerIDs" clampfractionalpixelpositions="true">

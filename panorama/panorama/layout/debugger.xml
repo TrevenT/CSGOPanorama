@@ -32,7 +32,7 @@
 			</Panel>
 			<HorizontalSplitter />
 			<Panel class="DebugJSConsole">
-				<Label id="JSConsoleText" />
+				<Label allowrawtext="true" id="JSConsoleText" />
 				<TextEntry id="JSConsoleInput" onmoveup="UpdateJSConsolePriorHistory()" onmovedown="UpdateJSConsoleNextHistory()" />
 			</Panel>
 		</Panel>

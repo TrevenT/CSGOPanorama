@@ -42,7 +42,8 @@ var contextmenuPlayerCard = ( function (){
 			icon: 'invite',
 			AvailableForItem: function ( id ) {
 				                                                                                              
-				return !GameStateAPI.IsLocalPlayerPlayingMatch() && !( LobbyAPI.IsPartyMember( id ) ) && !_IsSelf( id) ;
+				return !GameStateAPI.IsLocalPlayerPlayingMatch() && !( LobbyAPI.IsPartyMember( id ) ) && !_IsSelf( id) &&
+					( 'purchased' === MyPersonaAPI.GetLicenseType() );
 			},
 			OnSelected:  function ( id ) {
 				FriendsListAPI.ActionInviteFriend( id, '' );
@@ -67,7 +68,8 @@ var contextmenuPlayerCard = ( function (){
 								return false;
 						}
 					}
-					return true;
+
+					return ( 'purchased' === MyPersonaAPI.GetLicenseType() );
 				}
 			},
 			OnSelected:  function ( id ) {

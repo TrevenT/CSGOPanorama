@@ -6,14 +6,16 @@
   </styles>
 
   <Panel class="PopupPanel Hidden" defaultfocus="Button0" popupbackground="dim">
-    <Label id="TitleLabel" class="PopupTitle" />
-    <Panel class="MessagePanel" >
+    <Label id="TitleLabel" class="PopupTitle" allowrawtext="true"/>	                             
+
+		<Panel class="MessagePanel" >
       <Panel class="ImageContainer" >
                                                                                               
                                                                                   
       </Panel>
-      <Label id="MessageLabel" html="true" />
-    </Panel>
+
+			<Label id="MessageLabel" html="true" allowrawtext="true" />	                             
+		</Panel>
     <Panel class="Confirmation" >
       <Label text="#GenericConfirmText_Label" />
       <TextEntry id="ConfirmationText" oninputsubmit="GenericConfirmFinished()" />

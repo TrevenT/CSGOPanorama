@@ -813,13 +813,13 @@ var Scoreboard = ( function()
 					{
 						elTeam.MoveChildBefore( elPlayer, children[ i ] );
 
-					   	                                                                 
+					   	                                                             
 					   		     
 					   		      
 					   		     
 					   		        
 					   		       
-					   		                                                        
+					   		                                                    
 					   		     
 					   		      
 					   		     
@@ -833,13 +833,13 @@ var Scoreboard = ( function()
 				( ( p1stat == undefined ) && ( p2stat != undefined ) ) )
 				{
 
-					                                                             
+					                                                         
 					   	     
 					   	      
 					   	     
 					   	        
 					   	       
-					   	                                                        
+					   	                                                    
 					   	     
 					   	      
 					   	     
@@ -1226,11 +1226,11 @@ var Scoreboard = ( function()
 					if ( !elNameLabel || !elNameLabel.IsValid() )
 						return;
 
-					elNameLabel.SetDialogVariable( 'player_name', GameStateAPI.GetPlayerNameSafe( oPlayer.m_xuid ) );
+					elNameLabel.SetDialogVariable( 'player_name', GameStateAPI.GetPlayerName( oPlayer.m_xuid ) );
 
 					if ( GameStateAPI.GetPlayerClanTag( oPlayer.m_xuid ) != "" )
 					{
-						elNameLabel.SetDialogVariable( 'player_clan', $.HTMLEscape( GameStateAPI.GetPlayerClanTag( oPlayer.m_xuid ) ) );
+						elNameLabel.SetDialogVariable( 'player_clan', GameStateAPI.GetPlayerClanTag( oPlayer.m_xuid ) );
 						elNameLabel.text = "#Scoreboard_Player_Name_Clan";
 					}
 					else

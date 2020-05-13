@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
+	</styles>	
+	<scripts>
+		<include src="file://{resources}/scripts/tournaments/pickem_bracket.js" />
+	</scripts>
+
+	<Panel class="tournament-content-container tournament-content-container--hidden" useglobalcontext="true">
+		<Label text="BRACKET"/>
+		<Frame id="id-pickem-loading-status" src="file://{resources}/layout/tournaments/loading_status.xml" />
+	</Panel>
+</root>

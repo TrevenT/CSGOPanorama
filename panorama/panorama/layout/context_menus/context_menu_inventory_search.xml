@@ -5,6 +5,7 @@
 		<include src="file://{resources}/styles/context_menus/context_menu_inventory_search.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/context_menus/context_menu_inventory_search.js" />
 	</scripts>
 
@@ -34,7 +35,7 @@
 					<Image src='file://{images}/icons/ui/warning.svg' />
 					<Label id="SearchNoResultsLabel"
 							html="true"
-							text="inv_search_no_results"
+							text="#inv_search_no_results"
 							class="context-menu-search__no-results-text"/>
 				</Panel>
 
@@ -48,7 +49,7 @@
 				</InventoryItemList>
 
 				<Panel id="SuggestedSearchEntries" class="context-menu-search__no-results" >
-					<Label html="true" text="inv_search_popular" class="context-menu-search__no-results-text fontWeight-Bold"/>
+					<Label html="true" text="#inv_search_popular" class="context-menu-search__no-results-text fontWeight-Bold"/>
 					                     
 				</Panel>
 				

@@ -207,27 +207,28 @@ var matchList = ( function() {
         elMatchlistDropdown.SetPanelEvent( 'oninputsubmit', _OnTournamentSectionSelected.bind( undefined, elParentPanel, elMatchList, tournamentId ) );
     }
 
-    function _UpdateMatchList( elTab, matchListDescriptor )
+    function _UpdateMatchList( elTab, matchListDescriptor, optbFromMatchListChangeEvent )
     {
 		var listState = MatchListAPI.GetState( matchListDescriptor );
         
         if ( listState === 'none')
         {
-            _RequestMatchListUpdate( elTab, matchListDescriptor ) 
+            listState = _RequestMatchListUpdate( elTab, matchListDescriptor ) ;
         }
-        if ( listState === 'ready' )
+        else if ( listState === 'ready' && !optbFromMatchListChangeEvent )
         {
-            var okToUpdate = ( MatchListAPI.HowManyMinutesAgoCached( matchListDescriptor ) >= 3 )
-            if ( okToUpdate )
-            {
-                _RequestMatchListUpdate( elTab, matchListDescriptor )
-                return;
-            }
-            if ( elTab )
-            {
-                _PopulateMatchList( elTab, matchListDescriptor );
-            }
-        }
+			                                                                                                
+            listState = _RequestMatchListUpdate( elTab, matchListDescriptor );
+	                                                                                                    
+	                                        
+	                                                                                                 
+	                                        
+		}
+		
+		if ( elTab && ( listState !== "loading" ) )
+		{
+			_PopulateMatchList( elTab, matchListDescriptor );
+		}
     }
 
     function _PopulateMatchInfo( parentPanel, matchListDescriptor, matchId )
@@ -301,11 +302,30 @@ var matchList = ( function() {
 
         if ( elTab )
         {
-            _ShowListSpinner( true, elTab );
-            _SetListMessage( "", false, elTab );
-            elTab.matchListIsPopulated = false;
-            elTab.downloadFailedHandler = $.Schedule(  3.0, _ShowLoadingError.bind( undefined, elTab ) );
-            MatchListAPI.Refresh( matchListDescriptor );
+			MatchListAPI.Refresh( matchListDescriptor );
+			
+			var newState = MatchListAPI.GetState( matchListDescriptor );
+			if ( newState === "loading" )
+			{
+				  
+				                               
+				                                                                                       
+				                                                                                              
+				                                 
+				                                                                                                  
+				_ShowListSpinner( true, elTab );
+				_SetListMessage( "", false, elTab );
+				elTab.matchListIsPopulated = false;
+				
+				                                                                 
+				if ( elTab.downloadFailedHandler )
+				{
+					$.CancelScheduled( elTab.downloadFailedHandler );
+					elTab.downloadFailedHandler = undefined;
+				}
+				elTab.downloadFailedHandler = $.Schedule(  3.0, _ShowLoadingError.bind( undefined, elTab ) );
+			}
+			return newState;
         }
     }
 

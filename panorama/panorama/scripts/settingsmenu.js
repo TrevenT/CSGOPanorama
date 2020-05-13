@@ -11,6 +11,16 @@ var SettingsMenu = ( function () {
     var _NavigateToTab = function( tab, XmlName ) {
                                       
                                         
+
+        var bDisplayBlankPage = false;
+
+        if ( tab == 'ControllerSettings' )
+        {
+           if ( OptionsMenuAPI.ShowSteamControllerBindingsPanel() )
+            {
+                bDisplayBlankPage = true;
+            }
+        }
     
         var parentPanel = $('#SettingsMenuContent');
 
@@ -43,6 +53,9 @@ var SettingsMenu = ( function () {
             }
 
             $.RegisterEventHandler( 'PropertyTransitionEnd', newPanel, newPanel.OnPropertyTransitionEndEvent );
+  
+                                                                                                                
+            newPanel.visible = false;
         }
 
                                                                                   
@@ -66,8 +79,11 @@ var SettingsMenu = ( function () {
                                           
 
                                                                                      
-            activePanel.visible = true;
-            activePanel.SetReadyForDisplay( true );   
+            if ( !bDisplayBlankPage )
+            {
+                activePanel.visible = true;
+                activePanel.SetReadyForDisplay( true );   
+            }
 
             SettingsMenuShared.NewTabOpened( activeTab );
         }

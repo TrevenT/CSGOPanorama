@@ -208,14 +208,13 @@ var InspectActionBar = ( function (){
 		vaildEntiresList.forEach( function ( entry ){
 			var elDropdown = elPanel.FindChildInLayoutFile( 'InspectDropdownCharModels' );
 			var newEntry = $.CreatePanel( 'Label', elDropdown, entry.model, {
-				class: 'DropDownMenu',
-				html: 'true'
+				'class': 'DropDownMenu',
+				'html': 'true',
+			    'text': entry.label,
+                'data-team': entry.team
 			});
 	
-			newEntry.SetAttributeString( 'data-team', entry.team );
-			newEntry.text = $.Localize( entry.label );
 			elDropdown.AddOption( newEntry );
-
 		});
 
 		elDropdown.SetPanelEvent( 'oninputsubmit', InspectActionBar.OnUpdateCharModel.bind( undefined, false, elDropdown, id ));

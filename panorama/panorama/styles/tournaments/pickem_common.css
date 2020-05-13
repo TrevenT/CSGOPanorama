@@ -1,0 +1,586 @@
+.tournament-content-container
+{
+    width: 100%;
+	height: 100%;
+	                           
+	opacity: 1;
+
+	transform: translatex( 0px );
+
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+	
+}
+
+.tournament-content-container--hidden
+{
+	opacity: 0;
+	transform: translatex( 200px );
+
+	transition-property: opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.tournament-content
+{
+	width: 100%;
+	height: 100%;
+	
+	                                                                                 
+	                             
+	                           
+	                             
+	                                 
+
+	                             
+	               
+	                  
+	background-color: contentPanelBackground;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.tournament-content--hidden
+{
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-upper-container
+{
+	width: 100%;
+	flow-children: down;
+}
+
+.pickem-info-bar
+{
+	width: 100%;
+	flow-children: none;
+	padding: 8px 0px 8px 0px;
+
+	                                                                                 
+	                             
+	                           
+	                                
+	box-shadow: #00000080 0px 0px 8px 0px; 
+	background-color: none;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-info-bar--bronze
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #7c5631 ), to( #b67c43) );
+}
+
+.pickem-info-bar--silver
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #5e5e5e ), to( #858585) );
+}
+
+.pickem-info-bar--gold
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #766300 ), to( #b19500 ) );
+}
+
+.pickem-score-container
+{
+	flow-children: right;
+	padding: 0px 16px;
+
+}
+
+.pickem-trophy-container
+{
+	                                                                                                                          
+	width: 72px;
+	height:72px;
+}
+
+
+.pickem-score
+{
+	text-align: center;
+	vertical-align: center;
+	horizontal-align: center;
+	font-weight: medium;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 24px;
+	color: rgb(236, 236, 236);
+}
+
+.pickem-header
+{
+	flow-children: down;
+	margin-left: 0px;
+	margin: 20px 0px 14px;
+}
+
+.pickem-header--margin
+{
+	margin-left:42px;
+}
+
+.pickem-header__title
+{
+	color: white;
+	font-size: 22px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-weight: Medium;
+
+	                               
+	                         
+}
+
+.pickem-header__subtitle
+{
+	font-size: 18px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: white;
+	                            
+	                      
+}
+
+.pickem-header-status
+{
+	padding: 6px;
+	margin-top: 4px;
+	flow-children: right;
+	vertical-align: center;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.25 );
+}
+
+.pickem-header-status--active
+{
+	background-color: rgba(16, 117, 13, 0.808);
+}
+
+.pickem-group-worth-header
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 28px;
+	margin: 16px 0px 5px;
+	horizontal-align: center;
+	color: white;
+}
+
+.pickem-team-actions-bar
+{
+	flow-children: left;
+	vertical-align: bottom;
+	horizontal-align: right;
+	padding: 0px 64px 16px 0px;
+}
+
+.pickem-team-actions-bar__warning
+{
+	width: fit-children;
+	height: 42px;
+	vertical-align: center;
+	horizontal-align: left;
+	flow-children: right;
+	padding-left:16px;
+	margin-right: 16px;
+
+	transition-property: position;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-team-actions-bar__warning-text
+{
+	horizontal-align: right;
+	text-align: right;
+	margin:0px 16px;
+}
+
+.PopupButton
+{
+	padding: 0px 16px;
+}
+
+.PopupButton.White.PositivePickemCheckout
+{
+	background-color: #3281AC66;
+}
+.PopupButton.White.PositivePickemCheckout:hover
+{
+	background-color: #3281AC;
+	brightness: 1.4;
+
+	transition-property: brightness;
+	transition-duration: 0s;
+	transition-timing-function: ease-in-out;
+}
+
+#id-pickem-apply
+{
+	border: 2px solid positiveColor;
+}
+
+#id-pickem-apply.loop
+{
+	animation-name: pick-btn-loop;
+	animation-duration: 1.25s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+}
+
+@keyframes pick-btn-loop
+{
+	0%
+	{
+		background-color: #4caf5033;
+	}
+
+	50%
+	{
+		background-color: positiveColor;
+	}
+
+	100%
+	{
+		background-color: #4caf5033;
+	}
+}
+
+.pickem-select-teams-container
+{
+	flow-children: right-wrap;
+	overflow: squish scroll;
+	                               
+	padding-bottom: 8px;
+
+	min-width: 900px;
+	height: fit-children;
+}
+
+.pickem-group-team
+{
+	vertical-align: center;
+	tooltip-position: bottom;
+	tooltip-body-position: 50% 0%;
+}
+
+.pickem-group-pick--wiggle
+{
+	animation-name: pick-wiggle;
+	animation-duration: .2s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+}
+
+@keyframes pick-wiggle
+{
+	0%
+	{
+		transform: translateX( 1px ) translatey( 1px );
+	}
+
+	50%
+	{
+		transform: translateX( -1px ) translatey( -1px ) rotateX( 10deg );
+	}
+
+	100%
+	{
+		transform: translateX( 1px ) translatey( -1px );
+	}
+}
+
+.pickem-group-pick--used
+{
+	border-radius: 50%;
+	padding: 4px;
+	background-color: blueColor;
+	border: 1px solid rgba(0, 0, 0, 0.438);
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-group-team__itemimage
+{
+	width: 92px;
+	height: 92px;
+	margin-right: 16px;
+}
+
+.pickem-group-team__logo
+{
+	width: 60px;
+	height: 60px;
+	margin-right: 5px;
+}
+
+.pickem-group-team__logo.barelogo
+{
+	padding: 10px;
+}
+
+.pickem-group-team__owned
+{
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background-color: blueColor;
+}
+
+.pickem-group-section-container
+{
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+	background-color: contentPanelBackground;
+	padding: 0px 16px;
+}
+
+.pickem-group-section
+{
+	horizontal-align: center;
+	flow-children: right;
+	width: 100%;
+}
+
+.pickem-group-section--bottom
+{
+	padding-bottom: 20px;
+}
+
+.pickem-group-pick-container
+{
+	flow-children: down;
+	img-shadow: 0px 0px 1px #000000;
+	width: fill-parent-flow( 1 );
+}
+
+.pickem-group-pick
+{
+	horizontal-align: center;
+	margin-right: 8px;
+
+	transition-property: background-color;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+	border-radius: 8px;
+}
+
+.pickem-group-pick.dragenter 
+{
+	background-color: gradient( radial, 50% 50%, 0% 0%, 70% 70%, from( rgba(255, 255, 255, 0.45) ), to( rgba(160, 160, 160, 0.1) ) );
+
+	transition-property: background-color;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-group-pick .IconButton
+{
+	horizontal-align: right;
+	vertical-align: top;
+	border-radius: 15%;
+}
+
+.pickem-group-pick__empty
+{
+	horizontal-align: center;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-pick-placed .pickem-group-pick__empty
+{
+	opacity: 0;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.is-saved-pick .pickem-group-pick
+{
+	box-shadow: positiveColor 0px 0px 8px 0px;
+}
+
+.pickem-group-pick__itemimage
+{
+	width:100%;
+	background-color: gradient( radial, 50% 50%, 0% 0%, 90% 90%, from( rgba(255, 255, 255, 0.15) ), to( rgba(160, 160, 160, 0) ) );
+
+	transition-property: transform, brightness, opacity, background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+
+.pickem-group-pick__itemimage.hidden
+{
+	opacity: 0;
+	brightness: 10;
+	transform: scale3d( 1.4, 1.4, 1 );
+
+	transition-property: transform, brightness, opacity, background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-points-earned
+{
+	vertical-align: bottom;
+	font-size: 16px;
+	text-align: left;
+	horizontal-align: left;
+	width: 100%;
+	padding: 4px 2px 4px 8px;
+
+	background-color: rgb(11, 114, 66);
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( rgb(11, 114, 66) ), to( rgba(11, 114, 66, 0)) );
+}
+
+.pickem-group-pick__drag-hint
+{
+	font-size: 18px;
+	width: 150px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	text-align: center;
+	opacity: 0.25;
+	margin-bottom: 10px;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.pickem-group-pick__giant
+{
+	font-size: 125px;
+	width: 170px;
+	vertical-align: center;
+	horizontal-align: center;
+	text-align: center;
+	font-weight: black;
+	opacity: 0.15;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.pickem-pick-placed .pickem-group-pick__drag-hint,
+.pickem-pick-placed .pickem-group-pick__giant
+{
+	visibility: collapse;
+}
+
+.pickem-group-winloss-text
+{
+	font-size: 98px;
+	width: fill-parent-flow( 1 );
+	font-weight: light;
+	opacity: 0.5;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.pickem-group-winloss-text--right
+{
+	text-align: center;
+	margin-left: 400px;
+}
+
+.pickem-group-winloss-text--left
+{
+	text-align: center;
+	margin-right: 400px;
+}
+
+.pickem-item-not-owned
+{
+	Padding: 16px;
+	wash-color:rgb(46, 46, 46);
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-remove-btn
+{
+	opacity: 1;
+}
+
+.pickem-item-not-owned.hidden,
+.pickem-points-earned.hidden,
+.pickem-remove-btn.hidden,
+.pickem-group-pick--used.hidden
+{
+	transform: translateY(-100%);
+	opacity: 0;
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-remove-btn.hidden
+{
+	visibility: collapse;
+}
+
+.pickem-team-draggable
+{
+	width: 128px;
+	height: 128px;
+	transform: scale3d( 0.2, 0.2, 0.2);
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-team-draggable.dragstart
+{
+	transform: scale3d( 1, 1, 1);
+	opacity: 1;
+}
+
+.pickem-team-draggable.dragend
+{
+	transform: scale3d( 0.5, 0.5, 0.5);
+	opacity: 0;
+}
+
+.pickem-group-pick-update
+{
+	animation-name: pick-update;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+}
+
+@keyframes pick-update
+{
+	0%
+	{
+		background-color: rgba(11, 114, 66, 00);
+		brightness: 1;
+	}
+
+	50%
+	{
+		background-color: rgb(11, 114, 66);
+		brightness: 3;
+	}
+
+	100%
+	{
+		background-color: rgba(11, 114, 66, 00 );
+		brightness: 1;
+	}
+}

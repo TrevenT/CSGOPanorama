@@ -188,6 +188,7 @@ var ItemContextEntires = ( function (){
 				return PredictionsAPI.GetMyPredictionItemIDEventSectionIndex( tournament, id ) != undefined;
 			},
 			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'OpenWatchMenu' );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 		},

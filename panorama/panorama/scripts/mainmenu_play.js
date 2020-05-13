@@ -1104,7 +1104,7 @@ var PlayMenu = ( function()
 	{
 		var playType = _GetPlayType();
 
-		if ( playType === 'listen' || playType === 'training' )
+		if ( playType === 'listen' || playType === 'training' || playType === 'workshop' )
 		{
 			                                       
 		}

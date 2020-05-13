@@ -14,7 +14,7 @@
         </CSGOBlurTarget>
         <Panel id="Text-Panel" class="tile-blur-rect-background full-width top-bottom-flow vertical-align-bottom horizontal-align-left left-right-padding bottom-padding">
             <Panel id = "Stream-title" class = "bottom-padding">
-                <Label id = "Stream-text" class="StreamText fontSize-m vertical-align-top" html="true"/>
+                <Label id = "Stream-text" class="StreamText fontSize-m vertical-align-top" html="true" text="{s:streamText}"/>
             </Panel>
             <Panel id = "ViewsPanel" class = "left-right-flow">
                 <Image src="file://{images}/icons/ui/watch.svg" texturewidth="28" textureheight="28"/>

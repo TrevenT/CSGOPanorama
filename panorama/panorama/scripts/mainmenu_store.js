@@ -13,15 +13,116 @@ var MainMenuStore = ( function()
 
 		if ( !MyPersonaAPI.IsConnectedToGC() )
 			return;
+
+		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 		
-		var itemsByCategory = {};
+		var itemsByCategory = {};	
+		if ( ( NewsAPI.GetActiveTournamentEventID() !== 0 )
+			&& ( '' !== ItemInfo.GetStoreSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_sticker, 0 ), 1 ) )
+			)
+		{
+			m_elStore.SetDialogVariable( "tournament_name", $.Localize( "#CSGO_Tournament_Event_Location_" + NewsAPI.GetActiveTournamentEventID() ) );
+			itemsByCategory.tournament = [
+				{
+					snippet_name: "TournamentStore",
+					load_func: function ( elPanel )
+					{
+						var itemsCount = g_ActiveTournamentTeams.length;
+						var randomItemsIndex = [];
+						var count = 0;
+
+						while ( count < 7 ) 
+						{
+							var random = _GetRandom( 0, itemsCount );
+							var filteredIndexes = randomItemsIndex.filter(index => index === random );
+
+							if( filteredIndexes.length === 0  )
+							{
+								randomItemsIndex.push(random);
+								count++;
+							}
+						}
+
+						var elImagesContainer = elPanel.FindChildInLayoutFile( 'id-store-tournament-items-container' );
+						var itemTypes = [
+							'itemid_sticker',
+							'itemid_graffiti',
+							'itemid_megabundle'
+						];
+						var offset = 78;
+						
+						for( var i = 0; i < randomItemsIndex.length ; i++ )
+						{
+							var elImage = elImagesContainer.FindChildInLayoutFile( 'id-store-tournament-item' + i );
+							var defIndex = 0;
+
+							if( i === 0 )
+							{
+								var randomItemType = _GetRandom( 0, itemTypes.length );
+								defIndex = g_ActiveTournamentInfo[ itemTypes[ randomItemType ]];
+							}
+							else
+							{
+								                                     
+								var randomItemType = _GetRandom( 0, itemTypes.length - 1 );
+								defIndex = g_ActiveTournamentTeams[ randomItemsIndex[i]][ itemTypes[ randomItemType ]];
+							}
+							
+							elImage.itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex, 0 );
+							elImage.style.x = ( offset*i ) + 'px';
+							var scaleOffset = 1 - ( 0.08 * i );
+							elImage.style.transform = 'scale3d( '+ scaleOffset +','+ scaleOffset +','+ scaleOffset +')';
+							elImage.style.zIndex = 10-i;
+							if( i > randomItemsIndex.length/2 )
+							{
+								elImage.style.blur = 'gaussian( 4, 4,' + 1 +')';
+							}
+						}
+						
+						elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
+						                                                                                       
+						                                                   
+					}
+				},
+				{
+					snippet_name: "TournamentGame",
+					load_func: function ( elPanel ) {
+
+						var elGoldTrophy = elPanel.FindChildInLayoutFile( 'StoreTournamentTrophyGold');
+						elGoldTrophy.SetSceneIntroRotation( 5, 22, -1 );
+
+						var schfnUpdateCountdown = function ( elPanelParam )
+						{	                                    
+							if ( !elPanelParam )
+								return;
+
+							var elCountdown = elPanelParam.FindChildInLayoutFile( 'StorePanelTournamentGameCountdown' );
+							if ( !elCountdown )
+								return;
+
+							var secRemaining = PredictionsAPI.GetGroupRemainingPredictionSeconds( "global" );
+							elCountdown.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( secRemaining ) );
+							elCountdown.SetHasClass( 'hidden', ( secRemaining > 0 ) ? false : true );
+							$.Schedule( 30, schfnUpdateCountdown.bind( null, elPanelParam ) );
+						}
+						$.Schedule( 0.1, schfnUpdateCountdown.bind( null, elPanel ) );
+					}
+				},
+			];
+		}
 		itemsByCategory = _GetCoupons( itemsByCategory );
 		itemsByCategory = _GetStoreItems( itemsByCategory );
+
 
 		_MakeCarousel( itemsByCategory );
 		_SortTabs();
 
 		_AccountWalletUpdated();
+	};
+
+	var _GetRandom = function ( min, max )
+	{
+		return Math.floor(Math.random() * (max - min)) + min;
 	};
 
 	var _CheckLicenseScreen = function()
@@ -258,7 +359,7 @@ var MainMenuStore = ( function()
 
 	var _PopulateCarousel = function( elCarousel, itemList, i, type )
 	{
-		var itemsPerPage = 4;
+		var itemsPerPage = type === "tournament" ? 1 : 4;
 		var elPage = null;
 
 		if ( i % itemsPerPage === 0 )
@@ -272,9 +373,18 @@ var MainMenuStore = ( function()
 		}
 
 		var elItem = $.CreatePanel( 'Panel', elPage, itemList[ i ] );
-		elItem.BLoadLayoutSnippet( 'StoreEntry' );
-		_FillOutItemData( elItem, itemList[ i ], type );
-		_OnActivateStoreItem( elItem, itemList[ i ], type );
+ 		                                                             
+		if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
+		{
+			elItem.BLoadLayoutSnippet( 'StoreEntry' );
+			_FillOutItemData( elItem, itemList[ i ], type );
+			_OnActivateStoreItem( elItem, itemList[ i ], type );
+		}
+		                                                    
+		else if ( typeof itemList[ i ] == "object" && elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name ) )
+		{
+			itemList[ i ].load_func( elItem );
+		}
 
 		if ( i % itemsPerPage === 0 )
 		{
@@ -328,7 +438,7 @@ var MainMenuStore = ( function()
 	{
 		var elBtn = $.CreatePanel( 'RadioButton', m_elStore.FindChildInLayoutFile( 'StoreNaveBar' ), type );
 		elBtn.BLoadLayoutSnippet( 'StoreNavBtn' );
-		elBtn.FindChildInLayoutFile( 'StoreTabLabel' ).text = $.Localize( '#store_tab_' +type );
+		elBtn.FindChildInLayoutFile( 'StoreTabLabel' ).SetLocalizationString( '#store_tab_' + type );
 
 		elBtn.SetPanelEvent( 'onactivate', MainMenuStore.OnNavigateTab.bind( undefined, prefix + type, type ) );
 	};
@@ -375,6 +485,7 @@ var MainMenuStore = ( function()
 		NewPostition( tabList.find(function (obj) { return obj.id === 'keys'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'store'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'coupons'; } ) );
+		NewPostition( tabList.find(function (obj) { return obj.id === 'tournament'; } ) );
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};
@@ -469,6 +580,15 @@ var MainMenuStore = ( function()
 			elBalance.SetDialogVariable( 'balance', balance );
 			elBalance.RemoveClass( 'hidden' );
 		}
+	}
+
+	var _OpenTournamentMarketLink = function()
+	{
+		var appid = SteamOverlayAPI.GetAppID();
+		SteamOverlayAPI.OpenURL(
+			SteamOverlayAPI.GetSteamCommunityURL() +
+			"/market/search?q=&category_"+appid+"_Tournament%5B%5D=tag_Tournament"+g_ActiveTournamentInfo.eventid+"&appid="+appid
+		);
 	}
 
 	return {

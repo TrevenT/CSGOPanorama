@@ -18,9 +18,9 @@
     <Panel class="separator-top" />
 		<Panel class="InfoBlock">
 			<Panel class="top-bottom-flow">
-				<Label class="rarity-header" text="Rarity:" />
-				<Label class="grade-header" text="Exterior:" />
-				<Label class="team-header" text="Team:" />
+				<Label class="rarity-header" text="#inv_header_rarity" />
+				<Label class="grade-header" text="#inv_header_grade" />
+				<Label class="team-header" text="#inv_header_team" />
 			</Panel>
 			<Panel class="top-bottom-flow">
 				<Label class="rarity-label" text="{s:rarity}" />
@@ -34,7 +34,7 @@
 		</Panel>
     <Panel class="separator-bottom" />
 
-    <Label class="desc-text" html="true" text="{s:description}" />
+    <Label class="desc-text" html="true" text="{s:h:description}" />
 				
 
 	</Panel>

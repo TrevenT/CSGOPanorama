@@ -17,15 +17,25 @@ var CapabilityDecodable = ( function()
 	var m_storeItemId = '';
 	var m_unusualItemImagePath = '';
 	var m_showInspectScheduleHandle = null;
+	var m_isAllowedToInteractWithLootlistItems = true;
 	
 	var _Init = function()
 	{
 		var strMsg = $.GetContextPanel().GetAttributeString( "key-and-case", "" );
 		                
 
+		m_isAllowedToInteractWithLootlistItems = ( $.GetContextPanel().GetAttributeString( 'allowtointeractwithlootlistitems', 'true' ) === 'true' ) ? true : false;
+
 		var idList = strMsg.split( ',' );
 		m_caseId = idList[ 1 ];
 		m_keyId = idList[ 0 ];
+
+		var styleforPopUpInspectFullScreenHostContainer = $.GetContextPanel().GetAttributeString( 'extrapopupfullscreenstyle', null );
+		if ( styleforPopUpInspectFullScreenHostContainer )
+		{
+			var elPopUpInspectFullScreenHostContainer = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectFullScreenHostContainer' );
+			elPopUpInspectFullScreenHostContainer.AddClass( styleforPopUpInspectFullScreenHostContainer );
+		}
 
 		                                           
 		if ( !m_keyId )
@@ -202,8 +212,9 @@ var CapabilityDecodable = ( function()
 				elItem.BLoadLayoutSnippet( 'LootListItem' );
 
 				_UpdateLootListItemInfo( elItem, itemid, caseId );
-				elItem.SetPanelEvent( 'onactivate', _OnActivateLootlistTile.bind( undefined, itemid, caseId, keyId ) );
-				elItem.SetPanelEvent( 'oncontextmenu', _OnActivateLootlistTile.bind( undefined, itemid, caseId, keyId ) );
+				var funcActivation = m_isAllowedToInteractWithLootlistItems ? _OnActivateLootlistTile : _OnActivateLootlistTileDummy;
+				elItem.SetPanelEvent( 'onactivate', funcActivation.bind( undefined, itemid, caseId, keyId ) );
+				elItem.SetPanelEvent( 'oncontextmenu', funcActivation.bind( undefined, itemid, caseId, keyId ) );
 
 				if ( itemid !== '0' )
 				{
@@ -215,6 +226,10 @@ var CapabilityDecodable = ( function()
 			}
 		}
 	};
+
+	var _OnActivateLootlistTileDummy = function( itemid, caseId, keyId )
+	{
+	}
 
 	var _OnActivateLootlistTile = function( itemid, caseId, keyId )
 	{
@@ -277,7 +292,7 @@ var CapabilityDecodable = ( function()
 		{
 			elItem.FindChildInLayoutFile( 'ItemImage' ).itemid = itemid;
 			elItem.FindChildInLayoutFile( 'JsRarity' ).style.backgroundColor = ItemInfo.GetRarityColor( itemid );
-			elItem.FindChildInLayoutFile( 'JsItemName' ).text = ItemInfo.GetName( itemid );
+			ItemInfo.GetFormattedName( itemid ).SetOnLabel( elItem.FindChildInLayoutFile( 'JsItemName' ) );
 		}
 	};
 

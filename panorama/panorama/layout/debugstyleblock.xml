@@ -5,8 +5,8 @@
 	
 	<DebugStyleBlock>
 		<TextEntry id="Selector" tabindex="0" undohistory="enabled" />
-		<Label text="{" />
+		<Label allowrawtext="true" text="{" />
 		<Panel id="PropertySection" class="DebugPropertySection" tabindex="1" />
-		<Label text="}" />
+		<Label allowrawtext="true" text="}" />
 	</DebugStyleBlock>	
 </root>

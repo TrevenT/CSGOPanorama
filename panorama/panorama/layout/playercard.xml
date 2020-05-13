@@ -82,7 +82,7 @@
 				</Panel>
 			</Panel>
 
-			<Panel class="player-card-skillgroup-container">
+			<Panel id="JsPlayerCardSkillGroupContainer" class="player-card-skillgroup-container">
 				<ToggleButton id="SkillGroupExpand"
 						class="player-card-skillgroup-expand"
 						onactivate="playerCard.ShowHideAdditionalRanks();">

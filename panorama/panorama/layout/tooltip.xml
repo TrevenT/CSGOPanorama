@@ -4,6 +4,6 @@
 	</styles>
 	
 	<TextTooltip>
-		<Label id="Text" />
+		<Label allowrawtext="true" id="Text" />	                                                                                                         
 	</TextTooltip>	
 </root>

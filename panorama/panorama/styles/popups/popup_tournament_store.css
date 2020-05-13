@@ -1,0 +1,220 @@
+.tournament-store {
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.tournament-store-header {
+	width: 100%;
+	flow-children: none;
+	horizontal-align: center;
+	margin: 16px 0px;
+}
+
+.tournament-store-header-seperator {
+	height: 8px;
+	width: 100%;
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(#00000066), to(#00000000));
+}
+
+.tournament-store-bg {
+	flow-children: down;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+Label {
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.tournament-logo {
+	height: 128px;
+	width: 128px;
+	margin-right: 20px;
+}
+
+.tournament-title {
+	font-size: 48px;
+	font-weight: light;
+}
+
+.tournament-info {
+	flow-children: right;
+	vertical-align: center;
+}
+
+.tournament-info Image {
+	height: 18px;
+	width: 18px;
+	margin-right: 6px;
+}
+
+.tournament-info Label {
+	font-size: 18px;
+	font-weight: medium;
+}
+
+.tournament-cart {
+	vertical-align: center;
+	horizontal-align: right;
+	flow-children: right;
+}
+
+.other-purchases {
+	flow-children: right;
+	horizontal-align: center;
+	padding: 16px 0px;
+}
+
+.other-purchases__button {
+	vertical-align: center;
+	horizontal-align: center;
+	margin-right: 40px;
+}
+
+.item-category.other-purchases__button {
+	margin-right: 40px;
+	margin-left: 40px;
+}
+
+.team-purchases {
+	flow-children: right;
+	horizontal-align: center;
+	padding: 8px 0px;
+}
+
+.team-purchases-block {
+	border-radius: 0px;
+	padding-bottom: 32px;
+	flow-children: down;
+	margin: 1px;
+}
+
+.team-purchases__header {
+	horizontal-align: center;
+	font-size: 24px;
+	font-weight: light;
+	padding: 12px 0px 12px 0px;
+	width: 100%;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.03);
+	                                
+}
+
+.team-grouping {
+	flow-children: right-wrap;
+	width: 360px;
+	padding: 12px 0px;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+   
+	                     
+   	                                                                   
+  
+.item-category {
+	width: 168px;
+	margin: 8px 3px 8px 3px;
+	flow-children: none;
+	context-menu-position: bottom;
+}
+
+.item-category-button {
+	flow-children: down;
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+.item-category-button:Hover .item-category__image {
+	brightness: 2;
+	transform: scale3d(1.1, 1.1, 1.1);
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.other-purchases__button.scaleimage .item-category__image 
+{
+	ui-scale: 145%;
+}
+
+.other-purchases__button.scaleimage .item-category__image .item-category__cart-count
+{
+	ui-scale: 75%;
+}
+
+.item-category__image {
+	horizontal-align: center;
+	padding: 8px;
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.item-category__label {
+	font-size: 18px;
+	horizontal-align: center;
+	text-align: center;
+	font-weight: medium;
+}
+
+.item-category__cart-count {
+	text-align: center;
+	font-size: 18px;
+	padding-top: 10%;
+	font-weight: bold;
+	horizontal-align: left;
+	vertical-align: top;
+	background-color: blueColor;
+	height: 24px;
+	width: 24px;
+	border-radius: 50%;
+	box-shadow: shadowOffset;
+}
+
+.item-category__cart-count.cart 
+{
+	ui-scale: 120%;
+}
+
+.item-category--has-items-in-cart .item-category__cart-count {
+	visibility: visible;
+}
+
+.popup-capability__separator {
+	width: 1px;
+	height: 64px;
+	background-color: rgba(255, 255, 255, 0.178);
+	margin: 0px 16px;
+	vertical-align: center;
+}
+
+.only-visible-with-items {
+	opacity: 0;
+	transform: translateX(10%);
+	transition-property: opacity, transform;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
+.has-items-in-cart .only-visible-with-items {
+	transform: translateX(0%);
+	opacity: 1;
+	transition-property: opacity, transform;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
+.cart-controls__item_price
+{
+	margin-left:8px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: positiveColor;
+	vertical-align: center;
+	padding-top: 6px;
+	text-align: right;
+	font-weight: medium;
+	font-size: 17px;
+	margin-right: 8px;
+}

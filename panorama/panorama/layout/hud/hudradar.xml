@@ -38,8 +38,8 @@
 				</Panel>
 
 				<Panel id="PI_NonRotated">
-					<Label id="PlayerNumber" class="PI_Text"/>
-					<Label id="PlayerLetter" class="PI_Text"/>
+					<Label id="PlayerNumber" class="PI_Text" />
+					<Label id="PlayerLetter" class="PI_Text" />
 				</Panel>
 
 			</Panel>

@@ -426,9 +426,6 @@ var playerCard = ( function (){
 		if ( !_m_isSelf )
 			return;
 
-		if ( !MyPersonaAPI.IsInventoryValid() )
-			return;
-
 		var teamName = MyPersonaAPI.GetMyOfficialTeamName(),
 			tournamentName = MyPersonaAPI.GetMyOfficialTournamentName();
 		
@@ -440,13 +437,15 @@ var playerCard = ( function (){
 			$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerTeam' ).AddClass( 'hidden' );
 			return;
 		}
-		
+
+		                                                        
+		$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXp' ).AddClass( 'hidden' );
+		$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardSkillGroupContainer' ).AddClass( 'hidden' );
 		$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerTeam' ).RemoveClass( 'hidden' );
-		$.GetContextPanel().FindChildInLayoutFile( 'JsPlayerSkill' ).ToggleClass( 'hidden' );
 		
 		var teamTag = MyPersonaAPI.GetMyOfficialTeamTag();
 
-		$.GetContextPanel().FindChildInLayoutFile( 'JsTeamIcon' ).SetImage( 'file://{images}/icons/teams/' + teamTag + '.png' );
+		$.GetContextPanel().FindChildInLayoutFile( 'JsTeamIcon' ).SetImage( 'file://{images}/tournaments/teams/' + teamTag + '.svg' );
 		$.GetContextPanel().FindChildInLayoutFile( 'JsTeamLabel' ).text = teamName;
 		$.GetContextPanel().FindChildInLayoutFile( 'JsTournamentLabel' ).text = tournamentName;
 	};

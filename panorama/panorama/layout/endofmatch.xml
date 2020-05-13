@@ -53,7 +53,7 @@
 
 					<Panel id="id-eom-chat-and-score" >
 						<Panel id="id-eom-chat-container" />
-						<Frame id="eom-scoreboard" src="file://{resources}/layout/scoreboard.xml" class="eom-scoreboard" useglobalcontext="false" />	
+						<Panel id="id-eom-scoreboard-container" class="horizontal-center eom-scoreboard"/>	
 					</Panel>
 
 				</Panel>

@@ -5,6 +5,13 @@
 	</styles>
 
   <TooltipText class="TextContents">
-    <Label id="TextLabel" class="tooltip-txt-default" html="true" />
+		                                                                                          
+		                                                                          
+		    
+		                                                                                     
+		                                                                                    
+		                                     
+		      
+    <Label id="TextLabel" class="tooltip-txt-default" html="true" allowrawtext="true" />
   </TooltipText>
 </root>

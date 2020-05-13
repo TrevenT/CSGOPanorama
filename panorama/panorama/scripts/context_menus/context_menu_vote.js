@@ -85,9 +85,16 @@ var ItemContextMenu = ( function (){
 		this.cmd = function ()
 		{
 			GameInterfaceAPI.ConsoleCommand( 'callvote ' + voteCommand );
+			$.DispatchEvent( 'ContextMenuEvent', '' );
 			$.DispatchEvent( 'CSGOMainMenuResumeGame' );
 		};
 		this.enabled = true;
+	}
+
+	function ConstructBaseVoteIssueEnabled( voteCommand, locToken, bEnabled )
+	{
+		ConstructBaseVoteIssue.call( this, voteCommand, locToken );
+		this.enabled = bEnabled;
 	}
 
 	function CreateVotePopupChoices( locToken )
@@ -143,14 +150,13 @@ var ItemContextMenu = ( function (){
 		this.enabled = choiceListFunc().length > 0;
 	}
 
-	function ConstructRoundBackupVoteIssue( voteCommand, locToken, pollForBackups )
+	function ConstructRoundBackupVoteIssue( voteCommand, locToken, bEnabled, pollForBackups )
 	{
-		ConstructBaseVoteIssue.call(this, voteCommand, locToken );
+		ConstructBaseVoteIssueEnabled.call(this, voteCommand, locToken, bEnabled );
 		this.cmd = function () {
+			$.DispatchEvent( 'ContextMenuEvent', '' );
 			var elPopup = CreateVotePopupChoices( locToken );
 			pollForBackups( elPopup );
-
-			                                                          
 		}
 	}
 	
@@ -169,6 +175,8 @@ var ItemContextMenu = ( function (){
 		var curGameMode 			= MatchStatsAPI.GetGameMode();
 		var mapsInMapGroup			= GetMapTargets().length;
 		var kickablePlayers			= GetKickTargets().length;
+		var nLocalPlayerTeamNum		= GameStateAPI.GetAssociatedTeamNumber( GameStateAPI.GetLocalPlayerXuid() );
+		var bLocalPlayerActiveTeam = ( nLocalPlayerTeamNum === 2 || nLocalPlayerTeamNum === 3 );
 
 		  
 		                                            
@@ -182,37 +190,48 @@ var ItemContextMenu = ( function (){
 			VoteIssues.push(new ConstructPopupMapChoicesVoteIssue("ChangeLevel", "#SFUI_Vote_ChangeMap", GetMapTargets ));
 		}
 
-		if ( bIsQueuedMatchmaking )
+		if ( bIsQueuedMatchmaking && !bIsTournamentMatch )
 		{
 			VoteIssues.push(new ConstructBaseVoteIssue("Surrender", "#SFUI_vote_surrender" ));
-			if ( bIsTournamentMatch )
+		}
+
+		if ( bIsQueuedMatchmaking && bIsTournamentMatch )
+		{
+			if ( bLocalPlayerActiveTeam )
+			{	                                              
+				VoteIssues.push(new ConstructBaseVoteIssueEnabled( "starttimeout", "#SFUI_Vote_StartTimeout", !bIsWarmup && !bIsPaused ) );
+				VoteIssues.push( new ConstructBaseVoteIssueEnabled( "PauseMatch", "#SFUI_Vote_pause_match", !bIsWarmup && !bIsPaused ) );
+			}
+			else
 			{
 				if ( bIsWarmup )
 				{
-					if ( bIsPaused )
-						VoteIssues.push(new ConstructBaseVoteIssue("NotReadyForMatch", "#SFUI_Vote_not_ready_for_match"));
+					if ( !bIsPaused )
+						VoteIssues.push( new ConstructBaseVoteIssue( "NotReadyForMatch", "#SFUI_Vote_not_ready_for_match") );
 					else
-						VoteIssues.push(new ConstructBaseVoteIssue("ReadyForMatch", "#SFUI_Vote_ready_for_match"));
-
-					VoteIssues.push(new ConstructRoundBackupVoteIssue("LoadBackup", "#SFUI_Vote_loadbackup", GetBackupFilenames ));
+						VoteIssues.push( new ConstructBaseVoteIssue( "ReadyForMatch", "#SFUI_Vote_ready_for_match") );
 				}
 				else
 				{
 					if ( bIsPaused )
-						VoteIssues.push(new ConstructBaseVoteIssue("UnpauseMatch", "#SFUI_Vote_unpause_match"));
+						VoteIssues.push( new ConstructBaseVoteIssue( "UnpauseMatch", "#SFUI_Vote_unpause_match" ) );
 					else
-						VoteIssues.push(new ConstructBaseVoteIssue("PauseMatch", "#SFUI_Vote_pause_match"));
+						VoteIssues.push( new ConstructBaseVoteIssue( "PauseMatch", "#SFUI_Vote_pause_match" ) );
 				}
 
+				VoteIssues.push( new ConstructRoundBackupVoteIssue("LoadBackup", "#SFUI_Vote_loadbackup1", bIsPaused, GetBackupFilenames ) );
 			}
 		}
 
-		if ( curGameMode === "competitive" || curGameMode === "scrimcomp5v5" || curGameMode === "scrimcomp2v2" )
+		if ( !bIsTournamentMatch )
 		{
-			VoteIssues.push(new ConstructBaseVoteIssue("starttimeout", "#SFUI_Vote_StartTimeout" ));
-		}
+			if  ( curGameMode === "competitive" || curGameMode === "scrimcomp5v5" || curGameMode === "scrimcomp2v2" )
+			{
+				VoteIssues.push(new ConstructBaseVoteIssue("starttimeout", "#SFUI_Vote_StartTimeout" ));
+			}
 
-		VoteIssues.push(new ConstructPopupAvatarChoicesVoteIssue("Kick", "#SFUI_Vote_KickPlayer", GetKickTargets));
+			VoteIssues.push(new ConstructPopupAvatarChoicesVoteIssue("Kick", "#SFUI_Vote_KickPlayer", GetKickTargets));
+		}
 
 		return VoteIssues;
 	}

@@ -20,7 +20,7 @@
 
 		<Panel class="mainmenu-content__container mainmenu-content__container--inspect" useglobalcontext="true">
 			<Panel class="full-width full-height top-bottom-flow vertical-center">
-				<Panel class="full-width full-height">
+				<Panel id="PopUpInspectFullScreenHostContainer" class="full-width full-height">
 				
 					<Frame id="PopUpInspectModelOrImage" src="file://{resources}/layout/popups/popup_inspect_model-image.xml" />
 					<Frame id="PopUpInspectHeader" class='hidden' src="file://{resources}/layout/popups/popup_inspect_header.xml" />
@@ -30,7 +30,7 @@
 						<Frame id="PopUpInspectActionBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_action-bar.xml" />
 						<Frame id="PopUpInspectAsyncBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_async-bar.xml" />
 						<Frame id="PopUpInspectPurchaseBar" class="hidden" src="file://{resources}/layout/popups/popup_inspect_purchase-bar.xml" />
-						<Label id="InspectItemDesc"  html="true" class="popup-inspect__desc" text=""/>
+						<Label id="InspectItemDesc"  html="true" class="popup-inspect__desc" text="{s:h:item_description}"/>
 					</Panel>
 
 				</Panel>

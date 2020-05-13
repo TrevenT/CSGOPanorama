@@ -39,7 +39,7 @@
 					<InventoryItemList id="InvSearchPanel-List" />
 
 					<Panel id="InvSearchSuggestions" class="inv-search__suggestions">
-						<Label html="true" text="inv_search_popular" class="bottom-padding-medium fontWeight-Light"/>
+						<Label html="true" text="#inv_search_popular" class="bottom-padding-medium fontWeight-Light"/>
 						<Panel id="InvSearchSuggestionsList" class="top-bottom-flow"/>
 					</Panel>
 				</Panel>
@@ -63,18 +63,18 @@
 
 		<snippet name="TopRightExtraButtonsSnippet">
 			<Panel class='content-navbar__tabs'>
-				<Panel class="inv-nav__separator" />
+				<Panel class="inv-nav__seperator" />
 				<Button id="InvSearchBtn"
 							class="" 
 							data-type='any'>
 					                                                                                               
-					<Label text="inv_nav_search" />
+					<Label text="#inv_nav_search" />
 				</Button>
 				<Button id="InvLoadoutBtn" class="">
-					<Label text="inv_nav_loadout" />
+					<Label text="#inv_nav_loadout" />
 				</Button>
 				<Button id="InvCraftingBtn" class="">
-					<Label text="inv_nav_tradeup" />
+					<Label text="#inv_nav_tradeup" />
 				</Button>
 			</Panel>
 		</snippet>
@@ -82,8 +82,8 @@
 		<snippet name="MarketLinkSnippet">
 			<Panel class="horizontal-align-right vertical-center left-right-padding">
 				<Button id="InvMarketLink" class="IconButton left-right-flow" >
-					<Label text="#Market"/>
 					<Image src="file://{images}/icons/ui/link.svg"/>
+					<Label text="#Market"/>
 				</Button>
 			</Panel>
 		</snippet>
@@ -112,7 +112,7 @@
 					</Panel>
 
 					<Panel class="inv-popup-title">
-						<Label class="mainmenu-content--popuptab__title" text="inv_nav_loadout"/>
+						<Label class="mainmenu-content--popuptab__title" text="#inv_nav_loadout"/>
 					</Panel>
 		
 				</Panel>
