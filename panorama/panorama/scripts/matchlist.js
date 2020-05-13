@@ -432,12 +432,6 @@ var matchList = ( function() {
             }
             _SetListMessage( $.Localize( msg ), true, parentPanel );
         }
-        else
-        {
-            _ShowListPanel( true, parentPanel );
-            _ShowInfoPanel( true, parentPanel );
-            _SetListMessage( "", false, parentPanel );
-        }
 
         var displayedMatches = new Array();
         var elMatchList = parentPanel.FindChildTraverse("JsMatchList");
@@ -527,6 +521,13 @@ var matchList = ( function() {
         }
         _ClearList( elMatchList, parentPanel.tournament_id );
         _SelectFirstTile( parentPanel, elMatchList, matchListDescriptor );
+
+        if ( nCount > 0 )
+        {
+            _ShowListPanel( true, parentPanel );
+            _ShowInfoPanel( true, parentPanel );
+            _SetListMessage( "", false, parentPanel );
+        }
 
                                                        
         if ( ( matchListDescriptor === 'live' ) && ( nCount > 0 ) )

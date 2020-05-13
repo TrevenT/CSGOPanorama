@@ -834,11 +834,17 @@ var matchInfo = ( function() {
                     
                 if ( !elParentPanel.teamsFilled )
                 {
+					var tag = MatchInfoAPI.GetMatchTournamentTeamTag( elParentPanel.matchId, teamId );
+					if ( !tag )
+					{
+						tag = '';
+					}
+
 					elAvatarImage.visible = !elParentPanel.isTournament;
 					elAvatarTeamLogo.visible = elParentPanel.isTournament;
 					if ( elParentPanel.isTournament )
 					{
-						elAvatarTeamLogo.SetImage( 'file://{images}/tournaments/teams/' + MatchInfoAPI.GetMatchTournamentTeamTag( elParentPanel.matchId, teamId ).toLowerCase() + '.svg' );
+						elAvatarTeamLogo.SetImage( 'file://{images}/tournaments/teams/' + tag.toLowerCase() + '.svg' );
 					}
                     else if ( elAvatarImage.steamid !== playerXuid )
                     {
