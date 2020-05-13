@@ -57,9 +57,9 @@
 				<Panel id="watch-navbar" class="content-navbar content-navbar--short">
 					<Panel class="content-navbar__tabs">
 						                                                          
-						                                                                                                                                                                            
-							                                                                     
-						                       
+						<RadioButton id="WatchNavBarActiveTourament" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsActiveTournament', 'active tournament menu button');">
+							<Label class="" text="#CSGO_Tournament_Event_NameShort_15"/>
+						</RadioButton>
 						<RadioButton id="WatchNavBarButtonTournaments" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Tournament_0"/>
 						</RadioButton>
@@ -75,6 +75,12 @@
 						<RadioButton id="WatchNavBarButtonStreams" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsStreams', 'streams menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Streams"/>
 						</RadioButton>
+						               
+						                                                                                                                                           
+							                                               
+						              
+						               
+
 					</Panel>
 					<Panel class="horizontal-align-right vertical-center left-right-padding">	
 						<Button class="IconButton" >

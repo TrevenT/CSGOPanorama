@@ -87,6 +87,10 @@ var Loadout = ( function() {
 		var elTitle = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSingleItemLabel' );
 		var elRarity = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSingleItemRarity' );
 
+		var idForDisplay = itemId;
+		if ( loadoutSlot === 'spray0' )
+			idForDisplay = ItemInfo.GetFauxReplacementItemID( itemId, 'graffiti' );
+
 		var noIdEquipped = ( itemId === '0' ) ? true : false;
 		elModel.SetHasClass( 'hidden', noIdEquipped );
 		elRarity.SetHasClass( 'hidden', noIdEquipped );
@@ -99,9 +103,8 @@ var Loadout = ( function() {
 			return;
 		}
 		
-		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( itemId );
-		
-		InventoryAPI.PrecacheCustomMaterials( itemId );
+		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( idForDisplay );
+		InventoryAPI.PrecacheCustomMaterials( idForDisplay );
 
 		                                                  
 		elModel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
@@ -109,7 +112,7 @@ var Loadout = ( function() {
 			false
 		);
 
-		elTitle.text = ItemInfo.GetName( itemId );
+		elTitle.text = ItemInfo.GetName( idForDisplay );
 		elRarity.style.backgroundColor = ItemInfo.GetRarityColor( itemId );
 	};
 

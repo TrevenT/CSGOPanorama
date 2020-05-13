@@ -58,14 +58,34 @@ var ItemContextEntires = ( function (){
 			},
 			AvailableForItem: function ( id ) {
 				                                                                 
-				return ( ItemInfo.GetSlotSubPosition( id ) ||
+				return ( ( ItemInfo.GetSlotSubPosition( id ) ||
 					ItemInfo.ItemMatchDefName( id, 'sticker' ) ||
-					ItemInfo.ItemMatchDefName( id, 'spray' )
+					ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
+					!ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' )                                                      
 				);
 			},
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 				$.DispatchEvent( "InventoryItemPreview", id );
+			}
+		},
+		{
+			name: 'view_tournament_journal',
+			populateFilter: ['inspect', 'loadout'],
+			style: function (id){
+				return false;
+			},
+			AvailableForItem: function ( id ) {
+				return ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' );
+			},
+			OnSelected:  function ( id ) {
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_tournament_journal.xml',
+					'journalid=' + id
+				);
+
+				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 		},
 		{
@@ -133,24 +153,69 @@ var ItemContextEntires = ( function (){
 		},
 		{
 			                            
-			name: 'equip_spray',
-			CustomName: function (id) {
-				return _GetItemToReplaceName(id, 'noteam');
-			},
+			name: 'flair',
 			populateFilter: ['inspect', 'loadout'],
-			ToolTip: function (id) {
-				return _GetItemToReplaceName( id, 'noteam');
-			},
-			style: function (id){
-				return (ItemInfo.IsItemAnyTeam(id) || ItemInfo.IsItemT(id)) ? 'BottomSeparator' : '';
-			},
 			AvailableForItem: function ( id ) {
-				return ItemInfo.ItemMatchDefName(id, 'spraypaint') && !ItemInfo.IsEquippedForNoTeam(id);
+				return ItemInfo.GetSlotSubPosition(id) === 'flair0' && (
+					!ItemInfo.IsEquippedForNoTeam(id) || ( InventoryAPI.GetRawDefinitionKey(id, 'item_sub_position2') !== '' )
+				);
 			},
 			OnSelected: function( id )
 			{
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 				EquipItem( id, [ 'noteam' ] );
+			}
+		},
+		                                                           
+		    
+			                        
+		   	                              
+		   	                                       
+		   	                                   
+		   		                                                                         
+		   	  
+		   	                          
+		   	 
+		   		                                          
+				
+		   		                                
+		   			                                                   
+		   			                                                   
+		   			   
+		   			              
+		   			             
+		   		  
+		   	 
+		     
+		{
+			                            
+			name: 'equip_spray',
+			populateFilter: ['inspect', 'loadout'],
+			AvailableForItem: function ( id ) {
+				return ( ItemInfo.ItemMatchDefName( id, 'spraypaint' ) && !ItemInfo.IsEquippedForNoTeam( id ) );
+			},
+			OnSelected: function( id )
+			{
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				EquipItem( id, [ 'noteam' ], 'spray0' );
+			}
+		},
+		{
+			                            
+			name: 'equip_tournament_spray',
+			populateFilter: ['inspect', 'loadout'],
+			AvailableForItem: function ( id ) {
+				return ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_journal_') && ( InventoryAPI.GetRawDefinitionKey(id, 'item_sub_position2') === 'spray0' ) );
+			},
+			OnSelected: function( id )
+			{
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+	
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_tournament_select_spray.xml',
+					'journalid=' + id
+				);
 			}
 		},
 		{
@@ -187,16 +252,18 @@ var ItemContextEntires = ( function (){
 				if ( GameStateAPI.GetMapBSPName() )	                                           
 					return false;
 				var tournament = 'tournament:' + NewsAPI.GetActiveTournamentEventID();
-				return PredictionsAPI.GetMyPredictionItemIDEventSectionIndex( tournament, id ) != undefined;
+				return ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' );
 			},
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'OpenWatchMenu' );
+                $.DispatchEvent( 'ShowActiveTournamentPage', '' );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 		},
 		{
 			name: 'useitem',
 			AvailableForItem: function ( id ) {
+				if ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_') ) return true;
 				if ( !InventoryAPI.IsTool( id ) ) return false;
 				var season = InventoryAPI.GetItemAttributeValue( id, 'season access' );
 				if ( season != undefined ) return true;                                    
@@ -204,12 +271,23 @@ var ItemContextEntires = ( function (){
 			},
 			OnSelected: function( id )
 			{
-				UiToolkitAPI.ShowCustomLayoutPopupParameters(
-					'',
-					'file://{resources}/layout/popups/popup_inventory_inspect.xml',
-					'itemid=' + id +
-					'&' + 'asyncworktype=useitem'
-				);
+				if ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_') ) {
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_capability_decodable.xml',
+						'key-and-case=,' + id +
+						'&' + 'asyncworktype=decodeable'
+					);
+				} else {
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+						'itemid=' + id +
+						'&' + 'asyncworktype=useitem'
+					);
+				}
+				
+				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 		},
 		{
@@ -349,21 +427,6 @@ var ItemContextEntires = ( function (){
 			OnSelected:  function ( id ) {
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 				$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'can_stattrack_swap', id, '' );
-			}
-		},
-		{
-			name: 'flair',
-			populateFilter: ['inspect', 'loadout'],
-			style: function (id){
-				return 'BottomSeparator';
-			},
-			AvailableForItem: function ( id ) {
-				return ItemInfo.GetSlotSubPosition(id) === 'flair0' && !ItemInfo.IsEquippedForNoTeam(id);
-			},
-			OnSelected: function( id )
-			{
-				$.DispatchEvent( 'ContextMenuEvent', '' );
-				EquipItem( id, [ 'noteam' ] );
 			}
 		},
 		{
@@ -523,9 +586,11 @@ var ItemContextEntires = ( function (){
 		return '<font color="' + rarityColor + '">' + ItemInfo.GetName( id ) + '</font>';
 	};
 
-	var EquipItem = function( id, team )
+	var EquipItem = function( id, team, slot )
 	{
-		var slot = ItemInfo.GetSlotSubPosition( id );
+		if ( slot === null || slot === undefined || slot === '' )
+			slot = ItemInfo.GetSlotSubPosition( id );                                                   
+		
 		team.forEach( element => LoadoutAPI.EquipItemInSlot( element, id, slot ) );
 	};
 

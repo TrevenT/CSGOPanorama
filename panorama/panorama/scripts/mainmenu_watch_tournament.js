@@ -288,11 +288,9 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
+			var tabIdToActivate = 'id-nav-pick-prelims';
 
-			var tabIdToActivate = 'id-nav-pick-playoffs';
-
-			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );
-			
+			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );	
 		}
 		else
 		{
@@ -300,6 +298,15 @@ var mainmenu_watch_tournament = (function () {
 		}
 
 		_SetUpTournamentInfoLink( elParentPanel, tournament_id );
+		_SetStyleOverridesForTournament( elParentPanel, tournamentNumber )
+	};
+
+	var _SetStyleOverridesForTournament = function( elParentPanel, tournamentNumber )
+	{
+		if ( tournamentNumber === 15 )
+		{
+			elParentPanel.AddClass( 'tournament-' + tournamentNumber );
+		}
 	};
 
 	var _GetParentPanel = function( tournament_id )
@@ -323,7 +330,8 @@ var mainmenu_watch_tournament = (function () {
 	var _SetUpTournamentInfoLink = function( elPanel, tournament_id )
     {
         var elLink = elPanel.FindChildInLayoutFile( 'JsTournamentInfoLink' );
-        var olinks = {
+		var olinks = {
+			15: "https://www.intelextrememasters.com/season-13/katowice/schedule/",
             14: "https://www.faceitmajor.com/",
             13: "http://www.eleague.com/major-2018",
             12: "https://major.pglesports.com/"

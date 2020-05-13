@@ -16,6 +16,7 @@ var PickEmInfoBar = ( function()
 		var elParent = elPanel.FindChildTraverse( 'id-pickem-info' );
 		var elLink = elParent.FindChildTraverse( 'id-pickem-how-to-play' );
 		var olinks = {
+			15: "http://www.counter-strike.net/pickem/katowice2019#team_instructions",
 			14: "http://www.counter-strike.net/pickem/london2018#team_instructions",
 			13: "http://www.counter-strike.net/pickem/boston2018#team_instructions",
 			12: "http://www.counter-strike.net/pickem/krakow2017#team_instructions"
@@ -119,6 +120,10 @@ var PickEmInfoBar = ( function()
 
 	var _UpdateScore = function( elPanel )
 	{
+		                                                                                            
+		if ( PickemCommon.GetTournamentIdNumFromString( elPanel._oPickemData.oInitData.tournamentid ) >= 15 )
+			return;
+		
 		var pointsEarned = PredictionsAPI.GetMyPredictionsTotalPoints( elPanel._oPickemData.oInitData.tournamentid );
 		var bronzePoints = PredictionsAPI.GetRequiredPredictionsPointsBronze( elPanel._oPickemData.oInitData.tournamentid );
 		var silverPoints = PredictionsAPI.GetRequiredPredictionsPointsSilver( elPanel._oPickemData.oInitData.tournamentid );
@@ -273,11 +278,16 @@ var PickEmInfoBar = ( function()
 				return "econ/status_icons/boston_pickem_2018_";
 			else if ( tournamentId == "tournament:14" )
 				return "econ/status_icons/london_pickem_2018_";
+			else
+				return '';
 		}
 
-		var elTrophyImage = elPanel.FindChildTraverse( 'id-pickem-trophy-image' );
-		elTrophyImage.RemoveClass('hidden');
-		elTrophyImage.SetImage( 'file://{images_econ}/' + GetTrophyIconPath( tournamentId ) + resultLevel +'.png');
+		if ( GetTrophyIconPath( tournamentId ) !== '' )
+		{
+			var elTrophyImage = elPanel.FindChildTraverse( 'id-pickem-trophy-image' );
+			elTrophyImage.RemoveClass( 'hidden' );
+			elTrophyImage.SetImage( 'file://{images_econ}/' + GetTrophyIconPath( tournamentId ) + resultLevel + '.png' );
+		}
 	};
 
 	var DoesTournamentHaveAWinner = function ( tournamentId )

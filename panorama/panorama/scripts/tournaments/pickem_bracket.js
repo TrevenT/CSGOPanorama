@@ -252,7 +252,7 @@ var PickEmBracket = ( function()
 		return aNotOwnedItems;
 	};
 
-	var _MakePicksParams = function( elPickemPanel )
+	var _MakePicksParams = function( elPickemPanel, useFakeItems = false )
 	{
 		var sectionCount = elPickemPanel._oPickemData.oTournamentData.sections.length;
 		var startIndex = elPickemPanel._oPickemData.oInitData.sectionindex;
@@ -278,7 +278,7 @@ var PickEmBracket = ( function()
 						groupsList[j].picks[0].localid
 					);
 
-					strStickerItemId = oItemIdData.type === 'fakeitem' ? '' : oItemIdData.itemid;
+					strStickerItemId = oItemIdData.type === 'fakeitem' && !useFakeItems ? '' : oItemIdData.itemid;
 
 					if ( strStickerItemId && ( idsForDisplayInConfimPopup.indexOf( strStickerItemId ) === -1 ))
 					{
@@ -592,7 +592,7 @@ var PickEmBracket = ( function()
 			var elLabel = elPickemPanel.FindChildInLayoutFile( 'id-pickem-group-worth' + i );
 			var points = elPickemPanel._oPickemData.oTournamentData.sections[ i + fistDayOfBracketIndex ].groups[ 0 ].pickworth;
 
-			PickemCommon.SetPointsWorth( elLabel, points );
+			PickemCommon.SetPointsWorth( elLabel, points, elPickemPanel._oPickemData.oInitData.tournamentid, i + fistDayOfBracketIndex );
 		}
 	};
 

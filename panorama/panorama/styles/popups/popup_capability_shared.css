@@ -93,6 +93,11 @@
 	height: 36px;
 }
 
+.popup-capability__button-row.no-border
+{
+	border-top: 0px solid rgba(145, 145, 145, 0.5);
+}
+
 .popup-capability__purchase
 {
 	height: fit-children;

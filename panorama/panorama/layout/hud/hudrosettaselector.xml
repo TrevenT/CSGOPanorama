@@ -9,7 +9,7 @@
 			<Panel class="RosettaInventorySlot" acceptsinput="true" onactivate="RosettaInventorySlotActivate()">
 				<Image id="InventorySelection" class="RosettaInventory__Selection" src="file://{images}/hud/rosettaselector/rosetta_inventoryselection.svg"/>
 				<Image id="InventoryImage" class="RosettaInventory__Image"/>
-				<Label class="RosettaInventory__Count" text="#Panorama_CSGO_Rosetta_Item_Count" />
+				<Label id="InventoryCount" class="RosettaInventory__Count" text="#Panorama_CSGO_Rosetta_Item_Count" />
 				<Label class="RosettaInventory__Name" html="true" text="#Panorama_CSGO_Rosetta_Item_Name" />
 			</Panel>
 		</snippet>

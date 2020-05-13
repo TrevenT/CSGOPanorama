@@ -8,7 +8,7 @@ var ContextMenuAddToCart = ( function (){
 		{
 			if ( type === "megabundle" )
 			{
-				elItem.SetPanelEvent( 'onactivate', _ShowMegaBundlePopup.bind( undefined, id ) );
+				elItem.SetPanelEvent( 'onactivate', _ShowInspectPopup.bind( undefined, id ) );
 			}
 			else if( type === "capsule" )
 			{
@@ -22,18 +22,20 @@ var ContextMenuAddToCart = ( function (){
 
 		var _ShowMegaBundlePopup = function( id )
 		{
-			                                      
+
 			UiToolkitAPI.ShowCustomLayoutPopupParameters(
 				'',
-				'file://{resources}/layout/popups/popup_capability_decodable.xml',
-				'key-and-case=' + '' + ',' + id +
+				'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+				'itemid=' + id +
 				'&' + 'extrapopupfullscreenstyle=solidbkgnd' +
-				'&' + 'asyncworkitemwarningtext=#Store_MegaBundle_PreviewDesc_' + InventoryAPI.GetItemAttributeValue( id, 'tournament event id' ) +
 				'&' + 'inspectonly=true' +
-				'&' + 'allowtointeractwithlootlistitems=false' +
-				'&' + 'asyncworktype=cartpreview' +
+				'&' + 'asyncworkitemwarning=no' +
+				'&' + 'allowsave=false' +
+				'&' + 'showequip=false' +
+				'&' + 'showitemcert=false' +
+				'&' + 'showmarketlink=false',
 				'&' + 'asyncworkbtnstyle=hidden' +
-				'&' + 'storeitemid=' + id
+				'none'
 			);
 		};
 
@@ -78,6 +80,21 @@ var ContextMenuAddToCart = ( function (){
 			var itemID = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIdx, 0 );
 			var elItemImage = elItemEntry.FindChildTraverse( "ItemImage" );
 			elItemImage.itemid = itemID;
+
+			var _ShowTooltip = function( itemID )
+			{
+				if ( !InventoryAPI.IsItemInfoValid( itemID ) )
+				{
+					return;
+				}
+		
+				UiToolkitAPI.ShowCustomLayoutParametersTooltip(
+					'ItemImage',
+					'JsItemTooltip',
+					'file://{resources}/layout/tooltips/tooltip_inventory_item.xml',
+					'itemid=' + itemID
+				);
+			};
 
 			                                                                                                              
 			var count = ItemInfo.GetLootListCount( itemID );

@@ -7,6 +7,7 @@ var CapabiityHeader = ( function()
 	var m_worktype = '';                                                                             
 	var m_storeItemid = '';
 	var m_itemid = '';                             
+	var m_itemtype = '';                                       
 	var m_ToolId = '';
 	
 	var _Init = function( elPanel, itemId, funcGetSettingCallback )
@@ -19,6 +20,15 @@ var CapabiityHeader = ( function()
 		                                                                              
 		if ( !m_worktype && !m_storeItemid )
 			return;
+
+		if ( m_itemid != undefined && m_itemid != null && m_itemid !== '' )
+		{
+			var itemDefName = ItemInfo.GetItemDefinitionName( m_itemid );
+			if ( itemDefName && itemDefName.indexOf( "spray" ) != -1 )
+				m_itemtype = "_graffiti";
+			else if ( itemDefName && itemDefName.indexOf( "tournament_pass_" ) != -1 )
+				m_itemtype = "_fantoken";
+		}
 		
 		m_bShowWarning = ( funcGetSettingCallback( "asyncworkitemwarning", "yes" ) === 'no' ) ? false : true;
 		m_strWarningText = funcGetSettingCallback( "asyncworkitemwarningtext", '' );
@@ -49,7 +59,7 @@ var CapabiityHeader = ( function()
 		                                                       
 		if( !m_ToolId && m_worktype === 'decodeable' )
 		{
-		    elTitle.text = '#popup_totool_' + m_worktype + '_header';
+		    elTitle.text = '#popup_totool_' + m_worktype + '_header' + m_itemtype;
 		}
 		else
 		{
@@ -65,6 +75,8 @@ var CapabiityHeader = ( function()
 		if ( m_bShowWarning )
 		{	                                      
 			sWarnLocString = '#popup_'+m_worktype+'_warning';
+			if ( m_worktype === 'decodeable' )
+				sWarnLocString = sWarnLocString + m_itemtype;
 		}
 
 		if ( m_worktype === 'decodeable' )
@@ -95,7 +107,10 @@ var CapabiityHeader = ( function()
 
 	var _SetUpDesc = function ( elPanel)
 	{
-	    elPanel.FindChildInLayoutFile( 'CapabilityDesc' ).text = '#popup_' + m_worktype + '_desc';
+		var sDescString = '#popup_' + m_worktype + '_desc';
+		if ( m_worktype === 'decodeable' )
+			sDescString = sDescString + m_itemtype;
+	    elPanel.FindChildInLayoutFile( 'CapabilityDesc' ).text = sDescString;
 	};
 
 	return {

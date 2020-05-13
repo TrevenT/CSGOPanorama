@@ -1,0 +1,82 @@
+.tournament-pass-status
+{
+    height: 128px;
+    width: 100%;
+
+	margin-bottom: 16px;
+	flow-children: down;
+
+	transition-property: height;
+	transition-duration: .25s;
+    transition-timing-function: ease-in-out;
+}
+
+.tournament-pass-status.hidden
+{
+    visibility: collapse;
+    height: 0px;
+
+    transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.tournament-pass-status-container
+{
+    background-color: blurBackgroundColor;
+    width: 100%;
+    height: 100%;
+    flow-children: right;
+    transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rolloff";
+}
+
+.tournament-pass-status-container:hover
+{
+    brightness: 1.2;
+	transform: scale3d( 1.05, 1.05, 1.05 );
+
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rollover";
+}
+
+.tournament-pass-status__image
+{
+    height: 112px;
+    vertical-align: center;
+}
+
+.tournament-pass-status__image.pass
+{
+    margin-left: 24px;
+    height: 128px;
+}
+
+.tournament-pass-status__info
+{
+    flow-children: down;
+    vertical-align: center;
+    margin-left: 16px;
+}
+
+.tournament-pass-status__desc
+{
+	margin-top: 8px;
+	font-size: 18px;
+	color: white;
+	max-height: 48px;
+    text-overflow: ellipsis;
+    width: 500px;
+    padding-right: 16px;
+}
+
+.hidden
+{
+    visibility: collapse;
+}

@@ -582,7 +582,11 @@ var MainMenu = ( function() {
 		};
 
 		_ShowNewsAndStore();
-		                      
+		_AddFeaturedPanel();
+
+		          
+		                       
+		          
 	};
 
 	var _AddStream = function()
@@ -593,8 +597,9 @@ var MainMenu = ( function() {
 
 	var _AddFeaturedPanel = function()
 	{
-		                  
-		var featuredXML = 'file://{resources}/layout/mainmenu_featured.xml';
+		                 
+		                                                                      
+		var featuredXML = 'file://{resources}/layout/mainmenu_tournament_pass_status.xml';
 
 		var elPanel = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsFeaturedPanel' );
 		elPanel.BLoadLayout( featuredXML, false, false );
@@ -603,6 +608,17 @@ var MainMenu = ( function() {
 		$.FindChildInContext( '#JsNewsPanel' ).AddClass( 'news-panel-style-feature-panel-visible' );
 	};
 
+	          
+	                                     
+	 
+
+		                                                                          
+		                                                                                                              
+		                                                                                                            
+		                                                    
+	 
+	          
+	
 	var _ShowNewsAndStore = function ()
 	{
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );

@@ -16,6 +16,10 @@ var InspectHeader = ( function()
 	
 	var _SetName = function( elPanel, ItemId )
 	{
+		                                                                      
+		if ( ItemInfo.ItemDefinitionNameSubstrMatch( ItemId, 'tournament_journal_' ) )
+			ItemId = ItemInfo.GetFauxReplacementItemID( ItemId, 'graffiti' );
+
 		elPanel.FindChildInLayoutFile( 'InspectName' ).text = ItemInfo.GetName( ItemId );
 	};
 	

@@ -178,6 +178,18 @@
 	color: white;
 }
 
+.tournament-15 .pickem-group-worth-header
+{
+	font-family: notosans, 'Arial Unicode MS';
+	font-style: italics;
+	font-size: 24px;
+	margin: 16px 8px 0px 8px;
+	padding: 8px 16px;
+	border-radius: 3px;
+	background-color:rgba(0, 0, 0, 0.185);
+	text-overflow: shrink;
+}
+
 .pickem-team-actions-bar
 {
 	flow-children: left;
@@ -447,6 +459,12 @@
 	transition-timing-function: ease-in-out;
 }
 
+.pickem-group-pick__itemimage.teamlogo
+{
+	padding: 24px;
+	height: 100%;
+}
+
 .pickem-points-earned
 {
 	vertical-align: bottom;
@@ -647,7 +665,7 @@
 .pickem-bracket-picksworth-container
 {
 	flow-children: right;
-	height: 48px;
+	height: fit-children;
 	width: 100%;
 }
 
@@ -874,6 +892,25 @@
 	color: white;
 }
 
+.tournament-15 .pickem-bracket-worth-header
+{
+	font-family: notosans, 'Arial Unicode MS';
+	text-overflow: shrink;
+	min-height: 72px;
+	vertical-align: center;
+	font-style: italics;
+	font-size: 16px;
+	margin: 16px 8px 0px 8px;
+	padding: 4px 8px;
+	border-radius: 3px;
+	background-color:rgba(0, 0, 0, 0.151);
+}
+
+.left-column > .pickem-bracket-worth-header
+{
+	background-color:none;
+}
+
 .pickem-points-earned-bracket
 {
 	background-color: rgb(11, 114, 66);
@@ -892,4 +929,12 @@
 	border-radius: 50%;
 	width: 16px;
 	height: 16px;
+}
+
+.tournament-15 #id-pickem-leaderboards,
+.tournament-15 .pickem-trophy-container,
+.tournament-15 #id-pickem-points-needed,
+.tournament-15 .pickem-group-team__owned
+{
+	visibility: collapse;
 }

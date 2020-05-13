@@ -12,7 +12,13 @@ var ItemTile = ( function()
 		if ( id === '0' )
 			return;
 
-		_SetItemName( id );
+		var idForDisplay = id;
+		if ( $.GetContextPanel().GetAttributeString( 'filter_category', '' ) === 'inv_graphic_art' )
+		{
+			idForDisplay = ItemInfo.GetFauxReplacementItemID( id, 'graffiti' );
+		}
+
+		_SetItemName( idForDisplay );
 		_SetItemRarity( id );
 		_SetEquippedState( id );
 		_SetStickers( id );
@@ -354,6 +360,7 @@ var ItemTile = ( function()
 ( function()
 {
 	$.RegisterEventHandler( 'CSGOInventoryItemLoaded', $.GetContextPanel(), ItemTile.OnTileUpdated );
+	$.RegisterEventHandler( 'UpdateItemTile', $.GetContextPanel(), ItemTile.OnTileUpdated );
 } )();
 
 

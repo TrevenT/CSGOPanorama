@@ -26,7 +26,9 @@
 					<Label class="pickem-group-pick__giant" text="?"/>
 					<ItemImage id="id-pick-itemimage" 
 							class="pickem-group-pick__itemimage" 
-							large="false" 
+							large="false"
+							texturewidth="128"
+							textureheight="-1"
 							scaling="stretch-to-fit-preserve-aspect" />
 					<Button id="id-pick-cancelbtn" class="IconButton pickem-remove-btn hidden" >
 						<Image texturewidth="24" 

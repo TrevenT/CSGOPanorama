@@ -234,6 +234,37 @@ var ItemInfo = ( function() {
 		return InventoryAPI.DoesItemMatchDefinitionByName( id, defName );
 	};
 
+	var _ItemDefinitionNameSubstrMatch = function( id, defSubstr )
+	{
+		var itemDefName = InventoryAPI.GetItemDefinitionName( id );
+		return ( itemDefName && ( itemDefName.indexOf( defSubstr ) != -1 ) );
+	};
+
+	var _GetFauxReplacementItemID = function( id, purpose )
+	{
+		                                                                                 
+		                                                                                
+		                                
+		if ( purpose === 'graffiti' )
+		{
+			if ( _ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' ) )
+			{
+				return _GetFauxItemIdForGraffiti( parseInt( InventoryAPI.GetItemAttributeValue( id, 'sticker slot 0 id' ) ));
+			}
+		}
+		return id;
+	};
+
+	var _GetFauxItemIdForGraffiti = function( stickestickerid_graffiti )
+	{
+		                                                                                 
+		                                                                                
+		                                
+		
+		return InventoryAPI.GetFauxItemIDFromDefAndPaintIndex(                
+			1349, stickestickerid_graffiti );
+	};
+
 	var _GetItemIdForItemEquippedInLoadoutSlot = function( id, team )
 	{
 		return LoadoutAPI.GetItemID( team, _GetSlotSubPosition( id ) );
@@ -279,10 +310,11 @@ var ItemInfo = ( function() {
 		var isSticker = _ItemMatchDefName( id, 'sticker' );
 		var isSpray = itemSchemaDef.name === 'spraypaint';
 		var isSprayPaint = itemSchemaDef.name === 'spray';
+		var isFanTokenOrShieldItem = itemSchemaDef.name && itemSchemaDef.name.indexOf( 'tournament_journal_' ) != -1;
 		
 		                                                                    
 		                                                       
-		if ( isSpray || isSprayPaint )
+		if ( isSpray || isSprayPaint || isFanTokenOrShieldItem )
 			return 'vmt://spraypreview_' + id;
 		else if ( isSticker )
 			return 'vmt://stickerpreview_' + id;
@@ -338,6 +370,8 @@ var ItemInfo = ( function() {
 	return {
 		GetRarityColor					: _GetRarityColor,
 		GetName							: _GetName,
+		GetFauxReplacementItemID		: _GetFauxReplacementItemID,
+		GetFauxItemIdForGraffiti		: _GetFauxItemIdForGraffiti,
         GetFormattedName                : _GetFormattedName,                                 
 		IsEquippedForCT					: _IsEquippedForCT,
 		IsEquippedForT					: _IsEquippedForT,
@@ -371,6 +405,7 @@ var ItemInfo = ( function() {
 		ItemsNeededToTradeUp			: _ItemsNeededToTradeUp,
 		             						                                      
 		ItemMatchDefName				: _ItemMatchDefName,
+		ItemDefinitionNameSubstrMatch	: _ItemDefinitionNameSubstrMatch,
 		GetItemDefinitionName			: _GetItemDefinitionName,
 		GetGifter						: _GetGifter,
 		GetSet							: _GetSet,

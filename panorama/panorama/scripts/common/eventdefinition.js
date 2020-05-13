@@ -55,7 +55,8 @@
     $.DefineEvent( 'CloseSubMenuContent', 0, 'no args', 'Closes up the submenu panel' );
     $.DefineEvent( 'NavigateToTab', 4, 'tab name, xml name, If its a tab, if you should add to stack', 'Closes up the submenu panel' );
                                                                                                                 
-    $.DefineEvent( 'InitializeTournamentsPage', 1, 'tournament ID', 'Loads the layout for a given tournament' );
+    $.DefineEvent( 'InitializeTournamentsPage', 1, 'tournament ID', 'Loads the layout for a given tournament for active tournament tab' );
+    $.DefineEvent( 'ShowActiveTournamentPage', 1, 'tab to show id', 'Opens active tournament page in the watch panel' );
     $.DefineEvent( 'RefreshPickemPage', 1, 'tournament ID', 'refreshed pickem data' );
 
                                                                                                                             

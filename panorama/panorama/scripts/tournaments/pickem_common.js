@@ -175,8 +175,13 @@ var PickemCommon = ( function()
 			elPanel._oPickemData.oInitData.oPickemType.UpdatePrediction.bind( undefined, elPanel )
 		);
 
-		elPanel._oPickemData.eventhandleinventoryUpdate = $.RegisterForUnhandledEvent( 
+		elPanel._oPickemData.eventhandlepurchaseUpdate = $.RegisterForUnhandledEvent( 
 			'PanoramaComponent_Store_PurchaseCompleted', 
+			elPanel._oPickemData.oInitData.oPickemType.PurchaseComplete.bind( undefined, elPanel )
+		);
+
+		elPanel._oPickemData.eventhandleinventoryUpdate = $.RegisterForUnhandledEvent(
+			'PanoramaComponent_MyPersona_InventoryUpdated', 
 			elPanel._oPickemData.oInitData.oPickemType.PurchaseComplete.bind( undefined, elPanel )
 		);
 
@@ -191,21 +196,33 @@ var PickemCommon = ( function()
 	{
 		$.UnregisterForUnhandledEvent('PanoramaComponent_MatchList_StateChange', elPanel._oPickemData.eventhandle );
 		$.UnregisterForUnhandledEvent('PanoramaComponent_MatchList_PredictionUploaded', elPanel._oPickemData.eventhandleprediction );
-		$.UnregisterForUnhandledEvent('PanoramaComponent_Store_PurchaseCompleted', elPanel._oPickemData.eventhandleinventoryUpdate );
+		$.UnregisterForUnhandledEvent( 'PanoramaComponent_Store_PurchaseCompleted', elPanel._oPickemData.eventhandlepurchaseUpdate );
+		$.UnregisterForUnhandledEvent('PanoramaComponent_MyPersona_InventoryUpdated', elPanel._oPickemData.eventhandleinventoryUpdate );
+
 	};
 
 	                         
 
-	var _UpdateImageForPick = function( oItemIdData, elItemImage, localTeamId )
+	var _UpdateImageForPick = function( oItemIdData, elItemImage, localTeamId, useSvg = false )
 	{
 		var bValidTeamID = localTeamId ? ( oItemIdData.itemid ? true : false ) : false;
 
 		if ( bValidTeamID )
 		{
-			elItemImage.itemid = oItemIdData.itemid;
+			if ( useSvg )
+			{
+				var teamTag = PredictionsAPI.GetTeamTag( localTeamId );
+				elItemImage.SetImage( 'file://{images}/tournaments/teams/' + teamTag + '.svg' );
+			}
+			else
+			{
+				elItemImage.itemid = oItemIdData.itemid;
+			}
+
 		}
 
 		elItemImage.SetHasClass( 'hidden', !bValidTeamID );
+		elItemImage.SetHasClass( 'teamlogo', useSvg )
 	};
 
 	var _UpdateCorrectPickState = function ( oGroupData, correctPicks, localTeamId, elPointsEarned, showOnlyNumbers )
@@ -232,6 +249,7 @@ var PickemCommon = ( function()
 
 	var _ShowPickItemNotOwnedWarning = function( isSectionActive, oGroupData, oItemIdData, elItemNotOwned, localTeamId )
 	{
+		
 		if ( isSectionActive && oGroupData.canpick && localTeamId )
 		{
 			if( oItemIdData.type === 'fakeitem' )
@@ -245,19 +263,55 @@ var PickemCommon = ( function()
 		return false;
 	};
 
-	var _SetPointsWorth = function( elLabel, points )
+	var _SetPointsWorth = function( elLabel, points, tournamentid, sectionindex )
 	{
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( tournamentid );
+		if ( tournamentNum >= 15 )
+		{
+			_SetTournamentSpecificRules( elLabel, sectionindex );
+			return;
+		}
+		
 		var pluralString = points === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
 		elLabel.SetDialogVariableInt( 'points', points );
 		elLabel.SetDialogVariable( 'plural', pluralString );
+	};
+
+	var _SetTournamentSpecificRules = function( elLabel, sectionindex )
+	{
+		if ( sectionindex === 0 )
+		{
+			elLabel.text = '#CSGO_TournamentChallenge_katowice2019_challengers_pickem';
+		}
+
+		if ( sectionindex === 1 )
+		{
+			elLabel.text = '#CSGO_TournamentChallenge_katowice2019_legends_pickem';
+		}
+
+		if ( sectionindex === 2 )
+		{
+			elLabel.text = '#CSGO_TournamentChallenge_katowice2019_quarterfinals_pickem';
+		}
+
+		if ( sectionindex === 3 )
+		{
+			elLabel.text = '#CSGO_TournamentChallenge_katowice2019_semifinals_pickem';
+		}
+
+		if ( sectionindex === 4 )
+		{
+			elLabel.text = '#CSGO_TournamentChallenge_katowice2019_grandfinal_pickem';
+		}
 	};
 
 	var _SetTeamImage = function ( tournamentId, elLogoImage, elTeam, useFakeItemId = '' )
 	{
 		var szImageToUse = null;
 		var yourItemId = PredictionsAPI.GetMyPredictionItemIDForTeamID( tournamentId, elTeam._oteamData.teamid );
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( tournamentId );
 
-		if (( !yourItemId || yourItemId === '0' || yourItemId === 0 ) && !useFakeItemId )
+		if ((( !yourItemId || yourItemId === '0' || yourItemId === 0 ) && !useFakeItemId ) || tournamentNum >= 15 )
 		{
 			szImageToUse = _GetTeamImage( elTeam );
 			elLogoImage.AddClass( 'barelogo' );
@@ -347,7 +401,8 @@ var PickemCommon = ( function()
 		var yourItemId = PredictionsAPI.GetMyPredictionItemIDForTeamID( tournamentId, userPickTeamID );
 
 		                                                                                             
-		if ( !yourItemId || yourItemId === '0' || yourItemId === 0 )
+		if ( !yourItemId || yourItemId === '0' || yourItemId === 0 ||
+			PickemCommon.GetTournamentIdNumFromString( tournamentId ) >= 15 )
 		{
 			yourItemId = PredictionsAPI.GetFakeItemIDToRepresentTeamID( tournamentId, userPickTeamID );
 			return { type:'fakeitem', itemid:yourItemId };
@@ -384,17 +439,34 @@ var PickemCommon = ( function()
 
 	var _UpdateActionBarBtns = function( elPanel, _funcListOfPicksWithNoOwnedItems, _funcMakePicksParams, _funcEnableApply )
 	{
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPanel._oPickemData.oInitData.tournamentid );
 		var elPurchase = elPanel.FindChildInLayoutFile( 'id-pickem-getitems' );
-		var listStoreIndex = _funcListOfPicksWithNoOwnedItems( elPanel );
-		var bShow = listStoreIndex.length > 0;
-		if( elPurchase.visible !== bShow )
-			elPurchase.TriggerClass( 'popup-capability-update-anim' );
-
-		elPurchase.visible = bShow;
-		_MouseOverEventsWithStickersToPurchase( elPurchase, 'id-pickem-getitems', listStoreIndex );
-		_EventsForPurchaseBtn( elPurchase, listStoreIndex );
-
 		var elApplyPicks = elPanel.FindChildInLayoutFile( 'id-pickem-apply' );
+
+		if ( tournamentNum >= 15 )
+		{
+			_UpdatePurchaseBtnForPass( elPurchase, tournamentNum );
+			_UpdateApplyBtnForPass( elPanel, elApplyPicks, tournamentNum, _funcMakePicksParams );
+		}
+		else
+		{
+			var listStoreIndex = _funcListOfPicksWithNoOwnedItems( elPanel );
+			var bShow = listStoreIndex.length > 0;
+
+			if ( elPurchase.visible !== bShow )
+				elPurchase.TriggerClass( 'popup-capability-update-anim' );
+
+			elPurchase.visible = bShow;
+			_MouseOverEventsWithStickersToPurchase( elPurchase, 'id-pickem-getitems', listStoreIndex );
+			_EventsForPurchaseBtn( elPurchase, listStoreIndex );
+
+			_EventsForApplyBtn( elPanel, elApplyPicks, _funcListOfPicksWithNoOwnedItems, _funcMakePicksParams );
+			_MouseOverEventsWithStickersToPurchase( elApplyPicks, 'id-pickem-apply', listStoreIndex );
+		}
+
+		  
+		                                                           
+		  
 		var bEnable = _funcEnableApply( elPanel );
 		elApplyPicks.visible = true;
 		elApplyPicks.SetHasClass( 'loop', bEnable );
@@ -406,8 +478,65 @@ var PickemCommon = ( function()
 		                                    
 
 		elApplyPicks.enabled = bEnable;
-		_EventsForApplyBtn( elPanel, elApplyPicks, _funcListOfPicksWithNoOwnedItems, _funcMakePicksParams );
-		_MouseOverEventsWithStickersToPurchase( elApplyPicks, 'id-pickem-apply', listStoreIndex );
+	};
+
+	var _UpdatePurchaseBtnForPass = function( elPurchase, tournamentNum )
+	{
+		elPurchase.visible = false;
+
+		var _ShowInpsectPopup = function( id )
+		{
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'',
+				'file://{resources}/layout/popups/popup_inventory_inspect.xml',
+				'itemid=' + id
+				+ '&' +
+				'inspectonly=false'
+				+ '&' +
+				'asyncworkitemwarning=no'
+				+ '&' +
+				'storeitemid=' + id,
+				'none'
+			);
+		};
+	
+		var _ActivatePass = function ( id )
+		{
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'',
+				'file://{resources}/layout/popups/popup_capability_decodable.xml',
+				'key-and-case=,' + id +
+				'&' + 'asyncworktype=decodeable'
+			);
+		};
+
+		                                                                                                
+		var id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum );
+		if ( !id || id === '0' )
+		{
+			elPurchase.visible = true;
+			
+			                                                              
+			id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum * -1 );
+			if ( !id || id === '0' )
+			{
+				                                                
+				id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
+				elPurchase.FindChildInLayoutFile( 'id-pickem-getitems-label' ).text = '#SFUI_ConfirmBtn_GetPassNow';
+				elPurchase.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id ) );
+				return;
+			}
+
+			elPurchase.FindChildInLayoutFile( 'id-pickem-getitems-label' ).text = '#SFUI_ConfirmBtn_ActivatePassNow';
+			elPurchase.SetPanelEvent( 'onactivate', _ActivatePass.bind( undefined, id ) );
+
+			return;
+		}
+	};
+
+	var _UpdateApplyBtnForPass = function( elPanel, elApplyPicks, tournamentNum, _funcMakePicksParams )
+	{
+		_EventsForApplyBtn( elPanel, elApplyPicks, function() { return []; }, _funcMakePicksParams, true );
 	};
 
 	var _MouseOverEventsWithStickersToPurchase = function( elButton, btnid, listStoreIndex )
@@ -450,10 +579,10 @@ var PickemCommon = ( function()
 		elPurchase.SetPanelEvent( 'onactivate', _OnActivatePurchase.bind( undefined, listStoreIndex ) );
 	};
 
-	var _EventsForApplyBtn = function( elPanel, elApplyBtn, _funcListOfPicksWithNoOwnedItems, _funcMakePicksParams )
+	var _EventsForApplyBtn = function( elPanel, elApplyBtn, _funcListOfPicksWithNoOwnedItems, _funcMakePicksParams, useFakeItems = false )
 	{
-		var _OnApplyPicks = function( elPanel, elApplyBtn)
-		{
+		var _OnApplyPicks = function( elPanel, elApplyBtn, applyImmediate = false )
+		{	
 			var popup = UiToolkitAPI.ShowCustomLayoutPopupParameters( 
 				'', 
 				'file://{resources}/layout/popups/popup_confirm_picks.xml',
@@ -467,7 +596,7 @@ var PickemCommon = ( function()
 			});
 
 			                                       
-			var oData = _funcMakePicksParams( elPanel );
+			var oData = _funcMakePicksParams( elPanel, useFakeItems );
 
 			if ( typeof popup._oPicksData !== 'object' )
 			{
@@ -477,9 +606,10 @@ var PickemCommon = ( function()
 			popup._oPicksData.args = oData.args;
 			popup._oPicksData.picksforconfirm = oData.idsForDisplayInConfimPopup;
 			popup._oPicksData.picksnoitems = alistTeams;
+			popup._oPicksData.applyImmediate = applyImmediate;
 		};
 
-		elApplyBtn.SetPanelEvent( 'onactivate', _OnApplyPicks.bind( undefined,elPanel, elApplyBtn ) );
+		elApplyBtn.SetPanelEvent( 'onactivate', _OnApplyPicks.bind( undefined,elPanel, elApplyBtn, useFakeItems ) );
 	};
 	
 	return {
@@ -502,7 +632,6 @@ var PickemCommon = ( function()
 		GetTeamItemDefIndex : _GetTeamItemDefIndex,
 		GetYourPicksItemIdData : _GetYourPicksItemIdData
 	};
-
 } )();
 
 ( function()

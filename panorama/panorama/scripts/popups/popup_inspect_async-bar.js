@@ -110,7 +110,7 @@ var InspectAsyncActionBar = ( function()
 		if ( m_worktype === 'decodeable' )
 		{
 			                                                                 
-			if ( ItemInfo.ItemMatchDefName( m_itemid, 'spray' ) )
+			if ( ItemInfo.ItemMatchDefName( m_itemid, 'spray' ) || ItemInfo.ItemDefinitionNameSubstrMatch(m_itemid, 'tournament_pass_') )
 			{
 				InventoryAPI.UseTool( m_itemid, '' );
 			}
@@ -157,7 +157,16 @@ var InspectAsyncActionBar = ( function()
 			return;
 		}
 
-		elOK.text = '#popup_'+m_worktype+'_button';
+		var sOkButtonText = '#popup_'+m_worktype+'_button';
+		if ( m_worktype === 'decodeable' )
+		{
+			var itemDefName = ItemInfo.GetItemDefinitionName( m_itemid );
+			if ( itemDefName && itemDefName.indexOf( "spray" ) != -1 )
+				sOkButtonText = sOkButtonText + "_graffiti";
+			else if ( itemDefName && itemDefName.indexOf( "tournament_pass_" ) != -1 )
+				sOkButtonText = sOkButtonText + "_fantoken";
+		}
+		elOK.text = sOkButtonText;
 		elOK.AddClass( m_okButtonClass );
 		
 		elOK.SetPanelEvent( 'onactivate', _OnAccept.bind( undefined, elPanel, funcGetSettingCallback, funcCallbackOnAction ) );

@@ -5,10 +5,23 @@ var PopupConfirmPickemPicks = ( function(){
     var m_timeoutHandle = false;
     var _Init = function()
     {
-                                                                                       
-        _ShowStickers();
-		_ShowTeams();
-		_ShowAllClearingMsg();
+                                                                                      
+        
+        var applyImmediate = $.GetContextPanel()._oPicksData.applyImmediate;
+
+
+        if ( !applyImmediate )
+        {
+            _ShowStickers();
+            _ShowTeams();
+            _ShowAllClearingMsg();
+        }
+        else
+        {
+            _ApplyPicks();
+        }
+
+        $.GetContextPanel().SetHasClass( 'apply-immediate', applyImmediate );
     };
 
     var _ShowStickers = function()
@@ -31,7 +44,6 @@ var PopupConfirmPickemPicks = ( function(){
                         scaling:"stretch-to-fit-preserve-aspect",
                         itemid: aPicksForConfirm[i]
                     } );
-
            }
         }
     };

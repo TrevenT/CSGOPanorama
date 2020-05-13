@@ -17,9 +17,9 @@
 			<Panel class="item-category">
 				<Button id="CategoryButton" class ="item-category-button">
 					<Label class="item-category__label" id="CategoryLabel"/>
-					<Image texturewidth="68" textureheight="68" class="item-category__image" id="CategoryImage" scaling="stretch-to-fit-x-preserve-aspect" >
+					<ItemImage texturewidth="68" textureheight="68" large="false" class="item-category__image" id="CategoryImage" scaling="stretch-to-fit-x-preserve-aspect" >
 						<Label class="item-category__cart-count only-visible-with-items" text="{d:num_in_cart}"/>
-					</Image>
+					</ItemImage>
 				</Button>
 				<Label id="SaleTagLabel"
 					class="item-category-saletag hidden" html="false"
@@ -33,8 +33,7 @@
 			                                             
 			<Panel class="tournament-store-header">
 				<Panel class="horizontal-center left-right-flow">
-					<Image id="TournamentLogo" class="tournament-logo"/>
-					<Panel class="top-bottom-flow vertical-center">
+					<Panel class="top-bottom-flow vertical-center horizontal-center">
 						<Label id="TournamentTitle" class="tournament-title" text="{s:tournament_name}"/>
 						<Button id="TournamentInfo" class="tournament-info">
 							<Image src="file://{images}/icons/ui/info.svg"/>
@@ -49,9 +48,9 @@
 				                                                        
 				<Panel class="other-purchases">
 					                                                       
-					<Panel class="other-purchases__button scaleimage" id="Org"/>
-					<Panel class="other-purchases__button" id="Capsules"/>
 					<Panel class="other-purchases__button" id="MegaBundle"/>
+					<Panel class="other-purchases__button" id="Capsules"/>
+					<Panel class="other-purchases__button scaleimage" id="Org"/>
 				</Panel>
 
 				                                    

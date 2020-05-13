@@ -9,6 +9,10 @@ var InspectModelImage = ( function (){
 
 	var _Init = function ( elPanel, itemId, funcGetSettingCallback)
 	{
+		                                                                      
+		if ( ItemInfo.ItemDefinitionNameSubstrMatch( itemId, 'tournament_journal_' ) )
+			itemId = ItemInfo.GetFauxReplacementItemID( itemId, 'graffiti' );
+
 		if ( !InventoryAPI.IsValidItemID( itemId ) )
 		{
 			return;

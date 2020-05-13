@@ -5,13 +5,17 @@
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/context_menus/context_menu_add_to_cart.js" />
+		
 	</scripts>
 	
 	<snippets>
 		<snippet name="Item">
 			<Panel class="item">
-				<ItemImage class="item__image" scaling="stretch-to-fit-x-preserve-aspect" id="ItemImage" />
+				<ItemImage class="item__image" scaling="stretch-to-fit-x-preserve-aspect" id="ItemImage" >
+					<Image class="item__image__inspect horizontal-center vertical-center" texturewidth="64" textureheight="-1" src="file://{images}/icons/ui/find.svg"/>
+				</ItemImage>
 				<Label class="item__item-name" text="{s:name}"/>
 				<Panel class="left-right-flow horizonatal-center full-width">
 					<Panel class="cart-controls">

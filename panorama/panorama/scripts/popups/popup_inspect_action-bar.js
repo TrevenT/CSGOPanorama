@@ -113,13 +113,16 @@ var InspectActionBar = ( function (){
 			return;
 		}
 
+		var isFanToken = ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_');
 		var isSticker = ItemInfo.ItemMatchDefName( id, 'sticker' );
+		var isSpraySealed = ItemInfo.IsSpraySealed( id );
 		var isEquipped = ( ItemInfo.IsEquippedForT( id ) || ItemInfo.IsEquippedForCT( id ) || ItemInfo.IsEquippedForNoTeam( id ) ) ? true : false;
 		
 		                                                 
 		if ( ItemInfo.IsEquippalbleButNotAWeapon( id ) ||
 			isSticker ||
-			ItemInfo.IsSpraySealed( id ) ||
+			isSpraySealed ||
+			isFanToken ||
 			isEquipped )
 		{
 			elMoreActionsBtn.AddClass( 'hidden' );
@@ -127,7 +130,7 @@ var InspectActionBar = ( function (){
 			if ( !isEquipped  )
 			{
 				elSingleActionBtn.RemoveClass( 'hidden' );
-				_SetUpSingleActionBtn( elPanel, id, ( isSticker || ItemInfo.IsSpraySealed( id )) );
+				_SetUpSingleActionBtn( elPanel, id, ( isSticker || isSpraySealed || isFanToken ) );
 			}
 
 			return;
@@ -173,7 +176,12 @@ var InspectActionBar = ( function (){
 	var _ShowWeaponAndCharacterModelBtns = function ( elPanel, id )
 	{
 		var list = _GetValidCharacterModels( id );
-		if( list && !ItemInfo.IsEquippalbleButNotAWeapon( id ) && !ItemInfo.ItemMatchDefName(id, 'sticker' ) && !ItemInfo.IsSpraySealed( id ))
+		if ( list && !ItemInfo.IsEquippalbleButNotAWeapon( id ) &&
+			!ItemInfo.ItemMatchDefName( id, 'sticker' ) &&
+			!ItemInfo.IsSpraySealed( id ) &&
+			!ItemInfo.ItemDefinitionNameSubstrMatch( id, "tournament_journal_" ) &&
+			!ItemInfo.ItemDefinitionNameSubstrMatch( id, "tournament_pass_" )
+		)
 		{
 			var hasAnims = CharacterAnims.ItemHasCharacterAnims(
 							list[0].team,

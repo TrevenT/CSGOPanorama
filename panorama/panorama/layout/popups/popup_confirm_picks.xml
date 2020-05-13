@@ -34,6 +34,10 @@
 			</Panel>
 		</Panel>
 
+		<Panel class="popup-confirm-appy-immediate-container">
+			<Label class="PopupMessage" text="#pickem_apply_immediate" html="true" />
+		</Panel>
+
 		<Panel class="PopupButtonRow">
 			<Panel class="PopupButtonRow">
 				 <Panel id="id-popup-confirm-spinner" class="Spinner hidden horizontal-center vertical-center"/>
@@ -42,7 +46,7 @@
 							class="PopupButton" 
 							text="#SFUI_MainMenu_ConfirmBan" 
 							onactivate="PopupConfirmPickemPicks.ApplyPicks();" />
-				<TextButton class="PopupButton" text="#GameUI_Close" onactivate="UIPopupButtonClicked()" />
+				<TextButton class="PopupButton" text="#Cancel_Button" onactivate="UIPopupButtonClicked()" />
 			</Panel>
 		</Panel>
 	

@@ -46,8 +46,7 @@ var MainMenuStore = ( function()
 						var elImagesContainer = elPanel.FindChildInLayoutFile( 'id-store-tournament-items-container' );
 						var itemTypes = [
 							'itemid_sticker',
-							'itemid_graffiti',
-							'itemid_megabundle'
+							'itemid_pass'
 						];
 						var offset = 78;
 
@@ -94,33 +93,34 @@ var MainMenuStore = ( function()
 						                                                                                       
 						                                                   
 					}
-				},
-				{
-					snippet_name: "TournamentGame",
-					load_func: function ( elPanel ) {
+				}
+				                             
+				    
+				   	                               
+				   	                                 
 
-						var elGoldTrophy = elPanel.FindChildInLayoutFile( 'StoreTournamentTrophyGold');
-						elGoldTrophy.SetSceneIntroRotation( 5, 22, -1 );
+				   		                                                                               
+				   		                                                
 
-						var schfnUpdateCountdown = function ( elPanelParam )
-						{
-							                                    
-							if ( !elPanelParam || !elPanelParam.IsValid() )
-								return;
+				   		                                                    
+				   		 
+				   			                                    
+				   			                                               
+				   				       
 
-							var elCountdown = elPanelParam.FindChildInLayoutFile( 'StorePanelTournamentGameCountdown' );
-							if ( !elCountdown )
-								return;
+				   			                                                                                            
+				   			                   
+				   				       
 
-							var secRemaining = PredictionsAPI.GetGroupRemainingPredictionSeconds( "global" );
-							elCountdown.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( secRemaining ) );
-							elCountdown.SetHasClass( 'hidden', ( secRemaining > 0 ) ? false : true );
-							$.Schedule( 30, schfnUpdateCountdown.bind( null, elPanelParam ) );
-						}
+				   			                                                                                 
+				   			                                                                                                   
+				   			                                                                         
+				   			                                                                  
+				   		 
 
-						$.Schedule( 0.1, schfnUpdateCountdown.bind( null, elPanel ) );
-					}
-				},
+				   		                                                              
+				   	 
+				     
 			];
 		}
 		itemsByCategory = _GetCoupons( itemsByCategory );

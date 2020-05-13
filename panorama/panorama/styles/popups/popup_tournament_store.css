@@ -8,7 +8,7 @@
 	width: 100%;
 	flow-children: none;
 	horizontal-align: center;
-	margin: 16px 0px;
+	margin: 8px 0px;
 }
 
 .tournament-store-header-seperator {
@@ -51,19 +51,22 @@ Label {
 }
 
 .tournament-logo {
-	height: 128px;
-	width: 128px;
+	height: 64px;
+	width: 64px;
 	margin-right: 20px;
 }
 
 .tournament-title {
-	font-size: 48px;
-	font-weight: light;
+	font-size: 24px;
+	font-weight: medium;
+	text-align:  center;
+	horizontal-align: center;
 }
 
 .tournament-info {
 	flow-children: right;
 	vertical-align: center;
+	horizontal-align: center;
 }
 
 .tournament-info Image {
@@ -108,7 +111,6 @@ Label {
 
 .team-purchases-block {
 	border-radius: 0px;
-	padding-bottom: 32px;
 	flow-children: down;
 	margin: 1px;
 }
@@ -129,6 +131,7 @@ Label {
 	width: 360px;
 	padding: 12px 0px;
 	background-color: rgba(0, 0, 0, 0.25);
+	height: 640px;
 }
 
    
