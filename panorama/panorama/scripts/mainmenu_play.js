@@ -722,7 +722,9 @@ var PlayMenu = ( function()
 	{
 		_CancelRotatingMapGroupSchedule();
 		
-		if ( m_gameModeSetting && m_gameModeSetting === "survival" )
+		if ( m_gameModeSetting && m_gameModeSetting === "survival"
+			&& m_mapSelectionButtonContainers && m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ]
+			&& m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ].Children() )
 		{
 			var btnSelectedMapGroup = m_mapSelectionButtonContainers[ m_activeMapGroupSelectionPanelID ].Children().filter( entry => entry.GetAttributeString( 'mapname', '' ) !== '' );
 
@@ -742,7 +744,7 @@ var PlayMenu = ( function()
 		if ( m_timerMapGroupHandler )
 		{
 			$.CancelScheduled( m_timerMapGroupHandler );
-			                                                                     
+			                                                                        
 			m_timerMapGroupHandler = null;
 		}
 	};
