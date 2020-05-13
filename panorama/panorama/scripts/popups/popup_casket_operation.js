@@ -1,18 +1,57 @@
 "use strict";
 
+var m_strOperation = '';
 var m_CasketOperationTimeoutScheduledHandle = null;
 var m_strShowSelectItemForCapabilityPopupCapability = '';
+var m_numSubjectItems = 1;
+var m_itemidCasket = '';
+var m_itemidSubject = '';
+var m_arrSubjectItemsRemaining = [];
+
+var _BIsBatchMode = function()
+{
+	if ( m_strShowSelectItemForCapabilityPopupCapability && ( m_strShowSelectItemForCapabilityPopupCapability === 'batch' ) )
+		return true;
+	else
+		return false;
+};
 
 var SetupPopup = function()
 {
-	var strOperation = $.GetContextPanel().GetAttributeString( "op", "" );
-	$.GetContextPanel().SetDialogVariable( "title", $.Localize( "#popup_casket_title_" + strOperation ) );
+	m_strOperation = $.GetContextPanel().GetAttributeString( "op", "" );
+	$.GetContextPanel().SetDialogVariable( "title", $.Localize( "#popup_casket_title_" + m_strOperation ) );
+
+	m_itemidCasket = $.GetContextPanel().GetAttributeString( "casket_item_id", "" );
 
 	m_strShowSelectItemForCapabilityPopupCapability = $.GetContextPanel().GetAttributeString( "nextcapability", "" );
 
 	                 
+	var itemidsList = $.GetContextPanel().GetAttributeString( "subject_item_id", "" );
+	ConfigurePopupFromItemsList( itemidsList );
+
+	                                                                                                     
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_ItemCustomizationNotification', OnItemCustomizationNotification );
+};
+
+var ConfigurePopupFromItemsList = function( itemidsList )
+{
+	m_arrSubjectItemsRemaining = itemidsList.split( "," );
+	
+	m_numSubjectItems = m_arrSubjectItemsRemaining.length;
+	$.GetContextPanel().SetDialogVariableInt( "count", m_numSubjectItems );
+	$( '#ItemsRemaining' ).visible = ( m_numSubjectItems > 1 );
+	$( '#PopupButtonRow' ).visible = _BIsBatchMode() && ( m_numSubjectItems > 1 );
+
+	var itemid = m_arrSubjectItemsRemaining.splice( 0, 1 )[0];
+	m_itemidSubject = itemid;
+
+	if ( !InventoryAPI.GetItemRarityColor( m_itemidSubject ) ) {
+		                                                     
+		PanelTimedOut();
+		return;
+	}
+
 	var elItem = $( "#CasketItemPanel" );
-	var itemid = $.GetContextPanel().GetAttributeString( "subject_item_id", "" );
 	elItem.SetAttributeString( 'itemid', itemid );
 	elItem.BLoadLayoutSnippet( "LootListItem" );
 
@@ -27,10 +66,12 @@ var SetupPopup = function()
     
 	m_CasketOperationTimeoutScheduledHandle = $.Schedule( 10, PanelTimedOut );
 	var schOperation = 0.75;
-	if ( strOperation === 'loadcontents' ) {
+	if ( m_strOperation === 'loadcontents' ) {
 		schOperation = 0.5;
-	} else if ( ( strOperation === 'add' ) && m_strShowSelectItemForCapabilityPopupCapability ) {
+	} else if ( ( m_strOperation === 'add' ) && m_strShowSelectItemForCapabilityPopupCapability ) {
 		schOperation = 0.25;
+	} else if ( _BIsBatchMode() ) {
+		schOperation = 0.2;
 	}
 	          
 	                                                                           
@@ -41,10 +82,7 @@ var SetupPopup = function()
 			                       
 	 
 	          
-    $.Schedule( schOperation, LaunchOperation );
-
-	                                                                                                     
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_ItemCustomizationNotification', OnItemCustomizationNotification );
+	$.Schedule( schOperation, LaunchOperation );
 };
 
 var PanelTimedOut = function()
@@ -88,9 +126,37 @@ var _TeardownPreviousInventoryCapabilitiesPopup = function()
 	$.DispatchEvent( 'CapabilityPopupIsOpen', false );
 };
 
+function OnRequestCancelBatch()
+{
+	                                                                                                                                         
+	m_arrSubjectItemsRemaining = [];
+}
+
 function OnItemCustomizationNotification ( numericType, type, itemid )
 {
 	_CancelCasketOperationTimeoutScheduledHandle();
+
+	  
+	                        
+	  
+	switch ( type )
+	{
+	case 'casket_added':
+	case 'casket_removed':
+		if ( _BIsBatchMode() ) {
+			if ( m_arrSubjectItemsRemaining.length > 0 ) {                               
+				var strItemIDs = m_arrSubjectItemsRemaining.join( "," );
+				ConfigurePopupFromItemsList( strItemIDs );
+			} else {                                  
+				_ClosePopUp();
+			}
+			return;
+		}
+	}
+
+	  
+	                         
+	  
 	_ClosePopUp();
 
 	switch ( type )
@@ -115,8 +181,10 @@ function OnItemCustomizationNotification ( numericType, type, itemid )
 			_TeardownPreviousInventoryCapabilitiesPopup();
 			$.DispatchEvent( "ShowSelectItemForCapabilityPopup", m_strShowSelectItemForCapabilityPopupCapability, itemid, '' );
 		}
-		else  {                                                                          
-			$.DispatchEvent( 'PanoramaComponent_MyPersona_InventoryUpdated' );
+		else  {                                                            
+			$.DispatchEvent( "PromptShowSelectItemForCapabilityPopup",
+				'#popup_casket_title_prompt_bulkstore', '#popup_casket_message_prompt_bulkstore',
+				'casketstore', itemid, '' );
 		}
 		break;
 	case 'casket_removed':
@@ -145,17 +213,14 @@ function OnItemCustomizationNotification ( numericType, type, itemid )
 
 function LaunchOperation()
 {
-	var strOperation = $.GetContextPanel().GetAttributeString( "op", "" );
-	var strCasketItemID = $.GetContextPanel().GetAttributeString( "casket_item_id", "" );
-	var strSubjectItemID = $.GetContextPanel().GetAttributeString( "subject_item_id", "" );
 	                                                                                                                   
 
 	var nOpRequestNumber = 0;
-	switch ( strOperation )
+	switch ( m_strOperation )
 	{
 		case "add": nOpRequestNumber = 1; break;
 		case "remove": nOpRequestNumber = -1; break;
 	}
-	InventoryAPI.PerformItemCasketTransaction( nOpRequestNumber, strCasketItemID, strSubjectItemID );
+	InventoryAPI.PerformItemCasketTransaction( nOpRequestNumber, m_itemidCasket, m_itemidSubject );
 }
 

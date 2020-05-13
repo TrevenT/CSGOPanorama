@@ -35,10 +35,15 @@
 		<Panel class="horizontal-center" id="CasketItemPanel"/>
 
 		                                                                                                     
-		<Panel id="Spinner" class="Spinner" />
+		<Panel class="horizontal-center left-right-flow">
+			<Label html="true" id="ItemsRemaining" text="#CSGO_Recipe_Count_Items_Remaining"
+				class="item-tile__name top-padding right-padding vertical-center" />
+			<Panel id="Spinner" class="Spinner" />
+		</Panel>
 
 
-		<Panel class="PopupButtonRow">
+		<Panel class="PopupButtonRow" id="PopupButtonRow">
+			<TextButton class="PopupButton" text="#Cancel" onactivate="OnRequestCancelBatch()" />
 			                                                                                
                                                                                                          
 		</Panel>

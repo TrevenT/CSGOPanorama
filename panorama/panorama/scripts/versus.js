@@ -15,6 +15,7 @@ var Versus = ( function()
 	var _m_elPreviewPanel_EnemyTeam;
 	var _m_elWipe;
 	var _m_elContentRoot;
+	var _m_elMovie;
 
 	var _m_sTeamName;		                                  
 	var _m_oPlayersData;	                                            
@@ -71,6 +72,7 @@ var Versus = ( function()
 		
 		_m_elWipe = $.CreatePanel( "Panel", _m_elContentRoot, 'versus-wipe' );
 
+		_m_elMovie = _m_cP.FindChildTraverse( "id-vs-movie" );
 
 		             
 		_m_elMyTeam.AddClass( _m_sTeamName );
@@ -242,6 +244,9 @@ var Versus = ( function()
 		if ( !_Init( teamOverride ) )
 			return;
 
+		                                 
+		_m_elMovie.SetMovie( "file://{resources}/videos/vs_bg.webm" );
+
 		for ( var i = 0; i < _m_oScene[ 'numModels']; i++ )
 		{
 			_AddCharacter( i, _m_sTeamName );
@@ -391,6 +396,8 @@ var Versus = ( function()
 			{
 
 				_m_cP.RemoveClass( 'vs-show' );
+				                     
+				_m_elMovie.SetMovie( "" );
 
 				_m_bInitialized = false;
 

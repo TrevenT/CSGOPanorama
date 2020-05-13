@@ -742,6 +742,8 @@ var InventoryPanel = ( function (){
 		capability : '',
 		initialItemId :'',
 		secondaryItemId : '',
+		multiselectItemIds : {},		               
+		multiselectItemIdsArray : [],	                 
 		popupVisible : false
 	};
 
@@ -749,7 +751,23 @@ var InventoryPanel = ( function (){
 	{
 		return _SelectedCapabilityInfo;
 	};
-	
+
+	var _PromptShowSelectItemForCapabilityPopup = function( titletxt, messagetxt, capability, itemid, itemid2 )
+	{
+		UiToolkitAPI.ShowGenericPopupOkCancel(
+			$.Localize( titletxt ),
+			$.Localize( messagetxt ),
+			'',
+			function()
+			{
+				$.DispatchEvent( "ShowSelectItemForCapabilityPopup", capability, itemid, itemid2 );
+			},
+			function()
+			{
+			}
+		);
+	};
+
 	var _ShowSelectItemForCapabilityPopup = function( capability, itemid, itemid2 )
 	{
 		                                                                  
@@ -763,6 +781,8 @@ var InventoryPanel = ( function (){
 		_SelectedCapabilityInfo.capability = capability;
 		_SelectedCapabilityInfo.initialItemId = itemid;
 		_SelectedCapabilityInfo.secondaryItemId = itemid2;
+		_SelectedCapabilityInfo.multiselectItemIds = {};
+		_SelectedCapabilityInfo.multiselectItemIdsArray = [];
 		_SelectedCapabilityInfo.popupVisible = true;
 
 		_UpdatePopup( itemid, capability );
@@ -802,10 +822,45 @@ var InventoryPanel = ( function (){
 			_GetSelectedSort( null ),
 			capabilityFilter
 		);
-		_SetCapabilityPopupTitle( id, capability );
+
+		_SetUpCasketPopup( capability, elList );
+		_SetCapabilityPopupTitle( id, capability, elList );
 	};
 
-	var _SetCapabilityPopupTitle = function( id, capability )
+	var _SetUpCasketPopup = function( capability, elList )
+	{
+		var elActionBar = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile( 'CapabilityPopupActionBar' );
+		
+		if ( capability === "casketstore" || capability === "casketretrieve" )
+		{
+			elList.SetAttributeInt( "capability_multistatus_selected", 1 );
+
+
+			if ( !elActionBar )
+			{
+				elActionBar = $.CreatePanel( 'Panel', _m_elSelectItemForCapabilityPopup, 'CapabilityPopupActionBar', 
+					{ class: "content-controls-actions-bar" }
+				);
+				elActionBar.BLoadLayoutSnippet( 'CapabilityActionBar' );
+			}
+			
+			elList.SetHasClass( 'inv-item-list-fill-height-flow', true );
+			_UpdateMultiSelectDisplay( elActionBar.FindChildInLayoutFile( 'CapabilityPopupMultiStatus' ) );
+		}
+		else
+		{
+			                                                                     
+			elList.SetAttributeInt( "capability_multistatus_selected", 0 );
+			if ( elActionBar )
+			{
+				elActionBar.DeleteAsync( 0.0 );
+			}
+
+			elList.SetHasClass( 'inv-item-list-fill-height-flow', false );
+		}
+	};
+
+	var _SetCapabilityPopupTitle = function( id, capability, elList )
 	{
 		                                      
 		var elPrefixString = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile('CapPrefixItemLabel');
@@ -844,6 +899,83 @@ var InventoryPanel = ( function (){
 		var elLabel = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile('CapItemName');
 		elLabel.text = ItemInfo.GetName(id);
 	};
+
+	var _UpdateSelectItemForCapabilityPopup = function ( capability, itemid, bSelected )
+	{
+		if ( !_m_elSelectItemForCapabilityPopup || !_m_elSelectItemForCapabilityPopup.IsValid() ) return false;
+		
+		var elMultiItemPortion = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile( 'CapabilityPopupMultiStatus' );
+		if ( !elMultiItemPortion || !elMultiItemPortion.IsValid() ) return false;
+
+		if ( _SelectedCapabilityInfo.capability !== capability ) return false;
+		if ( !itemid ) return false;
+
+		if ( bSelected ) {
+			if ( !_SelectedCapabilityInfo.multiselectItemIds.hasOwnProperty( itemid ) ) {
+				_SelectedCapabilityInfo.multiselectItemIds[ itemid ] = bSelected;
+				_SelectedCapabilityInfo.multiselectItemIdsArray.push( itemid );
+			}
+		} else {
+			if ( _SelectedCapabilityInfo.multiselectItemIds.hasOwnProperty( itemid ) ) {
+				delete _SelectedCapabilityInfo.multiselectItemIds[ itemid ];
+				_SelectedCapabilityInfo.multiselectItemIdsArray.splice( _SelectedCapabilityInfo.multiselectItemIdsArray.indexOf( itemid ), 1 );
+			}
+		}
+
+		_UpdateMultiSelectDisplay( elMultiItemPortion );
+
+		return true;
+	};
+
+	var _UpdateMultiSelectDisplay = function( elMultiItemPortion )
+	{
+		elMultiItemPortion.SetDialogVariableInt( 'count', _SelectedCapabilityInfo.multiselectItemIdsArray.length );
+		elMultiItemPortion.FindChildInLayoutFile( 'CapabilityPopupMultiStatusBtn' ).enabled = ( _SelectedCapabilityInfo.multiselectItemIdsArray.length > 0 );
+	};
+
+	var _ProceedForMultiStatusCapabilityPopup = function()
+	{
+		var capability = _SelectedCapabilityInfo.capability;
+		var arrItemIDs = _SelectedCapabilityInfo.multiselectItemIdsArray;
+		_CloseSelectItemForCapabilityPopup();
+		                                                                      
+
+		                                                                 
+		$.DispatchEvent( 'ContextMenuEvent', '' );
+		$.DispatchEvent( 'HideSelectItemForCapabilityPopup' );
+		$.DispatchEvent( 'UIPopupButtonClicked', '' );
+		$.DispatchEvent( 'CapabilityPopupIsOpen', false );
+
+		if ( arrItemIDs.length <= 0 ) return;
+
+		switch ( capability )
+		{
+		case 'casketretrieve':
+			var strItemIDs = arrItemIDs.join( "," );
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'', 
+				'file://{resources}/layout/popups/popup_casket_operation.xml',
+				'op=remove' +
+				'&nextcapability=batch' +
+				'&spinner=1' +
+				'&casket_item_id=' + _SelectedCapabilityInfo.initialItemId +
+				'&subject_item_id=' + strItemIDs
+			);
+			break;
+		case 'casketstore':
+			var strItemIDs = arrItemIDs.join( "," );
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'', 
+				'file://{resources}/layout/popups/popup_casket_operation.xml',
+				'op=add' +
+				'&nextcapability=batch' +
+				'&spinner=1' +
+				'&casket_item_id=' + _SelectedCapabilityInfo.initialItemId +
+				'&subject_item_id=' + strItemIDs
+			);
+			break;
+		}
+	}
 
 	var _SetIsCapabilityPopUpOpen = function( isOpen )
 	{
@@ -1098,7 +1230,10 @@ var InventoryPanel = ( function (){
 		NavigateToTab: _NavigateToTab,
 		UpdateActiveItemList: _UpdateActiveItemList,
 		OnReadyForDisplay: _OnReadyForDisplay,
+		PromptShowSelectItemForCapabilityPopup: _PromptShowSelectItemForCapabilityPopup,
 		ShowSelectItemForCapabilityPopup: _ShowSelectItemForCapabilityPopup,
+		UpdateSelectItemForCapabilityPopup: _UpdateSelectItemForCapabilityPopup,
+		ProceedForMultiStatusCapabilityPopup : _ProceedForMultiStatusCapabilityPopup,
 		CloseSelectItemForCapabilityPopup: _CloseSelectItemForCapabilityPopup,
 		CloseLoadout: _CloseLoadout,
 		GetCapabilityInfo: _GetCapabilityInfo,
@@ -1127,7 +1262,9 @@ var InventoryPanel = ( function (){
 	$.RegisterEventHandler( 'UnreadyForDisplay', elJsInventory, InventoryPanel.ClosePopups );
 	$.RegisterEventHandler( 'Cancelled', elJsInventory, InventoryPanel.ClosePopups );
 
+	$.RegisterForUnhandledEvent('PromptShowSelectItemForCapabilityPopup', InventoryPanel.PromptShowSelectItemForCapabilityPopup );
 	$.RegisterForUnhandledEvent('ShowSelectItemForCapabilityPopup', InventoryPanel.ShowSelectItemForCapabilityPopup );
+	$.RegisterForUnhandledEvent( 'UpdateSelectItemForCapabilityPopup', InventoryPanel.UpdateSelectItemForCapabilityPopup );
 	$.RegisterForUnhandledEvent( 'HideSelectItemForCapabilityPopup', InventoryPanel.CloseSelectItemForCapabilityPopup );
 	$.RegisterForUnhandledEvent( 'CapabilityPopupIsOpen', InventoryPanel.SetIsCapabilityPopUpOpen );
 	$.RegisterForUnhandledEvent( 'RefreshActiveInventoryList', InventoryPanel.InventoryUpdated );

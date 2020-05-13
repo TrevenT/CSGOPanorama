@@ -61,9 +61,11 @@
 
 	<Panel class="vs_root">
 		<CSGOBlurTarget id="vs-blurtarget" class="blur-target" blurrects="id-vs-content-container">
+			                                                                                                               
+			                     
 			<Movie
+				id="id-vs-movie"
 				class="full-width full-height"
-				src="file://{resources}/videos/vs_bg.webm" 
 				repeat="true"
 				autoplay="onload"  />
 

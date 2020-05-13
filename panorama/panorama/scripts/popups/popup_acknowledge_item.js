@@ -51,9 +51,15 @@ var AcknowledgeItems = ( function()
 		var elLabel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemLabel' );
 		elLabel.text = ItemInfo.GetName( item.id );
 
+		                                                        
+		var defName = InventoryAPI.GetItemDefinitionName( item.id );
+
 		var elTitle = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemTitle' );
 		var titleSuffex = isOperationReward ? 'quest_reward' : item.type;
-		elTitle.text = $.Localize( '#popup_title_' + titleSuffex );
+		if ( defName === 'casket' && item.type === 'nametag_add' )
+			elTitle.text = $.Localize( '#CSGO_Tool_Casket_Tag' );
+		else
+			elTitle.text = $.Localize( '#popup_title_' + titleSuffex );
 
 		if ( isOperationReward )
 		{

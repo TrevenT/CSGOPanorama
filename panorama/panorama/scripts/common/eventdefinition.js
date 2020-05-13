@@ -74,7 +74,9 @@
                                                                                                                       
     $.DefineEvent( 'FriendInvitedFromContextMenu', 1, 'xuid', 'invite friend from the playercard. Make the invite anim snow immediately instead of waiting for the callback that can take a long time.' );
     $.DefineEvent( 'CapabilityPopupIsOpen', 1, 'bActive', 'User is using the name tag or opening a case, or stickering.  Using one of the capabilites' );
+    $.DefineEvent( 'PromptShowSelectItemForCapabilityPopup', 5, 'titletxt,msgtxt,capability, itemid, itemid2', 'Show popup in Inventory before dispatching ShowSelectItemForCapabilityPopup' );
     $.DefineEvent( 'ShowSelectItemForCapabilityPopup', 3, 'capability, itemid, itemid2', 'Show popup in Inventory that allow you to select a second item for a capability that requires 2 items' );
+    $.DefineEvent( 'UpdateSelectItemForCapabilityPopup', 3, 'capability, itemid, bSelected', 'Update this popup in inventory' );
     $.DefineEvent( 'HideSelectItemForCapabilityPopup', 0, '', 'Hide this popup in inventory' );
     $.DefineEvent( 'ShowLoadoutForItem', 3, 'slot', 'subslot', 'team', 'Open loadout panel for an item' );
     $.DefineEvent( 'ShowAcknowledgePopup', 2, 'updatetype, itemid', 'show acknowledge popup, also takes params for when an item is updated but does not need to be acknowledged like after using a nametag' );

@@ -35,5 +35,9 @@
 		<Panel id="StickersOnWeapon" class="item-tile__stickers">
 			                                        
 		</Panel>
+		<Panel class="item-tile__multi-select">
+			<Image id="IconMultiSelect" texturewidth="32" textureheight="32" src="file://{images}/icons/ui/check.svg" />
+		</Panel>
+		
 	</Panel>
 </root>

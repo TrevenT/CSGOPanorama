@@ -17,6 +17,12 @@ InventoryItemList
 	background-color: contentPanelBackground;
 }
 
+InventoryItemList.inv-item-list-fill-height-flow,
+.mainmenu-content__container InventoryItemList.inv-item-list-fill-height-flow
+{
+	height: fill-parent-flow( 1 );
+}
+
 .mainmenu-content__container .loadout--visible InventoryItemList,
 .mainmenu-content__container .crafting-items InventoryItemList
 {

@@ -91,6 +91,19 @@
 	height: 24px;
 }
 
+.inv-popup-rightextra-label
+{
+	margin-right: 8px;
+}
+
+.content-navbar__extra-buttons.inv-popup-rightextra
+{
+	width: fill-parent-flow( 1.0 );
+	horizontal-align: right;
+	flow-children: left;
+	margin-right: 48px;
+}
+
 .inv-category__empty-list-text
 {
 	max-width: 512px;

@@ -83,7 +83,7 @@
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( rgba(75, 75, 75, 0.75), to(rgba(175, 175, 175, .75) ) );
 	box-shadow: rgba(0, 0, 0, 0.25) -2px -2px 4px 4px;
 
-	transition-property: box-shadow, border;
+	transition-property: box-shadow, border, background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -92,23 +92,18 @@
 {
 	width:height-percentage( 120%);
 	height: 40%;
-
 	vertical-align:top;
 	horizontal-align:left;
-
 	position: 5% 5% 0px;
-
 	padding-left: 6px;
-
 	opacity: 0.2;
 }
-
 
 .item-tile:hover:not(.item-tile:disabled) .item-tile__bg
 {
 	box-shadow: rgba(0, 0, 0, 0.75) -2px -2px 8px 4px;
 
-	transition-property: box-shadow;
+	transition-property: box-shadow, border, background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 	sound: "UIPanorama.inventory_item_rollover";
@@ -118,7 +113,7 @@
 {
 	border: 4px solid white;
 
-	transition-property: border;
+	transition-property: box-shadow, border, background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -130,6 +125,38 @@
 	transition-property: opacity;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.item-tile__multi-select
+{
+	visibility: collapse;
+	opacity: 0;
+	y: 40px;
+	horizontal-align: center;
+	background-color: rgba(252, 252, 252, 0.61);
+	padding: 8px;
+	border-radius: 50%;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.item-tile__multi-select Image
+{
+	wash-color: rgb(31, 31, 31);
+}
+
+.item-tile.capability_multistatus_selected .item-tile__multi-select
+{
+	visibility: visible;
+	opacity: 1;
+}
+
+.item-tile.capability_multistatus_selected .item-tile__bg,
+.item-tile.capability_multistatus_selected .item-tile__image
+{
+	brightness: .3;
 }
 
 .item-tile__rarity

@@ -14,7 +14,6 @@
 	horizontal-align: center;
 }
 
-
 #NameableItemModel
 {
 	transition-property: brightness;
@@ -105,3 +104,11 @@
 		brightness: 1;
 	}
 }
+
+                                                              
+.isstorageunit .popup-nameable__model,
+.isstorageunit #NameableRemoveBtn
+{
+	visibility: collapse;
+}
+

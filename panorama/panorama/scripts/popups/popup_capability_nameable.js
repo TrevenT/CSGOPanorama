@@ -24,6 +24,10 @@ var CapabilityNameable = ( function()
 		elModel.SetCameraPreset( 2, true );
 		m_elNameDisplay.RemoveClass( 'hidden' );
 
+		                                     
+		var defName = InventoryAPI.GetItemDefinitionName( m_itemId );
+		$.GetContextPanel().SetHasClass( 'isstorageunit', ( defName === 'casket' ) );
+
 		_SetUpPanelElements();
 		_SetUpNameTagModel();
 
@@ -151,13 +155,7 @@ var CapabilityNameable = ( function()
 		m_elRemoveConfirm.SetPanelEvent( 'onactivate',
 			_OnRemoveConfirm.bind( undefined, itemId ) );
 
-		var bCanRemoveName = hasName;
-		if ( bCanRemoveName ) {
-			var defName = InventoryAPI.GetItemDefinitionName( itemId );
-			if ( defName === 'casket' )
-				bCanRemoveName = false;
-		}
-		m_elRemoveConfirm.SetHasClass( 'hidden', !bCanRemoveName );
+		m_elRemoveConfirm.SetHasClass( 'hidden', !hasName );
 		m_elTextEntry.SetFocus();
 		m_elTextEntry.SetMaxChars( 20 );
 		m_elTextEntry.text = _SetDefaultTextForTextEntry( hasName, itemId );

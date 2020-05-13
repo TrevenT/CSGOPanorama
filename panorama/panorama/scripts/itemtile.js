@@ -26,6 +26,7 @@ var ItemTile = ( function()
 		_TintSprayImage( id );
 		_DisableTile( id );
 		_SetBackground( id );
+		_SetMultiSelect( id );
 
 		                                                               
 		                                                       
@@ -76,6 +77,16 @@ var ItemTile = ( function()
 			elTeamTile.visible = false;
 		}
 	}
+
+	var _SetMultiSelect = function( id )
+	{
+		var bSelectedInMultiSelect = ( $.GetContextPanel().GetParent() &&
+			$.GetContextPanel().GetParent().GetAttributeInt( "capability_multistatus_selected", 0 ) &&
+			InventoryPanel.GetCapabilityInfo().multiselectItemIds &&
+			InventoryPanel.GetCapabilityInfo().multiselectItemIds.hasOwnProperty( id ) );
+		
+		$.GetContextPanel().SetHasClass( 'capability_multistatus_selected', bSelectedInMultiSelect );
+	};
 
 	                             
 	    
@@ -244,11 +255,19 @@ var ItemTile = ( function()
 			}
 			else if ( capabilityInfo.capability === 'casketretrieve' )
 			{
-				_CapabilityItemRetrieveFromCasketAction( capabilityInfo.initialItemId, id );
+				$.GetContextPanel().ToggleClass( 'capability_multistatus_selected' );
+				$.DispatchEvent( 'UpdateSelectItemForCapabilityPopup', capabilityInfo.capability, id,
+					$.GetContextPanel().BHasClass( 'capability_multistatus_selected' )
+					);
+				                                                                               
 			}
 			else if ( capabilityInfo.capability === 'casketstore' )
 			{
-				_CapabilityPutIntoCasketAction( capabilityInfo.initialItemId, id, capabilityInfo.capability );
+				$.GetContextPanel().ToggleClass( 'capability_multistatus_selected' );
+				$.DispatchEvent( 'UpdateSelectItemForCapabilityPopup', capabilityInfo.capability, id,
+					$.GetContextPanel().BHasClass( 'capability_multistatus_selected' )
+					);
+				                                                                                                 
 			}
 
 			return;

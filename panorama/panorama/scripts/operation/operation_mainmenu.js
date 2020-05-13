@@ -335,12 +335,23 @@ var OperationMainMenu = ( function()
 		oData.controlBtnNext.enabled = oData.activeIndex < oData.oCallbackData.length - 1;
 	};
 
+	var _ShowMainMenu = function()
+	{
+		var moviePanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-upsell-movie' );
+		moviePanel.SetMovie( "file://{resources}/videos/op9_mainmenu.webm" );
+
+		_CheckUsersOperationStatus();
+	};
+
 	var _HideMainMenu = function()
 	{
 		if ( OperationMissionCard )
 		{
 			OperationMissionCard.CancelUnlockTimer();
 		}
+
+		var moviePanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-upsell-movie' );
+		moviePanel.SetMovie( "" );
 	};
 
 	                    
@@ -526,6 +537,7 @@ var OperationMainMenu = ( function()
 		OnInventoryUpdated: _OnInventoryUpdated,
 		CheckUsersOperationStatus: _CheckUsersOperationStatus,
 		OpenOperationHub: _OpenOperationHub,
+		ShowMainMenu: _ShowMainMenu,
 		HideMainMenu: _HideMainMenu,
 		OnMissionSelectPopupBtnPress: _OnMissionSelectPopupBtnPress
 	};
@@ -536,7 +548,7 @@ var OperationMainMenu = ( function()
                              
 ( function()
 {
-	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', OperationMainMenu.CheckUsersOperationStatus );
+	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', OperationMainMenu.ShowMainMenu );
 	$.RegisterForUnhandledEvent( 'CSGOHideMainMenu', OperationMainMenu.HideMainMenu );
 	OperationMainMenu.Init();
 } )();

@@ -57,7 +57,9 @@
 	<Panel class="op-mainmenu hidden MainMenuModeOnly" onload="">
 		<Panel id="id-op-mainmenu-upsell" class="op-mainmenu__upsell-container" hittest="true" onactivate="">
 			<Panel id="id-op-mainmenu-upsell-bg" class="full-width full-height" blurrects="id-op-mainmenu-upsell-btns-container">
-				<Movie class="op-mainmenu__upsell__movie" src="file://{resources}/videos/op9_mainmenu.webm" controls="none" repeat="true" autoplay="onload" />
+				                                                                 
+				                                                                        
+				<Movie id="id-op-mainmenu-upsell-movie" class="op-mainmenu__upsell__movie" controls="none" repeat="true" autoplay="onload" />
 			</Panel>
 			<Panel class="op-mainmenu__title-container ">
 				<Label class="op-mainmenu__title__prefix" text="#XP_Bonus_RankUp_9"/>
