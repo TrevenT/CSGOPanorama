@@ -45,9 +45,11 @@
 
 .friendlobby__row-name
 {
+	vertical-align: center;
+	padding: 0px 4px 0px 0px;
 	flow-children: right;
 	height: fit-children;
-	width: fit-children;
+	width: 100%;
 }
 
 .friendlobby__row-left
@@ -61,21 +63,21 @@
 {
 	horizontal-align: left;
 	vertical-align: center;
-	margin: 0px 8px 0px 0px;
+	padding: 0px 8px 0px 0px;
 	opacity: .5;
 }
 
 .friendlobby__row__icon-flag
 {
 	vertical-align: center;
-	margin: 0px 0px 0px 8px;
-	width: 36px;
+	padding: 0px 8px 0px 0px;
 	height: 20px;
 }
 
 .friendlobby__row__icon-skillgroup
 {
 	vertical-align: center;
+	padding: 0px 8px 0px 0px;
 	visibility: visible;
 }
 
@@ -89,7 +91,7 @@
 
 #FriendLobbyCloseButton
 {
-	margin: 0px 0px 0px 8px;
+	margin: 0px;
 	height: 20px;
 	width: 20px;
 }
@@ -137,6 +139,12 @@
 	text-overflow: ellipsis;
 	font-weight: normal;
 	color: white;
+}
+
+#JsFriendLobbyLeaderName
+{
+	width: 100%;
+	max-height: 20px;
 }
 
 .friendlobby-avatar__Image

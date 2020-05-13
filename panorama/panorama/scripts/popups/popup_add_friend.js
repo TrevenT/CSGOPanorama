@@ -117,7 +117,7 @@ var PopupAddFriend = ( function(){
 	{
 		var elTile = $.GetContextPanel().FindChildTraverse( 'JsPopupFriendTile' );
 
-		if ( xuid === elTile.GetAttributeString( 'xuid', '' ))
+		if ( elTile.IsValid() && ( xuid === elTile.GetAttributeString( 'xuid', '' )))
 		{
 			friendTile.Init( elTile ); 
 		}
