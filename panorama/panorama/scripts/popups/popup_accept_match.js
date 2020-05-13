@@ -209,6 +209,7 @@ var PopupAcceptMatch = ( function(){
 	                                                                                                          
 	  
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Lobby_ReadyUpForMatch', PopupAcceptMatch.ReadyForMatch );
+	$.RegisterForUnhandledEvent( 'MatchAssistedAccept', PopupAcceptMatch.OnAcceptMatchPressed );
 
 	  
 	           
