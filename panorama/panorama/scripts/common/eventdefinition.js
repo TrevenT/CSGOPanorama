@@ -26,7 +26,7 @@
     $.DefineEvent( 'OpenPlayMenu', 0, 'no args', 'opens the play menu from anywhere. EXAMPLE from party menu settings button from client' );
     $.DefineEvent( 'OpenInventory', 0, 'no args', 'opens the inventory menu from anywhere.' );
     $.DefineEvent( 'OpenWatchMenu', 0, 'no args', 'opens the watch menu from anywhere.' );
-    $.DefineEvent( 'OpenSidebarPanel', 0, 'no args', 'open the sidebar from a abutton click from anywhere' );
+    $.DefineEvent( 'OpenSidebarPanel', 1, 'auto close', 'open the sidebar from a abutton click from anywhere pass setting if you wasnt it to autoclose' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
 
     $.DefineEvent( 'EndOfMatch_ShowNext', 0, '', "Notify the EndOfMatch controller to proceed to the next panel." );
@@ -61,7 +61,10 @@
                                                                                                                 
     $.DefineEvent( 'InitializeTournamentsPage', 1, 'tournament ID', 'Loads the layout for a given tournament for active tournament tab' );
     $.DefineEvent( 'ShowActiveTournamentPage', 1, 'tab to show id', 'Opens active tournament page in the watch panel' );
-    $.DefineEvent( 'RefreshPickemPage', 1, 'tournament ID', 'refreshed pickem data' );
+	$.DefineEvent( 'RefreshPickemPage', 1, 'tournament ID', 'refreshed pickem data' );
+	
+	$.DefineEvent( 'Tournaments_RequestMatch', 1, 'matchId', 'Request match jso as string by match id' );
+	$.DefineEvent( 'Tournaments_RequestMatch_Response', 1, 'matchString', 'Return match jso as string' );
 
                                                                                                                             
                                                                                                                       

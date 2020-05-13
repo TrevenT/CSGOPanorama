@@ -155,11 +155,60 @@ var FormatText = ( function ()
 		return integer;
 	}
 
+	                                                                                   
+	                                                               
+	var _AbbreviateNumber = function( number )
+	{
+		                                           
+		if ( number < 0 )
+			return -1;
+
+		var pow10 = Math.log10( number ) | 0;
+		
+		var stringToken = "";
+
+		var locFilePrefix = "NumberAbbreviation_E";
+
+		function _IsLocalizationValid ( symbol )
+		{
+			                                                                                                  
+			return ( symbol === "" );
+		}
+		
+		do
+		{
+			stringToken = locFilePrefix + [ pow10 ];
+
+			                                                                                    
+			if ( _IsLocalizationValid( $.Localize( stringToken ) ) )
+				break;
+			
+		} while ( --pow10 > 0 );
+
+		if ( !_IsLocalizationValid( $.Localize( stringToken ) ) )
+			return number;
+
+		var scale = Math.pow(10, pow10 );
+
+		                   
+		var scaledNumber = number / scale;
+		
+		                                                                     
+		var finalNum = scaledNumber.toFixed( 0 ).replace( /\.?0+$/, '' );
+
+		$.GetContextPanel().SetDialogVariable( 'abbreviated_number', finalNum );
+
+		var result = $.Localize( stringToken, $.GetContextPanel() );
+
+		return result;
+	}
+
 	return{
 	    SetFormattedTextOnLabel                     : _SetFormattedTextOnLabel,                                                                 
 	    ClearFormattedTextFromLabel                 : _ClearFormattedTextFromLabel,                                                                 
 	    SecondsToDDHHMMSSWithSymbolSeperator		: _SecondsToDDHHMMSSWithSymbolSeperator,                    
 		SecondsToSignificantTimeString				: _SecondsToSignificantTimeString,                                               
 		PadNumber									: _PadNumber,                                                                               
+		AbbreviateNumber							: _AbbreviateNumber,                                                                   	
 	};
 })();

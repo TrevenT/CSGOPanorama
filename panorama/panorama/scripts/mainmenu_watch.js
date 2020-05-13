@@ -183,11 +183,9 @@ var mainmenu_watch = ( function() {
 					matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
 				}
 				break;
-			          
-			                
-				                                    
-				      
-			          
+			case "JsEvents":
+				TournamentsAPI.RequestTournaments();
+				break;
 		}
 
 		                                   
@@ -253,6 +251,8 @@ var mainmenu_watch = ( function() {
 	function _NavigateToTab( tab, xmlName, tournament_id=undefined, isSubTab=false, addToStack=false )
 	{
 		                               
+
+		StoreAPI.RecordUIEvent( "WatchMenuTab_" + tab );
 		
 		                                                                                                                   
 
@@ -447,15 +447,12 @@ var mainmenu_watch = ( function() {
 		_InitTab( 'JsYourMatches' );
 		_InitTab( 'JsDownloaded')
 		_InitTab( 'JsLive' );
-		          
-		                       
-		          
 		_InitResourceManagement( $( '#JsTournaments' ) );
 		
 		
 		$.GetContextPanel().Data().elMainMenuRoot;
 
-		                                   
+		                                             
 		if ( _m_bPerfectWorld )
 		{
 			var elWatchNavBarButtonStreams = $( '#WatchNavBarButtonStreams' );
@@ -465,39 +462,35 @@ var mainmenu_watch = ( function() {
 		else
 		{
 			_InitResourceManagement( $( '#JsStreams' ) );
+			_InitTab( 'JsEvents' );
 		}
 
-		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
-		if ( restrictions === false )
-		{
+		  
+		                                                               
+		                             
+		 
 			                                                                                       
-			if ( false ) {
-				_InitResourceManagement( $( '#JsActiveTournament' ) );
-				_NavigateToTab( 'JsActiveTournament' );
-				$( '#WatchNavBarActiveTourament' ).checked = true;
-			}
-			
-			                                                          
-			                               
-			                                                 
+			              
+				                                                      
+				                                       
+				                                                  
+			 
+		 
+		  
 
+		                                                                                                     
+		if ( _m_bPerfectWorld )
+		{
 			_NavigateToTab( 'JsLive' );
 			$( '#WatchNavBarButtonLive' ).checked = true;
 		}
 		else
 		{
-			                                                                            
-			          
+			                             
 			                                               
-			       
-			          
 			
-			
-			_NavigateToTab( 'JsLive' );
-			$( '#WatchNavBarButtonLive' ).checked = true;
-			
-			                                
-			                                                  
+			_NavigateToTab( 'JsEvents' );
+			$( '#WatchNavBarButtonEvents' ).checked = true;
 		}
 	}
 

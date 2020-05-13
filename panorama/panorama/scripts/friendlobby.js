@@ -10,6 +10,9 @@ var friendLobby = ( function (){
 		var lobbyType = PartyBrowserAPI.GetPartyType( _m_xuid );
 		var gameMode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid,'game/mode' );
 
+		                               
+		elTile.SetHasClass( 'playerforhire', ( lobbyType === 'nearby' ) );
+
 		_SetLobbyLeaderNameAvatar( elTile, lobbyType );
 		_SetGroupNameLink( elTile, lobbyType );
 		_SetPrime( elTile );
@@ -37,7 +40,7 @@ var friendLobby = ( function (){
 	var _SetPrime = function ( elTile )
 	{
 		var primeValue = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/apr' );
-		elTile.FindChildTraverse( 'JsFriendLobbyPrime' ).visible = primeValue === true ? true : false;
+		elTile.FindChildTraverse( 'JsFriendLobbyPrime' ).visible = primeValue ? true : false;
 	};
 
 	var _SetFlag = function ( elTile )
@@ -123,7 +126,9 @@ var friendLobby = ( function (){
 	};
 
 	var _SetLobbyPlayerSlots = function ( elTile, gameMode, lobbyType )
-	{	
+	{
+		if ( lobbyType === 'nearby' ) return;                                 
+
 		var count = PartyBrowserAPI.GetPartyMembersCount( _m_xuid );
 		var numSlotsToShow = SessionUtil.GetMaxLobbySlotsForGameMode( gameMode ) - 1;
 

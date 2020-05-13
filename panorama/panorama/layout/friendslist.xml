@@ -6,9 +6,10 @@
 		<include src="file://{resources}/styles/friendtile.css" />
 	</styles>
 	<scripts>
-		<include src="file://{resources}/scripts/friendtile.js" />
 		<include src="file://{resources}/scripts/common/sessionutil.js" />
+		<include src="file://{resources}/scripts/friendtile.js" />
 		<include src="file://{resources}/scripts/friendlobby.js" />
+		<include src="file://{resources}/scripts/friend_advertise_tile.js" />
 		<include src="file://{resources}/scripts/friendslist.js" />
 		<include src="file://{resources}/scripts/common/teamcolor.js" />
 		<include src="file://{resources}/scripts/avatar.js" />
@@ -129,9 +130,9 @@
 				<RadioButton id="JsFriendsTab" 
 							group="FriendsNavBar"
 							onactivate="friendsList.ShowSelectedTab( 3 );"
-							onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsTab-lobbies', '#FriendsList_nodata_lobbies_title' );"
+							onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsTab-lobbies', '#FriendsList_nodata_advertising_title' );"
 							onmouseout="UiToolkitAPI.HideTextTooltip();">
-					<Image src="file://{images}/icons/ui/lobby.svg"/>
+					<Image src="file://{images}/icons/ui/broadcast.svg"/>
 				</RadioButton>
 				<Panel id="JsFriendsTabAlert" class="navbar-btn__notification">
 					<Label id="JsFriendsTabAlertText" class="navbar-btn__notification-text" text=""/>
@@ -221,12 +222,6 @@
 								<Image src="file://{images}/icons/ui/survival.svg"/>
 							</RadioButton>
 							<Panel class="friendslist-navbar-spacer-fit-width"/>
-							<Button id="JsFriendsList-lobbies-toolbar-button-info"
-								class="IconButton" onactivate="friendsList.OpenLobbyFaq();"
-								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-info', '#ShowFAQ' );"
-								onmouseout="UiToolkitAPI.HideTextTooltip();">
-								<Image src="file://{images}/icons/ui/info.svg"/>
-							</Button>
 							<Button id="JsFriendsList-lobbies-toolbar-button-refresh"
 								class="IconButton" onactivate="friendsList.RefreshLobbyListings();"
 								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-refresh', '#GameUI_Refresh' );"

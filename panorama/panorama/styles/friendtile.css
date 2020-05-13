@@ -36,7 +36,11 @@
 	flow-children: right;
 	width: 100%;
 	height: 100%;
-	border-radius: 1px;
+}
+
+.friendtile-advertise .friendtile-contents
+{
+	flow-children: none;
 }
 
 .friendtile-contents.Activated
@@ -62,6 +66,13 @@
 	transition-property:  background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.friendtile-advertise.friendtile:Hover
+{
+	background-color: none;
+	transition-property:  none;
+	transition-duration: .0s;
 }
 
 .player-card-row--button.hidden
@@ -118,7 +129,6 @@
 	transition-timing-function: ease-in-out;
 }
 
-
 .friendtile-avatar__status
 {
 	height: 48px;
@@ -168,6 +178,11 @@
 	transition-property: color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.friendtile-advertise .friendtile__text__title
+{
+	width: 220px;
 }
 
 .friendtile.friendtile--party .friendtile__text__title
@@ -233,4 +248,10 @@
 	transition-property: transform, opacity, position;
 	transition-duration: .4s;
 	transition-timing-function: ease-in-out;
+}
+
+.friendtile__status__advert-advert-row
+{
+	flow-children: right;
+	margin-top: 4px;
 }

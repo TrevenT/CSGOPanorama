@@ -123,7 +123,8 @@ var friendTile = ( function (){
 				'',
 				'',
 				'file://{resources}/layout/context_menus/context_menu_playercard.xml',
-				'xuid=' + xuid,
+				'xuid=' + xuid +
+				( elTile.Data().type ? ( '&type='+elTile.Data().type ) : '' ),                                      
 				function()
 				{
 					$.DispatchEvent( 'SidebarContextMenuActive', false )
@@ -144,7 +145,6 @@ var friendTile = ( function (){
 
 ( function (){
 	                                                                                                      
-
 })();
 
 

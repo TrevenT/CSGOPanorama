@@ -33,6 +33,30 @@
 	margin: 8px 0px 8px 24px;
 }
 
+.friendlobby.playerforhire .friendlobby__row__settings,
+.friendlobby.playerforhire .friendlobby__row__group
+{
+	visibility: collapse;
+}
+
+.friendlobby.playerforhire
+{
+	flow-children: none;
+}
+
+.friendlobby.playerforhire .friendlobby__row-avatars
+{
+	margin-top: 4px;
+	horizontal-align: left;
+	vertical-align: top;
+}
+
+.friendlobby.playerforhire .friendlobby__row
+{
+	margin-left: 82px;
+	margin-top: 18px;
+}
+
 .friendlobby__row--bottom-margin
 {
 	margin: 0px 0px 8px 24px;
@@ -159,6 +183,12 @@
 	transition-property: border, transform, box-shadow;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.friendtile-advertise .friendlobby-avatar__Image
+{
+	width: 48px;
+	height: 48px;
 }
 
 .friendlobby-avatar__Image--Slots

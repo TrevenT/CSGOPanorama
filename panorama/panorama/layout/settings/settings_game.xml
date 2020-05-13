@@ -275,9 +275,22 @@
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="lobby_default_privacy_bits1">
 							<Label text="#SFUI_Settings_LobbyAccessPrivate" value="0" id ="teamlobbyaccess0"/>
 							<Label text="#SFUI_Settings_LobbyAccessPublic" value="1" id ="teamlobbyaccess1"/>
-							<Label text="#SFUI_Settings_LobbyAccessNearby" value="4" id ="teamlobbyaccess2"/>
-							<Label text="#SFUI_Settings_LobbyAccessClan" value="2" id ="teamlobbyaccess3"/>
-							<Label text="#SFUI_Settings_LobbyAccessFGN" value="6" id ="teamlobbyaccess4"/>
+							    
+							                                                                                 
+							                                                                               
+							                                                                              
+							   
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                                             
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#SFUI_Settings_AdvertiseBeaconAtLaunch" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="ui_setting_advertiseforhire_auto">
+							<Label text="#SFUI_Settings_AdvertiseBeaconAtLaunch_Off" value="0" id ="advertiseforhire0"/>
+							<Label text="#SFUI_Settings_AdvertiseBeaconAtLaunch_Last" value="1" id ="advertiseforhire1"/>
+							<Label text="#SFUI_Settings_AdvertiseBeaconAtLaunch_Auto" value="2" id ="advertiseforhire2"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 				</Panel>

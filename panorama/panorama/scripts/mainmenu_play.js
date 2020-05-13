@@ -16,8 +16,6 @@ var PlayMenu = ( function()
 
 	var m_bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === 'perfectworld' );
 	var m_activeMapGroupSelectionPanelID = null;
-	var m_allowNearbyUsersToJoinSetting = null;
-	var m_steamGroupIdThatCanJoin = '';
 	var m_permissions = '';
 
 	                                              
@@ -116,7 +114,19 @@ var PlayMenu = ( function()
 		var elPermissionsButton = $( '#PermissionsSettings' );
 		elPermissionsButton.SetPanelEvent( 'onactivate', function()
 		{
-			UiToolkitAPI.ShowCustomLayoutPopup( 'permission_settings', 'file://{resources}/layout/popups/popup_permissions_settings.xml' );
+			                                                                                                                                  
+			var bCurrentlyPrivate = ( LobbyAPI.GetSessionSettings().system.access === "private" );
+			var sNewAccessSetting = bCurrentlyPrivate ? "public" : "private";
+			var settings = {
+				update: {
+					System: {
+						access: sNewAccessSetting
+					}
+				}
+			};
+			GameInterfaceAPI.SetSettingString( 'lobby_default_privacy_bits', ( sNewAccessSetting === "public" ) ? "1" : "0" );
+			LobbyAPI.UpdateSessionSettings( settings );
+			$.DispatchEvent( 'UIPopupButtonClicked', '' );
 		} );
 
 		                           
@@ -147,25 +157,7 @@ var PlayMenu = ( function()
 
 		elPermissionsButton.SetPanelEvent( 'onmouseover', function()
 		{
-
-			var displayString = $.Localize( '#SFUI_Client_PermissionsTitle' );
-
-			if ( m_permissions !== 'private' )
-			{
-				if ( m_steamGroupIdThatCanJoin )
-				{
-					var clan = PartyListAPI.GetPartyClanTag();
-					elPermissionsButton.SetDialogVariable( "group", $.HTMLEscape( clan ) );
-					displayString = displayString + '<br><br>' + $.Localize( 'tooltip_permissions_group', elPermissionsButton );
-				}
-
-				if ( m_allowNearbyUsersToJoinSetting === 1 )
-				{
-					displayString = displayString + '<br>' + $.Localize( 'tooltip_permissions_nearby' );
-				}
-			}
-
-			UiToolkitAPI.ShowTextTooltip( 'PermissionsSettings', displayString );
+			UiToolkitAPI.ShowTextTooltip( 'PermissionsSettings', '#SFUI_Client_PermissionsTitle' );
 		} );
 
 		elPermissionsButton.SetPanelEvent( 'onmouseout', function()
@@ -287,9 +279,7 @@ var PlayMenu = ( function()
 		if ( !settings || !settings.game || !settings.system )
 			return;
 
-		m_allowNearbyUsersToJoinSetting = settings.game.nby;
 		m_serverSetting = settings.options.server;
-		m_steamGroupIdThatCanJoin = settings.game.clanid;
 		m_permissions = settings.system.access;
 		m_gameModeSetting = settings.game.mode;
 
@@ -298,8 +288,7 @@ var PlayMenu = ( function()
 			&& settings.game.mapgroupname.includes( '@workshop' );
 
 		var isHost = LobbyAPI.BIsHost();
-		var searchingStatus = LobbyAPI.GetMatchmakingStatusString();
-		var isSearching = searchingStatus !== '' && searchingStatus !== undefined ? true : false;
+		var isSearching = _IsSearching();
 		var isEnabled = !isSearching && isHost ? true : false;
 
 		if ( m_isWorkshop )
@@ -751,13 +740,7 @@ var PlayMenu = ( function()
 		var elLockImg = $.GetContextPanel().FindChildInLayoutFile( 'PermissionsSettingsImg' );
 		if ( settings.system.access === 'public' )
 		{
-			if ( settings.game.hasOwnProperty( 'clanid' ) && settings.game.clanid !== '' )
-				displayText = '#permissions_group';
-			else
-				displayText = '#permissions_' + settings.system.access;
-			
-			displayText = settings.game.nby === 1 ? displayText + '_nearby' : displayText;
-
+			displayText = '#permissions_' + settings.system.access;
 			elLockImg.SetImage( "file://{images}/icons/ui/unlockedwide.svg" );
 		}
 		else
@@ -809,15 +792,12 @@ var PlayMenu = ( function()
 			return;
 		}
 
-		var searchingStatus = LobbyAPI.GetMatchmakingStatusString();
-		var isSearching = searchingStatus !== '' && searchingStatus !== undefined ? true : false;
-
 		if ( gameMode === 'survival' && _IsPlayingOnValveOfficial() && ( PartyListAPI.GetCount() <= 1 ) )
 		{
 			elBtn.visible = true;
 			var bAutoFill = !( GameInterfaceAPI.GetSettingString( 'ui_playsettings_survival_solo' ) === '1' );
 			elBtn.checked = bAutoFill;
-			elBtn.enabled = !isSearching;
+			elBtn.enabled = !_IsSearching();
 
 			var _OnActivate = function()
 			{
@@ -889,6 +869,12 @@ var PlayMenu = ( function()
 	var _IsPlayingOnValveOfficial = function()
 	{
 		return _IsValveOfficialServer( m_serverSetting );
+	};
+
+	var _IsSearching = function()
+	{
+		var searchingStatus = LobbyAPI.GetMatchmakingStatusString();
+		return searchingStatus !== '' && searchingStatus !== undefined ? true : false;
 	};
 
 	                                                         
@@ -1042,6 +1028,11 @@ var PlayMenu = ( function()
 	                                                                                                    
 	var _ApplySessionSettings = function()
 	{
+		if ( m_gameModeSetting === 'scrimcomp2v2' )
+		{	                                                                                     
+			MyPersonaAPI.HintLoadPipRanks( 'wingman' );
+		}
+
 		if ( !LobbyAPI.BIsHost() )
 		{
 			return;

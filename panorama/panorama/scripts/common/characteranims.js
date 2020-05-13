@@ -794,7 +794,7 @@ var CharacterAnims = ( function ()
 				if( weapon.indexOf( 'ump45' ) !== -1 )
 				{
 					return {
-						cameraPreset: 0,
+						cameraPreset: 4,
 						intro: 't_loadout_ump45_walkup',
 						idle: 't_loadout_ump45_idle',
 						animsList: [
@@ -860,12 +860,17 @@ var CharacterAnims = ( function ()
 				if( weapon.indexOf( 'mac10' ) !== -1 )
 				{
 					return {
-						cameraPreset: 2,
-						intro: 't_loadout_pistol_walkup',
-						idle: 't_loadout_pistol_idle',
+						cameraPreset: 1,
+						intro: 't_loadout_shotgun_xm_walkup',
+						idle: 't_loadout_shotgun_xm_idle',
 						animsList: [
-							't_loadout_pistol_weightshift',
-							't_loadout_pistol_lookat_pistol'
+							't_loadout_shotgun_xm_weightshift',
+							't_loadout_shotgun_xm_lookat01',
+							't_loadout_shotgun_xm_shrug',
+							't_loadout_shotgun_xm_headcock',
+							't_loadout_shotgun_xm_headgrab',
+							't_loadout_shotgun_xm_bellyscratch',
+							't_loadout_shotgun_xm_lookback'
 						]
 					};
 				}

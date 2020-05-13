@@ -78,7 +78,7 @@
 							<Panel id="mainmenu-content__blur-target"/>
 						</Panel>
 						                                                                                    
-					</Panel >
+					</Panel>
 				</CSGOBlurTarget>
 
 
@@ -94,6 +94,7 @@
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/csgologo.svg" />
 						</RadioButton>
+						<Frame class="MainMenuModeOnly" src="file://{resources}/layout/advertising_toggle.xml" />
 						<RadioButton id="MainMenuNavBarPlay"
 									class="mainmenu-navbar__btn-small mainmenu-navbar__btn-play"
 									group="NavBar"
@@ -161,10 +162,13 @@
 						<RadioButton id="MainMenuNavBarWatch"
 									class="mainmenu-navbar__btn-small MainMenuModeOnly"
 									group="NavBar"
-									onactivate="MainMenu.NavigateToTab('JsWatch', 'mainmenu_watch');"
+									onactivate="MainMenu.NavigateToTab('JsWatch', 'mainmenu_watch'); MainMenu.WatchBtnPressedUpdateAlert();"
 									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarWatch', '#tooltip_navbar_watch' );"
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="34" texturewidth="-1" src="file://{images}/icons/ui/watch_tv.svg" />
+							<Panel id="MainMenuWatchAlert" class="navbar-btn__notification hidden">
+								<Label id="MainMenuWatchAlertText" class="navbar-btn__notification-text" text="#Store_Price_New"/>
+							</Panel>
 						</RadioButton>
 						                                                 
 						<RadioButton id="MainMenuNavBarOverwatch"

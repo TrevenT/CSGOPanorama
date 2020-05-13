@@ -800,6 +800,7 @@ SimpleContextMenu .ContextMenuBody Label,
 	transition-duration: 0.2s;
 }
 
+
 SimpleContextMenu .ContextMenuBody Image,
 .ContextMenuItem Image
 {
@@ -809,6 +810,14 @@ SimpleContextMenu .ContextMenuBody Image,
 	margin: 0px 6px 0px 4px;
 
 	brightness:.7;
+}
+
+SimpleContextMenu .ContextMenuBody .Icon Image,
+.ContextMenuItem .Icon Image
+{
+	height: 18px;
+	vertical-align: bottom;
+	margin-right: 12px;
 }
 
 SimpleContextMenu .ContextMenuBody Button:not(.NoAction):enabled:hover,
@@ -1406,7 +1415,7 @@ CSGOSettingsEnumDropDown.PopupButton Image
 
 Button.PopupButton.Activated
 {
-	sound: "UIPanorama.generic_button_press";
+	sound: "";
 }
 
 .PopupButton.Positive,
@@ -2658,8 +2667,7 @@ EdgeScrollBar.Vertical #MaxButton
 	background-size:24px auto;
 }
 
-.popup-acknowledge .PaginationArrow.Right,
-.store-panel__carousel-container .PaginationArrow.Right
+.PaginationArrow.Right
 {
 	transform: rotateZ( -90deg );
 	horizontal-align: right;
@@ -3052,6 +3060,11 @@ EdgeScrollBar.Vertical #MaxButton
 	transition-property:  opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+#MainMenuWatchAlert.navbar-btn__notification
+{
+	margin-left: 8px;
 }
 
 .navbar-btn__notification.text-only

@@ -45,7 +45,10 @@ var contextmenuPlayerCard = ( function (){
 				return !GameStateAPI.IsLocalPlayerPlayingMatch() && !( LobbyAPI.IsPartyMember( id ) ) && !_IsSelf( id) &&
 					( 'purchased' === MyPersonaAPI.GetLicenseType() );
 			},
-			OnSelected:  function ( id ) {
+			OnSelected:  function ( id, type ) {
+				if ( type ) StoreAPI.RecordUIEvent( "ActionInviteFriendFrom_" + type );
+				else StoreAPI.RecordUIEvent( "ActionInviteFriendGeneric" );
+				
 				FriendsListAPI.ActionInviteFriend( id, '' );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 				$.DispatchEvent( 'FriendInvitedFromContextMenu', id ); 
@@ -387,6 +390,7 @@ var contextmenuPlayerCard = ( function (){
 
 		var items = [];
 		var xuid = $.GetContextPanel().GetAttributeString( "xuid", "(not found)" );
+		var type = $.GetContextPanel().GetAttributeString( "type", "" );
 
 		elContextMenuBtns.xuid = xuid;                                                                     
 
@@ -417,7 +421,7 @@ var contextmenuPlayerCard = ( function (){
 
 					$.CreatePanel( 'Image', elEntryBtn, entry.name, { src: 'file://{images}/icons/ui/' + entry.icon + '.svg' } );
 
-					elEntryBtn.SetPanelEvent( 'onactivate', entry.OnSelected.bind( this, xuid ) );
+					elEntryBtn.SetPanelEvent( 'onactivate', entry.OnSelected.bind( this, xuid, type ) );
 
 					          
 					var OnMouseOver = function ()

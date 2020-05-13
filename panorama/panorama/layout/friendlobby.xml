@@ -56,10 +56,10 @@
 			</Button>
 			                               
 		</Panel>
-		<Panel class="friendlobby__row friendlobby__row--no-margin">
+		<Panel class="friendlobby__row__settings friendlobby__row friendlobby__row--no-margin">
 			<Label id="JsFriendLobbySettings" class="friendlobby__text" text="" html="true"/>
 		</Panel>
-		<Panel class="friendlobby__row friendlobby__row--bottom-margin">
+		<Panel class="friendlobby__row__group friendlobby__row friendlobby__row--bottom-margin">
 			<Button id="JsFriendLobbyGroupBtn" class="text-external-Link-button">
 				<Label id="JsFriendLobbyGroupTxt" text=""/>
 			</Button>

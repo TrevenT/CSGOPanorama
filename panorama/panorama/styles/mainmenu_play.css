@@ -409,6 +409,31 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
+.play-menu-controls-actions-bar
+{
+	background-color: contentPanelBackground;
+	width: 100%;
+	height: 96px;
+	padding-left: 64px;
+	vertical-align: bottom;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.play-menu-controls-actions-bar__right
+{
+	flow-children :right;
+	height: 100%;
+	horizontal-align: right;
+}
+
+.play-menu-controls-action-bar__right__go-cancel
+{
+	padding-right: 64px;
+	height: 100%;
+	vertical-align: center;
+	padding-left: 16px;
+}
+
 .play-menu__playbtn
 {
 	horizontal-align: right;
@@ -426,11 +451,16 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
+.play-menu__playbtn:hover
+{
+	sound: "UIPanorama.mainmenu_rollover";
+}
+
 .play-menu__playbtn.pressed
 {
 	                           
 	opacity: 0;
-	transform: scale3D( 2, 2, 2 );
+	transform: scale3D( 1.2, 2, 2 );
 
 	transition-property: opacity, box-shadow, wash-color, transform;
 	transition-duration: .25s;

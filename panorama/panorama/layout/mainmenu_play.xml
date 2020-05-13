@@ -3,6 +3,7 @@
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/mainmenu.css" />
 		<include src="file://{resources}/styles/mainmenu_play.css" />
+		<include src="file://{resources}/styles/advertising_toggle.css" />
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/common/formattext.js" />
@@ -139,7 +140,7 @@
 					                                                                                                
 				</Panel>
 
-				<Panel class="content-controls-actions-bar">
+				<Panel class="play-menu-controls-actions-bar">
 					<Panel class="left-right-flow vertical-center">
 						<Button id="PermissionsSettings" class="PopupButton" >
 							<Image id="PermissionsSettingsImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/unlockedwide.svg" />
@@ -150,12 +151,16 @@
 							<Label text="#SFUI_LEADERBOARD" />
 						</Button>
 					</Panel>
-					<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
-						<Label text="#SFUI_Lobby_StartMatchButton" />
-					</Button>
-					<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch"  >
-						<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
-					</Button>
+					<Panel class="play-menu-controls-actions-bar__right">
+						<Panel class="play-menu-controls-action-bar__right__go-cancel">
+							<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
+								<Label text="#SFUI_Lobby_StartMatchButton" />
+							</Button>
+							<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch"  >
+								<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
+							</Button>
+						</Panel>
+					</Panel>
 				</Panel>
 			</Panel>
 		</Panel>

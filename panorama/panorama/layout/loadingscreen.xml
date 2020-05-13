@@ -52,7 +52,6 @@
                   <Image id="LoadingScreenGameModeIcon"
 						      class="loading-screen-content__info__modeicon"
 						      src=""
-						      defaultsrc="file://{images}/icons/ui/random.svg"
 						      scaling="stretch-to-cover-preserve-aspect"
 						      texturewidth="40"
 						      textureheight="40"/>
@@ -65,7 +64,6 @@
               <Image id="LoadingScreenIcon"
                 class="loading-screen__mapicon"
                 src=""
-                defaultsrc="file://{images}/map_icons/map_icon_de_nuke.svg"
                 scaling="stretch-to-cover-preserve-aspect"
                 texturewidth="112"
                 textureheight="112"/>

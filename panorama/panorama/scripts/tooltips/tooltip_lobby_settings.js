@@ -122,18 +122,11 @@ var TooltipLobby = ( function ()
 			return;
 		
 		var systemAccess = systemSettings.access;
-		var isNearby = m_GameSettings.nby === 1 ? true : false;
-		var clanId = m_GameSettings.clanid;
 		var displayText = '';
 
 		if( systemAccess === 'public')
 		{
-			if( m_GameSettings.hasOwnProperty( 'clanid' ) && m_GameSettings.clanid !== '' )
-				displayText = '#permissions_group';
-			else
-				displayText = '#permissions_' + systemAccess;
-			
-				displayText = isNearby ? displayText + '_nearby' : displayText;
+			displayText = '#permissions_' + systemAccess;
 		}
 		else
 		{

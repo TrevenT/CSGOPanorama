@@ -56,8 +56,8 @@ var friendsList = (function() {
 				getCount: _GetLobbiesCount,
 				getAlertsCount: _GetLobbiesCount,
 				getXuidByIndex: _GetLobbyXuidByIndex,
-				tileXmlToUse: 'friendlobby',
-				nodatString: '#FriendsList_nodata_lobbies'
+				tileXmlToUse: 'friend_advertise_tile',
+				nodatString: '#FriendsList_nodata_advertising'
 			}
 		];
 
@@ -200,6 +200,10 @@ var friendsList = (function() {
 		if( _m_activeTabIndex !== tabIndex )
 			_m_tabs[ _m_activeTabIndex ].elContent.AddClass( 'hidden' );
 
+		                     
+		if ( tabIndex == 2 ) StoreAPI.RecordUIEvent( "FriendsListerTabRecent" );
+		else if ( tabIndex == 3 ) StoreAPI.RecordUIEvent( "FriendsListerTabNearby" );
+
 		_m_activeTabIndex = tabIndex;
 		_m_tabs[ tabIndex ].elContent.RemoveClass( 'hidden' );
 
@@ -265,6 +269,12 @@ var friendsList = (function() {
 		var tabData = _m_tabs[ tabIndex ];
 		var count = tabData.getCount();
 
+		                                                                 
+		if( tabIndex === 3 )
+		{
+			_UpdateLobbiesLoadingBar();
+		}
+
 		                                              
 		if( !count )
 		{
@@ -278,12 +288,6 @@ var friendsList = (function() {
 		{
 			if( _ShowRecentsLoadingBar() )
 				return;
-		}
-
-		                                                                 
-		if( tabIndex === 3 )
-		{
-			_UpdateLobbiesLoadingBar();
 		}
 
 		                                      
@@ -354,48 +358,53 @@ var friendsList = (function() {
 			var descString = tabData.nodatString;
 			var elBtn = elTile.FindChildTraverse( 'JsFriendsNoDataBtn' );
 
-			                                                                       
+			        
+			                                                                                   
+			                               
+
 			                                              
-			   	                                           
+			   		                                           
 			       
-			if ( tabData.elContent.id === 'JsFriendsList-lobbies' )
-			{
-				var isSteamBeta = SteamOverlayAPI.GetAppID() === "710" ? true : false;
+			   	                                                       
+			    
+			   	                                                                      
 				
-				if( _m_isPerfectWorld )
-				{
-					descString = "#FriendsList_nodata_lobbies";
-				}
-				else if( MyPersonaAPI.GetMyClanCount() === 0 || PartyBrowserAPI.GetProgress() >= 100 )
-				{
-					if (  MyPersonaAPI.GetMyClanCount() === 0 )
-					{
-						var urlLink = isSteamBeta ?
-								"http://beta.steamcommunity.com/search/#filter=groups&text=" :
-								"http://steamcommunity.com/search/#filter=groups&text=";
+			   	                       
+			   	 
+			   		                                           
+			   	 
+			   	                                                                                      
+			   	 
+			   		                                           
+			   		 
+			   			                           
+			   					                                                              
+			   					                                                        
 						
-						descString = "#FriendsList_nodata_lobbies_nogroup";
-					}
-					else
-					{
-						var xuid = MyPersonaAPI.GetXuid();
-						var urlLink = isSteamBeta ?
-							"http://beta.steamcommunity.com/profiles/" + xuid + "/groups/" :
-							"http://steamcommunity.com/profiles/" + xuid + "/groups/";
+			   			                                                   
+			   		 
+			   		    
+			   		 
+			   			                                  
+			   			                           
+			   				                                                                
+			   				                                                          
 						
-						descString = "#FriendsList_nodata_lobbies";
-					}
+			   			                                           
+			   		 
 
-					var onActivate = function ()
-					{
-						SteamOverlayAPI.OpenURL( urlLink ); 
-					}
+			   		                            
+			   		 
+			   			                                    
+			   		 
 
-					elBtn.SetPanelEvent( 'onactivate', onActivate );
-					elBtn.visible = true;
-				}
-			}
-			else
+			   		                                                
+			   		                     
+			   	 
+			    
+			       
+			      
+
 				elBtn.visible = false;
 			
 			elTile.FindChildTraverse( 'JsFriendsNoDataTitle' ).text = $.Localize( descString + '_title' );
@@ -498,12 +507,20 @@ var friendsList = (function() {
 	{
 		                                                                        
 		                                           
+		                                    
 		                          
-		                          
-		if( tileXmlToUse === "friendtile" )
-			friendTile.Init( elTile ); 
+		if ( tileXmlToUse === "friendtile" )
+		{
+			friendTile.Init( elTile );
+		}
+		else if ( tileXmlToUse === "friendlobby" )
+		{
+			friendLobby.Init( elTile );
+		}
 		else
-			friendLobby.Init( elTile ); 
+		{
+			FriendAdvertiseTile.Init( elTile );
+		}
 	};
 
 	var _AddTransitionEndEventHandeler =  function ( elTile )
@@ -657,11 +674,22 @@ var friendsList = (function() {
 
 	var _SetInvitedTile = function ( xuid )
 	{
-		var tile = _m_tabs[0].elList.FindChild( xuid );
-		if ( tile )
-		{
-			friendTile.SetInvitedFromContextMenu( tile ); 
+		                                                     
+		if ( _m_activeTabIndex === 3 || _m_activeTabIndex === 0 )
+		{		
+			var tile = _m_tabs[ _m_activeTabIndex ].elList.FindChild( xuid );
+			if ( tile )
+			{
+				friendTile.SetInvitedFromContextMenu( tile );
+			}
 		}
+	};
+
+	var _SetToTabLobbies = function()
+	{
+		                                 
+		_m_tabs[ 3 ].elTabRadioBtn.FindChildInLayoutFile( 'JsFriendsTab' ).checked = true;
+		_ShowSelectedTab( 3 );
 	};
 
 	                      
@@ -685,11 +713,10 @@ var friendsList = (function() {
 		SidebarContextMenuActive	: _SidebarContextMenuActive,
 		SetLocalPlayerAvatar		: _SetLocalPlayerAvatar,                
 		HideLocalPlayer				: _HideLocalPlayer,
-		SetInvitedTile				: _SetInvitedTile
+		SetInvitedTile				: _SetInvitedTile,
+		SetToTabLobbies				: _SetToTabLobbies
 	};
-
 })();
-
 
                                                                                                     
                                            
@@ -708,7 +735,9 @@ var friendsList = (function() {
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_PartyBrowser_InviteReceived', friendsList.UpdateIncomingInvitesContainer );
 	$.RegisterForUnhandledEvent( 'SidebarIsCollapsed', friendsList.OnSideBarHover );
 	$.RegisterForUnhandledEvent( 'SidebarContextMenuActive', friendsList.SidebarContextMenuActive );
-	$.RegisterForUnhandledEvent( 'FriendInvitedFromContextMenu', friendsList.SetInvitedTile )
+	$.RegisterForUnhandledEvent( 'FriendInvitedFromContextMenu', friendsList.SetInvitedTile );
+	$.RegisterForUnhandledEvent( 'OpenSidebarPanel', friendsList.SetToTabLobbies );
+
 
 	                                                                                                
 })();

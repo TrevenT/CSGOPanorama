@@ -179,7 +179,7 @@
 						</RadioButton>
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>
-					<TooltipPanel id="spawnselect-equipment-equip_armor" class="spawnselect-equipment__tooltip equipment-locked" tooltip="#CSGO_Item_Desc_Survival_VestHelm">
+					<TooltipPanel id="spawnselect-equipment-equip_armor" class="spawnselect-equipment__tooltip" tooltip="#CSGO_Item_Desc_Survival_VestHelm">
 						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_armor' );" >
 							<Panel class="spawnselect-equipment__btn__image">
 								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/equipment/armor.svg"/>
@@ -188,7 +188,7 @@
 						</RadioButton>
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>
-					<TooltipPanel id="spawnselect-equipment-equip_dronepilot" class="spawnselect-equipment__tooltip equipment-locked" tooltip="#CSGO_Item_Desc_Survival_DronePilot">
+					<TooltipPanel id="spawnselect-equipment-equip_dronepilot" class="spawnselect-equipment__tooltip" tooltip="#CSGO_Item_Desc_Survival_DronePilot">
 						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_dronepilot' );" >
 							<Panel class="spawnselect-equipment__btn__image">
 								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/equipment/controldrone.svg"/>
@@ -197,7 +197,7 @@
 						</RadioButton>
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>
-					<TooltipPanel id="spawnselect-equipment-equip_exploremoney" class="spawnselect-equipment__tooltip equipment-locked" tooltip="#CSGO_Item_Desc_Survival_Exploremoney">
+					<TooltipPanel id="spawnselect-equipment-equip_exploremoney" class="spawnselect-equipment__tooltip" tooltip="#CSGO_Item_Desc_Survival_Exploremoney">
 						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_exploremoney' );" >
 							<Panel class="spawnselect-equipment__btn__image">
 								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/ui/explorebonus.svg"/>
@@ -206,7 +206,7 @@
 						</RadioButton>
 						<Frame snippet="snippet-equipment-locked"/>
 					</TooltipPanel>
-					<TooltipPanel id="spawnselect-equipment-equip_wavemoney" class="spawnselect-equipment__tooltip equipment-locked" tooltip="#CSGO_Item_Desc_Survival_Wavemoney">
+					<TooltipPanel id="spawnselect-equipment-equip_wavemoney" class="spawnselect-equipment__tooltip" tooltip="#CSGO_Item_Desc_Survival_Wavemoney">
 						<RadioButton id="" class="spawnselect-equipment__btn" onactivate="GameInterfaceAPI.ConsoleCommand( 'survival_equip spawn_equip_wavemoney' );" >
 							<Panel class="spawnselect-equipment__btn__image">
 								<Image id="" texturewidth="-1" textureheight="48" src="file://{images}/icons/ui/bombwavebonus.svg"/>

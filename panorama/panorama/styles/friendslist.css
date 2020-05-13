@@ -202,12 +202,11 @@
 	width: 100%;
 
 	opacity: 1;
-	blur: fastgaussian( 0, 0, 0 );
 	
 	transform: translatex( 0px );
 	flow-children: down;
 
-	transition-property:  opacity, blur, transform;
+	transition-property:  opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -224,10 +223,9 @@
 .friendslist-list.hidden
 {
 	opacity: 0;
-	blur: fastgaussian( 4, 4, 5 );
 	transform: translatex( 200px );
 
-	transition-property:  opacity, blur, transform;
+	transition-property:  opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
