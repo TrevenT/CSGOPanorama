@@ -195,6 +195,10 @@ Label {
 
 .sb-team-logo-bg {
 	background-img-opacity:0.2;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 0% 0%;
+
 }
 
 .sb-team__info__score Label {
@@ -969,6 +973,8 @@ Label.sb-row__cell--mvps__count {
 	text-align: center;
 	font-size: 14px;
 	margin-top:5px;
+
+	text-overflow: shrink;
 
 	                              
 

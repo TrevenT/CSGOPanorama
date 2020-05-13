@@ -597,7 +597,7 @@ var MainMenu = ( function() {
 
 		var loadout = {
 			itemId: GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_itemid' ),
-			modelPath: '',
+			model: '',
 			team: '',
 			loadoutSlot: ''
 		};
@@ -611,14 +611,14 @@ var MainMenu = ( function() {
 				loadout.itemId = LoadoutAPI.GetItemID( loadout.team, loadout.loadoutSlot );
 				                                          
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', loadout.itemId );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', loadout.modelPath );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', loadout.model );
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', loadout.team );
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', loadout.loadoutSlot );
 				                                                                                                                      
 			}
 			else
 			{	                             
-				loadout.modelPath = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_model' );
+				loadout.model = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_model' );
 				loadout.team = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_team' );
 				loadout.loadoutSlot = GameInterfaceAPI.GetSettingString( 'ui_vanitysetting_loadoutslot' );
 
@@ -627,10 +627,10 @@ var MainMenu = ( function() {
 				var arrModels = CharacterAnims.GetValidCharacterModels();
 				if ( arrModels.filter( function( entry )
 					{
-						return entry.model === loadout.modelPath && entry.team === loadout.team;
+						return entry.model === loadout.model && entry.team === loadout.team;
 					} ).length <= 0 )
 				{
-					                                                                                                                     
+					                                                                                                                 
 					loadout.itemId = null;
 					continue;
 				}
@@ -697,30 +697,10 @@ var MainMenu = ( function() {
 
 	var _DefaultModelLoadouts = function()
 	{
-		var loadoutsList = [
-			{
-				team: 'ct',
-				modelPath: 'models/player/custom_player/legacy/ctm_sas.mdl',
-				loadoutSlot: 'rifle1'
-			},
-			{
-				team: 'ct',
-				modelPath: 'models/player/custom_player/legacy/ctm_sas.mdl',
-				loadoutSlot: 'smg2'
-			},
-			{
-				team: 't',
-				modelPath: 'models/player/custom_player/legacy/tm_leet_variantb.mdl',
-				loadoutSlot: 'rifle1'
-			},
-			{
-				team: 't',
-				modelPath: 'models/player/custom_player/legacy/tm_leet_variantd.mdl',
-				loadoutSlot: 'secondary1'
-			}
-		];
+		var loadoutsList = CharacterAnims.GetValidCharacterModels();
+		var randomEntry = Math.floor( Math.random() * loadoutsList.length );
 
-		return loadoutsList[ Math.floor( Math.random() * loadoutsList.length )];
+		return loadoutsList[ randomEntry ];
 	};
 
 	                                                                           

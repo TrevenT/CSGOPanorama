@@ -56,9 +56,9 @@
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Speaker_Config_Tip">
+					<TooltipPanel id="DeviceConfigurationPanel" class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Speaker_Config_Tip">
 						<Label text="#SFUI_Settings_Audio_Device" class="half-width"/>
-						<CSGOSettingsEnumDropDown id ="DeviceConfigurationEnum" class="PopupButton White" convar="sound_device_override" oninputsubmit="CSGOAudioDeviceConfigurationChanged()">
+						<CSGOSettingsEnumDropDown id="DeviceConfigurationEnum" class="PopupButton White" convar="sound_device_override" oninputsubmit="CSGOAudioDeviceConfigurationChanged()">
 							                                                                               
 							<Label text="XXXXXX 1" id="audiodeviceconfig1"/>
 							<Label text="XXXXXX 2" id="audiodeviceconfig2"/>

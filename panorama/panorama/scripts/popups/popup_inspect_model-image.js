@@ -14,12 +14,12 @@ var InspectModelImage = ( function (){
 			return;
 		}
 
-		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( itemId );
+		var model = ItemInfo.GetModelPathFromJSONOrAPI( itemId );
 		m_elPanel = elPanel;
 
-		if ( modelPath )
+		if ( model )
 		{
-			_SetModelScene( elPanel, modelPath );
+			_SetModelScene( elPanel, model );
 		}
 		else
 		{
@@ -27,13 +27,13 @@ var InspectModelImage = ( function (){
 		}
 	};
 
-	var _SetModelScene = function ( elParent, modelPath )
+	var _SetModelScene = function ( elParent, model )
 	{
-		                                                  
+		                                              
 
 		var elPanel = elParent.FindChildInLayoutFile( 'InspectItemModel' );
 		elPanel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
-			modelPath,
+			model,
 			false
 		);
 
@@ -61,7 +61,7 @@ var InspectModelImage = ( function (){
 		var settings = {
 			panel: elPanel,
 			team: selectedTeam,
-			modelPath: selectedModel,
+			model: selectedModel,
 			itemId: id,
 			loadoutSlot: ItemInfo.GetSlotSubPosition( id ),
 			playIntroAnim: false,

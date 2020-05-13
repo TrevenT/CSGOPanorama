@@ -113,12 +113,31 @@ var PopupAddFriend = ( function(){
 		
 	};
 
+	var _FriendsListUpdateName = function( xuid )
+	{
+		var elTile = $.GetContextPanel().FindChildTraverse( 'JsPopupFriendTile' );
 
-	return {
-		Init			:	_Init,
-		OnSendInvite	:	_OnSendInvite,
-		OnCancelEntry	:	_OnCancelEntry,
-		OnEntrySubmit	:	_OnEntrySubmit
+		if ( xuid === elTile.GetAttributeString( 'xuid', '' ))
+		{
+			friendTile.Init( elTile ); 
+		}
 	};
 
+	return {
+		Init:	_Init,
+		OnSendInvite:	_OnSendInvite,
+		OnCancelEntry:	_OnCancelEntry,
+		OnEntrySubmit: _OnEntrySubmit,
+		FriendsListUpdateName: _FriendsListUpdateName
+	};
+
+} )();
+
+                                                                                                    
+                                            
+                                                                                                    
+(function()
+{
+	
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', PopupAddFriend.FriendsListUpdateName );
 })();

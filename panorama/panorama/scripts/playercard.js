@@ -635,16 +635,14 @@ var playerCard = ( function (){
 		elWingman.SetHasClass( 'collapsed', !elToggleBtn.checked );
 	};
 
-	var _UpdateAvatarForLocalPlayerCard = function ( xuid )
+	var _FriendsListUpdateName = function( xuid )
 	{
-		                                                              
-		                                                                       
-
-		if(  $.GetContextPanel().visible && _m_isSelf )
+		if ( xuid === _m_xuid )
 		{
-			_UpdateAvatar();
+			_SetName();
 		}
-	}
+	};
+	
 
 	return {
 		Init					: _Init,
@@ -657,7 +655,8 @@ var playerCard = ( function (){
 		ShowXpTooltip			: _ShowXpTooltip,
 		HideXpTooltip: _HideXpTooltip,
 		SetAllSkillGroups: _SetAllSkillGroups,
-		ShowHideAdditionalRanks: _ShowHideAdditionalRanks
+		ShowHideAdditionalRanks: _ShowHideAdditionalRanks,
+		FriendsListUpdateName: _FriendsListUpdateName
 		
 	};
 
@@ -682,5 +681,6 @@ var playerCard = ( function (){
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_ProfileUpdated', playerCard.ProfileUpdated );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_PipRankUpdate', playerCard.SetAllSkillGroups );
 	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_PlayerUpdated", playerCard.UpdateAvatar );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', playerCard.FriendsListUpdateName );
 	                                                                                          
 })();

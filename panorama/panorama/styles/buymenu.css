@@ -255,6 +255,7 @@
 {
 	text-transform: uppercase;
 	text-overflow: shrink;
+	max-width: 210px;
 }
 
 .buywheel-category__title

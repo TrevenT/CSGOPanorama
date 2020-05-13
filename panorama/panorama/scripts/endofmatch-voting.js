@@ -109,20 +109,24 @@ var EOM_Voting = (function () {
 					var internalName = oMatchEndVoteData[ "voting_options" ][ key ][ "name" ];
 					text = GameTypesAPI.GetFriendlyMapName( internalName );
 
+					var image;
 					
-					                                                           
-					var image = 'url("file://{images}/map_icons/screenshots/360p/' + internalName + '.png")';
-
 					var elMapImage = $.CreatePanel( 'Panel', elVoteItem.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
 					elMapImage.AddClass( 'map-selection-btn__screenshot' );
 	
 					var cfg = GameTypesAPI.GetConfig();
 					if ( internalName in cfg.maps )
 					{
-						elMapImage.style.backgroundImage = image;
-						elMapImage.style.backgroundPosition = '50% 0%';
-						elMapImage.style.backgroundSize = 'auto 100%';							
+						image = 'url("file://{images}/map_icons/screenshots/360p/' + internalName + '.png")';			
 					}	
+					else
+					{
+						image = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
+					}
+					
+					elMapImage.style.backgroundImage = image;
+					elMapImage.style.backgroundPosition = '50% 0%';
+					elMapImage.style.backgroundSize = 'auto 100%';		
 				}
 				else
 				{

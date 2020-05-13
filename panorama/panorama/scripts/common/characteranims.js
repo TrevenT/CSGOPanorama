@@ -7,7 +7,7 @@ var CharacterAnims = ( function ()
 	               
 		      
 		      
-		           
+		       
 		        
 		             
 		               
@@ -26,7 +26,7 @@ var CharacterAnims = ( function ()
 		
 		playerPanel.ResetAnimation( false );
 		playerPanel.SetSceneAngles( 0, 0, 0 );
-		playerPanel.SetPlayerModel( settings.modelPath );
+		playerPanel.SetPlayerModel( settings.model );
 		playerPanel.EquipPlayerWithItem( settings.itemId );
 
 		var anims = _GetAnims(
@@ -129,7 +129,7 @@ var CharacterAnims = ( function ()
 			if( settingsToSave )
 			{
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_team', settingsToSave.team );
-				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', settingsToSave. modelPath );
+				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_model', settingsToSave.model );
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_loadoutslot', settingsToSave.loadoutSlot );
 				GameInterfaceAPI.SetSettingString( 'ui_vanitysetting_itemid', settingsToSave.itemId );
 			}
@@ -155,18 +155,24 @@ var CharacterAnims = ( function ()
 
 	var _GetValidCharacterModels = function()
 	{
+		                                                                            
+		
 		var dropdownEntries = [
-			{ label:'#faction_sas', model:"models/player/custom_player/legacy/ctm_sas.mdl", team:"ct" },
-			                                                                                                       
+			{ label: '#faction_sas', model: "models/player/custom_player/legacy/ctm_sas.mdl", team: "ct", loadoutSlot: 'rifle1' },
+			{ label: '#faction_fbi_a', model: "models/player/custom_player/legacy/ctm_fbi_varianta.mdl", team: "ct", loadoutSlot: 'rifle1' },
+			{ label: '#faction_fbi_c', model: "models/player/custom_player/legacy/ctm_fbi_variantc.mdl", team: "ct", loadoutSlot: 'secondary1' },
+			{ label: '#faction_fbi_d', model: "models/player/custom_player/legacy/ctm_fbi_variantd.mdl", team: "ct", loadoutSlot: 'secondary1' },
+			{ label: '#faction_fbi_e', model: "models/player/custom_player/legacy/ctm_fbi.mdl", team: "ct", loadoutSlot: 'rifle1'},
 			                                                                                                         
 			                                                                                                       
-			{ label:'#faction_elite_a', model:"models/player/custom_player/legacy/tm_leet_variantc.mdl", team:"t" },
-			{ label:'#faction_elite_b', model:"models/player/custom_player/legacy/tm_leet_variantb.mdl", team:"t" },
-			{ label:'#faction_elite_c', model:"models/player/custom_player/legacy/tm_leet_variantd.mdl", team:"t" },
+			{ label: '#faction_elite_a', model: "models/player/custom_player/legacy/tm_leet_varianta.mdl", team: "t", loadoutSlot: 'rifle1' },
+			{ label: '#faction_elite_b', model:"models/player/custom_player/legacy/tm_leet_variantb.mdl", team:"t", loadoutSlot: 'secondary1' },
+			{ label: '#faction_elite_c', model:"models/player/custom_player/legacy/tm_leet_variantc.mdl", team:"t", loadoutSlot: 'secondary1' },
+			{ label: '#faction_elite_d', model:"models/player/custom_player/legacy/tm_leet_variantd.mdl", team:"t", loadoutSlot: 'rifle1' },
 			                                                                                                                 
 			                                                                                                           
 			                                                                                                                   
-			{ label:'#faction_phoenix', model:"models/player/custom_player/legacy/tm_phoenix.mdl", team:"t" }
+			{ label:'#faction_phoenix', model:"models/player/custom_player/legacy/tm_phoenix.mdl", team:"t", loadoutSlot: 'secondary1' }
 		];
 		return dropdownEntries;
 	};
@@ -304,7 +310,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							'ct_loadout_p90_lookbehind01',
+							                                
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -319,7 +325,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							'ct_loadout_p90_lookbehind01',
+							                                
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -334,7 +340,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							'ct_loadout_p90_lookbehind01',
+							                                
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -349,7 +355,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							'ct_loadout_p90_lookbehind01',
+							                                
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]
@@ -380,7 +386,7 @@ var CharacterAnims = ( function ()
 						idle: 'ct_loadout_p90_idle',
 						animsList: [
 							'ct_loadout_p90_weightshift01',
-							'ct_loadout_p90_lookbehind01',
+							                                
 							'ct_loadout_p90_lookatwatch',
 							'ct_loadout_p90_lookbehind02'
 						]

@@ -232,7 +232,7 @@ var EOM_Podium = ( function () {
 		var settings = {
 			panel: elPlayerModel,
 			team: shortTeam,
-			modelPath: 'models/' + GameStateAPI.GetPlayerModel( _xuid ),
+			model: 'models/' + GameStateAPI.GetPlayerModel( _xuid ),
 			itemId: id,
 			loadoutSlot: ItemInfo.GetSlotSubPosition( id ),
 			playIntroAnim: false,

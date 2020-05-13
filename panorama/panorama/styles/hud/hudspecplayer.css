@@ -511,4 +511,7 @@
     text-shadow: 1px 1px 1px 1.5 #000000AA;
                                                                                                
     padding-bottom: 1px;
+
+    text-overflow: shrink;
+    white-space: nowrap;
 }

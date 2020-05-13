@@ -26,5 +26,11 @@ var HudEdgePositions  = ( function() {
 
 ( function()
 {
+                                                                                             
+                                                                                                         
+                                             
+    $('#HudEdgeX').OnShow();
+    $('#HudEdgeY').OnShow();
+    
     HudEdgePositions.OnSliderValueChanged();
 } )();

@@ -257,6 +257,7 @@ var Scoreboard = ( function()
 			m_oStats: {},				                                        
 			m_oElStats: {},			                                         
 			m_isMuted: false,			               
+			m_oMatchStats: undefined,
 		}
 	}
 
@@ -657,6 +658,8 @@ var Scoreboard = ( function()
 		
 		var xuid = oPlayer.m_xuid;
 
+		oPlayer.m_oMatchStats = MatchStatsAPI.GetPlayerStatsJSO( xuid );
+
 		                    
 		    
 		   	       
@@ -914,7 +917,8 @@ var Scoreboard = ( function()
 	{
 		var _fn = function( xuid )
 		{
-			var allstats = MatchStatsAPI.GetPlayerStatsJSO( xuid );
+			var oPlayer = _m_oPlayers.GetPlayerByXuid( xuid );
+			var allstats = oPlayer.m_oMatchStats;
 
 			if ( allstats )
 				return ( allstats[ stat ] == -1 ) ? "-" : allstats[ stat ];
@@ -2308,9 +2312,6 @@ var Scoreboard = ( function()
 			_m_cP.FindChildrenWithClassTraverse( "sb-team-logo-background--" + team ).forEach( function( el )
 			{
 				el.style.backgroundImage = 'url("file://{images}' + _m_oTeams[ team ].m_teamLogoImagePath + '")';
-				el.style.backgroundSize = 'contain';
-				el.style.backgroundRepeat = 'no-repeat';
-
 				el.AddClass( "sb-team-logo-bg" );
 			} );
 		}
