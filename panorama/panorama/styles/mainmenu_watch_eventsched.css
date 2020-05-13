@@ -605,6 +605,17 @@ img-shadow: 2px 2px 2px #000000ff;
 	transition-timing-function: ease-in-out;
 
 	brightness: 2;
+
+	background-color: #ffffff10;
+	border-radius: 50%;
+	
+}
+
+.eventsched__teams__team__button.has_data{
+
+	background-color: #ffffff05;
+	border-radius: 50%;
+	
 }
 
 
