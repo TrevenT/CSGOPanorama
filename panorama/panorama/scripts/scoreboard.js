@@ -2114,15 +2114,17 @@ var Scoreboard = ( function()
 	
 		
 		var elMouseBinding = _m_cP.FindChildInLayoutFile( "id-sb-mouse-instructions" );
-		
-		bind = "{v:csgo_bind:bind_" + bind + "}";
 
-		bind = $.Localize( bind, elMouseBinding );
+		if ( elMouseBinding && elMouseBinding.IsValid() )
+		{
+			bind = "{v:csgo_bind:bind_" + bind + "}";
 
+			bind = $.Localize( bind, elMouseBinding );
+	
+			elMouseBinding.SetDialogVariable( "scoreboard_mouse_enable_bind", bind );
+			elMouseBinding.text =  $.Localize( "#Scoreboard_Mouse_Enable_Instruction", elMouseBinding );
+		}
 
-		
-		elMouseBinding.SetDialogVariable( "scoreboard_mouse_enable_bind", bind );
-		elMouseBinding.text =  $.Localize( "#Scoreboard_Mouse_Enable_Instruction", elMouseBinding );
 	}
 
 	function _UpdateRound ( rnd )
