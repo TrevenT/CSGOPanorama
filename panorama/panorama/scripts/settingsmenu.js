@@ -3,34 +3,59 @@
                                                                                                     
           
                                                                                                     
-
 var SettingsMenu = ( function () {
 
-    var activeTab;
+	var activeTab;
+	
+	let tabInfo = {
+		Promoted: {
+			xml: "settings_promoted",
+			radioid: "PromotedSettingsRadio"
+		},
+		KeybdMouseSettings: {
+			xml: 'settings_kbmouse',
+			radioid: "KBMouseRadio"
+		},
+		ControllerSettings: {
+			xml: 'settings_controller',
+			radioid: "ControllerRadio"
+		},
+		GameSettings: {
+			xml: "settings_game",
+			radioid: "GameRadio"
+		},
+		AudioSettings: {
+			xml: "settings_audio",
+			radioid: "AudioRadio"
+		},
+		VideoSettings: {
+			xml: "settings_video",
+			radioid: "VideoRadio"
+		}
+	};
 
-    var _NavigateToTab = function( tab, XmlName ) {
-                                      
-                                        
-
+    var _NavigateToTab = function( tabID ) {
+		
         var bDisplayBlankPage = false;
 
-        if ( tab == 'ControllerSettings' )
+        if ( tabID == 'ControllerSettings' )
         {
            if ( OptionsMenuAPI.ShowSteamControllerBindingsPanel() )
             {
                 bDisplayBlankPage = true;
             }
-        }
-    
+		}
+	
         var parentPanel = $('#SettingsMenuContent');
 
                                                
                                     
-        if (!parentPanel.FindChildInLayoutFile(tab))
+        if (!parentPanel.FindChildInLayoutFile(tabID))
         {
-            var newPanel = $.CreatePanel('Panel', parentPanel, tab);
+            var newPanel = $.CreatePanel('Panel', parentPanel, tabID);
                                                              
 
+			let XmlName = tabInfo[ tabID ].xml;
             newPanel.BLoadLayout('file://{resources}/layout/settings/' + XmlName + '.xml', false, false );
             
                                                                                         
@@ -60,7 +85,7 @@ var SettingsMenu = ( function () {
 
                                                                                   
                                 
-        if( activeTab !==  tab )
+        if( activeTab !==  tabID )
         {
                                              
             if( activeTab )
@@ -72,8 +97,8 @@ var SettingsMenu = ( function () {
             
                                
             var prevTab = activeTab;
-            activeTab = tab;
-            var activePanel = $.GetContextPanel().FindChildInLayoutFile( tab );
+            activeTab = tabID;
+            var activePanel = $.GetContextPanel().FindChildInLayoutFile( tabID );
             activePanel.AddClass( 'Active' );
 
                                           
@@ -117,9 +142,17 @@ var SettingsMenu = ( function () {
         SettingsMenuShared.NewTabOpened( activeTab );
 	}
 
+	var _NavigateToSetting = function ( tab, id )
+	{
+		                                                  
+		$.DispatchEvent( "Activated", $( "#" + tabInfo[ tab ].radioid ), "mouse" );
+		SettingsMenuShared.ScrollToId( id );                     
+	}
+
     return {
 
         NavigateToTab	                : _NavigateToTab,
+        NavigateToSetting	            : _NavigateToSetting,
         AccountPrivacySettingsChanged   : _AccountPrivacySettingsChanged,
         OnSettingsMenuHidden            : _OnSettingsMenuHidden
     };
@@ -131,12 +164,25 @@ var SettingsMenu = ( function () {
                                                                                                     
 (function ()
 {
-    SettingsMenu.NavigateToTab('KeybdMouseSettings', 'settings_kbmouse');
+	if ( PromotedSettingsUtil.GetUnacknowledgedPromotedSettings().length > 0 )
+	{
+		SettingsMenu.NavigateToTab( 'Promoted' );
+	}
+	else
+	{
+		const now = new Date();
+		if ( g_PromotedSettings.filter( setting => setting.start_date <= now && setting.end_date > now ).length == 0 )
+			$( '#PromotedSettingsRadio' ).visible = false;
+
+		SettingsMenu.NavigateToTab( 'GameSettings' );
+	}
 
     MyPersonaAPI.RequestAccountPrivacySettings();
     $.RegisterForUnhandledEvent( "PanoramaComponent_MyPersona_AccountPrivacySettingsChanged", 
         SettingsMenu.AccountPrivacySettingsChanged );
 
-    $.RegisterEventHandler( 'UnreadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuHidden );
+	$.RegisterEventHandler( 'UnreadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuHidden );
+	$.RegisterForUnhandledEvent( 'SettingsMenu_NavigateToSetting',  SettingsMenu.NavigateToSetting );
+	
 })();
 

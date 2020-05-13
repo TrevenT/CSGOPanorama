@@ -93,10 +93,10 @@ CSGOSettingsEnumDropDown:hover
 	border-radius: 3px;
 }
 
-.SettingsBackground.Highlight
+.Highlight
 {
 	animation-name: settings-highlight;
-	animation-duration: 1s;
+	animation-duration: 2s;
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: 1;
 }
@@ -159,3 +159,34 @@ CSGOSettingsEnumDropDown:hover
  
 
   
+
+.prmototed-setting
+{
+	height: 150px;
+	flow-children: down;
+	padding-bottom: 20px;
+}
+
+.promoted-setting__name
+{
+	padding-bottom: 20px;
+	color: white;
+}
+
+.promoted-setting__desc
+{
+	width: 85%;
+}
+
+.promoted-setting__button
+{
+	horizontal-align: right;
+	flow-children: right;
+}
+
+                                                                                                   
+#ViewSetting .promoted-setting__label
+{
+	margin: 2px 8px 2px 8px;
+	text-align: center;
+}

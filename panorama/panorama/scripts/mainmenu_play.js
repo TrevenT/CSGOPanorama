@@ -431,6 +431,36 @@ var PlayMenu = ( function()
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'submenu_leveloptions_select', 'MOUSE' );
 
+		                                                                                                    
+		var mapGroupName = mapgroupButton.GetAttributeString( "mapname", '' );
+		if ( mapGroupName )
+		{
+			var siblingSuffix = '_scrimmagemap';
+			if ( mapGroupName.toLowerCase().endsWith( siblingSuffix ) )
+				mapGroupName = mapGroupName.substring( 0, mapGroupName.length - siblingSuffix.length );
+			else
+				mapGroupName = mapGroupName + siblingSuffix;
+
+			                                   
+			var elParent = mapgroupButton.GetParent();
+			if ( elParent )
+				elParent = elParent.GetParent();
+			if ( elParent && elParent.GetAttributeString( 'hassections', '') )
+			{
+				elParent.Children().forEach( function( section )
+				{
+					section.Children().forEach( function( tile )
+					{
+						var mapGroupNameSibling = tile.GetAttributeString( "mapname", '' );
+						if ( mapGroupNameSibling.toLowerCase() === mapGroupName.toLowerCase() )
+						{	                           
+							tile.checked = false;
+						}
+					} );
+				} );
+			}
+		}
+
 		if ( _CheckContainerHasAnyChildChecked( _GetMapListForServerTypeAndGameMode( m_activeMapGroupSelectionPanelID )) )
 		{ 
 			_ApplySessionSettings();

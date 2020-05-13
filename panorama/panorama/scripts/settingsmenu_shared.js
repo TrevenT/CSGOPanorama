@@ -3,6 +3,7 @@
 
 var SettingsMenuShared = ( function () {
 
+
 	var _ResetControlsRecursive = function( panel )
 	{
 		if ( panel == null )
@@ -124,11 +125,11 @@ var SettingsMenuShared = ( function () {
 
 	var _ScrollToId = function ( locationId )
 	{
-		var elLocationPanel = $.GetContextPanel().FindChildInLayoutFile( locationId );
+		var elLocationPanel = $.GetContextPanel().FindChildTraverse( locationId );
 
 		if ( elLocationPanel != null )
 		{
-			elLocationPanel.ScrollParentToMakePanelFit(2, false);
+			elLocationPanel.ScrollParentToMakePanelFit(3, false);
 			elLocationPanel.AddClass('Highlight');
 
 			var kfs = elLocationPanel.CreateCopyOfCSSKeyframes( 'settings-highlight' );

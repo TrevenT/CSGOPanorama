@@ -24,6 +24,31 @@ var MainMenu = ( function() {
 	var _m_storePopupElement = null;
 	var m_TournamentPickBanPopup = null;
 
+	                                         
+	let nNumNewSettings = UpdateSettingsMenuAlert();
+
+	function UpdateSettingsMenuAlert()
+	{ 
+		let elNewSettingsAlert = $( "#MainMenuSettingsAlert" );
+		if ( elNewSettingsAlert )
+		{
+			let nNewSettings = PromotedSettingsUtil.GetUnacknowledgedPromotedSettings().length;
+			elNewSettingsAlert.SetHasClass( "has-new-settings", nNewSettings > 0 );
+			elNewSettingsAlert.SetDialogVariableInt( "num_settings", nNewSettings );
+			return nNewSettings;
+		}
+		return 0;
+	}
+
+	if ( nNumNewSettings > 0 )
+	{
+		var hPromotedSettingsViewedEvt = $.RegisterForUnhandledEvent( "MainMenu_PromotedSettingsViewed", function () 
+		{
+			UpdateSettingsMenuAlert();
+			$.UnregisterForUnhandledEvent( "MainMenu_PromotedSettingsViewed", hPromotedSettingsViewedEvt );
+		} );
+	}
+
 	var _OnInitFadeUp = function()
 	{
 		if( !_m_playedInitalFadeUp )
@@ -88,6 +113,7 @@ var MainMenu = ( function() {
 
 		                                                               
 		_ShowHideAlertForNewEventForWatchBtn();
+
 	};
 
 	var _TournamentDraftUpdate = function ()

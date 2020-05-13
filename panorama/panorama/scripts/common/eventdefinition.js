@@ -83,4 +83,6 @@
     $.DefineEvent( 'ShowTradeUpPanel', 0, '', 'Show trade up panel' );
     $.DefineEvent( 'UpdateTradeUpPanel', 0, '', 'Update trade up panel' );
     $.DefineEvent( 'MainMenuTabShown', 1, 'tabid', 'Alert main menu tabs when they are shown, in case there is a data update needed' );
+	$.DefineEvent( 'SettingsMenu_NavigateToSetting', 2, 'category, settingPanelID', 'Takes cateogry eg "GAME" or "KBMOUSE" and contained setting ID, opens that category and scrolls to the settting matching the id.' );
+	$.DefinePanelEvent( "MainMenu_PromotedSettingsViewed", 0, "", "Fired when user views new settings." )
 } )();

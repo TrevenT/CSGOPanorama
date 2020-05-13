@@ -264,6 +264,19 @@ var MainMenuStore = ( function()
 			}
 			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "new" )
 			{
+				                                                                                        
+				var idToCheckForRestrictions = FauxItemId;
+				if( ItemInfo.GetLootListCount( idToCheckForRestrictions ) > 0 )
+				{
+					idToCheckForRestrictions = InventoryAPI.GetLootListItemIdByIndex( idToCheckForRestrictions, 0 );
+				}
+				var sRestriction = InventoryAPI.GetDecodeableRestriction( idToCheckForRestrictions );
+				if ( sRestriction === "restricted" || sRestriction === "xray" )
+				{
+					                                                                                                                                                                          
+					continue;
+				}
+
 				if ( !itemsByCategory.newstore )
 				{
 					itemsByCategory.newstore = [];

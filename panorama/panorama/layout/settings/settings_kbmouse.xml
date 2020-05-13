@@ -249,7 +249,11 @@
 
 					<CSGOSettingsKeyBinder text="#SFUI_Voice" id="VoiceBinder" bind="+voicerecord"/>
 					<Panel class="horizontal-separator"/>          
-				
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_Voice_Enable_Tooltip">
+						<CSGOSettingsKeyBinder text="#GameUI_Voice_Enable" id="VoiceEnable" bind="voice_enable"/>
+					</TooltipPanel>
+
 				</Panel>
 			</Panel>
 						

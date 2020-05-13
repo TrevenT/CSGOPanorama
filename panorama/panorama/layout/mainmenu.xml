@@ -4,6 +4,7 @@
 		<include src="file://{resources}/styles/mainmenu.css" />
 	</styles>	
 	<scripts>
+		<include src="file://{resources}/scripts/common/promoted_settings.js" />
 		<include src="file://{resources}/scripts/mainmenu.js" />
 		<include src="file://{resources}/scripts/common/characteranims.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
@@ -189,6 +190,9 @@
 									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarSettings', '#tooltip_navbar_settings' );"
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/settings.svg" />
+							<Panel id="MainMenuSettingsAlert" class="navbar-btn__notification settings-notification">
+								<Label class="navbar-btn__notification-text" text="{d:num_settings}"/> 
+							</Panel>
 						</RadioButton>
 						                                          
 						               

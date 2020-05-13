@@ -1057,3 +1057,13 @@ RadioButton.content-navbar__tabs--small-image  Image
 {	                                                           
 	visibility: collapse;
 }
+
+.settings-notification
+{
+	visibility: collapse;
+}
+
+.settings-notification.has-new-settings
+{
+	visibility: visible;
+}
