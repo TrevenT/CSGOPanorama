@@ -95,6 +95,7 @@
 {
 	font-size: 14px;
 	height: 22px;
+    text-overflow:shrink;
 }
 
 .rarity-header, .grade-header, .team-header,

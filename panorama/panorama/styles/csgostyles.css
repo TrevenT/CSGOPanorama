@@ -92,6 +92,12 @@
 @define color-hud-10: #ff7999;           
 @define color-hud-11: #d5e286;                                        
 
+@define color-player-yellow: rgb(248, 246, 45);
+@define color-player-purple: rgb(161, 25, 240 );
+@define color-player-green: rgb(0, 181, 98);
+@define color-player-blue: rgb( 92, 168, 255);
+@define color-player-orange: rgb(255, 155, 37);
+
              
 @define curve__ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
 @define curve__ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -106,6 +112,7 @@ Label, TextEntry
 {
 	font-family: notosans, 'Arial Unicode MS';
 	text-overflow: clip;
+
 }
 
                                                                                      
@@ -1364,8 +1371,8 @@ CSGOSettingsEnumDropDown.PopupButton Label
 	font-weight: medium;
 	font-size: 20px;
 	margin: 16px 12px 12px;
-	overflow: noclip;
 	font-family: stratum2Font;
+    text-overflow: shrink;
 }
 
 .PopupButton Image,

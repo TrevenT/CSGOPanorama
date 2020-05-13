@@ -41,8 +41,10 @@
 
 				                  
 				<Panel id="id-sb-meta__musickit" class="hidden">
-					<Button id="id-sb-meta__musickit-unborrow" class="hidden" onactivate="$.DispatchEvent('Scoreboard_UnborrowMusicKit');" >
-						<Image src="file://{images}/icons/ui/cancel.svg"/>
+					<Button id="id-sb-meta__musickit-unborrow" class="hidden vertical-center" onactivate="$.DispatchEvent('Scoreboard_UnborrowMusicKit');" >
+						<TooltipPanel tooltip="#tooltip_stopborrowmusickit" style='tooltip-position: bottom;'>
+							<Image src="file://{images}/icons/ui/no_musickit.svg"/>
+						</TooltipPanel>
 					</Button>
 
 					<Image id="id-sb-meta__musickit-image" />

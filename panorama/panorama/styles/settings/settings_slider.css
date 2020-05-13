@@ -29,9 +29,10 @@ TextEntry#Value
 	width: 80px;
 	text-align: right;
 	color: baseText;
+    font-family: Stratum2, notosans, 'Arial Unicode MS';
 	font-weight: bold;
-	font-size: 18px;
-	padding: 4px, 0px, 0px;
+	font-size: 20px;
+	padding: 5px, 0px, 0px;
 	padding-left: 10px;
 	border-radius: 2px;
 	border: 2px solid #cccccc15;

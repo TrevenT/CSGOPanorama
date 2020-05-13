@@ -452,7 +452,8 @@
 	height: 100%;
 	
 	wash-color: rgb(40, 161, 218);
-	
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #183342 ), to( #306988aa ) );
+
 	background-image: url( "file://{resources}/videos/search.webm" );
 	background-repeat: no-repeat;
 
@@ -463,12 +464,13 @@
 	                                                         
 	background-size: clip_then_cover;
 	background-position: 0% 50%;
+	background-img-opacity: 0.12;
 
 	                                                             
 	                       
 	                                 
 
-	transition-property: wash-color;
+	transition-property: wash-color, background-img-opacity;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -476,8 +478,9 @@
 .party-list__bg--searching
 {
 	wash-color: rgb(9, 255, 152);
+	background-img-opacity: 1.0;
 
-	transition-property: wash-color;
+	transition-property: wash-color, background-img-opacity;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -485,11 +488,13 @@
 .party-list__bg--warning
 {
 	wash-color: rgb(218, 201, 56);
+	background-img-opacity: 1.0;
 
-	transition-property: wash-color;
+	transition-property: wash-color, background-img-opacity;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+
 
 .party-members-list
 {
@@ -541,6 +546,12 @@
 	text-align: center;
 	horizontal-align: center;
 	-s2-mix-blend-mode: SRGBadditive;
+}
+
+#MatchStatusWait
+{
+	min-height: 64px;
+	margin-left: 24px;
 }
 
 .party-status-header

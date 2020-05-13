@@ -21,6 +21,7 @@
     $.DefineEvent( 'InventoryItemPreview', 1, 'itemId', 'Just itemid' );
     $.DefineEvent( 'LootlistItemPreview', 2, 'itemId', 'typeParams', 'Requesting an item preview popup for the given item id. typeParams, caseid, key id' );
     $.DefineEvent( 'HideContentPanel', 0, 'no args', 'Hide all the content panels and show the default home dashboard' );
+    $.DefineEvent( 'ShowContentPanel', 0, 'no args', 'Show a content panel' );
     $.DefineEvent( 'InitAvatar', 2, 'xuid, type of panel', 'Update the avatar panel data for a xuid' );
     $.DefineEvent( 'UpdateVanityModelData', 0, 'no args', 'Update the vanity model with list of anims and model panel from updated settings' );
     $.DefineEvent( 'OpenPlayMenu', 0, 'no args', 'opens the play menu from anywhere. EXAMPLE from party menu settings button from client' );

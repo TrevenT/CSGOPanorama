@@ -176,6 +176,7 @@ var ItemContextEntires = ( function (){
 				}
 				else
 				{
+					$.DispatchEvent( 'PlaySoundEffect', 'equip_musickit', 'MOUSE' );
 					EquipItem( id, [ 'noteam' ] );
 				}
 			}

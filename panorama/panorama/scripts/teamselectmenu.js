@@ -50,6 +50,11 @@ var TeamSelectMenu = ( function (){
 		elModelPanel.SetHasClass( 'highlight', false );
 
 		elModelPanel.SetFlashlightAmount( 1.0 );
+
+		if ( elModelPanel.id === 'TeamCharT' )
+		{
+			elModelPanel.LayerSequence( 't_loadout_pistol_idle' , true, false );
+		}
 	}
 
 	function _SelectTeam( team )
@@ -82,7 +87,7 @@ var TeamSelectMenu = ( function (){
 		var elCtModel = $( '#TeamCharCT' );
 		var elTModel = $( '#TeamCharT' );
 
-		_HighlightPanel( elTModel, 't_loadout_pistol_idle_alt' );
+		_HighlightPanel( elTModel, 't_loadout_pistol_idle_alt_loop01' );
 		_UnhighlightPanel( elCtModel );
 		m_highlightedTeam = '2';
 		elBtnTeamT.SetFocus();
@@ -99,7 +104,7 @@ var TeamSelectMenu = ( function (){
 		var elCtModel = $( '#TeamCharCT' );
 		var elTModel = $( '#TeamCharT' );
 
-		_HighlightPanel( elCtModel, 'ct_loadout_pistol01_idle_alt' );
+		_HighlightPanel( elCtModel, 'ct_loadout_pistol_idle_alt_intro01' );
 		_UnhighlightPanel( elTModel );
 		m_highlightedTeam = '3';
 		elBtnTeamCT.SetFocus();
@@ -159,19 +164,28 @@ var TeamSelectMenu = ( function (){
 		                                      
 		                                     
 
+		var anims = {
+			cameraPreset: 0 ,
+			idle : 'ct_loadout_pistol_idle_alt_loop01'
+		};
+
 		_SetCharacterAnim( elCharRight,
 			{
 				team: 'ct',
 				model: $.GetContextPanel().GetPlayerModelCT(),
-				anims: CharacterAnims.GetAnims('ct', 'secondary0', 'deagle')                                                   
+				anims: anims 
 			}
 		);
 
+		anims = {
+			cameraPreset: 2 ,
+			idle : 't_loadout_pistol_idle'
+		};
 		_SetCharacterAnim( elCharLeft,
 			{
 				team: 't',
 				model: $.GetContextPanel().GetPlayerModelTerrorist(),
-				anims: CharacterAnims.GetAnims('t', 'secondary0', '')                                                   
+				anims: anims 
 			}
 		);
 	}

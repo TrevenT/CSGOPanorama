@@ -4,7 +4,7 @@
 	opacity: 1;
 	visibility: visible;
 	horizontal-align: right;
-	padding-right: 112px;
+	padding-right: 100px;
 
 	transition-property: clip;
 	transition-duration: .25s;
@@ -29,7 +29,7 @@
 
 .chat-panel
 {
-	flow-children: right;
+	width: 420px;
 	
 	opacity: 1;
 	visibility: visible;
@@ -37,6 +37,17 @@
 	transition-property: opacity, brightness;
 	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
+}
+
+.AspectRatio5x4 .chat-panel
+{
+	width: 400px;
+}
+
+.AspectRatio16x9 .chat-panel,
+.AspectRatio16x10 .chat-panel,
+{
+	width: 520px;
 }
 
 .chat-panel .TickBox
@@ -54,211 +65,182 @@
 	transition-timing-function: ease-in-out;
 }
 
-.chat-panel-icon
-{
-	margin: 32px 8px 0px 0px;
-	height: 32px;
-	width: 32px;
-	vertical-align: top;
-
-	transition-property: wash-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
 .chat-container
 {
-	horizontal-align: right;
 	vertical-align: top;
-	margin-top: 24px;
-	width: 440px;
-	height: 48px;
-	border-radius: 3px;
-	flow-children: down;
+	                               
+	                      
+	width: 100%;
+	max-height: 210px;
+	                          
 
-	transition-property: height, border;
-	transition-duration: 0.1s;
+	transition-property: height;
+	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
 }
 
-.chat-panel:Hover .chat-container:not(.chat-open)
+.chat-container.closed-minimized
 {
-	brightness: 1.5;
+	max-height: 95px;
 
-	transition-property: brightness;
-	transition-duration: 0.1s;
+	transition-property: height;
+	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
 }
 
 .chat-open
 {
-	visibility: visible;
-	height: 528px;
-
-	transition-property: height;
-	transition-duration: 0.1s;
-	transition-timing-function: ease-in-out;
+	height: fit-children;
+	max-height: 400px;
 }
 
 .chat-container__lines
 {
-	height: 448px;
+	height: fit-children;
 	width: 100%;
-
-	overflow: squish squish;
+	padding: 0px 0px;
+	overflow: squish scroll;
 	flow-children: up;
 	vertical-align: bottom;
-	background-color: #FFFFFF11;
+	                                                                                                               
+	                                               
 
-	transition-property: background-color, border;
-	transition-duration: 0.1s;
+	transition-property: background-color;
+	transition-duration: 0.3s;
 	transition-timing-function: ease-in-out;
+}
+
+.chat-container:hover .chat-panel-blur
+{
+	opacity: 1;
 }
 
 .chat-container.chat-open .chat-container__lines
 {
-	background-color: #FFFFFF55;
+	height: 300px;
 	overflow: squish scroll;
 
 	transition-property: background-color;
-	transition-duration: 0.1s;
+	transition-duration: 0.2s;
 	transition-timing-function: ease-in-out;
 }
 
+.chat-panel-blur
+{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.55);
+	                           
+	opacity: .1;
+
+	transition-property: opacity;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+
+}
+
+.chat-open .chat-panel-blur
+{
+	                          
+	opacity: 1;
+}
+
                                                                                
                                                                                
                                                                                
+
 .chat-entry
 {
-	padding: 0px 24px 0px 24px;
-	margin: 4px 0px;
-	height: fit-children;
-	              
-}
-
-.chat-container:not(.chat-open) .chat-entry
-{
-	padding: 0px 4px;
-}
-
-
-
-.chat-entry__player-invited
-{
-	flow-children: right;
+	padding: 0px 0px 0px 0px;
+	margin: 3px 0px 0px 0px;
 	height: fit-children;
 }
 
-.chat-entry__player-labels
-{
-	flow-children: down;
-	height: fit-children;
-	background-color: chatBgGrey;
-	border-radius: 3px;
-}
+.player-color__yellow .chat-entry__name { color: color-player-yellow; }
+.player-color__purple .chat-entry__name{  color: color-player-purple; }
+.player-color__green .chat-entry__name {  color: color-player-green; }
+.player-color__blue .chat-entry__name { color: color-player-blue; }
+.player-color__orange .chat-entry__name {  color: color-player-orange; }
 
-.chat-entry__player-labels--removed
+.self-chat Label
 {
-	background-color:chatBgGrey;
-}
-
-.chat-entry__avatar-label-wrapper:not(.chat-open) 
-{
-	vertical-align: center;
-}
-
-
-.self-chat,
-.self-chat .chat-entry__avatar-label-wrapper
-{
-	horizontal-align: right;
-}
-
-.chat-container.chat-open .chat-entry Label
-{
-	padding:4px 6px;
+	                                         
+	horizontal-align: left;
 }
 
 .chat-entry Label
 {
 	color: white;
-	background-color: rgba(0, 0, 0, 0.315);
 	font-size: 15px;
-	padding: 12px 6px;
-	max-width: 340px;
-	max-height: 380px;
-	height: fit-children;
-	text-align: right;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( rgba(0, 0, 0, 0.55)), to( rgba(0, 0, 0, 0.0)) );
+	text-shadow-fast: 2px 1px rgba(0, 0, 0, 0.8);
+	padding: 2px 8px;
+	text-align: left;
 	white-space: normal;
-	border-radius: 3px;
+	width: 400px;
 
 	transition-property: background-color;
 	transition-duration: 0.25s;
 	transition-timing-function: ease-in-out;
 
 	animation-name: chat-new-entry;
-	animation-duration: .5s;
+	animation-duration: .2s;
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: 1;
 }
 
-
-.player-invite Button
+.AspectRatio5x4 .chat-entry Label
 {
-	vertical-align: bottom;
+	width: 380px;
 }
 
-.player-invite:not(.invitee-name) Label
+.AspectRatio16x9 .chat-entry Label,
+.AspectRatio16x10 .chat-entry Label
 {
-	text-align: left;
-	background-color: rgba(94, 94, 94, 0.5);
-	margin-right: 8px;
+	width: 500px;
 }
 
-.player-invite__button
+.chat-open .chat-entry:not(.error-message) Label
 {
-	background-color: chatBgGrey;
+	background-color: none;
+}
+.chat-entry__player-invited
+{
+	flow-children: right;
+	height: fit-children;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( blueColor), to( rgba(0, 0, 0, 0.0)) );
 }
 
-.self-chat Label
+.chat-entry__player-invited Image
 {
-	background-color: rgb(58, 103, 128)
-	horizontal-align: right;
+	vertical-align: center;
+	padding-left: 8px;
 }
 
-.self-chat CSGOAvatarImage
+.chat-entry__player-invited Label
 {
-	visibility: collapse;
+	background-color: none;
+	padding: 2px 0px 2px 8px;
 }
 
 .error-message Label
 {
-	background-color: negativeColor;
-	horizontal-align: left;
-	text-align: left;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #c21b1baa ), to( rgba(0, 0, 0, 0.0)) );
 }
 
-.green-error Label
+.error-message--green Label
 {
-	background-color: #9e9d42;
-	text-align: left;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #4caf50aa ), to( rgba(0, 0, 0, 0.0)) );
 }
 
-.yellow-error Label
+.error-message--yellow Label
 {
-	background-color: #ffbb42;
-	text-align: left;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #b1af2daa ), to( rgba(0, 0, 0, 0.0)) );
 }
 
-.tournament-matchmaking-status Label
+.tournament-matchmaking-status
 {
-	background-color: rgba(0, 80, 0, 0.8);
-	text-align: left;
-}
-
-.chat-entry__player-title
-{
-	font-weight: bold;
+	visibility: collapse;
 }
 
 .chat-entry CSGOAvatarImage
@@ -270,15 +252,15 @@
 	margin-right: 8px;
 }
 
-.chat-container.chat-open .chat-chat-entry__avatar 
-{
-	                                                                        
-	vertical-align: bottom;
-}
-
 @keyframes 'chat-new-entry'
 {
 	0%
+	{
+		transform: translateX(-100%);
+		brightness: 10;
+	}
+
+	80%
 	{
 		brightness: 10;
 	}
@@ -286,7 +268,14 @@
 	100%
 	{
 		brightness: 1;
+		transform: translateX(0%);
 	}
+}
+
+.chat-open-text
+{
+	font-weight: bold;
+	text-decoration: underline;
 }
 
                                                                                
@@ -294,9 +283,10 @@
                                                                                
 .chat-container__input-container
 {
+	visibility: collapse;
 	height: 48px;
 	width: 100%;
-	background-color: #FFFFFF55;
+	vertical-align: bottom;
 
 	transition-property: position;
 	transition-duration: .1s;
@@ -310,12 +300,12 @@
 	width: 100%;
 	color: White;
 	padding-left: 8px;
-	margin: 0px 5px;
+	margin: 0px 6px;
 	border: 0px solid white;
 
 	vertical-align: center;
-	border-radius: 3px;
-	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 0px;
+	background-color: rgba(0, 0, 0, 0.7);
 }
 
 TextEntry.chat-container__input #PlaceholderText
@@ -337,7 +327,8 @@ TextEntry.chat-container__input.HasInput #PlaceholderText
 	border-bottom: 0px;                                                  
 }
 
-.chat-container.chat-open .chat-container__input 
+.chat-container.chat-open .chat-container__input-container,
+.chat-container.chat-open .chat-container__input
 {
 	visibility: visible;
 }
@@ -350,11 +341,11 @@ TextEntry.chat-container__input.HasInput #PlaceholderText
 	width: 100%;
 	height:fit-children;
 	visibility: collapse;
-	background-color: #FFFFFF55;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
+	background-color: rgba(255, 255, 255, 0.0);
 
-	transition-property: brightness;
+	transition-property: background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
@@ -363,7 +354,6 @@ TextEntry.chat-container__input.HasInput #PlaceholderText
 {
 	visibility: visible;
 }
-
 
 .chat-container__close__icon
 {
@@ -381,18 +371,14 @@ TextEntry.chat-container__input.HasInput #PlaceholderText
 
 .chat-container__close:Hover 
 {
-	brightness: .5;
+	background-color: rgba(255, 255, 255, 0.1);
 
-	transition-property: brightness;
+	transition-property: background-color;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
 
-.chat-container__close:Hover .chat-container__close__icon
+CSGOAvatarImage
 {
-	brightness: .1;
-
-	transition-property: brightness;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
+	visibility: collapse;
 }

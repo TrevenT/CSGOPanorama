@@ -47,14 +47,14 @@
                   </Panel>
                 
                   <Panel id="PlayerPanelWeaponBar" class="PlayerPanel__WeaponBar_L">
-                    <Image id="Weapon1" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-elite.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon2" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-decoy.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon3" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-flashbang.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon4" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-flashbang.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon5" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-hegrenade.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon6" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-molotov.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon7" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-smokegrenade.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
-                    <Image id="Weapon8" class="SmallWeaponIcon" src="file://{images}/hud/deathnotice/icon-defuser.png" textureheight="20" scaling="stretch-to-fit-x-preserve-aspect" />
+                    <Image id="Weapon1" class="SmallWeaponIcon" src="file://{images}/icons/equipment/elite.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon2" class="SmallWeaponIcon" src="file://{images}/icons/equipment/decoy.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon3" class="SmallWeaponIcon" src="file://{images}/icons/equipment/flashbang.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon4" class="SmallWeaponIcon" src="file://{images}/icons/equipment/flashbang.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon5" class="SmallWeaponIcon" src="file://{images}/icons/equipment/hegrenade.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon6" class="SmallWeaponIcon" src="file://{images}/icons/equipment/molotov.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon7" class="SmallWeaponIcon" src="file://{images}/icons/equipment/smokegrenade.png" textureheight="20" scaling="none" />
+                    <Image id="Weapon8" class="SmallWeaponIcon" src="file://{images}/icons/equipment/defuser.png" textureheight="20" scaling="none" />
                   </Panel>             
                 </Panel>    
             </Button>
@@ -62,7 +62,7 @@
             <Panel id="PlayerPanelDeadBG" class="PlayerPanel_DeadBG_L"/>
         
             <Panel class="weapon-selection-item-icon">
-              <Image id="PlayerPanel_MainWeapon" class="PlayerPanel_MainWeapon_L" src="file://{images}/icons/equipment/m4a1_silencer.svg" textureheight="45" />
+              <Image id="PlayerPanel_MainWeapon" class="PlayerPanel_MainWeapon_L" src="file://{images}/icons/equipment/m4a1_silencer.svg" textureheight="45" scaling="none" />
             </Panel>
           </Panel>
           

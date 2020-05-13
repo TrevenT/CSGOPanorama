@@ -16,6 +16,7 @@ var CapabilityDecodable = ( function()
 	var m_isKeyless = false;
 	var m_storeItemId = '';
 	var m_unusualItemImagePath = '';
+	var m_showInspectScheduleHandle = null;
 	
 	var _Init = function()
 	{
@@ -349,7 +350,9 @@ var CapabilityDecodable = ( function()
 			elScroll.ScrollToFitRegion( xPos, xPos, 0, 0, 3, true, false );
 		} );
 		
-		$.Schedule( 6, _ShowInspect );
+		var revealDelay = 6;
+		$.Schedule( ( revealDelay - 1 ), _PreCacheTextureForNewWeaponInpsect );
+		m_showInspectScheduleHandle = $.Schedule( revealDelay, _ShowInspect );
 
 		var itemDefName = ItemInfo.GetItemDefinitionName( m_caseId );
 
@@ -370,7 +373,6 @@ var CapabilityDecodable = ( function()
 	var _ScrollTick = function(soundEventName)
 	{
 		$.DispatchEvent( "PlaySoundEffect", soundEventName, "MOUSE" );
-
 	};
 
 	var _GetStopPostion = function( elParent, targetId, xOffsetSlackPercent )
@@ -381,9 +383,16 @@ var CapabilityDecodable = ( function()
 		return ( elTile.actualxoffset + ( tileWidth * xOffsetSlackPercent ));
 	};
 
+	var _PreCacheTextureForNewWeaponInpsect = function()
+	{
+		InventoryAPI.PrecacheCustomMaterials( m_itemFromContainer );
+	};
+
 	var _ShowInspect = function()
 	{
-		if( m_itemFromContainer )
+		m_showInspectScheduleHandle = null;
+
+		if ( m_itemFromContainer )
 		{
 			                                                                                
 			                                                                                         
@@ -392,8 +401,8 @@ var CapabilityDecodable = ( function()
 			InventoryAPI.SetItemSessionPropertyValue( m_itemFromContainer, 'recent', '1' );
 			InventoryAPI.AcknowledgeNewItembyItemID( m_itemFromContainer );
 
-			CapabilityDecodable.ClosePopUp();
 			$.DispatchEvent( "InventoryItemPreview", m_itemFromContainer );
+			CapabilityDecodable.ClosePopUp();
 
 			var rarityVal = InventoryAPI.GetItemRarity( m_itemFromContainer );
 			var soundEvent = "ItemRevealRarityCommon";
@@ -408,7 +417,7 @@ var CapabilityDecodable = ( function()
 			} else if( rarityVal == 8 ) {
 				soundEvent = "ItemRevealRarityAncient";
 			}
-
+	
 			$.DispatchEvent( "PlaySoundEffect", soundEvent, "MOUSE" );
 		}
 		else
@@ -516,6 +525,7 @@ var CapabilityDecodable = ( function()
 	                                                                                                    
 	var _SetUpCaseOpeningCountdown = function()
 	{
+		_UpdateOpeningCounter.SetIsGraffiti( _GetContainerType( m_caseId ) === 'graffiti' );
 		_UpdateOpeningCounter.ShowCounter();
 		_UpdateOpeningCounter.UpdateCounter();
 		_ShowHideLootList( false );
@@ -528,6 +538,7 @@ var CapabilityDecodable = ( function()
 		var elCountdownLabel = elCountdown.FindChildInLayoutFile( 'DecodableCountdownLabel' );
 		var elCountdownRadial = elCountdown.FindChildInLayoutFile( 'DecodableCountdownRadial' );
 		var timerHandle = null;
+		var isGraffitiUnseal = false;
 
 		var _UpdateCounter = function()
 		{
@@ -545,9 +556,17 @@ var CapabilityDecodable = ( function()
 				$.DispatchEvent( "PlaySoundEffect", "container_countdown", "MOUSE" );
 
 				elCountdownLabel.text = counterVal;
-
-				elCountdownLabel.RemoveClass( 'popup-countdown-anim' );
-				elCountdownLabel.AddClass( 'popup-countdown-anim' );
+				
+				if ( !isGraffitiUnseal )
+				{
+					elCountdownLabel.visible = true;
+					elCountdownLabel.RemoveClass( 'popup-countdown-anim' );
+					elCountdownLabel.AddClass( 'popup-countdown-anim' );
+				}
+				else
+				{
+					elCountdownLabel.visible = false;
+				}
 
 				elCountdownRadial.RemoveClass( 'popup-countdown-timer-circle-anim' );
 				elCountdownRadial.AddClass( 'popup-countdown-timer-circle-anim' );
@@ -570,10 +589,16 @@ var CapabilityDecodable = ( function()
 			}
 		};
 
+		var _SetIsGraffiti = function( isGraffiti )
+		{
+			isGraffitiUnseal = isGraffiti;
+		};
+
 		return {
 			UpdateCounter: _UpdateCounter,
 			ShowCounter: _ShowCounter,
-			CancelTimer: _CancelTimer
+			CancelTimer: _CancelTimer,
+			SetIsGraffiti: _SetIsGraffiti
 		};
 	} )();
 	
@@ -596,6 +621,11 @@ var CapabilityDecodable = ( function()
 			                                                                                         
 			if ( $.GetContextPanel().FindChildInLayoutFile( 'DecodableItemsScroll' ).BHasClass( 'hidden' ) )
 			{
+				if ( type === 'graffity_unseal' )
+				{
+					_ShowInspect();
+				}
+				
 				return;
 			}
 			else
@@ -709,6 +739,12 @@ var CapabilityDecodable = ( function()
 	{
 		if ( m_Inspectpanel.IsValid() )
 		{ 
+			if ( m_showInspectScheduleHandle )
+			{
+				$.CancelScheduled( m_showInspectScheduleHandle );
+				m_showInspectScheduleHandle = null;
+			}
+			
 			var elAsyncActionBarPanel = m_Inspectpanel.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 			var elPurchase = m_Inspectpanel.FindChildInLayoutFile( 'PopUpInspectPurchaseBar' );
 			if ( !elAsyncActionBarPanel.BHasClass( 'hidden' ) )

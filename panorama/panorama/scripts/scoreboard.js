@@ -33,6 +33,7 @@ var dictGamePhases = {
 }
 
 var arrSpectatorVisibleStats = [
+	"ping",
 	"avatar",
 	"name"
 ];
@@ -874,9 +875,9 @@ var Scoreboard = ( function()
 		{
 
 			if ( typeof ( _m_oUpdateStatFns[ stat ] ) === 'function' )
+			{
 				_m_oUpdateStatFns[ stat ]( oPlayer, bSilent );
-			else
-				                                       
+			}
 
 			if ( oPlayer.m_oElStats[ stat ] )
 			{
@@ -903,6 +904,11 @@ var Scoreboard = ( function()
 		}
 	}
 
+	function _MakeNameForScoreboardCellField( stat, childelement )
+	{
+		return "id-sb-row__cell--" + stat + "__" + childelement;
+	}
+
 	                                                                          
 	function _GenericUpdateStat ( oPlayer, stat, fnGetStat, bSilent = false, pulseDuration = 1.0 )
 	{
@@ -915,7 +921,7 @@ var Scoreboard = ( function()
 		var elLabel = elPanel.Children()[ 0 ];
 		if ( !elLabel || !elLabel.IsValid() )
 		{
-			elLabel = $.CreatePanel( "Label", elPanel, "id-sb-row__cell--" + stat + "__label" );
+			elLabel = $.CreatePanel( "Label", elPanel, _MakeNameForScoreboardCellField( stat, "label" ) );
 			_TeamColorizeStat( stat, elLabel );
 		}
 
@@ -970,7 +976,7 @@ var Scoreboard = ( function()
 					var isBorrowed = false;
 					var borrowedXuid = 0;
 
-					var borrowedPlayerIndex = parseInt( GameInterfaceAPI.LookupConVarStringValue( "cl_borrow_music_from_player_index" ) );
+					var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
 
 					if ( borrowedPlayerIndex != 0 )
 					{
@@ -1065,11 +1071,42 @@ var Scoreboard = ( function()
 
 					if ( elPlayer && elPlayer.IsValid())
 					{
-						var elStat = elPlayer.FindChildTraverse( "id-sb-row__cell--ping__label" );
+						                                                                             
+						                                                                                
+						                                                                                    
+						             
 
-						if ( !GameStateAPI.IsFakePlayer( oPlayer.m_xuid ) )
+						var elLabelElementName = _MakeNameForScoreboardCellField( stat, "label" );
+						var elLabel = elPlayer.FindChildTraverse( elLabelElementName );
+						if ( !elLabel )
 						{
 							_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerPing.bind( GameStateAPI ), true );
+							elLabel = elPlayer.FindChildTraverse( elLabelElementName );
+						}
+
+						if ( elLabel )
+						{
+							var bLabelNeedsSpectatorStyle = false;
+							var szCustomLabel = _GetCustomStatTextValue( 'ping', oPlayer.m_xuid );
+							elLabel.SetHasClass( "sb-row__cell--ping__label--bot", !!szCustomLabel );                                                          
+							if ( szCustomLabel )
+							{
+								elLabel.text = $.Localize( szCustomLabel );
+								oPlayer.m_oStats[ stat ] = szCustomLabel;                                                                                     
+
+								if ( szCustomLabel === "#SFUI_scoreboard_lbl_spec" )
+								{
+									                                                                                                    
+									                                                            
+									bLabelNeedsSpectatorStyle = true;
+								}
+							}
+							else
+							{
+								_GenericUpdateStat( oPlayer, stat, GameStateAPI.GetPlayerPing.bind( GameStateAPI ), true );
+							}
+
+							elPlayer.SetHasClass( "sb-player-team-spectator", bLabelNeedsSpectatorStyle );
 						}
 					}
 				};
@@ -1208,6 +1245,8 @@ var Scoreboard = ( function()
 						if ( elPlayer && elPlayer.IsValid() )
 						{
 							                                                                           
+							                                                                                                    
+							                                                          
 							if ( newStatValue === 1 )
 							{
 								elPlayer.AddClass( "sb-player-status-dead" );
@@ -1319,10 +1358,14 @@ var Scoreboard = ( function()
 					if ( !elPanel || !elPanel.IsValid() )
 						return;
 
+						                                                                             
+						                                                                                           
+						             
+						
 					var elLabel = elPanel.Children()[ 0 ];
 					if ( !elLabel || !elLabel.IsValid() )
 					{
-						elLabel = $.CreatePanel( "Label", elPanel, "id-sb-row__cell--" + stat + "__label" );
+						elLabel = $.CreatePanel( "Label", elPanel, _MakeNameForScoreboardCellField( stat, "label" ) );
 						_TeamColorizeStat( stat, elLabel );
 					}
 
@@ -1494,11 +1537,12 @@ var Scoreboard = ( function()
 					             
 					  
 					         
-					var elPlayerColor = elAvatarImage.FindChildTraverse( "id-sb-row__cell--avatar__playercolor" );
+					var elPlayerColorElementName = _MakeNameForScoreboardCellField( "avatar", "playercolor" );
+					var elPlayerColor = elAvatarImage.FindChildTraverse( elPlayerColorElementName );
 					if ( !elPlayerColor || !elPlayerColor.IsValid() )
 					{
 
-						elPlayerColor = $.CreatePanel( "Image", elAvatarImage, "id-sb-row__cell--avatar__playercolor" );
+						elPlayerColor = $.CreatePanel( "Image", elAvatarImage, elPlayerColorElementName );
 						elPlayerColor.AddClass( "sb-row__cell--avatar__playercolor" );
 					}
 
@@ -1698,7 +1742,7 @@ var Scoreboard = ( function()
 			case "competitive":
 				return "snippet_scoreboard-classic__row--comp";
 
-			case "gungameprogressive":            
+			case "armsrace":            
 				return "snippet_scoreboard__row--armsrace";
 
 			case "training":
@@ -1708,7 +1752,7 @@ var Scoreboard = ( function()
 				return "snippet_scoreboard__row--deathmatch";
 
 			case "flyingscoutsman":
-			case "gungametrbomb":
+			case "demolition":
 				return "snippet_scoreboard__row--demolition";
 
 			       
@@ -1901,6 +1945,24 @@ var Scoreboard = ( function()
 		}
 	}
 
+	                              
+	function _GetCustomStatTextValue( stat, xuid )
+	{
+		var szCustomLabel = null;
+		if ( stat === 'ping' )
+		{
+			if ( GameStateAPI.IsFakePlayer( xuid ) )
+			{
+				szCustomLabel = "#SFUI_scoreboard_lbl_bot";
+			}
+			else if ( IsTeamASpecTeam( GameStateAPI.GetPlayerTeamName( xuid ) ) )
+			{
+				szCustomLabel = "#SFUI_scoreboard_lbl_spec";
+			}
+		}
+		return szCustomLabel;
+	}
+
 	                      
 	function _NewPlayerPanel ( oPlayer )
 	{
@@ -1931,15 +1993,6 @@ var Scoreboard = ( function()
 			if ( stat === "" )
 			{
 				return;
-			}
-
-			                        
-			if ( stat === 'ping' && GameStateAPI.IsFakePlayer( oPlayer.m_xuid ) )
-			{
-				                        
-				var elLabel = $.CreatePanel( "Label", elStatCell, "id-sb-row__cell--ping__label" );
-				elLabel.AddClass( "sb-row__cell--ping__label--bot" );
-				elLabel.text = "BOT";
 			}
 
 			                                    
@@ -2658,7 +2711,7 @@ var Scoreboard = ( function()
 
 	function _UnborrowMusicKit ()
 	{
-		GameInterfaceAPI.ConsoleCommand( 'cl_borrow_music_from_player_index 0' );
+		InventoryAPI.SetUIPreferenceString( "cl_borrow_music_from_player_index", "0" );
 
 		var oLocalPlayer = _m_oPlayers.GetPlayerByXuid( GetLocalPlayerId() );
 		_m_oUpdateStatFns[ 'musickit' ]( oLocalPlayer, true );
@@ -2865,7 +2918,7 @@ var Scoreboard = ( function()
 				                          
 			       
 
-			case "gungameprogressive":            
+			case "armsrace":            
 				return sortOrder_gg;
 
 			case "deathmatch":
@@ -2897,7 +2950,7 @@ var Scoreboard = ( function()
 			
 			case "training":
 			case "deathmatch":
-			case "gungameprogressive":
+			case "armsrace":
 				scoreboardTemplate = "snippet_scoreboard-deathmatch";
 				break;
 			
@@ -2973,7 +3026,7 @@ var Scoreboard = ( function()
 			                
 			       
 			case "deathmatch":
-			case "gungameprogressive":
+			case "armsrace":
 				               
 				break;
 

@@ -51,8 +51,11 @@ var EOM_Rank = (function () {
 		var arrPostRankXP = [];                                    
 		var totalXP = 0;
 
+		var maxLevel = InventoryAPI.GetMaxLevel();
+
 		               
 		var currentRank = oXpData[ "current_level" ];
+		currentRank = currentRank < maxLevel ? currentRank : maxLevel;
 
 		elCurrent.SetDialogVariableInt( "level", currentRank );
 		elCurrent.SetDialogVariable( 'name', $.Localize( '#XP_RankName_' + currentRank, elCurrent ) );
@@ -60,7 +63,8 @@ var EOM_Rank = (function () {
 		_m_cP.FindChildInLayoutFile( "id-eom-rank__current__emblem" ).SetImage( "file://{images}/icons/xp/level" + currentRank + ".png" );
 
 		            
-		var newRank = currentRank + 1;
+		var newRank = currentRank < maxLevel ?  ( currentRank + 1 ) : maxLevel;
+		
 		elNew.SetDialogVariableInt( "level", newRank );
 		elNew.SetDialogVariable( 'rank_new_name', $.Localize( '#XP_RankName_' + newRank, elNew ) );
 		_m_cP.SetDialogVariable( 'rank_new_rank', $.Localize( '#XP_RankName_Display_Rank', elNew ) );
@@ -238,7 +242,6 @@ var EOM_Rank = (function () {
 		            
 		if ( totalXP >= xPPerLevel )
 		{
-
 			           
 			_AnimSequenceNext( function()
 			{

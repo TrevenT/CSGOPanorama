@@ -103,14 +103,16 @@ Label {
 	margin: 10px;
 	horizontal-align: left;
 	flow-children: right;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 #id-sb-footer-server-website Label
 {
 	font-size: 16px;
 	color: #ffffff;
-	margin-right: 0px;
-	margin-top: 14px;
+	margin: 2px -1px 2px 10px;
+	text-overflow: clip;
 }
 
 #id-sb-footer-server-website Image
@@ -687,8 +689,11 @@ background-color: rgba(255, 238, 0, 0.07);
 .sb-row__cell--deaths,
 .sb-row__cell--kdr,
 .sb-row__cell--utilitydamage,
-.sb-row__cell--score
+.sb-row__cell--score,
+.sb-row__cell.spectator-hidden,
+.sb-row__cell.sortstat.spectator-hidden
 {
+                                                                                                              
 	background-color: cell-background-dark;
 }
 
@@ -992,6 +997,16 @@ Label.sb-row__cell--mvps__count {
 
 :not(.eom-scoreboard) .sb-player-status-dead .sb-row__cell,
 :not(.eom-scoreboard) .sb-row__cell--label {
+	background-color: #00000000;
+}
+
+.sb-team--Spectator.sb-player-team-spectator,  {
+	                                                                                      
+	opacity: 0.8;
+	wash-color: #999;
+}
+
+.sb-team--Spectator.sb-player-team-spectator .sb-row__cell {
 	background-color: #00000000;
 }
 
@@ -1326,8 +1341,16 @@ Label.sb-row__cell--mvps__count {
 	visibility: visible;
 }
 
-.hidden,
-.spectator-hidden {
+.hidden {
+	visibility: collapse;
+}
+
+.spectator-hidden Image,
+.spectator-hidden Label {                                                                                                                 
+	opacity: 0;
+}
+
+.sb-team--Spectator #id-sb-name__nameicons {                                                      
 	visibility: collapse;
 }
 

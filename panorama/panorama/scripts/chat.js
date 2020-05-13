@@ -4,43 +4,69 @@
 
 "use strict"; 
 
-var Chat = ( function (){
+var Chat = ( function()
+{
+	var m_isContentPanelOpen = false;
 	
 	function _Init() 
 	{
 		var elInput = $('#ChatInput');
 		elInput.SetPanelEvent('oninputsubmit', Chat.ChatTextSubmitted );
 
-		var elOpenChat = $.GetContextPanel().FindChildInLayoutFile('ChatPanelContainer');
+		var elOpenChat = $.GetContextPanel().FindChildInLayoutFile( 'ChatContainer' );
 		elOpenChat.SetPanelEvent( "onactivate", function() {
-			$('#ChatContainer').AddClass( "chat-open" );
+			_OpenChat();
+		} );
+		
+		var elCloseChat = $.GetContextPanel().FindChildInLayoutFile( 'ChatCloseButton' );
+		elCloseChat.SetPanelEvent( "onactivate", function() {
+			_Close();
+		});
+	}
+
+	function _OpenChat ()
+	{
+		var elChatContainer = $( '#ChatContainer' );
+		
+		if ( !elChatContainer.BHasClass( "chat-open" ) )
+		{
+			elChatContainer.RemoveClass( 'closed-minimized' );
+			elChatContainer.AddClass( "chat-open" );
 			$("#ChatInput").SetFocus();
 			$( "#ChatInput" ).activationenabled = true;
-			$( "#ChatInput" ).enabled = true;
 			
-			$.Schedule( .15, _ScrollToBottom );
-		});
-
-		var elCloseChat = $.GetContextPanel().FindChildInLayoutFile('ChatCloseButton');
-		elCloseChat.SetPanelEvent( "onactivate", Chat.Close );
+			                                   
+			
+			$.Schedule( .1, _ScrollToBottom );
+		}
 	}
 
 	function _Close()
 	{
-		var elChatContainer = $( '#ChatContainer' ); 
-		if ( elChatContainer.BHasClass( 'chat-open' ) )
+		var elChatContainer = $( '#ChatContainer' );
+		if ( elChatContainer.BHasClass( "chat-open") )
 		{
 			elChatContainer.RemoveClass( "chat-open" );
-			$.Schedule( .2, _ScrollToBottom );
+			elChatContainer.SetFocus();
 			$( "#ChatInput" ).activationenabled = false;
-			$( "#ChatInput" ).enabled = false;
-			return true;
-		}
-		else
-		{
-			return false;
-		}	
+			                                    
+			$.Schedule( .1, _ScrollToBottom );
 
+			_SetClosedHeight();
+			return true;                                            
+		}
+
+		return false; 
+	}
+
+	function _SetClosedHeight ()
+	{
+		var elChatContainer = $( '#ChatContainer' );
+		if ( !elChatContainer.BHasClass( "chat-open" ) )
+		{ 
+			elChatContainer.SetHasClass( 'closed-minimized', m_isContentPanelOpen );
+			$.Schedule( .1, _ScrollToBottom );
+		}
 	}
 
 	function _ChatTextSubmitted()
@@ -85,8 +111,20 @@ var Chat = ( function (){
 		else
 		{
 			var numPlayersActuallyInParty = PartyListAPI.GetCount();
+			var networkSetting = PartyListAPI.GetPartySessionSetting( "system/network" );
 			
-			elChat.SetHasClass( 'hidden', ( numPlayersActuallyInParty < PartyListAPI.GetPartySessionUiThreshold() ) );
+			elChat.SetHasClass( 'hidden', ( networkSetting !== 'LIVE' ) );
+
+			var elPlaceholder = $.GetContextPanel().FindChildInLayoutFile( 'PlaceholderText' );
+
+			if ( numPlayersActuallyInParty > 1 )
+			{
+				elPlaceholder.text = $.Localize( '#party_chat_placeholder' );
+			}
+			else
+			{
+				elPlaceholder.text = $.Localize( '#party_chat_placeholder_empty_lobby' );
+			}
 		}
 	}
 
@@ -117,13 +155,27 @@ var Chat = ( function (){
 			panelToClip.style.clip = 'rect( 0%, '+clipPercent+'%, 100%, 0% );';
 	};
 
+	var _OnHideContentPanel = function()
+	{
+		m_isContentPanelOpen = false;
+		_SetClosedHeight();
+	};
+
+	var _OnShowContentPanel = function()
+	{
+		m_isContentPanelOpen = true;
+		_SetClosedHeight();
+	};
+
 	return {
 		Init 					: _Init,
 		ChatTextSubmitted  		: _ChatTextSubmitted,
 		ShowPlayerCard			: _ShowPlayerCard,
 		SessionUpdate			: _SessionUpdate,
 		NewChatEntry			: _OnNewChatEntry,
-		OnSideBarHover			: _ClipPanelToNotOverlapSideBar,
+		OnSideBarHover:  _ClipPanelToNotOverlapSideBar,
+		OnHideContentPanel: _OnHideContentPanel,
+		OnShowContentPanel: _OnShowContentPanel,
 		Close 					: _Close
 	 };
 })();
@@ -138,5 +190,7 @@ var Chat = ( function (){
 	$.RegisterForUnhandledEvent( "OnNewChatEntry", Chat.NewChatEntry );
 	$.RegisterEventHandler( "Cancelled", $.GetContextPanel(), Chat.Close );
 	$.RegisterForUnhandledEvent( 'SidebarIsCollapsed', Chat.OnSideBarHover );
+	$.RegisterForUnhandledEvent( 'HideContentPanel', Chat.OnHideContentPanel );
+	$.RegisterForUnhandledEvent( 'ShowContentPanel', Chat.OnShowContentPanel );
 
 })();

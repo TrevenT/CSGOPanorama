@@ -55,10 +55,7 @@
 				<Panel id="MatchStatusContainer" class="top-bottom-flow full-width hidden">
 
 					<Panel id="MatchStatusWait" class="left-right-flow">
-						<Panel class="party-status-left">
-							<Panel class="Spinner additive vertical-center horizontal-center"/>
-						</Panel>
-						<Label id="MatchStatusWaitLabel" class="party-status-header" html="true" text="Waiting for lobby leader"/>
+						<Label id="MatchStatusWaitLabel" class="party-status-header" html="true" text=""/>
 					</Panel>
 
 					<Panel id="MatchStatusSearching" class="left-right-flow" >
@@ -66,14 +63,14 @@
 							<Image id="MatchStatusFailIcon" class="vertical-center horizontal-center warningColor hidden" texturewidth="36" textureheight="-1" src="file://{images}/icons/ui/warning.svg"/>
 							<Label id="MatchStatusTime" class="party-status-time" text="00:00"/>
 						</Panel>
-						<Label id="MatchStatusSearchingLabel" class="party-status-header" html="true" text="Waiting for lobby leader"/>
+						<Label id="MatchStatusSearchingLabel" class="party-status-header" html="true" text=""/>
 					</Panel>
 
 					<Panel id="MatchStatusWarning" class="left-right-flow" >
 						<Panel class="party-status-left">
 							<Image class="vertical-center horizontal-center warningColor" texturewidth="36" textureheight="-1" src="file://{images}/icons/ui/warning.svg"/>
 						</Panel>
-						<Label id="MatchStatusWarningLabel" class="party-status-header" text="Waiting for lobby leader really long text"/>
+						<Label id="MatchStatusWarningLabel" class="party-status-header" text=""/>
 					</Panel>
 				</Panel>
 				<Panel class="friendslist__seperator"/>
@@ -81,7 +78,7 @@
 				                                   
 				<Panel id="PartyListHeader" class="left-right-flow full-width" >
 					<Panel id="PartyTitleAlert" class="party-player-count">
-						<Label id="PartyTitleAlertText" class="party-status-members-count" text="2/5"/>
+						<Label id="PartyTitleAlertText" class="party-status-members-count" text=""/>
 					</Panel>
 
 					<Panel class="left-right-padding left-right-flow">

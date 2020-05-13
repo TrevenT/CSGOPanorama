@@ -47,7 +47,7 @@
 			</Panel>
 			<Panel id="MainMenuInput">                                              
 				
-				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatContainer mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
+				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatLinesContainerBg mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
 					<CSGOBlurTarget id="MainMenuBackground" blurrects= "mainmenu-content__blur-target JsNewsPanel JsStorePanel JsStreamPanel">
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      

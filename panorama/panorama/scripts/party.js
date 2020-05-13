@@ -205,11 +205,7 @@ var PartyMenu = ( function()
 		var elPanel = $( '#PartyList' ).FindChildInLayoutFile( 'PartyListHeader' );
 		var isSoloSearch = ( numPlayersActuallyInParty === 1 );
 
-		elPanel.FindChildInLayoutFile( 'PartyTitleAlert' ).visible = !isSoloSearch;
 		elPanel.FindChildInLayoutFile( 'PartyCancelBtn' ).visible = LobbyAPI.BIsHost() && _IsSeaching();
-
-		if ( isSoloSearch )
-			return;
 
 		var elCount = elPanel.FindChildInLayoutFile( 'PartyTitleAlertText' );
 		elCount.text = numPlayersActuallyInParty +'/' +numPlayersPossibleInMode;
@@ -315,7 +311,7 @@ var PartyMenu = ( function()
 	var _UpdateLeaveBtn = function ( numPlayersActuallyInParty )
 	{
 		var elLeaveBtn = $( '#PartyList' ).FindChildInLayoutFile( 'PartyLeaveBtn' );
-		elLeaveBtn.visible = ( !GameStateAPI.IsLocalPlayerPlayingMatch() && LobbyAPI.IsSessionActive() && numPlayersActuallyInParty > 1 );
+		elLeaveBtn.visible = ( !GameStateAPI.IsLocalPlayerPlayingMatch() && LobbyAPI.IsSessionActive() );
 	};
 
 	var _AddOnActivateLeaveBtn= function ()

@@ -30,14 +30,19 @@
 											mouse_rotate="false"
 											hittest="false">
 							</ItemPreviewPanel>
-							<Label id="StatTrackSwapNumber0"  class="StatTrackSwapNumber" text="" html="true"/>
-							<Label id="StatTrackSwapNumber1"  class="StatTrackSwapNumber" text="" html="true"/>
+							<Panel class="StatTrackSwapNumberVerticalSpacer" />
 							<ItemPreviewPanel id="StatTrackSwapItemModel1" class="StatTrackSwapItemModel"
 											manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
 											item="img://inventory_0000"
 											mouse_rotate="false"
 											hittest="false">
 							</ItemPreviewPanel>
+						</Panel>
+						<Panel class="popup-stattrackswap-two-models">
+							<Panel class="StatTrackSwapNumberPadding" />
+							<Label id="StatTrackSwapNumber0"  class="StatTrackSwapNumber MonoNumbersFont" text="" html="true"/>
+							<Label id="StatTrackSwapNumber1"  class="StatTrackSwapNumber MonoNumbersFont" text="" html="true"/>
+							<Panel class="StatTrackSwapNumberPadding" />
 						</Panel>
 
 						<ItemPreviewPanel id="StatTrackSwapToolModel" class="popup-stattrackswap__model"

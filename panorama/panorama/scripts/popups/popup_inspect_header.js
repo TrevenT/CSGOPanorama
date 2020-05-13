@@ -38,7 +38,7 @@ var InspectHeader = ( function()
 			return;
 		}
 
-		elLabel.text = $.Localize( '#CSGO_' + ItemInfo.GetSet( itemId ) );
+		elLabel.text = $.Localize( '#CSGO_' + setName );
 		elLabel.visible = true;
 
 		elImage.SetImage( 'file://{images_econ}/econ/set_icons/' + setName + '_small.png' );

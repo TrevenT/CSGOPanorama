@@ -329,6 +329,7 @@ var MainMenu = ( function() {
 			_m_elContentPanel.RemoveClass( 'mainmenu-content--offscreen' );
 		}
 
+		$.DispatchEvent( 'ShowContentPanel' );
 		_DimMainMenuBackground( false );
 		_HideNewsAndStore();
 	};

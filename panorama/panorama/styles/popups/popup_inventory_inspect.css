@@ -87,6 +87,7 @@
 .popup-char-model-controls DropDown
 {
 	min-width: 350px;
+	max-width: 370px;
 	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000035), color-stop( 1, #00000035 ), to( #00000035 ) );
 }
 

@@ -188,6 +188,7 @@ CSGOHudFreezePanel Label
 	font-size: 30px;
 	font-weight: bold;
 	-s2-mix-blend-mode: additive;
+    text-overflow: ellipsis;
 }
 
 .FreezePanel__Desc
@@ -206,6 +207,7 @@ CSGOHudFreezePanel Label
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000088 ), color-stop( 0.60, #00000088 ), to( #00000000 ) );
 	font-size: 20px;
 	font-weight: normal;
+    text-overflow: ellipsis;
 }
 
 .FreezePanel__Damage--Hidden

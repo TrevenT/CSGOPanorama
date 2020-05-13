@@ -16,7 +16,7 @@
 						onload="PopupCommendPlayer.Init();">
 
 
-		<Label class="PopupTitle" text="commending {s:target_player}" />
+		<Label class="PopupTitle" text="#SFUI_PlayerDetails_Commend_TargetPlayer" html="true"/>
 		<Label id="id-commend-status" class="PopupMessage" text="wtf" html="true" />
 		<Panel id="id-commend" class="PopupDimVerticalButtonContainer">
 			<ToggleButton 	id="id-commend-friendly" 

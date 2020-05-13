@@ -128,7 +128,7 @@ var contextmenuPlayerCard = ( function (){
 			name: 'leave_lobby',
 			icon: 'leave',
 			AvailableForItem: function ( id ) {
-				if( !GameStateAPI.IsLocalPlayerPlayingMatch() && id === MyPersonaAPI.GetXuid() && LobbyAPI.IsSessionActive() )
+				if( !GameStateAPI.IsLocalPlayerPlayingMatch() && _IsSelf( id ) && LobbyAPI.IsSessionActive() )
 				{
 					var party = LobbyAPI.GetSessionSettings().members;
 					return party.numPlayers > 1 ? true : false;
@@ -222,7 +222,7 @@ var contextmenuPlayerCard = ( function (){
 			AvailableForItem: function ( id ) {
 				if( MyPersonaAPI.GetLauncherType() === "perfectworld" )
 				{
-					if ( id === MyPersonaAPI.GetXuid() ) return false;
+					if ( _IsSelf( id ) ) return false;
 					var status = FriendsListAPI.GetFriendStatusBucket( id );
 					return status !== 'AwaitingRemoteAccept' && status !== 'AwaitingLocalAccept';
 				}
@@ -238,11 +238,10 @@ var contextmenuPlayerCard = ( function (){
 			name: 'request',
 			icon: 'addplayer',
 			AvailableForItem: function ( id ) {
-				var isSelf = id === MyPersonaAPI.GetXuid() ? true : false;
 				var status = FriendsListAPI.GetFriendStatusBucket( id );
 				var isRequest = status === 'AwaitingRemoteAccept' || status === 'AwaitingLocalAccept';
 				
-				return FriendsListAPI.GetFriendRelationship( id ) !== "friend" && !isSelf && !isRequest;
+				return FriendsListAPI.GetFriendRelationship( id ) !== "friend" && !_IsSelf( id ) && !isRequest;
 			},
 			OnSelected:  function ( id ) {
 				SteamOverlayAPI.InteractWithUser( id, 'friendadd' );
@@ -332,17 +331,41 @@ var contextmenuPlayerCard = ( function (){
 		{
 			name: 'borrowmusickit',
 			icon: 'music_kit',
-			AvailableForItem: function ( id ) {
+			AvailableForItem: function ( id )
+			{
+				var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
 				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
-					!_IsSelf( id ) && _HasMusicKit( id ) &&
+					!_IsSelf( id ) &&
+					borrowedPlayerIndex !== GameStateAPI.GetPlayerIndex( id ) &&
+					_HasMusicKit( id ) &&
 					GameStateAPI.IsPlayerConnected( id );
 			},
 			OnSelected: function( id )
 			{
-				GameInterfaceAPI.ConsoleCommand( "cl_borrow_music_from_player_index " + GameStateAPI.GetPlayerIndex( id ) );
+				InventoryAPI.SetUIPreferenceString( "cl_borrow_music_from_player_index", "" + GameStateAPI.GetPlayerIndex( id ) );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
-		}
+		},
+		{
+			name: 'stopborrowmusickit',
+			icon: 'no_musickit',
+			AvailableForItem: function ( id )
+			{
+				var borrowedPlayerIndex = GameInterfaceAPI.LookupConVarIntValue( "cl_borrow_music_from_player_index" );
+				if ( borrowedPlayerIndex === 0 )
+					return false;
+
+				return GameStateAPI.IsLocalPlayerPlayingMatch() &&
+					(	( _IsSelf( id ) && borrowedPlayerIndex !== 0 ) ||
+						( borrowedPlayerIndex === GameStateAPI.GetPlayerIndex( id ) ) ) &&
+					GameStateAPI.IsPlayerConnected( id );
+			},
+			OnSelected: function( id )
+			{
+				$.DispatchEvent('Scoreboard_UnborrowMusicKit');
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},		
 	];
 
 	var _HasMusicKit = function( id )

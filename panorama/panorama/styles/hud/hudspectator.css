@@ -1046,6 +1046,8 @@
     horizontal-align: center;
     vertical-align: center;
     wash-color: white;
+    padding:0px 2px 0px 2px;
+    min-width:15px;                                               
 }
 
 .SmallWeaponIcon_R
@@ -1055,6 +1057,8 @@
     horizontal-align: center;
     vertical-align: center;
     wash-color: white;
+    padding:0px 2px 0px 2px;
+    min-width:15px;                                               
 }
 
 .Armor_Container_L

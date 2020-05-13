@@ -23,8 +23,8 @@
 						<Label text="+" />
 						<Label id="Assister" text="{s:name}" />
 					</Panel>
-					                                      
-					<Image id="Weapon" class="DeathNoticeIcon" scaling="stretch-to-fit-preserve-aspect" />
+					                                                                                                  
+					<Image id="Weapon" class="DeathNoticeIcon"  textureheight="24" scaling="none" />
 					                       
 					<Image id="Penetrate" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/penetrate.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                      

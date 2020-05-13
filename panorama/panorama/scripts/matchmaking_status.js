@@ -11,7 +11,7 @@ var MatchmakingStatus = ( function()
 
 	var _Init = function()
 	{
-		_ActionsForInotBtn();
+		_ShowMatchmakingStatusTooltipEvent();
 		_UpdateMatchmakingStatus();
 	};
 
@@ -130,7 +130,7 @@ var MatchmakingStatus = ( function()
 		$.GetContextPanel().FindChildInLayoutFile( 'MatchStatusBackground' ).SetHasClass( 'party-list__bg--searching', _IsSeaching() );
 	};
 
-	var _ActionsForInotBtn = function()
+	var _ShowMatchmakingStatusTooltipEvent = function()
 	{
 		var btnSettings = $.GetContextPanel().FindChildInLayoutFile( 'MatchStatusInfo' );
 		btnSettings.SetPanelEvent( 'onmouseover', function()

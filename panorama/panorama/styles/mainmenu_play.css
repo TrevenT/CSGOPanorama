@@ -48,7 +48,7 @@
 {
 	width: 224px;
 	height: width-percentage(142%);
-	margin: 24px 28px 24px 0px;
+	margin: 24px 28px 16px 0px;
 	border: 0px solid gray;
 	box-shadow: shadowOffset;
 	tooltip-position: bottom;
@@ -178,6 +178,7 @@
 {
 	opacity: .5;
 	brightness: .3;
+	
 }
 
 .map-selection-list:disabled .map-selection-btn .map-selection-btn__screenshot,
@@ -193,6 +194,11 @@
 	box-shadow: shadowOffset;
 	brightness: 1;
 	opacity: 1;
+}
+
+.map-selection-list:disabled .map-selection-btn:selected .map-selection-btn__screenshot
+{
+	pre-transform-scale2d: 1.2, 1.2;
 }
 
 .map-selection-info

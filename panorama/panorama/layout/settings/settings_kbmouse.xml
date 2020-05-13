@@ -75,7 +75,7 @@
 					                
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_RawInput" class="half-width"/>
-						<CSGOSettingsEnumDropDown convar="m_rawinput">
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="m_rawinput">
 							<Label text="#SFUI_Off"  id="rawinputmode0" value="0"/>
 							<Label text="#SFUI_On" id="rawinputmode1" value="1" />
 						</CSGOSettingsEnumDropDown>
@@ -84,7 +84,7 @@
 					                         
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_MouseAcceleration" class="half-width"/>
-						<CSGOSettingsEnumDropDown convar="m_customaccel">
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="m_customaccel">
 							<Label text="#SFUI_Off"  id="rawinputmode0" value="0"/>
 							<Label text="#SFUI_On" id="rawinputmode1" value="3" />
 						</CSGOSettingsEnumDropDown>

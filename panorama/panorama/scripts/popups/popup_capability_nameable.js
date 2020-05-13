@@ -190,10 +190,8 @@ var CapabilityNameable = ( function()
 
 	var _UpdateTextOnModel = function( itemId, hasName )
 	{
-		var currentName = ItemInfo.GetName( itemId );
-
 		if ( hasName )
-			m_elNameDisplay.text = currentName;
+			m_elNameDisplay.text = ItemInfo.GetName( itemId );
 		else
 			m_elNameDisplay.text = m_elTextEntry.text;
 	};

@@ -5,73 +5,91 @@
 	</styles>
 
 	<CSGOHud hittest="false">
-		                                                        
-		<Panel class="full-width full-height" hittest="false" hittestchildren="false">
-    		                                                                                     
-    		<Panel id="HudInWorld" hittest="false" hittestchildren="false">
-        		<CSGOHudDamageIndicator id="HudDamageIndicator"/>
-        		<CSGOHudReticle id="HudReticle"/>
-    		</Panel>
-
-    		<Panel id="HudSpectatorVignetting"/>
-
-			<Panel id="HudCenter">
-				<CSGOHudAlerts id="HudAlerts"/>
-				<CSGOHudDemolitionProgression id="HudDemolitionProgression" />
-			</Panel>
-
-      <CSGOHudSpecPlayer id="HudSpecPlayer"/>
-
-			<CSGOHudWinPanel id="HudWinPanel"/>
-
-			<Panel id="HudTopLeft">
-				<CSGOHudRadar id="HudRadar"/>
-				<CSGOHudMoney id="HudMoney"/>
-				<CSGOHudGameIcons id="HudGameIcons"/>
-				<CSGOHudMissionPanel id="HudMissionPanel" />
-				<CSGOHudGuardianPanel id="HudGuardianPanel" />
-				<CSGOHudDMBonusPanel id="HudDMBonusPanel" />
-				<Panel />                                                                        
-			</Panel>
-
-			<Panel id="HudTopCenter"/>
-
-			<CSGOHudTeamCounter id="HudTeamCounter"/>
-
-			<Panel id="HudBottomCenter">
-				<CSGOHudProgressBar id="HudProgressBar"/>
-				<CSGOHudHintText id="HudHintText"/>
-				
-			</Panel>
-
-			<Panel id="HudLowerLeft">
-				<CSGOHudVoiceStatus id="Status"/>
-				<CSGOHudHealthArmor id="HudHealthArmor"/>
-			</Panel>
-
-			<CSGOHudRadio id="HudRadio"/>
-
-			<Panel id="HudTopRight">
-				<CSGOHudAutoDisconnect id="HudAutoDisconnect"/>
-				<CSGOHudDeathNotice id="HudDeathNotice"/>
-			</Panel>
-
-			<Panel id="HudBottomRight">
-				<CSGOHudWeaponSelection id="HudWeaponSelection"/>
-				<CSGOHudWeaponPanel id="HudWeaponPanel"/>
-			</Panel>
-
-			<CSGOHudFreezePanel id="HudFreezePanel"/>
+		                                                                           
+		
+		                                                                                     
+		<Panel id="HudInWorld" hittest="false" hittestchildren="false">
+			<CSGOHudDamageIndicator id="HudDamageIndicator"/>
+			<CSGOHudReticle id="HudReticle"/>
 		</Panel>
 
-		<CSGOHudBlurTarget id="HudBlur" blurrects="Scoreboard EndOfMatch BuyMenu"  class="HudBlur">
+		                                                                            
+		<Panel id="HudSpectatorVignetting" hittest="false" hittestchildren="false" />
+
+		                                                               
+		<Panel id="HudCenter" hittest="false" hittestchildren="false">
+			<CSGOHudAlerts id="HudAlerts"/>
+			<CSGOHudDemolitionProgression id="HudDemolitionProgression" />
+		</Panel>
+
+		                                                                   
+		<CSGOHudSpecPlayer id="HudSpecPlayer" hittest="false" hittestchildren="false" />
+
+		                                                    
+		<CSGOHudWinPanel id="HudWinPanel" hittest="false" hittestchildren="false" />
+
+		                                                                                     
+		<Panel id="HudTopLeft" hittest="false" hittestchildren="false">
+			<CSGOHudRadar id="HudRadar"/>
+			<CSGOHudMoney id="HudMoney"/>
+			<CSGOHudGameIcons id="HudGameIcons"/>
+			<CSGOHudMissionPanel id="HudMissionPanel" />
+			<CSGOHudGuardianPanel id="HudGuardianPanel" />
+			<CSGOHudDMBonusPanel id="HudDMBonusPanel" />
+			<Panel />                                                                        
+		</Panel>
+
+		                                                                            
+		                                                                              
+			                                                                            
+			                                                                       
+			                                        
+			   
+		<Panel id="HudTopCenter" hittest="false" hittestchildren="false">
+		</Panel>
+
+		                                                              
+		<CSGOHudTeamCounter id="HudTeamCounter" hittest="false" hittestchildren="false" />
+
+		                                                                                
+		                                                                
+		<Panel id="HudBottomCenter" hittest="false" hittestchildren="false">
+			<CSGOHudProgressBar id="HudProgressBar"/>
+			<CSGOHudHintText id="HudHintText"/>
+		</Panel>
+
+		                                                                                      
+		<Panel id="HudLowerLeft" hittest="false" hittestchildren="false">
+			<CSGOHudVoiceStatus id="Status"/>
+			<CSGOHudHealthArmor id="HudHealthArmor"/>
+		</Panel>
+
+		                                                                
+		<CSGOHudRadio id="HudRadio" hittest="false" hittestchildren="false" />
+
+		                                                                           
+		<Panel id="HudTopRight" hittest="false" hittestchildren="false">
+			<CSGOHudAutoDisconnect id="HudAutoDisconnect"/>
+			<CSGOHudDeathNotice id="HudDeathNotice"/>
+		</Panel>
+
+		                                                                   
+		<Panel id="HudBottomRight" hittest="false" hittestchildren="false">
+			<CSGOHudWeaponSelection id="HudWeaponSelection"/>
+			<CSGOHudWeaponPanel id="HudWeaponPanel"/>
+		</Panel>
+
+		                                                                
+		<CSGOHudFreezePanel id="HudFreezePanel" hittest="false" hittestchildren="false" />
+
+		<CSGOHudBlurTarget id="HudBlur" blurrects="Scoreboard EndOfMatch BuyMenu" class="HudBlur" hittest="false" hittestchildren="false">
 			<CSGOBackbufferImagePanel class="full-width full-height" />
 		</CSGOHudBlurTarget>
-    
-    	<CSGOHudSpectator id="HudSpectator"/>
-		<CSGOHudDemoPlayback id="HudDemoPlayback"/>
 
-		<CSGOHudRosettaSelector id="HudRosettaSelector"/>
+		<CSGOHudSpectator id="HudSpectator" />
+		<CSGOHudDemoPlayback id="HudDemoPlayback" />
+
+		<CSGOHudRosettaSelector id="HudRosettaSelector" />
 		<CSGOMapOverview id="MapOverview"/>
 
 		<CSGOBuyMenu id="BuyMenu" />

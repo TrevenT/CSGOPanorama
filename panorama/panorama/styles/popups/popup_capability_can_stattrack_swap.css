@@ -24,22 +24,44 @@
 
 .StatTrackSwapItemModel
 {
-	width: 35%;
+	width: fill-parent-flow( 0.5 );
 	height: 100%;
 	transition-property: brightness;
 	transition-timing-function: ease-in-out;
 	transition-duration: 2s;
 }
 
+.StatTrackSwapNumberVerticalSpacer
+{
+	width: 2px;
+	height: 50%;
+	vertical-align: center;
+	background-color: #FFFFFF10;
+}
+
 .StatTrackSwapNumber
 {
-	width: 15%;
-	height: 30px;
-	vertical-align: center;
-	horizontal-align: center;
+	width: 256px;
+	height: 256px;
+	line-height: 147px;
+	margin: 0px 170px 15px;
+	vertical-align: bottom;
+	text-align: center;
 	transition-property: brightness;
 	transition-timing-function: ease-in-out;
 	transition-duration: 2s;
+
+	font-size: 65px;
+	color: #E86E34;
+
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url( "file://{images}/ui_textures/stattrak_module_lblbg.png" );
+}
+
+.StatTrackSwapNumberPadding
+{
+	width: fill-parent-flow( 0.5 );
 }
 
 .hidden
