@@ -17,6 +17,12 @@ var InpsectPurchaseBar = ( function()
 		                                          
 		m_itemid = !m_storeItemid ? itemId : m_storeItemid;
 
+		                                                          
+		                                                    
+		                                                                                           
+		                                                                                                                                                                                                    
+		                                                                                   
+
 		if ( !ItemInfo.GetStoreOriginalPrice( m_itemid, 1 ) ||
 			( funcGetSettingCallback( 'inspectonly', 'false' ) === 'true' ) ||
 			!InventoryAPI.IsValidItemID( m_itemid )

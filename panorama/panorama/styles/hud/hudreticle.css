@@ -161,6 +161,11 @@ CSGOHudReticle Label
 
 .crosshair__friend
 {
+	wash-color-fast: orange;
+	opacity: 0.2;
+
+	transform:Scale3d(1, 1, 1);
+
 	horizontal-align: center_nopixelsnap;
 	vertical-align: center_nopixelsnap;
 	overflow: noclip;	                                                                             
@@ -206,7 +211,7 @@ CSGOHudReticle Label
 {
 	background-color: crosshairColor1;
 }
-.crosshair--color1 .crosshair__friend,
+                                            
 .crosshair--color1 .crosshair__pip--green
 {
 	wash-color-fast: crosshairColor1;
@@ -217,7 +222,7 @@ CSGOHudReticle Label
 {
 	background-color: crosshairColor2;
 }
-.crosshair--color2 .crosshair__friend,
+                                            
 .crosshair--color2 .crosshair__pip--green
 {
 	wash-color-fast: crosshairColor2;
@@ -228,7 +233,7 @@ CSGOHudReticle Label
 {
 	background-color: crosshairColor3;
 }
-.crosshair--color3 .crosshair__friend,
+                                            
 .crosshair--color3 .crosshair__pip--green
 {
 	wash-color-fast: crosshairColor3;
@@ -239,7 +244,7 @@ CSGOHudReticle Label
 {
 	background-color: crosshairColor4;
 }
-.crosshair--color4 .crosshair__friend,
+                                            
 .crosshair--color4 .crosshair__pip--green
 {
 	wash-color-fast: crosshairColor4;

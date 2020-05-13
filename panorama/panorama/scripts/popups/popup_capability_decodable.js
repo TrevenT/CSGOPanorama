@@ -174,7 +174,9 @@ var CapabilityDecodable = ( function()
 			$.GetContextPanel().SetAttributeString( 'asyncactiondescription', 'yes' );
 		}
 
-		var sRestriction = InventoryAPI.GetDecodeableRestriction( m_caseId );
+		                                                                  
+		var sRestriction = m_storeItemId ? '' : InventoryAPI.GetDecodeableRestriction( m_caseId );
+		                                                                                                              
 		if ( sRestriction !== 'restricted' && sRestriction !== 'xray' || ( m_isXrayMode && sRestriction === 'xray' ) )
 		{
 			_ShowPurchase( ( m_keyId ) ? '' : m_keytoSellId );

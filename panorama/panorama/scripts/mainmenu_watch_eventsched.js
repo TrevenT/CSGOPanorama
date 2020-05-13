@@ -798,40 +798,42 @@ var mainmenu_watch_eventsched = ( function()
 
 			                  
 			var elFavoriteBtn = elEvent.FindChildTraverse( 'id-capsule__main__favorite' );
-
-			elFavoriteBtn.enabled = false;
-
-			var tooltipText = _m_IsPrime ? "#eventsched_favorite_tooltip_prime" : "#eventsched_favorite_tooltip_not_prime";
-
-			var onMouseOver = function( id, tooltipText ) {UiToolkitAPI.ShowTextTooltip( id, tooltipText );};
-			elFavoriteBtn.SetPanelEvent( 'onmouseover', onMouseOver.bind( undefined, oEvent[ 'event_id' ], tooltipText ) );
-			elFavoriteBtn.SetPanelEvent( 'onmouseout', function() {UiToolkitAPI.HideTextTooltip();} );
-
-			if ( elFavoriteBtn && elFavoriteBtn.IsValid() && _m_arrFavorites )
+			if ( elFavoriteBtn && elFavoriteBtn.IsValid() )
 			{
-				var onActivate = function( element, btn )
+				elFavoriteBtn.enabled = false;
+
+				var tooltipText = _m_IsPrime ? "#eventsched_favorite_tooltip_prime" : "#eventsched_favorite_tooltip_not_prime";
+
+				var onMouseOver = function( id, tooltipText ) {UiToolkitAPI.ShowTextTooltip( id, tooltipText );};
+				elFavoriteBtn.SetPanelEvent( 'onmouseover', onMouseOver.bind( undefined, oEvent[ 'event_id' ], tooltipText ) );
+				elFavoriteBtn.SetPanelEvent( 'onmouseout', function() {UiToolkitAPI.HideTextTooltip();} );
+
+				if ( _m_arrFavorites )
 				{
-					_DisplayAsFavorite( element, btn.IsSelected() );
-
-					TournamentsAPI.SetTournamentFavorite( Number( element.m_event_id ), btn.IsSelected() );
-
-					if ( btn.IsSelected() )
+					var onActivate = function( element, btn )
 					{
-						_m_arrFavorites.push( Number( element.m_event_id ) );
-					}
-					else
-					{
-						var idx = _m_arrFavorites.indexOf( Number( element.m_event_id ) );
-						if ( idx !== -1 )
-							_m_arrFavorites.splice( idx, 1 );
+						_DisplayAsFavorite( element, btn.IsSelected() );
+
+						TournamentsAPI.SetTournamentFavorite( Number( element.m_event_id ), btn.IsSelected() );
+
+						if ( btn.IsSelected() )
+						{
+							_m_arrFavorites.push( Number( element.m_event_id ) );
+						}
+						else
+						{
+							var idx = _m_arrFavorites.indexOf( Number( element.m_event_id ) );
+							if ( idx !== -1 )
+								_m_arrFavorites.splice( idx, 1 );
+						}
+
+						$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
 					}
 
-					$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
+					elFavoriteBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, elEvent, elFavoriteBtn ) );
+
+					elFavoriteBtn.enabled = _m_IsPrime;
 				}
-
-				elFavoriteBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, elEvent, elFavoriteBtn ) );
-
-				elFavoriteBtn.enabled = _m_IsPrime;
 			}
 
 			          	

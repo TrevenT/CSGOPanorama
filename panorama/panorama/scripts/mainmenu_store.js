@@ -674,6 +674,7 @@ var MainMenuStore = ( function()
 
 	var _ShowDecodePopup = function( id, displayItemId )
 	{
+		                                                                      
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
@@ -689,6 +690,7 @@ var MainMenuStore = ( function()
 
 	var _ShowInpsectPopup = function( id )
 	{
+		                                                            
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
 			'file://{resources}/layout/popups/popup_inventory_inspect.xml',

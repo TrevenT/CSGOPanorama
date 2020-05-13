@@ -81,6 +81,8 @@
 
 	<CSGOHudReticle class="reticle" hittest="false" hittestchildren="false" >
 
+		<Image id="FriendCrosshair" class="crosshair__friend" src="file://{images}/hud/reticle/reticlefriend.svg" />
+
 		                         
 		                                                                                                                             
 		                                                                        
@@ -98,8 +100,6 @@
 			<Panel id="BottomArc" class="crosshair__arc crosshair__arc--horizontal" />
 			<Panel id="LeftArc" class="crosshair__arc crosshair__arc--vertical" />
 					
-			<Image id="FriendCrosshair" class="crosshair__friend" src="file://{images}/hud/reticle/reticlefriend.png" />
-
 			                                  
 			<Image id="TopPipBlack" class="crosshair__pip crosshair__pip--black" src="file://{images}/hud/reticle/reticlepip.png" orientation="0" />
 			<Image id="RightPipBlack" class="crosshair__pip crosshair__pip--black" src="file://{images}/hud/reticle/reticlepip.png" orientation="90" />

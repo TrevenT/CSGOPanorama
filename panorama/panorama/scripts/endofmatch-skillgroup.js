@@ -131,6 +131,9 @@ var EOM_Skillgroup = (function () {
 
 	function _ShowIcon ()
 	{
+		if ( !_m_cP || !_m_cP.IsValid() )
+			return;
+		
 		var elModel = _m_cP.FindChildTraverse( 'id-eom-skillgroup-model' );
 		elModel.AddClass( 'eom-skillgroup__model-reveal' );
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.NewSkillGroup', 'MOUSE' );
@@ -145,8 +148,15 @@ var EOM_Skillgroup = (function () {
 		elModel.SetCameraAngles( 0.00,  0.00,  0.00 );
 		elModel.AddParticleSystem( 'nuke_sparks1_glow', '', false );
 		elModel.AddParticleSystem( 'nuke_sparks1_core', '', false );
-
-		$.Schedule( 1, function() { elModel.AddClass( 'hidden' ); } );
+		
+		$.Schedule( 1, function( panel )
+		{
+			if ( !panel || !panel.IsValid() )
+				return;
+			
+				panel.AddClass( 'hidden' );
+		}
+		).bind( undefined, elModel );
 	}
 
 	function _FilloutRankData ( oData )

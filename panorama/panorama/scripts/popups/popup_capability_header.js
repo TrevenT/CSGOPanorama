@@ -103,7 +103,8 @@ var CapabiityHeader = ( function()
 
 		if ( m_worktype === 'decodeable' )
 		{
-			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
+			                                                                 
+			var sRestriction = m_storeItemid ? '' : InventoryAPI.GetDecodeableRestriction( m_itemid );
 
 			if ( sRestriction === 'restricted' ||( sRestriction === 'xray' && m_isXrayMode ))
 			{	                                                               
@@ -143,7 +144,7 @@ var CapabiityHeader = ( function()
 				sDescString = '#popup_xray_desc';
 			}
 		}
-		else if(( InventoryAPI.GetDecodeableRestriction( m_itemid ) === 'xray' ) && m_worktype === 'decodeable' )
+		else if( ( m_worktype === 'decodeable' ) && ( InventoryAPI.GetDecodeableRestriction( m_itemid ) === 'xray' ) )
 		{
 			sDescString = '#popup_' + m_worktype + '_xray_desc';
 		}

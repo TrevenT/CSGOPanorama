@@ -13,8 +13,11 @@
                     <CSGOBlurTarget id="blur-backing" class="tournament-tile__blur full-width full-height"/>
                     <Panel id = "tournament-content" class = "top-bottom-flow horizontal-center top-padding bottom-padding full-height">
                         <Panel id="image-container" class="horizontal=center"/>
-                        <Label id="title" class="horizontal-center"/>
+                        <Label id="title" class="tournament-title stratum-font horizontal-center"/>
                     </Panel>
+
+                    <Frame id="id-champions-frame" class="" src="file://{resources}/layout/tournament_tile_champions.xml" />
+
                 </Panel>
             </Panel>
 		</snippet>

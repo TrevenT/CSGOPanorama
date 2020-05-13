@@ -236,6 +236,9 @@
 	height:110px;
 	margin:12px;
 	horizontal-align: center;
+
+	margin-top:40px;
+
 	
 	transition-property: pre-transform-scale2d;
 	transition-timing-function: ease-in-out;
@@ -258,6 +261,12 @@
 	transition-property: pre-transform-scale2d, brightness;
 	transition-timing-function: ease-in-out;
 	transition-duration: .25s;
+}
+
+.tournament-title{
+
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .Info-Message {
@@ -318,7 +327,7 @@
 	width: 200px;
 	height: 190px;
 	padding: 10px;
-	margin-top: 20px;
+  	                 
 }
 
 #tournament-text {
@@ -340,12 +349,12 @@
 }
 #individual-tournaments {
 	width: 290px;
-	height: 190px;
+	height: 290px;
 	margin: 20px 10px 20px 10px;
 }
 #individual-tournaments:hover .tournament-logo--large
 {
-	pre-transform-scale2d: 1.2, 1.2;
+  	                                
 	brightness:1.0;
 
 	transition-property: pre-transform-scale2d, brightness;
@@ -355,7 +364,7 @@
 
 #individual-tournaments:hover .tournament-logo--small
 {
-	pre-transform-scale2d: 1.04, 1.04;
+  	                                  
 
 	transition-property: pre-transform-scale2d;
 	transition-timing-function: ease-in-out;
@@ -363,6 +372,7 @@
 
 	sound: "UIPanorama.submenu_contents_rollover";
 }
+
 #smallTournamentLogo {
 	width: 100px;
 	height: 100px;

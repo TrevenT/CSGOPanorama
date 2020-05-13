@@ -143,6 +143,16 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 
+					                                      
+					<Panel id="id-friendlyfirecrosshair" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_CrosshairStyle_Friendly" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshair_friendly_warning">
+							<Label text="#GameUI_CrosshairFriendlyWarning_Off" id="crosshairfriendlywarning0" value="0"/>
+							<Label text="#GameUI_CrosshairFriendlyWarning_Default"	id="crosshairfriendlywarning1" value="1"/>
+							<Label text="#GameUI_CrosshairFriendlyWarning_On" id="crosshairfriendlywarning2" value="2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+
 					                
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUDScaling_Info">
 						<CSGOSettingsSlider text="#SFUI_Settings_HUDScaling" max="0.95" min="0.5" displayprecision="2" convar="hud_scaling"/>

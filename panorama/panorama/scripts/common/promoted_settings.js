@@ -31,6 +31,14 @@ var g_PromotedSettings = [
 	  
 	          	
 	{
+		id: "id-friendlyfirecrosshair",
+		loc_name: "#GameUI_FriendlyWarning",
+		loc_desc: "#GameUI_FriendlyWarning_desc",
+		section: "GameSettings",
+		start_date: new Date( 'October 7, 2019' ), 
+		end_date: new Date( 'February 30, 2020' )
+	},
+	{
 		id: "SettingsCommunicationSettings",
 		loc_name: "#settings_comm_binds_section",
 		loc_desc: "#settings_comm_binds_info",
@@ -45,9 +53,9 @@ var g_PromotedSettings = [
 		section: "KeybdMouseSettings",
 		start_date: new Date( 'September 18, 2019' ), 
 		end_date: new Date( 'January 30, 2020' )
-	}
+	},
+
 	          
-	 
 	 
 		                        
 		                                

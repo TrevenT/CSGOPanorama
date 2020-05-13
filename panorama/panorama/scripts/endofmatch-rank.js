@@ -159,21 +159,24 @@ var EOM_Rank = (function () {
 				}
 
 				                    
-				elCurrentListerItem = $.CreatePanel( 'Panel', elRankListerItems, 'id-eom-rank__lister__items__' + reason );
-				elCurrentListerItem.BLoadLayoutSnippet( "snippet_rank__lister__item" );
+				if ( elRankListerItems && elRankListerItems.IsValid() )
+				{
+					elCurrentListerItem = $.CreatePanel( 'Panel', elRankListerItems, 'id-eom-rank__lister__items__' + reason );
+					elCurrentListerItem.BLoadLayoutSnippet( "snippet_rank__lister__item" );
 
-				elCurrentListerItem.RemoveClass( "eom-rank__lister__item--appear" );
+					elCurrentListerItem.RemoveClass( "eom-rank__lister__item--appear" );
 
-				var elAmtLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__amt' );
-				elAmtLabel.SetDialogVariable( "xp", xp );
-				elAmtLabel.text = $.Localize( "#EOM_XP_Bar", elAmtLabel );
-				elAmtLabel.AddClass( colorClass );
+					var elAmtLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__amt' );
+					elAmtLabel.SetDialogVariable( "xp", xp );
+					elAmtLabel.text = $.Localize( "#EOM_XP_Bar", elAmtLabel );
+					elAmtLabel.AddClass( colorClass );
 
-				var elDescLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__desc' );
+					var elDescLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__desc' );
 
-				elDescLabel.SetDialogVariable( "gamemode", $.Localize( "#SFUI_GameMode_" + MatchStatsAPI.GetGameMode() ) );
+					elDescLabel.SetDialogVariable( "gamemode", $.Localize( "#SFUI_GameMode_" + MatchStatsAPI.GetGameMode() ) );
 
-				elDescLabel.text = $.Localize( "#XP_Bonus_RankUp_" + reason, elDescLabel );
+					elDescLabel.text = $.Localize( "#XP_Bonus_RankUp_" + reason, elDescLabel );
+				}
 
 			} );
 
