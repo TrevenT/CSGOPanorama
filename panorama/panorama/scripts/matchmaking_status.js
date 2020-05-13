@@ -19,9 +19,25 @@ function MatchmakingStatus( elMatchStatus )
 
 	var _BCanShow = function()
 	{
-		var teamCount = Number( GameInterfaceAPI.GetSettingString( 'sv_dz_team_count' ) );
-		var bMustHide = ( ( _m_elStatusPanel.GetAttributeString( 'data-type', '' ) === 'hud' ) && ( teamCount > 1 ));
-		return !bMustHide;
+		if ( _m_elStatusPanel.GetAttributeString( 'data-type', '' ) === 'hud' )
+		{
+			var mode = GameStateAPI.GetGameModeInternalName( false );
+			if ( mode === 'survival' )
+			{
+				var teamCount = Number( GameInterfaceAPI.GetSettingString( 'sv_dz_team_count' ) );
+				if ( teamCount > 1 )
+					return false;                                                                                  
+				else
+					return true;                                                                              
+			}
+			else
+			{	                                                    
+				return false;
+			}
+		}
+
+		                                         
+		return true;
 	}
 
 	var _Init = function()
