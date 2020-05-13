@@ -85,7 +85,7 @@ var Loadout = ( function() {
 		var teamAsString = _ConvertTeamFromNumToString( teamAsNumber );
 
 		var ItemId = _GetCurrentItemID();
-		if ( ItemId == "" )
+		if ( !InventoryAPI.IsValidItemID( ItemId ) )
 		{
 			                          
 			elBtn.visible = false;

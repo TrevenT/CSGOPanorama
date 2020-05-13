@@ -49,6 +49,8 @@ var InventoryPanel = ( function (){
 				}
 			);
 		}
+
+		_m_elInventoryMain.updatePlayerEquipSlotChangedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', InventoryPanel.ShowNotification );
 	};
 
 	                                                                                                    
@@ -994,7 +996,9 @@ var InventoryPanel = ( function (){
 	
 	var _ClosePopups = function ()
 	{
-		if ( !$('#InvLoadoutPanel').BHasClass( _m_HiddenContentClassname ) )
+		$.UnregisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', _m_elInventoryMain.updatePlayerEquipSlotChangedHandler );
+		
+		if ( !$( '#InvLoadoutPanel' ).BHasClass( _m_HiddenContentClassname ) )
 		{
 			_CloseLoadout();
 			return true;
@@ -1062,7 +1066,6 @@ var InventoryPanel = ( function (){
 	$.RegisterForUnhandledEvent( 'ShowDeleteItemConfirmationPopup', InventoryPanel.ShowDeleteItemConfirmation );
 	$.RegisterForUnhandledEvent( 'ShowUseItemOnceConfirmationPopup', InventoryPanel.ShowUseItemOnceConfirmation );
 	$.RegisterForUnhandledEvent( 'ShowResetMusicVolumePopup', InventoryPanel.ShowResetMusicConfirmation );
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', InventoryPanel.ShowNotification );
 	$.RegisterForUnhandledEvent( 'ShowLoadoutForItem', InventoryPanel.ShowLoadoutForItem );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_CraftIngredientAdded', function () { InventoryPanel.UpdateCraftingPanelVisibility( true ); } );
 	$.RegisterForUnhandledEvent( 'ShowTradeUpPanel', function () { InventoryPanel.UpdateCraftingPanelVisibility( true ); } );
