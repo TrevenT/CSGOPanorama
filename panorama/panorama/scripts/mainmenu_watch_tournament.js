@@ -6,7 +6,7 @@ var mainmenu_watch_tournament = (function () {
 	var _m_bInitializedTournamentOnce = false;
 	var _m_matchesTab;
 
-	var _NavigateToTab = function( tab, tournament_id, oData = null )
+	var _NavigateToTab = function( tab, tournament_id, oInitData = null )
 	{
 		if ( tab !== 'JsTournamentMatches' )
 		{
@@ -25,7 +25,7 @@ var mainmenu_watch_tournament = (function () {
 
 		                                                                 
 		var pressedTab = $.FindChildInContext( '#' + tab );
-		if ( !pressedTab && oData )
+		if ( !pressedTab && oInitData )
 		{
 			                                                               
 			                                                                   
@@ -34,11 +34,17 @@ var mainmenu_watch_tournament = (function () {
 			pressedTab = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsTournamentContainer' ), tab );
 			                                                      
 
-			pressedTab.BLoadLayout('file://{resources}/layout/tournaments/pickem_' + oData.xmltype + '.xml', false, false );
+			pressedTab.BLoadLayout('file://{resources}/layout/tournaments/pickem_' + oInitData.xmltype + '.xml', false, false );
 			pressedTab.RegisterForReadyEvents( true );
 			pressedTab.SetReadyForDisplay( false );
 
-			pressedTab._oData = oData;
+			                                                                      
+			if ( typeof pressedTab._oPickemData !== 'object' )
+			{
+				pressedTab._oPickemData = {};
+			}
+
+			pressedTab._oPickemData.oInitData = oInitData;
 			PickemCommon.Init( pressedTab );
 
 			_AddEventHandlers( pressedTab );
@@ -128,7 +134,7 @@ var mainmenu_watch_tournament = (function () {
 		if ( !elTournamentTab.hasSetUpNavBar )
 		{
 
-			var _CreateNavBarButton = function( buttonId, buttonTitle, targetTab, oData = null, isSelected = false )
+			var _CreateNavBarButton = function( buttonId, buttonTitle, targetTab, oInitData = null, isSelected = false )
 			{
 				                                                                                                 
 				
@@ -142,7 +148,7 @@ var mainmenu_watch_tournament = (function () {
 					hittest: false
 				} );
 
-				elButton.SetPanelEvent( 'onactivate', _NavigateToTab.bind( undefined, targetTab, tournament_id, oData ) );
+				elButton.SetPanelEvent( 'onactivate', _NavigateToTab.bind( undefined, targetTab, tournament_id, oInitData ) );
 
 				return elButton;
 			};
@@ -152,37 +158,64 @@ var mainmenu_watch_tournament = (function () {
 			var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
 			var bDefaultToMatches = ( ( restrictions === false ) && isCurrentTourament ) ? false : true;
 
-
 			                                                
-			                                                                                     
-			if ( isCurrentTourament )
+			
+			                           
+			if ( tournamentNumber <= g_ActiveTournamentInfo.eventid && tournamentNumber >= 13 )
 			{
-				                                                                                                                         
-				   	 	
-				   		                             
-				   		             
-				   		                   
-				   		                        
-				   	    
 				_CreateNavBarButton( 
 					'id-nav-pick-prelims', 
 					$.Localize( '#CSGO_Fantasy_PickEm_Qualifier_Title' ), 
 					'JsPickemPrelims', 
 					{	
 						tournamentid: tournament_id, 
-						dayindex: 0, 
+						sectionindex: 0, 
 						xmltype: 'group',
-						oPickemType: PickEmGroup,
+						oPickemType: PickEmGroup
 					} ,
 					!bDefaultToMatches
 				);
 				_CreateNavBarButton( 'id-nav-pick-group', $.Localize( '#CSGO_Fantasy_PickEm_Groups_Title' ), 'JsPickemGroup', 
 					{	
 						tournamentid: tournament_id, 
-						dayindex: 1, 
+						sectionindex: 1, 
 						xmltype: 'group',
 						oPickemType: PickEmGroup
-					} 
+					},
+					!bDefaultToMatches
+				);
+
+				_CreateNavBarButton( 'id-nav-pick-playoffs', $.Localize( '#CSGO_Fantasy_PickEm_Playoffs_Title' ), 'JsPickemPlayoffs', 
+					{	
+						tournamentid: tournament_id, 
+						sectionindex: 2, 
+						xmltype: 'bracket',
+						oPickemType: PickEmBracket
+					},
+					!bDefaultToMatches
+				);
+			}
+
+			if ( tournamentNumber === 12 )
+			{
+				_CreateNavBarButton( 'id-nav-pick-group', $.Localize( '#CSGO_Fantasy_PickEm_Groups_Title' ), 'JsPickemGroup', 
+					{	
+						tournamentid: tournament_id, 
+						sectionindex: 0, 
+						xmltype: 'group',
+						oPickemType: PickEmGroup
+					},
+					!bDefaultToMatches
+				);
+
+				_CreateNavBarButton( 'id-nav-pick-playoffs', $.Localize( '#CSGO_Fantasy_PickEm_Playoffs_Title' ), 'JsPickemPlayoffs', 
+					{	
+						tournamentid: tournament_id, 
+						sectionindex: 1, 
+						xmltype: 'bracket',
+						oPickemType: PickEmBracket
+					},
+					!bDefaultToMatches
 				);
 			}
 
@@ -196,14 +229,14 @@ var mainmenu_watch_tournament = (function () {
 			   	                                                                                                                     
 			   		 	
 			   			                             
-			   			             
+			   			                 
 			   			                   
 			   			                        
 			   		    
 			   	                                                                                                              
 			   		 	
 			   			                             
-			   			             
+			   			                 
 			   			                 
 			   			                        
 			   		    
@@ -251,24 +284,48 @@ var mainmenu_watch_tournament = (function () {
 		var tournamentNumber = PickemCommon.GetTournamentIdNumFromString( tournament_id );
 		var isCurrentTourament = ( tournamentNumber === g_ActiveTournamentInfo.eventid );
 
-		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
-		var bDefaultToMatches = ( ( restrictions === false ) && isCurrentTourament ) ? false : true;
+		var navBarPanel = elParentPanel.FindChildTraverse( 'content-navbar__tabs' );
 
-		if ( !bDefaultToMatches )
+		if ( isCurrentTourament )
 		{
-			_NavigateToTab( 
-				"JsPickemPrelims", 
-				tournament_id, 
-				{	
-				tournamentid: tournament_id, 
-				dayindex: 0, 
-				xmltype: 'group',
-				oPickemType: PickEmGroup
-			} );
+			var sectionsCount = PredictionsAPI.GetEventSectionsCount( tournament_id );
+			var activeSectionIndex = null;
+			for ( var i = 0; i < sectionsCount; i++ )
+			{
+				var sectionId = PredictionsAPI.GetEventSectionIDByIndex( tournament_id, i );
+				
+				if ( PredictionsAPI.GetSectionIsActive( tournament_id, sectionId ) )
+				{
+					activeSectionIndex = i;
+					break;
+				}
+			}
+
+			var tabIdToActivate = '';
+
+			if ( activeSectionIndex === 0 )
+			{
+				tabIdToActivate = 'id-nav-pick-prelims';
+			}
+			else if ( activeSectionIndex === 1 )
+			{
+				tabIdToActivate = 'id-nav-pick-group';
+			}
+			else if ( activeSectionIndex === 2 )
+			{
+				tabIdToActivate = 'id-nav-pick-playoffs';
+			}
+			else
+			{
+				tabIdToActivate = 'id-nav-pick-group';
+			}
+
+			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );
+			
 		}
 		else
 		{
-			_NavigateToTab( "JsTournamentMatches", tournament_id );
+			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( 'id-nav-matches' ), "mouse" );
 		}
 
 		_SetUpTournamentInfoLink( elParentPanel, tournament_id );

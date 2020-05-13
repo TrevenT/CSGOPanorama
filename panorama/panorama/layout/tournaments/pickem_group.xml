@@ -15,14 +15,14 @@
 		<snippet name='pick'>
 			<Panel class="pickem-group-pick-container" >
 				<Panel id="id-pick-boundingbox" class="pickem-group-pick">
-					<Image class="pickem-group-pick__empty" 
+					<Image class="pickem-pick__empty" 
 							textureheight="192" 
 							texturewidth="-1" 
 							src="file://{images}/tournaments/pickem_group_pick.svg"/>
 					<Label id="id-pickem-drag-hint" 
 							class="pickem-group-pick__drag-hint" 
 							html="true" 
-							text="#Drag your pick here"/>
+							text="#pickem_apply_drag_hint"/>
 					<Label class="pickem-group-pick__giant" text="?"/>
 					<ItemImage id="id-pick-itemimage" 
 							class="pickem-group-pick__itemimage" 
@@ -135,10 +135,6 @@
 						src="file://{images}/icons/ui/shoppingcart.svg" />
 				<Label id="id-pickem-getitems-label" text="#pickem_get_items" html="true"/>
 			</Button>
-			                                                                                                  
-				                                                                                                                          
-				                                                                                             
-			                 
 		</Panel>
 	</Panel>
 </root>

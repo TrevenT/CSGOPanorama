@@ -16,7 +16,8 @@
              <Panel id="" class="left-right-padding top-bottom-flow vertical-center">
                 <Panel id="id-pickem-points-needed" class="left-right-flow vertical-center">
                     <Label class="pickem-header__title" text="#pickem_points_earned"/>
-                    <Label class="pickem-header__subtitle left-padding" text="#pickem_points_needed_next_level" html="true"/>
+                    <Label id="id-pickem-points-needed-Label" class="pickem-header__subtitle left-padding" text="#pickem_points_needed_next_level" html="true"/>
+                    <Label id="id-pickem-points-result-Label" class="pickem-header__subtitle left-padding" text="#pickem_points_result" html="true"/>
                 </Panel>
                 <Panel id="id-pickem-status" class="pickem-header-status">
                     <Image id="id-pickem-lock-status-icon" textureheight="20" texturewidth="-1" class="vertical-center right-margin" src="file://{images}/icons/ui/clock.svg"/>

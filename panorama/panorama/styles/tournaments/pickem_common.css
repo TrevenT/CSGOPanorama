@@ -105,7 +105,6 @@
 	height:72px;
 }
 
-
 .pickem-score
 {
 	text-align: center;
@@ -115,6 +114,7 @@
 	font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 24px;
 	color: rgb(236, 236, 236);
+	margin-bottom: 8px;
 }
 
 .pickem-header
@@ -283,17 +283,17 @@
 {
 	0%
 	{
-		transform: translateX( 1px ) translatey( 1px );
+		transform: translateX( 2px ) translatey( 1px );
 	}
 
 	50%
 	{
-		transform: translateX( -1px ) translatey( -1px ) rotateX( 10deg );
+		transform: translateX( -1px ) translatey( -2px ) rotateX( 10deg );
 	}
 
 	100%
 	{
-		transform: translateX( 1px ) translatey( -1px );
+		transform: translateX( 2px ) translatey( -1px );
 	}
 }
 
@@ -391,7 +391,7 @@
 	border-radius: 15%;
 }
 
-.pickem-group-pick__empty
+.pickem-pick__empty
 {
 	horizontal-align: center;
 
@@ -400,7 +400,7 @@
 	transition-timing-function: ease-in-out;
 }
 
-.pickem-pick-placed .pickem-group-pick__empty
+.pickem-pick-placed:not(.drag-valid-target) .pickem-pick__empty
 {
 	opacity: 0;
 
@@ -409,9 +409,15 @@
 	transition-timing-function: ease-in-out;
 }
 
-.is-saved-pick .pickem-group-pick
+.is-saved-pick .pickem-group-pick,
+.is-saved-pick.pickem-bracket-team
 {
 	box-shadow: positiveColor 0px 0px 8px 0px;
+}
+
+.pickem-pick-locked .pickem-pick__empty
+{
+	wash-color: grey;
 }
 
 .pickem-group-pick__itemimage
@@ -423,7 +429,6 @@
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
-
 
 .pickem-group-pick__itemimage.hidden
 {
@@ -445,7 +450,6 @@
 	width: 100%;
 	padding: 4px 2px 4px 8px;
 
-	background-color: rgb(11, 114, 66);
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( rgb(11, 114, 66) ), to( rgba(11, 114, 66, 0)) );
 }
 
@@ -459,6 +463,15 @@
 	opacity: 0.25;
 	margin-bottom: 10px;
 	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.pickem-group-pick__drag-hint.long
+{
+	width: 100%;
+}
+.pickem-pick-locked .pickem-group-pick__drag-hint
+{
+	visibility: collapse;
 }
 
 .pickem-group-pick__giant
@@ -510,6 +523,12 @@
 	transition-timing-function: ease-in-out;
 }
 
+.pickem-item-not-owned.bracket
+{
+	Padding: 2px;
+	vertical-align: center;
+}
+
 .pickem-remove-btn
 {
 	opacity: 1;
@@ -517,6 +536,7 @@
 
 .pickem-item-not-owned.hidden,
 .pickem-points-earned.hidden,
+.pickem-points-earned-bracket.hidden,
 .pickem-remove-btn.hidden,
 .pickem-group-pick--used.hidden
 {
@@ -528,7 +548,10 @@
 	transition-timing-function: ease-in-out;
 }
 
-.pickem-remove-btn.hidden
+.pickem-remove-btn.hidden,
+.pickem-item-not-owned.hidden,
+.pickem-bracket-team__logo.hidden,
+.pickem-bracket-team__name.hidden
 {
 	visibility: collapse;
 }
@@ -544,13 +567,22 @@
 	transition-timing-function: ease-in-out;
 }
 
-.pickem-team-draggable.dragstart
+.pickem-team-draggable.small
+{
+	width: 64px;
+	height: 64px;
+}
+
+.pickem-team-draggable.dragstart,
+.pickem-bracket-draggable.dragstart
+
 {
 	transform: scale3d( 1, 1, 1);
 	opacity: 1;
 }
 
-.pickem-team-draggable.dragend
+.pickem-team-draggable.dragend,
+.pickem-bracket-draggable.dragend
 {
 	transform: scale3d( 0.5, 0.5, 0.5);
 	opacity: 0;
@@ -583,4 +615,252 @@
 		background-color: rgba(11, 114, 66, 00 );
 		brightness: 1;
 	}
+}
+
+
+              
+
+.pickem-bracket
+{
+	height: 100%;
+	width: 100%;
+	background-color: contentPanelBackground;
+}
+
+.pickem-bracket-container
+{
+	flow-children: right;
+	height: 100%;
+	width: 100%;
+	padding: 0px 24px;
+}
+
+.pickem-bracket-picksworth-container
+{
+	flow-children: right;
+	height: 48px;
+	width: 100%;
+}
+
+.pickem-bracket-column
+{
+	flow-children: down;
+	height: fit-children;
+	width: fill-parent-flow( .25);
+	                              
+	vertical-align: center;
+}
+
+.pickem-bracket-group
+{
+	height: fit-children;
+	width: 100%;
+	                             
+	padding: 0px 0px;
+	margin: 24px 0px;
+}
+
+.pickem-bracket-group__lines
+{
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+	border-bottom: 1px solid white;
+	                            
+	margin: 24px 0px;
+	width: 10%;
+	horizontal-align: right;
+	height: 64px;
+}
+
+.pickem-bracket-group__lines.left
+{
+	border-right: 0px solid white;
+	horizontal-align: left;
+}
+
+.pickem-pick-locked .pickem-bracket-group__lines.left,
+.pickem-pick-locked .pickem-bracket-group__lines
+{
+	wash-color: grey;
+}
+
+.pickem-bracket-team
+{
+	height: 48px;
+	width: 80%;
+	horizontal-align: center;
+	border-radius: 5px;
+	box-shadow: none;
+	
+	transition-property: background-color, box-shadow;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-bracket-group .pickem-group-pick__drag-hint,
+{
+	vertical-align: center;
+	margin-bottom: 0px;
+	opacity: .6;
+}
+
+.left-column > .pickem-bracket-group
+{
+	border-left: 0px solid rgb(196, 196, 196);
+}
+
+.pickem-bracket-team.bottom
+{
+	vertical-align: bottom;
+}
+
+.four-teams > .pickem-bracket-group
+{
+	margin: 36px 0px;
+}
+
+.four-teams .pickem-bracket-group__lines,
+.four-teams .pickem-bracket-group__lines.left
+{
+	height: 160px;
+}
+
+.four-teams-spacer
+{
+	height: 42px;
+	width: 100%;
+}
+
+.two-teams .pickem-bracket-group__lines,
+.two-teams .pickem-bracket-group__lines.left
+{
+	height: 320px;
+}
+
+.single-team .pickem-bracket-group
+{
+	vertical-align: center;
+}
+
+.single-team .pickem-bracket-group__lines.left
+{
+	height: 1px;
+	border-right: 0px solid white;
+	border-bottom: 0px solid white;
+}
+
+.pickem-bracket-team.drag-valid-target
+{
+	background-color: rgba(255, 255, 255, 0.15 );
+
+	transition-property: background-color, box-shadow;
+	transition-duration: .1s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-bracket-team.dragenter
+{
+	box-shadow: #ffffff 0px 0px 8px 0px;
+
+	transition-property: box-shadow;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-pick-placed.pickem-bracket-team:not(.drag-valid-target)
+{
+	background-color: rgba( 160, 160, 160, .15);
+	                                              
+	                                           
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+
+.pickem-bracket-team.dragdrop
+{
+	animation-name: drag-drop;
+	animation-duration: .25s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+}
+
+@keyframes drag-drop
+{
+	0%
+	{
+		transform: translatex( -24px ) scale3d( 1.1, 1.1, 1.1 );
+		brightness: 5;
+	}
+
+	100%
+	{
+		transform: translatey( 0px ) scale3d( 1.0, 1.0, 1.0 );
+		brightness: 1;
+	}
+}
+
+.pickem-bracket-draggable
+{
+	width: fit-children;
+	height: 48px;
+	padding: 0px 16px;
+	flow-children: right;
+	transform: scale3d( 0.2, 0.2, 0.2 );
+	background-color:rgba(204, 204, 204, 0.1);
+	border-radius: 3px;
+
+	transition-property: transform, opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.pickem-bracket-team__data
+{
+	flow-children: right;
+	padding-left: 8px;
+	width: 100%;
+}
+
+.pickem-bracket-team__data .IconButton Image
+{
+	margin: 0px;
+}
+
+.pickem-bracket-team__logo
+{
+	width: 48px;
+	height: 48px;
+	img-shadow: 0px 0px 4px #000000;
+}
+
+.pickem-bracket-team__name
+{
+	font-weight: medium;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+	color: white;
+	margin-left: 16px;
+	width: 115px;
+	text-overflow: shrink;
+}
+
+.pickem-bracket-worth-header
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 18px;
+	margin: 16px 0px 5px;
+	horizontal-align: center;
+	color: white;
+}
+
+.pickem-points-earned-bracket
+{
+	background-color: rgb(11, 114, 66);
+	padding: 14px 6px;
+	vertical-align: center;
+	box-shadow: 0px 0px 4px #000000;
+	horizontal-align: center;
+	font-size: 14px;
 }

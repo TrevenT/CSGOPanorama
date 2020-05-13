@@ -13,6 +13,7 @@
 		<include src="file://{resources}/scripts/mainmenu_watch_tournament.js" />
 		<include src="file://{resources}/scripts/tournaments/pickem_common.js" />
 		<include src="file://{resources}/scripts/tournaments/pickem_group.js" />
+		<include src="file://{resources}/scripts/tournaments/pickem_bracket.js" />
 		<include src="file://{resources}/scripts/tournaments/pickem_info_bar.js" />
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />

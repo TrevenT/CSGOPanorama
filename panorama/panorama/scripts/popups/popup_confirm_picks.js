@@ -5,7 +5,7 @@ var PopupConfirmPickemPicks = ( function(){
     var m_timeoutHandle = false;
     var _Init = function()
     {
-                                                                            
+                                                                                       
         _ShowStickers();
 		_ShowTeams();
 		_ShowAllClearingMsg();
@@ -13,7 +13,7 @@ var PopupConfirmPickemPicks = ( function(){
 
     var _ShowStickers = function()
     {
-        var aPicksForConfirm = $.GetContextPanel()._picksforconfirm;
+        var aPicksForConfirm = $.GetContextPanel()._oPicksData.picksforconfirm;
         var elStickerItemImages = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-confirm-apply' );
         elStickerItemImages.visible = aPicksForConfirm.length > 0;
 
@@ -38,7 +38,7 @@ var PopupConfirmPickemPicks = ( function(){
 
     var _ShowTeams = function()
     {
-        var aTeamIds = $.GetContextPanel()._picksnoitems;
+        var aTeamIds = $.GetContextPanel()._oPicksData.picksnoitems;
         var elTeamItemImages = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-confirm-purchase' );
         elTeamItemImages.visible = aTeamIds.length > 0;
 
@@ -63,8 +63,8 @@ var PopupConfirmPickemPicks = ( function(){
 	
 	var _ShowAllClearingMsg = function()
 	{
-		var aPicksForConfirm = $.GetContextPanel()._picksforconfirm;
-		var aTeamIds = $.GetContextPanel()._picksnoitems;
+		var aPicksForConfirm = $.GetContextPanel()._oPicksData.picksforconfirm;
+		var aTeamIds = $.GetContextPanel()._oPicksData.picksnoitems;
 		                                                                       
 		var elStickerItemImages = $.GetContextPanel().FindChildInLayoutFile( 'id-popup-confirm-clearall' );
 		elStickerItemImages.visible = ( aPicksForConfirm.length <= 0 && aTeamIds.length <= 0 );
@@ -75,7 +75,7 @@ var PopupConfirmPickemPicks = ( function(){
         $.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.inventory_new_item_accept', 'MOUSE' );	
         $.GetContextPanel().FindChildInLayoutFile( 'id-popup-confrim-apply-btn').enabled = false;
         $.GetContextPanel().FindChildInLayoutFile( 'id-popup-confirm-spinner' ).RemoveClass('hidden');
-        PredictionsAPI.SetMyPredictionUsingItemID.apply( PredictionsAPI, $.GetContextPanel()._args );
+        PredictionsAPI.SetMyPredictionUsingItemID.apply( PredictionsAPI, $.GetContextPanel()._oPicksData.args );
         $.Schedule( 5, _OnTimeout );
     };
 

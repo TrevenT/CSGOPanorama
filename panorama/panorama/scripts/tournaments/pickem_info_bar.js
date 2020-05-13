@@ -20,7 +20,7 @@ var PickEmInfoBar = ( function()
 			12: "http://www.counter-strike.net/pickem/krakow2017#team_instructions"
 		};
 
-		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPanel._oData.tournamentid );
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPanel._oPickemData.oInitData.tournamentid );
 
 		if ( olinks.hasOwnProperty( tournamentNum ) )
 		{
@@ -42,33 +42,45 @@ var PickEmInfoBar = ( function()
 			12: "official_leaderboard_pickem_krakow2017_team"
 		};
 
-		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPanel._oData.tournamentid );
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( elPanel._oPickemData.oInitData.tournamentid );
+
+		var _OnActivate = function()
+		{
+			UiToolkitAPI.ShowCustomLayoutPopupParameters( 
+				'', 
+				'file://{resources}/layout/popups/popup_leaderboards.xml',
+				'type=' + olinks[ tournamentNum  ],
+				'none'
+			);
+		};
+
+		if ( olinks.hasOwnProperty( tournamentNum ) )
+		{
+			var link = olinks[ tournamentNum ];
+			elLink.enabled = true;
+
+			elLink.SetPanelEvent( 'onactivate', _OnActivate );
+			return;
+		}
 
 		elLink.enabled = false;
-
-		                                  
-		                                                
-		    
-		   	                                   
-		   	                                                                                      
-		   	       
-		    
-
-		                          
 	};
 
 	var _UpdateTimer = function( elPanel )
 	{
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		
 		var elStatus = elPanel.FindChildTraverse( 'id-pickem-lock-status' );
 		var elIcon = elPanel.FindChildTraverse( 'id-pickem-lock-status-icon' );
-		var secRemaining = PredictionsAPI.GetGroupRemainingPredictionSeconds( elPanel._oData.tournamentid, elPanel._oGroupData.groupid );
+		var secRemaining = PredictionsAPI.GetGroupRemainingPredictionSeconds( elPanel._oPickemData.oInitData.tournamentid, oGroupData.id );
 
-		var sectionId = PredictionsAPI.GetEventSectionIDByIndex( elPanel._oData.tournamentid, elPanel._oData.dayindex );
-		var isActive = PredictionsAPI.GetSectionIsActive( elPanel._oData.tournamentid, sectionId );
-		var canPick = PredictionsAPI.GetGroupCanPick( elPanel._oData.tournamentid, elPanel._oGroupData.groupid );
+		var sectionId = PredictionsAPI.GetEventSectionIDByIndex( elPanel._oPickemData.oInitData.tournamentid, elPanel._oPickemData.oInitData.sectionindex );
+		var isActive = PredictionsAPI.GetSectionIsActive( elPanel._oPickemData.oInitData.tournamentid, sectionId );
+		var canPick = PredictionsAPI.GetGroupCanPick( elPanel._oPickemData.oInitData.tournamentid, oGroupData.id );
 
 		var elStatusBar = elPanel.FindChildTraverse( 'id-pickem-status' );
-		elStatusBar.SetHasClass( 'pickem-header-status--active', (isActive && canPick && secRemaining > 0 ) );
+		elStatusBar.SetHasClass( 'pickem-header-status--active', ( isActive && canPick && secRemaining > 0 ) );
 
 		if ( !isActive && canPick )
 		{
@@ -106,49 +118,83 @@ var PickEmInfoBar = ( function()
 
 	var _UpdateScore = function( elPanel )
 	{
-		var pointsEarned = PredictionsAPI.GetMyPredictionsTotalPoints( elPanel._oData.tournamentid );
-		var bronzePoints = PredictionsAPI.GetRequiredPredictionsPointsBronze( elPanel._oData.tournamentid );
-		var silverPoints = PredictionsAPI.GetRequiredPredictionsPointsSilver( elPanel._oData.tournamentid );
-		var goldPoints = PredictionsAPI.GetRequiredPredictionsPointsGold( elPanel._oData.tournamentid );
+		var pointsEarned = PredictionsAPI.GetMyPredictionsTotalPoints( elPanel._oPickemData.oInitData.tournamentid );
+		var bronzePoints = PredictionsAPI.GetRequiredPredictionsPointsBronze( elPanel._oPickemData.oInitData.tournamentid );
+		var silverPoints = PredictionsAPI.GetRequiredPredictionsPointsSilver( elPanel._oPickemData.oInitData.tournamentid );
+		var goldPoints = PredictionsAPI.GetRequiredPredictionsPointsGold( elPanel._oPickemData.oInitData.tournamentid );
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ elPanel._oPickemData.oInitData.sectionindex ].groups[ 0 ];
+		var canPick = PredictionsAPI.GetGroupCanPick( elPanel._oPickemData.oInitData.tournamentid, oGroupData.id );
 
 		var elYourPoints = elPanel.FindChildTraverse( 'id-pickem-your-points' );
 		elYourPoints.text = ( pointsEarned && pointsEarned > 0 ) ? pointsEarned : '-';
 
 		var nextLevel = '';
+		var resultLevel = '';
 		var pointsNeeded = null;
 		var elbar = elPanel.FindChildTraverse( 'id-pickem-info' );
+		var elPointsNeeded = elPanel.FindChildTraverse( 'id-pickem-points-needed' );
+		var elPointsNeededLabel = elPointsNeeded.FindChildTraverse( 'id-pickem-points-needed-Label' );
+		var elPointsResultLabel = elPointsNeeded.FindChildTraverse( 'id-pickem-points-result-Label' );
+
+		if ( !canPick )
+		{
+
+			elPointsNeededLabel.visible = false;
+			elPointsResultLabel.visible = true;
+		
+			elPointsNeeded.SetDialogVariableInt( 'points', pointsEarned );
+		}
+		else
+		{
+			elPointsNeededLabel.visible = true;
+			elPointsResultLabel.visible = false;
+		}
 
 		if ( pointsEarned < bronzePoints )
 		{
 			nextLevel = $.Localize( '#pickem_level_bronze' );
+			elPointsResultLabel.visible = false;
+			resultLevel = '';
 			pointsNeeded = bronzePoints - pointsEarned;
 		}
 		else if ( pointsEarned >= bronzePoints && pointsEarned < silverPoints )
 		{
 			nextLevel = $.Localize( '#pickem_level_silver' );
+			resultLevel = $.Localize( '#pickem_level_bronze' );
 			pointsNeeded = silverPoints - pointsEarned;
-			elbar.AddClass( 'pickem-info-bar--bronze' );
+
+			if( !canPick )
+				elbar.AddClass( 'pickem-info-bar--bronze' );
 		}
 		else if ( pointsEarned < goldPoints )
 		{
 			nextLevel = $.Localize( '#pickem_level_gold' );
-			elbar.AddClass( 'pickem-info-bar--silver' );
+			resultLevel = $.Localize( '#pickem_level_silver' );
+
+			if( !canPick )
+				elbar.AddClass( 'pickem-info-bar--silver' );
+			
 			pointsNeeded = goldPoints - pointsEarned;
 		}
 		else if ( pointsEarned >= goldPoints )
 		{
 			nextLevel = $.Localize( '#pickem_level_gold' );
-			elbar.AddClass( 'pickem-info-bar--gold' );
+			resultLevel = $.Localize( '#pickem_level_gold' );
+
+			if( !canPick )
+				elbar.AddClass( 'pickem-info-bar--gold' );
+			
 			pointsNeeded = 0;
 		}
 
 		var pluralString = pointsNeeded === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
-		var elPointsNeeded =  elPanel.FindChildTraverse( 'id-pickem-points-needed' );
+
 
 		                                   
 		elPointsNeeded.SetDialogVariableInt( 'points', pointsNeeded );
 		elPointsNeeded.SetDialogVariable( 'plural', pluralString );
 		elPointsNeeded.SetDialogVariable( 'level', nextLevel );
+		elPointsNeeded.SetDialogVariable( 'result-level', resultLevel );
 	};
 
 	return{

@@ -1,0 +1,78 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/popups/popups_shared.css" />
+		<include src="file://{resources}/styles/popups/popup_leaderboards.css" />
+	</styles>
+	
+	<scripts>
+		<include src="file://{resources}/scripts/popups/popup_leaderboards.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name='leaderboard-entry'>
+			<Panel class="popup-leaderboard__list__row">
+				<Panel class="popup-leaderboard__list__column ">
+					<Panel class="popup-leaderboard__name-entry">
+						<Label id="popup-leaderboard-entry-position" text="" class="popup-leaderboard__list__column__title position"/>
+						<CSGOAvatarImage id="popup-leaderboard-entry-avatar" class="popup-leaderboard__name-entry__avatar"/>
+						<Label id="popup-leaderboard-entry-name" text="" class="popup-leaderboard__list__column__title"/>
+					</Panel>
+				</Panel>
+
+				<Panel  class="popup-leaderboard__list__column points">
+					<Label id="popup-leaderboard-entry-points" text="#99" class="popup-leaderboard__list__column__title"/>
+				</Panel>
+
+				<Panel  class="popup-leaderboard__list__column rank" >
+					<Label id="popup-leaderboard-entry-rank" text="#100%" class="popup-leaderboard__list__column__title"/>
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<PopupCustomLayout class="PopupPanel Hidden"
+						useglobalcontext="true"
+						popupbackground="dim"
+						onload="PopupLeaderboards.Init();"
+						oncancel="PopupLeaderboards.Close();">
+		<Label id="id-popup-leaderboard-title" class="PopupTitle" text="#London Pick'Em leaderboards" />
+
+		<Panel class="popup-leaderboard__contents">
+
+			<Panel id="id-popup-leaderboard-loading" class="popup-leaderboard__status hidden">
+				<Panel class="Spinner horizontal-center vertical-center"/>
+				<Label class="PopupMessage" text="#CSGO_Operation_Leaderboard_Loading" html="false" />
+			</Panel>
+
+			<Panel id="id-popup-leaderboard-nodata" class="popup-leaderboard__status hidden">
+				<Image texturewidth="48" textureheight="48" src="file://{images}/icons/ui/info.svg" class="horizontal-center" />
+				<Label class="PopupMessage" text="#CSGO_Operation_Leaderboard_NoPicksLoaded" html="false" />
+			</Panel>
+
+			<Panel id="id-popup-leaderboard-list" class="popup-leaderboard__list hidden">
+				<Panel class="popup-leaderboard__list__row">
+					<Panel  class="popup-leaderboard__list__column">
+						<Label text="#CSGO_Operation_Leaderboard_Pickem_Friends" class="popup-leaderboard__list__column__title faded"/>
+					</Panel>
+
+					<Panel  class="popup-leaderboard__list__column points">
+						<Label text="#CSGO_Operation_Leaderboard_Pickem_Points" class="popup-leaderboard__list__column__title faded"/>
+					</Panel>
+
+					<Panel  class="popup-leaderboard__list__column rank" >
+						<Label text="#CSGO_Operation_Leaderboard_Pickem_Percent" class="popup-leaderboard__list__column__title faded"/>
+					</Panel>
+				</Panel>
+
+				<Panel id="id-popup-leaderboard-entries" class="popup-leaderboard__entries-container">
+					                         
+				</Panel>
+			</Panel>
+			
+		</Panel>
+			<Panel class="PopupButtonRow">
+				<TextButton class="PopupButton" text="#GameUI_Close" onactivate="UIPopupButtonClicked()" />
+			</Panel>
+	</PopupCustomLayout>
+</root>

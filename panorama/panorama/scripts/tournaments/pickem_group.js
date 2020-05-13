@@ -10,10 +10,6 @@ var PickEmGroup = ( function()
 
 	var _Init = function ( elPanel )
 	{
-		                                                                            
-		var oGroupData  = _MakeGroupDataObject( elPanel );
-		elPanel._oGroupData = oGroupData;
-
 		_SetPointsWorth( elPanel );
 		_SetUpDragTargets( elPanel );
 		_UpdateGroupPicks( elPanel );
@@ -21,175 +17,198 @@ var PickEmGroup = ( function()
 
 	var _UpdateGroupPicks = function( elPanel )
 	{
-		var oGroupData = elPanel._oGroupData;
+		                                                                                               
+		
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		var pickCount = oGroupData.pickscount;
 
-		for ( var i = 0; i < oGroupData.pickscount; i++ )
+		for ( var i = 0; i < pickCount; i++ )
 		{
 			var elPick = elPanel.FindChildInLayoutFile( 'id-pickem-pick' + i );
 			var elItemImage = elPick.FindChildInLayoutFile( 'id-pick-itemimage' );
 
 			var oItemIdData = PickemCommon.GetYourPicksItemIdData( 
-				oGroupData.tournamentid, 
-				oGroupData.listpicks[i].localid
+				elPanel._oPickemData.oTournamentData.tournamentid, 
+				oGroupData.picks[i].localid
 			 );
 			
 			PickemCommon.UpdateImageForPick( 
 				oItemIdData,
 				elItemImage, 
-				oGroupData.listpicks[i].localid 
+				oGroupData.picks[i].localid 
 			);
 
 			PickemCommon.UpdateCorrectPickState(
 				oGroupData,
-				PredictionsAPI.GetGroupCorrectPicksByIndex( oGroupData.tournamentid, oGroupData.groupid, i ),
-				oGroupData.listpicks[i].localid,
-				elPick.FindChildInLayoutFile( 'id-pickem-points-for-pick' )
+				PredictionsAPI.GetGroupCorrectPicksByIndex( elPanel._oPickemData.oTournamentData.tournamentid, oGroupData.id, i ),
+				oGroupData.picks[i].localid,
+				elPick.FindChildInLayoutFile( 'id-pickem-points-for-pick' ),
 			);
 
 			var notOwned = PickemCommon.ShowPickItemNotOwnedWarning(
+				elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].isactive,
 				oGroupData,
 				oItemIdData,
 				elPick.FindChildInLayoutFile( 'id-pickem-not-owned' ),
-				oGroupData.listpicks[i].localid 
+				oGroupData.picks[i].localid 
 			);
 			
-			oGroupData.listpicks[i].storedefindex = notOwned ? 
-				PickemCommon.GetTeamItemDefIndex( oGroupData.listpicks[i].localid ):
+			oGroupData.picks[i].storedefindex = notOwned ? 
+				PickemCommon.GetTeamItemDefIndex( oGroupData.picks[i].localid ):
 				undefined;
 
 			                                                              
-			PickemCommon.UpdateRemoveBtn(
-				elPanel,
-				elPick.FindChildInLayoutFile( 'id-pick-cancelbtn' ),
-				elPanel._oGroupData.listpicks[i].localid,
-				_UpdateGroupPicks
+			var elRemoveBtn = elPick.FindChildInLayoutFile( 'id-pick-cancelbtn' );
+			var showRemoveBtn = PickemCommon.ShowHideRemoveBtn(
+				elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].isactive,
+				oGroupData.canpick,
+				oGroupData.picks[i].localid,
+				elRemoveBtn
 			);
 
-			elPick.SetHasClass( 'pickem-pick-placed', oGroupData.listpicks[i].localid ? true : false );
-			elPick.SetHasClass( 'is-saved-pick', _IsPickSaved(elPanel._oGroupData.listpicks[i]) );
+			if ( showRemoveBtn )
+			{
+				PickemCommon.UpdateRemoveBtn(
+					elPanel,
+					oGroupData,
+					oGroupData.picks[i].localid,
+					elPick.FindChildInLayoutFile( 'id-pick-cancelbtn' ),
+					_UpdateGroupPicks
+				);
+			}
 
-                                                                                      
-                                                                                      
+
+			elPick.SetHasClass( 'pickem-pick-placed', oGroupData.picks[ i ].localid ? true : false );
+			elPick.SetHasClass( 'is-saved-pick', ( PickemCommon.IsPickSaved( oGroupData.picks[ i ] ) && oGroupData.canpick ));
+			elPick.SetHasClass( 'pickem-pick-locked', !oGroupData.canpick );
+
 			_UpdateTeams( elPanel );
 		}
 
-		PickemCommon.UpdateActionBarBtns( elPanel );
+		                                                                                                    
+		PickemCommon.UpdateActionBarBtns( elPanel, _GetListOfPicksWithNoOwnedItems, _MakePicksParams, _EnableApply );
 	};
 
-	var _HavePicksChanged = function( oGroupData )
+	var _GetListOfPicksWithNoOwnedItems = function( elPanel )
 	{
-		for ( var i = 0; i < oGroupData.pickscount; i++ )
-		{
-			if( oGroupData.listpicks[i].localid !== oGroupData.listpicks[i].savedid  )
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		
+		return oGroupData.picks.filter( index => index.storedefindex !== undefined );
+	};
+
+	var _MakePicksParams = function( elPanel )
+	{
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var tournamentId = elPanel._oPickemData.oTournamentData.tournamentid;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		var count = oGroupData.pickscount;
+		var args = [ tournamentId ];
+		var groupId = oGroupData.id;
+		var listPicks = oGroupData.picks;
+		var idsForDisplayInConfimPopup = [];
+
+		for ( var i = 0; i < count; ++i )
+		{                                                                             
+			var pickInGroupIndex = i;           
+			var strStickerItemId = '';
+
+			if ( listPicks[ i ].localid )
 			{
-				return true;
+				                                                    
+				var oItemIdData = PickemCommon.GetYourPicksItemIdData( 
+					tournamentId, 
+					oGroupData.picks[i].localid
+				);
+
+				strStickerItemId = oItemIdData.type === 'fakeitem' ? '' : oItemIdData.itemid;
+
+				if ( strStickerItemId )
+				{
+					idsForDisplayInConfimPopup.push( strStickerItemId );
+				}
 			}
-		}
-		return false;
-	};
 
-	var _IsPickSaved = function( oPick )
-	{	
-		if( ( oPick.localid === oPick.savedid ) && oPick.localid !== 0 && oPick.localid !== undefined )
-		{
-			return true;
-		}
-
-		return false;
-	};
-
-	var _MakeGroupDataObject = function( elPanel )
-	{
-		var tournamentId = elPanel._oData.tournamentid;
-		var sectionId = PredictionsAPI.GetEventSectionIDByIndex( tournamentId , elPanel._oData.dayindex );
-		var groupIds = PickemCommon.GetGroupIdsForSection( tournamentId, sectionId );
-		var groupId = groupIds[0];
-		var picksCount = PredictionsAPI.GetGroupPicksCount( tournamentId, groupId );
-	
-		                                                                  
-		                                                                                  
-		                                                                                             
-		var aPicks = [];
-		var aLocalPicks = [];
-		for ( var i = 0; i < picksCount; i++ )
-		{
-			var userPickTeamID = PredictionsAPI.GetMyPredictionTeamID( tournamentId, groupId, i );
-			
-			                                                                                     
-			                                            
-			userPickTeamID = userPickTeamID === undefined ? 0 : userPickTeamID;
-			aPicks.push( {
-				savedid: userPickTeamID,
-				localid: userPickTeamID,
-				storedefindex: undefined,
-			});
+			args.push( groupId, pickInGroupIndex, strStickerItemId );                              
 		}
 
 		return {
-			tournamentid : tournamentId,
-			groupid: groupId,
-			sectionid : sectionId,
-			pickscount: picksCount,
-			isdayactive: PredictionsAPI.GetSectionIsActive( tournamentId, sectionId ),
-			groupcanpick: PredictionsAPI.GetGroupCanPick( tournamentId, groupId ),
-			pickworth: PredictionsAPI.GetGroupPickWorth( tournamentId, groupId ),
-			listpicks: aPicks
+			args: args,
+			idsForDisplayInConfimPopup: idsForDisplayInConfimPopup
 		};
 	};
 
+	var _EnableApply = function( elPanel)
+	{
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		
+		var picks = oGroupData.picks;
+	
+		for ( var i = 0; i < oGroupData.pickscount; i++ )
+		{
+			if ( !picks[i].storedefindex )
+			{	                                                                  
+				var idLocal = picks[i].localid;
+				var idSaved = picks[i].savedid;
+				if ( !idLocal ) idLocal = 0;
+				if ( !idSaved ) idSaved = 0;
+				if( idLocal !== idSaved )
+				{
+					                                                                                                               
+					return true;
+				}
+			}
+		}
+
+		return false;
+	};
+
+
 	var _SetPointsWorth = function( elPanel )
 	{
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var points = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ].pickworth;
 		var elLabel = elPanel.FindChildInLayoutFile( 'id-pickem-group-worth' );
-		var points = elPanel._oGroupData.pickworth;
-		var pluralString = points === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
 
-		elLabel.SetDialogVariableInt( 'points', points );
-		elLabel.SetDialogVariable( 'plural', pluralString );
+		PickemCommon.SetPointsWorth( elLabel, points );
 	};
 
 	var _UpdateTeams = function( elPanel )
 	{
-		var groupId = elPanel._oGroupData.groupid;
-		var tournamentId = elPanel._oGroupData.tournamentid;
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		var groupId = oGroupData.id;
+		var tournamentId = elPanel._oPickemData.oInitData.tournamentid;
+
 		var teamCount = PredictionsAPI.GetGroupTeamsPickableCount( tournamentId, groupId );
 		var elTeams = elPanel.FindChildInLayoutFile( 'id-pickem-groum-teams' );
-		var isDayActive = elPanel._oGroupData.isdayactive;
-		var groupCanPick = elPanel._oGroupData.groupcanpick;
+		var isSectionActive = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].isactive;
+		var groupCanPick = oGroupData.canpick;
 
 		for ( var i = 0; i < teamCount; i++ )
 		{
 			var teamId = PredictionsAPI.GetGroupTeamIDByIndex( tournamentId, groupId, i );
-			var uniqueId = elPanel._oGroupData.tournamentid + elPanel._oData.xmltype + teamId;
+			var uniqueId = tournamentId + elPanel._oPickemData.oInitData.xmltype + teamId;
 			var elTeam = elTeams.FindChildInLayoutFile( uniqueId );
 
-            if ( !teamId )
-            {
-                return;
-            }
-            
-            if ( !elTeam )
+			if ( !teamId )
+			{
+				return;
+			}
+			
+			if ( !elTeam )
 			{
 				elTeam = _CreateTeam( elTeams, uniqueId, teamId );
 			}
 
 			var elLogoImage = elTeam.FindChildInLayoutFile( 'id-team-logo' );
-			var szImageToUse = null;
-			var yourItemId = PredictionsAPI.GetMyPredictionItemIDForTeamID( tournamentId, teamId );
-			if ( !yourItemId || yourItemId === '0' || yourItemId === 0 )
-			{
-				szImageToUse = _GetTeamImage( elTeam );
-				elLogoImage.AddClass( 'barelogo' );
-			}
-			else
-			{
-				szImageToUse = 'file://{images_econ}/'+InventoryAPI.GetItemInventoryImage( yourItemId )+'.png';
-				elLogoImage.RemoveClass( 'barelogo' );
-			}
-			elLogoImage.SetImage( szImageToUse );
+			PickemCommon.SetTeamImage( tournamentId, elLogoImage, elTeam );
 
 			var isAlreadyPicked = _SetIsAlreadyPicked( elPanel, elTeam );
 
-			if( isDayActive && groupCanPick )
+			if( isSectionActive && groupCanPick )
 			{
 				_SetUpDraggableEvents( elTeam, isAlreadyPicked );
 			}
@@ -206,70 +225,74 @@ var PickEmGroup = ( function()
 	{
 		var elTeam = $.CreatePanel( "Panel", elTeams, uniqueId );
 		elTeam.BLoadLayoutSnippet( "team" );
-		elTeam._teamid = teamId;
+
+		if ( typeof elTeam._oteamData !== 'object' )
+		{
+			elTeam._oteamData = {};
+		}
+
+		elTeam._oteamData.teamid = teamId;
 
 		return elTeam;
 	};
 
-	var _GetTeamImage = function( elTeam )
-	{
-		var teamTag = PredictionsAPI.GetTeamTag( elTeam._teamid );
-		return 'file://{images}/tournaments/teams/' + teamTag + '.svg';
-	};
-
 	var _SetIsAlreadyPicked = function ( elPanel, elTeam )
 	{
-		var isAlreadyPick = PickemCommon.CheckIfTeamIsAlreadyPicked( elPanel._oGroupData, elTeam._teamid );
-        var elUsed = elTeam.FindChildInLayoutFile( 'id-team-used' );
-        elUsed.SetHasClass( 'hidden', !isAlreadyPick );
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+		
+		var isAlreadyPick = PickemCommon.CheckIfTeamIsAlreadyPicked( oGroupData, elTeam._oteamData.teamid );
+		var elUsed = elTeam.FindChildInLayoutFile( 'id-team-used' );
+		elUsed.SetHasClass( 'hidden', !isAlreadyPick );
 
 		return isAlreadyPick;
 	};
 
 	var _SetUpDraggableEvents = function ( elTeam, isAlreadyPick ) 
 	{
-		if ( isAlreadyPick  ) {
+		if ( isAlreadyPick ) 
+		{
 			elTeam.IsDraggable = false;
-			if ( elTeam._DragStartHandle )
-			{
-				$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._DragStartHandle );
-			}
 			return;
 		}
 
 		elTeam.IsDraggable = true;
 
-		if ( elTeam._DragStartHandle ) {
-			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._DragStartHandle );
+		if ( elTeam._oteamData.dragStartHandle ) {
+			return;
 		}
 
-		elTeam._DragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function ( targetId, obj ) {
-			var elDraggable = $.CreatePanel( "Image", elTeam, 'draggable' + elTeam._teamid, {
-				src: _GetTeamImage( elTeam ),
+		elTeam._oteamData.dragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function ( targetId, obj ) {
+			var elDraggable = $.CreatePanel( "Image", elTeam, 'draggable' + elTeam._oteamData.teamid, {
+				src: PickemCommon.GetTeamImage( elTeam ),
 				class: 'pickem-team-draggable',
 				textureheight: '128',
 				texturewidth: '128'
 			} );
 
-			elDraggable._teamid = elTeam._teamid;
+			if ( typeof elDraggable._oteamData !== 'object' )
+			{
+				elDraggable._oteamData = {};
+			}
+			
+			elDraggable._oteamData = elTeam._oteamData;
 
 			obj.displayPanel = elDraggable;
 			obj.removePositionBeforeDrop = false;
 			elDraggable.AddClass( 'dragstart' );
 		} );
 
-		elTeam._DragEndHandle = $.RegisterEventHandler( 'DragEnd', elTeam, function ( targetId, obj ) {
+		$.RegisterEventHandler( 'DragEnd', elTeam, function ( targetId, obj ) {
 			obj.AddClass( 'dragend' );
 			obj.DeleteAsync( 0.25 );
 		} );
-
 	};
 
 	var _TeamTooltips = function( elTeam )
 	{
 		var OnMouseOver = function ( elTeam )
 		{
-			UiToolkitAPI.ShowTextTooltip( elTeam.id, PredictionsAPI.GetTeamName( elTeam._teamid ) );
+			UiToolkitAPI.ShowTextTooltip( elTeam.id, PredictionsAPI.GetTeamName( elTeam._oteamData.teamid ) );
 
 			if( elTeam.IsDraggable )
 			{
@@ -289,20 +312,26 @@ var PickEmGroup = ( function()
 
 	var _SetUpDragTargets = function( elPanel )
 	{
-		var picksCount = PredictionsAPI.GetGroupPicksCount( elPanel._oGroupData.tournamentid, elPanel._oGroupData.groupid );
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var picksCount = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ].pickscount;
+		
+		if ( typeof elPanel._odraggableData !== 'object' )
+		{
+			elPanel._odraggableData = {};
+		}
 
 		var _DragEnter = function( elDragTarget )
 		{
 			elDragTarget.AddClass( 'dragenter' );
 
 			                                                                                           
-			elPanel._dragtarget = elDragTarget.GetParent();
+			elPanel._odraggableData.dragtarget = elDragTarget.GetParent();
 		};
 
 		var _DragLeave = function( elDragTarget )
 		{
 			elDragTarget.RemoveClass( 'dragenter' );
-			elPanel._dragtarget = null;
+			elPanel._odraggableData.dragtarget = null;
 		};
 
 		for ( var i = 0; i < picksCount; i++ )
@@ -329,7 +358,7 @@ var PickEmGroup = ( function()
 				{
 					                                  
 					                                      
-					_PlaceTempPick( elPanel, elDisplay._teamid );
+					_PlaceTempPick( elPanel, elDisplay._oteamData.teamid );
 				}
 			);
 		}
@@ -338,13 +367,15 @@ var PickEmGroup = ( function()
 	var _PlaceTempPick = function( elPanel, teamid )
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'sticker_applySticker', 'MOUSE' );
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
 		
 		                                        
-		var pickIndex = elPanel._dragtarget.GetAttributeString( 'data-pick-index', '' );
+		var pickIndex = elPanel._odraggableData.dragtarget.GetAttributeString( 'data-pick-index', '' );
 
 		if( pickIndex )
 		{
-			elPanel._oGroupData.listpicks[ Number( pickIndex ) ].localid = teamid;
+			oGroupData.picks[ Number( pickIndex ) ].localid = teamid;
 		}
 
 		_UpdateGroupPicks( elPanel );
@@ -354,7 +385,9 @@ var PickEmGroup = ( function()
 	{
 		                                     
 
-		var oGroupData = elPanel._oGroupData;
+		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
+		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
+
 		if ( !oGroupData )
 		{
 			                                                                      
@@ -369,10 +402,10 @@ var PickEmGroup = ( function()
 		for ( var i = 0; i < oGroupData.pickscount; i++ )
 		{
 			var elPick = elPanel.FindChildInLayoutFile( 'id-pickem-pick' + i );
-			var userPickTeamID = PredictionsAPI.GetMyPredictionTeamID( oGroupData.tournamentid, oGroupData.groupid, i );
-			oGroupData.listpicks[i].savedid = userPickTeamID;
+			var userPickTeamID = PredictionsAPI.GetMyPredictionTeamID( elPanel._oPickemData.oInitData.tournamentid, oGroupData.id, i );
+			oGroupData.picks[i].savedid = userPickTeamID;
 				
-			if( _IsPickSaved( oGroupData.listpicks[i] ))
+			if( PickemCommon.IsPickSaved( oGroupData.picks[i] ) && oGroupData.canpick )
 			{
 				elPick.FindChildInLayoutFile('id-pick-boundingbox').TriggerClass( 'pickem-group-pick-update' );
 			}
