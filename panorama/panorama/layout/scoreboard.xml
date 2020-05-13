@@ -704,7 +704,7 @@
 
 		<snippet name="stat--MONEY">
 			<Panel	data-stat="money" class="spectator-hidden">
-				<Label id="label" class="sb-team-tint"/>
+				<Label id="label" class="sb-team-tint" text="#Scoreboard_money_val"/>
 			</Panel>
 		</snippet>
 

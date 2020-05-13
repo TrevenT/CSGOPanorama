@@ -35,6 +35,9 @@
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsRadarSettings')" group="SettingsGame">
 					<Label text="#settings_radarandtablet_section"/>
 				</RadioButton>
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsCrosshair')" group="SettingsGame">
+					<Label text="#settings_crosshair"/>
+				</RadioButton>
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsAccountConnSettings')" group="SettingsGame">
 					<Label text="#settings_account_conn_section"/>
 				</RadioButton>
@@ -118,40 +121,18 @@
 					<Label class="SettingsSectionTitleLabel" text="#settings_hud_section" />
 				</Panel>
 				<Panel class ="top-bottom-flow full-width">
-					                      
-					<Panel class="SettingsMenuDropdownContainer">
-						<Label text="#GameUI_CrosshairStyle" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshairstyle">
-							<Label text="#GameUI_CrosshairStyleDefault" id="crosshairstyle0" value="0"/>
-							<Label text="#GameUI_CrosshairStyleDefaultStatic"	id="crosshairstyle1" value="1"/>
-							<Label text="#GameUI_CrosshairStyleClassic" id="crosshairstyle2" value="2"/>
-							<Label text="#GameUI_CrosshairStyleClassicDyn" id="crosshairstyle3" value="3"/>
-							<Label text="#GameUI_CrosshairStyleClassicStatic"	id="crosshairstyle4" value="4"/>
-						</CSGOSettingsEnumDropDown>
-					</Panel>
-					<Panel class="horizontal-separator"/>
-
-					                      
-					<Panel class="SettingsMenuDropdownContainer">
-						<Label text="#GameUI_CrosshairColor" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshaircolor">
-							<Label text="#GameUI_ColorGreen" id="crosshairclr0" value="1"/>
-							<Label text="#GameUI_ColorYellow"	id="crosshairclr1" value="2"/>
-							<Label text="#GameUI_ColorBlue" id="crosshairclr2" value="3"/>
-							<Label text="#GameUI_ColorLtBlue" id="crosshairclr3" value="4"/>
-						</CSGOSettingsEnumDropDown>
-					</Panel>
-					<Panel class="horizontal-separator"/>
 
 					                                      
 					<Panel id="id-friendlyfirecrosshair" class="SettingsMenuDropdownContainer">
-						<Label text="#GameUI_CrosshairStyle_Friendly" class="half-width"/>
+						<Label text="#GameUI_FriendlyWarning" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshair_friendly_warning">
 							<Label text="#GameUI_CrosshairFriendlyWarning_Off" id="crosshairfriendlywarning0" value="0"/>
 							<Label text="#GameUI_CrosshairFriendlyWarning_Default"	id="crosshairfriendlywarning1" value="1"/>
 							<Label text="#GameUI_CrosshairFriendlyWarning_On" id="crosshairfriendlywarning2" value="2"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
+				
+					<Panel class="horizontal-separator"/>
 
 					                
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_HUDScaling_Info">
@@ -315,17 +296,16 @@
 				<Panel class ="top-bottom-flow full-width">
 					<Panel class="horizontal-separator"/>
 
-                               
-          <Panel class="SettingsMenuDropdownContainer">
-            <Label text="#SFUI_Settings_PlayerPingMute_Title" class="half-width"/>
-            <CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_player_ping_mute" >
-              <Label text="#GameUI_No" value="0" id="playerpingmute0" />
-              <Label text="#GameUI_Yes" value="1" id="playerpingmute1" />
-            </CSGOSettingsEnumDropDown>
-          </Panel>
-          <Panel class="horizontal-separator"/>
-          
-					                     
+					<Panel class="SettingsMenuDropdownContainer">
+					<Label text="#SFUI_Settings_PlayerPingMute_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_player_ping_mute" >
+							<Label text="#GameUI_No" value="0" id="playerpingmute0" />
+							<Label text="#GameUI_Yes" value="1" id="playerpingmute1" />
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+		
+						                     
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_MuteEnemies_Title" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_mute_enemy_team" >
@@ -612,6 +592,107 @@
 					</TooltipPanel>
 				</Panel>
 			</Panel> 
+
+			                           
+			<Panel id="SettingsCrosshair" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_crosshair" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+					                          
+					<Panel class="crosshair-editor">
+						<Panel id="XhairBkg" bkg-id="0" class="map-background"/>
+						<CSGOCrosshair id="CrosshairEditorPreview" preview="true">
+							<CrosshairPreviewControls crosshair="CrosshairEditorPreview"/> 
+						</CSGOCrosshair>
+						<Panel class="vertical-center full-width" >
+							<Button class="PaginationArrow Left horizontal-align-left" onactivate="SettingsMenuShared.ChangeBackground(-1)"/>
+							<Button class="PaginationArrow Right horizontal-align-right" onactivate="SettingsMenuShared.ChangeBackground(1)"/>
+						</Panel>
+					</Panel>
+
+					                      
+					<Panel class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_CrosshairStyle" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshairstyle" ondropdownselectionchanged="SettingsMenuGameSettings.OnCrosshairStyleChange()" >
+							<Label text="#GameUI_CrosshairStyleDefault" id="crosshairstyle0" value="0"/>
+							<Label text="#GameUI_CrosshairStyleDefaultStatic"	id="crosshairstyle1" value="1"/>
+							<Label text="#GameUI_CrosshairStyleClassic" id="crosshairstyle2" value="2"/>
+							<Label text="#GameUI_CrosshairStyleClassicDyn" id="crosshairstyle3" value="3"/>
+							<Label text="#GameUI_CrosshairStyleClassicStatic"	id="crosshairstyle4" value="4"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					                 
+					<Panel id="XhairCenterDot" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_CrosshairDot" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshairdot">
+								<Label text="#GameUI_Yes" value="1" id="crosshairdot0"/>
+								<Label text="#GameUI_No" value="0" id="crosshairdot1"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairLength" text="#GameUI_CrosshairLength" displayprecision="1" max="10.0" min="0.0" convar="cl_crosshairsize"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairThickness" text="#GameUI_CrosshairThickness" displayprecision="1" max="10" min="0.1" convar="cl_crosshairthickness"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_crosshairgap"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairOutline" text="#GameUI_CrosshairOutline" toggleconvar="cl_crosshair_drawoutline" max="3" min="0" convar="cl_crosshair_outlinethickness"/>
+					<Panel class="horizontal-separator"/>
+
+					                      
+					<CSGOSettingsSlider id="XhairColorRed" text="#GameUI_ColorRed" max="255" min="0" convar="cl_crosshaircolor_r" onvaluechanged="GameInterfaceAPI.SetSettingString('cl_crosshaircolor', '5');" />
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairColorGreen" text="#GameUI_ColorGreen" max="255" min="0" convar="cl_crosshaircolor_g" onvaluechanged="GameInterfaceAPI.SetSettingString('cl_crosshaircolor', '5');" />
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairColorBlue" text="#GameUI_ColorBlue" max="255" min="0" convar="cl_crosshaircolor_b" onvaluechanged="GameInterfaceAPI.SetSettingString('cl_crosshaircolor', '5');" />
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairAlpha" text="#GameUI_CrosshairAlpha" toggleconvar="cl_crosshairusealpha" max="255" min="0" convar="cl_crosshairalpha"/>
+					<Panel class="horizontal-separator"/>
+
+					                                 
+					<CSGOSettingsSlider id="XhairSlitDist" text="#GameUI_SplitDist"  max="16" min="0" convar="cl_crosshair_dynamic_splitdist"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairSplitInnerAlpha" text="#GameUI_SplitInnerAlpha" displayprecision="1" max="1.0" min="0.0" convar="cl_crosshair_dynamic_splitalpha_innermod"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairSplitOuterAlpha" text="#GameUI_SplitOuterAlpha" displayprecision="1" max="1.0" min="0.3" convar="cl_crosshair_dynamic_splitalpha_outermod"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairSplitRatio" text="#GameUI_SplitRatio" displayprecision="1" max="1.0" min="0.0" convar="cl_crosshair_dynamic_maxdist_splitratio"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsSlider id="XhairFixedGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_fixedcrosshairgap"/>
+					<Panel class="horizontal-separator"/>
+					
+
+
+
+
+					     
+					                                             
+						                                                         
+						                                                                               
+							                                                               
+							                                 	                              
+							                                                              
+							                                                                
+							                                                                
+						                           
+					        
+					   
+				</Panel>
+			</Panel>
 
 			                                   
 			<Panel id="SettingsAccountConnSettings" class="SettingsBackground">

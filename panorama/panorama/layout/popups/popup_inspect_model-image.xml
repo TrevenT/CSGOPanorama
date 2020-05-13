@@ -19,7 +19,7 @@
 			<ItemPreviewPanel id="InspectItemModel"
 							class="full-width full-height hidden"
 							manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
-							item="img://inventory_17293822569102704700"
+							item=""
 							mouse_rotate="true"
 							enable_floorshadow="true"
 							sound="weapon"/>

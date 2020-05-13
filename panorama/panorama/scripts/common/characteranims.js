@@ -71,14 +71,18 @@ var CharacterAnims = ( function()
 	}
 	
 
-	var _PlayAnimsOnPanel = function ( importedSettings )
+	var _PlayAnimsOnPanel = function ( importedSettings, bDontStompModel = false )
 	{
 		  
 		                                                       
 		                                                   
 		  
+
+		                                                                                        
+		                                                                                
+		                         
 		
-		if ( settings === null ) 
+		if ( importedSettings === null ) 
 		{
 			return;
 		}
@@ -94,7 +98,8 @@ var CharacterAnims = ( function()
 			settings.model = settings.modelOverride;
 			          
 			                            
-				                                                                        
+			 
+	  				                                                                        
 			 
 			          
 		} else {
@@ -117,12 +122,17 @@ var CharacterAnims = ( function()
 		_ResetLastRandomAnimHandle( playerPanel );
 		
 		playerPanel.ResetAnimation( false );
-		playerPanel.SetSceneAngles( 0, 0, 0 );
+		playerPanel.SetSceneAngles( 0, 0, 0, false );
 
 		if ( settings.manifest )
 			playerPanel.SetScene( settings.manifest, settings.model, false );
 
-		playerPanel.SetPlayerModel( settings.model );
+		if ( !bDontStompModel )
+		{
+			playerPanel.SetPlayerCharacterItemID( settings.charItemId );
+			playerPanel.SetPlayerModel( settings.model );
+		}
+
 		playerPanel.EquipPlayerWithItem( wid );
 		playerPanel.EquipPlayerWithItem( settings.glovesItemId );
 
@@ -155,7 +165,7 @@ var CharacterAnims = ( function()
 
 		var cam = 0;
 
-		if ( 'cameraPreset' in settings && settings.cameraPreset != "" )
+		if ( 'cameraPreset' in settings )
 		{
 			cam = settings.cameraPreset;
 			                                               

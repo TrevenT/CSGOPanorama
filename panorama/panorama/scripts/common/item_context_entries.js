@@ -760,6 +760,48 @@ var ItemContextEntires = ( function (){
 			}
 		},
 		{
+			                                                         
+			name: 'can_patch',
+			populateFilter: ['inspect', 'loadout'],
+			AvailableForItem: function ( id ) {
+				return ItemInfo.ItemMatchDefName(id, 'patch') && ItemInfo.ItemHasCapability(id, 'can_patch');
+			},
+			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'PlaySoundEffect', 'sticker_applySticker', 'MOUSE' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'can_patch', id, '' );
+			}
+		},
+		{
+			name: 'can_patch',
+			AvailableForItem: function ( id ) {
+				return ItemInfo.ItemHasCapability( id, 'can_patch' ) &&
+					ItemInfo.GetStickerSlotCount(id) > ItemInfo.GetStickerCount(id);
+					
+			},
+			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'PlaySoundEffect', 'sticker_applySticker', 'MOUSE' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+				$.DispatchEvent( "ShowSelectItemForCapabilityPopup", 'can_patch', id, '' );
+			}
+		},
+		{
+			name: 'remove_patch',
+			AvailableForItem: function ( id ) {
+				return ItemInfo.ItemHasCapability( id, 'can_patch' ) && ItemInfo.GetStickerCount(id) > 0;
+			},
+			OnSelected:  function ( id ) {
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_capability_can_sticker.xml',
+					'sticker-and-itemtosticker=remove' + ',' + id + 
+					'&' + 'asyncworktype=remove_sticker'
+				);
+			}
+		},
+		{
 			name: 'recipe',
 			AvailableForItem: function ( id ) {
 				return ItemInfo.ItemMatchDefName( id, 'recipe' );

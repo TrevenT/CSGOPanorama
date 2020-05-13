@@ -24,7 +24,7 @@
 				<ItemImage id="id-survivalbuymenu-item-image" class="survivalbuymenu-item__image" textureheight="48" texturewidth="-1" src="file://{images}/icons/ui/buyzone.svg" scaling="stretch-to-fit-y-preserve-aspect"/>                                              
 				<Panel class="survivalbuymenu-item__info">
 					<Label class="survivalbuymenu-item__info__name stratum-font" text="{s:item_name}"/>
-					<Label class="survivalbuymenu-item__info__price stratum-font" text="${d:r:item_price}"/>
+					<Label class="survivalbuymenu-item__info__price stratum-font" text="#buymenu_cost_amount"/>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -38,7 +38,7 @@
 			</Panel>
 
 			<Panel class="survivalbuymenu-titlebar__right">
-				<Label class="survivalbuymenu-titlebar__right__text stratum-font" text="${d:r:playermoney}"/>
+				<Label class="survivalbuymenu-titlebar__right__text stratum-font" text="#buymenu_money"/>
 				<Image class="survivalbuymenu-titlebar__right__icon" src="file://{images}/icons/ui/buyzone.svg" scaling="stretch-to-fit-preserve-aspect"/>
 			</Panel>
 		</Panel>

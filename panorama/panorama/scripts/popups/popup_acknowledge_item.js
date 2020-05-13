@@ -46,7 +46,7 @@ var AcknowledgeItems = ( function()
 		var elItemTile = $.CreatePanel( 'Panel', elParent, item.id );
 		elItemTile.BLoadLayoutSnippet( 'Item' );
 
-		_ShowModelOrItem( elItemTile, item.id );
+		_ShowModelOrItem( elItemTile, item.id, item.type );
 
 		var elLabel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemLabel' );
 		elLabel.text = ItemInfo.GetName( item.id );
@@ -57,9 +57,15 @@ var AcknowledgeItems = ( function()
 		var elTitle = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemTitle' );
 		var titleSuffex = isOperationReward ? 'quest_reward' : item.type;
 		if ( defName === 'casket' && item.type === 'nametag_add' )
+		{
 			elTitle.text = $.Localize( '#CSGO_Tool_Casket_Tag' );
+		}
 		else
-			elTitle.text = $.Localize( '#popup_title_' + titleSuffex );
+		{
+			var idxOfExtraParams = titleSuffex.indexOf( "[" );
+			var typeWithoutParams = ( idxOfExtraParams > 0 ) ? titleSuffex.substring( 0, idxOfExtraParams ) : titleSuffex;
+			elTitle.text = $.Localize( '#popup_title_' + typeWithoutParams );
+		}
 
 		if ( isOperationReward )
 		{
@@ -98,7 +104,7 @@ var AcknowledgeItems = ( function()
 		elMovie.style.washColor = rarityColor;
 	};
 
-	var _ShowModelOrItem = function( elItemTile, id )
+	var _ShowModelOrItem = function( elItemTile, id, type = "" )
 	{
 		var elModel = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemModel' );
 		var elImage = elItemTile.FindChildInLayoutFile( 'AcknowledgeItemImage' );
@@ -118,7 +124,30 @@ var AcknowledgeItems = ( function()
 				false
 			);
 
-			if ( ItemInfo.IsCharacter( id) )
+			if ( type && ( ( typeof type ) === 'string' ) && type.startsWith( "patch_apply[" ) )
+			{
+				var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( id );
+				settings.panel = elModel;
+
+				var slot = parseInt( type.substring( "patch_apply[".length ) );
+
+				CapabilityCanSticker.UpdatePreviewPanelSettingsForPatchPosition( id, settings, slot );
+				CharacterAnims.PlayAnimsOnPanel( settings );
+				CapabilityCanSticker.UpdatePreviewPanelCameraAndLightingForPatch( elModel, id, slot );
+
+			}
+			else if ( type == "patch_remove" )
+			{
+				var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( id );
+				settings.panel = elModel;
+	
+				CharacterAnims.PlayAnimsOnPanel( settings );
+
+				elModel.SetSceneIntroFOV( 1., 50000 );
+				elModel.SetCameraPosition( 305.60, -7.43, 85.19 );
+				elModel.SetCameraAngles( 4.81, 178.85, 0.00 );
+			}
+			else if ( ItemInfo.IsCharacter( id) )
 			{
 				var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( id );
 				settings.panel = elModel;
@@ -131,7 +160,7 @@ var AcknowledgeItems = ( function()
 
 				elModel.SetFlashlightColor( 4.16, 4.06, 5.20 );
 				elModel.SetFlashlightFOV( 60 );
-				elModel.SetFlashlightAmount( 5 );
+				elModel.SetFlashlightAmount( 3 );
 				elModel.SetDirectionalLightModify( 1 );
 				elModel.SetDirectionalLightDirection( 66.83, -23.02, 121.82);
 				elModel.SetDirectionalLightColor(0.29, 0.09, 0.63);

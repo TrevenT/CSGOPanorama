@@ -214,6 +214,12 @@ var ItemTile = ( function()
 		{
 			$.GetContextPanel().enabled = ( ItemInfo.GetStickerSlotCount( id ) > ItemInfo.GetStickerCount( id ) );
 		}
+		else if ( capabilityInfo &&
+			capabilityInfo.capability === 'can_patch' &&
+			!ItemInfo.ItemMatchDefName( id, 'patch' ) )
+		{
+			$.GetContextPanel().enabled = ( ItemInfo.GetStickerSlotCount( id ) > ItemInfo.GetStickerCount( id ) );
+		}
 	};
 
 	var _OnActivate = function()
@@ -236,6 +242,10 @@ var ItemTile = ( function()
 			else if ( capabilityInfo.capability === 'can_sticker' )
 			{
 				_CapabilityCanStickerAction( SortIdsIntoToolAndItemID( id, capabilityInfo.initialItemId ) );
+			}
+			else if ( capabilityInfo.capability === 'can_patch' )
+			{
+				_CapabilityCanPatchAction( SortIdsIntoToolAndItemID( id, capabilityInfo.initialItemId ) );
 			}
 			else if ( capabilityInfo.capability === 'decodable' )
 			{
@@ -334,6 +344,16 @@ var ItemTile = ( function()
 			'file://{resources}/layout/popups/popup_capability_can_sticker.xml',
 			'sticker-and-itemtosticker=' + idsToUse.tool + ',' + idsToUse.item +
 			'&' + 'asyncworktype=can_sticker'
+		);
+	};
+
+	var _CapabilityCanPatchAction = function( idsToUse )
+	{
+		UiToolkitAPI.ShowCustomLayoutPopupParameters(
+			'',
+			'file://{resources}/layout/popups/popup_capability_can_sticker.xml',
+			'sticker-and-itemtosticker=' + idsToUse.tool + ',' + idsToUse.item +
+			'&' + 'asyncworktype=can_patch'
 		);
 	};
 

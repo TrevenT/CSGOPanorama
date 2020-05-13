@@ -134,6 +134,7 @@ var InspectActionBar = ( function (){
 
 		var isFanToken = ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_pass_');
 		var isSticker = ItemInfo.ItemMatchDefName( id, 'sticker' );
+		var isPatch = ItemInfo.ItemMatchDefName( id, 'patch' );
 		var isSpraySealed = ItemInfo.IsSpraySealed( id );
 		var isEquipped = ( ItemInfo.IsEquippedForT( id ) || ItemInfo.IsEquippedForCT( id ) || ItemInfo.IsEquippedForNoTeam( id ) ) ? true : false;
 		
@@ -142,6 +143,7 @@ var InspectActionBar = ( function (){
 			isSticker ||
 			isSpraySealed ||
 			isFanToken ||
+			isPatch ||
 			isEquipped )
 		{
 			elMoreActionsBtn.AddClass( 'hidden' );
@@ -149,7 +151,7 @@ var InspectActionBar = ( function (){
 			if ( !isEquipped  )
 			{
 				elSingleActionBtn.RemoveClass( 'hidden' );
-				_SetUpSingleActionBtn( elPanel, id, ( isSticker || isSpraySealed || isFanToken ) );
+				_SetUpSingleActionBtn( elPanel, id, ( isSticker || isSpraySealed || isFanToken || isPatch ) );
 			}
 
 			return;

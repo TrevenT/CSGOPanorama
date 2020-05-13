@@ -5,6 +5,9 @@
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/buymenu.js" />
+		<include src="file://{resources}/scripts/common/characteranims.js" />
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/mock_adapter.js" />
 	</scripts>
 
 	<snippets>
@@ -87,14 +90,15 @@
 		                                  
 		<snippet name="TeamEquipment">
 			<Panel class="team-equip">
-				<Image id="Primary" class="team-equip__primary team-equip__flip"/>
+				<Panel class="team-equip-padding"/>
+				<Image id="Primary" scaling="stretch-to-fit-preserve-aspect" class="team-equip__primary team-equip__flip"/>
 				<Panel class="team-equip-other">
 					<Panel class="team-equip-gear">
-						<Label class="team-equip__money" text="${d:money}" />
+						<Label class="team-equip__money" text="#buymenu_money" />
 						<Panel id="OtherItems" class="team-equip__items">
 							<Image id="Bomb"  scaling="stretch-to-fit-preserve-aspect" class="team-equip__item-icon team-equip__special" texturewidth="-1" textureheight="24"/>
-							<Image id="Secondary"  scaling="stretch-to-fit-preserve-aspect" class="team-equip__item-icon team-equip__secondary team-equip__flip" texturewidth="-1" textureheight="32"/>
-							<Panel id="Grenades" class="left-right-flow vertical-center" texturewidth="-1" textureheight="32">
+							<Image id="Secondary"  scaling="stretch-to-fit-preserve-aspect" class="team-equip__item-icon team-equip__secondary team-equip__flip" texturewidth="-1" textureheight="24"/>
+							<Panel id="Grenades" class="left-right-flow vertical-center" texturewidth="-1" textureheight="24">
 								                                                                                                               
 									                                      
 								   
@@ -109,8 +113,8 @@
 						</Panel>
 					</Panel>
 					<Panel class="no-flow horizontal-align-right">
-						<CSGOAvatarImage id="Avatar" class="team-equip__avatar"/>
-						<Image id="Skull" class="team-equip__avatar--skull" src="file://{images}/icons/ui/elimination.svg"/>
+						<CSGOAvatarImage id="Avatar" class="team-equip__avatar" texturewidth="-1" textureheight="32"/>
+						<Image id="Skull" class="team-equip__avatar--skull" src="file://{images}/icons/ui/elimination.svg" texturewidth="-1" textureheight="24"/>
 						<Image id="PlayerColor" class="player-color" src="file://{images}/hud/teamcounter/teamcounter_playercolor.png"/>
 					</Panel>
 				</Panel>
@@ -121,22 +125,24 @@
 
 	<CSGOBuyMenu class="buymenu">
 		<Panel class='buymenu__fullscreen'>
+
+			<Panel class="buymenu-info">
+				<Panel class="horizontal-center fit-children left-right-flow">
+					<Panel class="left-right-flow horizontal-align-right">
+						<Label class="buymenu-timeleft-title" text="#BuyMenu_TimerText"/>
+						<CountdownTimer id="Countdown" output_milliseconds="false" class="buymenu-timeleft">
+							<Label text="{t:d:duration}"/>
+						</CountdownTimer>
+					</Panel>
+				</Panel>
+			</Panel>
+
 			<Panel class='buymenu__contents'>
+
 				<Panel class="buymenu-left">
 
-					                                      
-					<Panel class="buymenu-body">
-						<Panel class="buymenu-info">
-							<Panel class="horizontal-center fit-children left-right-flow">
-								<Panel class="left-right-flow horizontal-align-right">
-									<Label class="buymenu-timeleft-title" text="#BuyMenu_TimerText"/>
-									<CountdownTimer id="Countdown" output_milliseconds="false" class="buymenu-timeleft">
-										<Label text="{t:d:duration}"/>
-									</CountdownTimer>
-								</Panel>
-							</Panel>
-							</Panel>
 
+					<Panel class="buymenu-body">
 						<Panel class="buy-wheel-background" />
 							<Panel id="BuyWheelContainer" class="buy-wheel">
 								                                                                  
@@ -145,40 +151,46 @@
 					</Panel>
 					<Label id="PurchaseFailureLabel" class="buymenu__purchase-failure" />
 
+					<Panel class="team-equip-container--all">
+						                                                                                              
+						<Panel id="LocalPlayerEquipment" class="team-equip--self"/>
+						<Panel id="TeamEquipment" class="team-equip-container">
+						                                                          
+						</Panel>
+					</Panel>
+
 				</Panel>
 				<Panel class="buymenu-right">
-				<Panel class="vline" />
 
-					<Panel id="PreviewPanelContainer">
-            <Panel class="hrTop" />
+					<ItemPreviewPanel id="id-buymenu-agent"
+									class="buymenu-agent"
+									mouse_rotate="true"
+									hittest="true"
+									manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+									item="models/player/custom_player/legacy/ctm_sas.mdl"
+									enable_floorshadow="false"
+									force-no-composition-layer="true">                                                                                   
+					</ItemPreviewPanel>
+
+					<Panel class="vline" />
+
+					<Panel id="PreviewPanelContainer" class="">
+            			<Panel class="hrTop" />
 						<Panel class="category-preview"> 
 							<Label text="{s:category}" class="category-preview__label"/>
-							<Panel id="CategoryPreview" class="team-equip__flip top-bottom-flow full-width" >
+							<Panel id="CategoryPreview" class="category-image-container" >
 								     
 									                                                                  
 									                                                                           
 								   
-              </Panel>
-              
-              <Panel class="hrBot" />
+              				</Panel>
 						</Panel>
+
 						                                               
 						<Panel id="ItemStatsDisplay" class="stat-display">
 												
-							<ItemPreviewPanel id="BuyMenuItemModel" class="stat-display__model" custom_material_size="512"
-								item="img://inventory_4295015926">                                                                                                
-									<Panel class="rarity-bar">
+							<Panel id="WeaponNameAndRarity" class="rarity-bar">
 								<Label class="stat-display__item-name" text="{s:item_name}" />
-							</Panel>
-							</ItemPreviewPanel>
-							                                     
-									 
-							                 
-						
-
-							<Panel class="stat-display__row stat-display__cost">
-								<Label class="stat-display__name" text="#SFUI_BuyMenu_Cost"/>	
-								<Label class="stat-display__value" text="${d:cost}"/>	
 							</Panel>
 							<Panel id="WeaponStats" class="weapon-stats">
 								<Panel class="stat-display__row">
@@ -188,7 +200,7 @@
 								<Panel class="stat-display__row">
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_KillAward"/>	
 									<Panel class="horizontal-align-right no-flow">
-										<Label class="stat-display__value stat-display__kill-reward" text="${d:r:kill_reward}({d:r:kill_reward_pct}%)"/>	
+										<Label class="stat-display__value stat-display__kill-reward" text="#buymenu_killaward_amount"/>	
 										<Label class="stat-display__value stat-display__points" text="#SFUI_BuyMenu_KillAward_DMPoints_panorama"/>	
 									</Panel>
 								</Panel>
@@ -217,25 +229,12 @@
 									<Label class="stat-display__name" text="#SFUI_BuyMenu_ArmorPen"/>
 									<Label class="stat-display__value" text="#Pano_BuyMenu_ArmorPen_val"/>
 								</TooltipPanel>
-								<TooltipPanel class="stat-display__row" id="Penetration" tooltip="#buymenu_tooltip_penetration">
-									<Label class="stat-display__name" text="#SFUI_BuyMenu_Penetration"/>	
-									<Label class="stat-display__value" text="#Pano_BuyMenu_Penetration_val"/>
-								</TooltipPanel>
-								<TooltipPanel class="stat-display__row" id="Tagging" tooltip="#buymenu_tooltip_tagging">
-									<Label class="stat-display__name" text="#SFUI_BuyMenu_Tagging"/>
-									<Label class="stat-display__value" text="#Pano_BuyMenu_Tagging_val"/>
-								</TooltipPanel>
 							</Panel>
 							<Label id="ItemDesc" class="stat-display__desc" text="{s:desc}"/> 
 						</Panel>
+
 					</Panel>
-          <Panel class="team-equip-container--all">
-                                                                                                          
-            <Panel id="LocalPlayerEquipment" class="team-equip--self"/>
-            <Panel id="TeamEquipment" class="team-equip-container">
-                                                                        
-            </Panel>
-          </Panel>
+
 				</Panel>
 			</Panel>
 			<Panel id="BuyMenuNavBar" class="buymenu-navbar">
@@ -255,6 +254,11 @@
 			</Panel>
 			<Panel class="buymenu-money">
 				<CSGOMoneyPanel id="BuyMenuMoney" class="money__buymenu"/>
+			</Panel>
+			<Panel id="HudBottomRight" hittest="false" hittestchildren="false">
+				<CSGOHudWeaponSelection id="HudWeaponSelection"
+					neverfade="true" neverselected="true"
+					class="embedded-weapons-overview"/>
 			</Panel>
 		</Panel>
 	

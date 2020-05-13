@@ -97,13 +97,13 @@ var InspectAsyncActionBar = ( function()
 		{
 			InventoryAPI.RequestPrestigeCoin( InventoryAPI.GetItemDefinitionIndex( m_itemid ) );
 		}
-		if ( m_worktype === 'nameable' )
+		else if ( m_worktype === 'nameable' )
 		{
 			$.DispatchEvent( "PlaySoundEffect", "rename_applyConfirm", "MOUSE" );
 			InventoryAPI.UseTool( m_toolid, m_itemid );
 			funcCallbackOnAction();
 		}
-		if ( m_worktype === 'can_sticker' )
+		else if ( m_worktype === 'can_sticker' || m_worktype === 'can_patch' )
 		{
 			$.DispatchEvent( 'PlaySoundEffect', 'sticker_applyConfirm', 'MOUSE' );
 
@@ -116,7 +116,7 @@ var InspectAsyncActionBar = ( function()
 				funcCallbackOnAction();
 			}
 		}
-		if ( m_worktype === 'decodeable' )
+		else if ( m_worktype === 'decodeable' )
 		{
 			                                                                 
 			if ( ItemInfo.ItemMatchDefName( m_itemid, 'spray' ) || ItemInfo.ItemDefinitionNameSubstrMatch(m_itemid, 'tournament_pass_') )

@@ -159,6 +159,24 @@ CSGOSettingsEnumDropDown:hover
 
   
 
+.crosshair-editor
+{
+	height: 128px;
+	width: 100%;
+	flow-children: none;
+	horizontal-align: center;
+
+}
+
+
+
+.crosshair-editor__controls
+{
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+}
+
 .prmototed-setting
 {
 	height: 150px;
@@ -207,23 +225,28 @@ CSGOSettingsEnumDropDown:hover
 .bkg-dust2
 {
 	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_dust2.png" );
-	background-position: left 0px top -350px;
+	background-position: left -435px top -470px;
 }
 
 .bkg-aztec
 {
 	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_aztec.png" );
-	background-position: left 0px top -350px;
+	background-position: left -642px top -421px;
 }
 
 .bkg-mirage
 {
-	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_aztec.png" );
-	background-position: left 0px top -350px;
+	background-image: url( "file://{images}/map_icons/screenshots/1080p/de_mirage.png" );
+	background-position: left -855px top -690px;
 }
 
 .bkg-office
 {
 	background-image: url( "file://{images}/map_icons/screenshots/1080p/cs_office.png" );
-	background-position: left 0px top -350px;
+	background-position: left -887px top -585px;
+}
+
+.dynamic-crosshair
+{
+	brightness: 1;
 }

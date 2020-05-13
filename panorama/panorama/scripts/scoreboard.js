@@ -1249,16 +1249,19 @@ var Scoreboard = ( function()
 
 					var newStatValue = MockAdapter.GetPlayerMoney( oPlayer.m_xuid );
 
-					oPlayer.m_oStats[ stat ] = newStatValue;
-
-					if ( oPlayer.m_oStats[ stat ] >= 0 )
+					if ( newStatValue !== oPlayer.m_oStats[stat] )
 					{
-						elLabel.text = "$" + newStatValue;
+						if ( newStatValue >= 0 )
+						{
+							elLabel.SetHasClass( 'hidden', false );
+							elLabel.SetDialogVariableInt( "stat_d_money", newStatValue );
+						}
+						else
+						{
+							elLabel.SetHasClass( 'hidden', true );
+						}
 					}
-					else
-					{
-						elLabel.text = "";
-					}
+					oPlayer.m_oStats[stat] = newStatValue;
 
 				}
 				break;

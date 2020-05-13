@@ -802,6 +802,12 @@ var MainMenu = ( function() {
 		}
 		oSettings.panel = vanityPanel;
 
+		                                         
+		vanityPanel.SetSceneAngles( 0, 0, 0, true );
+		
+		                                                                          
+		vanityPanel.hittest = false; 
+
 		  
 		                               
 		  
@@ -810,6 +816,7 @@ var MainMenu = ( function() {
 		
 		CharacterAnims.PlayAnimsOnPanel( oSettings );
 
+
 		_SetVanityLightingBasedOnBackgroundMovie( vanityPanel );
 
 		if ( oSettings.panel.BHasClass( 'hidden' ) ) {
@@ -817,6 +824,9 @@ var MainMenu = ( function() {
 		}
 
 		_RigVanityHover( vanityPanel );
+
+		                                                                       
+		$.Schedule( 3.0, function() {if (vanityPanel && vanityPanel.IsValid() ) vanityPanel.hittest = true;} );
 
 	};
 
@@ -828,8 +838,8 @@ var MainMenu = ( function() {
 		if ( backgroundMap === 'cbble' )
 		{
 			vanityPanel.SetFlashlightAmount( 1.0 );
-			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
-			vanityPanel.SetFlashlightPosition( 38.67, 40.11, 107.51 );
+			                                               
+			                                                            
 			                                                           
 			vanityPanel.SetFlashlightColor( 0.81, 0.92, 1.00 );
 			vanityPanel.SetAmbientLightColor( 0.12, 0.21, 0.46 );
@@ -852,8 +862,8 @@ var MainMenu = ( function() {
 		else if ( backgroundMap === 'blacksite' )
 		{
 			vanityPanel.SetFlashlightAmount( 1 );
-			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
-			vanityPanel.SetFlashlightPosition( 47.37, 172.91, 0.00 );
+			                                               
+			                                                           
 			                                                            
 			vanityPanel.SetFlashlightColor( 4, 4, 4);
 			vanityPanel.SetAmbientLightColor( 0.16, 0.26, 0.30 );
@@ -873,9 +883,9 @@ var MainMenu = ( function() {
 		else if ( backgroundMap === 'sirocco_night' )
 		{
 			vanityPanel.SetFlashlightAmount( 2 );
-			vanityPanel.SetFlashlightRotation( 0, 0, 0 );
-			vanityPanel.SetFlashlightPosition( 17.57, -171.50, 0.00 );
-			vanityPanel.SetFlashlightAngle( 97.38, 16.46, 85.98);
+			                                               
+			                                                            
+			                                                       
 			vanityPanel.SetFlashlightFOV( 45 );
 			                                                            
 			vanityPanel.SetFlashlightColor( 1.8, 1.8, 2 );
@@ -956,7 +966,7 @@ var MainMenu = ( function() {
 	                                                                                                    
 	var _InventoryUpdated = function()
 	{
-		_InitVanity();
+		_ForceRestartVanity();
 		_UpdateInventoryBtnAlert();
 	};
 

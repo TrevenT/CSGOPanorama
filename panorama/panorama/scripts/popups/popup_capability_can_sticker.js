@@ -6,43 +6,96 @@ var CapabilityCanSticker = ( function()
 	var m_scheduleHandle = null;
 	var m_isRemoveStickers = false;
 	var m_SlotSelectedForScratch = null;
-	var m_Stickerpanel = $.GetContextPanel();
+	var m_isSticker = false;
+	var m_isPatch = false;
+	var m_cP = null;
+
+	var m_prevCameraSlot = null;
 
 	var _Init = function()
 	{
-		var strMsg = $.GetContextPanel().GetAttributeString( "sticker-and-itemtosticker", "(not found)" );
+		m_cP = $.GetContextPanel();
+
+		var strMsg = m_cP.GetAttributeString( "sticker-and-itemtosticker", "(not found)" );
 		                   
 
 		var idList = strMsg.split( ',' );
 		m_isRemoveStickers = idList[ 0 ] === 'remove' ? true : false;
 		var itemId = idList[ 1 ];
 		var toolId = m_isRemoveStickers ? '' : idList[ 0 ];
-	
+
+		m_isSticker = ItemInfo.IsSticker( idList[ 0 ] ) || ItemInfo.IsWeapon( idList[ 1 ] );
+		m_isPatch = ItemInfo.IsPatch( idList[ 0 ] ) || ItemInfo.IsCharacter( idList[ 1 ] );
+
+		var elTop = m_cP.FindChildTraverse( "id-popup-capability__top" );
+		var elInfoBlock = m_cP.FindChildTraverse( "id-popup-capability__info-block" );
+
+		if ( m_isSticker )
+		{
+			elTop.BLoadLayoutSnippet( "snippet-top--sticker" );			
+			elInfoBlock.BLoadLayoutSnippet( "snippet-info-block--sticker" );
+		}
+		else if ( m_isPatch )
+		{
+			elTop.BLoadLayoutSnippet( "snippet-top--patch" );			
+			elInfoBlock.BLoadLayoutSnippet( "snippet-info-block--patch" );	
+		}
+
+		if ( m_isPatch )
+		{
+			                                                         
+			                                                                        
+			                 
+
+			var elPanel = m_cP.FindChildInLayoutFile( 'CanStickerItemModel' );
+			elPanel.AddClass( 'characters' );
+		}
+
 		if ( !m_isRemoveStickers )
 			m_emptySlotList = _GetEmptyStickerSlots( _GetSlotInfo( itemId ) );
 		
-		_SetItemModel( toolId, itemId, m_isRemoveStickers );
-		_SetTitle( m_isRemoveStickers );
-		_SetDescText( itemId, m_isRemoveStickers );
-		_SetWarningText( m_isRemoveStickers, toolId, itemId );
-		_ShowStickerIconsToApplyOrRemove( m_isRemoveStickers, toolId, itemId );
+		_SetToolName();
+		_SetItemModel( toolId, itemId );
+		_SetTitle();
+		_SetDescText( itemId );
+		_SetWarningText( toolId, itemId );
+		_ShowStickerIconsToApplyOrRemove( toolId, itemId );
 		_SetUpAsyncActionBar( itemId, toolId );
-		_StickerBtnActions( toolId, itemId, m_isRemoveStickers );
+		_StickerBtnActions( toolId, itemId );
 
 		$.DispatchEvent( 'CapabilityPopupIsOpen', true );
 	};
 
+	function _SetToolName ()
+	{
+		var toolUpper = '';
+		var toolLower = '';
+
+		if ( m_isSticker )
+		{
+			toolUpper = $.Localize( "popup_can_stick_sticker_upper1" );
+			toolLower = $.Localize( "popup_can_stick_sticker_lower" );
+		}
+		else if ( m_isPatch )
+		{
+			toolUpper = $.Localize( "popup_can_stick_patch_upper1" );
+			toolLower = $.Localize( "popup_can_stick_patch_lower" );			
+		}
+
+		m_cP.SetDialogVariable( "tool_upper1", toolUpper );
+		m_cP.SetDialogVariable( "tool_lower", toolLower );
+		
+	}
+
 	                                                                                                    
 	                                        
 	                                                                                                    
-	var _SetItemModel = function( toolId, itemId, isRemoveStickers )
+	var _SetItemModel = function( toolId, itemId )
 	{
 		if ( !InventoryAPI.IsItemInfoValid( itemId ) )
-		{
 			return;
-		}
 		
-		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerItemModel' );
+		var elPanel = m_cP.FindChildInLayoutFile( 'CanStickerItemModel' );
 		var modelPath = ItemInfo.GetModelPathFromJSONOrAPI( itemId ) + '?stickers';
 
 		elPanel.SetAsActivePreviewPanel();
@@ -52,53 +105,69 @@ var CapabilityCanSticker = ( function()
 		
 		elPanel.Data().id = itemId;
 
-		if ( !isRemoveStickers )
+		if ( !m_isRemoveStickers )
 		{
 			_PreviewStickerInSlot( toolId, _GetSelectedStickerSlot() );
 		}
 	};
 
-	var _SetTitle = function( isRemoveStickers )
+	var _SetTitle = function()
 	{
-		var elTitle = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerTitle' );
-		elTitle.text = isRemoveStickers ?
-			$.Localize( '#SFUI_InvContextMenu_can_sticker_Wear' ) :
-			$.Localize( '#SFUI_InvContextMenu_sticker_use' );
-	};
+		var title = '';
 
-	var _SetDescText = function( itemId, isRemoveStickers )
-	{
-		var elDescLabel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerDesc' );
-		var currentName = ItemInfo.GetName( itemId );
-
-		elDescLabel.SetDialogVariable( 'name', currentName );
-		elDescLabel.text = isRemoveStickers ?
-			$.Localize( '#popup_can_sticker_scrape', elDescLabel ) :
-			$.Localize( '#popup_can_sticker_desc', elDescLabel );
-	};
-
-	var _SetWarningText = function( isRemoveStickers, toolId, itemId )
-	{
-		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerWarning' );
-		var warningText = '';
-
-		if ( isRemoveStickers )
+		if ( m_isRemoveStickers )
 		{
-			warningText = $.Localize( '#SFUI_Sticker_Wear_How_To' );
+			title = $.Localize( m_isPatch ? '#SFUI_InvContextMenu_can_stick_Wear_full' : '#SFUI_InvContextMenu_can_stick_Wear', m_cP ) ;
 		}
 		else
 		{
-			warningText = _GetWarningTradeRestricted( elLabel, toolId, itemId );
-			if ( !warningText )
-			{
-				warningText = $.Localize( '#SFUI_InvUse_Warning_use_can_sticker' );
-			}
+			title = $.Localize( '#SFUI_InvContextMenu_stick_use', m_cP ) ;
 		}
 
-		elLabel.text = warningText;
+
+		m_cP.SetDialogVariable( "CanStickerTitle", title );
+		
 	};
 
-	var _GetWarningTradeRestricted = function( elLabel, toolId, itemId )
+	var _SetDescText = function( itemId )
+	{
+		var currentName = ItemInfo.GetName( itemId );
+		m_cP.SetDialogVariable( 'tool_target_name', currentName );
+
+		var elDescLabel = m_cP.FindChildInLayoutFile( 'CanStickerDesc' );
+
+		var desc = m_isRemoveStickers ?
+		$.Localize( m_isPatch ? '#popup_can_stick_scrape_full' : '#popup_can_stick_scrape', m_cP ) :
+		$.Localize( '#popup_can_stick_desc', m_cP );
+
+		elDescLabel.text = desc;
+		elDescLabel.visible = !m_isRemoveStickers;
+	};
+
+	var _SetWarningText = function( toolId, itemId )
+	{
+
+		var warningText = _GetWarningTradeRestricted( toolId, itemId );
+
+		            
+		if ( m_isRemoveStickers )
+		{
+			warningText = $.Localize( m_isPatch ? '#popup_can_stick_scrape_full' : '#popup_can_stick_scrape', m_cP );
+		}
+		else if ( !m_isRemoveStickers )
+		{
+			if ( !warningText )
+			{
+				warningText = $.Localize( '#SFUI_InvUse_Warning_use_can_stick', m_cP );
+			}	
+		}
+
+		var elWarningLabel = m_cP.FindChildInLayoutFile( 'CanStickerWarning' );
+		if ( elWarningLabel )
+			elWarningLabel.text = warningText;
+	};
+
+	var _GetWarningTradeRestricted = function( toolId, itemId )
 	{
 		         
 		                                                                                                                           
@@ -116,24 +185,24 @@ var CapabilityCanSticker = ( function()
 					strSpecialParam = InventoryAPI.GetItemAttributeValue( toolId, "tradable after date" );
 					if ( strSpecialParam !== undefined && strSpecialParam !== null )
 					{
-						strSpecialWarning = _GetSpecialWarningString( strSpecialParam, "#popup_can_sticker_warning_marketrestricted" );
+						strSpecialWarning = _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_marketrestricted" );
 					}
 				}
 				else
 				{
-					strSpecialWarning = _GetStickerMarketDateGreater( elLabel, toolId, itemId );
+					strSpecialWarning = _GetStickerMarketDateGreater( toolId, itemId );
 				}
 			}
 		}
 		else
 		{
-			strSpecialWarning = _GetStickerMarketDateGreater( elLabel, toolId, itemId );
+			strSpecialWarning = _GetStickerMarketDateGreater( toolId, itemId );
 		}
 		
 		return strSpecialWarning;
 	}
 
-	var _GetStickerMarketDateGreater = function( elLabel, toolId, itemId )
+	var _GetStickerMarketDateGreater = function( toolId, itemId )
 	{
 		                                                                               
 		var rtTradableAfterSticker = InventoryAPI.GetItemAttributeValue( toolId, "{uint32}tradable after date" );
@@ -145,7 +214,7 @@ var CapabilityCanSticker = ( function()
 			strSpecialParam = InventoryAPI.GetItemAttributeValue( toolId, "tradable after date" );
 			if ( strSpecialParam != undefined && strSpecialParam != null )
 			{
-				return _GetSpecialWarningString( strSpecialParam, "#popup_can_sticker_warning_traderestricted" );
+				return _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_traderestricted" );
 			}
 		}
 
@@ -154,21 +223,21 @@ var CapabilityCanSticker = ( function()
 
 	var _GetSpecialWarningString = function( strSpecialParam, warningText )
 	{
-		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerWarning' );
+		var elLabel = m_cP.FindChildInLayoutFile( 'CanStickerWarning' );
 		
 		elLabel.SetDialogVariable( 'date', strSpecialParam );
 		return $.Localize( warningText, elLabel );
 	}
 
-	var _ShowStickerIconsToApplyOrRemove = function( isRemoveStickers, toolId, itemId )
+	var _ShowStickerIconsToApplyOrRemove = function( toolId, itemId )
 	{
-		var elStickerToApply = $.GetContextPanel().FindChildInLayoutFile( 'StickerToAppy' );
-		elStickerToApply.SetHasClass( 'hidden', isRemoveStickers );
+		var elStickerToApply = m_cP.FindChildInLayoutFile( 'StickerToAppy' );
+		elStickerToApply.SetHasClass( 'hidden', m_isRemoveStickers );
 
-		var elStickersToRemove = $.GetContextPanel().FindChildInLayoutFile( 'StickersToRemove' );
-		elStickersToRemove.SetHasClass( 'hidden', !isRemoveStickers );
+		var elStickersToRemove = m_cP.FindChildInLayoutFile( 'StickersToRemove' );
+		elStickersToRemove.SetHasClass( 'hidden', !m_isRemoveStickers );
 
-		if ( isRemoveStickers )
+		if ( m_isRemoveStickers )
 		{
 			var slotCount = InventoryAPI.GetItemStickerSlotCount( itemId );
 			
@@ -177,6 +246,9 @@ var CapabilityCanSticker = ( function()
 				var imagePath = InventoryAPI.GetItemStickerImageBySlot( itemId, i );
 				if ( imagePath )
 				{
+					if ( !m_SlotSelectedForScratch )
+						m_SlotSelectedForScratch = i;
+					
 					var elSticker = $.CreatePanel( 'Button', elStickersToRemove, imagePath );
 					elSticker.BLoadLayoutSnippet( 'ScrapeStickerBtn' );
 					elSticker.FindChildInLayoutFile( 'ScrapeStickerImage' ).SetImage( 'file://{images_econ}' + imagePath + '_large.png' );
@@ -194,9 +266,9 @@ var CapabilityCanSticker = ( function()
 
 	var _SetUpAsyncActionBar = function( itemId, toolId )
 	{
-		$.GetContextPanel().SetAttributeString( 'toolid', toolId );
+		m_cP.SetAttributeString( 'toolid', toolId );
 		
-		var elAsyncActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
+		var elAsyncActionBarPanel = m_cP.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 		InspectAsyncActionBar.Init(
 			elAsyncActionBarPanel,
 			itemId,
@@ -207,30 +279,52 @@ var CapabilityCanSticker = ( function()
 	
 	var _GetSettingCallback = function( settingname, defaultvalue )
 	{
-		return m_Stickerpanel.GetAttributeString( settingname, defaultvalue );
+		return m_cP.GetAttributeString( settingname, defaultvalue );
 	};
 
 	var _AsyncActionPerformedCallback = function()
 	{
-		m_Stickerpanel.FindChildInLayoutFile( 'CanStickerContinue' ).enabled = false;
-		m_Stickerpanel.FindChildInLayoutFile( 'CanStickerNextPos' ).enabled = false;
+		m_cP.FindChildInLayoutFile( 'CanStickerContinue' ).enabled = false;
+		m_cP.FindChildInLayoutFile( 'CanStickerNextPos' ).enabled = false;
 	};
 
-	var _StickerBtnActions = function( toolId, itemId, isRemoveStickers )
+	var _StickerBtnActions = function( toolId, itemId )
 	{
-		var elAsyncActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
+		var slotsCount = m_isRemoveStickers ? InventoryAPI.GetItemStickerSlotCount( itemId ) : m_emptySlotList.length;
+
+		var elAsyncActionBarPanel = m_cP.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 		InspectAsyncActionBar.EnableDisableOkBtn( elAsyncActionBarPanel, false );
 		
-		var elContinueBtn = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerContinue' );
-		var elNextSlotBtn = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerNextPos' );
+		var elContinueBtn = m_cP.FindChildInLayoutFile( 'CanStickerContinue' );
+		var elNextSlotBtn = m_cP.FindChildInLayoutFile( 'CanStickerNextPos' );
 		
-		elContinueBtn.SetHasClass( 'hidden', isRemoveStickers );
-		elNextSlotBtn.SetHasClass( 'hidden', isRemoveStickers );
+		if ( elContinueBtn )
+			elContinueBtn.SetHasClass( 'hidden', m_isRemoveStickers || slotsCount == 1 );
+		
+		if ( elNextSlotBtn )
+			elNextSlotBtn.SetHasClass( 'hidden', m_isRemoveStickers || slotsCount == 1 );
 
-		if ( !isRemoveStickers )
+		if ( !m_isRemoveStickers )
 		{	
-			elContinueBtn.SetPanelEvent( 'onactivate', _OnContinue.bind( undefined, elContinueBtn ) );
-			elNextSlotBtn.SetPanelEvent( 'onactivate', _NextSlot.bind( undefined, elContinueBtn, toolId ) );
+			if ( slotsCount > 1 )
+			{
+				if ( elContinueBtn )
+					elContinueBtn.SetPanelEvent( 'onactivate', _OnContinue.bind( undefined, elContinueBtn ) );
+				
+				if ( elNextSlotBtn )
+					elNextSlotBtn.SetPanelEvent( 'onactivate', _NextSlot.bind( undefined, elContinueBtn, toolId ) );
+				
+					_CameraAnim( _GetSelectedStickerSlot(), false );
+			}
+			else
+			{
+				_NextSlot( elContinueBtn, toolId, true );
+				_OnContinue( elContinueBtn );
+			}
+		}
+		else
+		{
+			_CameraAnim( m_SlotSelectedForScratch, false );			
 		}
 	};
 
@@ -241,25 +335,28 @@ var CapabilityCanSticker = ( function()
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'generic_button_press', 'MOUSE' );
 
-		var elAsyncActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
+		var elAsyncActionBarPanel = m_cP.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 		InspectAsyncActionBar.EnableDisableOkBtn( elAsyncActionBarPanel, true );
 
-		$.GetContextPanel().SetAttributeString( 'selectedstickerslot', _GetSelectedStickerSlot() );
+		m_cP.SetAttributeString( 'selectedstickerslot', _GetSelectedStickerSlot() );
 
-		$.GetContextPanel().FindChildInLayoutFile( 'StickerToAppy' ).RemoveClass( 'popup-cansticker-pickedslot--anim' );
-		$.GetContextPanel().FindChildInLayoutFile( 'StickerToAppy' ).AddClass( 'popup-cansticker-pickedslot--anim' );
+		m_cP.FindChildInLayoutFile( 'StickerToAppy' ).RemoveClass( 'popup-cansticker-pickedslot--anim' );
+		m_cP.FindChildInLayoutFile( 'StickerToAppy' ).AddClass( 'popup-cansticker-pickedslot--anim' );
 	};
 
-	var _NextSlot = function( elContinueBtn, toolId )
+	var _NextSlot = function( elContinueBtn, toolId, bDontIncrement = false )
 	{
-		_ActiveSlotIndex.IncrementIndex();
+
+		if ( !bDontIncrement )
+			_ActiveSlotIndex.IncrementIndex();
 
 		var activeIndex = _GetSelectedStickerSlot();
 		_PreviewStickerInSlot( toolId, activeIndex );
 
-		elContinueBtn.enabled = true;
+		if ( elContinueBtn )
+			elContinueBtn.enabled = true;
 		
-		var elAsyncActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
+		var elAsyncActionBarPanel = m_cP.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 		InspectAsyncActionBar.EnableDisableOkBtn( elAsyncActionBarPanel, false );
 		
 		_CameraAnim( activeIndex, true );
@@ -269,7 +366,19 @@ var CapabilityCanSticker = ( function()
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'sticker_scratchOff', 'MOUSE' );
 
-		if ( InventoryAPI.IsItemStickerAtExtremeWear( itemId, slotIndex ) )
+		if ( m_isPatch )
+		{
+			UiToolkitAPI.ShowGenericPopupTwoOptions(
+				$.Localize( '#SFUI_Patch_Remove' ),
+				$.Localize( '#SFUI_Patch_Remove_Desc' ),
+				'',
+				$.Localize( '#SFUI_Patch_Remove' ),
+				function() { InventoryAPI.WearItemSticker( itemId, slotIndex ); },
+				$.Localize( '#UI_Cancel'),
+				function() { }
+			);
+		}
+		else if ( InventoryAPI.IsItemStickerAtExtremeWear( itemId, slotIndex ) )
 		{
 			UiToolkitAPI.ShowGenericPopupTwoOptions(
 				$.Localize( '#SFUI_Sticker_Remove' ),
@@ -285,23 +394,37 @@ var CapabilityCanSticker = ( function()
 		{
 			            
 			elSticker.FindChildInLayoutFile( 'ScrapingSpinner' ).RemoveClass( 'hidden' );
+
+			                                                              
+			if ( m_SlotSelectedForScratch != slotIndex )
+			{
+				_CameraAnim( slotIndex, true );
+			}
+
 			m_SlotSelectedForScratch = slotIndex;
-	
-			_CameraAnim( slotIndex, true );
+
 			_HighlightStickerBySlot( slotIndex );
-			InventoryAPI.WearItemSticker( itemId, slotIndex );
-			
+			InventoryAPI.WearItemSticker( itemId, slotIndex );			
+
 			m_scheduleHandle = $.Schedule( 5, _CancelWaitforCallBack );
 			                                                                   
 		
-			var panelsList = $.GetContextPanel().FindChildInLayoutFile( 'StickersToRemove' ).Children();
+			var panelsList = m_cP.FindChildInLayoutFile( 'StickersToRemove' ).Children();
 			panelsList.forEach( element => element.enabled = false );
 		}
 	};
 
 	var _HighlightStickerBySlot = function( slotIndex )
 	{
-		InventoryAPI.HighlightStickerBySlot( slotIndex );
+		if ( m_isPatch )
+		{
+			InventoryAPI.HighlightPatchBySlot( slotIndex );
+			_CameraAnim( slotIndex, false );
+		}
+		else
+		{
+			InventoryAPI.HighlightStickerBySlot( slotIndex );
+		}
 	};
 
 	                                                                                                    
@@ -313,6 +436,12 @@ var CapabilityCanSticker = ( function()
 
 		InventoryAPI.PreviewStickerInModelPanel( stickerId, slotIndex );
 		InventoryAPI.PeelEffectStickerBySlot( slotIndex );
+		
+		if ( m_isPatch )
+		{
+			InventoryAPI.HighlightPatchBySlot( slotIndex );
+		}
+		
 	};
 
 	var _ActiveSlotIndex = ( function()
@@ -347,22 +476,186 @@ var CapabilityCanSticker = ( function()
 
 	var _CameraAnim = function( activeIndex, bTransition )
 	{
-		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerItemModel' );
+		if (m_prevCameraSlot == activeIndex || activeIndex == -1 )
+			return;
+		
+		var elPanel = m_cP.FindChildInLayoutFile( 'CanStickerItemModel' );
+		if ( !InventoryAPI.IsItemInfoValid( elPanel.Data().id ) )
+			return;
+		
 		var defName = ItemInfo.GetItemDefinitionName( elPanel.Data().id );
-		var weaponProp = m_cameraRules.find( weapon => weapon.weapontype === defName );
 
-		if ( weaponProp )
+		if ( m_isSticker )
 		{
-			if ( weaponProp.slotsForSecondCamera.includes( activeIndex ) )
+			var weaponProp = m_cameraRules.find( weapon => weapon.weapontype === defName );
+
+			if ( weaponProp )
 			{
-				elPanel.SetCameraPreset( weaponProp.cameraPreset, bTransition );
-			}
-			else
-			{
-				elPanel.SetCameraPreset( 0, bTransition );
+				if ( weaponProp.slotsForSecondCamera.includes( activeIndex ) )
+				{
+					elPanel.SetCameraPreset( weaponProp.cameraPreset, bTransition );
+				}
+				else
+				{
+					elPanel.SetCameraPreset( 0, bTransition );
+				}
 			}
 		}
+		else if ( m_isPatch )
+		{
+			var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( elPanel.Data().id );
+			settings.panel = elPanel;
+			settings.cameraPreset = 0;
+
+			_UpdatePreviewPanelSettingsForPatchPosition( elPanel.Data().id, settings, activeIndex );
+			CharacterAnims.PlayAnimsOnPanel( settings, !m_isRemoveStickers );
+			_UpdatePreviewPanelCameraAndLightingForPatch( elPanel, elPanel.Data().id, activeIndex )
+
+		}
+
+		m_prevCameraSlot = activeIndex;
 	};
+
+
+	function _UpdatePreviewPanelSettingsForPatchPosition ( charItemId, oSettings, activeIndex = 0 )
+	{
+		var patchPosition = InventoryAPI.GetCharacterPatchPosition( charItemId, activeIndex );
+
+		var loadoutslot;
+
+		switch ( patchPosition )
+		{
+			case 'chest':
+				loadoutslot = 'secondary1';
+				break;
+			
+			case 'back':
+			case 'rightarm':	
+			case 'leftarm':
+			case 'rightleg':
+			case 'leftleg':
+			default:
+				loadoutslot = 'rifle1';
+				
+				break;
+		}
+		oSettings.loadoutSlot = loadoutslot;
+		oSettings.weaponItemId = LoadoutAPI.GetItemID( oSettings.team, oSettings.loadoutSlot );
+	}
+
+
+	function _UpdatePreviewPanelCameraAndLightingForPatch ( elPanel, charItemId, activeIndex = 0 )
+	{
+		var patchPosition = InventoryAPI.GetCharacterPatchPosition( charItemId, activeIndex );
+
+		var angle = 0;
+		var lightpos = undefined;
+		var lightang = undefined;
+		var lightbrt = 0.5;
+
+		var lightpos_torso = [ 51.10, -9.16, 72.78 ];
+		var lightang_torso = [ 23.98, 166.50, 0.00 ];
+		var campos_torso = [ 189.90, -28.08, 46.37 ];
+		var camang_torso = [ -2.06, 171.74, 0.00 ];
+		
+		var lightpos_mid = [ 50.15, -10.03, 70.19 ];
+		var lightang_mid = [ 23.98, 166.50, 0.00 ];
+		var campos_mid = [ 188.43, -25.44, 38.53 ];
+		var camang_mid = [ -2.06, 171.74, 0.00 ];
+
+		var lightpos_legs = [ 50.15, -10.03, 50.19 ];
+		var lightang_legs = [ 23.98, 166.50, 0.00 ];
+		var campos_legs = [ 188.43, -25.44, 18.53 ];
+		var camang_legs = [ -2.06, 171.74, 0.00 ];
+
+		switch ( patchPosition )
+		{
+			case 'chest':
+				angle = 0;
+				lightpos = lightpos_torso;
+				lightang = lightang_torso;
+				campos = campos_torso;
+				camang = camang_torso;
+				break;
+			
+			case 'back':
+				angle = 180;
+				lightpos = lightpos_torso;
+				lightang = lightang_torso;
+				campos = campos_torso;
+				camang = camang_torso;
+				break;
+			
+			case 'rightarm':	
+				angle = 40;
+				lightpos = lightpos_torso;
+				lightang = lightang_torso;
+				campos = campos_torso;
+				camang = camang_torso;
+				break;
+			
+			
+			case 'leftarm':
+				angle = 280;
+				lightpos = lightpos_torso;
+				lightang = lightang_torso;
+				campos = campos_torso;
+				camang = camang_torso;
+				break;
+			
+			case 'rightleg':
+				angle = 65;
+				lightpos = lightpos_legs;
+				lightang = lightang_legs;
+				campos = campos_legs;
+				camang = camang_legs;
+				break;
+			
+			case 'leftleg':
+				angle = -90;
+				lightpos = lightpos_legs;
+				lightang = lightang_legs;
+				campos = campos_legs;
+				camang = camang_legs;
+				break;
+				
+			case 'rightside':
+				angle = 110;
+				lightpos = lightpos_mid;
+				lightang = lightang_mid;
+				campos = campos_mid;
+				camang = camang_mid;
+				break;
+				
+			case 'rightpocket':
+				angle = 40;
+				lightpos = lightpos_mid;
+				lightang = lightang_mid;
+				campos = campos_mid;
+				camang = camang_mid;
+				break;
+			
+			default:
+				angle = 0;
+		}
+
+		elPanel.SetCameraPosition( campos[0], campos[1], campos[2] );
+		elPanel.SetCameraAngles( camang[0], camang[1], camang[2] );
+
+		if ( lightang )
+		elPanel.SetFlashlightAngle( lightang[0], lightang[1], lightang[2] );
+
+		if ( lightpos )
+		elPanel.SetFlashlightPosition( lightpos[ 0 ], lightpos[ 1 ], lightpos[ 2 ] );
+		
+		if ( lightbrt )
+		elPanel.SetFlashlightAmount( lightbrt );
+
+		elPanel.SetSceneAngles( 0, angle, 0, true );
+
+		                                               
+
+	}
 
 	var _GetSlotInfo = function( itemId )
 	{
@@ -400,7 +693,7 @@ var CapabilityCanSticker = ( function()
 	{
 		_CancelHandleForTimeout();
 		
-		var elAsyncActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
+		var elAsyncActionBarPanel = m_cP.FindChildInLayoutFile( 'PopUpInspectAsyncBar' );
 
 		if( !elAsyncActionBarPanel.BHasClass( 'hidden' ))
 		{
@@ -433,17 +726,30 @@ var CapabilityCanSticker = ( function()
 	var _OnFinishedScratch = function( itemid )
 	{
 		_CancelHandleForTimeout();
-		
-		var panelsList = $.GetContextPanel().FindChildInLayoutFile( 'StickersToRemove' ).Children();
-		panelsList.forEach( element => {
-			element.enabled = true;
-			element.FindChildInLayoutFile( 'ScrapingSpinner' ).AddClass( 'hidden' );
-			
-		} );
 
-		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'CanStickerItemModel' );
-		_SetItemModel( '', elPanel.Data().id, true );
-		_CameraAnim( m_SlotSelectedForScratch, false );
+		if ( !m_cP )
+			return;
+		
+		var elStickersToRemove = m_cP.FindChildInLayoutFile( 'StickersToRemove' );
+		if ( elStickersToRemove )
+		{
+			var panelsList = m_cP.FindChildInLayoutFile( 'StickersToRemove' ).Children();
+			panelsList.forEach( element =>
+			{
+				element.enabled = true;
+				element.FindChildInLayoutFile( 'ScrapingSpinner' ).AddClass( 'hidden' );
+			
+			} );
+
+			var elPanel = m_cP.FindChildInLayoutFile( 'CanStickerItemModel' );
+			_SetItemModel( '', elPanel.Data().id, true );
+			_CameraAnim( m_SlotSelectedForScratch, false );
+		}
+
+
+		
+
+
 	};
 
 	var _CancelHandleForTimeout = function()
@@ -457,10 +763,12 @@ var CapabilityCanSticker = ( function()
 	};
 	
 	return {
-		Init: _Init,
-		ClosePopUp: _ClosePopUp,
-		NextSlot: _NextSlot,
-		OnFinishedScratch: _OnFinishedScratch
+		Init: 											_Init,
+		ClosePopUp: 									_ClosePopUp,
+		NextSlot: 										_NextSlot,
+		OnFinishedScratch: 								_OnFinishedScratch,
+		UpdatePreviewPanelCameraAndLightingForPatch: 	_UpdatePreviewPanelCameraAndLightingForPatch,
+		UpdatePreviewPanelSettingsForPatchPosition:		_UpdatePreviewPanelSettingsForPatchPosition,
 	};
 } )();
 

@@ -104,7 +104,7 @@ var Loadout = ( function() {
 
 		elBtn.visible = ItemInfo.IsShuffleAllowed( ItemId ) && ItemInfo.CountItemsInInventoryForShuffleSlot( ItemId, teamAsString ) > 1;
 
-		var nameString = ( loadoutSlot === 'melee' || loadoutSlot === 'clothing_hands' ) || loadoutSlot === 'musickit' ?
+		var nameString = ( loadoutSlot === 'melee' || loadoutSlot === 'clothing_hands' ) || loadoutSlot === 'musickit' || loadoutSlot === 'customplayer' ?
 		$.Localize( '#loadoutslot_' + loadoutSlot ) :
 		$.Localize( InventoryAPI.GetItemBaseName( ItemId ) );
 		

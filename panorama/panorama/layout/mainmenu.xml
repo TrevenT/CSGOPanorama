@@ -34,7 +34,7 @@
 									class="full-width full-height hidden"
 									manifest="resource/ui/econ/ItemModelPanelCharMainMenu.res"
 									item="models/player/custom_player/legacy/ctm_sas.mdl"
-									mouse_rotate="false"
+									mouse_rotate="true"
 									hittest="false">
 						<Panel id="id-mainmenu-vanity-hover" hittest="true"/>
 					</ItemPreviewPanel>

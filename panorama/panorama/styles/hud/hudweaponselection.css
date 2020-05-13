@@ -190,6 +190,11 @@ CSGOWeaponSelectionView Label
     opacity:1;
 }
 
+.embedded-weapons-overview .weapon-selection-item--selected .weapon-selection-item-name
+{
+    opacity:0;
+}
+
 .weapon-selection-item-name-text,
 .weapon-selection-item-name-text-owned
 {
@@ -460,6 +465,11 @@ CSGOWeaponSelectionView Label
     padding-right:2px;
     margin-right:2px;
     opacity:1;
+}
+
+.embedded-weapons-overview .weapon-row-number
+{
+	opacity: 0;
 }
 
 .weapon-row-horiz-container

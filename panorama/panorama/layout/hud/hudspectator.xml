@@ -21,7 +21,7 @@
               <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="X"/>
               <Label id="KAD_NumK" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>
             </Panel>  
-            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText" text="-$XXXX"/>
+            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText" text="#Spectate_money_spent"/>
           </Panel>
                                                                                                                                                              
 
@@ -43,7 +43,7 @@
                       <Image id="ArmorIcon" class="Armor_Icon" textureheight="19" src="file://{images}/icons/ui/elimination.svg" scaling="stretch-to-fit-x-preserve-aspect" />
                       <Image id="C4DefuserIcon" class="Armor_Icon" src="file://{images}/hud/deathnotice/icon-defuser.png" scaling="stretch-to-fit-x-preserve-aspect" />
                     </Panel>
-                    <Label id="MoneyText" class="PlayerPanel__MoneyText_L" text="XXXXX"/>
+                    <Label id="MoneyText" class="PlayerPanel__MoneyText_L" text="#Spectate_money_val"/>
                   </Panel>
                 
                   <Panel id="PlayerPanelWeaponBar" class="PlayerPanel__WeaponBar_L">
@@ -91,7 +91,7 @@
               <Label id="KAD_NumA" class="PlayerPanel_ED_KAD_NumberText" text="X"/>
               <Label id="KAD_NumD" class="PlayerPanel_ED_KAD_NumberText" text="XX"/>  
             </Panel>  
-            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText_R" text="-$XXXX"/>
+            <Label id="KAD_MoneySpent" class="PlayerPanel_ED_MoneySpentText_R" text="#Spectate_money_spent"/>
           </Panel>
             
                                                                                                                                                              
@@ -116,7 +116,7 @@
                     <Image id="ArmorIcon" class="Armor_Icon" textureheight="19" src="file://{images}/hud/healtharmor/icon-shield.png" scaling="stretch-to-fit-x-preserve-aspect" />
                     <Image id="C4DefuserIcon" class="Armor_Icon" src="file://{images}/hud/deathnotice/icon-defuser.png" scaling="stretch-to-fit-x-preserve-aspect" />
                   </Panel>
-                  <Label id="MoneyText" class="PlayerPanel__MoneyText_R" text="XXXXX"/>
+                  <Label id="MoneyText" class="PlayerPanel__MoneyText_R" text="#Spectate_money_val"/>
                 </Panel>
               
                 <Panel id="PlayerPanelWeaponBar" class="PlayerPanel__WeaponBar_R">
@@ -258,9 +258,9 @@
       <Panel class="TeamSpecPanel_PlayerPanels">
         <Panel id="TeamMoney_L" class="TeamSpecPanel_TeamMoney">
           <Label id="TeamMoneyHeader_L" class="TeamSpecPanel_MoneyHeader_L" text="#SFUIHUD_Spectate_TeamMoney"/>
-          <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="$XXXXX"/>
+          <Label id="TeamMoneyText_L" class="TeamSpecPanel_MoneyText_L" text="#Spectate_money_val"/>
           <Label id="TeamEQValueHeader_L" class="TeamSpecPanel_EQValueHeader_L" text="#SFUIHUD_Spectate_TeamEQValue"/>
-          <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="$XXXXX"/>
+          <Label id="TeamEQValueText_L" class="TeamSpecPanel_EQValueText_L" text="#Spectate_money_val"/>
                                                                
         </Panel>
         <Panel id="TeamSpec_L" class="TeamSpecPanel">
@@ -271,9 +271,9 @@
         <Image id="EventLogo_R" class="EventLogo_Right" src="file://{images_econ}/econ/status_icons/collectible_pin_guardian_small.png"  textureheight="64" scaling="stretch-to-fit-preserve-aspect" />
         <Panel id="TeamMoney_R" class="TeamSpecPanel_TeamMoney TeamSpecPanel_TeamMoney_R">
           <Label id="TeamMoneyHeader_R" class="TeamSpecPanel_MoneyHeader_R" text="#SFUIHUD_Spectate_TeamMoney"/>
-          <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="$XXXXX"/>
+          <Label id="TeamMoneyText_R" class="TeamSpecPanel_MoneyText_R" text="#Spectate_money_val"/>
           <Label id="TeamEQValueHeader_R" class="TeamSpecPanel_EQValueHeader_R" text="#SFUIHUD_Spectate_TeamEQValue"/>
-          <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="$XXXXX"/>
+          <Label id="TeamEQValueText_R" class="TeamSpecPanel_EQValueText_R" text="#Spectate_money_val"/>
                                                                
         </Panel>
         <Panel id="TeamSpec_R" class="TeamSpecPanel TeamSpecPanel_Right">

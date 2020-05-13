@@ -2266,3 +2266,8 @@
 {
     text-transform: uppercase;
 }
+
+.hidden 
+{
+	visibility: collapse;
+}

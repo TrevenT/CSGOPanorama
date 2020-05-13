@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+		id: "SettingsCrosshair",
+		loc_name: "#settings_crosshair",
+		loc_desc: "#settings_crosshair_info",
+		section: "GameSettings",
+		start_date: new Date( 'February 24, 2019' ), 
+		end_date: new Date( 'March 28, 2020' )
+	},
+	{
 		id: "TripleMonitor",
 		loc_name: "#SFUI_Settings_Triple_Monitor",
 		loc_desc: "#GameUI_TripleMonitor_Tooltip",

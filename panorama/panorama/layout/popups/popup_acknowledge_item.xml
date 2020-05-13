@@ -10,6 +10,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/popups/popup_acknowledge_item.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/popups/popup_capability_can_sticker.js" />
 	</scripts>
 
 	<snippets>

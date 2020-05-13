@@ -204,6 +204,9 @@
 	width: fit-children;
 	height: 32px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from(#000000aa), to( #00000088) );
+	margin: 2px 2px 2px 2px;
+	padding-left: 4px;
+	padding-right: 4px;
 }
 .xhair-ctrl-btn__img
 {

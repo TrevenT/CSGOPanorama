@@ -463,7 +463,7 @@ var ItemInfo = ( function() {
 	var _IsEquippableThroughContextMenu = function( id )
 	{
 		var subSlot = _GetSlotSubPosition( id );
-		return ( subSlot === "flair0" || subSlot === "musickit" || subSlot === "spray0" );
+		return ( subSlot === "flair0" || subSlot === "musickit" || subSlot === "spray0"  );
 	};
 
 	var _IsWeapon = function( id )
@@ -581,7 +581,6 @@ var ItemInfo = ( function() {
 	{
 		var isMusicKit = _ItemMatchDefName( id, 'musickit' );
 		var issMusicKitDefault = _ItemMatchDefName( id, 'musickit_default' );
-		var isSticker = _ItemMatchDefName( id, 'sticker' );
 		var isSpray = itemSchemaDef.name === 'spraypaint';
 		var isSprayPaint = itemSchemaDef.name === 'spray';
 		var isFanTokenOrShieldItem = itemSchemaDef.name && itemSchemaDef.name.indexOf( 'tournament_journal_' ) != -1;
@@ -590,7 +589,7 @@ var ItemInfo = ( function() {
 		                                                       
 		if ( isSpray || isSprayPaint || isFanTokenOrShieldItem )
 			return 'vmt://spraypreview_' + id;
-		else if ( isSticker )
+		else if ( _IsSticker( id ) || _IsPatch( id ) )
 			return 'vmt://stickerpreview_' + id;
 		else if ( itemSchemaDef.hasOwnProperty( "model_player" ) || isMusicKit || issMusicKitDefault )
 			return 'img://inventory_' + id;
@@ -609,6 +608,16 @@ var ItemInfo = ( function() {
 
 		return modelPlayer;
 
+	}
+
+	function _IsSticker( itemId )
+	{
+		return _ItemMatchDefName( itemId, 'sticker' );
+	}
+
+	function _IsPatch( itemId )
+	{
+		return _ItemMatchDefName( itemId, 'patch' );
 	}
 
 	var _GetDefaultCheer = function( id )
@@ -681,6 +690,13 @@ var ItemInfo = ( function() {
 		return InventoryAPI.GetToolType( id );
 	};
 
+	function _FindAnyUserOwnedCharacterItemID()
+	{
+		InventoryAPI.SetInventorySortAndFilters( 'inv_sort_rarity', false, 'customplayer,not_base_item', '', '' );
+		var count = InventoryAPI.GetInventoryCount();
+		return ( count > 0 ) ? InventoryAPI.GetInventoryItemIDByIndex( 0 ) : '';
+	}
+
 	function _IsDefaultCharacter ( id )
 	{
 		var defaultTItem = LoadoutAPI.GetDefaultItem( 't', 'customplayer' );
@@ -690,7 +706,7 @@ var ItemInfo = ( function() {
 
 	function _IsPreviewable ( id )
 	{
-		return ( ItemInfo.GetSlotSubPosition( id ) || ItemInfo.ItemMatchDefName( id, 'sticker' ) || ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
+		return ( ItemInfo.GetSlotSubPosition( id ) || ItemInfo.ItemMatchDefName( id, 'sticker' ) || ItemInfo.ItemMatchDefName( id, 'patch' ) ||ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
 			!ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' ) &&                                                       
 			!_IsDefaultCharacter( id );
 	}
@@ -765,12 +781,15 @@ var ItemInfo = ( function() {
 		GetDefaultCheer					: _GetDefaultCheer,
 		GetVoPrefix						: _GetVoPrefix,
 		IsPreviewable					: _IsPreviewable,
+		FindAnyUserOwnedCharacterItemID : _FindAnyUserOwnedCharacterItemID,
 		IsDefaultCharacter				: _IsDefaultCharacter,
 		GetKeyForCaseInXray				: _GetKeyForCaseInXray,
 		GetItemsInXray					: _GetItemsInXray,
 		GetOrUpdateVanityCharacterSettings: _GetOrUpdateVanityCharacterSettings,
 		DeepCopyVanityCharacterSettings : _DeepCopyVanityCharacterSettings,
 		PrecacheVanityCharacterSettings : _PrecacheVanityCharacterSettings,
-		GetLoadoutWeapons				: _GetLoadoutWeapons
+		GetLoadoutWeapons				: _GetLoadoutWeapons,
+		IsSticker						: _IsSticker,
+		IsPatch							: _IsPatch,				
 	};
 })();

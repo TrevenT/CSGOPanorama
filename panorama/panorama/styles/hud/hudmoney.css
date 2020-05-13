@@ -86,6 +86,11 @@
     opacity:1;
 }
 
+.buymenu .buymenu-money .money__in-buy-zone .money-text-buy-icon
+{
+    opacity:0;
+}
+
 .money-text-explorebonus-icon
 {
     margin-left: 20px;

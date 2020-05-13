@@ -165,15 +165,31 @@ var InpsectPurchaseBar = ( function()
 		var elDropdown = m_elPanel.FindChildInLayoutFile( 'PurchaseCountDropdown' );
 		var qty = Number( elDropdown.GetSelected().id );
 
+		var itemDefitionNameString = ItemInfo.GetItemDefinitionName( m_itemid );
 		var purchaseList = [];
 
+		                                                                                          
 		for ( var i = 0; i < qty; i++ )
 		{
 			purchaseList.push( m_itemid );
 		}
 
 		var purchaseString = purchaseList.join( ',' );
-		ItemInfo.ItemPurchase( purchaseString );
+		if ( itemDefitionNameString && itemDefitionNameString.startsWith( 'coupon - crate_patch_' ) &&
+			! ItemInfo.FindAnyUserOwnedCharacterItemID() )
+		{	                                                                                           
+			UiToolkitAPI.ShowGenericPopupYesNo(
+				$.Localize( '#CSGO_Patch_NoAgent_Title' ),
+				$.Localize( '#CSGO_Patch_NoAgent_Message' ),
+				'',
+				function() { ItemInfo.ItemPurchase( purchaseString ); },
+				function() {}
+			);
+		}
+		else
+		{
+			ItemInfo.ItemPurchase( purchaseString );
+		}
 	};
 
 	var _ClosePopup = function()

@@ -1,4 +1,29 @@
 
+#CanStickerItemModel{
+
+	height: 100%;
+	width: 100%;
+	horizontal-align:center;
+}
+
+#CanStickerItemModel.characters{
+
+	height: 100%;
+	width: 1480px;
+	horizontal-align:center;
+}
+
+.popup-capability__info-block.patch{
+	flow-children: right;
+
+}
+
+.patch .popup-cansticker-pickedslot{
+
+	max-width: 150px;
+	max-height: 150px;
+}
+
 .popup-cansticker-pickedslot
 {
 	horizontal-align: center;
@@ -6,6 +31,9 @@
 	z-index: 2;
 	padding-bottom: 16px;
 	padding-top: 16px;
+
+	max-width: 342px;
+	max-height: 298px;
 }
 
 .popup-cansticker-pickedslot.hidden
