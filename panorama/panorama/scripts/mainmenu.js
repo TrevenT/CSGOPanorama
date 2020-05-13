@@ -1346,17 +1346,22 @@ var MainMenu = ( function() {
 
 		function CreateEndOfMatchPanel ()
 		{
-			var elPanel = $.CreatePanel(
-				'CSGOSurvivalEndOfMatch',
-				$( '#MainMenuBackground' ),
-				'PauseMenuSurvivalEndOfMatch',
-				{
-					class: 'PauseMenuModeOnly'
-				}
-			);
+			var elPanel = $( '#PauseMenuSurvivalEndOfMatch' );
 
-			
-			elPanel.SetAttributeString( 'pausemenu', 'true' );
+			if ( !elPanel )
+			{
+				elPanel = $.CreatePanel(
+					'CSGOSurvivalEndOfMatch',
+					$( '#MainMenuBackground' ),
+					'PauseMenuSurvivalEndOfMatch',
+					{
+						class: 'PauseMenuModeOnly'
+					}
+				);
+
+				elPanel.SetAttributeString( 'pausemenu', 'true' );
+			}
+
 			_UpdateSurvivalEndOfMatchInstance();
 		}
 
@@ -1458,13 +1463,16 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'ShowVoteContextMenu', MainMenu.ShowVote );
 	$.RegisterForUnhandledEvent( 'ShowTournamentStore', MainMenu.ShowTournamentStore );
 
-	$.RegisterForUnhandledEvent( 'OnMapConfigLoaded', MainMenu.ResetSurvivalEndOfMatch );
+  	                                                                                     
+	$.RegisterForUnhandledEvent( 'UnloadLoadingScreenAndReinit', MainMenu.ResetSurvivalEndOfMatch );
+	
 	
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitVanity();
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitFriendsList();
 	MainMenu.InitNewsAndStore();
+
 
 	                                                                                  
 	$.RegisterEventHandler( "Cancelled", $.GetContextPanel(), MainMenu.OnEscapeKeyPressed );

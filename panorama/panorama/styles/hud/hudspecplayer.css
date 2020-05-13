@@ -480,7 +480,7 @@
 
 .HudSpecplayerRoot--TeamNone .HudSpecplayerBG__BottomStrip
 {
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #bebebeFF ), to( #11111100 ) );
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #e2e2e2FF ), to( #78787800 ) );
 }
 
 .HudSpecplayerRoot--TeamNone .HudSpecplayerBG__MainBG
@@ -493,6 +493,11 @@
 	                                                                    
  
   
+
+.HudSpecplayerRoot--TeamNone .HudSpecplayerBG__BottomStrip
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #bebebeFF ), to( #11111100 ) );
+}
 
 .HudSpecplayer__ItemContainer
 {

@@ -175,6 +175,11 @@ CSGOMapOverview Label
     z-index:2;
 }
 
+.PlayerIcons.PlayerIcons__SurvivalCrate
+{
+    z-index:2;
+}
+
 
 
 #PI_NonRotated
@@ -474,6 +479,15 @@ CSGOMapOverview Label
 	width: 24px;
 	height: 24px;
 
+    horizontal-align: center;
+	vertical-align: center;	
+}
+
+#SurvivalCrate
+{
+	width: 64px;
+	height: 64px;
+	
     horizontal-align: center;
 	vertical-align: center;	
 }

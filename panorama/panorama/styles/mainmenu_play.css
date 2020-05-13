@@ -42,6 +42,11 @@
 	flow-children: none;
 }
 
+.map-selection-list .flow-down
+{
+	flow-children: down;
+}
+
 .map-selection-btn
 {
 	width: 224px;
@@ -74,26 +79,26 @@
 
 .AspectRatio4x3 .map-selection-btn--full
 {
-	width: 1100px;
+	width: 1030px;
 	height: width-percentage( 64% );
 }
 
 .AspectRatio5x4 .map-selection-btn--full
 {
-	width: 1025px;
+	width: 965px;
 	height: width-percentage( 68% );
 }
 
 .AspectRatio16x9 .map-selection-btn--full
 {
-	width: 1500px;
+	width: 1380px;
 	height: width-percentage( 47.5% );
 }
 
 .map-selection-btn--full,
 .AspectRatio16x10 .map-selection-btn--full
 {
-	width: 1350px;
+	width: 1270px;
 	height: width-percentage( 52% );
 }
 
@@ -604,6 +609,25 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
+.play-menu-svl-auto-squad-toggle-container
+{
+	flow-children: right;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 16px;
+}
+
+#SurvivalAutoSquadToggle.PopupButton:not(.PopupButton:disabled):selected
+{
+	wash-color: positiveColor;
+}
+
+#SurvivalAutoSquadToggle.PopupButton:not(.PopupButton:disabled)
+{
+	wash-color: warningColor;
+}
+
+
 .active .play-menu-primestatus
 {
 	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( positiveColor ), color-stop(.5, positiveColor ), to( #000000) );
@@ -625,3 +649,4 @@ RadioButton .map-selection-info__new
 	horizontal-align:center;
 	wash-color:black;
 }
+

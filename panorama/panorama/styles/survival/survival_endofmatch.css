@@ -23,12 +23,22 @@
 
 .AspectRatio4x3 .PauseMenuModeOnly.eom-survival
 {
-    ui-scale: 92%;
+    ui-scale: 95%;
+}
+
+.AspectRatio4x3 .eom-survival
+{
+    ui-scale: 95%;
 }
 
 .AspectRatio5x4 .PauseMenuModeOnly.eom-survival
 {
-    ui-scale: 88%;
+    ui-scale: 80%;
+}
+
+.AspectRatio5x4 .eom-survival
+{
+    ui-scale: 90%;
 }
 
 .eom-survival__players
@@ -206,7 +216,7 @@
                  
 .survival-team
 {
-    padding: 0px 32px 0px 16px;
+    padding: 0px 8px 0px 2px;
 }
 
 .survival-team--border

@@ -80,13 +80,17 @@ var TournamentStore = ( function()
 			SetItemsToOffer.apply( undefined, [ elCapsules, ...g_ActiveTournamentCapsules ] );
 		}
 
-
-		var elMegaBundle = $( '#MegaBundle' );
-		elMegaBundle.BLoadLayoutSnippet( "ItemCategory" );
-		elMegaBundle.FindChildTraverse( "CategoryImage" ).itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
-		elMegaBundle.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TournamentPass_" + g_ActiveTournamentInfo.location );
-		_ShowSaleTag( elMegaBundle,  g_ActiveTournamentInfo.itemid_pass );
-		SetItemsToOffer( elMegaBundle, g_ActiveTournamentInfo.itemid_pass );
+		                                                      
+		var passItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
+		if ( StoreAPI.GetStoreItemSalePrice( passItemId, 1 ) )
+		{
+			var elMegaBundle = $( '#MegaBundle' );
+			elMegaBundle.BLoadLayoutSnippet( "ItemCategory" );
+			elMegaBundle.FindChildTraverse( "CategoryImage" ).itemid = passItemId;
+			elMegaBundle.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TournamentPass_" + g_ActiveTournamentInfo.location );
+			_ShowSaleTag( elMegaBundle,  g_ActiveTournamentInfo.itemid_pass );
+			SetItemsToOffer( elMegaBundle, g_ActiveTournamentInfo.itemid_pass );
+		}
 
 		function SetupTeamPurchases( elRootPanel, arrTeamList )
 		{

@@ -27,7 +27,7 @@ var SessionUtil = ( function ()
 			gameMode == "coopmission" )
 			numLobbySlots = 2;
 		else if ( gameMode === "survival" )
-			numLobbySlots = 3;
+			numLobbySlots = 2;
 		return numLobbySlots;
 	};
 

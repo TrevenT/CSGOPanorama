@@ -76,7 +76,7 @@
             <Panel id="DefaultTeamLogo" class="HudSpecplayerBG__DefaultLogo" />
             <Panel id="TeamLogo" class="HudSpecplayerBG__TeamLogo" />
             <Panel class="HudSpecplayerBG__TopStrip" />
-            <Panel class="HudSpecplayerBG__BottomStrip" />
+            <Panel id="PlayerColorStrip" class="HudSpecplayerBG__BottomStrip" />
                                                                                                                               
           </Panel>      
           <Label class="HudSpecplayer__player-name" text="{s:spec_player_name}"/>

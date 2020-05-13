@@ -341,11 +341,14 @@ var PlayMenu = ( function()
 		_UpdateTournamentButton( isHost, isSearching );
 
 		                   
-		_UpdatePrimeBtn( settings.game.prime === 1 ? true : false, isEnabled );
+		_UpdatePrimeBtn( settings.game.prime === 1 ? true : false );
 		_UpdatePermissionBtnText( settings, isEnabled );
 
 		                             
 		_UpdateLeaderboardBtn( m_gameModeSetting );
+
+		                                         
+		_UpdateSurvivalAutoFillSquadBtn( m_gameModeSetting );
 
 		                                  
 		_UpdatePlayDropDown();
@@ -504,18 +507,23 @@ var PlayMenu = ( function()
 			{
 				p.AddClass( 'map-selection-btn--large' );
 				p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
-				p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
+			p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
 			}
 			else
 			{
 				if ( gameMode === 'survival' && isPlayingOnValveOfficial )
 				{
+					container.AddClass( 'flow-down' );
+					
 					p.AddClass( 'map-selection-btn--full' );
 
 					if ( MyPersonaAPI.GetLauncherType() === "perfectworld" )
 					{
 						p.FindChildInLayoutFile( 'MapGroupBetaTag' ).RemoveClass( 'hidden' );
 					}
+
+					var elAutoSquadToggle = $.CreatePanel( 'Panel', container, panelID + mapName );
+					elAutoSquadToggle.BLoadLayoutSnippet( "SurvivalAutoSquad" );
 				}
 				
 				var iconPath = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
@@ -528,7 +536,7 @@ var PlayMenu = ( function()
 					class: 'map-selection-btn__map-icon'
 				} );
 
-				p.FindChildInLayoutFile( 'MapSelectionButton' ).MoveChildBefore( mapGroupIcon, p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ) )
+				p.FindChildInLayoutFile( 'MapSelectionButton' ).MoveChildBefore( mapGroupIcon, p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ) );
 			}
 
 			if ( mapName === 'random' )
@@ -775,7 +783,7 @@ var PlayMenu = ( function()
 				UiToolkitAPI.ShowCustomLayoutPopupParameters( 
 					'', 
 					'file://{resources}/layout/popups/popup_leaderboards.xml',
-					'type=official_leaderboard_survival_solo,official_leaderboard_survival_squads' +
+					'type=official_leaderboard_survival_squads,official_leaderboard_survival_solo' +
 					'&' + 'titleoverride=#CSGO_official_leaderboard_survival_title' +
 					'&' + 'showglobaloverride=false' +
 					'&' + 'points-title=#Cstrike_TitlesTXT_WINS',
@@ -788,6 +796,40 @@ var PlayMenu = ( function()
 		}
 		
 		elLeaderboardButton.visible = false;
+	};
+
+	var _UpdateSurvivalAutoFillSquadBtn = function( gameMode )
+	{
+		var elBtn = $( '#SurvivalAutoSquadToggle' );
+
+		if ( !elBtn )
+		{
+			return;
+		}
+
+		var searchingStatus = LobbyAPI.GetMatchmakingStatusString();
+		var isSearching = searchingStatus !== '' && searchingStatus !== undefined ? true : false;
+
+		if ( gameMode === 'survival' && _IsPlayingOnValveOfficial() && ( PartyListAPI.GetCount() <= 1 ) )
+		{
+			elBtn.visible = true;
+			var bAutoFill = !( GameInterfaceAPI.GetSettingString( 'ui_playsettings_survival_solo' ) === '1' );
+			elBtn.checked = bAutoFill;
+			elBtn.enabled = !isSearching;
+
+			var _OnActivate = function()
+			{
+				var bAutoFill = !( GameInterfaceAPI.GetSettingString( 'ui_playsettings_survival_solo' ) === '1' );
+				GameInterfaceAPI.SetSettingString( 'ui_playsettings_survival_solo', bAutoFill ? '1' : '0' );
+				_UpdateSurvivalAutoFillSquadBtn( 'survival' );
+			};
+
+			elBtn.SetPanelEvent( 'onactivate', _OnActivate );
+		}
+		else
+		{
+			elBtn.visible = false;
+		}
 	};
 
 	var _SetEnabledStateForMapBtns = function( elMapList, isSearching, isHost )

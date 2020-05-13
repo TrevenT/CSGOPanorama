@@ -544,38 +544,41 @@ var PickEmBracket = ( function()
 		var tournamentId = elPickemPanel._oPickemData.oTournamentData.tournamentid;
 		for( var i = 0; i < validTargets.length; i++ )
 		{
-			if( validTargets[ i ] === elPickemPanel._odraggableData.dragtarget.id )
+			if ( elPickemPanel._odraggableData.dragtarget && elPickemPanel._odraggableData.dragtarget.IsValid() )
 			{
-				$.DispatchEvent( 'PlaySoundEffect', 'sticker_applySticker', 'MOUSE' );
-				var teamsInGroup = '';
-
-				var foundPick = false;
-				for ( var j = 0; j < validTargets.length; j++ )
+				if ( validTargets[ i ] === elPickemPanel._odraggableData.dragtarget.id )
 				{
-					var elValidTarget = elPickemPanel.FindChildInLayoutFile( validTargets[ j ] );
-					var sectionIndex = elValidTarget._oteamData.picksectionindex;
-					var groupIndex = elValidTarget._oteamData.pickgroupindex;
-					var oGroupData = elPickemPanel._oPickemData.oTournamentData.sections[ sectionIndex ].groups[ groupIndex ];
+					$.DispatchEvent( 'PlaySoundEffect', 'sticker_applySticker', 'MOUSE' );
+					var teamsInGroup = '';
 
-					if(( oGroupData.picks[ 0 ].localid !== elDisplay._oteamData.teamid ) && !foundPick )
+					var foundPick = false;
+					for ( var j = 0; j < validTargets.length; j++ )
 					{
-						oGroupData.picks[ 0 ].localid = elDisplay._oteamData.teamid;
+						var elValidTarget = elPickemPanel.FindChildInLayoutFile( validTargets[ j ] );
+						var sectionIndex = elValidTarget._oteamData.picksectionindex;
+						var groupIndex = elValidTarget._oteamData.pickgroupindex;
+						var oGroupData = elPickemPanel._oPickemData.oTournamentData.sections[ sectionIndex ].groups[ groupIndex ];
 
-						teamsInGroup = elValidTarget.GetAttributeString( 'data-teams-in-group', '' );
-						elValidTarget.TriggerClass( 'dragdrop' );
-					}
-					else if( _IsTeamIsFromSameGroup( elPickemPanel, teamsInGroup, oGroupData.picks[ 0 ].localid ))
-					{
-					 	oGroupData.picks[ 0 ].localid = 0;
-					}
+						if ( ( oGroupData.picks[ 0 ].localid !== elDisplay._oteamData.teamid ) && !foundPick )
+						{
+							oGroupData.picks[ 0 ].localid = elDisplay._oteamData.teamid;
 
-					if( validTargets[ j ] === elPickemPanel._odraggableData.dragtarget.id )
-					{
-						foundPick = true;
+							teamsInGroup = elValidTarget.GetAttributeString( 'data-teams-in-group', '' );
+							elValidTarget.TriggerClass( 'dragdrop' );
+						}
+						else if ( _IsTeamIsFromSameGroup( elPickemPanel, teamsInGroup, oGroupData.picks[ 0 ].localid ) )
+						{
+							oGroupData.picks[ 0 ].localid = 0;
+						}
+
+						if ( validTargets[ j ] === elPickemPanel._odraggableData.dragtarget.id )
+						{
+							foundPick = true;
+						}
 					}
+			
+					_UpdateAllSections( elPickemPanel );
 				}
-		
-				_UpdateAllSections( elPickemPanel );
 			}
 		}
 	};

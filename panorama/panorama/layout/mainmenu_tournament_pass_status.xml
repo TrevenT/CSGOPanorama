@@ -14,7 +14,9 @@
 
 	<Panel class="tournament-pass-status hidden" onactivate="">
         <Button id="id-tournament-pass-status" class="tournament-pass-status-container">
-            <ItemImage id="id-tournament-pass-status-image" class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
+            <ItemImage id="id-tournament-pass-status-image" class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect">
+                    <Label id="id-tournament-pass-saletag" class="store-sale-tag__text" text=""/>
+            </ItemImage>
             <Panel class="tournament-pass-status__info">
                 <Label id="id-tournament-pass-status-header" class="news-entry__title stratum-font" text="Check your coin status"/>
                 <Label id="id-tournament-pass-status-game-countdown" class="tournament-pass-status__desc hidden" html="true" text=""/>

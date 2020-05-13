@@ -130,8 +130,12 @@ var matchInfo = ( function() {
 
     var _CanRedeem = function ( elParentPanel )
     {
+        if ( !elParentPanel.tournamentIndex )
+        {
+            return;
+        }
+
         var id = InventoryAPI.GetActiveTournamentCoinItemId( elParentPanel.tournamentIndex );
-    
         if( !id || id === '0' )
         {
             return false;
@@ -141,8 +145,10 @@ var matchInfo = ( function() {
             var coinLevel = InventoryAPI.GetItemAttributeValue( id, "upgrade level" );
             var redeemed = InventoryAPI.GetItemAttributeValue( id, "operation drops awarded 0" );
             var redeemsAvailable = coinLevel - redeemed;
-            
-            return redeemsAvailable > 0;
+
+            var tournamentName = MatchInfoAPI.GetMatchTournamentName( elParentPanel.matchId );
+            return redeemsAvailable > 0 &&
+                ( ( tournamentName != undefined ) && ( tournamentName != "" ) );
         }
     };
 

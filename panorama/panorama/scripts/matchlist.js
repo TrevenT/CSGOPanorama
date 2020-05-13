@@ -588,8 +588,17 @@ var matchList = ( function() {
         function _CreateOrValidateMatchTile( matchId )
         {
             var elMatchButton = elMatchList.FindChildInLayoutFile( matchListDescriptor + "_" + matchId );
-            if ( elMatchButton == undefined )
+            if ( !elMatchButton || matchListDescriptor === 'live' )
             {
+                                                                                         
+                if ( matchListDescriptor === 'live' )
+                {
+                    if ( elMatchButton )
+                    {
+                        elMatchButton.DeleteAsync( 0.0 );
+                    }
+                }
+
                 elMatchButton = $.CreatePanel( 'RadioButton', elMatchList, matchListDescriptor + "_" + matchId );
                 elMatchButton.downloadStateHandler = undefined;
                 elMatchButton.group = parentPanel.id;

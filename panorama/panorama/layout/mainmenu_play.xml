@@ -46,6 +46,15 @@
 				<Label class="map-selection-no-subscriptions-label" html="true" text="#CSGO_Workshop_No_Maps" />
 			</Panel>
 		</snippet>
+
+		<snippet name="SurvivalAutoSquad" >
+			<Panel class="play-menu-svl-auto-squad-toggle-container">
+				<ToggleButton id="SurvivalAutoSquadToggle" class="PopupButton">
+					<Image class="" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/lobby.svg" />
+					<Label id="SurvivalAutoSquadToggleLabel" text="#SFUI_DANGERZONE_AUTO_FILL" html="true"/>
+				</ToggleButton>
+			</Panel>
+		</snippet>
 	</snippets>
 
 	<Panel class="full-width full-height">
@@ -72,8 +81,8 @@
 						</Panel>
 						<Label id="PrimeStatusButtonLabel" text="#SFUI_Elevated_Status_Title" html="true"/>
 					</Button>
-					
 				</Panel>
+
 			</Panel>
 			
 			<Panel class="content-navbar content-navbar--short">

@@ -80,3 +80,11 @@
 {
     visibility: collapse;
 }
+
+#id-tournament-pass-saletag
+{
+    vertical-align: bottom;
+    margin-bottom: 8px;
+    margin-left: 0;
+    font-size: 18px;
+}

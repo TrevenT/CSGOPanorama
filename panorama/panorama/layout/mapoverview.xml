@@ -37,7 +37,9 @@
 
 					<Image id="Defuser" src="file://{images}/hud/radar/icons-defuser.png"/>
 
-					<Image id="AbovePlayer" class="PI_Above" src="file://{images}/hud/radar/icon-radar-bomb-above.png"/>
+          <Image id="SurvivalCrate" src="file://{images}/hud/radar/mapoverview/icon-paradrop.png"/>     
+
+          <Image id="AbovePlayer" class="PI_Above" src="file://{images}/hud/radar/icon-radar-bomb-above.png"/>
 					<Image id="BelowPlayer" class="PI_Below" src="file://{images}/hud/radar/icon-radar-bomb-below.png"/>
 
 					<Image id="Flashed" src="file://{images}/hud/radar/mapoverview/icon-flashed.png"/>

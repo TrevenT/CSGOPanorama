@@ -496,8 +496,6 @@ var PickemCommon = ( function()
 
 	var _UpdatePurchaseBtnForPass = function( elPurchase, tournamentNum )
 	{
-		elPurchase.visible = false;
-
 		var _ShowInpsectPopup = function( id )
 		{
 			UiToolkitAPI.ShowCustomLayoutPopupParameters(
@@ -524,23 +522,32 @@ var PickemCommon = ( function()
 			);
 		};
 
+		elPurchase.visible = false;
+
 		                                                                                                
 		var id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum );
 		if ( !id || id === '0' )
-		{
-			elPurchase.visible = true;
-			
+		{	
 			                                                              
 			id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum * -1 );
 			if ( !id || id === '0' )
 			{
-				                                                
+				                                                               
 				id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
+				if ( !StoreAPI.GetStoreItemSalePrice( id, 1 ) )
+				{
+					elPurchase.visible = false;
+					return;
+				}
+				
+				elPurchase.visible = true;
+				                                                
 				elPurchase.FindChildInLayoutFile( 'id-pickem-getitems-label' ).text = '#SFUI_ConfirmBtn_GetPassNow';
 				elPurchase.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id ) );
 				return;
 			}
 
+			elPurchase.visible = true;
 			elPurchase.FindChildInLayoutFile( 'id-pickem-getitems-label' ).text = '#SFUI_ConfirmBtn_ActivatePassNow';
 			elPurchase.SetPanelEvent( 'onactivate', _ActivatePass.bind( undefined, id ) );
 
