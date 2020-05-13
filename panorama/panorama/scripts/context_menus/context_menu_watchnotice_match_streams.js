@@ -4,6 +4,7 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 	var _m_oStreams = undefined;
 	var _m_cP = $.GetContextPanel();
+	var _m_myCountryCode = undefined;
 
 
 	function _Init()
@@ -21,7 +22,22 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 	function _StreamCompareFunction ( a, b )
 	{
-		return a['iso'] > b['iso'];
+		var myCountryCode = _m_myCountryCode;                                                  
+		var alc = a[ 'iso' ].toLowerCase();
+		var blc = b[ 'iso' ].toLowerCase();
+
+		if ( ( myCountryCode == alc ) != ( myCountryCode == blc ) )
+		{
+			return ( myCountryCode == alc ) ? -1 : 1;
+		}
+		else if ( alc == blc )
+		{
+			return 0;
+		}
+		else
+		{
+			return ( alc < blc ) ? -1 : 1;
+		}
 	}
 
 	function _RequestMatchString_Received( matchString )
@@ -46,13 +62,14 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 			elNoStreamLabel.RemoveClass( 'hidden' );
 		}
 
+		_m_myCountryCode = MyPersonaAPI.GetMyCountryCode().toLowerCase();
 		_m_oStreams.sort( _StreamCompareFunction );
 		
 		for ( var jdx in _m_oStreams )
 		{
 			var oStream = oMatch[ 'streams' ][ jdx ];
 
-			var countryCode = oStream[ 'iso' ].replace( "world", "US" );
+			var countryCode = oStream[ 'iso' ].replace( "world", "us" );
 
 			                           
 			var elStreamContainer = $.GetContextPanel().FindChildTraverse( 'id-watchnotice__event__match__stream-container' );

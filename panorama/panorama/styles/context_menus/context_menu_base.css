@@ -113,11 +113,15 @@
 {
 	margin-left: 0px;
 	min-height: 60px;
+	max-height: 920px;
+	overflow: squish scroll;
 }
 #ContextMenuBody.RightArrowVisible #Contents
 {
 	margin-right: 0px;
 	min-height: 60px;
+	max-height: 920px;
+	overflow: squish scroll;
 }
 #ContextMenuBody.BottomArrowVisible #Contents
 {
