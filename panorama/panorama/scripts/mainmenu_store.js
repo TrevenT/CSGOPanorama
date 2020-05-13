@@ -509,7 +509,13 @@ var MainMenuStore = ( function()
 		{
 			elItem.BLoadLayoutSnippet( 'StoreEntry' );
 			_FillOutItemData( elItem, itemList[ i ], type );
-			_OnActivateStoreItem( elItem, itemList[ i ], type );
+
+			                                                                   
+			var activationType = type;
+			if ( type === 'coupons' && itemList[ i ] === m_itemNewReleases )
+				activationType = 'newstore';
+
+			_OnActivateStoreItem( elItem, itemList[ i ], activationType );
 		}
 		                                                    
 		else if ( typeof itemList[ i ] == "object" && elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name ) )
@@ -654,12 +660,12 @@ var MainMenuStore = ( function()
 				displayItemId= InventoryAPI.GetLootListItemIdByIndex( id, 0 );
 			
 			if( displayItemId )
-				elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined, id, displayItemId ) );
+				elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined, id, displayItemId, type ) );
 			else
-				elItem.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id ) );	
+				elItem.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id, type ) );	
 		}
 		else
-			elItem.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id ) );
+			elItem.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id, type ) );
 	};
 
 	var _OpenOverlayToMarket = function( id )
@@ -672,9 +678,15 @@ var MainMenuStore = ( function()
 		StoreAPI.RecordUIEvent( "ViewOnMarket" );
 	};
 
-	var _ShowDecodePopup = function( id, displayItemId )
+	var _ShowDecodePopup = function( id, displayItemId, type )
 	{
-		                                                                      
+		                                                                                     
+		var strExtraSettings = '';
+		if ( type === 'newstore' )
+		{	                                                                                   
+			strExtraSettings = '&overridepurchasemultiple=1';
+		}
+
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
@@ -685,6 +697,7 @@ var MainMenuStore = ( function()
 			'asyncforcehide=true'
 			+ '&' +
 			'storeitemid=' + id
+			+ strExtraSettings
 		);
 	};
 

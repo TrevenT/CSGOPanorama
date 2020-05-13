@@ -8,10 +8,12 @@ var InpsectPurchaseBar = ( function()
 	var m_showToolUpsell = false;                                                             
 	var m_isXrayMode = false;
 	var m_allowXrayPurchase = false;
+	var m_bOverridePurchaseMultiple = false;
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback )
 	{
 		m_storeItemid = funcGetSettingCallback( "storeitemid", "" );
+		m_bOverridePurchaseMultiple = ( funcGetSettingCallback( "overridepurchasemultiple", "" ) === '1' ) ? true : false;
 		
 		                                                     
 		                                          
@@ -87,11 +89,10 @@ var InpsectPurchaseBar = ( function()
 		var elDropdown = m_elPanel.FindChildInLayoutFile( 'PurchaseCountDropdown' );
 		var qty = 1;
 
-		elDropdown.visible = !_isCoupon() && !m_isXrayMode;
-
-		if( !_isCoupon() && !m_isXrayMode )
+		var bCanShowQuantityDropdown = !m_isXrayMode && ( m_bOverridePurchaseMultiple || !_isCoupon() );
+		elDropdown.visible = bCanShowQuantityDropdown;
+		if( bCanShowQuantityDropdown )
 		{
-			elDropdown.visible = true;
 			qty = Number( elDropdown.GetSelected().id );
 		}
 
