@@ -965,6 +965,9 @@
 .player-color
 {
 	horizontal-align: center;
+	width: 90%;
+	margin-left: -1px;
+	img-shadow: 0px 0px 1px 1.0 #000000cc;
 }
 
 

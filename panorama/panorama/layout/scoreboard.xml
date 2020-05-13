@@ -205,7 +205,7 @@
 
 				<Panel id="CoopStats" class="sb-coop-mission-info" >
 					<Panel class="coop-mission-instructions">
-						<Label html="true" text="#Quest_op09_coopmission" />
+						<Label id="MissionDescriptionLabel" html="true" text="#Quest_op09_coopmission" />
 					</Panel>
 					<Panel class="coop-mission-stats">
 						<Label class="stats-header-previous" text="#SFUI_CoopSB_Rating_Prev"/>

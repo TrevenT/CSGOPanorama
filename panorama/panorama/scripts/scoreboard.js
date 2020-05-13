@@ -2024,6 +2024,12 @@ var Scoreboard = ( function()
 			{
 				elCoopStats.AddClass( "show-mission-desc" );
 				MissionsAPI.ApplyQuestDialogVarsToPanelJS( questID, elCoopStats );
+				var elLabel = elCoopStats.FindChildInLayoutFile( "MissionDescriptionLabel" );
+				if ( elLabel )
+				{
+					var strMissionDescriptionToken = MissionsAPI.GetQuestDefinitionField( questID, "loc_description" )
+					elLabel.text = $.Localize( strMissionDescriptionToken, elCoopStats );
+				}
 			}
 		}
 

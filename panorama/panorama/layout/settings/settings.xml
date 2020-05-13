@@ -23,24 +23,24 @@
 				  <Label class="" text="#settings_new"/>
 			  </RadioButton>
 
-			  <RadioButton id="KBMouseRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "KeybdMouseSettings" )'>
-				  <Label class="" text="#settings_keyboard_mouse"/>
-			  </RadioButton>
-
-			  <RadioButton id="ControllerRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("ControllerSettings")'>
-				  <Label class="" text="#settings_controller"/>
-			  </RadioButton>
-
-			  <RadioButton id="GameRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("GameSettings")'>
-				  <Label class="" text="#settings_game"/>
+			  <RadioButton id="VideoRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("VideoSettings")'>
+				  <Label class="" text="#settings_video"/>
 			  </RadioButton>
 
 			  <RadioButton id="AudioRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("AudioSettings")'>
 				  <Label class="" text="#settings_audio"/>
 			  </RadioButton>
 
-			  <RadioButton id="VideoRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("VideoSettings")'>
-				  <Label class="" text="#settings_video"/>
+			  <RadioButton id="GameRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("GameSettings")'>
+				  <Label class="" text="#settings_game"/>
+			  </RadioButton>
+
+			  <RadioButton id="KBMouseRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "KeybdMouseSettings" )'>
+				  <Label class="" text="#settings_keyboard_mouse"/>
+			  </RadioButton>
+
+			  <RadioButton id="ControllerRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("ControllerSettings")'>
+				  <Label class="" text="#settings_controller"/>
 			  </RadioButton>
 
 			      
