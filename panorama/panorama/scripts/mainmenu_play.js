@@ -430,8 +430,9 @@ var PlayMenu = ( function()
 	var _OnActivateMapOrMapGroupButton = function( mapgroupButton )
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'submenu_leveloptions_select', 'MOUSE' );
-		if ( _CheckContainerHasAnyChildChecked( _GetMapListForServerTypeAndGameMode() ) )
-		{
+
+		if ( _CheckContainerHasAnyChildChecked( _GetMapListForServerTypeAndGameMode( m_activeMapGroupSelectionPanelID )) )
+		{ 
 			_ApplySessionSettings();
 		}
 	}
@@ -489,6 +490,7 @@ var PlayMenu = ( function()
 			if ( gameMode === 'competitive' && _IsValveOfficialServer( m_serverSetting ) )
 			{
 				container.AddClass( 'map-selection-list--competitive-section-container' );
+				container.SetAttributeString( 'hassections', 'true' );
 				elSectionContainer = _GetCreateMapListSection( _IsUnranked( aMapGroups[ index ] ) ? 'unranked' : 'ranked', container );
 			}
 			else
@@ -1219,7 +1221,7 @@ var PlayMenu = ( function()
 		var mapGroupPanelID = !mapGroupOverride ? _LazyCreateMapListPanel( m_serverSetting, m_gameModeSetting ) : mapGroupOverride;
 		var elParent = m_mapSelectionButtonContainers[ mapGroupPanelID ];
 
-		if ( m_gameModeSetting === 'competitive' )
+		if ( m_gameModeSetting === 'competitive' && elParent.GetAttributeString( 'hassections', '') )
 		{
 			var aListMapPanels = [];
 			elParent.Children().forEach( function( section )
@@ -1286,7 +1288,7 @@ var PlayMenu = ( function()
 		} );
 
 		return Array.from(selectedMaps);
-	}
+	};
 
 	var _GetSelectedWorkshopMap = function()
 	{
@@ -1299,7 +1301,7 @@ var PlayMenu = ( function()
 		}, '' );
 
 		return selectedMaps;
-	}
+	};
 
 	                                                                                                    
 	                                                    
