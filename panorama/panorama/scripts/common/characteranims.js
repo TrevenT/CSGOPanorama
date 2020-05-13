@@ -153,6 +153,24 @@ var CharacterAnims = ( function ()
 		return hasAnims;
 	};
 
+	var _GetValidCharacterModels = function()
+	{
+		var dropdownEntries = [
+			{ label:'#faction_sas', model:"models/player/custom_player/legacy/ctm_sas.mdl", team:"ct" },
+			                                                                                                       
+			                                                                                                         
+			                                                                                                       
+			{ label:'#faction_elite_a', model:"models/player/custom_player/legacy/tm_leet_variantc.mdl", team:"t" },
+			{ label:'#faction_elite_b', model:"models/player/custom_player/legacy/tm_leet_variantb.mdl", team:"t" },
+			{ label:'#faction_elite_c', model:"models/player/custom_player/legacy/tm_leet_variantd.mdl", team:"t" },
+			                                                                                                                 
+			                                                                                                           
+			                                                                                                                   
+			{ label:'#faction_phoenix', model:"models/player/custom_player/legacy/tm_phoenix.mdl", team:"t" }
+		];
+		return dropdownEntries;
+	};
+
 	                                                                                                    
 	                                                                                                      
 	                                                               
@@ -963,6 +981,7 @@ var CharacterAnims = ( function ()
 		PlayAnimsOnPanel			: _PlayAnimsOnPanel,
 		CancelScheduledAnim			: _CancelScheduledAnim,
 		ItemHasCharacterAnims		: _ItemHasCharacterAnims,
-		GetAnims					: _GetAnims
+		GetAnims					: _GetAnims,
+		GetValidCharacterModels		: _GetValidCharacterModels
 	};
 })();

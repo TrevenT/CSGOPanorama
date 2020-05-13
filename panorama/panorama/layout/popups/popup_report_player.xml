@@ -34,7 +34,7 @@
 				<Label id="" text="#SFUI_PlayerDetails_WallHacking" />
 			</ToggleButton>
 
-			<ToggleButton id="id-report-aimhacking" data-category="aimhack" class="PopupButton Row" >
+			<ToggleButton id="id-report-aimhacking" data-category="aimbot" class="PopupButton Row" >
 				<Label id="" text="#SFUI_PlayerDetails_AimHacking" />
 			</ToggleButton>
 

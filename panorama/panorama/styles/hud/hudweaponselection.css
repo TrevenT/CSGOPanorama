@@ -48,7 +48,7 @@ CSGOWeaponSelectionView Label
 .weapon-selection--animation-enable .weapon-row-number
 {
     transition-property:opacity;
-    transition-duration:2s;
+    transition-duration:0.5s;
     transition-timing-function:linear;
 }
 
@@ -79,7 +79,7 @@ CSGOWeaponSelectionView Label
                                     
        
     opacity:1;
-    transform:translateX(200%);
+    transform:translateX(125%);
     margin-bottom:0px;
 }
 .weapon-selection-item--selected.weapon-selection-item
@@ -92,8 +92,8 @@ CSGOWeaponSelectionView Label
 .weapon-selection--animation-enable .weapon-selection-item
 {
     transition-property: position,transform,opacity;
-	transition-duration: 0.4s,0.4s,2s;
-	transition-timing-function: ease-in-out;
+	transition-duration: 0.2s,0.2s,0.2s;
+	transition-timing-function: linear;
 }
 
 @keyframes weapon-selection-item--weapon-selection-item--on-active
@@ -358,7 +358,7 @@ CSGOWeaponSelectionView Label
 .weapon-selection--animation-enable .weapon-row
 {
 	transition-property: position,opacity;
-	transition-duration: 0.4s;
+	transition-duration: 0.2s;
 	transition-timing-function: ease-in-out;
 }
 
@@ -459,7 +459,7 @@ CSGOWeaponSelectionView Label
 .weapon-selection--animation-enable .weapon-selection-progression-item
 {
     transition-property:height,opacity;
-    transition-duration:0.6s;
+    transition-duration:0.2s;
     transition-timing-function: ease-in-out;
 }
 
@@ -604,7 +604,7 @@ CSGOWeaponSelectionView Label
 .weapon-selection--animation-enable .progression-pip.progression-pip--earned
 {
     animation-name: armsrace-earn-pip;
-    animation-duration: 0.8s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count:1;
 }

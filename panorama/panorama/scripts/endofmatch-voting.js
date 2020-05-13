@@ -148,6 +148,10 @@ var EOM_Voting = (function () {
 	var _UpdateVotes = function() {
 
 		        
+
+		if ( !_m_cP || !_m_cP.IsValid() )
+			return;
+		
 		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
 
 		if ( !oMatchEndVoteData )

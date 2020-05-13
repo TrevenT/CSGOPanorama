@@ -56,7 +56,7 @@ var TeamSelectMenu = ( function (){
 	{
 		var currentTeamNumber = GameStateAPI.GetPlayerTeamNumber( MyPersonaAPI.GetXuid());
 
-		if( currentTeamNumber.toString() === team )
+		if( team !== "0" && currentTeamNumber.toString() === team )
 		{
 			                                                        
 			_HidePanel();
@@ -85,6 +85,7 @@ var TeamSelectMenu = ( function (){
 		_HighlightPanel( elTModel, 't_loadout_pistol_idle_alt' );
 		_UnhighlightPanel( elCtModel );
 		m_highlightedTeam = '2';
+		elBtnTeamT.SetFocus();
 	}
 
 	function _HighlightCTTeam()
@@ -101,6 +102,7 @@ var TeamSelectMenu = ( function (){
 		_HighlightPanel( elCtModel, 'ct_loadout_pistol01_idle_alt' );
 		_UnhighlightPanel( elTModel );
 		m_highlightedTeam = '3';
+		elBtnTeamCT.SetFocus();
 	}
 
 	function _SetUpTeamSelectBtns()
@@ -340,7 +342,10 @@ var TeamSelectMenu = ( function (){
 		elWarningPanel.RemoveClass('hidden');
 		
 		m_errorTimerHandle = $.Schedule(5.0, function () {
-			elWarningPanel.AddClass('hidden');
+			if ( elWarningPanel.IsValid() )
+			{
+				elWarningPanel.AddClass('hidden');
+			}
 			m_errorTimerHandle = false;
 		});
 	}

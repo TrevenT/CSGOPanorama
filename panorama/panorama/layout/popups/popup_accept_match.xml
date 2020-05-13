@@ -17,7 +17,8 @@
 
 	<PopupCustomLayout class="accept-match Hidden" 
 					popupbackground="blur" 
-					onload="PopupAcceptMatch.Init();">
+					onload="PopupAcceptMatch.Init();"
+					oncancel="">                                                                                                        
 					
 		<Panel class="accept-match">
 

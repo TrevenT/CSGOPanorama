@@ -10,7 +10,6 @@ var InventorySearch = ( function (){
 	{
 		var elTextEntry = m_elSearchPanel.FindChildInLayoutFile( 'InvSearchTextEntry' );
 		elTextEntry.SetPanelEvent( 'ontextentrychange', InventorySearch.OnEntryChanged );
-		elTextEntry.SetFocus();
  
 		_PopulateSuggested( m_elSearchPanel.FindChildInLayoutFile( 'InvSearchSuggestionsList' ) );
 		_TextEntrySettings.SetTextEntryPanel( elTextEntry );

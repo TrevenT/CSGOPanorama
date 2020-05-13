@@ -497,7 +497,16 @@ var matchInfo = ( function() {
 
         var elStatsContainer = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__container' );
         var elTickLabels = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__tick-labels' );
-		var playedRounds = MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 0 ) + MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 1 );
+
+        var team0Score = MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 0 );
+        if ( team0Score === undefined )
+            team0Score = 0;
+        
+        var team1Score = MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 1 );
+        if ( team1Score === undefined )
+            team1Score = 0;
+        
+        var playedRounds = team0Score + team1Score;
         var totalRounds = 30 >= playedRounds ? 30 : playedRounds;
         var nOvertime = Math.ceil( ( totalRounds - 30 ) / 6 );
         if ( nOvertime > 0 )

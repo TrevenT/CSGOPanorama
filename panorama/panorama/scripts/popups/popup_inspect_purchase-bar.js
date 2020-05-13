@@ -73,7 +73,7 @@ var InpsectPurchaseBar = ( function()
 		var salePrice = ItemInfo.GetStoreSalePrice( m_itemid, qty );
 		elBtn.text = salePrice;
 
-		_UpdateSalePrice( salePrice );
+		_UpdateSalePrice( ItemInfo.GetStoreOriginalPrice( m_itemid, qty ) );
 	};
 
 	var _isCoupon = function()

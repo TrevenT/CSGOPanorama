@@ -194,21 +194,7 @@ var InspectActionBar = ( function (){
 
 	var _GetValidCharacterModels = function ( id )
 	{
-		var dropdownEntries = [
-			{ label:'#faction_sas', model:"models/player/custom_player/legacy/ctm_sas.mdl", team:"ct" },
-			                                                                                                       
-			                                                                                                         
-			                                                                                                       
-			{ label:'#faction_elite_a', model:"models/player/custom_player/legacy/tm_leet_variantc.mdl", team:"t" },
-			{ label:'#faction_elite_b', model:"models/player/custom_player/legacy/tm_leet_variantb.mdl", team:"t" },
-			{ label:'#faction_elite_c', model:"models/player/custom_player/legacy/tm_leet_variantd.mdl", team:"t" },
-			                                                                                                                 
-			                                                                                                           
-			                                                                                                                   
-			{ label:'#faction_phoenix', model:"models/player/custom_player/legacy/tm_phoenix.mdl", team:"t" }
-		];
-
-		return dropdownEntries.filter(function (entry) {
+		return CharacterAnims.GetValidCharacterModels().filter(function (entry) {
 			return (ItemInfo.IsItemCt(id) && entry.team === 'ct') ||
 				(ItemInfo.IsItemT(id) && entry.team === 't') ||
 				ItemInfo.IsItemAnyTeam(id);

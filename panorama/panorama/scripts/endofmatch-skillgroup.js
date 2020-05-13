@@ -60,7 +60,7 @@ var EOM_Skillgroup = (function () {
 
 		var rankToShow = ( newRank > oldRank ) ? newRank : oldRank;
 
-		if ( rankToShow == newRank )
+		if ( newRank > oldRank )
 		{
 			_m_pauseBeforeEnd += 2;
 			

@@ -104,10 +104,14 @@ var Chat = ( function (){
 			return;
 
 		var panelToClipWidth = panelToClip.actuallayoutwidth;
+		if ( panelToClipWidth <= 0 )
+			return;
+
 		var friendsListWidthWhenExpanded = panelToClip.GetParent().FindChildInLayoutFile( 'mainmenu-sidebar__blur-target' ).contentwidth;
 		
 		var sideBarWidth = noClip ? 0 : friendsListWidthWhenExpanded;
-		var clipPercent = (( panelToClipWidth - sideBarWidth ) / panelToClipWidth ) * 100;
+		var widthDiff = panelToClipWidth - sideBarWidth;
+		var clipPercent = ( panelToClipWidth <= 0 || widthDiff <= 0 ? 1 : ( widthDiff / panelToClipWidth ) ) * 100;
 
 		if( clipPercent )
 			panelToClip.style.clip = 'rect( 0%, '+clipPercent+'%, 100%, 0% );';

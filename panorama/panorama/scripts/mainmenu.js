@@ -576,6 +576,18 @@ var MainMenu = ( function() {
 				loadout.team = InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_team' );
 				loadout.loadoutSlot = InventoryAPI.GetUIPreferenceString( 'ui_vanitysetting_loadoutslot' );
 
+				                                            
+				                                         
+				var arrModels = CharacterAnims.GetValidCharacterModels();
+				if ( arrModels.filter( function( entry )
+					{
+						return entry.model === loadout.modelPath && entry.team === loadout.team;
+					} ).length <= 0 )
+				{
+					                                                                                                                     
+					loadout.itemId = null;
+					continue;
+				}
 				if ( !InventoryAPI.IsValidItemID( loadout.itemId ) || !InventoryAPI.IsItemInfoValid( loadout.itemId ) )
 				{
 					loadout.itemId = LoadoutAPI.GetItemID( loadout.team, loadout.loadoutSlot );
@@ -583,6 +595,24 @@ var MainMenu = ( function() {
 				}
 				else
 				{
+					                                                        
+					if ( !loadout.loadoutSlot || ( ItemInfo.GetSlotSubPosition( loadout.itemId ) !== loadout.loadoutSlot ) )
+					{
+						                                                                                                                   
+						loadout.itemId = null;
+						continue;
+					}
+					
+					                                            
+					if ( !( ItemInfo.IsItemAnyTeam( loadout.itemId ) ||
+						(ItemInfo.IsItemCt( loadout.itemId ) && loadout.team === 'ct') ||
+						(ItemInfo.IsItemT( loadout.itemId ) && loadout.team === 't') ) )
+					{
+						                                                                                                            
+						loadout.itemId = null;
+						continue;
+					}
+
 					                                                                                                                        
 				}
 			}
