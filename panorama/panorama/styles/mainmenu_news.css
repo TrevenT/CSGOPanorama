@@ -18,14 +18,21 @@
 	transition-timing-function: ease-in-out;
 }
 
+
+.news-panel.news-panel-style-feature-panel-visible 
+{
+	height: fill-parent-flow( .20 );
+}
+
 .news-panel.news-panel-style-short-entires
 {
 	height: fill-parent-flow( .25 );
 }
 
-.news-panel.news-panel-style-feature-panel-visible 
+                                                                                               
+.news-panel.news-panel-style-short-entires.news-panel.news-panel-style-feature-panel-visible 
 {
-	height: fill-parent-flow( .20 );
+	height: fill-parent-flow( .0 );
 }
 
 .news-panel-navbar
