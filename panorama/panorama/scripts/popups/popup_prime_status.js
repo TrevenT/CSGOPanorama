@@ -13,7 +13,7 @@ var PopupPrimeStatus = ( function ()
 	var _Init = function ()
 	{
 		_SetElevatedInfoText();
-		_SetStatusPanel( _GetPlayerElevatedStatus() );
+		_SetStatusPanel( MyPersonaAPI.GetElevatedState() );
 	}
 
 	function _SetElevatedInfoText()
@@ -167,7 +167,6 @@ var PopupPrimeStatus = ( function ()
 	{
 		_UpdateCheckStatusButton( "refresh", "#SFUI_Elevated_Status_Check_Btn", function()
 		{
-			_GetPlayerElevatedStatus();
 			_SetStatusPanel( "loading" );
 		} );
 	
@@ -229,7 +228,7 @@ var PopupPrimeStatus = ( function ()
 			return;
 		}
 
-		$( '#PrimeStatusText' ).SetDialogVariableTime( "cooldowntime", numSec );
+		$( '#PrimeStatusText' ).SetDialogVariable( "cooldowntime", FormatText.SecondsToSignificantTimeString( numSec ) );
 		_UpdateStatus( "info", strWarningText, true );
 	}
 
@@ -265,17 +264,7 @@ var PopupPrimeStatus = ( function ()
 
 	function _UpdateEleveatedStatusPanel()
 	{
-		_SetStatusPanel( _GetPlayerElevatedStatus() );
-	}
-
-	function _GetPlayerElevatedStatus()
-	{
-		return MyPersonaAPI.GetElevatedState();
-	}
-
-	function GetEleveatedTime()
-	{
-		return MyPersonaAPI.GetElevatedTime();
+		_SetStatusPanel( MyPersonaAPI.GetElevatedState() );
 	}
 
 	return {

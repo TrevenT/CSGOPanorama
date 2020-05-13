@@ -5,6 +5,7 @@
                                                                                                     
 
 var MainMenu = ( function() {
+	var _m_bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 	var _m_activeTab;
 	var _m_sideBarElementContextMenuActive = false;
 	var _m_elContentPanel = $( '#JsMainMenuContent' );
@@ -174,6 +175,7 @@ var MainMenu = ( function() {
 		var bQueuedMatchmaking = GameStateAPI.IsQueuedMatchmaking();
 		var bTraining = elContextPanel.IsTraining();
 		var bGotvSpectating = elContextPanel.IsGotvSpectating();
+		var bIsCommunityServer = !_m_bPerfectWorld && MatchStatsAPI.IsConnectedToCommunityServer();
 
 		                                                                        
 		                                                                                                         
@@ -185,6 +187,9 @@ var MainMenu = ( function() {
 		                                                                                                                   
 		                                                                                                                                                 
 		$( '#MainMenuNavBarVote' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', ( bTraining ||                      bGotvSpectating ) );
+
+		                                                                                           
+		$( '#MainMenuNavBarShowCommunityServerBrowser' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', !bIsCommunityServer );
 
 		                
 		_OnHomeButtonPressed();
@@ -199,6 +204,16 @@ var MainMenu = ( function() {
 
 	var _BCheckTabCanBeOpenedRightNow = function( tab )
 	{
+		if ( tab === 'JsInventory' || tab === 'JsWatch' )
+		{
+			var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
+			if ( restrictions !== false )
+			{
+				LicenseUtil.ShowLicenseRestrictions( restrictions );
+				return false;
+			}
+		}
+
 		if ( tab === 'JsInventory' )
 		{
 			if ( !MyPersonaAPI.IsInventoryValid() || !MyPersonaAPI.IsConnectedToGC() )
@@ -757,7 +772,7 @@ var MainMenu = ( function() {
 		var keyId = ParamsList[ 0 ];
 		var caseId = ParamsList[ 1 ];
 		var storeId = ParamsList[ 2 ];
-		var showMarketLinkDefault = MyPersonaAPI.GetLauncherType() === "perfectworld" ? 'false' : 'true';
+		var showMarketLinkDefault = _m_bPerfectWorld ? 'false' : 'true';
 
 		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( _OpenDecodeAfterInspect.bind( undefined, keyId, caseId, storeId ) );
 
@@ -907,25 +922,28 @@ var MainMenu = ( function() {
 	{
 		var notification = { color_class: "", title: "", tooltip: "" };
 
-		  
-		                                        
-		  
-		var bIsConnectedToGC = MyPersonaAPI.IsConnectedToGC();
-		$( '#MainMenuInput' ).SetHasClass( 'GameClientConnectingToGC', !bIsConnectedToGC );
-		if ( bIsConnectedToGC )
-		{	                                                                 
-			_m_tLastSeenDisconnectedFromGC = 0;
-		}
-		else if ( !_m_tLastSeenDisconnectedFromGC )
-		{	                                                                          
-			_m_tLastSeenDisconnectedFromGC = + new Date();                                                          
-		}
-		else if ( Math.abs( ( + new Date() ) - _m_tLastSeenDisconnectedFromGC ) > 7000 )
-		{	                                           
-			notification.color_class = "NotificationLoggingOn";
-			notification.title = $.Localize( "#Store_Connecting_ToGc" );
-			notification.tooltip = $.Localize( "#Store_Connecting_ToGc_Tooltip" );
-			return notification;
+		if ( LicenseUtil.GetCurrentLicenseRestrictions() === false )
+		{
+			  
+			                                                                                              
+			  
+			var bIsConnectedToGC = MyPersonaAPI.IsConnectedToGC();
+			$( '#MainMenuInput' ).SetHasClass( 'GameClientConnectingToGC', !bIsConnectedToGC );
+			if ( bIsConnectedToGC )
+			{	                                                                 
+				_m_tLastSeenDisconnectedFromGC = 0;
+			}
+			else if ( !_m_tLastSeenDisconnectedFromGC )
+			{	                                                                          
+				_m_tLastSeenDisconnectedFromGC = + new Date();                                                          
+			}
+			else if ( Math.abs( ( + new Date() ) - _m_tLastSeenDisconnectedFromGC ) > 7000 )
+			{	                                           
+				notification.color_class = "NotificationLoggingOn";
+				notification.title = $.Localize( "#Store_Connecting_ToGc" );
+				notification.tooltip = $.Localize( "#Store_Connecting_ToGc_Tooltip" );
+				return notification;
+			}
 		}
 
 		  
@@ -953,8 +971,7 @@ var MainMenu = ( function() {
 		  
 		                                  
 		  
-		var strStatusString = LobbyAPI.GetMatchmakingStatusString();
-		if ( strStatusString.indexOf( 'outofdate' ) !== -1 )
+		if ( NewsAPI.IsNewClientAvailable() )
 		{
 			notification.color_class = "NotificationYellow";
 			notification.title = $.Localize( "#SFUI_MainMenu_Outofdate_Title" );
@@ -989,7 +1006,10 @@ var MainMenu = ( function() {
 			}
 			
 			                    
-			notification.title = notification.title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
+			if ( strType != "global" )
+			{
+				notification.title = notification.title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
+			}
 
 			return notification;
 		}	
@@ -1074,7 +1094,7 @@ var MainMenu = ( function() {
 	var _ShowVote = function ()
 	{
 		var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParametersDismissEvent(
-			'',
+			'MainMenuNavBarVote',
 			'',
 			'file://{resources}/layout/context_menus/context_menu_vote.xml',
 			'',
@@ -1182,6 +1202,8 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'ShowAcknowledgePopup', MainMenu.ShowAcknowledgePopup );
     $.RegisterForUnhandledEvent( 'ShowStoreStatusPanel', MainMenu.ShowStoreStatusPanel );
 	$.RegisterForUnhandledEvent( 'HideStoreStatusPanel', MainMenu.HideStoreStatusPanel );
+
+	$.RegisterForUnhandledEvent( 'ShowVoteContextMenu', MainMenu.ShowVote );
 	
 	MainMenu.MinimizeSidebar();
 	MainMenu.InitVanity();

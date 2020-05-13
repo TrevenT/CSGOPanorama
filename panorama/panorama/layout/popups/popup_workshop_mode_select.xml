@@ -28,10 +28,9 @@
 			</Panel>
 
 			<Panel class="PopupButtonRow">
-				<TextButton class="PopupButton" 
-							text="#SFUI_GO" 
-							onactivate="PopupWorkshopModeSelect.OnApply();" />
-				<TextButton class="PopupButton" text="#Cancel" onactivate="PopupWorkshopModeSelect.OnCancel()" />
+				<TextButton id="GoButton" class="PopupButton" 
+							text="#SFUI_GO" />
+				<TextButton id="CancelButton" class="PopupButton" text="#Cancel" />
 			</Panel>
 		</Panel>
 	

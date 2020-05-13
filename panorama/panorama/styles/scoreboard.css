@@ -1,8 +1,8 @@
 @define row-image-size: 24px;
-@define cell-background-dark: #00000090;
-@define cell-background-darker: #000000D0;
-@define cell-background-light: #00000070;
-@define cell-background-lighter: #FFFFFF02;
+@define cell-background-dark: #ffffff05;
+@define cell-background-darker: #ffffff05;
+@define cell-background-light: #ffffff08;
+@define cell-background-lighter: #FFFFFF10;
 
 @define left-panel-width: 87px;
 
@@ -484,6 +484,7 @@ Button.sb-row__cell:hover {
 
 	                       
 
+
 }
 
 .sb-row--transition {
@@ -529,7 +530,7 @@ Button.sb-row__cell:hover {
 }
 
 .sb-row--localplayer.sb-row.sb-team--Spectator {
-	background-color: rgba(255, 255, 255, 0.07);
+	                                                  
 	-s2-mix-blend-mode: SRGBadditive;
 }
 
@@ -584,7 +585,7 @@ background-color: rgba(255, 238, 0, 0.07);
 .sb-row__cell.sortstat {
 
 	background-color: cell-background-lighter;
-	-s2-mix-blend-mode: SRGBadditive;
+	                                       
 
 }
 
@@ -707,15 +708,19 @@ Label.sb-row__cell--ping__label--bot {
 .sb-row__cell--flair Image{
 
 	padding: 1px;
+
 }
 
 .sb-row__cell--avatar {
 	width: height-percentage(100%);
 	padding: 2px;
+
 }
 
 .sb-row__cell--avatar CSGOAvatarImage{
 	background-size:cover;
+
+	-s2-mix-blend-mode: opaque;
 }
 
 .sb-row__cell--avatar--CT{
@@ -741,6 +746,7 @@ Label.sb-row__cell--ping__label--bot {
 	background-color: #80808080;
 
 	img-shadow:1px 1px 1px 1.0 #000000ff;
+
 }
 
 .sb-row__cell--name {
@@ -790,6 +796,7 @@ Label.sb-row__cell--ping__label--bot {
 	vertical-align: center;
 
 	                                           
+
 }
 
 #id-sb-name__nameicons #id-sb-skillgroup-image {
@@ -1334,7 +1341,7 @@ Label.sb-row__cell--mvps__count {
 	visibility: collapse;
  }
 
- .eom-scoreboard .sb-row__cell--money
+ .eom-scoreboard .sb-row__cell--money:not(.sb-row__cell--label)
 {
 	background-color: cell-background-dark;
 }

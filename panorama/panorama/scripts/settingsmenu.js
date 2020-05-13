@@ -67,8 +67,9 @@ var SettingsMenu = ( function () {
 
                                                                                      
             activePanel.visible = true;
-            activePanel.SetReadyForDisplay( true );
-            SettingsMenuShared.NewTabOpened( prevTab, activeTab );
+            activePanel.SetReadyForDisplay( true );   
+
+            SettingsMenuShared.NewTabOpened( activeTab );
         }
     };
 
@@ -92,7 +93,12 @@ var SettingsMenu = ( function () {
 	var _OnSettingsMenuHidden = function ()
 	{
                                            
-		GameInterfaceAPI.ConsoleCommand( "host_writeconfig");
+        GameInterfaceAPI.ConsoleCommand( "host_writeconfig");
+        
+                                                                                     
+                                                                                           
+                                                       
+        SettingsMenuShared.NewTabOpened( activeTab );
 	}
 
     return {

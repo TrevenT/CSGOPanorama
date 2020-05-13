@@ -8,6 +8,7 @@
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/mainmenu_store.js" />
 	</scripts>
 
@@ -52,6 +53,15 @@
 	</snippets>
 
 	<Panel class="news-panel news-panel--store-container" useglobalcontext="true">
+		<Panel class="store-panel-license-banner hidden" id="StorePanelLicenseBanner">
+			<Label class="store-panel-license-banner__text" id="StorePanelLicenseBannerText"
+				html="true" text="#SFUI_LoginLicenseAssist_NoOnlineLicense"/>
+			<TextButton id="StorePanelLicenseBannerButton"
+				class="store-panel-license-banner__button PopupButton Positive"
+				onactivate="MyPersonaAPI.ActionBuyLicense();"
+				selected="false" html="true"
+				text="#Store_Get_License"/>
+		</Panel>
 		<Panel class="store-panel-connectingtogc">
 			<Label class="store-panel-connectingtogc-text" text="#Store_Connecting_ToGc"/>
 			<Panel class="Spinner vertical-center horizontal-center"/>

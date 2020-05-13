@@ -201,4 +201,6 @@ var InventorySearch = ( function (){
 (function()
 {
 	 InventorySearch.Init();
+
+	 $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', InventorySearch.UpdateItemList );
 })();

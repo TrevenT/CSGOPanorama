@@ -2979,6 +2979,11 @@ EdgeScrollBar.Vertical #MaxButton
 	margin-right: 8px;
 }
 
+.right-margin-medium
+{
+	margin-right: 16px;
+}
+
 .z-index-2
 {
 	z-index: 2;

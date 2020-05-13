@@ -66,7 +66,7 @@
 						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsDownloaded', 'downloaded menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Downloaded"/>
 						</RadioButton>
-						<RadioButton group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsStreams', 'streams menu button');">
+						<RadioButton id="WatchNavBarButtonStreams" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsStreams', 'streams menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Streams"/>
 						</RadioButton>
 					</Panel>

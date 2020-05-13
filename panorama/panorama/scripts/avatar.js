@@ -5,7 +5,7 @@ var Avatar = ( function()
 	
 	var _Init = function( elAvatar, xuid, type )
 	{
-		                                      
+	  	                                      
 
 		switch ( type )
 		{

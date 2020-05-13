@@ -185,13 +185,13 @@
 	border: 1px solid rgba(255, 255, 255, 0.233);
 	box-shadow: #000000 -2px -2px 6px 4px;
 	margin: 1px;
-	opacity: 0;
+	opacity: 1;
 
-	transition-property: opacity;
-	transition-duration: .5s;
-	transition-timing-function: ease-in-out;
+	                               
+	                           
+	                                          
 
-	-s2-mix-blend-mode: opaque;
+	                             
 }
 
 .loading-screen-content__info
@@ -299,7 +299,7 @@
 .loading-screen-progress-container
 {
     width: loadingScreenWidth;
-    height: 36px;
+    height: 42px;
     vertical-align: center;
     horizontal-align: center;
     margin-top: 16px;
@@ -307,17 +307,17 @@
 
 .loading-screen-progress-secondary-container
 {
-    width: 400px;
-    height: 24px;
+    width: 500px;
+    height: 32px;
     vertical-align: bottom;
     horizontal-align: right;
                               
-    margin-bottom: 4px;
+    margin-bottom: 10px;
 }
 
 .loading-screen-progress-text
 {
-                   
+    height: 32px;
     width: 400px;
     font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 22px;
@@ -325,17 +325,19 @@
 	text-overflow: shrink;
     vertical-align: bottom;
     text-align: left;  
+    margin-bottom: 1px;
 }
 
 .loading-screen-progress-secondary-text
 {
-    width: 300px;
+    width: 100%;
     font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 16px;
-	color: #CCCCCCFF;
+	color: #FFFFFFFF;
 	text-overflow: shrink;
-    vertical-align: top;
+    vertical-align: bottom;
     text-align: left; 
+    margin-bottom: 5px;
 }
 
 .loading-screen-content__info__text
@@ -390,9 +392,15 @@
 {
 	width: 100%;
 	height: 100%;
-                                                                                                        
     background-color: gradient(radial, 50% 50%, 0px 0px, 100% 100%, from( #00000000 ), color-stop( 0.4, #00000000), color-stop( 0.65, #000000DD), to( #000000FF ) );
                                                                               
+}
+
+.loading-screen-fade--teams
+{
+	width: 100%;
+	height: 100%;
+    background-color: gradient(radial, 50% 50%, 0px 0px, 100% 100%, from( #00000099 ), color-stop( 0.4, #000000DD), color-stop( 0.65, #000000FF), to( #000000FF ) );
 }
 
 .loading-screen-model
@@ -439,6 +447,12 @@
 	transition-property: opacity, blur;
 	transition-duration: .5s;
 	transition-timing-function: ease-in-out;
+}
+
+.showOverview
+{
+	opacity: 1;
+	visibility: visible;
 }
 
 .loading-screen--closing

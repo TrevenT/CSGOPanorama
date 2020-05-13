@@ -178,6 +178,50 @@
 	margin-top: 30%;
 }
 
+.store-panel-license-banner
+{
+	width: 100%;
+	height: 100%;
+	margin: 24px;
+
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 100%;
+	flow-children: right;
+	background-image: url( "file://{images}/store/pw_linking_bg.png" );
+	box-shadow: fill #000000aa 0px 0px 8px 4px;
+}
+
+.store-panel-license-banner.hidden
+{
+	visibility: collapse;
+}
+
+.store-panel-license-banner__text
+{
+	color: white;
+	font-weight: lighter;
+	font-size: 18px;
+	width: 70%;
+	height: fit-children;
+
+	horizontal-align: left;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( rgb(0, 0, 0) ), to( rgba(0, 0, 0, 0) ));
+
+	padding: 0px 16px 20px 32px;
+	vertical-align: bottom;
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+.store-panel-license-banner__button
+{
+	margin-top: 10px;
+	horizontal-align: right;
+	vertical-align: bottom;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
 #StoreNaveBarWalletBalance
 {
 	horizontal-align: right;

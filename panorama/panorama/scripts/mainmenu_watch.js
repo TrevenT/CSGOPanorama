@@ -2,6 +2,7 @@
 
 var mainmenu_watch = ( function() {
 
+	var _m_bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === 'perfectworld' );
     var _m_activeTab;
     var _m_contextTab;                                                                                                               
     var _m_tabStack = [];
@@ -85,7 +86,8 @@ var mainmenu_watch = ( function() {
 
                                         
                 elStreamPanel.FindChildTraverse('Stream-text').text = StreamsAPI.GetStreamTextDescriptionByName(streamName);
-                elStreamPanel.FindChildTraverse('Stream-views').text = StreamsAPI.GetStreamViewersByName(streamName) + " Viewers on " + StreamsAPI.GetStreamDisplayNameByName(streamName);
+                elStreamPanel.SetDialogVariable( "numberOfViewers", StreamsAPI.GetStreamViewersByName(streamName) );
+                elStreamPanel.SetDialogVariable( "channel", StreamsAPI.GetStreamDisplayNameByName(streamName) );
                 
                 elStreamPanel.FindChildTraverse( "TwitchThumb" ).SetImage( StreamsAPI.GetStreamPreviewImageByName(streamName) );
                 elStreamPanel.FindChildTraverse( "flag" ).SetImage( "file://{images}/flags/" + streamCountry +".png" );
@@ -406,8 +408,20 @@ var mainmenu_watch = ( function() {
         _InitTab( 'JsYourMatches' );
         _InitTab( 'JsDownloaded')
         _InitTab( 'JsLive' );
-        _InitResourceManagement( $( '#JsTournaments' ) );
-        _InitResourceManagement( $( '#JsStreams' ) );
+		_InitResourceManagement( $( '#JsTournaments' ) );
+
+		                                   
+		if ( _m_bPerfectWorld )
+		{
+			var elWatchNavBarButtonStreams = $( '#WatchNavBarButtonStreams' );
+			if ( elWatchNavBarButtonStreams )
+				elWatchNavBarButtonStreams.DeleteAsync( .0 );
+		}
+		else
+		{
+			_InitResourceManagement( $( '#JsStreams' ) );
+		}
+
         _NavigateToTab( 'JsYourMatches' );
     }
 

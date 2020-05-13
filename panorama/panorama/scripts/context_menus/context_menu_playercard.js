@@ -154,6 +154,18 @@ var contextmenuPlayerCard = ( function (){
 			}
 		},
 		{
+			name: 'trade',
+			icon: 'trade',
+			AvailableForItem: function ( id ) {
+				return FriendsListAPI.GetFriendRelationship( id ) === "friend";
+
+			},
+			OnSelected:  function ( id ) {
+				SteamOverlayAPI.StartTradeWithUser( id );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}
+		},
+		{
 			name: 'summonmissioncoopmission',
 			icon: 'coop',
 			AvailableForItem: function ( id ) {

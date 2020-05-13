@@ -14,13 +14,6 @@
 	                        
 }
 
-Label
-{
-	text-shadow: 2px 2px 2px 0.0 #000000ff;
-}
-
-
-
 .eom-podium_podium{
 
 	margin-top: 20px;
@@ -36,7 +29,7 @@ Label
 
 Label
 {
-	text-shadow: 2px 2px 2px 0.0 #000000ff;
+	                                             
 }
 
 #id-eom-podium__podium__teamname{

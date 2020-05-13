@@ -585,3 +585,12 @@
 	transform: scaleY( 1 );
 }
 
+                                                                                     
+.steam-license-restricted .friendslist-navbar,
+.steam-license-restricted .friendslist__seperator,
+.steam-license-restricted .friendslist-lists
+{
+	visibility: collapse;
+}
+
+

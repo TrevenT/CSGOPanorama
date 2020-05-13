@@ -7,6 +7,7 @@
 		<include src="file://{resources}/scripts/mainmenu.js" />
 		<include src="file://{resources}/scripts/common/characteranims.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/popups/popup_acknowledge_item.js" />
 	</scripts>
 
@@ -111,15 +112,23 @@
 							<Image textureheight="40" texturewidth="-1" src="file://{images}/icons/ui/VoteTeamSwitch.svg" />
 						</Button>
 						                                                   
-						<RadioButton id="MainMenuNavBarVote"
+						<Button id="MainMenuNavBarVote"
 									class="mainmenu-navbar__btn-small PauseMenuModeOnly"
-									group="NavBar"
 									onactivate="MainMenu.ShowVote()"
 									oncontextmenu="MainMenu.ShowVote()"
 									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarVote', '#tooltip_navbar_vote' );"
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/check.svg" />
-						</RadioButton>
+						</Button>
+						                                                      
+						<Button id="MainMenuNavBarShowCommunityServerBrowser"
+									class="mainmenu-navbar__btn-small PauseMenuModeOnly"
+									onactivate="GameInterfaceAPI.ConsoleCommand( 'gamemenucommand openserverbrowser' )"
+									oncontextmenu="GameInterfaceAPI.ConsoleCommand( 'gamemenucommand openserverbrowser' )"
+									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarShowCommunityServerBrowser', '#play_setting_community' );"
+									onmouseout="UiToolkitAPI.HideTextTooltip();">
+							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/servers.svg" />
+						</Button>
 						                           
 						<RadioButton id="MainMenuNavBarInventory"
 									class="mainmenu-navbar__btn-small"

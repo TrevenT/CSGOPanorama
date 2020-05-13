@@ -14,6 +14,7 @@ var PlayMenu = ( function()
 	var GetMGDetails;
 	var GetGameType;
 
+	var m_bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === 'perfectworld' );
 	var m_activeMapGroupSelectionPanelID = null;
 	var m_allowNearbyUsersToJoinSetting = null;
 	var m_steamGroupIdThatCanJoin = '';
@@ -47,6 +48,16 @@ var PlayMenu = ( function()
 
 	var _Init = function()
 	{
+		                                             
+		if ( m_bPerfectWorld )
+		{
+			$.GetContextPanel().AddClass( 'launcher-type-perfect-world' );
+
+			var elDropDownCommunity = $( '#PlayTopNavDropdown' );
+			if ( elDropDownCommunity )
+				elDropDownCommunity.RemoveOption( "PlayCommunity" );
+		}
+
 		                                                
 		var cfg = GameTypesAPI.GetConfig();
 		                                                                                                  
@@ -269,17 +280,18 @@ var PlayMenu = ( function()
 	var _GetAvailableMapGroups = function( gameMode, isPlayingOnValveOfficial )
 	{
 		                                   
-		if ( m_gameModeConfigs[ gameMode ] === undefined )
+		var gameModeCfg = m_gameModeConfigs[ gameMode ];
+		if ( gameModeCfg === undefined )
 			return [];
 
-		if ( isPlayingOnValveOfficial )
+		var mapgroup = isPlayingOnValveOfficial ? gameModeCfg.mapgroupsMP : gameModeCfg.mapgroupsSP;
+		if ( mapgroup !== undefined && mapgroup !== null )
 		{
-			return Object.keys( m_gameModeConfigs[ gameMode ].mapgroupsMP );
+			return Object.keys( mapgroup );
 		}
-		else
-		{
-			return Object.keys( m_gameModeConfigs[ gameMode ].mapgroupsSP );
-		}
+
+		                                                                  
+		return [];
 	};
 
 	var _GetMapGroupPanelID = function ( serverType, gameMode )
@@ -323,7 +335,7 @@ var PlayMenu = ( function()
 	    $( '#GameModeSelectionRadios' ).visible = !isWorkshop;
 
                                                  
-	    $( '#WorkshopVisitButton' ).visible = isWorkshop;
+	    $( '#WorkshopVisitButton' ).visible = isWorkshop && !m_bPerfectWorld;
 	    $( '#WorkshopVisitButton' ).enabled = SteamOverlayAPI.IsEnabled();
 	}
 
@@ -723,7 +735,8 @@ var PlayMenu = ( function()
 					mapsWithThisName[0].checked = true;
 				}
 			} );
-			if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
+
+			if ( mapContainer.GetChildCount() > 0 && !_CheckContainerHasAnyChildChecked( mapContainer ) )
 			{
 				mapContainer.Children()[0].checked = true;
 			}
@@ -1088,6 +1101,22 @@ var PlayMenu = ( function()
 	{
 		var playType = _GetPlayType();
 
+		if ( playType === 'listen' || playType === 'training' )
+		{
+			                                       
+		}
+		else
+		{
+			var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
+			if ( restrictions !== false )
+			{
+				LicenseUtil.ShowLicenseRestrictions( restrictions );
+				                                                                       
+				_UpdatePlayDropDown();
+				return false;
+			}
+		}
+
 		if ( playType === 'official' || playType === 'listen' )
 		{
 		    m_isWorkshop = false;
@@ -1181,7 +1210,7 @@ var PlayMenu = ( function()
 	}
 
 	var _UpdateWorkshopMapFilter = function () {
-	    var filter = $.HTMLEscape( $( '#WorkshopSearchTextEntry' ).text ).toLowerCase();
+	    var filter = $.HTMLEscape( $( '#WorkshopSearchTextEntry' ).text, true ).toLowerCase();
 	    var container = m_mapSelectionButtonContainers[k_workshopPanelId];
 
 	    if( !container )

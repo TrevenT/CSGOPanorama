@@ -9,6 +9,8 @@ var MainMenuStore = ( function()
 	
 	var _Init = function()
 	{
+		_CheckLicenseScreen();
+
 		if ( !MyPersonaAPI.IsConnectedToGC() )
 			return;
 		
@@ -21,6 +23,30 @@ var MainMenuStore = ( function()
 
 		_AccountWalletUpdated();
 	};
+
+	var _CheckLicenseScreen = function()
+	{
+		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
+		
+		var elBanner = m_elStore.FindChildInLayoutFile( 'StorePanelLicenseBanner' );
+		elBanner.SetHasClass( 'hidden', restrictions === false );
+		if ( restrictions )
+		{
+			elBanner.FindChildInLayoutFile( 'StorePanelLicenseBannerText' ).text = restrictions.license_msg;
+			elBanner.FindChildInLayoutFile( 'StorePanelLicenseBannerButton' ).Children()[0].text = restrictions.license_act;
+		}
+
+		var elMainMenuInput = m_elStore;
+		while ( elMainMenuInput ) {
+			elMainMenuInput = elMainMenuInput.GetParent();
+			if ( elMainMenuInput.id === 'MainMenuInput' )
+				break;
+		}
+		if ( elMainMenuInput )
+		{
+			elMainMenuInput.SetHasClass( 'steam-license-restricted', restrictions !== false );
+		}
+	}
 
 	var _GetStoreItems = function( itemsByCategory )
 	{
@@ -447,6 +473,7 @@ var MainMenuStore = ( function()
 
 	return {
 		Init: _Init,
+		CheckLicenseScreen : _CheckLicenseScreen,
 		AccountWalletUpdated : _AccountWalletUpdated,
 		OnNavigateTab: _OnNavigateTab,
 		RefreshCoupons : _RefreshCoupons
@@ -456,6 +483,8 @@ var MainMenuStore = ( function()
 ( function()
 {
 	MainMenuStore.Init();
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GcLogonNotificationReceived', MainMenuStore.CheckLicenseScreen );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_UpdateConnectionToGC', MainMenuStore.CheckLicenseScreen );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_AccountWalletUpdated', MainMenuStore.AccountWalletUpdated );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_PriceSheetChanged', MainMenuStore.Init );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_PurchaseCompleted', MainMenuStore.RefreshCoupons );

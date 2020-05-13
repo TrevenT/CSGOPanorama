@@ -158,6 +158,9 @@ var PopupAcceptMatch = ( function(){
 	                                                                                             
 	var _SetMatchData = function ( map )
 	{
+		if ( m_lobbySettings === undefined )
+			return;
+
 		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.mode );
 		var labelData = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchModeMap' );
 

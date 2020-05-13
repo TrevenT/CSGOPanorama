@@ -93,6 +93,11 @@
 	padding-top: 20px;
 }
 
+.sb-row__cell
+{
+	background-color:rgba(0, 0, 0, 0.20);
+}
+
 .sb-row .RadioBox
 {
 	visibility: collapse;
@@ -100,7 +105,7 @@
 
 .sb-row:selected
 {
-	background-color: rgba(150,150,150,1);
+	background-color:rgba(0, 0, 0, 0.40);
 	sound: "generic_button_press";
 }
 

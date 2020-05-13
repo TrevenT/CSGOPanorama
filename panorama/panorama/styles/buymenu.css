@@ -253,6 +253,7 @@
 .buywheel-category__label--UPPERCASE
 {
 	text-transform: uppercase;
+	text-overflow: shrink;
 }
 
 .buywheel-category__title

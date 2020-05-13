@@ -8,7 +8,7 @@ var LoadingScreen = ( function() {
 
 		var elOverview = $('#LoadingScreenOverview');
 		elOverview.RemoveAndDeleteChildren();
-		elOverview.SetImage("file://{images}/overheadmaps/default.png");
+		                                                                  
 
 		$('#LoadingScreenMapName').text = "";
 		$('#LoadingScreenGameMode').text = $.Localize("#SFUI_LOADING");
@@ -42,11 +42,18 @@ var LoadingScreen = ( function() {
 			$('#LoadingScreenIcon').SetImage('file://{images}/map_icons/map_icon_' + mapName + '.svg');
 			
 		                  
+			var mapOverviewLoaded = function () {
+			    $('#LoadingScreenOverview').visible = true;
+			}
+			$.RegisterEventHandler('ImageLoaded', $('#LoadingScreenOverview'), mapOverviewLoaded.bind(undefined));
+			var mapOverviewFailed = function () {
+			    $('#LoadingScreenOverview').visible = false;
+			}
+			$.RegisterEventHandler('ImageFailedLoad', $('#LoadingScreenOverview'), mapOverviewFailed.bind(undefined));
 
 			var elOverview = $( '#LoadingScreenOverview' );
-			elOverview.SetImage( 'file://{images_overviews}/'+ mapName + '_radar.dds' );
-			elOverview.AddClass('show');
-			                                                                                                                 
+			elOverview.SetImage('file://{images_overviews}/' + mapName + '_radar.dds');
+
 			$( '#LoadingScreenIcon' ).AddClass('show');
 			elBackgroundImage.AddClass('show');
 
@@ -96,9 +103,9 @@ var LoadingScreen = ( function() {
 	                                                                                
 	function CreateMapIcon( overviewKV, elParent, name )
 	{
-		var X = overviewKV[ name+'_x' ];
-		var Y = overviewKV[ name+'_y' ];
-		if ( X && Y )
+	    var X = overviewKV[ name+'_x' ];
+	    var Y = overviewKV[ name+'_y' ];
+	    if (X != null && Y != null && parseFloat(X) && parseFloat(Y))
 		{
 			var elIcon = $.CreatePanel( "Image", elParent, name );
 			elIcon.style.position = Math.floor( X * 100 ).toString() + "% " + Math.floor( Y * 100 ).toString() + "% 0px;";

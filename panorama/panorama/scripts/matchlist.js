@@ -9,6 +9,8 @@ var matchList = ( function() {
         if ( tab )
         {
             var elSpinner = tab.FindChildInLayoutFile( "id-list-spinner" );
+            _ShowInfoPanel( false, tab );
+            _ShowListPanel( false, tab );
             if ( elSpinner )
             {
                 if ( value )
@@ -58,10 +60,18 @@ var matchList = ( function() {
                 if ( value )
                 {
                     elInfoPanel.AddClass( 'subsection-content__background-color--dark' );
+                    if ( tab.activeMatchInfoPanel )
+                    {
+                        matchInfo.Refresh( tab.activeMatchInfoPanel );
+                    }
                 }
                 else
                 {
                     elInfoPanel.RemoveClass( 'subsection-content__background-color--dark' );
+                    if ( tab.activeMatchInfoPanel )
+                    {
+                        matchInfo.Hide( tab.activeMatchInfoPanel );
+                    }
                 }
             }
             if ( elMatchList )
@@ -77,6 +87,26 @@ var matchList = ( function() {
             }
         }
     }
+
+    function _ShowListPanel( value, tab = undefined )
+    {
+        if ( tab )
+        {
+            var elMatchList = tab.FindChildInLayoutFile( "JsMatchList" );
+            
+            if ( elMatchList )
+            {
+                if ( !value )
+                {
+                    elMatchList.AddClass( 'hide' );
+                }
+                else
+                {
+                    elMatchList.RemoveClass( 'hide' );
+                }
+            }
+        }
+}
 
     function _ClearList( elListPanel, tournament_id )
     {
@@ -248,7 +278,6 @@ var matchList = ( function() {
         function _ShowLoadingError( elBoundTab )
         {
             _ShowListSpinner( false, elBoundTab );
-            _ShowInfoPanel( false, elBoundTab );
             var msg = "";
             if ( elBoundTab.tournament_id )
             {
@@ -274,7 +303,6 @@ var matchList = ( function() {
         {
             _ShowListSpinner( true, elTab );
             _SetListMessage( "", false, elTab );
-            _ShowInfoPanel( false, elTab );
             elTab.matchListIsPopulated = false;
             elTab.downloadFailedHandler = $.Schedule(  3.0, _ShowLoadingError.bind( undefined, elTab ) );
             MatchListAPI.Refresh( matchListDescriptor );
@@ -361,11 +389,11 @@ var matchList = ( function() {
         if ( nCount <= 0 )
         {
             _ShowInfoPanel( false, parentPanel );
+            _ShowListPanel( false, parentPanel );
             var msg = "";
             if ( parentPanel.tournament_id )
             {
                 msg = "#CSGO_Watch_NoMatch_Tournament_" + parentPanel.tournament_id.split(':')[1];
-                _ShowInfoPanel( false, parentPanel );
             }
             else 
             {
@@ -386,12 +414,17 @@ var matchList = ( function() {
         }
         else
         {
+            _ShowListPanel( true, parentPanel );
             _ShowInfoPanel( true, parentPanel );
             _SetListMessage( "", false, parentPanel );
         }
 
         var displayedMatches = new Array();
         var elMatchList = parentPanel.FindChildTraverse("JsMatchList");
+        if ( !elMatchList )
+        {
+            return;
+        }
 
         for ( var i = 0 ; i < elMatchList.GetChildCount(); i ++ )
         {
@@ -431,8 +464,8 @@ var matchList = ( function() {
                     var elDownloadIndicator = elBoundMatchButton.FindChildInLayoutFile( 'id-download-state' );
                     if ( elDownloadIndicator )
                     {
-                        var isDownloading = ( MatchInfoAPI.GetMatchState( elBoundMatchButton.matchId ) === "downloading" )
-                        var canWatch = MatchInfoAPI.CanWatch( elBoundMatchButton.matchId );
+                        var isDownloading = Boolean( ( MatchInfoAPI.GetMatchState( elBoundMatchButton.matchId ) === "downloading" ) );
+                        var canWatch = Boolean( MatchInfoAPI.CanWatch( elBoundMatchButton.matchId ) );
                         elDownloadIndicator.SetHasClass( "download-animation", isDownloading );
                         elDownloadIndicator.SetHasClass( "downloaded", canWatch );
                     }

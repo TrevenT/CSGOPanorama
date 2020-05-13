@@ -33,7 +33,7 @@
 		</CSGOBlurTarget>
 		
 		<Panel id="" class="mainmenu-content">
-			<Panel class="loading-screen-fade--dark"/>
+			<Panel class="loading-screen-fade--teams"/>
 			<Panel id="loadingscreen__blur-target"/>
 				<Countdown id="AutojoinTimer" class="team-select__timer" update-interval="1.0" time-dialog-variable="duration">
 					<Image texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/clock.svg" />

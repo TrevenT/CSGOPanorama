@@ -7,6 +7,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/common/formattext.js" />
 		<include src="file://{resources}/scripts/common/icon.js" />
+		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/mainmenu_play.js" />
 	</scripts>
 

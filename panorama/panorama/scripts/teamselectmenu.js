@@ -329,8 +329,8 @@ var TeamSelectMenu = ( function (){
 
 	var _ShowCancelButton = function()
 	{
-		var elTimer = $( '#AutojoinTimer' );
-		$('#TeamSelectCancel').visible = !elTimer.visible;
+		var bUnassigned = $.GetContextPanel().GetTeamNumber() == 0;
+		$('#TeamSelectCancel').visible = !bUnassigned;
 	}
 
 	var _ShowError = function( locString )

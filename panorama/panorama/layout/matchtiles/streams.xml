@@ -18,7 +18,7 @@
             </Panel>
             <Panel id = "ViewsPanel" class = "left-right-flow">
                 <Image src="file://{images}/icons/ui/watch.svg" texturewidth="28" textureheight="28"/>
-                <Label id="Stream-views" class= "fontSize-s left-padding"/>
+                <Label id="Stream-views" class= "fontSize-s left-padding" text="#WatchMenu_ViewerCount"/>
             </Panel>
         </Panel>
         <Panel id="CountryFlag" class="horizontal-align-right vertical-align-bottom bottom-padding">

@@ -8,9 +8,13 @@ var PopupWorkshopModeSelect = ( function () {
 
     var _Init = function () {
                                             
+        m_elButtons = [];
         m_elPopup = $.GetContextPanel();
         m_elButtonContainer = m_elPopup.FindChildTraverse( 'popup-workshop-mode-items' );
-        m_elButtons = [];
+
+                         
+        m_elPopup.FindChildTraverse( 'GoButton' ).SetPanelEvent( 'onactivate', _Apply );
+        m_elPopup.FindChildTraverse( 'CancelButton' ).SetPanelEvent( 'onactivate', _Cancel );
 
         var strModes = m_elPopup.GetAttributeString( 'workshop-modes', '' );
         if ( !strModes )
@@ -118,8 +122,6 @@ var PopupWorkshopModeSelect = ( function () {
 
 	return {
 		Init	    : _Init,
-		OnApply     : _Apply,
-        OnCancel    : _Cancel
 	};
 
 })();

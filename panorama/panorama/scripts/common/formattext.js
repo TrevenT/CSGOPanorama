@@ -68,6 +68,9 @@ var FormatText = ( function ()
 
 	var _SecondsToSignificantTimeString = function( rawSeconds )
 	{
+		if ( rawSeconds < 60 )
+			return '1 ' + $.Localize( '#SFUI_Store_Timer_Min' );
+
 		var time = _ConvertSecondsToDaysHoursMinSec( rawSeconds );
 		var numComponentsReturned = 0;
 		var strResult = '';

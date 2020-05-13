@@ -119,6 +119,9 @@ var EndOfMatch = ( function () {
 	
 		_m_jobStart = $.Schedule( 3.0, _ =>
 		{
+			if ( !_m_cP || !_m_cP.IsValid() )
+				return;
+			
 			                   
 			var elBlur = _m_cP.GetParent().FindChildTraverse( "HudBlur" );
 			elBlur.AddClass( "eom-blur-fade-in" );
@@ -134,7 +137,7 @@ var EndOfMatch = ( function () {
 			$.Schedule( 1.25, _ShowNextPanel );
 
 			_m_jobStart = undefined;
-
+			
 		})
 	}
 
@@ -146,9 +149,12 @@ var EndOfMatch = ( function () {
 
 		$.Schedule( 0.0, function()
 		{
-			elProgBar.style.transitionDuration = "0s";
+			if ( elProgBar && elProgBar.IsValid() )
+			{
+				elProgBar.style.transitionDuration = "0s";
 			
-			elProgBar.style.width = '0%';
+				elProgBar.style.width = '0%';				
+			}
 		} );
 
 		       
@@ -156,9 +162,12 @@ var EndOfMatch = ( function () {
 		
 		$.Schedule( 0.0, function()
 		{
-			elProgBar.style.transitionDuration = time + "s";
+			if ( elProgBar && elProgBar.IsValid() )
+			{
+				elProgBar.style.transitionDuration = time + "s";
 
-			elProgBar.style.width = '100%';
+				elProgBar.style.width = '100%';
+			}
 		} );
 
 	}

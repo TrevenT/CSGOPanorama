@@ -154,13 +154,18 @@ CSGOHudRosettaSelector Label
     -s2-mix-blend-mode: screen;    
 }
 
+.RosettaSelector__CoolDown .RosettaSelection__HintText
+{
+    opacity: 0;
+}
+
 .RosettaSelection__Text
 {
     width: 100%;
 
     text-align: center;
 
-    font-size: 21px;
+    font-size: 20px;
     letter-spacing: 1px;
 
     padding-bottom: 32px;
