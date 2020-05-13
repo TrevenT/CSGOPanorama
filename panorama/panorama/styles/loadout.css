@@ -215,8 +215,8 @@ ItemImage Label
 {
 	flow-children: left;
 	horizontal-align: right;
-	vertical-align: bottom;
-	margin: 32px;
+	vertical-align: top;
+	margin: 8px 16px;
 }
 
 .loadout-team-selector .RadioBox
@@ -230,12 +230,44 @@ ItemImage Label
 	visibility: collapse;
 }
 
+.loadout--shuffle-enabled ItemImage
+{
+	brightness: 0.3;
+	blur: fastgaussian( 2, 2, 1 );
+}
+
+.loadout-shuffle_icon
+{
+	visibility: collapse;
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+.loadout-shuffle-text
+{
+	visibility: collapse;
+	horizontal-align: center;
+}
+
+.loadout--shuffle-enabled .loadout-shuffle_icon, 
+.loadout--shuffle-enabled .loadout-shuffle-text
+{
+	visibility: visible;
+}
+
 .loadout-empty-list-text
 {
 	max-width: 512px;
 	font-size:16;
 	font-weight:lighter;
 	line-height:24px;
+}
+
+.shuffle-options
+{
+	vertical-align: center;
+	width: 24px;
+	height: 24px;
 }
 
 .loadout-info

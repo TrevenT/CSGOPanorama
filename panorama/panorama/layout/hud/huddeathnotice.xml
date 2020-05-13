@@ -21,6 +21,8 @@
 					                                         
 					<Panel id="AssistParent">
 						<Label text="+" />
+                                  
+            <Image id="Flashbang" class="DeathNoticeIcon" src="file://{images}/icons/equipment/flashbang_assist.svg" scaling="stretch-to-fit-preserve-aspect" />
 						<Label id="Assister" text="{s:name}" />
 					</Panel>
 					                                                                                                  

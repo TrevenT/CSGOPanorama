@@ -1489,7 +1489,7 @@ Button.PopupButton.Activated
 	z-index: 1;
 	margin-left: 8px;
 	border: 2px solid white;
-	wash-color: baseText;
+	wash-color: white;
 	box-shadow: #00000000 -2px -2px 2px 4px;
 
 	transition-property: background-color, wash-color;

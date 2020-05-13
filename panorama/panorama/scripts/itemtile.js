@@ -77,48 +77,32 @@ var ItemTile = ( function()
 		elTDot.RemoveClass( 'item-tile__equipped__radiodot--filled' );
 		elCtDot.RemoveClass( 'item-tile__equipped__radiodot--filled' );
 
-		                                                       
-		                                                                    
-
-		                                             
-		if ( ItemInfo.IsEquippedForNoTeam( id ) && ( subSlot === 'flair0' || subSlot === 'musickit' || subSlot === 'spray0' ) )
+		for ( var team of [ 't', 'ct', 'noteam' ] )
 		{
-			elCtDot.RemoveClass( 'hidden' );
-			elCtDot.AddClass( 'item-tile__equipped__radiodot--filled' );
-			return;
-		}
-
-		if ( ItemInfo.IsItemAnyTeam( id ) )
-		{
-			if ( ItemInfo.IsEquippedForCT( id ) )
+			if ( !ItemInfo.IsShuffleEnabled( id, team ) || subSlot === "flair0" || subSlot === "spray0")
 			{
-				elCtDot.AddClass( 'item-tile__equipped__radiodot--filled' );
-
-				elTDot.RemoveClass( 'hidden' );
-				elCtDot.RemoveClass( 'hidden' );
+				if ( ItemInfo.IsEquipped( id, team ) )
+				{
+					_SetEquipIcon( false, team );
+				}				
 			}
-
-			if ( ItemInfo.IsEquippedForT( id ) )
+			else if ( ItemInfo.IsShuffleEnabled( id, team ) && ItemInfo.IsItemInShuffleForTeam( id, team ) )
 			{
-				elTDot.AddClass( 'item-tile__equipped__radiodot--filled' );
-
-				elTDot.RemoveClass( 'hidden' );
-				elCtDot.RemoveClass( 'hidden' );
+				_SetEquipIcon( true, team );
 			}
-			return;
-		}
+		}	
+	};
 
-		if ( ItemInfo.IsEquippedForCT( id ) )
-		{
-			elCtDot.RemoveClass( 'hidden' );
-			elCtDot.AddClass( 'item-tile__equipped__radiodot--filled' );
-			return;
-		} else if ( ItemInfo.IsEquippedForT( id ) )
-		{
-			elTDot.RemoveClass( 'hidden' );
-			elTDot.AddClass( 'item-tile__equipped__radiodot--filled' );
-			return;
-		}
+	var _SetEquipIcon = function( isShuffle, team )
+	{
+		if ( team === 'noteam' )
+			team = 'ct';                                            
+
+		var elCtDot = $.GetContextPanel().FindChildInLayoutFile( 'ItemEquipped-' + team );
+		
+		elCtDot.RemoveClass( 'hidden' );
+		elCtDot.AddClass( 'item-tile__equipped__radiodot--filled' );
+		elCtDot.SetHasClass( 'shuffle', isShuffle );
 	};
 
 	var _SetStickers = function( id )

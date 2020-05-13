@@ -71,9 +71,15 @@
 			<Panel class="buywheel-button">
 				<Panel class="buywheel-item__textbox">
 					                                                                     
+					<Panel class="no-flow">
 					<ItemImage id="ItemImage" class="loadout-item__image" scaling="stretch-to-fit-y-preserve-aspect">
 						<Label text="{s:item_name}" class="loadout-item__textbox stratum2Font"/>
 					</ItemImage>
+						<Panel class="top-bottom-flow horizontal-center vertical-center">
+							<Image class="loadout-shuffle_icon" src="file://{images}/icons/ui/random.svg" texturewidth="64" textureheight="64"/>
+							<Label text="#CSGO_UI_Shuffle" class="loadout-shuffle-text stratum2Font"/>
+						</Panel>
+					</Panel>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -183,9 +189,17 @@
 					</Panel>
 				</Panel>
 				<Panel class="loadout-sort">
-						<DropDown class="PopupButton White" id="LoadoutSortDropdown" menuclass="DropDownMenu" oninputsubmit="Loadout.UpdateItemLister()">
+					<TooltipPanel id="LoadoutShuffleControls" class="left-right-flow" tooltip="#inv_shuffle_tooltip" >
+						<ToggleButton id="LoadoutShuffleToggle" class="PopupButton horizontal-align-left" onactivate="Loadout.OnShuffleToggle()" >
+							<Label id="LoadoutShuffleToggleLabel" text="#shuffle_toggle_btn" />
+						</ToggleButton>
+						<Button id="LoadoutShuffleOptions" onactivate="Loadout.ShowShuffleContextMenu();" class="shuffle-options" >
+							<Image src="file://{images}/control_icons/gear.vtf"/>
+						</Button>
+					</TooltipPanel>
+					<DropDown class="PopupButton White" id="LoadoutSortDropdown" menuclass="DropDownMenu" oninputsubmit="Loadout.UpdateItemLister()">
 
-						</DropDown>
+					</DropDown>
 				</Panel>
 				<InventoryItemList id="LoadoutItemList"
 									hittest="true"
@@ -196,6 +210,8 @@
 									item_context_menu_filter="loadout"
 									class="loadout-item-list">
 				</InventoryItemList>
+
+
 			</Panel>
 		</Panel>
 	</CSGOLoadout>

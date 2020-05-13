@@ -133,4 +133,78 @@
     flow-children: right;
 }
 
+.ContextMenuEquipItem .TickBox
+{
+    width: 28px;
+	height: 28px;
+	position: 0px 0px 0px;
+	vertical-align: center;
+	background-color: None;
+	border-radius: 50%;
+	z-index: 1;
+    margin-left: 8px;
+    margin-right: 8px;
 
+    background-color: gradient( radial, 50% 50%, 0% 0%, 0% 0%, from( #ffffff00  ), color-stop( 0.8, #ffffff00  ), to( #ffffff00 ) );
+    border: 1px solid white;
+    box-shadow: #00000000 -2px -2px 2px 4px;
+    background-img-opacity: 0;
+
+	transition-property: background-color, wash-color, background-img-opacity;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.ContextMenuEquipItem.ct .TickBox
+{
+    wash-color: color-CT;
+}
+
+.ContextMenuEquipItem.t .TickBox
+{
+    wash-color: color-T;
+}
+
+.ContextMenuEquipRow
+{
+
+}
+
+.ContextMenuEquipRowButtons
+{
+    flow-children: left;
+    horizontal-align: right;
+}
+
+
+.ContextMenuEquipItem:selected .TickBox
+{
+    width: 28px;
+	height: 28px;
+    box-shadow: #00000000 0px 0px 3px 0px;
+    position: 0px 0px 0px;
+    background-color: gradient( radial, 50% 50%, 0% 0%, 25% 25%, from( white ), color-stop( .95, white ), to( #ffffff00 ) );
+
+	transition-property: wash-color, background-color;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
+.ContextMenuEquipRow.Shuffle .ContextMenuEquipItem:selected .TickBox
+{
+    width: 28px;
+	height: 28px;
+    box-shadow: #00000000 0px 0px 3px 0px;
+    position: 0px 0px 0px;
+
+    background-image: url("file://{images}/icons/ui/random.svg");
+    background-img-opacity: 1;
+    background-size: 15px 15px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+	background-color: None;
+
+    transition-property: wash-color, background-color, background-img-opacity;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}

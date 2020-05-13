@@ -207,6 +207,7 @@ CSGOHudDeathNotice Label
 .DeathNoticeDomination #Domination,
 .DeathNoticePenetrate #Penetrate,
 .DeathNoticeHeadShot #HeadShot,
+.DeathNoticeFlashbang #Flashbang,
 .DeathNoticeSuicide #Suicide,
 .DeathNoticeAssist #AssistParent
 {

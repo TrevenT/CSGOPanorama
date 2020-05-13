@@ -32,6 +32,55 @@ var ItemInfo = ( function() {
 	    }
 	};
 
+	var _AddItemToShuffle = function( id, team )
+	{
+		return LoadoutAPI.AddItemToShuffle( id, team );
+	};
+
+	var _RemoveItemFromShuffle = function( id, team )
+	{
+		return LoadoutAPI.RemoveItemFromShuffle( id, team );
+	};
+
+	var _IsItemInShuffleForTeam = function( id, team )
+	{
+		return LoadoutAPI.IsItemInShuffleForTeam( id, team );
+	};
+
+	var _ClearShuffle = function( id, team )
+	{
+		return LoadoutAPI.ClearShuffle ( id, team );
+	};
+
+	var _SetShuffleEnabled = function ( id, team, enable )
+	{
+		return LoadoutAPI.SetShuffleEnabled( id, team, enable );
+	};
+
+	var _IsShuffleEnabled = function ( id, team )
+	{
+		return LoadoutAPI.IsShuffleEnabled( id, team );
+	};
+
+	var _IsShuffleAllowed = function ( id )
+	{
+		return LoadoutAPI.IsShuffleAllowed( id );
+	};
+
+	var _CountItemsInInventoryForShuffleSlot = function ( id, team )
+	{
+		return LoadoutAPI.CountItemsInInventoryForShuffleSlot( id, team );
+	};
+
+	var _EnsureShuffleItemEquipped = function ( itemID, team )
+	{
+		var equippedItemID = ItemInfo.GetItemIdForItemEquippedInLoadoutSlot( itemID, team );
+		if ( !LoadoutAPI.IsItemInShuffleForTeam( equippedItemID, team ) )
+		{
+			LoadoutAPI.ShuffleEquipmentInSlot( equippedItemID, team );
+		}
+	};
+
 	var _GetName = function( id )
 	{
 		return InventoryAPI.GetItemName( id );
@@ -50,6 +99,11 @@ var ItemInfo = ( function() {
 	var _IsEquippedForNoTeam = function( id )
 	{
 		return InventoryAPI.IsEquipped( id, "noteam" );
+	};
+
+	var _IsEquipped = function( id, team )
+	{
+		return InventoryAPI.IsEquipped( id, team );
 	};
 
 	var _GetSlot = function( id )
@@ -379,10 +433,20 @@ var ItemInfo = ( function() {
 		GetFauxReplacementItemID		: _GetFauxReplacementItemID,
 		GetFauxItemIdForGraffiti		: _GetFauxItemIdForGraffiti,
         GetFormattedName                : _GetFormattedName,                                 
+		IsEquipped						: _IsEquipped,
 		IsEquippedForCT					: _IsEquippedForCT,
 		IsEquippedForT					: _IsEquippedForT,
 		IsEquippedForNoTeam				: _IsEquippedForNoTeam,
 		IsEquippalbleButNotAWeapon		: _IsEquippalbleButNotAWeapon,
+		AddItemToShuffle				: _AddItemToShuffle,
+		RemoveItemFromShuffle			: _RemoveItemFromShuffle,
+		IsItemInShuffleForTeam			: _IsItemInShuffleForTeam,
+		ClearShuffle					: _ClearShuffle,
+		SetShuffleEnabled				: _SetShuffleEnabled, 
+		IsShuffleEnabled				: _IsShuffleEnabled, 
+		IsShuffleAllowed				: _IsShuffleAllowed, 
+		CountItemsInInventoryForShuffleSlot	: _CountItemsInInventoryForShuffleSlot, 
+		EnsureShuffleItemEquipped		: _EnsureShuffleItemEquipped, 
 		GetSlot							: _GetSlot,
 		GetTeam							: _GetTeam,
 		GetSlotSubPosition				: _GetSlotSubPosition,

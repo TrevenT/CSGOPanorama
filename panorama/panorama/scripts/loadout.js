@@ -29,7 +29,6 @@ var Loadout = ( function() {
 
 		                        
 		elDropdown.SetSelected( InventoryAPI.GetSortMethodByIndex( 1 ) );
-
 	};
 
 	var _HideShowRadialLoadout = function( bShow )
@@ -42,6 +41,92 @@ var Loadout = ( function() {
 		_HideShowRadialLoadout( true );
 		_HideShowSingleItem( false );
 		_ShouldShowTeamData();
+	};
+
+	var _OnShuffleToggle = function()
+	{
+		var elBtn = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutShuffleToggle' );
+		var slot = _GetUsesWedges() ? _GetSelectededRadialButton() : _GetSelectededLoadoutSlot();
+		var ItemId = _GetUsesWedges() ? _GetItemIdFromSelectedWedge() : LoadoutAPI.GetItemID( _GetSelectedTeamAsString( slot ), slot );
+		
+		LoadoutAPI.SetShuffleEnabled( ItemId, _GetSelectedTeamAsString( slot ), elBtn.checked );
+	
+		_UpdateItemList();
+		if ( elBtn.checked )
+		{
+			var teamAsString = _ConvertTeamFromNumToString( _GetSelectededTeam( slot ) );
+			                                            
+			LoadoutAPI.ShuffleAllForTeam( ItemId, teamAsString );
+			ItemInfo.EnsureShuffleItemEquipped( ItemId, teamAsString );
+		}
+	};
+
+	var _GetCurrentItemID = function ()
+	{
+		var bValidWedgeSelected = _GetSelectededRadialButton() !== '';
+		if ( !_GetUsesWedges() || !bValidWedgeSelected ) 
+		{
+			var loadoutSlot = _GetSelectededLoadoutSlot();
+			var team = _GetSelectedTeamAsString( loadoutSlot );
+			return LoadoutAPI.GetItemID( team, loadoutSlot );
+		}
+		else
+		{
+			return _GetItemIdFromSelectedWedge();
+		}
+	}
+
+	var _UpdateShuffleToggle = function( teamAsNumber )
+	{
+		var elBtn = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutShuffleToggle' );
+		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutShuffleToggleLabel' );
+		var loadoutSlot = _GetSelectededLoadoutSlot();
+		var weaponType = '';
+		var teamAsString = _ConvertTeamFromNumToString( teamAsNumber );
+
+		var ItemId = _GetCurrentItemID();
+		if ( ItemId == "" )
+		{
+			                          
+			elBtn.visible = false;
+			$( "#LoadoutShuffleOptions" ).visible = false;
+			return;
+		}
+
+		if ( _GetUsesWedges() ) 
+		{
+			weaponType = InventoryAPI.GetItemDefinitionName( ItemId ).replace( 'weapon_', '' );
+
+			elLabel.SetDialogVariable( 'weapon', $.Localize( InventoryAPI.GetItemBaseName( ItemId ) ) );
+			elLabel.SetDialogVariable( 'team', $.Localize( '#SFUI_MainMenu_TeamIcon_' + teamAsString ) );
+			elLabel.text = $.Localize( "#shuffle_toggle_btn" , elLabel );
+		}
+
+		elBtn.visible = ItemInfo.IsShuffleAllowed( ItemId ) && ItemInfo.CountItemsInInventoryForShuffleSlot( ItemId, teamAsString ) > 1;
+
+		var nameString = ( loadoutSlot === 'melee' || loadoutSlot === 'clothing_hands' ) || loadoutSlot === 'musickit' ?
+		$.Localize( '#loadoutslot_' + loadoutSlot ) :
+		$.Localize( InventoryAPI.GetItemBaseName( ItemId ) );
+		
+		if ( loadoutSlot === 'musickit' )
+		{
+			elLabel.SetDialogVariable( 'weapon', $.Localize( nameString ) );
+			elLabel.text = $.Localize( "#shuffle_toggle_btn_noteam" , elLabel );
+		}
+		else
+		{
+			elLabel.SetDialogVariable( 'weapon', nameString );
+			elLabel.SetDialogVariable( 'team', $.Localize( '#SFUI_MainMenu_TeamIcon_' + teamAsString) );
+			elLabel.text = $.Localize( "#shuffle_toggle_btn" , elLabel );
+		}
+			
+		elBtn.checked = LoadoutAPI.IsShuffleEnabled( ItemId, teamAsString );
+		$( "#LoadoutShuffleOptions" ).visible = elBtn.checked;
+	};
+
+	var _LoadoutWedgePressed = function( team )
+	{
+		_UpdateShuffleToggle( team );
 	};
 
 	                                                                                                    
@@ -63,21 +148,13 @@ var Loadout = ( function() {
 	var _UpdateSingleItem = function()
 	{
 		var loadoutSlot = _GetSelectededLoadoutSlot();
-		var team = '';
-
-		if ( _SlotHasNoTeamAsTeam( loadoutSlot ) )
-		{
-			team = 'noteam';
-		}
-		else
-		{
-			team = _GetSelectededTeam() === "3" ? 'ct' : 't';
-		}
+		var team = _GetSelectedTeamAsString( loadoutSlot );
 		
 		var elModel = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSingleItemModel' );
 		var itemId = LoadoutAPI.GetItemID( team, loadoutSlot );
 
 		_FillOutItemData( itemId, loadoutSlot );
+		_UpdateShuffleToggle( _GetSelectededTeam( loadoutSlot ) );
 		_UpdateItemList();
 	};
 
@@ -146,7 +223,10 @@ var Loadout = ( function() {
 		var loadoutSlot = _GetUsesWedges() ? _GetSelectededRadialButton() : _GetSelectededLoadoutSlot();
 		var elListerToUpdate = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutItemList' );
 		var elDropdown = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSortDropdown' );
+		var elShuffle = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutShuffleToggle' );
 		var sortType = elDropdown.GetSelected().id;
+
+		var defName= _GetUsesWedges() && elShuffle.checked ? InventoryAPI.GetItemDefinitionName( _GetItemIdFromSelectedWedge() ) : '';
 
 		var szMainFilter = 'inv_group_equipment';
 		switch ( loadoutSlot )
@@ -159,13 +239,17 @@ var Loadout = ( function() {
 				break;
 		}
 
+		var team = _GetSelectedTeamAsString( loadoutSlot ) === 'noteam' ? '' : _GetSelectedTeamAsString( loadoutSlot );
+
+		var loadoutSlotParams = defName ? ',only_econ_items,item_definition:'+ defName + ',' + team : ',' + team;
+
 		$.DispatchEvent( 'SetInventoryFilter',
 			elListerToUpdate,
 			szMainFilter,
 			'any',
 			'any',
 			sortType,
-			loadoutSlot,
+			loadoutSlot + loadoutSlotParams,
 			''               
 		);
 
@@ -212,21 +296,33 @@ var Loadout = ( function() {
 
 	var _GetUsesWedges= function()
 	{
+		                                                                                    
 		return _GetSelectedTab().GetAttributeString( 'data-wedge', '' ) === 'true' ? true : false;
 	};
 
 	var _GetSelectededRadialButton = function()
 	{
+		return _GetSelectedWedge().GetAttributeString( 'equip_slot', '' );
+	};
+
+	var _GetSelectedWedge = function()
+	{
 		var elWedges = $.GetContextPanel().FindChildInLayoutFile( 'ItemWheel' );
 		var wedgeList = elWedges.Children().filter( wedge => wedge.checked === true );
-		return wedgeList[0].GetAttributeString( 'equip_slot', '' );
-	}	
+		return wedgeList[ 0 ];
+	};
 
-	var _GetSelectededTeam = function()
+	var _GetItemIdFromSelectedWedge = function()
+	{
+		var slot = _GetSelectededRadialButton();
+		return LoadoutAPI.GetItemID( _GetSelectedTeamAsString( slot ), slot );
+	};
+
+	var _GetSelectededTeam = function( loadoutSlot )
 	{
 		var elTeams = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSelectTeam' );
 		var elSelectedTeam = elTeams.Children().filter( slot => slot.checked === true );
-		return elSelectedTeam[ 0 ].GetAttributeString( 'data-team', '' );
+		return _SlotHasNoTeamAsTeam( loadoutSlot ) ? 0 : elSelectedTeam[ 0 ].GetAttributeString( 'data-team', '' );
 	};
 
 	var _SlotHasNoTeamAsTeam = function( loadoutSlot )
@@ -245,7 +341,7 @@ var Loadout = ( function() {
 	{
 		var elTeams = $.GetContextPanel().FindChildInLayoutFile( 'LoadoutSelectTeam' );
 		var loadoutSlot = _GetSelectededLoadoutSlot();
-		var team = _GetSelectededTeam();
+		var team = _GetSelectededTeam( loadoutSlot );
 
 		if ( _SlotHasNoTeamAsTeam( loadoutSlot ) )
 		{
@@ -257,16 +353,40 @@ var Loadout = ( function() {
 		}
 	};
 
+	var _GetSelectedTeamAsString = function( loadoutSlot )
+	{
+		if ( _SlotHasNoTeamAsTeam( loadoutSlot ) )
+		{
+			return 'noteam';
+		}
+
+		return _ConvertTeamFromNumToString( _GetSelectededTeam( loadoutSlot ));
+	};
+
+	var _ConvertTeamFromNumToString = function( numTeam )
+	{
+		if ( numTeam === 0 )
+		{
+			return 'noteam';
+		}
+		
+		return numTeam === 3 || numTeam === "3" ? 'ct' : 't';
+	};
+
 	                                                                                                    
 	var _ShowItemsForSelectedSlot = function()
 	{
 		                           
 		if ( _GetUsesWedges() )
 		{
-			$.DispatchEvent( "ShowLoadout", _GetSelectededLoadoutSlot(), Number( _GetSelectededTeam() ) );
+			var loadoutSlot = _GetSelectededLoadoutSlot();
+			$.DispatchEvent( "ShowLoadout", loadoutSlot, Number( _GetSelectededTeam(loadoutSlot) ) );
 
 			var wedges = $.GetContextPanel().FindChildInLayoutFile( 'ItemWheel' ).Children();
-			$.DispatchEvent( "Activated", wedges[ 0 ], "mouse" );
+			var result = wedges.filter( element => element.checked === true );
+			var selectedWedge =  result.length > 0 ? result[0] : wedges[ 0 ];
+
+			$.DispatchEvent( "Activated", selectedWedge, "mouse" );
 
 			_ShowRadialLoadout();
 			return;
@@ -297,7 +417,8 @@ var Loadout = ( function() {
 	{
 		                       
 		                              
-		$.DispatchEvent( "ShowLoadout", _GetSelectededLoadoutSlot(), Number( _GetSelectededTeam() ) );
+		var loadoutSlot = _GetSelectededLoadoutSlot();
+		$.DispatchEvent( "ShowLoadout", loadoutSlot, Number( _GetSelectededTeam( loadoutSlot ) ) );
 		Loadout.PlayerEquipSlotChangedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', Loadout.UpdateForSingleSlotItems );
 	};
 
@@ -314,6 +435,9 @@ var Loadout = ( function() {
 	{
 		if ( _GetUsesWedges() )
 		{
+			var loadoutSlot = _GetSelectededLoadoutSlot();
+			var team = _GetSelectededTeam( loadoutSlot );
+			_UpdateShuffleToggle( team );
 			return;
 		}
 
@@ -332,6 +456,13 @@ var Loadout = ( function() {
 		var elSelectedSlot = elSlots.Children().filter( slot => slot.GetAttributeString( 'data-slot', '' ) === itemSlot );
 		elSelectedSlot[ 0 ].checked = true;
 
+		                                                                               
+		                                         
+		if ( numTeam == 2 )
+		{
+			$( "#LoadoutTeamT" ).checked = true;
+		}
+
 		if ( _GetUsesWedges() )
 		{
 			$.DispatchEvent( "ShowLoadout", subslot, numTeam );
@@ -340,20 +471,62 @@ var Loadout = ( function() {
 			wedgeList[ 0 ].checked = true;
 
 			_ShowRadialLoadout();
+			_UpdateShuffleToggle( numTeam );
 		}
 		else
 		{
 			_ShowSingleSlotLoadout();
-		}	
-		
-		                              
-		
-		
-		                                                                                          
-		                                                                                                                      
-		  
-	}	
+		}
+	};
 
+	var _SelectMinimumItemsForShuffle = function ( itemID, team )
+	{
+		                               
+		var curItem = ItemInfo.GetItemIdForItemEquippedInLoadoutSlot( itemID, team );
+		if ( !ItemInfo.IsItemInShuffleForTeam( curItem, team ) )
+		{
+			ItemInfo.AddItemToShuffle( curItem, team );
+		}
+
+		var elLoadoutItemList = $( '#LoadoutItemList' );
+		if ( elLoadoutItemList && elLoadoutItemList.IsValid() )
+		{
+			for ( var i = 0; i < elLoadoutItemList.count; ++i )
+			{
+				if ( LoadoutAPI.GetItemCountInShuffle( itemID, team ) >= 2 )
+					break;
+	
+				ItemInfo.AddItemToShuffle( elLoadoutItemList.GetItem( i ), team );
+			}
+		}
+	}
+
+
+	var _ShowShuffleContextMenu = function()
+	{
+		var items = [];	
+		var loadoutSlot = _GetSelectededLoadoutSlot();
+		var team = _ConvertTeamFromNumToString( _GetSelectededTeam( loadoutSlot ) );
+		var itemID = _GetCurrentItemID();
+		items.push( 
+			{
+				label: '#CSGO_UI_AddAllToShuffle',
+				jsCallback: function ()
+				{
+					LoadoutAPI.ShuffleAllForTeam( itemID, team )
+				}
+			},
+			{
+				label: '#CSGO_UI_MinimalShuffle',
+				jsCallback: function ()
+				{
+					LoadoutAPI.ClearShuffle( itemID, team );
+					_SelectMinimumItemsForShuffle( itemID, team );
+				}
+			}
+		);
+		UiToolkitAPI.ShowSimpleContextMenu( 'LoadoutShuffleOptions', 'LoadoutShuffleCtxMenu', items );
+	}
 
                           
     return {
@@ -363,11 +536,14 @@ var Loadout = ( function() {
 		ShowItemsForSelectedSlot: _ShowItemsForSelectedSlot,
 		OnReadyForDisplay: _OnReadyForDisplay,
 		OnUnreadyForDisplay: _OnUnreadyForDisplay,
+		LoadoutWedgePressed: _LoadoutWedgePressed,
 		UpdateForSingleSlotItems: _UpdateForSingleSlotItems,
 		ResetFlair: _ResetFlair,
 		UpdateItemLister: _UpdateItemList,
+		OnShuffleToggle: _OnShuffleToggle,
 		SetLoadoutToSlot: _SetLoadoutToSlot,
-		ToggleTeam: _ToggleTeam
+		ToggleTeam: _ToggleTeam,
+		ShowShuffleContextMenu: _ShowShuffleContextMenu
     };
 
 } )();
@@ -378,7 +554,9 @@ var Loadout = ( function() {
 (function ()
 {
 	Loadout.Init();
+	var elloadout = $.GetContextPanel().FindChildInLayoutFile( 'Loadout' );
 	$.RegisterEventHandler( 'ReadyForDisplay', $.GetContextPanel(), Loadout.OnReadyForDisplay );
 	$.RegisterEventHandler( 'UnreadyForDisplay', $.GetContextPanel(), Loadout.OnUnreadyForDisplay );
+	$.RegisterEventHandler( 'LoadoutWedgePressed', $.GetContextPanel(), Loadout.LoadoutWedgePressed );
 	$.RegisterForUnhandledEvent( 'ShowLoadoutForItem', Loadout.SetLoadoutToSlot );
 })();

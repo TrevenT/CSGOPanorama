@@ -183,6 +183,16 @@
 	transition-timing-function: ease-in-out;
 }
 
+.item-tile__equipped__radiodot--filled.shuffle
+{
+    background-image: url("file://{images}/icons/ui/random.svg");
+    background-img-opacity: 1;
+    background-size: 10px 10px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+	background-color: None;
+}
+
 .item-tile__equipped__radiodot--t
 {
 	wash-color: warningColor;
