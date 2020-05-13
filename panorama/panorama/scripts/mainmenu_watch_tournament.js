@@ -295,7 +295,7 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
-			var tabIdToActivate = 'id-nav-pick-prelims';
+			var tabIdToActivate = 'id-nav-pick-group';
 
 			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );	
 		}
