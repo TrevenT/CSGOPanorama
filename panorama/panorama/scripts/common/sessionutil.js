@@ -15,7 +15,7 @@ var SessionUtil = ( function ()
 		                                                                                                                  
 		                               
 		return true;
-	}
+	};
 
 	var _GetMaxLobbySlotsForGameMode = function( gameMode )
 	{
@@ -24,15 +24,34 @@ var SessionUtil = ( function ()
 		var numLobbySlots = 5;                                        
 		if ( gameMode == "scrimcomp2v2" ||
 			gameMode == "cooperative" ||
-			gameMode == "coopmission")
+			gameMode == "coopmission" )
 			numLobbySlots = 2;
 		else if ( gameMode === "survival" )
 			numLobbySlots = 3;
 		return numLobbySlots;
-	}
+	};
+
+	var _AreLobbyPlayersPrime = function()
+	{
+		var playersCount = PartyListAPI.GetCount();
+
+		for ( var i = 0; i < playersCount; i++ )
+		{
+			var xuid = PartyListAPI.GetXuidByIndex( i );
+			var isFriendPrime = PartyListAPI.GetFriendPrimeEligible( xuid );
+
+			if ( isFriendPrime === false )
+			{
+				return false;
+			}
+		}
+
+		return true;
+	};
 
 	return{
 		DoesGameModeHavePrimeQueue : _DoesGameModeHavePrimeQueue,
-		GetMaxLobbySlotsForGameMode : _GetMaxLobbySlotsForGameMode
+		GetMaxLobbySlotsForGameMode: _GetMaxLobbySlotsForGameMode,
+		AreLobbyPlayersPrime: _AreLobbyPlayersPrime
 	};
 })();

@@ -675,24 +675,6 @@ var PlayMenu = ( function()
 
 	var _UpdatePrimeBtn = function( isPrime )
 	{
-		var AreLobbyPlayersPrime = function()
-		{
-			var playersCount = PartyListAPI.GetCount();
-
-			for ( var i = 0; i < playersCount; i++ )
-			{
-				var xuid = PartyListAPI.GetXuidByIndex( i );
-				var isFriendPrime = PartyListAPI.GetFriendPrimeEligible( xuid );
-
-				if ( isFriendPrime === false )
-				{
-					return false;
-				}
-			}
-
-			return true;
-		};
-
 		var elPrimeStatusButton = $( '#PrimeStatusButton' );
 
 		                                                                                  
@@ -710,7 +692,7 @@ var PlayMenu = ( function()
 
 		                                                
 		                                                                               
-		if ( AreLobbyPlayersPrime() )
+		if ( SessionUtil.AreLobbyPlayersPrime() )
 		{
 			tooltipText = isPrime ? '#tooltip_prime_only' : '#tooltip_prime_priority';
 			btnText = "#SFUI_Elevated_Status_enabled";
