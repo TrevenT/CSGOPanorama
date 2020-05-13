@@ -53,7 +53,7 @@
 					</Panel>
 					<Panel id="MVPMusicKit" class="MVP__MusicKit">
 						<Image id="MVPMusicKitIcon" class="MVP__MusicKitIcon" scaling="stretch-to-fit-preserve-aspect" />
-						<Label id="MVPMusicKitName" class="MVP__MusicKitText" text="XXXXX XXX XXXX" />
+						<Label id="MVPMusicKitName" class="MVP__MusicKitText MVP__MusicKitName" text="XXXXX XXX XXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
 						<Label id="MVPMusicKitStatTrak" class="MVP__MusicKitText MVP__MusicKitText--Bold" text="#SFUI_WinPanel_Playing_MVP_MusicKit_StatTrak" />
 						
 						                                                                                                     

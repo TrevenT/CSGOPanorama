@@ -18,11 +18,12 @@ CSGOSettingsSlider
 	vertical-align: center;
 }
 
-CSGOSettingsSlider:disabled Panel Label
-{
-    color: #333333;
-}
 
+#SliderTrackProgress:parentdisabled,
+#SliderThumb:parentdisabled
+{
+	visibility: collapse;
+}
 
 TextEntry#Value
 {
@@ -50,6 +51,10 @@ TextEntry#Value:focus
 	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000080), color-stop( 0, #00000060 ), to( #00000080 ) );
 }
 
+TextEntry#Value:parentdisabled
+{
+	visibility: collapse;
+}
 
              
             

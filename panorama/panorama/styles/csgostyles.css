@@ -1177,11 +1177,6 @@ CSGOSettingsSlider
 	margin-right: 10px;
 }
 
-CSGOSettingsSlider:disabled Panel Label
-{
-    color: #333333;
-}
-
 #Value
 {
 	width: 36px;

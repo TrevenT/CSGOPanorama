@@ -49,6 +49,12 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 
+					                   
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_Brightness">
+						<CSGOSettingsSlider id="brightness" text="#GameUI_Brightness" max="2.6" min="1.6" invert="true" percentage="true" value100percent="2.0" convar="mat_monitorgamma"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
 					                     
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_Aspect_Ratio" class="half-width"/>

@@ -764,6 +764,18 @@ var Scoreboard = ( function()
 		'deaths': -1,           
 	}
 
+	function _lessthan( x , y )
+	{
+	    x = Number(x);
+	    y = Number(y);
+
+	    if( x === NaN )
+	        return (y !== NaN);
+	    if( y === NaN )
+	        return false;
+
+	    return (x < y);
+	}
 
 	                                                          
 	  
@@ -798,23 +810,18 @@ var Scoreboard = ( function()
 
 			for ( var stat in _m_sortOrder )
 			{
-
-				var p1stat;
-				var p2stat;
+			    var p1stat = oPlayer.m_oStats[ stat ];
+			    var p2stat = oCompareTargetPlayer.m_oStats[ stat ];
 
 				if ( _m_sortOrder[ stat ] === -1 )            
 				{
-					p2stat = Number( oPlayer.m_oStats[ stat ] );
-					p1stat = Number( oCompareTargetPlayer.m_oStats[ stat ] );
-				}
-				else
-				{
-					p1stat = Number( oPlayer.m_oStats[ stat ] );
-					p2stat = Number( oCompareTargetPlayer.m_oStats[ stat ] );
+                           
+				    var tmp = p1stat;
+				    p1stat = p2stat;
+				    p2stat = tmp;
 				}
 
-				if ( ( p1stat > p2stat ) ||
-						( ( p1stat != undefined ) && ( p2stat == undefined ) ) )
+				if ( _lessthan(p2stat, p1stat) )
 				{
 
 					if ( children[ i - 1 ] != elPlayer )
@@ -837,8 +844,7 @@ var Scoreboard = ( function()
 
 					return;
 				}
-				else if ( ( p1stat < p2stat ) ||
-				( ( p1stat == undefined ) && ( p2stat != undefined ) ) )
+				else if ( _lessthan(p1stat, p2stat) )
 				{
 
 					                                                         

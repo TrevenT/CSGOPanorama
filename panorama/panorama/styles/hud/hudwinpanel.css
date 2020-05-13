@@ -642,10 +642,18 @@ CSGOHudWinPanel Label
 
 .MVP__MusicKitText
 {
-	width: fit-children;
 	font-size: 18px;
 	color: #ffffff;
 	vertical-align: middle;
+	text-overflow: shrink;
+	padding-left: 4px;
+}
+
+.MVP__MusicKitName
+{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 400px;
 }
 
 .MVP__MusicKitInfoText
@@ -686,7 +694,6 @@ CSGOHudWinPanel Label
 	animation-duration: musicKitAnimDuration;
 	animation-timing-function: linear;
 	animation-iteration-count: 1;
-	width: fit-children;
 }
 
 @keyframes 'MusicKitFadeOutAnim'
