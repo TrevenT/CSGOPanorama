@@ -659,6 +659,19 @@ var CapabilityDecodable = ( function()
 	var _ShowUnlockAnimation = function()
 	{
 		var lootListCount = InventoryAPI.GetLootListItemsCount( m_caseId );
+		if ( lootListCount === undefined )
+		{
+			if ( InventoryAPI.IsValidItemID( m_itemFromContainer ) )
+			{
+				_ShowInspect();
+			}
+			else
+			{
+				_SetUpCaseOpeningCountdown();
+			}
+
+			return;
+		}
 
 		if ( lootListCount <= 1 )
 		{

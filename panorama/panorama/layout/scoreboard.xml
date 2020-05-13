@@ -116,6 +116,9 @@
 					</Panel>
 				</Panel>
 
+				               
+				<Panel id="id-sb-footer-panel"/>
+
 			</Panel>
 		</snippet>
 
@@ -192,36 +195,41 @@
 					</Panel>
 				</Panel>
 
-        
+				               
+				<Panel id="id-sb-footer-panel"/>
 
-        <Panel class="sb-footer-panel">
-          <Panel id="spec-button-group" class="sb-spectator-control-panel">
-            <Button id="spec-button1" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterIsCameraman');" 
-              onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button1', '#CSGO_Scoreboard_CastButton_Camera_Tooltip' );"
-						  onmouseout="UiToolkitAPI.HideTextTooltip();">
-              <Image src="file://{images}/icons/ui/camera.svg"/>
-            </Button>
-            <Button id="spec-button2" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterIsHeard');" 
-              onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button2', '#CSGO_Scoreboard_CastButton_Voice_Tooltip' );"
-						  onmouseout="UiToolkitAPI.HideTextTooltip();">
-              <Image src="file://{images}/icons/ui/unmuted.svg"/>
-            </Button>
-            <Button id="spec-button3" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterControlsXray');" 
-              onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button3', '#CSGO_Scoreboard_CastButton_XRay_Tooltip' );"
-						  onmouseout="UiToolkitAPI.HideTextTooltip();">
-              <Image src="file://{images}/icons/ui/ct_silhouette.svg"/>
-            </Button>
-            <Button id="spec-button4" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterControlsUI');" 
-              onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button4', '#CSGO_Scoreboard_CastButton_UI_Tooltip' );"
-						  onmouseout="UiToolkitAPI.HideTextTooltip();">
-              <Image src="file://{images}/icons/ui/menu.svg"/>
-            </Button>
-          </Panel>
-          <Label id="id-sb-mouse-instructions" />
-        </Panel>
-        
-				
+			</Panel>
+		</snippet>
 
+		<snippet name="snippet_sb-footer">
+			<Panel class="sb-footer-panel">
+				<Panel id="spec-button-group" class="sb-spectator-control-panel">
+					<Button id="spec-button1" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterIsCameraman');" 
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button1', '#CSGO_Scoreboard_CastButton_Camera_Tooltip' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image src="file://{images}/icons/ui/camera.svg"/>
+					</Button>
+					<Button id="spec-button2" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterIsHeard');" 
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button2', '#CSGO_Scoreboard_CastButton_Voice_Tooltip' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image src="file://{images}/icons/ui/unmuted.svg"/>
+					</Button>
+					<Button id="spec-button3" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterControlsXray');" 
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button3', '#CSGO_Scoreboard_CastButton_XRay_Tooltip' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image src="file://{images}/icons/ui/ct_silhouette.svg"/>
+					</Button>
+					<Button id="spec-button4" class="IconButton sb-spectator-control-button" onactivate="$.DispatchEvent('Scoreboard_ToggleSetCasterControlsUI');" 
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'spec-button4', '#CSGO_Scoreboard_CastButton_UI_Tooltip' );"
+								onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image src="file://{images}/icons/ui/menu.svg"/>
+					</Button>
+				</Panel>
+				<Button id="id-sb-footer-server-website" class="PopupButton hidden" onactivate="MatchStatsAPI.GetServerWebsiteURL( true );" >
+					<Label html="true" text="#CSGO_Watch_ServerWebsite" />
+					<Image src="file://{images}/icons/ui/link.svg"/>
+				</Button>
+				<Label id="id-sb-mouse-instructions" />
 			</Panel>
 		</snippet>
 

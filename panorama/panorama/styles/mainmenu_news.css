@@ -44,6 +44,7 @@
 	margin: 0px 24px 0px 0px;
 	vertical-align: center;
 	background-color: gradient( linear, 0% 100%, 0% 99%, from( white ), color-stop( 0, #ffffff00 ), to( #ffffff00 ) );
+	sound-trans: "";
 }
 
 .news-panel-navbar Label

@@ -712,7 +712,7 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 .content-navbar__tabs DropDown, 
 .content-navbar__tabs ToggleButton, 
 .content-navbar__tabs TextButton,
-.content-navbar__tabs Button
+.content-navbar__tabs Button,
 {
 	margin: 0px 28px 0px 0px;
 	width: fit-children;
@@ -775,7 +775,6 @@ ToggleButton Label,
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 	sound-trans: "UIPanorama.submenu_dropdown_option_select";
-	sound-trans: "UIPanorama.submenu_leveloptions_slidein";
 }
 
 .content-navbar__tabs RadioButton:disabled,

@@ -90,6 +90,9 @@ var InspectModelImage = ( function (){
 
 	var _ShowHideCharPanel = function( elParent, bshow )
 	{
+		if ( !elParent.IsValid() )
+			return;
+		
 		elParent.FindChildTraverse( 'InspectModelCharContainer' ).SetHasClass( 'hidden', !bshow );
 
 		if ( bshow )

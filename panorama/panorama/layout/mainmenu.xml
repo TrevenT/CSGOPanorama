@@ -121,6 +121,14 @@
 							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/check.svg" />
 						</Button>
 						                                                      
+						<Button id="MainMenuNavBarReportServer"
+									class="mainmenu-navbar__btn-small PauseMenuModeOnly"
+									onactivate="UiToolkitAPI.ShowCustomLayoutPopupParameters('', 'file://{resources}/layout/popups/popup_report_server.xml', '' );"
+									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarReportServer', '#tooltip_navbar_report_server' );"
+									onmouseout="UiToolkitAPI.HideTextTooltip();">
+							<Image textureheight="32" texturewidth="-1" src="file://{images}/icons/ui/report_server.svg" />
+						</Button>
+						                                                      
 						<Button id="MainMenuNavBarShowCommunityServerBrowser"
 									class="mainmenu-navbar__btn-small PauseMenuModeOnly"
 									onactivate="GameInterfaceAPI.ConsoleCommand( 'gamemenucommand openserverbrowser' )"

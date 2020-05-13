@@ -98,6 +98,28 @@ Label {
                                            
 }
 
+#id-sb-footer-server-website
+{
+	margin: 10px;
+	horizontal-align: left;
+	flow-children: right;
+}
+
+#id-sb-footer-server-website Label
+{
+	font-size: 16px;
+	color: #ffffff;
+	margin-right: 0px;
+	margin-top: 14px;
+}
+
+#id-sb-footer-server-website Image
+{
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
 #id-sb-mouse-instructions{
 
 	font-size: 12px;
@@ -257,7 +279,7 @@ Label {
 	font-size: 16px;
 
 	horizontal-align: left;
-	margin-top: 6px;
+	margin-top: 0px;
 
 	max-height: 20px;
 	max-width: 500px;

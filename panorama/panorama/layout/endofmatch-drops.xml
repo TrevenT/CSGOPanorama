@@ -27,7 +27,7 @@
 
 					<Panel class="eom-drops__item__owner-container">
 						<CSGOAvatarImage id="id-avatar" class="eom-drops-avatar"/>
-						<Label id="id-item-owner-name" class="stratum-font"/>
+						<Label id="id-item-owner-name" class="stratum-font" text="{s:user_name}"/>
 					</Panel>
 				</Panel>
 			</Panel>

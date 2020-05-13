@@ -188,6 +188,9 @@ var MainMenu = ( function() {
 		                                                                                                                                                 
 		$( '#MainMenuNavBarVote' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', ( bTraining ||                      bGotvSpectating ) );
 
+		                                                                                        
+		$( '#MainMenuNavBarReportServer' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', !bIsCommunityServer );
+
 		                                                                                           
 		$( '#MainMenuNavBarShowCommunityServerBrowser' ).SetHasClass( 'mainmenu-navbar__btn-small--hidden', !bIsCommunityServer );
 

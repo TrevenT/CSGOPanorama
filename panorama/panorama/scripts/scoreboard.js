@@ -2159,7 +2159,6 @@ var Scoreboard = ( function()
 	
 		
 		var elMouseBinding = _m_cP.FindChildInLayoutFile( "id-sb-mouse-instructions" );
-
 		if ( elMouseBinding && elMouseBinding.IsValid() )
 		{
 			bind = "{v:csgo_bind:bind_" + bind + "}";
@@ -2170,6 +2169,27 @@ var Scoreboard = ( function()
 			elMouseBinding.text =  $.Localize( "#Scoreboard_Mouse_Enable_Instruction", elMouseBinding );
 		}
 
+
+		var elFooterWebsite = _m_cP.FindChildInLayoutFile( "id-sb-footer-server-website" );
+		if ( elFooterWebsite && elFooterWebsite.IsValid() )
+		{
+			var strWebsiteURL = MatchStatsAPI.GetServerWebsiteURL();
+			if ( strWebsiteURL )
+			{
+				elFooterWebsite.RemoveClass( 'hidden' );
+
+				elFooterWebsite.SetPanelEvent( 'onmouseover', function() {
+					UiToolkitAPI.ShowTextTooltip( 'id-sb-footer-server-website', strWebsiteURL );
+				} );
+				elFooterWebsite.SetPanelEvent( 'onmouseout', function () {
+					UiToolkitAPI.HideTextTooltip();
+				} );
+			}
+			else
+			{
+				elFooterWebsite.AddClass( 'hidden' );
+			}
+		}
 	}
 
 	function _UpdateHLTVViewerNumber( nViewers )
@@ -2261,6 +2281,9 @@ var Scoreboard = ( function()
 		                      
 		elRndTop.AddClass( "sb-team--CT" );
 		elRndBot.AddClass( "sb-team--TERRORIST" );
+
+		if ( typeof oScoreData[ "rounddata" ][ rnd ] !== "object" )
+			return;
 
 		var result = oScoreData[ "rounddata" ][ rnd ][ "result" ].replace( /^(ct_|t_)/, "" );
 
@@ -2892,6 +2915,7 @@ var Scoreboard = ( function()
 		_Helper_LoadSnippet( _m_cP, scoreboardTemplate );
 
 		_Helper_LoadSnippet( $( "#id-sb-meta" ), "snippet_sb-meta" );
+		_Helper_LoadSnippet( $( "#id-sb-footer-panel" ), "snippet_sb-footer" );
 
 		                                                                               
 		  

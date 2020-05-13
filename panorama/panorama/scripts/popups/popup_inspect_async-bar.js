@@ -310,7 +310,6 @@ var InspectAsyncActionBar = ( function()
 		OnInventoryPrestigeCoinResponse: _OnInventoryPrestigeCoinResponse,
 		ClosePopup: _ClosePopup,
 		OnEventToClose : _OnEventToClose,
-		DoAsyncAction: _OnAccept,
 		EnableDisableOkBtn : _EnableDisableOkBtn
 	};
 } )();

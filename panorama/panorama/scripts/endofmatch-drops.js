@@ -11,11 +11,13 @@ var EOM_Drops = (function () {
 
 	_m_cP.Data().m_retries = 0;
 
-	var _DisplayMe = function() {
+	var _DisplayMe = function()
+	{
 
 		var oDropList = _m_cP.DropListJSO;
+		var numDrops = Object.keys( oDropList ).length;
 
-		if ( Object.keys( oDropList ).length == 0 )
+		if ( numDrops === 0 )
 		{
 			return false;
 		}
@@ -23,8 +25,8 @@ var EOM_Drops = (function () {
 		var animTime = 0;
 
 		                                                                      
-		Object.keys( oDropList ).forEach( function (key, index) {
-
+		Object.keys( oDropList ).forEach( function( key, index )
+		{
 			$.Schedule( animTime, function()
 			{
 				var elDropContainer = $.CreatePanel( "Panel", _m_cP, "drop_" + index );
@@ -53,7 +55,7 @@ var EOM_Drops = (function () {
 				              
 				var elOwnerLabel = elDropContainer.FindChildInLayoutFile( "id-item-owner-name" );
 				elOwnerLabel.AddClass( "eom-drops__item__owner" );
-				elOwnerLabel.text = GameStateAPI.GetPlayerName( oDropList[ key ].owner_xuid );
+				elOwnerLabel.SetDialogVariable( 'user_name', GameStateAPI.GetPlayerNameWithNoHTMLEscapes( oDropList[ key ].owner_xuid ) );
 				
 				if ( oDropList[ key ].is_local )
 				{
@@ -95,27 +97,29 @@ var EOM_Drops = (function () {
 					soundEvent = "ItemDropAncient";
 				}
 
-				var dropWidth = 220;
-
-				                                                           
-				                                                      
-					
 				$.Schedule( 0.5, function() { elDropContainer.AddClass( 'blendmode' ); } );
-				_m_cP.style.width = ( dropWidth * ( index + 1 )) + 'px';
 
+				var dropWidth = 220;
+				_m_cP.style.width = ( dropWidth * ( index + 1 ) ) + 'px';
 
 				$.DispatchEvent( "PlaySoundEffect", soundEvent, "MOUSE" );
-				elDropContainer.ScrollParentToMakePanelFit ( 2, false );
-			});
+				elDropContainer.ScrollParentToMakePanelFit( 2, false );
+
+				                                                                       
+				                                                                          
+				if ( index === ( numDrops - 1 ) && index > 4 )
+				{
+					_m_cP.AddClass( 'showscroll' );
+				}
+			} );
 
 			animTime += oDropList[ key ].display_time;
-		});
+		} );
 
 		_m_pauseBeforeEnd += animTime;
 
 		return true;
-
-	}
+	};
 
 	                                                         
 	                                                                      
