@@ -459,7 +459,7 @@ var CapabilityDecodable = ( function()
 		{
 			var elParent = $.GetContextPanel().FindChildInLayoutFile( element );
 
-			for ( var i = 0; i < numTilesInScroll; i++ )
+			for ( var i = 0; i < displayItemsList.length; i++ )
 			{
 				var itemId = displayItemsList[ i ];
 				var tileId = ( i === indexItemsFromContainer ) ? 'ItemFromContainer' : ( i === indexStart ) ? 'ItemStart' : itemId;

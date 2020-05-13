@@ -155,25 +155,8 @@ var ItemTile = ( function()
 
 	var _TintSprayImage = function( id )
 	{
-		if ( ItemInfo.ItemMatchDefName( id, 'spraypaint' ) || ItemInfo.ItemMatchDefName( id, 'spray' ) )
-		{
-			InventoryAPI.GetSprayTintColorCode( id );
-
-			var colorTint = InventoryAPI.GetSprayTintColorCode( id );
-			
-			if ( colorTint )
-			{
-				$.GetContextPanel().FindChildInLayoutFile( 'ItemImage' ).style.washColor = colorTint;
-			}
-			else
-			{
-				$.GetContextPanel().FindChildInLayoutFile( 'ItemImage' ).style.washColor = 'none';
-			}
-		}
-		else
-		{
-			$.GetContextPanel().FindChildInLayoutFile( 'ItemImage' ).style.washColor = 'none';
-		}
+		var elImage = $.GetContextPanel().FindChildInLayoutFile( 'ItemImage' );
+		TintSprayIcon.CheckIsSprayAndTint( id, elImage );
 	};
 
 	var _DisableTile = function( id )

@@ -109,12 +109,18 @@
 	-s2-mix-blend-mode: additive;
 }
 
-.eom-skillgroup-new-anim
+.eom-skillgroup-new-anim,
+.eom-skillgroup__flare.appear
 {
 	animation-name: eom-skillgroup-new;
 	animation-duration: 1s;
 	animation-timing-function: ease-in;
 	animation-iteration-count: 1;
+}
+
+.eom-skillgroup__flare.appear
+{
+	animation-duration: .75s;
 }
 
 
@@ -179,8 +185,7 @@
 
 	vertical-align: center;
 	horizontal-align: center;
-	-s2-mix-blend-mode: screen;
-	z-index: 5;
+	-s2-mix-blend-mode: additive;
 }
 
 .eom-skillgroup__info

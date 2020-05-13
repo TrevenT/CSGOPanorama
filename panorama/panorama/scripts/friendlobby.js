@@ -10,21 +10,28 @@ var friendLobby = ( function (){
 		var lobbyType = PartyBrowserAPI.GetPartyType( _m_xuid );
 		var gameMode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid,'game/mode' );
 
-		_SetLobbyLeaderNameAvatar( elTile );
+		_SetLobbyLeaderNameAvatar( elTile, lobbyType );
 		_SetGroupNameLink( elTile, lobbyType );
 		_SetPrime( elTile );
 		_SetFlag( elTile );
 		_SetSkillGroup( elTile, gameMode );
 		_SetLobbySettings( elTile, gameMode );
 		_SetLobbyPlayerSlots( elTile, gameMode, lobbyType );
+		_SetDismissButton( elTile, lobbyType );
 	}
 
-	var _SetLobbyLeaderNameAvatar = function ( elTile )
+	var _SetLobbyLeaderNameAvatar = function ( elTile, lobbyType )
 	{
-		elTile.FindChildTraverse( 'JsFriendLobbyLeaderName' ).text = FriendsListAPI.GetFriendName( _m_xuid );
-		elTile.FindChildTraverse( 'JsFriendLobbyLeaderAvatar' ).steamid = _m_xuid;
+		var xuidLobbyLeader = PartyBrowserAPI.GetPartyMemberXuid( _m_xuid, 0 );
 
-		elTile.FindChildTraverse( 'JsFriendLobbyLeaderBtn' ).SetPanelEvent( 'onactivate', _OpenContextMenu.bind( undefined, _m_xuid ));
+		elTile.SetDialogVariable( 'friendname', $.HTMLEscape( FriendsListAPI.GetFriendName( xuidLobbyLeader ) ) );
+
+		var nameString = ( lobbyType === 'invited' ) ? '#tooltip_friend_invited_you' : "#tooltip_lobby_leader_name";
+		elTile.FindChildTraverse( 'JsFriendLobbyLeaderName' ).text = nameString;
+
+		elTile.FindChildTraverse( 'JsFriendLobbyLeaderAvatar' ).steamid = xuidLobbyLeader;
+
+		elTile.FindChildTraverse( 'JsFriendLobbyLeaderBtn' ).SetPanelEvent( 'onactivate', _OpenContextMenu.bind( undefined, xuidLobbyLeader ));
 	};
 
 	var _SetPrime = function ( elTile )
@@ -37,7 +44,15 @@ var friendLobby = ( function (){
 	{
 		var countryCode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/loc' );
 		var elFlagImg = elTile.FindChildTraverse( 'JsFriendLobbyFlag' );
-		elFlagImg.SetImage( 'file://{images}/flags/'+ countryCode +'.png' );
+		if ( countryCode )
+		{
+			elFlagImg.SetImage( 'file://{images}/flags/'+ countryCode +'.png' );
+			elFlagImg.RemoveClass( 'hidden' );
+		}
+		else
+		{
+			elFlagImg.AddClass( 'hidden' );
+		}
 	};
 
 	var _SetSkillGroup = function ( elTile, gameMode )
@@ -153,10 +168,11 @@ var friendLobby = ( function (){
 				else
 				{
 					elJoinBtn.enabled = true;
-					tooltipText = $.Localize( 'tooltip_join_public_lobby' );
+					tooltipText = $.Localize( ( lobbyType === 'invited' ) ? 'tooltip_Join' : 'tooltip_join_public_lobby' );
 					
 					var onActivate = function ( lobbyLeaderXuid )
 					{
+						$.DispatchEvent( 'PlaySoundEffect', 'PanoramaUI.Lobby.Joined', 'MOUSE' );
 						PartyBrowserAPI.ActionJoinParty( lobbyLeaderXuid );
 					}
 
@@ -194,6 +210,12 @@ var friendLobby = ( function (){
 		var elGroupLBtn = elTile.FindChildTraverse( 'JsFriendLobbyGroupBtn' );
 		var elGroupLabel = elTile.FindChildTraverse( 'JsFriendLobbyGroupTxt' );
 
+		if ( lobbyType === 'invited' )
+		{
+			elGroupLabel.visible = false;
+			elGroupLBtn.visible = false;
+		}
+
 		if( lobbyType === 'nearby' )
 		{
 			elGroupLabel.text = $.Localize( '#SFUI_Lobby_GroupsNearby' );
@@ -222,6 +244,26 @@ var friendLobby = ( function (){
 			elGroupLBtn.enabled = true;
 		}
 	};
+
+	var _SetDismissButton = function( elTile, lobbyType )
+	{
+		if ( lobbyType === 'invited' )
+		{
+			var elCloseButton = elTile.FindChildInLayoutFile( 'FriendLobbyCloseButton' );
+			elCloseButton.RemoveClass( 'hidden' );
+			elCloseButton.SetPanelEvent( "onactivate", function() {
+				$.DispatchEvent( 'PlaySoundEffect', 'PanoramaUI.Lobby.Left', 'MOUSE' );
+				PartyBrowserAPI.ClearInvite( _m_xuid );
+			} );
+
+			elCloseButton.SetPanelEvent( 'onmouseover', function() {
+				UiToolkitAPI.ShowTextTooltip( 'FriendLobbyCloseButton', $.Localize( '#tooltip_discard_invite' ) );
+			} );
+			elCloseButton.SetPanelEvent( 'onmouseout', function () {
+				UiToolkitAPI.HideTextTooltip();
+			} );
+		}
+	}
 
 	var _GetClanLink = function ( clanId )
 	{

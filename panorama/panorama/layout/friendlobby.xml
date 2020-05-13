@@ -31,9 +31,12 @@
 						src="file://{images}/icons/ui/prime.svg" 
 						texturewidth="20" 
 						textureheight="20"/>
-				<Label id="JsFriendLobbyLeaderName" class="friendlobby__text fontWeight-Bold" text=""/>
+				<Label id="JsFriendLobbyLeaderName" html="true" class="friendlobby__text fontWeight-Bold" text=""/>
 			</Panel>
 			<Panel class="friendlobby__row-left">
+				<Button id="FriendLobbyCloseButton" class="IconButton hidden">
+					<Image src = "file://{images}/icons/ui/exit.svg"/>
+				</Button>
 				<Image id="JsFriendLobbyFlag" 
 						class="friendlobby__row__icon-flag" 
 						src=""

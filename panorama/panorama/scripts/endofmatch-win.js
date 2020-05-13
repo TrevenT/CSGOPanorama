@@ -11,7 +11,7 @@ var dictRoundResultImage = {
 var EOM_Win = ( function () {
 
 
-	var _m_pauseBeforeEnd = 7.0;
+	var _m_pauseBeforeEnd = 4.0;
 	var _m_cP = $.GetContextPanel();
 
                                                      

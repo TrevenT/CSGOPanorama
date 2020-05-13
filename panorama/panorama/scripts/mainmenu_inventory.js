@@ -347,7 +347,7 @@ var InventoryPanel = ( function (){
 			}
 	
 			                        
-			elDropdown.SetSelected( InventoryAPI.GetSortMethodByIndex( 0 ) );
+			elDropdown.SetSelected( GameInterfaceAPI.LookupConVarStringValue( "cl_inventory_saved_sort2" ) );
 		}
 	};
 
@@ -364,6 +364,12 @@ var InventoryPanel = ( function (){
 				elDropdown.GetSelected().id,
 				''
 			);
+
+			if ( typeof elDropdown.GetSelected().id === "string" && elDropdown.GetSelected().id !== GameInterfaceAPI.LookupConVarStringValue( "cl_inventory_saved_sort2" ) )
+			{
+				GameInterfaceAPI.SetConVarStringValue( "cl_inventory_saved_sort2", elDropdown.GetSelected().id );
+				GameInterfaceAPI.ConsoleCommand( "host_writeconfig" );
+			}
 		}
 	};
 

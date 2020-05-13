@@ -51,25 +51,7 @@ var InspectModelImage = ( function (){
 
 	var _TintSprayImage = function( id, elImage )
 	{
-		if ( ItemInfo.ItemMatchDefName( id, 'spraypaint' ) || ItemInfo.ItemMatchDefName( id, 'spray' ) )
-		{
-			InventoryAPI.GetSprayTintColorCode( id );
-
-			var colorTint = InventoryAPI.GetSprayTintColorCode( id );
-			
-			if ( colorTint )
-			{
-				elImage.style.washColor = colorTint;
-			}
-			else
-			{
-				elImage.style.washColor = 'none';
-			}
-		}
-		else
-		{
-			elImage.style.washColor = 'none';
-		}
+		TintSprayIcon.CheckIsSprayAndTint( id, elImage );
 	};
 
 	var _SetCharScene = function ( elParent, id, selectedModel, selectedTeam )

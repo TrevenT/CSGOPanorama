@@ -129,6 +129,12 @@
 				text="#UI_AntiAddiction_Label_Composite" />
 		</Panel>
 
+		<Panel id="JsIncomingInvites" class="friendslist-incominginvites hidden">
+			<Panel id="JsIncomingInviteContainer" class="friendslist-incominginvites-container">
+				                                         
+			</Panel>
+		</Panel>
+
 		<Panel id="JsFriendsNavBar" class="friendslist-navbar">
 			<Panel id="JsFriendsTab-friends" class="friendslist-navbar-btn" style="tooltip-position: bottom;">
 				<RadioButton id="JsFriendsTab" 

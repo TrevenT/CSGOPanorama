@@ -23,10 +23,10 @@
 
 .eom-win__model
 {
-	width: 220px;
-	height: 220px;
+	width: 210px;
+	height: 210px;
 	horizontal-align: center;
-	vertical-align: center;
+	vertical-align: top;
 	background-color: none;
 	z-index: 2;
 
@@ -37,13 +37,11 @@
 {
 	horizontal-align: center;
 	vertical-align: bottom;
-	background-color: none;
-	font-size: 42px;
-	font-weight: bold;
-	text-shadow: 4px 4px 8px 2.0 #000000ff;
-	color: gradient( linear, 0% 0%, 0% 100%, from( white ), to( grey) );
+
+	font-size: 38px;
+
+
 	text-transform: uppercase;
-	margin-bottom: 18px;
 	z-index: 3;
 	pre-transform-scale2d: 1.8, 1.8;
 	opacity: 0;

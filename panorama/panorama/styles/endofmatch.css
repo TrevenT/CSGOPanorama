@@ -182,12 +182,11 @@
 
 .timer{
 
-	horizontal-align: center;
+	horizontal-align: right;
 	vertical-align: center;
-	text-shadow: 2px 2px 2px 0.0 #000000ff;
 	color: white;
 	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
-	text-align: center;
+	text-align: right;
 	letter-spacing: 1px;
 }
 
@@ -198,8 +197,10 @@
 
 #id-gametime__desc{
 
-	font-size: 16px;
+	font-size: 18px;
 	margin-right: 20px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: rgb(189, 189, 189);
 }
 
 
@@ -237,10 +238,8 @@
 }
 
 .content-navbar__tabs Label{
-	font-family: Stratum2, 'Arial Unicode MS';	
-	text-shadow: 2px 2px 2px 0.0 #000000ff;
+	font-family: Stratum2, 'Arial Unicode MS';
 }
-
 
 .content-navbar__tabs RadioButton{
 

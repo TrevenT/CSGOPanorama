@@ -9,14 +9,11 @@
 
 	flow-children: down;
 	horizontal-align: center;
+	margin-top: 12px;
 }
 
-#id-map-selection-container__directive {
-
-	text-transform: uppercase;
-	font-family: Stratum2;
-	font-weight: bold;
-	font-size: 24px;
+#id-map-selection-container__directive
+{
 
 	margin-left: 15px;
 
@@ -30,16 +27,17 @@
 
 
 .eom-voting__item {
-
 	flow-children: down;
-
 	margin: 9px;
-
 }
 
 .vote-item--separator {
 
-	width: 50px;
+	width: 1px;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.1);
+	margin: 0px 24px 0px 24px;
+	
 }
 
 .map-selection-btn--vote
@@ -49,7 +47,7 @@
 
 	horizontal-align: center;
 
-	margin: 15px;
+	margin: 10px 16px 10px 16px;
 
 	box-shadow: none;
 }
@@ -62,14 +60,25 @@
 
 .map-selection-info__map-name {
 
-	margin: 8px 8px 8px 0px;
+	margin: 0px 6px 0px 6px;
 	font-family: Stratum2;
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 14px;
 	color: white;
 
-	vertical-align: top;
+	vertical-align: bottom;
 	horizontal-align: center;
+}
+
+.map-selection-btn:enabled:Hover .map-selection-btn__screenshot
+{
+	pre-transform-scale2d: 1.2, 1.2;
+
+	transition-property: opacity, pre-transform-scale2d;
+	transition-duration: 2s, .25s;
+	transition-timing-function: ease-in-out;
+	
+	sound: "UIPanorama.submenu_contents_rollover";
 }
 
 
@@ -127,28 +136,25 @@
 	width: fit-children;
 	horizontal-align: center;
 	height: fit-children;
-
-
 }
+
 RadioButton Label.map-selection-item-count {
 
 	vertical-align: bottom;
 	horizontal-align: center;
 
 	margin: 0px;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 
 	font-family: Stratum2;
 	font-weight: bold;
 	font-size: 26px;
-
-
-
 }
 
 .map-selection-btn__skirmishicon {
 
-	vertical-align: center;
+	vertical-align: top;
+	margin-top: 48px;
 	horizontal-align: center;
 	width: 50%;
 	height: width-percentage(100%);

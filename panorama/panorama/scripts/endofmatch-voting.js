@@ -34,6 +34,9 @@ var EOM_Voting = (function () {
 		                        
 		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
 
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.submenu_leveloptions_slidein', 'MOUSE' );
+
+
 		if ( !oMatchEndVoteData || !oMatchEndVoteData[ "voting_options" ] )
 		{
 			return false;
@@ -81,9 +84,15 @@ var EOM_Voting = (function () {
 							{
 								var elMapImage = $.CreatePanel( 'Panel', elVoteItem.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
 								elMapImage.AddClass( 'map-selection-btn__screenshot' );
-								elMapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + map + '.png")';
-								elMapImage.style.backgroundPosition = '50% 0%';
-								elMapImage.style.backgroundSize = 'auto 100%';
+
+								var image = 'url("file://{images}/map_icons/screenshots/360p/' + map + '.png")';
+
+								if ( map in cfg.maps )
+								{
+									elMapImage.style.backgroundImage = image;
+									elMapImage.style.backgroundPosition = '50% 0%';
+									elMapImage.style.backgroundSize = 'auto 100%';
+								}
 							} );
 						}
 					}
@@ -107,11 +116,12 @@ var EOM_Voting = (function () {
 					var elMapImage = $.CreatePanel( 'Panel', elVoteItem.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
 					elMapImage.AddClass( 'map-selection-btn__screenshot' );
 	
-					if ( image )
+					var cfg = GameTypesAPI.GetConfig();
+					if ( internalName in cfg.maps )
 					{
 						elMapImage.style.backgroundImage = image;
 						elMapImage.style.backgroundPosition = '50% 0%';
-						elMapImage.style.backgroundSize = 'auto 100%';
+						elMapImage.style.backgroundSize = 'auto 100%';							
 					}	
 				}
 				else
@@ -129,13 +139,13 @@ var EOM_Voting = (function () {
 
 					                       
 					elMapSelectionList.FindChildrenWithClassTraverse( "map-selection-btn" ).forEach( btn => btn.enabled = false );
-				}
+					$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.submenu_leveloptions_select', 'MOUSE' );
+				};
 
 				elVoteItem.SetPanelEvent( 'onactivate', onActivate.bind( undefined, elVoteItem ) );
 
 				_m_elVoteItemPanels[ index ] = elVoteItem;
-
-			}	
+			}
 
 		});
 
@@ -155,9 +165,7 @@ var EOM_Voting = (function () {
 		var oMatchEndVoteData = _m_cP.NextMatchVotingData;
 
 		if ( !oMatchEndVoteData )
-		{
-			_Shutdown();
-			
+		{	
 			return;
 		}
 
@@ -218,14 +226,21 @@ var EOM_Voting = (function () {
 					if ( _m_elVoteItemPanels[ winningIndex ] )
 					{
 						                          
-						var elCheckmark =  _m_elVoteItemPanels[ winningIndex ].FindChildTraverse('id-map-selection-btn__winner' );
-						elCheckmark.AddClass( "appear" );
+						var elCheckmark = _m_elVoteItemPanels[ winningIndex ].FindChildTraverse( 'id-map-selection-btn__winner' );
+						
+						if ( !elCheckmark.BHasClass( 'appear' ) )
+						{
+							elCheckmark.AddClass( "appear" );
+							$.DispatchEvent( 'PlaySoundEffect', 'mainmenu_press_GO', 'MOUSE' );
+						}
 					}
-
 				}
 				else
 				{
 					var arrWinners = _GetWinningMaps();
+
+					if ( arrWinners.length == 0 )
+						return;
 
 					                 
 					                                                              
@@ -237,30 +252,38 @@ var EOM_Voting = (function () {
 						randIdx = Math.floor( Math.random() * arrWinners.length );
 					}
 
-					if ( arrWinners.length <= 2 || randIdx == m_randIdx )
+					                                                        
+					if ( randIdx == m_randIdx )
 					{
 						m_randIdx++;
+
+						                    
+						if ( m_randIdx >= arrWinners.length )
+						{
+							m_randIdx = 0;
+						}
 					}
 					else
 					{
 						m_randIdx = randIdx;
 					}
-					
-					
-					if ( m_randIdx >= arrWinners.length )
-					{
-						m_randIdx = 0;
-					}
 
 					var elMapSelectionList = _m_cP.FindChildInLayoutFile( 'id-map-selection-list' );
 
 					var elVoteItem = elMapSelectionList.FindChildTraverse( "id-vote-item--" + arrWinners[ m_randIdx ] );
+
+					if ( !elVoteItem || !elVoteItem.IsValid() )
+						return;
+					
 					var panelToHilite = elVoteItem.FindChildTraverse( "id-map-selection-btn__gradient" );
+					
+					if ( !panelToHilite || !panelToHilite.IsValid() )
+						return;
 					
 					panelToHilite.RemoveClass( "map-selection-btn__gradient--whiteout" );
 					panelToHilite.AddClass( "map-selection-btn__gradient--whiteout" );
+					$.DispatchEvent('PlaySoundEffect', 'buymenu_select', elVoteItem.id );
 
-					_m_updateJob = $.Schedule( 0.3, _UpdateVotes );
 					return;
 				}
 			}
@@ -278,25 +301,21 @@ var EOM_Voting = (function () {
 					var votes = oVoteOptions[ "votes" ];
 					var votesNeeded = oMatchEndVoteData[ "votes_to_succeed" ];
 
+					if ( votes > 0 && votes !== elVoteCountLabel.Data().votecount )
+					{
+						$.DispatchEvent('PlaySoundEffect', 'tab_settings_settings', elVoteItem.id );
+						elVoteCountLabel.Data().votecount = votes;
+					}
+
 					elVoteCountLabel.text = "<font color='#ffc130'>" + votes + '</font>/' + votesNeeded;
-
-
 				});
 			}
 
-			_m_updateJob = $.Schedule( 0.1, _UpdateVotes );
-
+			_m_updateJob = $.Schedule( 0.2, _UpdateVotes );
 		}
 
 	}
 
-	function _Shutdown()
-	{
-		if ( _m_updateJob )
-			$.CancelScheduled( _m_updateJob );
-	
-		_m_updateJob = undefined;
-	}
 
                                                          
                                                                       
@@ -310,8 +329,6 @@ var EOM_Voting = (function () {
 		{
 			EndOfMatch.SwitchToPanel( 'eom-voting' );
 
-			                                                     
-			
 			$.Schedule( _m_pauseBeforeEnd, _End );
 		}
 		else
@@ -323,8 +340,6 @@ var EOM_Voting = (function () {
 
 	function _End() 
 	{
-  		            
-
 		$.DispatchEvent( 'EndOfMatch_ShowNext' );
 	}
 
@@ -333,7 +348,6 @@ var EOM_Voting = (function () {
 return {
 
 	Start: _Start,
-	Shutdown: _Shutdown,
 	
 };
 

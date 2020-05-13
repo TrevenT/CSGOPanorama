@@ -4,7 +4,7 @@
 var EOM_Skillgroup = (function () {
 
 
-	var _m_pauseBeforeEnd = 2.0;	
+	var _m_pauseBeforeEnd = 1.5;
 	var _m_cP = $.GetContextPanel();
 
 
@@ -121,6 +121,7 @@ var EOM_Skillgroup = (function () {
 	{
 		var elModel = _m_cP.FindChildTraverse( 'id-eom-skillgroup-model' );
 		elModel.AddClass( 'eom-skillgroup__model-reveal' );
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.XP.NewSkillGroup', 'MOUSE' );
 	}
 
 	function _PlayParticles ()

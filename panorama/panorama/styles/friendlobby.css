@@ -79,7 +79,27 @@
 	visibility: visible;
 }
 
-.friendlobby__row__icon-skillgroup.hidden
+.friendlobby__row__icon-skillgroup.hidden,
+.friendlobby__row__icon-flag.hidden
+{
+	width: 0px;
+	height: 0px;
+	visibility: collapse;
+}
+
+#FriendLobbyCloseButton
+{
+	margin: 0px;
+	height: 20px;
+	width: 20px;
+}
+
+#FriendLobbyCloseButton Image
+{
+	margin: 0px;
+}
+
+.IconButton.hidden
 {
 	width: 0px;
 	height: 0px;

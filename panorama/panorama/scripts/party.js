@@ -60,11 +60,11 @@ var PartyMenu = ( function()
 
 		if ( numPlayersActuallyInParty > m_prevMembersInParty )
 		{
-			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.Lobby.Joined', 'PartyList' );
+			$.DispatchEvent( 'PlaySoundEffect', 'PanoramaUI.Lobby.Joined', 'PartyList' );
 		}
 		else if ( numPlayersActuallyInParty < m_prevMembersInParty )
 		{
-			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.Lobby.Left', 'PartyList' );
+			$.DispatchEvent( 'PlaySoundEffect', 'PanoramaUI.Lobby.Left', 'PartyList' );
 		}
 
 		m_prevMembersInParty = numPlayersActuallyInParty;

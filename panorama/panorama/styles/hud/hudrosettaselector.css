@@ -132,12 +132,27 @@ CSGOHudRosettaSelector Label
 {
     width: 300px;
     height: 300px;
-    y: 0px;
     
     horizontal-align: center;
     vertical-align: center;
     
     opacity: 1.0;
+}
+
+.RosettaSelection__ImageBG
+{
+    width: 300px;
+    height: 300px;
+
+    horizontal-align: center;
+    vertical-align: center;
+
+    opacity: 0.3;
+
+    background-color: #00000060;
+
+    border-radius: 50%;
+    border: 2px solid white;
 }
 
 .RosettaSelection__HintText

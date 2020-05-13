@@ -59,7 +59,6 @@ var EOM_Rank = (function () {
 	
 		_m_cP.FindChildInLayoutFile( "id-eom-rank__current__emblem" ).SetImage( "file://{images}/icons/xp/level" + currentRank + ".png" );
 
-
 		            
 		var newRank = currentRank + 1;
 		elNew.SetDialogVariableInt( "level", newRank );
@@ -81,7 +80,7 @@ var EOM_Rank = (function () {
 
 			var duration = sPerXp * xp;
 
-			var sPerSoundTick = 0.01;
+			var sPerSoundTick = 0.082;
 			for ( var t = sPerSoundTick; t < duration; t += sPerSoundTick )
 			{
 				$.Schedule( animTime + t, function()

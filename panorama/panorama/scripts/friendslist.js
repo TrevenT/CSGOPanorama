@@ -63,6 +63,8 @@ var friendsList = (function() {
 
 		_UpdateAllTabsAlertCounts();
 		_ShowSelectedTab( 0 );
+
+		_UpdateIncomingInvitesContainer();
 	}
 
 	var _SetLocalPlayerAvatar = function ()
@@ -447,7 +449,7 @@ var friendsList = (function() {
 			elTile.Data().type = type;
 		}	
 
-		if( children[index + 1] )
+		if( children && children[index + 1] )
 			elList.MoveChildBefore( elTile, children[index + 1] );
 		
 		_AddTransitionEndEventHandeler( elTile );
@@ -455,7 +457,25 @@ var friendsList = (function() {
 		_InitTile( elTile, tileXmlToUse );
 		elTile.RemoveClass( 'hidden' );
 
+		return elTile;
 	};
+
+	var _UpdateIncomingInvitesContainer = function()
+	{
+		var elInviteRoot = $.GetContextPanel().FindChild( 'JsIncomingInvites' );
+		elInviteRoot.AddClass( 'hidden' );
+
+		var elInviteContainer = elInviteRoot.FindChildInLayoutFile( 'JsIncomingInviteContainer' );
+		elInviteContainer.RemoveAndDeleteChildren();
+		
+		var numInvites = PartyBrowserAPI.GetInvitesCount();
+		if ( numInvites > 0 )
+		{	                                             
+			var xuid = PartyBrowserAPI.GetInviteXuidByIndex( 0 );
+			_AddTile( elInviteContainer, null, xuid, 0, 'friendlobby', null );
+			elInviteRoot.RemoveClass( 'hidden' );
+		}
+	}
 
 	var _UpdateTilePosition = function( elList, children, elTile, xuid, index, tileXmlToUse )
 	{
@@ -648,6 +668,7 @@ var friendsList = (function() {
 		SetLobbiesTabListFilters	: _SetLobbiesTabListFilters,
 		UpdateRecentsTabList		: _UpdateRecentsTabList,
 		UpdateActiveTabList			: _UpdateActiveTabList,
+		UpdateIncomingInvitesContainer : _UpdateIncomingInvitesContainer,
 		FriendsListNameChanged		: _FriendsListNameChanged,
 		RefreshLobbyListings		: _RefreshLobbyListings,
 		OpenLobbyFaq				: _OpenLobbyFaq,
@@ -676,8 +697,8 @@ var friendsList = (function() {
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', friendsList.FriendsListNameChanged );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', friendsList.SetLocalPlayerAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_MedalsChanged', friendsList.SetLocalPlayerAvatar );
-  	                                                                                                                  
-  	                                                                                                                  
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_PartyBrowser_InviteConsumed', friendsList.UpdateIncomingInvitesContainer );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_PartyBrowser_InviteReceived', friendsList.UpdateIncomingInvitesContainer );
 	$.RegisterForUnhandledEvent( 'SidebarIsCollapsed', friendsList.OnSideBarHover );
 	$.RegisterForUnhandledEvent( 'SidebarContextMenuActive', friendsList.SidebarContextMenuActive );
 	$.RegisterForUnhandledEvent( 'FriendInvitedFromContextMenu', friendsList.SetInvitedTile )

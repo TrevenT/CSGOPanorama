@@ -8,6 +8,7 @@
 		<include src="file://{resources}/scripts/common/formattext.js" />
 		<include src="file://{resources}/scripts/itemtile.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
+		<include src="file://{resources}/scripts/common/tint_spray_icon.js" />
 	</scripts>
 	
 	<Panel class="item-tile" 

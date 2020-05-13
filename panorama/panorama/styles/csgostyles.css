@@ -630,28 +630,29 @@ VerticalScrollBar:active .ScrollThumb, HTMLVerticalScrollBar:active .ScrollThumb
 
 HorizontalScrollBar, HTMLHorizontalScrollBar
 {
-	height: 12px;
+	height: 8px;
 	width: 100%;
-	background-color: #0d131a;
+	opacity:.4;
 	horizontal-align: left;
 	vertical-align: bottom;
-	box-shadow: fill #00000055 0px -3px 3px 4px;
-	transition-property: transform;
+	transition-property: transform, opacity;
+
+	-s2-mix-blend-mode: screen;
 }
 
 HorizontalScrollBar:hover, HTMLHorizontalScrollBar:hover
 {
-	brightness: 1;
-	background-color: blueColor;
+	opacity:.6;
 }
 
 HorizontalScrollBar .ScrollThumb, HTMLHorizontalScrollBar .ScrollThumb
 {
-	height: 12px;
+	height: 8px;
 	min-width: 32px;
-    border-radius: 14px;
-	brightness: .2;
-	background-color: blueColor;
+	background-color: white;
+	opacity:.4;
+	transition-property: position;
+	border-radius: 2px;
 	transition-property: background-color, transform;
 	transition-duration: 0.1s;
 	transition-timing-function: linear;
@@ -659,13 +660,12 @@ HorizontalScrollBar .ScrollThumb, HTMLHorizontalScrollBar .ScrollThumb
 
 HorizontalScrollBar:hover .ScrollThumb, HTMLHorizontalScrollBar:hover .ScrollThumb
 {
-    brightness: 1;
-	background-color: blueColor;
+	opacity:.6;
 }
 
 HorizontalScrollBar:active .ScrollThumb, HTMLHorizontalScrollBar:active .ScrollThumb
 {
-    background-color: blueColor;
+	opacity:.6;
 }
 
 VerticalScrollBar, 

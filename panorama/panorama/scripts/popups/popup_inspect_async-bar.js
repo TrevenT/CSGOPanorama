@@ -223,7 +223,8 @@ var InspectAsyncActionBar = ( function()
 
 	var _CancelWaitforCallBack = function( elPanel )
 	{
-		_ResetTimeouthandle();
+		m_scheduleHandle = null;
+		                        
 		
 		var elSpinner = elPanel.FindChildInLayoutFile( 'NameableSpinner' );
 		elSpinner.AddClass( 'hidden' );

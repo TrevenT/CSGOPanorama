@@ -137,17 +137,27 @@ Label {
 	
  }
 
-.sb-team__info__name {
+.sb-team__info__name,
+.sb-team__info__number {
 
 	font-size: 12px;
 
 	                   
+
+	margin-top: 2px;
 
 	horizontal-align: center;
 	text-align: center;
 
 	text-shadow-fast:1px 1px 1px 1.0 #000000;
 
+	max-width: 90px;
+
+}
+
+.sb-team__info__number{
+
+	opacity: 0.2;
 }
 
 .sb-team__info__score {
@@ -255,6 +265,21 @@ Label {
 
 	vertical-align: top;
 	position: 0px 50px 0px;
+
+	color: grey;
+	-s2-mix-blend-mode: SRGBadditive;
+
+	font-family: Stratum2, 'Arial Unicode MS';
+}
+
+#id-viewers {
+
+	font-size: 16px;
+
+	horizontal-align: left;
+	                      
+
+	vertical-align: top;
 
 	color: grey;
 	-s2-mix-blend-mode: SRGBadditive;
@@ -795,7 +820,6 @@ Label.sb-row__cell--ping__label--bot {
 #id-sb-name__nameicons Image {
 	width: 22px;
 	height: 22px;
-	padding: 1px;
 	margin-left: 3px;
 	margin-right: 3px;
 
@@ -1343,6 +1367,7 @@ Label.sb-row__cell--mvps__count {
 .eom-scoreboard #id-sb-mouse-instructions,
 .eom-scoreboard #id-sb-meta__musickit,
 .eom-scoreboard .sb-row__cell--money Label,
+.eom-scoreboard .sb-team__info__number,
  {
 	visibility: collapse;
  }

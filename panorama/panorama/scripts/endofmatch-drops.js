@@ -3,7 +3,7 @@
 
 var EOM_Drops = (function () {
 
-	var _m_pauseBeforeEnd = 2.0;	
+	var _m_pauseBeforeEnd = 1;
 	var _m_cP = $.GetContextPanel();
 
 
@@ -25,47 +25,90 @@ var EOM_Drops = (function () {
 		                                                                      
 		Object.keys( oDropList ).forEach( function (key, index) {
 
-			$.Schedule( animTime, function() {
-
-				var elDropContainer =  $.CreatePanel( "Panel", _m_cP, "drop_" + index );
+			$.Schedule( animTime, function()
+			{
+				var elDropContainer = $.CreatePanel( "Panel", _m_cP, "drop_" + index );
 				elDropContainer.BLoadLayoutSnippet( "eom-drops__item" );
 
-				var elItem = elDropContainer.FindChild( "id-itemtile");	
-				elItem.BLoadLayout( "file://{resources}/layout/itemtile.xml", true, false );
+				var itemId = oDropList[ key ].item_id;
 
-				var itemId = oDropList[ key ][ 'item_id' ];
+				itemId = InventoryAPI.IsItemInfoValid( itemId ) ? itemId : oDropList[ key ].faux_item_id;
 
-				if ( InventoryAPI.IsItemInfoValid( itemId ) )
-					elItem.SetAttributeString( 'itemid', oDropList[ key ][ 'item_id' ] );
-				else
-					elItem.SetAttributeString( 'itemid', oDropList[ key ][ 'faux_item_id' ] );
-					elItem.SetAttributeString( 'loadimage', "1" );
+				         
+				var color = ItemInfo.GetRarityColor( itemId );
+				if ( color )
+				{
+					elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).style.backgroundColor = color;
+				}
 
-				$.DispatchEvent( 'CSGOInventoryItemLoaded', elItem  );
+				elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).AddClass( 'reveal' );
 
-				var elOwnerLabel = elDropContainer.FindChild( "id-item-owner-name" );	
+				             
+				elDropContainer.FindChildInLayoutFile( 'id-item-image' ).itemid = itemId;
+
+				            
+				var name = ItemInfo.GetName( itemId );
+				elDropContainer.FindChildInLayoutFile( 'id-item-name' ).text = FormatText.GetInventoryDisplayStringFromName( name );
+
+				              
+				var elOwnerLabel = elDropContainer.FindChildInLayoutFile( "id-item-owner-name" );
 				elOwnerLabel.AddClass( "eom-drops__item__owner" );
-				elOwnerLabel.text = GameStateAPI.GetPlayerName( oDropList[ key ][ 'owner_xuid' ] );
+				elOwnerLabel.text = GameStateAPI.GetPlayerName( oDropList[ key ].owner_xuid );
+				
+				if ( oDropList[ key ].is_local )
+				{
+					elOwnerLabel.AddClass( 'localplayer' );
+				}
 
+				                                                 
+				                                    
+				TintSprayIcon.CheckIsSprayAndTint( itemId, elDropContainer.FindChildInLayoutFile( 'id-item-image' ) );
+
+				var elOwnerAvatar = elDropContainer.FindChildInLayoutFile( "id-avatar" );
+				elOwnerAvatar.steamid = oDropList[ key ].owner_xuid;
+
+				         
 				var rarityVal = InventoryAPI.GetItemRarity( itemId );
 				var soundEvent = "ItemDropCommon";
-				if( rarityVal == 4 ) {
+				if ( oDropList[ key ].is_local && rarityVal < 3 )
+				{
+					soundEvent = "ItemRevealSingleLocalPlayer";
+				}
+				else if ( rarityVal == 4 )
+				{
 					soundEvent = "ItemDropUncommon";
-				} else if( rarityVal == 5 ) {
+				}
+				else if ( rarityVal == 5 ) 
+				{
 					soundEvent = "ItemDropRare";
-				} else if( rarityVal == 6 ) {
+				}
+				else if ( rarityVal == 6 ) 
+				{
 					soundEvent = "ItemDropMythical";
-				} else if( rarityVal == 7 ) {
+				}
+				else if ( rarityVal == 7 )
+				{
 					soundEvent = "ItemDropLegendary";
-				} else if( rarityVal == 8 ) {
+				}
+				else if ( rarityVal == 8 ) 
+				{
 					soundEvent = "ItemDropAncient";
 				}
 
+				var dropWidth = 220;
+
+				                                                           
+				                                                      
+					
+				$.Schedule( 0.5, function() { elDropContainer.AddClass( 'blendmode' ); } );
+				_m_cP.style.width = ( dropWidth * ( index + 1 )) + 'px';
+
+
 				$.DispatchEvent( "PlaySoundEffect", soundEvent, "MOUSE" );
+				elDropContainer.ScrollParentToMakePanelFit ( 2, false );
 			});
 
-			animTime += oDropList[ key ][ 'display_time' ];
-
+			animTime += oDropList[ key ].display_time;
 		});
 
 		_m_pauseBeforeEnd += animTime;

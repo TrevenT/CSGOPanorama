@@ -575,6 +575,64 @@
 	color: rgb(175, 175, 175);
 }
 
+                                                                               
+                                                                               
+                                                                               
+.friendslist-incominginvites
+{
+	height: fit-children;
+	width: 100%;
+	flow-children: down;
+	border-top: 1px solid rgba(255, 255, 255, 0.281);
+
+	transition-property: position;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+.friendslist-incominginvites.hidden
+{
+	opacity: 0;
+	visibility: collapse;
+}
+
+.friendslist-incominginvites-container
+{
+	height: fit-children;
+	width: 100%;
+	flow-children: down;
+	background-color: rgba(10, 104, 33, 0.185);
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( blueColor ), to( #2d692f00  ) );
+
+	animation-name: InvitePulse;
+	animation-duration: 2s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes 'InvitePulse'
+{
+	0%
+	{
+		background-color: gradient( linear, 0% 0%, 100% 0%, from( blueColor ), to( #2d692f00  ) );
+	}
+	30%
+	{
+		background-color: gradient( linear, 0% 0%, 100% 0%, from( #2d692f00 ), to( #2d692f00  ) );
+	}
+	60%
+	{
+		background-color: gradient( linear, 0% 0%, 100% 0%, from( blueColor ), to( #2d692f00  ) );
+	}
+	100%
+	{
+		background-color: gradient( linear, 0% 0%, 100% 0%, from( blueColor ), to( #2d692f00  ) );
+	}
+}
+
+.friendslist-incominginvites-container .friendlobby
+{
+	border: 0px;
+}
 
 
 .MainMenuRootPanel--PauseMenuMode #JsLocalPlayercard.hidden
@@ -587,6 +645,7 @@
 
                                                                                      
 .steam-license-restricted .friendslist-navbar,
+.steam-license-restricted .friendslist-incominginvites,
 .steam-license-restricted .friendslist__seperator,
 .steam-license-restricted .friendslist-lists
 {

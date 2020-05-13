@@ -24,6 +24,7 @@
 
 			<Panel class="RosettaIcon">
 				<Image id="RosettaSprayImage" class="RosettaSelection__Image" scaling="stretch-to-fit-preserve-aspect"/>
+				<Image id="RosettaSprayImageBG" class="RosettaSelection__ImageBG"/>
 				<Panel id="RosettaCountdown" class="RosettaSelection__Countdown">
 					<Panel id="RosettaCountdownPie" class="RosettaSelection__Pie"/>
 					<Label id="RosettaCountdownTimer" class="RosettaCountdown__Timer" text="99"/>

@@ -29,7 +29,8 @@
 					<Panel class="top-bottom-flow">
 						<Label id="id-sb-meta__labels__mode-map" text="" />
 						<Label id="id-sb-meta__labels__server" text="{s:server_name}" />
-						</Panel>
+						<Label id="id-viewers" class="hidden" text="#Scoreboard_Viewers" />
+					</Panel>
 				</Panel>
 
 				              
@@ -144,7 +145,8 @@
 						<Panel id="id-sb-team__info--ct" class="sb-team__info__score" >
 							<Label text="{d:sb_team_score--CT}" />
 						</Panel>
-						<Label class="sb-team__info__name"	text="{s:sb_team_name--CT}" />
+						<Label class="sb-team__info__name"		text="{s:sb_team_name--CT}" />
+						<Label class="sb-team__info__number"	text="#Scoreboard_Players_CT" />
 
 					</Panel>
 
@@ -176,10 +178,9 @@
 						<Panel id="id-sb-team__info--t" class="sb-team__info__score" >
 							<Label text="{d:sb_team_score--TERRORIST}" />
 						</Panel>
-						<Label class="sb-team__info__name"	text="{s:sb_team_name--TERRORIST}" />
+						<Label class="sb-team__info__name"		text="{s:sb_team_name--TERRORIST}" />
+						<Label class="sb-team__info__number"	text="#Scoreboard_Players_TERRORIST" />
 					</Panel>
-
-
 
 				</Panel>
 
