@@ -277,7 +277,7 @@
 
 .map-selection-info__new
 {
-	padding: 4px 8px;
+	padding: 2px 8px 0px 10px;
 	background-color: blueColor;
 	color: white;
 	font-weight: medium;
@@ -285,7 +285,11 @@
 	horizontal-align: left;
 	border: 1px solid rgb(100, 180, 223);
 	brightness: 1.5;
+}
 
+.map-selection-list .map-selection-btn .map-selection-info__new
+{
+	font-size: 18px;
 }
 
 ToggleButton .map-selection-info__new,

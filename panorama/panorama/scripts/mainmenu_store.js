@@ -202,6 +202,15 @@ var MainMenuStore = ( function()
 				
 				itemsByCategory.market.push( FauxItemId );
 			}
+			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "new" )
+			{
+				if ( !itemsByCategory.newstore )
+				{
+					itemsByCategory.newstore = [];
+				}
+				
+				itemsByCategory.newstore.push( FauxItemId );
+			}
 			else
 			{
 				if ( !itemsByCategory.store )
@@ -540,6 +549,7 @@ var MainMenuStore = ( function()
 		NewPostition( tabList.find(function (obj) { return obj.id === 'keys'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'store'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'coupons'; } ) );
+		NewPostition( tabList.find(function (obj) { return obj.id === 'newstore'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'tournament'; } ) );
 
 		_SetDefaultTabActive( elParent.Children()[0] )

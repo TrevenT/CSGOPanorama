@@ -20,11 +20,11 @@
 					                                                
 				</Carousel>
 				<Panel class="map-selection-btn__gradient" hittest="false" />
-				<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
 				<Label id="MapGroupBetaTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Overwatch_Beta'/>
 				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
-						<Image id="ActiveGroupIcon" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
+						<Image id="ActiveGroupIcon" class="right-margin" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
+						<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
 					</Panel>
 					                           
 
