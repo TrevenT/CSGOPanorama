@@ -208,6 +208,8 @@ var PickEmGroup = ( function()
 
 			var isAlreadyPicked = _SetIsAlreadyPicked( elPanel, elTeam );
 
+			                                                                                                                     
+
 			if( isSectionActive && groupCanPick )
 			{
 				_SetUpDraggableEvents( elTeam, isAlreadyPicked );
@@ -250,16 +252,17 @@ var PickEmGroup = ( function()
 
 	var _SetUpDraggableEvents = function ( elTeam, isAlreadyPick ) 
 	{
-		if ( isAlreadyPick ) 
+		if ( isAlreadyPick )
 		{
 			elTeam.IsDraggable = false;
+			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._oteamData.dragStartHandle );
 			return;
 		}
 
 		elTeam.IsDraggable = true;
 
 		if ( elTeam._oteamData.dragStartHandle ) {
-			return;
+			$.UnregisterEventHandler( 'DragStart', elTeam, elTeam._oteamData.dragStartHandle );
 		}
 
 		elTeam._oteamData.dragStartHandle = $.RegisterEventHandler( 'DragStart', elTeam, function ( targetId, obj ) {
