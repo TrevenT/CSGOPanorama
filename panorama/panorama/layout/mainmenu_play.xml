@@ -64,6 +64,9 @@
 						<Label text="#play_setting_workshop" id="PlayWorkshop" data-type="workshop" value="4"/>
 						<Label text="#play_setting_community" id="PlayCommunity" data-type="community" value="5"/>
 					</DropDown>
+
+					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentTeamDropdown" menuclass="DropDownMenu Width-300" />
+					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentStageDropdown" menuclass="DropDownMenu Width-300" />
 				</Panel>
 			</Panel>
 			
@@ -134,9 +137,6 @@
 						<ToggleButton id="PrimeButton" class="PopupButton White" >
 							<Label id="JsPlayMenuPrimeLabel" text="#prime_only_label" />
 						</ToggleButton>
-
-						<DropDown class="PopupButton play-menu__tournament-only" id="TournamentTeamDropdown" menuclass="DropDownMenu Width-300" />
-						<DropDown class="PopupButton play-menu__tournament-only" id="TournamentStageDropdown" menuclass="DropDownMenu Width-300" />
 					</Panel>
 					<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
 						<Label text="#SFUI_Lobby_StartMatchButton" />

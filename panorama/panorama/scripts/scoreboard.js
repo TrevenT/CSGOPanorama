@@ -70,6 +70,7 @@ var Scoreboard = ( function()
 	var _m_dataSetGetCount;
 
 	var _m_areTeamsSwapped;
+	var _m_maxRounds;
 	var _m_oPlayers;				                               
 
 	var _m_RoundUpdated;			                                                                                               
@@ -380,6 +381,7 @@ var Scoreboard = ( function()
 		_m_dataSetCurrent = 0;
 		_m_dataSetGetCount = 0;
 		_m_areTeamsSwapped = false;
+		_m_maxRounds = 0;
 		_m_sortOrder = undefined;
 
 		_m_RoundUpdated = {};
@@ -2396,7 +2398,7 @@ var Scoreboard = ( function()
 
 	}
 
-	function _UpdateScore_Classic()
+	function _UpdateScore_Classic( bForceUpdate = false )
 	{
 
 		                                                                                    
@@ -2424,25 +2426,30 @@ var Scoreboard = ( function()
 
 		                                                                                               
 			
-		var bResetTimeline = false;
+		var bResetTimeline = bForceUpdate;
 
+		if ( _m_maxRounds != jsoTime[ "maxrounds_this_period" ] )
+		{
+			bResetTimeline = true;
+			_m_maxRounds = jsoTime[ "maxrounds_this_period" ];
+		}
+		
 		if ( _m_areTeamsSwapped !== GameStateAPI.AreTeamsPlayingSwitchedSides() )
 		{
 			bResetTimeline = true;
 			_m_areTeamsSwapped = GameStateAPI.AreTeamsPlayingSwitchedSides();
 		}
 
+		if ( !_SupportsTimeline( jsoTime ) )
+		{
+			bResetTimeline = true;
+		}
+
 		                               
 		if ( bResetTimeline || !( currentRound in _m_RoundUpdated ) )
 		{
 
-			                              
-			if ( MatchStatsAPI.DoesSupportOvertimeStats() && currentRound == jsoTime[ "first_round_this_period" ] )
-			{
-				bResetTimeline = true;
-			}
-
-			if ( !_SupportsTimeline( jsoTime ) || bResetTimeline )
+			if ( bResetTimeline )
 			{
 				_ResetTimeline();
 			}
@@ -2933,12 +2940,12 @@ var Scoreboard = ( function()
 
 	}
 
-	function _UpdateScore () 
+	function _UpdateScore ( bForce ) 
 	{
 		switch ( GameStateAPI.GetGameModeInternalName( false ) )
 		{
 			case "competitive":
-				_UpdateScore_Classic();
+				_UpdateScore_Classic( bForce );
 				break;
 
 			       		
@@ -2951,7 +2958,7 @@ var Scoreboard = ( function()
 
 			default:
 			case "casual":
-				_UpdateScore_Classic();
+				_UpdateScore_Classic( bForce );
 				break;
 		}
 	};
@@ -2972,7 +2979,7 @@ var Scoreboard = ( function()
 		}
 
 		_UpdateMatchInfo();
-		_UpdateScore();
+		_UpdateScore( true );
 		_UpdateAllPlayers_delayed( true );
 		_UpdateSpectatorButtons();
 
@@ -3136,6 +3143,7 @@ var Scoreboard = ( function()
 		GetFreeForAllTopThreePlayers: 		_GetFreeForAllTopThreePlayers,
 		GetFreeForAllPlayerPosition: 		_GetFreeForAllPlayerPosition,
 		UnborrowMusicKit: 					_UnborrowMusicKit,
+
 		
 		UpdateHLTVViewerNumber:				_UpdateHLTVViewerNumber,
 

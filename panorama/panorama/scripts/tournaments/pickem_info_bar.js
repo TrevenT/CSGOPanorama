@@ -94,6 +94,13 @@ var PickEmInfoBar = ( function()
 			elIcon.SetImage( 'file://{images}/icons/ui/locked.svg' );
 			elStatus.text = $.Localize( '#pickem_timer_locked' );
 		}
+		else
+		{
+			                                            
+			elIcon.SetImage( 'file://{images}/icons/ui/clock.svg' );
+			elStatus.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( 60 ) );
+			elStatus.text = $.Localize( '#pickem_timer', elStatus );
+		}
 	};
 
 

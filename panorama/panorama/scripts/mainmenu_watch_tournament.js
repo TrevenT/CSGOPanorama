@@ -176,14 +176,14 @@ var mainmenu_watch_tournament = (function () {
 					} ,
 					!bDefaultToMatches
 				);
-				                                                                                                                 
-				   	 	
-				   		                             
-				   		             
-				   		                 
-				   		                        
-				   	  
-				     
+				_CreateNavBarButton( 'id-nav-pick-group', $.Localize( '#CSGO_Fantasy_PickEm_Groups_Title' ), 'JsPickemGroup', 
+					{	
+						tournamentid: tournament_id, 
+						dayindex: 1, 
+						xmltype: 'group',
+						oPickemType: PickEmGroup
+					} 
+				);
 			}
 
 			         

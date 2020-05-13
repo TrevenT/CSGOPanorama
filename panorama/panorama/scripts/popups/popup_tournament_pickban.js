@@ -2,6 +2,7 @@
 
 var PopupTournamentPickBan = ( function ()
 {
+	var _m_thisPanel = null;
     var m_strTournament = "";
     var m_strTeamID = "";
     var m_pickbanTiles = [];
@@ -9,6 +10,8 @@ var PopupTournamentPickBan = ( function ()
 
 	var _Init = function ()
     {
+		_m_thisPanel = $.GetContextPanel();
+
         m_strTournament = MyPersonaAPI.GetMyOfficialTournamentName();
         m_strTeamID = MyPersonaAPI.GetMyOfficialTeamID();
 
@@ -389,13 +392,32 @@ var PopupTournamentPickBan = ( function ()
 
     var _OnCancel = function ()
     {
-        LobbyAPI.StopMatchmaking();
-        $.DispatchEvent( 'UIPopupButtonClicked', '' );
-    }
+		LobbyAPI.StopMatchmaking();
+		
+		_CloseThisPopupWindow();
+	}
+	
+	var _SessionSettingsUpdate = function( sessionState ) 
+	{
+		                                                     
+		if ( !LobbyAPI.GetMatchmakingStatusString() )
+		{
+			_CloseThisPopupWindow();
+		}
+	};
+
+	var _CloseThisPopupWindow = function()
+	{
+		if ( _m_thisPanel && _m_thisPanel.IsValid() )
+		{
+			$.DispatchEvent( 'UIPopupButtonClicked', _m_thisPanel, '' );
+		}
+	}
 
 	return {
 		Init				:	_Init,
-        DraftUpdate         :   _DraftUpdate,
+		DraftUpdate         :   _DraftUpdate,
+		SessionSettingsUpdate	: _SessionSettingsUpdate,
         OnCancel            :   _OnCancel,
 	};
 })();
@@ -406,5 +428,6 @@ var PopupTournamentPickBan = ( function ()
 ( function()
 {
 	$.RegisterForUnhandledEvent( "PanoramaComponent_TournamentMatch_DraftUpdate", PopupTournamentPickBan.DraftUpdate );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", PopupTournamentPickBan.SessionSettingsUpdate );
 } )();
 

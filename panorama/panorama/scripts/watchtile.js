@@ -26,7 +26,56 @@ var watchTile = ( function() {
     function _Delete( elTile )
     {
         $.DispatchEvent( 'DeletePanel', elTile );
-    }
+	}
+	
+	function _UpdateScore( elTile )
+	{
+		var elScore0Label = elTile.FindChildInLayoutFile('score_team0');
+		var elScore1Label = elTile.FindChildInLayoutFile('score_team1');
+		
+		                                                                                                            
+        var team0 = 0;
+		var team1 = 1;
+		var _multiresult = _CheckPlayerParticipatedInMatch( elTile );
+		var bPlayerParticipated = _multiresult.bPlayerParticipated;
+		var myTeam = _multiresult.myTeam;
+        if ( bPlayerParticipated && ( myTeam != 0 ) )
+        {
+            team0 = 1;
+            team1 = 0;
+        }
+
+        if ( elScore0Label )
+        {
+            elScore0Label.text = MatchInfoAPI.GetMatchRoundScoreForTeam( elTile.matchId, team0 );
+        }
+
+        if ( elScore1Label )
+        {
+            elScore1Label.text =  MatchInfoAPI.GetMatchRoundScoreForTeam( elTile.matchId, team1 );
+        }
+	}
+
+	function _CheckPlayerParticipatedInMatch( elTile )
+	{
+		var bPlayerParticipated = false;
+		var myTeam = 0;
+
+		for ( var t = 0; t < 2; t++ )
+		{
+            for ( var n = 0; n < 5; n++ )
+            {
+                var playerXuid = MatchInfoAPI.GetMatchPlayerXuidByIndexForTeam( elTile.matchId, t, n );
+                if ( playerXuid === elTile.myXuid ) 
+                {
+                    bPlayerParticipated = true;
+                    myTeam = t;
+                }
+			}
+		}
+
+		return { bPlayerParticipated: bPlayerParticipated, myTeam: myTeam };
+	}
 
     function _Init( elTile )
     {
@@ -51,16 +100,9 @@ var watchTile = ( function() {
             matchTileDescriptor = 'live';
         }
 
-        for ( var t = 0; t < 2; t++ )
-            for ( var n = 0; n < 5; n++ )
-            {
-                var playerXuid = MatchInfoAPI.GetMatchPlayerXuidByIndexForTeam( elTile.matchId, t, n );
-                if ( playerXuid === elTile.myXuid ) 
-                {
-                    bPlayerParticipated = true;
-                    myTeam = t;
-                }
-            }
+		var _multiresult = _CheckPlayerParticipatedInMatch( elTile );
+		bPlayerParticipated = _multiresult.bPlayerParticipated;
+		myTeam = _multiresult.myTeam;
 
         var mapName = MatchInfoAPI.GetMatchMap( elTile.matchId );
 
@@ -251,7 +293,8 @@ var watchTile = ( function() {
                       
 	return {
         Init			: _Init,
-        SetParentActive : _SetParentActive,
+		SetParentActive : _SetParentActive,
+		UpdateScore		: _UpdateScore,
         Delete          : _Delete
 	};
 

@@ -221,15 +221,6 @@ var PlayMenu = ( function()
 		btnStartSearch.enabled = isSearchingForTournament ? ( _GetTournamentOpponent() != '' && _GetTournamentStage() != '' ) : true;
 	}
 
-	var m_TournamentPickBanPopup = null;
-	var _TournamentDraftUpdate = function ()
-	{
-		if ( !m_TournamentPickBanPopup || !m_TournamentPickBanPopup.IsValid() )
-		{
-			m_TournamentPickBanPopup = UiToolkitAPI.ShowCustomLayoutPopup( 'tournament_pickban_popup', 'file://{resources}/layout/popups/popup_tournament_pickban.xml' );
-		}
-	}
-
 	var _UpdateTournamentButton = function( isHost, isSearching )
 	{
 		var bIsOfficialCompetitive = m_gameModeSetting === "competitive" && _IsPlayingOnValveOfficial();
@@ -294,12 +285,6 @@ var PlayMenu = ( function()
 
 		_UpdateStartSearchBtn( isSearchingForTournament );
 		_ShowActiveMapSelectionTab( !isSearchingForTournament );
-
-		                                                     
-		if ( !isSearching && m_TournamentPickBanPopup && m_TournamentPickBanPopup.IsValid() )
-		{
-			$.DispatchEvent( 'UIPopupButtonClicked', m_TournamentPickBanPopup, '' );
-		}
 	}
 
 	var _SyncDialogsFromSessionSettings = function( settings )
@@ -1453,8 +1438,7 @@ var PlayMenu = ( function()
 		OnShowMainMenu				: _OnShowMainMenu,
 		PlayTopNavDropdownChanged	: _PlayTopNavDropdownChanged,
 		BotDifficultyChanged		: _BotDifficultyChanged,
-		WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged,
-		TournamentDraftUpdate		: _TournamentDraftUpdate
+		WorkshopSubscriptionsChanged: _WorkshopSubscriptionsChanged
 	};
 
 } )();
@@ -1473,5 +1457,4 @@ var PlayMenu = ( function()
 	$.RegisterForUnhandledEvent( "CSGOShowMainMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOShowPauseMenu", PlayMenu.OnShowMainMenu );
 	$.RegisterForUnhandledEvent( "CSGOWorkshopSubscriptionsChanged", PlayMenu.WorkshopSubscriptionsChanged );
-	$.RegisterForUnhandledEvent( "PanoramaComponent_TournamentMatch_DraftUpdate", PlayMenu.TournamentDraftUpdate );
 } )();

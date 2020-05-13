@@ -474,7 +474,12 @@ var matchList = ( function() {
                 elMatchButton.SetPanelEvent('onmouseout', OnMouseOutButton.bind( undefined, parentPanel, matchListDescriptor + "_" + matchId ) );
                 watchTile.Init( elMatchButton );
                 elMatchButton.RemoveClass( 'MatchTile--Collapse' );
-            }
+			}
+			else
+			{
+				                                                      
+				watchTile.UpdateScore( elMatchButton );
+			}
             elMatchButton.markForDelete = false;
 
             function _UpdateDownloadState( elBoundMatchButton )
@@ -500,8 +505,8 @@ var matchList = ( function() {
             {
                 elMatchButton.downloadStateHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MatchInfo_StateChange', _UpdateDownloadState.bind( undefined, elMatchButton ) );
                 _UpdateDownloadState( elMatchButton );
-            }
-
+			}
+			
             elMatchButton.RemoveClass( 'MatchTile--Collapse' );
         }
 		

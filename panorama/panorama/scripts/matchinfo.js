@@ -780,7 +780,12 @@ var matchInfo = ( function() {
             var elScoreboxBackdrop = elParentPanel.FindChildInLayoutFile( 'id-sb-scorebox_backdrop--' + TEAMS[teamId] );
             if ( elParentPanel.isTournament )
             {
-                elScoreboxBackdrop.SetImage( 'file://{images}/tournaments/teams/' + MatchInfoAPI.GetMatchTournamentTeamTag( elParentPanel.matchId, teamId ).toLowerCase() + '.svg' );
+				var tag = MatchInfoAPI.GetMatchTournamentTeamTag( elParentPanel.matchId, teamId );
+				if ( !tag )
+				{
+					tag = '';
+				}
+                elScoreboxBackdrop.SetImage( 'file://{images}/tournaments/teams/' + tag.toLowerCase() + '.svg' );
                 elScoreboxBackdrop.AddClass( 'scorebox_backdrop--tournament' );
                 elParentPanel.SetDialogVariable( 'sb_team_name--' + TEAMS[teamId], MatchInfoAPI.GetMatchTournamentTeamName( elParentPanel.matchId, teamId ) );
             }
@@ -877,14 +882,14 @@ var matchInfo = ( function() {
         if ( elParentPanel.matchListDescriptor === 'live' )
         {
             var round = 1 + MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 0 ) + MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, 1 );
-            var progressionStateString = 'WatchMenu_FirstHalf';
-            if ( round > 15 )
-            {
-                progressionStateString = 'WatchMenu_SecondHalf';
-            }
-            else if ( round > 30 )
+			var progressionStateString = 'WatchMenu_FirstHalf';
+			if ( round > 31 )
             {
                 progressionStateString = 'WatchMenu_Overtime';
+            }
+            else if ( round > 15 )
+            {
+                progressionStateString = 'WatchMenu_SecondHalf';
             }
             elParentPanel.SetDialogVariable( 'dateOrRound', $.Localize( progressionStateString ) );
             elParentPanel.SetDialogVariable( 'dateOrRoundLabel', $.Localize( '#CSGO_Watch_Info_4' ) );
@@ -892,7 +897,7 @@ var matchInfo = ( function() {
         }
         else
         {
-            elParentPanel.SetDialogVariable( 'dateOrRound', MatchInfoAPI.GetMatchTimestamp( elParentPanel.matchId ) );
+            elParentPanel.SetDialogVariable( 'dateOrRound', MatchInfoAPI.IsLive( elParentPanel.matchId ) ? $.Localize( '#CSGO_Watch_Cat_LiveMatches' ) : MatchInfoAPI.GetMatchTimestamp( elParentPanel.matchId ) );
             elParentPanel.SetDialogVariable( 'dateOrRoundLabel', $.Localize( '#CSGO_Watch_Info_2' ) );
             elParentPanel.SetDialogVariable( 'durationLabel', $.Localize( "CSGO_Watch_Info_1" ) );
         }

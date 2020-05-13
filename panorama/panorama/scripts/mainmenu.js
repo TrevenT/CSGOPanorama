@@ -22,6 +22,7 @@ var MainMenu = ( function() {
 	];
 
 	var _m_storePopupElement = null;
+	var m_TournamentPickBanPopup = null;
 
 	var _OnInitFadeUp = function()
 	{
@@ -60,6 +61,14 @@ var MainMenu = ( function() {
 		                              
 		_GcLogonNotificationReceived();
 	};
+
+	var _TournamentDraftUpdate = function ()
+	{
+		if ( !m_TournamentPickBanPopup || !m_TournamentPickBanPopup.IsValid() )
+		{
+			m_TournamentPickBanPopup = UiToolkitAPI.ShowCustomLayoutPopup( 'tournament_pickban_popup', 'file://{resources}/layout/popups/popup_tournament_pickban.xml' );
+		}
+	}
 
 	var _m_bGcLogonNotificationReceivedOnce = false;
 	var _GcLogonNotificationReceived = function()
@@ -1259,7 +1268,8 @@ var MainMenu = ( function() {
 		ShowStoreStatusPanel				: _ShowStoreStatusPanel,
 		HideStoreStatusPanel				: _HideStoreStatusPanel,
 		PauseMainMenuCharacter				: _PauseMainMenuCharacter,
-		ShowTournamentStore					: _ShowTournamentStore
+		ShowTournamentStore					: _ShowTournamentStore,
+		TournamentDraftUpdate				: _TournamentDraftUpdate
 	};
 })();
 
@@ -1286,6 +1296,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'LootlistItemPreview', MainMenu.OnLootlistItemPreview );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_WeaponPreviewRequest', MainMenu.WeaponPreviewRequest );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Overwatch_CaseUpdated', MainMenu.UpdateOverwatch );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_TournamentMatch_DraftUpdate", MainMenu.TournamentDraftUpdate );
 
 	$.RegisterForUnhandledEvent( 'ShowAcknowledgePopup', MainMenu.ShowAcknowledgePopup );
     $.RegisterForUnhandledEvent( 'ShowStoreStatusPanel', MainMenu.ShowStoreStatusPanel );
