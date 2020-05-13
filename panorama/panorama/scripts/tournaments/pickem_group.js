@@ -18,6 +18,14 @@ var PickEmGroup = ( function()
 	var _UpdateGroupPicks = function( elPanel )
 	{
 		                                                                                               
+
+		if ( !elPanel._oPickemData.oTournamentData || !elPanel._oPickemData.oInitData )
+		{
+			                                                
+			                                                                                                 
+			                                                                                              
+			return;
+		}
 		
 		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
 		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
@@ -44,7 +52,7 @@ var PickEmGroup = ( function()
 				oGroupData,
 				PredictionsAPI.GetGroupCorrectPicksByIndex( elPanel._oPickemData.oTournamentData.tournamentid, oGroupData.id, i ),
 				oGroupData.picks[i].localid,
-				elPick.FindChildInLayoutFile( 'id-pickem-points-for-pick' ),
+				elPick.FindChildInLayoutFile( 'id-pickem-points-for-pick' )
 			);
 
 			                                                                                       
