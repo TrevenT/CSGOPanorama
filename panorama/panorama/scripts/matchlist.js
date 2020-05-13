@@ -495,14 +495,19 @@ var matchList = ( function() {
             }
         }
 
-		                                               
+        if ( (matchListDescriptor === 'live' ) && elMatchList.FindChildInLayoutFile( "live_gotv" ) )
+        {
+            elMatchList.FindChildInLayoutFile( "live_gotv" ).markForDelete = true;
+        }
+        _ClearList( elMatchList, parentPanel.tournament_id );
+        _SelectFirstTile( parentPanel, elMatchList, matchListDescriptor );
+
+                                                       
         if ( ( matchListDescriptor === 'live' ) && ( nCount > 0 ) )
         {
             _CreateOrValidateMatchTile(  'gotv' );
         }
-
-        _ClearList( elMatchList, parentPanel.tournament_id );
-        _SelectFirstTile( parentPanel, elMatchList, matchListDescriptor );
+        
 
         parentPanel.matchListIsPopulated = true;
     }

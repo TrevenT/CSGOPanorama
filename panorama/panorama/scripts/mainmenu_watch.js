@@ -245,7 +245,14 @@ var mainmenu_watch = ( function() {
             }
             else
             {
-                _m_contextPanel.AddClass( "mainmenu-content--hidden" );
+                if ( !_m_contextPanel )
+                {
+                    _m_contextPanel = $( "#main-content" );
+                }
+                if ( _m_contextPanel )
+                {
+                    _m_contextPanel.AddClass( "mainmenu-content--hidden" );
+                }
             }
         }
 
@@ -298,7 +305,14 @@ var mainmenu_watch = ( function() {
 
                 _m_activeTab = pressedTab;
                 _m_contextTab = pressedTab;
-                _m_contextPanel.RemoveClass( "mainmenu-content--hidden" );
+                if ( !_m_contextPanel )
+                {
+                    _m_contextPanel = $( "#main-content" );
+                }
+                if ( _m_contextPanel )
+                {
+                    _m_contextPanel.RemoveClass( "mainmenu-content--hidden" );
+                }
                 
                 if ( !_m_activeTab )
                 {
