@@ -160,6 +160,11 @@
 	height: 64px;
 }
 
+.popup-capability__purchase .PopupButton Label
+{
+	text-transform: none;
+}
+
 .popup-capability__button-row .PopupButton
 {
 	transition-property: opacity, transform, background-color;

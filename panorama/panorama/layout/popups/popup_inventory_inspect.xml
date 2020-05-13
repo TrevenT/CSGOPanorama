@@ -8,6 +8,7 @@
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/popups/popup_inspect_action-bar.js" />
 		<include src="file://{resources}/scripts/popups/popup_inventory_inspect.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
 	</scripts>

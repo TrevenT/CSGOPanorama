@@ -168,10 +168,10 @@ var PickEmInfoBar = ( function()
 			elPointsResultLabel.visible = ( resultLevel !== '' ) ? true : false;
 
 			elbar.AddClass( 'pickem-info-bar--'+ resultLevel );
-			elPointsNeeded.SetDialogVariable( 'result-level', $.Localize( '#pickem_level_' + resultLevel ));
 
 			if( resultLevel )
 			{
+                elPointsResultLabel.text = '#pickem_points_result_' + resultLevel;
 				SetTrophyImage( elPanel, resultLevel );
 			}
 		}

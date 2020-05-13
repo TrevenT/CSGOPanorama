@@ -1,36 +1,7 @@
 'use strict';
 
 
-var dictPlayerStatusImage = {
-	0: "",
-	1: "file://{images}/icons/ui/elimination.svg",
-	2: "file://{images}/icons/ui/bomb_c4.svg",
-	3: "file://{images}/icons/ui/dominated.svg",
-	4: "file://{images}/icons/ui/dominated_dead.svg",
-	5: "file://{images}/icons/ui/nemesis.svg",
-	6: "file://{images}/icons/ui/nemesis_dead.svg",
-	7: "file://{images}/icons/equipment/defuser.svg",
-	8: "file://{images}/icons/ui/VoteTeamSwitch.svg",
-	9: "file://{images}/icons/ui/switch_teams_dead.svg"
-}
 
-var dictRoundResultImage = {
-	"win_elimination": "file://{images}/icons/ui/elimination.svg",
-	"win_rescue": "file://{images}/icons/ui/rescue.svg",
-	"win_defuse": "file://{images}/icons/equipment/defuser.svg",
-	"win_time": "file://{images}/icons/ui/timer.svg",
-	"win_bomb": "file://{images}/icons/ui/bomb.svg",
-}
-
-
-var dictGamePhases = {
-	"GAMEPHASE_WARMUP_ROUND": 0,
-	"GAMEPHASE_PLAYING_STANDARD": 1,
-	"GAMEPHASE_PLAYING_FIRST_HALF": 2,
-	"GAMEPHASE_PLAYING_SECOND_HALF": 3,
-	"GAMEPHASE_HALFTIME": 4,
-	"GAMEPHASE_MATCH_ENDED": 5
-}
 
 var arrSpectatorVisibleStats = [
 	"ping",
@@ -40,7 +11,7 @@ var arrSpectatorVisibleStats = [
 
 var arrStatsNotToTeamColorize = [
 	"ping"
-]
+];
 
 var Scoreboard = ( function()
 {
@@ -63,7 +34,6 @@ var Scoreboard = ( function()
 	var _m_updatePlayerIndex;		                                   
 	var _m_oTeams = {};					                                  
 	var _m_arrSortingPausedRefGetCounter;                                     
-	var _m_stateGetCounter;				                                      
 	var _m_hDenyInputToGame;		                                                                         
 
 	var _m_dataSetCurrent;
@@ -248,7 +218,7 @@ var Scoreboard = ( function()
 			CalculateAllCommends: 						_CalculateAllCommends,
 		}
 
-	}
+	};
 
 	function player_t ( xuid )
 	{
@@ -409,7 +379,7 @@ var Scoreboard = ( function()
 			element.BLoadLayoutSnippet( snippet )
 			element.m_bSnippetLoaded = true;
 		}
-	};
+	}
 
 
 	  
@@ -469,7 +439,7 @@ var Scoreboard = ( function()
 		}
 
 		return true;
-	};
+	}
 
 	function _ChangeTeams ( oPlayer, newTeam )
 	{
@@ -608,6 +578,8 @@ var Scoreboard = ( function()
 			for ( var i = 0; i < _m_oPlayers.GetCount(); i++ )
 			{
 				_UpdatePlayer( i, bSilent );
+
+			  	                                                    
 			};
 	
 			  	                            
@@ -722,21 +694,27 @@ var Scoreboard = ( function()
 		'enemiesflashed' :0,
 	};
 
+	var sortOrder_reverse = {
 
-	                            
-
-	   	            
-	   	           
-	   	            
-	   	              
-	   	                       
-	   	             
-	   	               
-	   	              
-	   	           
-	   	        
-
-	     
+		'score': -1,
+		'mvps': -1,
+		'kills': -1,
+		'assists': -1,
+		'deaths': 0,           
+		'leader': -1,
+		'teacher': -1,
+		'friendly': -1,
+		'rank': -1,
+		'idx': 0,
+		                                                              
+		                                                                	
+		'money': 0,
+		'hsp': 0,
+		'kdr': 0,
+		'adr':0,
+		'utilitydamage': 0,
+		'enemiesflashed' :0,
+	};
 
 
 	var sortOrder_dm = {
@@ -744,7 +722,9 @@ var Scoreboard = ( function()
 		'score': 0,
 		'idx': -1,
 		                                                              
-		                                                                		
+		                                                                	
+		'hsp': 0,
+		'kdr': 0,
 		'kills': 0,
 		'assists': 0,
 		'deaths': -1,           
@@ -758,6 +738,8 @@ var Scoreboard = ( function()
 		'idx': -1,
 		                                                              
 		                                                                
+		'hsp': 0,
+		'kdr': 0,
 		'score' : 0,
 		'kills': 0,
 		'assists': 0,
@@ -826,6 +808,8 @@ var Scoreboard = ( function()
 
 					if ( children[ i - 1 ] != elPlayer )
 					{
+					  	                                                                                                          
+
 						elTeam.MoveChildBefore( elPlayer, children[ i ] );
 
 					   	                                                             
@@ -1610,7 +1594,7 @@ var Scoreboard = ( function()
 		} );
 	}
 
-	function _CreateLabelForStat ( stat, set )
+	function _CreateLabelForStat ( stat, set, isHidden )
 	{
 		var elLabelRow = $( "#id-sb-players-table__labels-row" );
 
@@ -1712,7 +1696,15 @@ var Scoreboard = ( function()
 			else
 			{
 				elStatLabel = $.CreatePanel( "Label", elStatPanel, "label-" + elStatPanel.id );
-				elStatLabel.text = $.Localize( "#Scoreboard_" + stat );
+
+				if ( isHidden == '1' )
+				{
+					elStatLabel.text = "";
+				}
+				else
+				{
+					elStatLabel.text = $.Localize( "#Scoreboard_" + stat );
+				}
 			}
 
 			                     
@@ -1770,6 +1762,17 @@ var Scoreboard = ( function()
 		}
 	}
 
+          
+	                                     
+	 
+		                                                                                        
+		                                  
+			                                 
+		    
+			                           			
+	 
+          
+
 	                              
 	function _GetCustomStatTextValue( stat, xuid )
 	{
@@ -1807,6 +1810,7 @@ var Scoreboard = ( function()
 			
 			var stat = elStatCell.GetAttributeString( "data-stat", "" );
 			var set = elStatCell.GetAttributeString( "data-set", "" );
+			var isHidden = elStatCell.GetAttributeString( "data-hidden", "" );
 
 			                                                         
 			var children = elStatCell.Children();
@@ -1861,7 +1865,10 @@ var Scoreboard = ( function()
 				}
 			}
 
-			_CreateStatUpdateFn( stat );
+			if ( !isHidden )
+			{
+				_CreateStatUpdateFn( stat );
+			}
 
 		}
 
@@ -2114,18 +2121,55 @@ var Scoreboard = ( function()
 		var elRndTop = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--top" );
 		var elRndBot = elRnd.FindChildTraverse( "id-sb-timeline__segment__round--bot" );
 
+		elRndTop.FindChildTraverse( "result" ).SetImage( "" );
+		elRndBot.FindChildTraverse( "result" ).SetImage( "" );
+
+		elRndTop.SetDialogVariable( "sb_clinch", "" );
+		elRndBot.SetDialogVariable( "sb_clinch", "" );
+
+  		                                 
+
 		var elTick = elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" );
 		elTick.SetHasClass( "hilite", rnd <= jsoTime[ "rounds_played" ] + 1 );
 		
 		                                                                               
 		if ( rnd > jsoTime[ "rounds_played" ] )
 		{
-			elRndBot.FindChildTraverse( "result" ).SetImage( "" );
-			elRndBot.FindChildTraverse( "result" ).RemoveClass( "sb-timeline__segment__round--active" );
+			var bCanClinch = jsoTime[ "can_clinch" ];
+			if ( bCanClinch )
+			{
+				var numToClinch = jsoTime[ "num_wins_to_clinch" ];
 
-			elRndTop.FindChildTraverse( "result" ).SetImage( "" );
-			elRndTop.FindChildTraverse( "result" ).RemoveClass( "sb-timeline__segment__round--active" );
-			
+				var topClinchRound = jsoTime[ "rounds_played" ] + numToClinch - m_topScore;
+				var bThisRoundIsClinchTop = rnd == topClinchRound;
+
+				var botClinchRound = jsoTime[ "rounds_played" ] + numToClinch - m_botScore;
+				var bThisRoundIsClinchBot = rnd == botClinchRound;
+
+				var bShowClinchTop = ( bThisRoundIsClinchTop && topClinchRound <= botClinchRound );
+				var bShowClinchBot = ( bThisRoundIsClinchBot &&  botClinchRound <= topClinchRound );
+
+				var thisRoundIsClinchAndShowIt = false;
+
+				if ( bShowClinchTop )
+				{
+					elRndTop.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ "win" ] );
+					thisRoundIsClinchAndShowIt = true;
+				}
+
+				if ( bShowClinchBot )
+				{
+					elRndBot.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ "win" ] );
+					thisRoundIsClinchAndShowIt = true;
+				}
+
+				var roundIsPastClinch = ( rnd > topClinchRound || rnd > botClinchRound );
+
+				elRnd.SetHasClass( "past-clinch", roundIsPastClinch );
+				elRnd.SetHasClass( "clinch-round", thisRoundIsClinchAndShowIt );
+				
+			}
+
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).RemoveClass( "sb-team--CT" );
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick__label" ).RemoveClass( "sb-team--CT" );
 			elRnd.FindChildTraverse( "id-sb-timeline__segment__round__tick" ).RemoveClass( "sb-team--TERRORIST" );
@@ -2152,8 +2196,11 @@ var Scoreboard = ( function()
 			return;
 		}
 
+		var bFlippedSides = false;
+
 		if ( GameStateAPI.AreTeamsPlayingSwitchedSides() !== GameStateAPI.AreTeamsPlayingSwitchedSidesInRound( rnd ) )
 		{
+			bFlippedSides = true;
 			var elTemp = elRndTop;
 			elRndTop = elRndBot;
 			elRndBot = elTemp;
@@ -2162,6 +2209,7 @@ var Scoreboard = ( function()
 		                      
 		elRndTop.AddClass( "sb-team--CT" );
 		elRndBot.AddClass( "sb-team--TERRORIST" );
+
 
 		var idx;
 
@@ -2180,9 +2228,12 @@ var Scoreboard = ( function()
 
 		var result = oScoreData[ "rounddata" ][ idx ][ "result" ].replace( /^(ct_|t_)/, "" );
 
+
 		                
 		if ( oScoreData[ "rounddata" ][ idx ][ "result" ].charAt( 0 ) === "c" )
 		{
+			bFlippedSides ? m_botScore++ : m_topScore++;
+
 			elRndTop.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ result ] );
 			elRndTop.FindChildTraverse( "result" ).AddClass( "sb-timeline__segment__round--active" );
 
@@ -2197,6 +2248,8 @@ var Scoreboard = ( function()
 		}
 		else if ( oScoreData[ "rounddata" ][ idx ][ "result" ].charAt( 0 ) === "t" )
 		{
+			bFlippedSides ? m_topScore++ : m_botScore++;
+
 			elRndBot.FindChildTraverse( "result" ).SetImage( dictRoundResultImage[ result ] );
 			elRndBot.FindChildTraverse( "result" ).AddClass( "sb-timeline__segment__round--active" );
 
@@ -2378,6 +2431,9 @@ var Scoreboard = ( function()
 		_UpdateTeamInfo( "CT" );
 	}
 
+	var m_topScore;
+	var m_botScore;
+
 	function _UpdateAllRounds ()
 	{
 		var jsoTime = GameStateAPI.GetTimeDataJSO();
@@ -2403,13 +2459,24 @@ var Scoreboard = ( function()
 			lastRound = jsoTime[ "maxrounds" ];
 		}
 
+		m_topScore = 0;
+		m_botScore = 0;
+
+		                                                                                                                                
+		if ( jsoTime[ "overtime" ] > 0 )
+		{
+			m_topScore = (jsoTime[ "maxrounds"] + ( jsoTime[ "overtime"] - 1 ) * jsoTime[ "maxrounds_overtime"] ) / 2;
+			m_botScore = (jsoTime[ "maxrounds"] + ( jsoTime[ "overtime"] - 1 ) * jsoTime[ "maxrounds_overtime"] ) / 2;			
+		}
+
+
 		for ( var rnd = 1; rnd <= lastRound; rnd++ )
 		{
 			_UpdateRound( rnd, oScoreData, jsoTime );
 		}
 	}
 
-	function _UpdateScore_Classic( bForceUpdate = false )
+	function _UpdateScore_Classic()
 	{
 
 		                                                                                    
@@ -2429,8 +2496,6 @@ var Scoreboard = ( function()
 		
 		var currentRound = jsoTime[ "rounds_played" ] + 1;
 
-		_m_overtime = jsoTime[ "overtime" ];
-
 		_m_cP.SetDialogVariable( "match_phase", $.Localize( "gamephase_" + jsoTime[ "gamephase" ] ) );
 		_m_cP.SetDialogVariable( "rounds_remaining", jsoTime[ "rounds_remaining" ] );
 		_m_cP.SetDialogVariableInt( "scoreboard_ot", jsoTime[ "overtime" ] );
@@ -2439,7 +2504,7 @@ var Scoreboard = ( function()
 
 		                                                                                               
 			
-		var bResetTimeline = bForceUpdate;
+		var bResetTimeline = false;
 
 		if ( _m_maxRounds != jsoTime[ "maxrounds_this_period" ] )
 		{
@@ -2458,6 +2523,12 @@ var Scoreboard = ( function()
 			bResetTimeline = true;
 		}
 
+		if ( _m_overtime != jsoTime[ "overtime" ] )
+		{
+			_m_overtime = jsoTime[ "overtime" ];
+			bResetTimeline = true;
+		}
+	
 		                               
 		if ( bResetTimeline || !( currentRound in _m_RoundUpdated ) )
 		{
@@ -2842,9 +2913,10 @@ var Scoreboard = ( function()
 
 		var stat = el.GetAttributeString( "data-stat", "" );
 		var set = el.GetAttributeString( "data-set", "" );
+		var isHidden = el.GetAttributeString( "data-hidden", "" );
 
 		if ( stat != "" )
-			_CreateLabelForStat( stat, set );
+			_CreateLabelForStat( stat, set, isHidden );
 		
 	}
 
@@ -3006,7 +3078,7 @@ var Scoreboard = ( function()
 		}
 
 		_UpdateMatchInfo();
-		_UpdateScore( true );
+		_UpdateScore();
 		_UpdateAllPlayers_delayed( true );
 		_UpdateSpectatorButtons();
 
@@ -3196,8 +3268,11 @@ var Scoreboard = ( function()
 		                                
 		       
 
-		RankRevealAll:						_RankRevealAll,
+		RankRevealAll: _RankRevealAll,
 
+          		
+		                        	 		                         
+          
 	};
 
 
@@ -3247,4 +3322,7 @@ var Scoreboard = ( function()
 	$.RegisterForUnhandledEvent( "Scoreboard_Casualties_OnMouseOver", Scoreboard.Casualties_OnMouseOver );
 	$.RegisterForUnhandledEvent( "Scoreboard_Casualties_OnMouseOut", Scoreboard.Casualties_OnMouseOut );
 
+          	
+	                                                                                            
+          
 } )();

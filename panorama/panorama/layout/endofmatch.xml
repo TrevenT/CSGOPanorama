@@ -7,6 +7,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/endofmatch.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
+		<include src="file://{resources}/scripts/common/gamerules_constants.js" />
 	</scripts>
 
 	<snippets>

@@ -16,12 +16,12 @@
 			<Panel>
 				<Movie class="mainmenu-movie MainMenuModeOnly" 
 					id="MainMenuMovie"
-					src="file://{resources}/videos/cbble.webm"
+					src="file://{resources}/videos/nuke.webm"
 					sound="UIPanorama.BG_Inferno"
 					controls="none" 
 					repeat="true"
 					hittest="false"
-					data-type="cbble">
+					data-type="nuke">
 				</Movie>
 			</Panel>
 		</snippet>

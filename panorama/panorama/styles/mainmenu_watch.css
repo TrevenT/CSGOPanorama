@@ -85,7 +85,7 @@
 .MatchList
 {
 	height:100%;
-	width:336px;
+	width:360px;
 	flow-children:down;
 }
 
@@ -94,9 +94,9 @@
 	border-right:1px solid rgba(255, 255, 255, 0.05);
 }
 
-.MatchList VerticalScrollBar
+.mainmenu-content__container .MatchList VerticalScrollBar
 {
-	margin-right: 8px;
+	margin-right: 6px;
 }
 
 .InfoPanel
@@ -117,7 +117,7 @@
 
 .MatchList RadioButton
 {
-	margin: 2px 32px 1px 0px;
+	margin: 2px 20px 1px 0px;
 	horizontal-align: left;
 	vertical-align: middle;
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( white ), color-stop( 0, white ), color-stop( 0, #30303048 ), color-stop( 0, #30303048 ), to( #30303000 ) );

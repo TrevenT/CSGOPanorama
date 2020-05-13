@@ -2,7 +2,7 @@
 
 var PlayMenu = ( function()
 {
-    var k_workshopPanelId = 'gameModeButtonContainer_workshop';
+	var k_workshopPanelId = 'gameModeButtonContainer_workshop';
 
 	                                                                   
 	var m_mapSelectionButtonContainers = {};
@@ -20,30 +20,30 @@ var PlayMenu = ( function()
 	var m_steamGroupIdThatCanJoin = '';
 	var m_permissions = '';
 
-                                                  
+	                                              
 	var m_serverSetting = '';
 	var m_gameModeSetting = '';
-                                                                                                                                                
+	                                                                                                                                            
 
-                        
+	                    
 	var m_isWorkshop = false;
 
 	var k_workshopModes = {
-	    classic: 'casual,competitive',
+		classic: 'casual,competitive',
 
-	    casual: 'casual',
-	    competitive: 'competitive',
-	    wingman: 'scrimcomp2v2',
-	    deathmatch: 'deathmatch',
-	    training: 'training',
-	    coopstrike: 'coopmission',
+		casual: 'casual',
+		competitive: 'competitive',
+		wingman: 'scrimcomp2v2',
+		deathmatch: 'deathmatch',
+		training: 'training',
+		coopstrike: 'coopmission',
 
-	    custom: 'custom',
+		custom: 'custom',
 
-	                     
-	    armsrace: 'armsrace',
-	    demolition: 'demolition',
-	    flyingscoutsman: 'flyingscoutsman'
+		                 
+		armsrace: 'armsrace',
+		demolition: 'demolition',
+		flyingscoutsman: 'flyingscoutsman'
 	};
 
 	var _Init = function()
@@ -95,8 +95,8 @@ var PlayMenu = ( function()
 		{
 			entry.SetPanelEvent( 'onactivate', function()
 			{
-			    m_isWorkshop = false;
-			    m_gameModeSetting = entry.id;
+				m_isWorkshop = false;
+				m_gameModeSetting = entry.id;
 				_ApplySessionSettings();
 			} );
 		} );
@@ -132,7 +132,7 @@ var PlayMenu = ( function()
 			btnStartSearch.AddClass( 'pressed' );
 
 			if ( m_isWorkshop )
-			    _DisplayWorkshopModePopup();
+				_DisplayWorkshopModePopup();
 			else
 			{
 				LobbyAPI.StartMatchmaking(	MyPersonaAPI.GetMyOfficialTournamentName(),
@@ -298,9 +298,9 @@ var PlayMenu = ( function()
 		m_permissions = settings.system.access;
 		m_gameModeSetting = settings.game.mode;
 
-	                                           
+		                                       
 		m_isWorkshop = settings.game.mapgroupname
-            && settings.game.mapgroupname.includes( '@workshop' );
+			&& settings.game.mapgroupname.includes( '@workshop' );
 
 		var isHost = LobbyAPI.BIsHost();
 		var searchingStatus = LobbyAPI.GetMatchmakingStatusString();
@@ -309,36 +309,36 @@ var PlayMenu = ( function()
 
 		if ( m_isWorkshop )
 		{
-		    _SwitchToWorkshopTab( isEnabled );
-		    _SelectMapButtonsFromSettings( settings );
+			_SwitchToWorkshopTab( isEnabled );
+			_SelectMapButtonsFromSettings( settings );
 		}
 		else if ( m_gameModeSetting )
 		{
-		                                               
-		    for ( var i = 0; i < m_arrGameModeRadios.length; ++i )
-		    {
-		        var strGameModeForButton = m_arrGameModeRadios[i].id;
+			                                           
+			for ( var i = 0; i < m_arrGameModeRadios.length; ++i )
+			{
+				var strGameModeForButton = m_arrGameModeRadios[i].id;
 
-		                                                       
-		        if ( strGameModeForButton === m_gameModeSetting )
-		        {
-		            m_arrGameModeRadios[i].checked = true;
-		        }
+				                                               
+				if ( strGameModeForButton === m_gameModeSetting )
+				{
+					m_arrGameModeRadios[i].checked = true;
+				}
 
-		                                                                                             
-		        m_arrGameModeRadios[i].enabled = isEnabled && _IsGameModeAvailable( m_serverSetting, strGameModeForButton );
-		    }
+				                                                                                     
+				m_arrGameModeRadios[i].enabled = isEnabled && _IsGameModeAvailable( m_serverSetting, strGameModeForButton );
+			}
 
-		                                                                       
-		    _UpdateMapGroupButtons( isEnabled );
-		    _SelectMapButtonsFromSettings( settings );
+			                                                                   
+			_UpdateMapGroupButtons( isEnabled, isSearching, isHost );
+			_SelectMapButtonsFromSettings( settings );
 		}
 		else
 		{
 			                                                         
 			                                                                     
 			                                                                           
-            m_arrGameModeRadios[0].checked = true;
+			m_arrGameModeRadios[0].checked = true;
 		}
 
 		_ShowHideStartSearchBtn( isEnabled );
@@ -347,11 +347,11 @@ var PlayMenu = ( function()
 		                           
 		_UpdateTournamentButton( isHost, isSearching );
 
-	                       
+		                   
 		_UpdatePrimeBtn( settings.game.prime === 1 ? true : false, isEnabled );
 		_UpdatePermissionBtnText( settings, isEnabled );
 
-	                                      
+		                                  
 		_UpdatePlayDropDown();
 		_UpdateBotDifficultyButton();
 
@@ -396,7 +396,7 @@ var PlayMenu = ( function()
 
 	var _GetMapGroupPanelID = function ( serverType, gameMode )
 	{
-	    var panelID = 'gameModeButtonContainer_' + gameMode + '_' + serverType;
+		var panelID = 'gameModeButtonContainer_' + gameMode + '_' + serverType;
 		return panelID;
 	}
 
@@ -411,180 +411,180 @@ var PlayMenu = ( function()
    
 	var _ShowActiveMapSelectionTab = function( isEnabled )
 	{
-	    var panelID = m_activeMapGroupSelectionPanelID;
+		var panelID = m_activeMapGroupSelectionPanelID;
 
-	    for ( var key in m_mapSelectionButtonContainers )
-	    {
-	        if ( key !== panelID )
-	        {
-	            m_mapSelectionButtonContainers[key].AddClass( "hidden" );
-	        }
-	        else
-	        {
-	                                           
-	            m_mapSelectionButtonContainers[key].RemoveClass( "hidden" );
-	            m_mapSelectionButtonContainers[key].visible = true;
+		for ( var key in m_mapSelectionButtonContainers )
+		{
+			if ( key !== panelID )
+			{
+				m_mapSelectionButtonContainers[key].AddClass( "hidden" );
+			}
+			else
+			{
+				                               
+				m_mapSelectionButtonContainers[key].RemoveClass( "hidden" );
+				m_mapSelectionButtonContainers[key].visible = true;
 
-	                                                     
-	            m_mapSelectionButtonContainers[key].enabled = isEnabled;
-	        }
-	    }
+				                                         
+				m_mapSelectionButtonContainers[key].enabled = isEnabled;
+			}
+		}
 
-	    var isWorkshop = panelID === k_workshopPanelId;
-	    $( '#WorkshopSearchBar' ).visible = isWorkshop;
-	    $( '#GameModeSelectionRadios' ).visible = !isWorkshop;
+		var isWorkshop = panelID === k_workshopPanelId;
+		$( '#WorkshopSearchBar' ).visible = isWorkshop;
+		$( '#GameModeSelectionRadios' ).visible = !isWorkshop;
 
-                                                 
-	    $( '#WorkshopVisitButton' ).visible = isWorkshop && !m_bPerfectWorld;
-	    $( '#WorkshopVisitButton' ).enabled = SteamOverlayAPI.IsEnabled();
+		                                         
+		$( '#WorkshopVisitButton' ).visible = isWorkshop && !m_bPerfectWorld;
+		$( '#WorkshopVisitButton' ).enabled = SteamOverlayAPI.IsEnabled();
 	}
 
 	var _LazyCreateMapListPanel = function ( serverType, gameMode )
 	{
-	                                                                    
+		                                                                
 
-	    var panelID = _GetMapGroupPanelID( serverType, gameMode );
-	    if ( panelID in m_mapSelectionButtonContainers )
-	        return panelID;
+		var panelID = _GetMapGroupPanelID( serverType, gameMode );
+		if ( panelID in m_mapSelectionButtonContainers )
+			return panelID;
 
-	                               
+		                           
 
-	    var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelID, {
-	        class: 'map-selection-list hidden'
-	    } );
+		var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelID, {
+			class: 'map-selection-list hidden'
+		} );
 
-	    m_mapSelectionButtonContainers[panelID] = container;
+		m_mapSelectionButtonContainers[panelID] = container;
 
-	                                 
-	    var OnMouseOver = function ( id, tooltipText, mapsList ) {
-	        tooltipText = $.Localize( tooltipText );
+		                             
+		var OnMouseOver = function ( id, tooltipText, mapsList ) {
+			tooltipText = $.Localize( tooltipText );
 
-	        var mapNamesList = [];
+			var mapNamesList = [];
 
-	        if ( mapsList.length > 1 )
-	        {
-	            mapsList.forEach( function ( element ) {
-	                mapNamesList.push( $.Localize( 'SFUI_Map_' + element ) );
-	            } );
+			if ( mapsList.length > 1 )
+			{
+				mapsList.forEach( function ( element ) {
+					mapNamesList.push( $.Localize( 'SFUI_Map_' + element ) );
+				} );
 
-	            var mapGroupsText = mapNamesList.join( ', ' );
-	            tooltipText = tooltipText + '<br><br>' + mapGroupsText;
-	        }
+				var mapGroupsText = mapNamesList.join( ', ' );
+				tooltipText = tooltipText + '<br><br>' + mapGroupsText;
+			}
 
-	        UiToolkitAPI.ShowTextTooltip( id, tooltipText );
-	    };
+			UiToolkitAPI.ShowTextTooltip( id, tooltipText );
+		};
 
-	    var OnMouseOut = function () {
-	        UiToolkitAPI.HideTextTooltip();
-	    };
+		var OnMouseOut = function () {
+			UiToolkitAPI.HideTextTooltip();
+		};
 
-	    var isPlayingOnValveOfficial = _IsValveOfficialServer( serverType );
-	    var arrMapGroups = _GetAvailableMapGroups( gameMode, isPlayingOnValveOfficial );
-	    var bIsCompetitive = gameMode === 'competitive';
-	    var bIsSkirmish = gameMode === 'skirmish';
-	    var bIsWingman = gameMode === 'scrimcomp2v2';
-	    var panelType = ( ( ( bIsCompetitive || bIsSkirmish || bIsWingman ) && isPlayingOnValveOfficial ) ? "ToggleButton" : "RadioButton" );
-	    for ( var k in arrMapGroups )
-	    {
-	        var mapName = arrMapGroups[k];
-	        var mg = GetMGDetails( mapName );
-	        var p = $.CreatePanel( panelType, container, panelID + mapName );
-	        p.BLoadLayoutSnippet( "MapGroupSelection" );
-	        if ( panelType === "RadioButton" )
-	            p.group = "radiogroup_" + panelID;
+		var isPlayingOnValveOfficial = _IsValveOfficialServer( serverType );
+		var arrMapGroups = _GetAvailableMapGroups( gameMode, isPlayingOnValveOfficial );
+		var bIsCompetitive = gameMode === 'competitive';
+		var bIsSkirmish = gameMode === 'skirmish';
+		var bIsWingman = gameMode === 'scrimcomp2v2';
+		var panelType = ( ( ( bIsCompetitive || bIsSkirmish || bIsWingman ) && isPlayingOnValveOfficial ) ? "ToggleButton" : "RadioButton" );
+		for ( var k in arrMapGroups )
+		{
+			var mapName = arrMapGroups[k];
+			var mg = GetMGDetails( mapName );
+			var p = $.CreatePanel( panelType, container, panelID + mapName );
+			p.BLoadLayoutSnippet( "MapGroupSelection" );
+			if ( panelType === "RadioButton" )
+				p.group = "radiogroup_" + panelID;
 
-	        p.SetAttributeString( "mapname", mapName );
-	        p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
+			p.SetAttributeString( "mapname", mapName );
+			p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
 
-	        p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = mg.grouptype === 'active';
-	        p.FindChildInLayoutFile( 'MapGroupName' ).text = $.Localize( mg.nameID );
+			p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = mg.grouptype === 'active';
+			p.FindChildInLayoutFile( 'MapGroupName' ).text = $.Localize( mg.nameID );
 
-	        var keysList = Object.keys( mg.maps );
-	        var mapIcon = null;
-	        var mapImage = null;
-	                                                  
-	        if ( keysList.length > 1 )
-	        {
-	            p.AddClass( 'map-selection-btn--large' );
-	            p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
-	            p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
-	            p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
-	        }
-	        else
-	        {
-	            mapIcon = p.FindChildInLayoutFile( 'MapGroupCollectionIcon' );
-	            mapIcon.visible = true;
+			var keysList = Object.keys( mg.maps );
+			var mapIcon = null;
+			var mapImage = null;
+			                                          
+			if ( keysList.length > 1 )
+			{
+				p.AddClass( 'map-selection-btn--large' );
+				p.FindChildInLayoutFile( 'MapSelectionButton' ).AddClass( 'map-selection-btn-container--large' );
+				p.FindChildInLayoutFile( 'MapGroupName' ).AddClass( 'fontSize-m' );
+				p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
+			}
+			else
+			{
+				mapIcon = p.FindChildInLayoutFile( 'MapGroupCollectionIcon' );
+				mapIcon.visible = true;
 
-	            IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/' + mg.icon_image_path );
+				IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/' + mg.icon_image_path );
 
-	            var mapGroupIcon = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
-	            mapIcon.SetImage( mapGroupIcon );
-	        }
+				var mapGroupIcon = mapName === 'random' ? 'file://{images}/icons/ui/random.svg' : 'file://{images}/' + mg.icon_image_path + '.svg';
+				mapIcon.SetImage( mapGroupIcon );
+			}
 
-	        if ( mapName === 'random' )
-	        {
-	            mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
-	            mapImage.AddClass( 'map-selection-btn__screenshot' );
+			if ( mapName === 'random' )
+			{
+				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' );
+				mapImage.AddClass( 'map-selection-btn__screenshot' );
 
-	            mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
-	            mapImage.style.backgroundPosition = '50% 0%';
-	            mapImage.style.backgroundSize = 'auto 100%';
+				mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
+				mapImage.style.backgroundPosition = '50% 0%';
+				mapImage.style.backgroundSize = 'auto 100%';
 			}
 			
 			_SetNewMapElement( mapName, p );
 
-	                                      
-	        for ( var i = 0; i < keysList.length; i++ )
-	        {
-	            mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
-	            mapImage.AddClass( 'map-selection-btn__screenshot' );
-	            mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[i] + '.png")';
-	            mapImage.style.backgroundPosition = '50% 0%';
-	            mapImage.style.backgroundSize = 'auto 100%';
+			                              
+			for ( var i = 0; i < keysList.length; i++ )
+			{
+				mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot' + i );
+				mapImage.AddClass( 'map-selection-btn__screenshot' );
+				mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/' + keysList[i] + '.png")';
+				mapImage.style.backgroundPosition = '50% 0%';
+				mapImage.style.backgroundSize = 'auto 100%';
 
-	                                           
-	            if ( keysList.length > 1 )
-	            {
-	                                                   
+				                               
+				if ( keysList.length > 1 )
+				{
+					                                   
 
-	                mapIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ), 'MapIcon' + i, {
-	                    defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
-	                    texturewidth: '72',
-	                    textureheight: '72',
-	                    src: 'file://{images}/map_icons/map_icon_' + keysList[i] + '.svg'
-	                } );
-	                mapIcon.AddClass( 'map-selection-btn__map-icon' );
-	                mapIcon.AddClass( 'map-selection-btn__map-icon-small' );
+					mapIcon = $.CreatePanel( 'Image', p.FindChildInLayoutFile( 'MapGroupCollectionMultiIcons' ), 'MapIcon' + i, {
+						defaultsrc: 'file://{images}/map_icons/map_icon_NONE.png',
+						texturewidth: '72',
+						textureheight: '72',
+						src: 'file://{images}/map_icons/map_icon_' + keysList[i] + '.svg'
+					} );
+					mapIcon.AddClass( 'map-selection-btn__map-icon' );
+					mapIcon.AddClass( 'map-selection-btn__map-icon-small' );
 
-	                IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/map_icons/map_icon_' + keysList[i] );
-	            }
-	        }
+					IconUtil.SetupFallbackMapIcon( mapIcon, 'file://{images}/map_icons/map_icon_' + keysList[i] );
+				}
+			}
 
-	                  
-	        if ( mg.tooltipID )
-	        {
-	            p.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined, p.id, mg.tooltipID, keysList ) );
-	            p.SetPanelEvent( 'onmouseout', OnMouseOut );
-	        }
-	    }
+			          
+			if ( mg.tooltipID )
+			{
+				p.SetPanelEvent( 'onmouseover', OnMouseOver.bind( undefined, p.id, mg.tooltipID, keysList ) );
+				p.SetPanelEvent( 'onmouseout', OnMouseOut );
+			}
+		}
 
-	                                                                              
-	    container.OnPropertyTransitionEndEvent = function ( panelName, propertyName ) {
-	        if ( container.id === panelName && propertyName === 'opacity' )
-	        {
-	                                                     
-	            if ( container.visible === true && container.BIsTransparent() )
-	            {
-	                container.visible = false;
-	                return true;
-	            }
-	        }
-	        return false;
-	    };
+		                                                                          
+		container.OnPropertyTransitionEndEvent = function ( panelName, propertyName ) {
+			if ( container.id === panelName && propertyName === 'opacity' )
+			{
+				                                         
+				if ( container.visible === true && container.BIsTransparent() )
+				{
+					container.visible = false;
+					return true;
+				}
+			}
+			return false;
+		};
 
-	    $.RegisterEventHandler( 'PropertyTransitionEnd', container, container.OnPropertyTransitionEndEvent );
+		$.RegisterEventHandler( 'PropertyTransitionEnd', container, container.OnPropertyTransitionEndEvent );
 
-	    return panelID;
+		return panelID;
 	}
 
 	var _SetNewMapElement = function( mapName, elMapPanel )
@@ -594,19 +594,21 @@ var PlayMenu = ( function()
 	};
 
 
-	var _UpdateMapGroupButtons = function( isEnabled )
+	var _UpdateMapGroupButtons = function( isEnabled, isSearching, isHost )
 	{
-	    var panelID = _LazyCreateMapListPanel( m_serverSetting, m_gameModeSetting );
+		var panelID = _LazyCreateMapListPanel( m_serverSetting, m_gameModeSetting );
 
-                            
-	    m_activeMapGroupSelectionPanelID = panelID;
-	    _ShowActiveMapSelectionTab( isEnabled );
+		                    
+		m_activeMapGroupSelectionPanelID = panelID;
+		_ShowActiveMapSelectionTab( isEnabled );
 
-                                            
-	    if ( ( m_gameModeSetting === 'competitive' || m_gameModeSetting === 'scrimcomp2v2' ) && _IsPlayingOnValveOfficial() )
-	    {
-	        _UpdateWaitTime( m_mapSelectionButtonContainers[panelID] );
-	    }
+		                                    
+		if ( ( m_gameModeSetting === 'competitive' || m_gameModeSetting === 'scrimcomp2v2' ) && _IsPlayingOnValveOfficial() )
+		{
+			_UpdateWaitTime( m_mapSelectionButtonContainers[panelID] );
+		}
+		
+		_SetEnabledStateForMapBtns( m_mapSelectionButtonContainers[ panelID ], isSearching, isHost );
 	};
 
 	var _SelectMapButtonsFromSettings = function( settings )
@@ -763,6 +765,16 @@ var PlayMenu = ( function()
 		elBtn.enabled = isEnabled;
 	};
 
+	var _SetEnabledStateForMapBtns = function( elMapList, isSearching, isHost )
+	{
+		elMapList.SetHasClass( 'is-client', ( isSearching || !isHost ) );
+
+		var childrenList = elMapList.Children();
+		childrenList.forEach(element => {
+			element.enabled = !isSearching && isHost; 
+		});
+	};
+
 	var _UpdateWaitTime = function( elMapList )
 	{
 		var childrenList = elMapList.Children();
@@ -789,14 +801,14 @@ var PlayMenu = ( function()
 
 	var _UpdatePlayDropDown = function()
 	{
-	    if ( m_activeMapGroupSelectionPanelID === k_workshopPanelId )
-	    {
-	        $( '#PlayTopNavDropdown' ).SetSelected( 'PlayWorkshop' );
-	    }
-	    else
-	    {
-	        $( '#PlayTopNavDropdown' ).SetSelected( 'Play-' + m_serverSetting );
-	    }
+		if ( m_activeMapGroupSelectionPanelID === k_workshopPanelId )
+		{
+			$( '#PlayTopNavDropdown' ).SetSelected( 'PlayWorkshop' );
+		}
+		else
+		{
+			$( '#PlayTopNavDropdown' ).SetSelected( 'Play-' + m_serverSetting );
+		}
 	};
 
 	var _IsValveOfficialServer = function( serverType )
@@ -814,8 +826,8 @@ var PlayMenu = ( function()
 		return $( '#PrimeButton' ).checked;
 	};
 
-                                                             
-	var _GetSelectedMapsForServerTypeAndGameMode = function ( serverType, gameMode )
+	                                                         
+	var _GetSelectedMapsForServerTypeAndGameMode = function( serverType, gameMode )
 	{
 		var isPlayingOnValveOfficial = _IsValveOfficialServer( serverType );
 		var mapGroupPanelID = _LazyCreateMapListPanel( serverType, gameMode );
@@ -824,12 +836,12 @@ var PlayMenu = ( function()
 		                                                                                                             
 		if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
 		{
-		                                                                          
-		    var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_' + serverType + '_' + gameMode );
+			                                                                      
+			var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_' + serverType + '_' + gameMode );
 
-                                                      
-		    if ( !preferencesMapsForThisMode )
-		        preferencesMapsForThisMode = '';
+			                                          
+			if ( !preferencesMapsForThisMode )
+				preferencesMapsForThisMode = '';
 
 			var savedMapIds = preferencesMapsForThisMode.split( ',' );
 			savedMapIds.forEach( function( strMapNameIndividual )
@@ -841,13 +853,13 @@ var PlayMenu = ( function()
 				} );
 				if ( mapsWithThisName.length > 0 )
 				{
-					mapsWithThisName[0].checked = true;
+					mapsWithThisName[ 0 ].checked = true;
 				}
 			} );
 
 			if ( mapContainer.GetChildCount() > 0 && !_CheckContainerHasAnyChildChecked( mapContainer ) )
 			{
-				mapContainer.Children()[0].checked = true;
+				mapContainer.Children()[ 0 ].checked = true;
 			}
 		}
 
@@ -863,66 +875,66 @@ var PlayMenu = ( function()
 		}, '' );
 
 		return selectedMaps;
-	}
+	};
 
 	var _GetSelectedWorkshopMapButtons = function()
 	{
-	    var mapGroupPanelID = _LazyCreateWorkshopTab();
-	    var mapContainer = m_mapSelectionButtonContainers[mapGroupPanelID];
-	    var children = mapContainer.Children();
+		var mapGroupPanelID = _LazyCreateWorkshopTab();
+		var mapContainer = m_mapSelectionButtonContainers[mapGroupPanelID];
+		var children = mapContainer.Children();
 
-	    if ( children.length == 0 || !children[0].group )
-	    {
-	                           
-	        return [];
-	    }
+		if ( children.length == 0 || !children[0].group )
+		{
+			                   
+			return [];
+		}
 
-	                                                                                                                 
-	    if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
-	    {
-	        var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_workshop' );
+		                                                                                                             
+		if ( !_CheckContainerHasAnyChildChecked( mapContainer ) )
+		{
+			var preferencesMapsForThisMode = GameInterfaceAPI.GetSettingString( 'ui_playsettings_maps_workshop' );
 
-	                                                  
-	        if ( !preferencesMapsForThisMode )
-	            preferencesMapsForThisMode = '';
+			                                          
+			if ( !preferencesMapsForThisMode )
+				preferencesMapsForThisMode = '';
 
-	        var savedMapIds = preferencesMapsForThisMode.split( ',' );
-	        savedMapIds.forEach( function ( strMapNameIndividual ) {
-	            var mapsWithThisName = children.filter( function ( map ) {
-	                var mapName = map.GetAttributeString( "mapname", "invalid" );
-	                return mapName === strMapNameIndividual;
-	            } );
-	            if ( mapsWithThisName.length > 0 )
-	            {
-	                mapsWithThisName[0].checked = true;
-	            }
-	        } );
+			var savedMapIds = preferencesMapsForThisMode.split( ',' );
+			savedMapIds.forEach( function ( strMapNameIndividual ) {
+				var mapsWithThisName = children.filter( function ( map ) {
+					var mapName = map.GetAttributeString( "mapname", "invalid" );
+					return mapName === strMapNameIndividual;
+				} );
+				if ( mapsWithThisName.length > 0 )
+				{
+					mapsWithThisName[0].checked = true;
+				}
+			} );
 
-	        if ( !_CheckContainerHasAnyChildChecked( mapContainer ) && children.length > 0 )
-	        {
-	            children[0].checked = true;
-	        }
-	    }
+			if ( !_CheckContainerHasAnyChildChecked( mapContainer ) && children.length > 0 )
+			{
+				children[0].checked = true;
+			}
+		}
 
-	    var selectedMaps = mapContainer.Children().filter( function ( e ) {
-	                                                                 
-	        return e.checked;
-	    } );
+		var selectedMaps = mapContainer.Children().filter( function ( e ) {
+			                                                         
+			return e.checked;
+		} );
 
-	    return Array.from(selectedMaps);
+		return Array.from(selectedMaps);
 	}
 
 	var _GetSelectedWorkshopMap = function()
 	{
-	    var mapButtons = _GetSelectedWorkshopMapButtons();
+		var mapButtons = _GetSelectedWorkshopMapButtons();
 
-        var selectedMaps = mapButtons.reduce( function ( accumulator, e ) {
-	                                                      
-	        var mapName = e.GetAttributeString( "mapname", "invalid" );
-	        return ( accumulator ) ? ( accumulator + "," + mapName ) : mapName;
-	    }, '' );
+		var selectedMaps = mapButtons.reduce( function ( accumulator, e ) {
+			                                              
+			var mapName = e.GetAttributeString( "mapname", "invalid" );
+			return ( accumulator ) ? ( accumulator + "," + mapName ) : mapName;
+		}, '' );
 
-	    return selectedMaps;
+		return selectedMaps;
 	}
 
 	                                                                                                    
@@ -930,35 +942,35 @@ var PlayMenu = ( function()
 	                                                                                                    
 	var _CheckContainerHasAnyChildChecked = function( aPanelContainer )
 	{
-	    if ( !aPanelContainer )
-	        return false;
+		if ( !aPanelContainer )
+			return false;
 
 		return aPanelContainer.Children().filter( function( map )
-			{
-				return map.checked;
-			} )
+		{
+			return map.checked;
+		} )
 			.length > 0;
-	}
+	};
 
-                                                                                                        
-                                                        
-                                                                                                        
+	                                                                                                    
+	                                                    
+	                                                                                                    
 	var _ValidateSessionSettings = function()
 	{
-	    if ( m_isWorkshop )
-	    {
-	                                             
-	        m_serverSetting = "listen";
-	    }
+		if ( m_isWorkshop )
+		{
+			                                     
+			m_serverSetting = "listen";
+		}
 
-	    if ( !_IsGameModeAvailable( m_serverSetting, m_gameModeSetting ) )
-	    {
-	                                           
-              
-	                                                           
-	        m_gameModeSetting = "casual";
-	    }
-	}
+		if ( !_IsGameModeAvailable( m_serverSetting, m_gameModeSetting ) )
+		{
+			                                   
+			  
+			                                                   
+			m_gameModeSetting = "casual";
+		}
+	};
 
 	                                                                                                    
 	                                   
@@ -970,7 +982,7 @@ var PlayMenu = ( function()
 			return;
 		}
 
-                                                             
+		                                                     
 		_ValidateSessionSettings();
 
 		                                                                                 
@@ -979,8 +991,8 @@ var PlayMenu = ( function()
 		var selectedMaps;
 
 		if ( m_isWorkshop )
-		    selectedMaps = _GetSelectedWorkshopMap();
-        else
+			selectedMaps = _GetSelectedWorkshopMap();
+		else
 			selectedMaps = _GetSelectedMapsForServerTypeAndGameMode( serverType, gameMode );
 
 		var settings = {
@@ -998,20 +1010,20 @@ var PlayMenu = ( function()
 			}
 		};
 
-	                           
-	                                                      
+		                       
+		                                                  
 		if ( m_isWorkshop )
 		{
-		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_workshop', selectedMaps );
+			GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_workshop', selectedMaps );
 		}
-        else
+		else
 		{
-		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_mode_' + serverType, m_gameModeSetting );
-		    GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_' + serverType + '_' + m_gameModeSetting, selectedMaps );
+			GameInterfaceAPI.SetSettingString( 'ui_playsettings_mode_' + serverType, m_gameModeSetting );
+			GameInterfaceAPI.SetSettingString( 'ui_playsettings_maps_' + serverType + '_' + m_gameModeSetting, selectedMaps );
 		}
 
-	                                                                      
-                                                                                                  
+		                                                                  
+		                                                                                          
 		LobbyAPI.UpdateSessionSettings( settings );
 	};
 
@@ -1061,150 +1073,150 @@ var PlayMenu = ( function()
 		} );
 	};
 
-	var _GetPlayType = function ()
+	var _GetPlayType = function()
 	{
 		var elDropDownEntry = $( '#PlayTopNavDropdown' ).GetSelected();
 		var playType = elDropDownEntry.GetAttributeString( 'data-type', '(not_found)' );
 		return playType;
-	}
+	};
 
 	var _InitializeWorkshopTags = function ( panel, mapInfo )
 	{
-	    var mapTags = mapInfo.tags ? mapInfo.tags.split( "," ) : [];
+		var mapTags = mapInfo.tags ? mapInfo.tags.split( "," ) : [];
 
-	                              
-	    var rawModes = [];
-	    var modes = [];
-	    var tags = [];
+		                          
+		var rawModes = [];
+		var modes = [];
+		var tags = [];
 
-	    for ( var i = 0; i < mapTags.length; ++i )
-	    {
-	                                       
-                                                              
-	        var modeTag = mapTags[i].toLowerCase().split( ' ' ).join( '' ).split( '-' ).join( '' );
-	        if ( modeTag in k_workshopModes )
-	        {
-	            var gameTypes = k_workshopModes[modeTag].split(',');
-	            for( var iType = 0; iType < gameTypes.length; ++iType )
-	            {
-	                if( !rawModes.includes( gameTypes[iType] ) )
-	                    rawModes.push( gameTypes[iType] );
-	            }
+		for ( var i = 0; i < mapTags.length; ++i )
+		{
+			                               
+			                                                  
+			var modeTag = mapTags[i].toLowerCase().split( ' ' ).join( '' ).split( '-' ).join( '' );
+			if ( modeTag in k_workshopModes )
+			{
+				var gameTypes = k_workshopModes[modeTag].split(',');
+				for( var iType = 0; iType < gameTypes.length; ++iType )
+				{
+					if( !rawModes.includes( gameTypes[iType] ) )
+						rawModes.push( gameTypes[iType] );
+				}
 
-	            modes.push( $.Localize( '#CSGO_Workshop_Mode_' + modeTag ) );
-	        }
-	        else
-	        {
-	            tags.push( $.HTMLEscape( mapTags[i] ) );
-	        }
-	    }
+				modes.push( $.Localize( '#CSGO_Workshop_Mode_' + modeTag ) );
+			}
+			else
+			{
+				tags.push( $.HTMLEscape( mapTags[i] ) );
+			}
+		}
 
-                           
-	    var tooltip = mapInfo.desc ? $.HTMLEscape( mapInfo.desc, true ) : '';
+		                   
+		var tooltip = mapInfo.desc ? $.HTMLEscape( mapInfo.desc, true ) : '';
 
-	    if ( modes.length > 0 )
-	    {
-	        if ( tooltip )
-	            tooltip += '<br><br>';
+		if ( modes.length > 0 )
+		{
+			if ( tooltip )
+				tooltip += '<br><br>';
 
-	        tooltip += $.Localize( "#CSGO_Workshop_Modes" );
-	        tooltip += ' ';
-	        tooltip += modes.join(', ');
-	    }
+			tooltip += $.Localize( "#CSGO_Workshop_Modes" );
+			tooltip += ' ';
+			tooltip += modes.join(', ');
+		}
 
-	    if ( tags.length > 0 )
-	    {
-	        if ( tooltip )
-	            tooltip += '<br><br>';
+		if ( tags.length > 0 )
+		{
+			if ( tooltip )
+				tooltip += '<br><br>';
 
-	        tooltip += $.Localize( "#CSGO_Workshop_Tags" );
-	        tooltip += ' ';
-	        tooltip += tags.join( ', ' );
-	    }
+			tooltip += $.Localize( "#CSGO_Workshop_Tags" );
+			tooltip += ' ';
+			tooltip += tags.join( ', ' );
+		}
 
-	    panel.SetAttributeString( 'data-tooltip', tooltip );                               
-	    panel.SetAttributeString( 'data-workshop-modes', rawModes.join( ',' ) );
+		panel.SetAttributeString( 'data-tooltip', tooltip );                               
+		panel.SetAttributeString( 'data-workshop-modes', rawModes.join( ',' ) );
 	}
 
 	var _ShowWorkshopMapInfoTooltip = function ( panel )
 	{
-	    var text = panel.GetAttributeString( 'data-tooltip', '' );
+		var text = panel.GetAttributeString( 'data-tooltip', '' );
 
-	    if ( text )
-	        UiToolkitAPI.ShowTextTooltip( panel.id, text );
+		if ( text )
+			UiToolkitAPI.ShowTextTooltip( panel.id, text );
 	};
 
 	var _HideWorkshopMapInfoTooltip = function ()
 	{
-	    UiToolkitAPI.HideTextTooltip();
+		UiToolkitAPI.HideTextTooltip();
 	};
 
 
-	var _LazyCreateWorkshopTab = function ()
+	var _LazyCreateWorkshopTab = function()
 	{
-	    var panelId = k_workshopPanelId;
+		var panelId = k_workshopPanelId;
 
-	    if ( panelId in m_mapSelectionButtonContainers )
-	        return panelId;
+		if ( panelId in m_mapSelectionButtonContainers )
+			return panelId;
 
-	                          
-	    var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelId, {
-	        class: 'map-selection-list hidden'
-	    } );
+		                      
+		var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelId, {
+			class: 'map-selection-list hidden'
+		} );
 
-	    m_mapSelectionButtonContainers[panelId] = container;
+		m_mapSelectionButtonContainers[ panelId ] = container;
 
-	    var numMaps = WorkshopAPI.GetNumSubscribedMaps();
-	    for ( var idxMap = 0; idxMap < numMaps; ++idxMap )
-	    {
-	        var strMapId = WorkshopAPI.GetSubscribedMapID( idxMap );
-	        var mapInfo = WorkshopAPI.GetWorkshopMapInfo( strMapId );
-	        if ( !mapInfo || !mapInfo.mapgroup )
-	            continue;
+		var numMaps = WorkshopAPI.GetNumSubscribedMaps();
+		for ( var idxMap = 0; idxMap < numMaps; ++idxMap )
+		{
+			var strMapId = WorkshopAPI.GetSubscribedMapID( idxMap );
+			var mapInfo = WorkshopAPI.GetWorkshopMapInfo( strMapId );
+			if ( !mapInfo || !mapInfo.mapgroup )
+				continue;
 
-	        var p = $.CreatePanel( 'RadioButton', container, panelId + '_' + idxMap );
-	        p.BLoadLayoutSnippet( 'MapGroupSelection' );
-	        p.group = 'radiogroup_' + panelId;
+			var p = $.CreatePanel( 'RadioButton', container, panelId + '_' + idxMap );
+			p.BLoadLayoutSnippet( 'MapGroupSelection' );
+			p.group = 'radiogroup_' + panelId;
 
-	        if ( !( mapInfo.imageUrl ) )
-	            mapInfo.imageUrl = 'file://{images}/map_icons/screenshots/360p/random.png';
+			if ( !( mapInfo.imageUrl ) )
+				mapInfo.imageUrl = 'file://{images}/map_icons/screenshots/360p/random.png';
 
-	        p.SetAttributeString( 'mapname', mapInfo.mapgroup );
-	        p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
-	        p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = false;
-	        p.FindChildInLayoutFile( 'MapGroupName' ).text = mapInfo.name;
-	        p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
+			p.SetAttributeString( 'mapname', mapInfo.mapgroup );
+			p.SetPanelEvent( 'onactivate', _OnActivateMapOrMapGroupButton.bind( this, p ) );
+			p.FindChildInLayoutFile( 'ActiveGroupIcon' ).visible = false;
+			p.FindChildInLayoutFile( 'MapGroupName' ).text = mapInfo.name;
+			p.FindChildInLayoutFile( 'MapGroupCollectionIcon' ).visible = false;
 
-	        var mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot0' );
-	        mapImage.AddClass( 'map-selection-btn__screenshot' );
-	        mapImage.style.backgroundImage = 'url("' + mapInfo.imageUrl + '")';
-	        mapImage.style.backgroundPosition = '50% 0%';
-	        mapImage.style.backgroundSize = 'auto 100%';
+			var mapImage = $.CreatePanel( 'Panel', p.FindChildInLayoutFile( 'MapGroupImagesCarousel' ), 'MapSelectionScreenshot0' );
+			mapImage.AddClass( 'map-selection-btn__screenshot' );
+			mapImage.style.backgroundImage = 'url("' + mapInfo.imageUrl + '")';
+			mapImage.style.backgroundPosition = '50% 0%';
+			mapImage.style.backgroundSize = 'auto 100%';
 
-	        _InitializeWorkshopTags( p, mapInfo );
+			_InitializeWorkshopTags( p, mapInfo );
 
-	        p.SetPanelEvent( 'onmouseover', _ShowWorkshopMapInfoTooltip.bind( null, p ) );
-	        p.SetPanelEvent( 'onmouseout', _HideWorkshopMapInfoTooltip.bind( null ) );
-	    }
+			p.SetPanelEvent( 'onmouseover', _ShowWorkshopMapInfoTooltip.bind( null, p ) );
+			p.SetPanelEvent( 'onmouseout', _HideWorkshopMapInfoTooltip.bind( null ) );
+		}
 
-	    if ( numMaps == 0 )
-	    {
-	        var p = $.CreatePanel( 'Panel', container, undefined );
-	        p.BLoadLayoutSnippet( 'NoWorkshopMaps' );
-	    }
+		if ( numMaps == 0 )
+		{
+			var p = $.CreatePanel( 'Panel', container, undefined );
+			p.BLoadLayoutSnippet( 'NoWorkshopMaps' );
+		}
 
-	                                            
-	    _UpdateWorkshopMapFilter();
+		                                        
+		_UpdateWorkshopMapFilter();
 
-	    return panelId;
-	}
+		return panelId;
+	};
 
 	var _SwitchToWorkshopTab = function( isEnabled )
 	{
-	    var panelId = _LazyCreateWorkshopTab();
-	    m_activeMapGroupSelectionPanelID = panelId;
-	    _ShowActiveMapSelectionTab( isEnabled );
-	}
+		var panelId = _LazyCreateWorkshopTab();
+		m_activeMapGroupSelectionPanelID = panelId;
+		_ShowActiveMapSelectionTab( isEnabled );
+	};
 
 	var _PlayTopNavDropdownChanged = function()
 	{
@@ -1228,8 +1240,8 @@ var PlayMenu = ( function()
 
 		if ( playType === 'official' || playType === 'listen' )
 		{
-		    m_isWorkshop = false;
-		    m_serverSetting = playType;
+			m_isWorkshop = false;
+			m_serverSetting = playType;
 			_ApplySessionSettings();
 			return;
 		}
@@ -1252,8 +1264,8 @@ var PlayMenu = ( function()
 		}
 		else if ( playType === 'workshop' )
 		{
-		    _SetPlayDropdownToWorkshop();
-		    return;
+			_SetPlayDropdownToWorkshop();
+			return;
 		}
 		else if ( playType === 'community' )
 		{
@@ -1267,7 +1279,7 @@ var PlayMenu = ( function()
 			}
 		}
 
-	                                                       
+		                                                   
 		_UpdatePlayDropDown();
 	};
 
@@ -1277,14 +1289,14 @@ var PlayMenu = ( function()
 
 		var elDropDown = $( '#BotDifficultyDropdown' );
 
-        var bShowBotDifficultyButton = ( playType === 'listen' || playType === 'workshop' );
+		var bShowBotDifficultyButton = ( playType === 'listen' || playType === 'workshop' );
 		elDropDown.SetHasClass( "hidden", !bShowBotDifficultyButton );
 
 		                         
 		var botDiff = GameInterfaceAPI.GetSettingString( 'player_botdifflast_s' );
 		GameTypesAPI.SetCustomBotDifficulty( botDiff );
 		elDropDown.SetSelected( botDiff );
-	}
+	};
 
 	var _BotDifficultyChanged = function()
 	{
@@ -1295,149 +1307,150 @@ var PlayMenu = ( function()
 
 		                                  
 		GameInterfaceAPI.SetSettingString( 'player_botdifflast_s', botDiff )
-	}	
+	};
 
-	var _DisplayWorkshopModePopup = function ()
+	var _DisplayWorkshopModePopup = function()
 	{
-	                             
-	    var elSelectedMaps = _GetSelectedWorkshopMapButtons();
-	    var modes = [];
+		                         
+		var elSelectedMaps = _GetSelectedWorkshopMapButtons();
+		var modes = [];
 
-	    for ( var iMap = 0; iMap < elSelectedMaps.length; ++iMap )
-	    {
-	        var mapModes = elSelectedMaps[iMap].GetAttributeString( 'data-workshop-modes', '' ).split( ',' );
+		for ( var iMap = 0; iMap < elSelectedMaps.length; ++iMap )
+		{
+			var mapModes = elSelectedMaps[ iMap ].GetAttributeString( 'data-workshop-modes', '' ).split( ',' );
 
-	                                                                  
-	        if ( iMap == 0 )
-	            modes = mapModes;
-            else
-	            modes = modes.filter( function ( mode ) { return mapModes.includes( mode ); } );
-	    }
+			                                                          
+			if ( iMap == 0 )
+				modes = mapModes;
+			else
+				modes = modes.filter( function( mode ) { return mapModes.includes( mode ); } );
+		}
 
-	    var strModes = modes.join( ',' );
-	    UiToolkitAPI.ShowCustomLayoutPopupParameters( 'workshop_map_mode', 'file://{resources}/layout/popups/popup_workshop_mode_select.xml', 'workshop-modes=' + $.UrlEncode( strModes ) );
-	}
+		var strModes = modes.join( ',' );
+		UiToolkitAPI.ShowCustomLayoutPopupParameters( 'workshop_map_mode', 'file://{resources}/layout/popups/popup_workshop_mode_select.xml', 'workshop-modes=' + $.UrlEncode( strModes ) );
+	};
 
-	var _UpdateWorkshopMapFilter = function () {
-	    var filter = $.HTMLEscape( $( '#WorkshopSearchTextEntry' ).text, true ).toLowerCase();
-	    var container = m_mapSelectionButtonContainers[k_workshopPanelId];
-
-	    if( !container )
-	        return;                       
-
-	    var children = container.Children();
-
-	    for ( var i = 0; i < children.length; ++i )
-	    {
-	        var panel = children[i];
-
-                                                                                    
-	        var mapname = panel.GetAttributeString( 'mapname', '' );
-	        if ( mapname === '' )
-	            continue;
-
-                                           
-	        if ( filter === '' ) 
-	        {
-	            panel.visible = true;
-	            continue;
-	        }
-
-	                                                                                 
-	        if ( mapname.toLowerCase().includes( filter ) )
-	        {
-	            panel.visible = true;
-	            continue;
-	        }
-
-	                                                                        
-	        var modes = panel.GetAttributeString( 'data-workshop-modes', '' );
-	        if ( modes.toLowerCase().includes( filter ) )
-	        {
-	            panel.visible = true;
-	            continue;
-	        }
-
-	                                                                                                   
-                                                         
-	        var tooltip = panel.GetAttributeString( 'data-tooltip', '' );
-	        if( tooltip.toLowerCase().includes(filter) )
-	        {
-	            panel.visible = true;
-	            continue;
-	        }
-
-	                                                                                          
-	                                                                     
-	        var mapname = panel.FindChildTraverse( 'MapGroupName' );
-	        if ( mapname && mapname.text && mapname.text.toLowerCase().includes( filter ) )
-	        {
-	            panel.visible = true;
-	            continue;
-	        }
-
-	        panel.visible = false;
-	    }
-	}
-
-	var _SetPlayDropdownToWorkshop = function ()
+	var _UpdateWorkshopMapFilter = function()
 	{
-                                                   
-	    m_serverSetting = 'listen';
-	    m_isWorkshop = true;
-	    if ( _GetSelectedWorkshopMap() )
-	    {
-	        _ApplySessionSettings();
-	    }
-	    else
-	    {
-	                                                                                                     
-	        _SwitchToWorkshopTab( true );
-	    }
-	}
+		var filter = $.HTMLEscape( $( '#WorkshopSearchTextEntry' ).text, true ).toLowerCase();
+		var container = m_mapSelectionButtonContainers[ k_workshopPanelId ];
+
+		if ( !container )
+			return;                       
+
+		var children = container.Children();
+
+		for ( var i = 0; i < children.length; ++i )
+		{
+			var panel = children[ i ];
+
+			                                                                        
+			var mapname = panel.GetAttributeString( 'mapname', '' );
+			if ( mapname === '' )
+				continue;
+
+			                               
+			if ( filter === '' ) 
+			{
+				panel.visible = true;
+				continue;
+			}
+
+			                                                                         
+			if ( mapname.toLowerCase().includes( filter ) )
+			{
+				panel.visible = true;
+				continue;
+			}
+
+			                                                                
+			var modes = panel.GetAttributeString( 'data-workshop-modes', '' );
+			if ( modes.toLowerCase().includes( filter ) )
+			{
+				panel.visible = true;
+				continue;
+			}
+
+			                                                                                           
+			                                             
+			var tooltip = panel.GetAttributeString( 'data-tooltip', '' );
+			if ( tooltip.toLowerCase().includes( filter ) )
+			{
+				panel.visible = true;
+				continue;
+			}
+
+			                                                                                  
+			                                                             
+			var mapname = panel.FindChildTraverse( 'MapGroupName' );
+			if ( mapname && mapname.text && mapname.text.toLowerCase().includes( filter ) )
+			{
+				panel.visible = true;
+				continue;
+			}
+
+			panel.visible = false;
+		}
+	};
+
+	var _SetPlayDropdownToWorkshop = function()
+	{
+		                                           
+		m_serverSetting = 'listen';
+		m_isWorkshop = true;
+		if ( _GetSelectedWorkshopMap() )
+		{
+			_ApplySessionSettings();
+		}
+		else
+		{
+			                                                                                             
+			_SwitchToWorkshopTab( true );
+		}
+	};
 
 	var _WorkshopSubscriptionsChanged = function()
 	{
-	    var currentMap = '';
-	    var panel = m_mapSelectionButtonContainers[k_workshopPanelId];
-	    if ( panel )
-	    {
-	        currentMap = _GetSelectedWorkshopMap();
-	        panel.DeleteAsync( 0.0 );
+		var currentMap = '';
+		var panel = m_mapSelectionButtonContainers[k_workshopPanelId];
+		if ( panel )
+		{
+			currentMap = _GetSelectedWorkshopMap();
+			panel.DeleteAsync( 0.0 );
 
-	                          
-	        delete m_mapSelectionButtonContainers[k_workshopPanelId];
-	    }
+			                  
+			delete m_mapSelectionButtonContainers[k_workshopPanelId];
+		}
 
-	    if ( m_activeMapGroupSelectionPanelID != k_workshopPanelId )
-	    {
-	                                                                               
-	        return;
-	    }
+		if ( m_activeMapGroupSelectionPanelID != k_workshopPanelId )
+		{
+			                                                                       
+			return;
+		}
 
-	    if ( !LobbyAPI.IsSessionActive() )
-	    {
-	                                                                                                                            
-                                                       
+		if ( !LobbyAPI.IsSessionActive() )
+		{
+			                                                                                                                    
+			                                           
 
-	                                                                                                                    
-	                                                                      
-	        m_activeMapGroupSelectionPanelID = null;
-	        return;
-	    }
+			                                                                                                            
+			                                                              
+			m_activeMapGroupSelectionPanelID = null;
+			return;
+		}
 
-                                                        
-	    _SyncDialogsFromSessionSettings( LobbyAPI.GetSessionSettings() );
+		                                                
+		_SyncDialogsFromSessionSettings( LobbyAPI.GetSessionSettings() );
 
-                                                                                                                                              
-	    if ( LobbyAPI.BIsHost() )
-	    {
-	        _ApplySessionSettings();
+		                                                                                                                                      
+		if ( LobbyAPI.BIsHost() )
+		{
+			_ApplySessionSettings();
 
-	                                                                                                                                  
-	        _SetPlayDropdownToWorkshop();
-	    }
-    }
+			                                                                                                                          
+			_SetPlayDropdownToWorkshop();
+		}
+	}
 
 	return {
 		Init: _Init,

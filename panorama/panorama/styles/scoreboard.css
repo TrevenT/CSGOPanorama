@@ -1276,6 +1276,7 @@ Label.sb-row__cell--mvps__count {
                                 
 .sb-timeline__segment__round__team {
 	horizontal-align: center;
+	min-height: 49px;
 }
 
 
@@ -1377,6 +1378,39 @@ Label.sb-row__cell--mvps__count {
 	opacity:0.6;
 }
 
+.sb-timeline__segment__round--clinch{
+
+	background-color: gray;
+	opacity:0.2;
+}
+
+.clinch-label {
+
+	font-size: 12px;
+	text-align: center;
+	horizontal-align: center;
+	width: 100%;
+	color: gray;
+}
+
+.past-clinch {
+
+	opacity: 0.1;
+}
+
+.clinch-round {
+
+	                   
+}
+
+.sb-timeline__segment__round__team--top .clinch-label {
+	vertical-align: bottom;
+}
+
+.sb-timeline__segment__round__team--bot .clinch-label {
+	vertical-align: top;
+}
+
 
 .sb-timeline__segment__round__team--top .sb-timeline__segment__round--active{
 	background-color: gradient( linear, 0% 100%, 0% 0%, from( #ffffff22 ), to( #ffffff00 ) );
@@ -1427,6 +1461,7 @@ Label.sb-row__cell--mvps__count {
 	transition-duration: 0.1s;
 	transition-timing-function: ease-in-out;
 }
+
 
 .transparent {
 	opacity: 0;
@@ -1488,6 +1523,13 @@ Label.sb-row__cell--mvps__count {
  {
 	visibility: collapse;
  }
+
+ .eom-scoreboard .sb-timeline__segment__round--clinch,
+ .eom-scoreboard .clinch-label
+{
+	opacity: 0;
+ }
+
 
  .eom-scoreboard .sb-row__cell--money:not(.sb-row__cell--label)
 {

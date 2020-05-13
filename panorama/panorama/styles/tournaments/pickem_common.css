@@ -860,6 +860,11 @@
 	text-overflow: shrink;
 }
 
+.pickem-bracket-team__name--long 
+{
+	width: 170px;
+}
+
 .pickem-bracket-worth-header
 {
 	font-family: Stratum2, 'Arial Unicode MS';

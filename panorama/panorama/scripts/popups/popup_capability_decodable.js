@@ -254,7 +254,7 @@ var CapabilityDecodable = ( function()
 		};
 
 		var items = [];
-		items.push( { label: 'Inspect', jsCallback: callBackFunc.bind( undefined, itemid, caseId, keyId ) } );
+		items.push( { label: '#UI_Inspect', jsCallback: callBackFunc.bind( undefined, itemid, caseId, keyId ) } );
 
 		if ( MyPersonaAPI.GetLauncherType() !== "perfectworld" )
 		{

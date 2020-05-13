@@ -160,7 +160,8 @@ var EOM_Rank = (function () {
 				elCurrentListerItem.RemoveClass( "eom-rank__lister__item--appear" );
 
 				var elAmtLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__amt' );
-				elAmtLabel.text = xp + "xp";
+				elAmtLabel.SetDialogVariable( "xp", xp );
+				elAmtLabel.text = $.Localize( "#EOM_XP_Bar", elAmtLabel );
 				elAmtLabel.AddClass( colorClass );
 
 				var elDescLabel = elCurrentListerItem.FindChildTraverse( 'id-eom-rank__lister__item__desc' );

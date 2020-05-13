@@ -105,14 +105,6 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 
-					                     
-					<Panel class="SettingsMenuDropdownContainer">
-						<Label text="#GameUI_Clock_Format" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_clock_24hour">
-							<Label text="#GameUI_Clock_24hr" id="clockformat0" value="1"/>
-							<Label text="#GameUI_Clock_12hr" id="clockformat1" value="0" />
-						</CSGOSettingsEnumDropDown>
-					</Panel>
 				</Panel>
 			</Panel>
 

@@ -70,11 +70,13 @@ var PickEmBracket = ( function()
 			{
 				elName.text = $.Localize( '#CSGO_PickEm_Team_TBD' );
 				elLogoImage.AddClass( 'hidden' );
+				elName.AddClass( 'pickem-bracket-team__name--long' );
 			}
 			else
 			{
 				elTeam._oteamData.teamid = teamId;
 				elLogoImage.RemoveClass( 'hidden' );
+				elName.RemoveClass( 'pickem-bracket-team__name--long' );
 				PickemCommon.SetTeamImage( oGroupInfoForUpdate.tournamentId, elLogoImage, elTeam );
 
 				elName.text = PredictionsAPI.GetTeamName( teamId );
