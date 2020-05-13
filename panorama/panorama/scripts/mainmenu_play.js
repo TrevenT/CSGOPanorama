@@ -417,12 +417,12 @@ var PlayMenu = ( function()
 	    {
 	        if ( key !== panelID )
 	        {
-	            m_mapSelectionButtonContainers[key].AddClass( "Hidden" );
+	            m_mapSelectionButtonContainers[key].AddClass( "hidden" );
 	        }
 	        else
 	        {
 	                                           
-	            m_mapSelectionButtonContainers[key].RemoveClass( "Hidden" );
+	            m_mapSelectionButtonContainers[key].RemoveClass( "hidden" );
 	            m_mapSelectionButtonContainers[key].visible = true;
 
 	                                                     
@@ -450,7 +450,7 @@ var PlayMenu = ( function()
 	                               
 
 	    var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelID, {
-	        class: 'map-selection-list Hidden'
+	        class: 'map-selection-list hidden'
 	    } );
 
 	    m_mapSelectionButtonContainers[panelID] = container;
@@ -529,7 +529,9 @@ var PlayMenu = ( function()
 	            mapImage.style.backgroundImage = 'url("file://{images}/map_icons/screenshots/360p/random.png")';
 	            mapImage.style.backgroundPosition = '50% 0%';
 	            mapImage.style.backgroundSize = 'auto 100%';
-	        }
+			}
+			
+			_SetNewMapElement( mapName, p );
 
 	                                      
 	        for ( var i = 0; i < keysList.length; i++ )
@@ -584,6 +586,12 @@ var PlayMenu = ( function()
 
 	    return panelID;
 	}
+
+	var _SetNewMapElement = function( mapName, elMapPanel )
+	{
+		var isNew = GameTypesAPI.GetMapGroupAttribute( mapName, 'showtagui' );
+		elMapPanel.FindChildInLayoutFile( 'MapGroupNewTag' ).SetHasClass( 'hidden', ( isNew !== 'new' ));
+	};
 
 
 	var _UpdateMapGroupButtons = function( isEnabled )
@@ -769,11 +777,11 @@ var PlayMenu = ( function()
 			{
 				elWaitTime.SetDialogVariable( "time", numWait );
 				elWaitTime.FindChild( 'MapGroupWaitTimeLabel' ).text = $.Localize( '#matchmaking_expected_wait_time', elWaitTime );
-				elWaitTime.RemoveClass( 'Hidden' );
+				elWaitTime.RemoveClass( 'hidden' );
 			}
 			else
 			{
-				elWaitTime.AddClass( 'Hidden' );
+				elWaitTime.AddClass( 'hidden' );
 			}
 		}
 	};
@@ -1140,7 +1148,7 @@ var PlayMenu = ( function()
 
 	                          
 	    var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelId, {
-	        class: 'map-selection-list Hidden'
+	        class: 'map-selection-list hidden'
 	    } );
 
 	    m_mapSelectionButtonContainers[panelId] = container;

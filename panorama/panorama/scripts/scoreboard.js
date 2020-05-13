@@ -80,6 +80,8 @@ var Scoreboard = ( function()
 
 	var _m_sortOrder;                                 
 
+	var _m_updatePlayerHandler = null;
+
 	var _m_cP = $.GetContextPanel();
 
 	_Reset();
@@ -3040,7 +3042,11 @@ var Scoreboard = ( function()
 	                                                
 	function _CloseScoreboard ()
 	{
-		$.UnregisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
+		if( _m_updatePlayerHandler )
+		{
+			$.UnregisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", _m_updatePlayerHandler );
+			_m_updatePlayerHandler = null;
+		}
 
 		_CancelUpdateJob();
 
@@ -3059,7 +3065,10 @@ var Scoreboard = ( function()
 
 		_m_cP.FindChildrenWithClassTraverse( "timer" ).forEach( el => el.active = true );
 
-		$.RegisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
+		if( !_m_updatePlayerHandler )
+		{
+			_m_updatePlayerHandler = $.RegisterForUnhandledEvent( "Scoreboard_UpdatePlayerByEntIndex", Scoreboard.UpdatePlayerByEntIndex );
+		}
 	};
 
 	                                                

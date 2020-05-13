@@ -101,6 +101,17 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_VOIP_Positional_Tip">
+						<Label text="#SFUI_Settings_VOIP_Positional" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="voice_positional">
+							<Label text="#GameUI_Yes" id="voippositional0" value="1"/>
+							<Label text="#GameUI_No"  id="voippositional1" value="0" />
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+
+					<Panel class="horizontal-separator"/>
+
 					                           
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_Enable_Audio_Background" class="half-width"/>

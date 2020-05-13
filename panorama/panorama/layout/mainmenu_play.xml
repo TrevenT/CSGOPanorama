@@ -19,6 +19,7 @@
 					                                                
 				</Carousel>
 				<Panel class="map-selection-btn__gradient" hittest="false" />
+				<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
 				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
 						<Image id="ActiveGroupIcon" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
@@ -34,7 +35,7 @@
 	
 					</Panel>
 					<Panel class="map-selection-info">
-						<Panel id="MapGroupWaitTime" class="map-selection-info__wait-time-block Hidden">
+						<Panel id="MapGroupWaitTime" class="map-selection-info__wait-time-block hidden">
 							<Image class="map-selection-info__wait-icon" texturewidth="12" textureheight="12" src="file://{images}/icons/ui/recent.svg"/>
 							<Label id="MapGroupWaitTimeLabel" class="fontSize-s"/>
 						</Panel>

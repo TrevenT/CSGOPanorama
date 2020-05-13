@@ -219,6 +219,27 @@
 	text-overflow: ellipsis;
 }
 
+.map-selection-info__new
+{
+	padding: 4px 8px;
+	background-color: blueColor;
+	color: white;
+	font-weight: medium;
+	vertical-align: top;
+	horizontal-align: left;
+	border: 1px solid rgb(100, 180, 223);
+	brightness: 1.5;
+
+}
+
+ToggleButton .map-selection-info__new,
+RadioButton .map-selection-info__new
+{
+	position: 0px 0px 0px;
+	margin-left: 0px;
+}
+
+
                                                                  
 .map-selection-btn-container--large .map-selection-info__map-name
 {
@@ -236,7 +257,8 @@
 	visibility: visible;
 }
 
-.map-selection-info__wait-time-block.Hidden
+.map-selection-info__wait-time-block.hidden,
+.map-selection-info__new.hidden
 {
 	visibility: collapse;
 }
@@ -262,7 +284,7 @@
 	visibility: collapse;
 }
 
-.map-selection-list.Hidden
+.map-selection-list.hidden
 {
 	opacity: 0;
 	transform: translatex( 200px );
