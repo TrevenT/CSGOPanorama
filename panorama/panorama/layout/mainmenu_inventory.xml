@@ -91,7 +91,7 @@
 			<Panel class="horizontal-align-right vertical-center left-right-padding">
 				<Button id="InvMarketLink" class="IconButton left-right-flow" >
 					<Image src="file://{images}/icons/ui/link.svg"/>
-					<Label text="#Market"/>
+					<Label text="#store_tab_market"/>
 				</Button>
 			</Panel>
 		</snippet>

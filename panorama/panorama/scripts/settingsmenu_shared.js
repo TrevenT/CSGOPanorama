@@ -100,7 +100,7 @@ var SettingsMenuShared = ( function () {
 			function() {
 				resetCall();
 			},
-			'Return',
+			'#settings_return',
 			function() {
 			},
 			'dim'
@@ -116,7 +116,7 @@ var SettingsMenuShared = ( function () {
 			function() {
 				discardCall();
 			},
-			'Return',
+			'#settings_return',
 			function() {
 			},
 			'dim'

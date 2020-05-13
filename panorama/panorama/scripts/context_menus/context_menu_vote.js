@@ -47,7 +47,7 @@ var ItemContextMenu = ( function (){
 		var mapsInMapGroup = strMaps.split( ',' );
 		                            
 		return mapsInMapGroup.map( function ( curMap ) {
-			return { displayName: $.Localize( GetMapDisplayName( curMap ) ), voteParam: curMap };
+			return { displayName: $.Localize( GetMapDisplayName( curMap ) ).toUpperCase(), voteParam: curMap };
 		});
 	}
 
@@ -111,6 +111,7 @@ var ItemContextMenu = ( function (){
 		ConstructBaseVoteIssue.call( this, voteCommand, locToken );
 		this.cmd = function () {
 			var elPopup = CreateVotePopupChoices( locToken );
+			elPopup.AddClass( 'popup-map-vote' );
 			var voteFunc = function ( param )
 			{
 				GameInterfaceAPI.ConsoleCommand( 'callvote ' + voteCommand + " " + param );
