@@ -295,6 +295,20 @@ var ItemInfo = ( function() {
 		return InventoryAPI.GetLootListItemIdByIndex( id, index );
 	};
 
+	var _GetMarketLinkForLootlistItem = function( id )
+	{
+		var appID = SteamOverlayAPI.GetAppID();
+		var communityUrl = SteamOverlayAPI.GetSteamCommunityURL();
+		var strName = _GetName( id );
+		
+		return communityUrl + "/market/search?appid=" + appID + "&lock_appid=" + appID + "&q=" + strName;
+	};
+
+	var _GetToolType = function( id )
+	{
+		return InventoryAPI.GetToolType( id );
+	};
+
 	return {
 		GetRarityColor					: _GetRarityColor,
 		GetName							: _GetName,
@@ -336,8 +350,10 @@ var ItemInfo = ( function() {
 		GetModelPath					: _GetModelPath,
 		GetModelPathFromJSONOrAPI		: _GetModelPathFromJSONOrAPI,
 		GetLootListCount				: _GetLootListCount,
-		GetLootListItemByIndex			:_GetLootListItemByIndex,
-		IsStatTrak						:_IsStatTrak,
+		GetLootListItemByIndex			: _GetLootListItemByIndex,
+		IsStatTrak						: _IsStatTrak,
+		GetToolType						: _GetToolType,
+		GetMarketLinkForLootlistItem	: _GetMarketLinkForLootlistItem,
 		GetItemIdForItemEquippedInLoadoutSlot : _GetItemIdForItemEquippedInLoadoutSlot           
 	};
 })();

@@ -28,7 +28,6 @@
 		                   
 		<snippet name="eom-skillgroup">
 			<Panel>
-				<Label id="id-eom-skillgroup--new__label" class="hidden new-skillgroup" text="#eom_skillgroup_up_string" />
 				<Panel id="id-eom-skillgroup--new__image-and-label">
 					                                                
 
@@ -36,7 +35,7 @@
 									class="eom-rank__model hidden"
 									manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
 									item=""
-									mouse_rotate="true"/>
+									mouse_rotate="false"/>
 					<Panel style="flow-children:none;">
 						<Label text="{s:skillgroup_name}" class="metallic"/>
 						<Label text="{s:skillgroup_name}" class="sheen"/>

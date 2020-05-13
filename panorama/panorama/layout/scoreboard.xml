@@ -361,6 +361,46 @@
 			</Panel>
 		</snippet>
 
+
+				                             
+		<snippet name="snippet_scoreboard-classic__row--wingman">
+			<Panel class="sb-row" cachepaintcmdlist="true" >
+				<Panel				data-stat="status" />
+				<Panel				data-stat="ping"/>
+				<Panel				data-stat="rank" />
+				<Panel				data-stat="avatar"/>
+				<Panel				data-stat="name" >	
+					<Panel id="id-sb-name__nameicons">
+						<Image id="id-sb-skillgroup-image" 
+							class="hidden" 
+							src="" 
+							textureheight='22'
+							texturewidth='55'
+							/>
+						<Image id="id-sb-name__musickit" 
+							class="hidden sb-team-tint" 
+							src="file://{images}/icons/ui/music_kit.svg" />
+					</Panel>
+				</Panel>
+				<Panel				data-stat="flair" />					
+				<Panel				data-stat="money" 			data-set='0'/>
+				<Panel				data-stat="kills" 			data-set='0'/>
+				<Panel				data-stat="assists" 		data-set='0'/>
+				<Panel				data-stat="deaths" 			data-set='0'/>
+				<Panel				data-stat="mvps" 			data-set='0'/>
+				<Panel				data-stat="hsp" 			data-set='1'/>
+				<Panel				data-stat="kdr" 			data-set='1'/>
+				<Panel				data-stat="adr" 			data-set='1'/>			
+				<Panel				data-stat="utilitydamage" 	data-set='1'/>
+				<Panel				data-stat="enemiesflashed" 	data-set='1'/>
+				<Panel				data-stat="score" />
+
+
+
+
+			</Panel>
+		</snippet>
+
 		                            
 		<snippet name="snippet_scoreboard-classic__row--casual">
 			<Panel class="sb-row" cachepaintcmdlist="true">

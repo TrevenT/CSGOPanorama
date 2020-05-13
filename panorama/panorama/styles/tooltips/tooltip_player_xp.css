@@ -6,6 +6,11 @@
 	padding: 16px;
 }
 
+.Language_thai .tooltip-player-xp 
+{
+	max-width: 560px;
+}
+
 .tooltip-player-xp--matchmaking
 {
 	width: 300px;

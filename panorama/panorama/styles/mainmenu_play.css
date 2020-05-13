@@ -214,6 +214,14 @@
 	text-overflow: ellipsis;
 }
 
+                                                                 
+.map-selection-btn-container--large .map-selection-info__map-name
+{
+	height: fit-children;
+	min-height: 34px;
+	max-height: 68px;
+}
+
 .map-selection-info__wait-time-block
 {
 	height: fit-children;

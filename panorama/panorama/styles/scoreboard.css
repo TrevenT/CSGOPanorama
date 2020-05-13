@@ -927,9 +927,10 @@ Label.sb-row__cell--mvps__count {
 }
 
 .sb-player-status-dead {
-	                   
+	opacity: 0.5;
 	                            
 	wash-color: #999;
+	background-color: gray;
 
 	                                
 	                         

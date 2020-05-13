@@ -148,21 +148,26 @@
     color: #AAAAAAFF;
 }
 
+   
+               
+                                                                              
+                                          
+   
 .HudSpecplayer__key-hints
 {
-	width: HudSpecplayer_PanelWidth;
+	width: fit-children;
     height: 30px;
     horizontal-align: center;
+	overflow: noclip;
 	                                                                                           
     visibility: visible;
 }
 
 .HudSpecplayer__key-hints-text
 {
-    width: HudSpecplayer_PanelWidth;
+    width: fit-children;
     font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 14px;
-    text-align: center;
     text-shadow: 1px 1px 1px 2.0 black;
     color: #BBBBBBFF;
     margin-top: 7px;

@@ -268,32 +268,29 @@ var contextmenuPlayerCard = ( function (){
 		},
 		{
 			name: 'mute',
-			icon: 'unmuted',
+			xml: 'file://{resources}/layout/mute_spinner.xml',
+			icon: null,                      
 			AvailableForItem: function ( id ) {
 				return GameStateAPI.IsLocalPlayerPlayingMatch() && 
 					!_IsSelf( id ) && 
-					!GameStateAPI.IsSelectedPlayerMuted( id ) &&
 					GameStateAPI.IsPlayerConnected( id );
 			},
-			OnSelected: function ( id ) {
-				GameStateAPI.ToggleMute( id );
-				$.DispatchEvent( 'ContextMenuEvent', '' );
-			}
+			OnSelected: null                      
 		},
-		{
-			name: 'unmute',
-			icon: 'muted',
-			AvailableForItem: function ( id ) {
-				return GameStateAPI.IsLocalPlayerPlayingMatch() && 
-					!_IsSelf( id ) && 
-					GameStateAPI.IsSelectedPlayerMuted( id ) &&
-					GameStateAPI.IsPlayerConnected( id );
-			},
-			OnSelected: function ( id ) {
-				GameStateAPI.ToggleMute( id );
-				$.DispatchEvent( 'ContextMenuEvent', '' );
-			}
-		},
+		    
+		   	               
+		   	              
+		   	                                   
+		   		                                                   
+		   			                  
+		   			                                           
+		   			                                     
+		   	  
+		   	                             
+		   		                              
+		   		                                          
+		   	 
+		     
 		{
 			name: 'report',
 			icon: 'alert',
@@ -355,34 +352,57 @@ var contextmenuPlayerCard = ( function (){
 		var items = [];
 		var xuid = $.GetContextPanel().GetAttributeString( "xuid", "(not found)" );
 
+		elContextMenuBtns.xuid = xuid;                                                                     
+
 		_ContextMenus.forEach( function( entry ) {
 			if ( entry.AvailableForItem( xuid )) 
 			{
 				                                                   
 				
-				                                   
-				var elEntryBtn = $.CreatePanel( 'Button', elContextMenuBtns, entry.name, { 
-					class: 'IconButton',
-					style: 'tooltip-position: bottom;'
-				} );
+				                                     
 
-				elEntryBtn.SetPanelEvent('onactivate', entry.OnSelected.bind( this, xuid ) );
+				var elEntryBtn;
 
-				var OnMouseOver = function ()
+				if ( 'xml' in entry )                                 
 				{
-					UiToolkitAPI.ShowTextTooltip( elEntryBtn.id, '#tooltip_' + entry.name );
+					elEntryBtn = $.CreatePanel( 'Panel', elContextMenuBtns, entry.name, { 
+						class: 'IconButton',
+						style: 'tooltip-position: bottom;'
+					} );
+					
+					elEntryBtn.BLoadLayout( entry.xml, false, false );
+				}
+				else                
+				{
+					elEntryBtn = $.CreatePanel( 'Button', elContextMenuBtns, entry.name, { 
+						class: 'IconButton',
+						style: 'tooltip-position: bottom;'
+					} );
+
+					$.CreatePanel( 'Image', elEntryBtn, entry.name, { src: 'file://{images}/icons/ui/' + entry.icon + '.svg' } );
+
+					elEntryBtn.SetPanelEvent( 'onactivate', entry.OnSelected.bind( this, xuid ) );
+
+					          
+					var OnMouseOver = function ()
+					{
+						UiToolkitAPI.ShowTextTooltip( elEntryBtn.id, '#tooltip_' + entry.name );
+					}
+
+					var OnMouseOut = function ()
+					{
+						UiToolkitAPI.HideTextTooltip();
+					}
+					
+					elEntryBtn.SetPanelEvent('onmouseover', OnMouseOver );
+					elEntryBtn.SetPanelEvent('onmouseout', OnMouseOut );
+
 				}
 
-				var OnMouseOut = function ()
-				{
-					UiToolkitAPI.HideTextTooltip();
-				}
-				
-				elEntryBtn.SetPanelEvent('onmouseover', OnMouseOver );
-				elEntryBtn.SetPanelEvent('onmouseout', OnMouseOut );
 
-				$.CreatePanel( 'Image', elEntryBtn, entry.name, { src: 'file://{images}/icons/ui/' + entry.icon + '.svg' });
-				
+
+
+
 				              
 					                                           
 					                                                           

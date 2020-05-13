@@ -8,7 +8,7 @@
       <Panel class="left-right-flow vertical-center">
       <Label class="" id="Title" />
       <Slider class="HorizontalSlider" direction="horizontal" id="Slider"/>
-      <Label id="Value" />
+      <TextEntry maxchars="4" textmode="numeric" id="Value" />
       </Panel>
   </CSGOSettingsSlider>
   

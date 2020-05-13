@@ -17,11 +17,11 @@
 					                        
 					<Image id="Domination" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/domination.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                                        
-					<Label id="Attacker" html="true" />
+					<Label id="Attacker" text="{s:name}" />
 					                                         
 					<Panel id="AssistParent">
 						<Label text="+" />
-						<Label id="Assister" html="true" />
+						<Label id="Assister" text="{s:name}" />
 					</Panel>
 					                                      
 					<Image id="Weapon" class="DeathNoticeIcon" scaling="stretch-to-fit-preserve-aspect" />
@@ -32,7 +32,7 @@
 					                     
 					<Image id="Suicide" class="DeathNoticeIcon" src="file://{images}/hud/deathnotice/icon_suicide.svg" scaling="stretch-to-fit-preserve-aspect" />
 					                                       
-					<Label id="Victim" html="true" />
+					<Label id="Victim" text="{s:name}" />
 				</Panel>
 			</Panel>
 		</snippet>

@@ -1,0 +1,229 @@
+
+                                                                               
+                                                                               
+                                                                               
+
+.news-panel-streamfeed
+{
+	width: 100%;
+	height: fill-parent-flow( .50 );
+	background-color: blurBackgroundColor;
+	margin-bottom: 16px;
+	flow-children: down;
+
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-panel-streamfeed.hidden
+{
+	height: fill-parent-flow( 0 );
+
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-panel-streamfeed #StreamHTML
+{
+	width: news-image-width;
+	horizontal-align: center;
+	height: width-percentage( 56.25% );
+	border: 1px solid blueColor;
+	margin: 8px 16px 0px 16px;
+	box-shadow: fill #000000aa 0px 0px 8px 4px;
+}
+
+.news-panel-streamfeed-header
+{
+	height: fit-children;
+}
+
+.news-panel-streamfeed .content-navbar__extra-buttons
+{
+	padding: 0px;
+}
+
+.news-panel-streamfeed .IconButton
+{
+	margin: 0px;
+	brightness: .7;
+}
+
+.news-panel-streamfeed .IconButton:Hover
+{
+	background-color: none;
+	brightness: 2;
+
+	sound: "UIPanorama.mainmenu_rollover";
+	transition-property: brightness;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.news-panel-navbar.news-panel-navbar__streamfeed
+{
+	border: 0px;
+	height: 100%;
+}
+
+.news-panel-navbar.news-panel-navbar__streamfeed Label
+{
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.news-panel-streamfeed-spacer
+{
+	width: fill-parent-flow( 1.0 );
+}
+
+Slider.news-panel-streamfeed-volumeslider
+{
+	width: 150px;
+	height: 20px;
+	vertical-align: center;
+}
+
+Slider.HorizontalSlider.news-panel-streamfeed-volumeslider #SliderTrack
+{
+	height: 4px;
+}
+
+Slider.HorizontalSlider.news-panel-streamfeed-volumeslider #SliderTrackProgress
+{
+	height: 4px;
+	background-color: white;
+}
+
+Slider.HorizontalSlider.news-panel-streamfeed-volumeslider #SliderThumb
+{
+	width: 5px;
+	height: 18px;
+}
+
+
+  
+                                 
+
+        
+ 
+	            
+	             
+	                    
+ 
+
+           
+ 
+	            
+	             
+	                   
+	             
+	                             
+	                             
+	                         
+	                                                                                                                     
+ 
+
+               
+ 
+	             
+	             
+	                         
+	                       
+	                   
+ 
+
+                                
+ 
+	                       
+	                     
+	           
+	             
+	                       
+ 
+
+                                 
+ 
+	                        
+	                    
+	          
+	             
+	                       
+ 
+
+            
+ 
+	            
+	             
+	                               
+	               
+	                            
+	                                                  
+	                         
+	                                        
+	                          
+	                         
+	                       
+	                    
+	                    
+ 
+
+                  
+ 
+	              
+ 
+                   
+ 
+	            
+	             
+	                      
+	              
+	                                
+	                         
+	                                   
+	                       
+ 
+
+                         
+ 
+	              
+	                                
+	                          
+	                                        
+ 
+
+              
+ 
+	            
+	            
+	                       
+	                         
+	                    
+ 
+
+              
+ 
+	            
+	             
+	                         
+	                       
+
+ 
+
+                                 
+ 
+	            
+	             
+	                                                                                        
+	           
+ 
+  
+
+                           
+ 
+	                         
+	                       
+	                    
+   

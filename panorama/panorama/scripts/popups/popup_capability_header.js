@@ -5,10 +5,12 @@ var CapabiityHeader = ( function()
 	var m_bShowWarning = true;                                            
 	var m_worktype = '';                                                                             
 	var m_storeItemid = '';
+	var m_itemid = '';                             
 	var m_ToolId = '';
 	
 	var _Init = function( elPanel, itemId, funcGetSettingCallback )
 	{
+		m_itemid = itemId;
 		m_worktype = funcGetSettingCallback( "asyncworktype", "" );
 		m_storeItemid = funcGetSettingCallback( "storeitemid", "" );
 		m_ToolId = funcGetSettingCallback( "toolid", "" );
@@ -55,10 +57,28 @@ var CapabiityHeader = ( function()
 	{
 		var elWarn = elPanel.FindChildInLayoutFile( 'CapabilityWarning' );
 
+		var sWarnLocString = '';
 		if ( m_bShowWarning )
+		{	                                      
+			sWarnLocString = '#popup_'+m_worktype+'_warning';
+		}
+
+		if ( m_worktype === 'decodeable' )
+		{
+			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
+			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+			{	                                                               
+				sWarnLocString = '#popup_'+m_worktype+'_err_'+sRestriction;
+				elWarn.AddClass( 'popup-capability__error' );
+			}
+		}
+
+		if ( sWarnLocString )
 		{
 			elWarn.RemoveClass( 'hidden' );
-			elWarn.FindChildInLayoutFile( 'CapabilityWarningLabel' ).text = '#popup_'+m_worktype+'_warning';
+			
+			var elWarnLabel = elWarn.FindChildInLayoutFile( 'CapabilityWarningLabel' );
+			elWarnLabel.text = sWarnLocString;
 		}
 		else
 		{

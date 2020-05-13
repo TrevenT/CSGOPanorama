@@ -224,3 +224,9 @@ Label.sheen{
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
+
+.hidden {
+
+	visibility: collapse;
+}

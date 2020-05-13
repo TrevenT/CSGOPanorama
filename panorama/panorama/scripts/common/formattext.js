@@ -133,28 +133,11 @@ var FormatText = ( function ()
 		return integer;
 	}
 
-	var _SignificantDigits = function( float, digits, char = '0' ) 
-	{ 
-		float = float.toPrecision( digits );
-
-		var integer = float.toPrecision( 0 );
-
-		var decimal = float - integer;
-
-		decimal = decimal.toString();
-
-		while ( decimal.length < digits + 2 ) 
-			decimal = decimal + char; 
-		
-		return integer.toString() + decimal;
-	}
-
 	return{
 		SecondsToDDHHMMSSWithSymbolSeperator		: _SecondsToDDHHMMSSWithSymbolSeperator,                    
 		SecondsToSignificantTimeString				: _SecondsToSignificantTimeString,                                               
 		RemoveItemTypeFromName						: _RemoveItemTypeFromName,                      
 		PadNumber									: _PadNumber,                                                                               
-		SignificantDigits							: _SignificantDigits,                                                                                   
 		GetSectionOfStringAfterSpecifiedLocation: _GetSectionOfStringAfterSpecifiedLocation,
 		GetInventoryDisplayStringFromName			: _GetInventoryDisplayStringFromName                                                  
 	};

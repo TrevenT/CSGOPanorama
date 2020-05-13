@@ -39,22 +39,27 @@
 					<Image class="" src="file://{images}/icons/ui/ct_silhouette.svg" />
 			</Button>
 
-				<Panel id="InspectCharModelsControls" class="popup-char-model-controls hidden" >
-					<DropDown id="InspectDropdownCharModels" class="PopupButton horizontal-align-left" menuclass="DropDownMenu Width-250" >
-						                                
-					</DropDown>
-					<Button id="PopupInspectSaveModel"
-						class="IconButton"
-						onactivate="InspectActionBar.SaveCharacterModelForVanity();"
-						onmouseover="UiToolkitAPI.ShowTextTooltip( 'PopupInspectSaveModel', '#tooltip_save_vanity_model' );"
-						onmouseout="UiToolkitAPI.HideTextTooltip();">
-						<Image class="" src="file://{images}/icons/ui/picture.svg" />
-					</Button>
-				</Panel>
+			<Panel id="InspectCharModelsControls" class="popup-char-model-controls hidden" >
+				<DropDown id="InspectDropdownCharModels" class="PopupButton horizontal-align-left" menuclass="DropDownMenu Width-250" >
+					                                
+				</DropDown>
+				<Button id="PopupInspectSaveModel"
+					class="IconButton"
+					onactivate="InspectActionBar.SaveCharacterModelForVanity();"
+					onmouseover="UiToolkitAPI.ShowTextTooltip( 'PopupInspectSaveModel', '#tooltip_save_vanity_model' );"
+					onmouseout="UiToolkitAPI.HideTextTooltip();">
+					<Image class="" src="file://{images}/icons/ui/picture.svg" />
+				</Button>
+			</Panel>
 			<Button id="InspectItemCert"
 					class="IconButton"
 					onactivate="">
 					<Image class="" src="file://{images}/icons/ui/info.svg" />
+			</Button>
+			<Button id="InspectMarketLink"
+					class="IconButton hidden"
+					onactivate="">
+					<Image class="" src="file://{images}/icons/ui/link.svg" />
 			</Button>
 			<Button id="InspectActionsButton"
 					class="IconButton"

@@ -58,7 +58,9 @@ var EOM_Skillgroup = (function () {
 		                   
 		_m_cP.SetDialogVariable( "skillgroup_name", $.Localize( "RankName_" + newRank ) );
 
-		if ( newRank > oldRank )
+		var rankToShow = ( newRank > oldRank ) ? newRank : oldRank;
+
+		if ( rankToShow == newRank )
 		{
 			_m_pauseBeforeEnd += 2;
 			
@@ -69,11 +71,11 @@ var EOM_Skillgroup = (function () {
 				entry.RemoveClass( "hidden" );
 			} )
 
-			SetModel( newRank );
+			SetModel( rankToShow );
 
 			                    
 			                                                                                     
-			                                                                                     
+			                                                                                        
 			                                           
 
 			var animTime = 0;
@@ -96,47 +98,57 @@ var EOM_Skillgroup = (function () {
 			_AnimPause( 2 );
 
 		}
-		else if ( newRank < 1 && compWins < 10 )                                    
+		                                                                                            
+		                                                                                                
+		                                                                                                   
+		                                 
+		else if ( rankToShow < 1 && compWins < 10 )                                    
 		{
 			_m_cP.FindChildInLayoutFile( "id-eom-skillgroup" ).BLoadLayoutSnippet( "eom-no-skillgroup" );
 
 			_m_cP.SetDialogVariableInt( "missing_wins", 10 - compWins );
 		}
-		else if ( newRank < 1 && compWins >= 10 )                                         
+		else if ( rankToShow < 1 && compWins >= 10 )                                         
 		{
 			
 			
 			_m_cP.FindChildInLayoutFile( "id-eom-skillgroup" ).BLoadLayoutSnippet( "eom-skillgroup-expired" );
 		}
-		else if ( newRank >= 1 )                   
+		else if ( rankToShow >= 1 )                   
 		{
 			
 			_m_cP.FindChildInLayoutFile( "id-eom-skillgroup" ).BLoadLayoutSnippet( "eom-skillgroup" );
 
 			                    
 			                                                                                     
-			                                                                                     
+			                                                                                        
 
 			
 			                                           
-			SetModel( newRank );
+			SetModel( rankToShow );
 		}
+		                                          
 
-		function SetModel( newRank )
+		function SetModel( rank )
 		{
 			var elModel = _m_cP.FindChildInLayoutFile( "id-eom-skillgroup-model" );
+			if ( rank < 1 )
+			{
+				elModel.AddClass( 'hidden' );
+				return;
+			}
 
 			var mode = GameStateAPI.GetGameModeInternalName( true );
 									
 			var imagePath = "skillgroup";
 
 			                                          
-			                                
-			   	                      
+			if ( mode == "scrimcomp2v2" )
+				imagePath = "skillgroup_wingman";
 			
 
 			elModel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
-			'models/inventory_items/skillgroups/' + imagePath + newRank + '.mdl',
+			'models/inventory_items/skillgroups/' + imagePath + rank + '.mdl',
 				false
 			);
 

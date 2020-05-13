@@ -48,6 +48,8 @@
                 <Image class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
                 <Image class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
                 <Image class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
+                <Image class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
+                <Image class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
               </Panel>
               <Image id="WeaponPrimary" class="playerid__weaponicon" textureheight="26" scaling="stretch-to-fit-preserve-aspect" />
             </Panel>

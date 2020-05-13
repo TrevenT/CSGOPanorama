@@ -36,19 +36,18 @@
 		</snippet>
 	</snippets>
 
-
 	<CSGOMainMenu class="InitialDisplay MainMenuRootPanel" hittest="false" useglobalcontext="true" oncancel="MainMenu.OnEscapeKeyPressed();">
 		<Panel id="MainMenuContainerPanel" class="MainMenuContainer">
 			<Panel	id="NotificationsContainer"
 					class="MainMenuNotification hidden MainMenuModeOnly"
 					onmouseover="MainMenu.ShowNotificationBarTooltip();"
-					onmouseout="UiToolkitAPI.HideTextTooltip();"> >
+					onmouseout="UiToolkitAPI.HideTextTooltip();">
 				<Label id="MainMenuNotificationTitle"/>
 			</Panel>
 			<Panel id="MainMenuInput">                                              
 				
 				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatContainer mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
-					<CSGOBlurTarget id="MainMenuBackground" blurrects= "mainmenu-content__blur-target JsNewsPanel JsStorePanel">
+					<CSGOBlurTarget id="MainMenuBackground" blurrects= "mainmenu-content__blur-target JsNewsPanel JsStorePanel JsStreamPanel">
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      
 						<CSGOBackbufferImagePanel class="full-width full-height PauseMenuModeOnly" />

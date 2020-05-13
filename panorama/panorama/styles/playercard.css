@@ -109,6 +109,15 @@
 	text-overflow: ellipsis;
 }
 
+  
+	                                                 
+  
+.player-card__text-subtitle--multiline 
+{
+	max-height: 40px;
+	overflow: squish noclip;
+}
+
 .player-card__text-subtitle--light
 {
 	font-weight: normal;

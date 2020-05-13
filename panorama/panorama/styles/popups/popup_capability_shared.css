@@ -128,6 +128,22 @@
 	text-overflow: ellipsis;
 }
 
+.popup-capability__purchase__text.popup-capability__error
+{
+	color: #FF9900;
+	font-size: 18px;
+}
+
+.popup-capability__error .popup-capability__warning_label
+{
+	color: #FF9900;
+}
+
+.popup-capability__error .popup-capability__warning_image
+{
+	wash-color: #FF9900;
+}
+
 .popup-capability__sale-price
 {
 	font-size: 20px;

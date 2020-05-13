@@ -47,7 +47,21 @@ var EOM_Drops = (function () {
 				elOwnerLabel.AddClass( "eom-drops__item__owner" );
 				elOwnerLabel.text = GameStateAPI.GetPlayerName( oDropList[ key ][ 'owner_xuid' ] );
 
+				var rarityVal = InventoryAPI.GetItemRarity( itemId );
+				var soundEvent = "ItemDropCommon";
+				if( rarityVal == 4 ) {
+					soundEvent = "ItemDropUncommon";
+				} else if( rarityVal == 5 ) {
+					soundEvent = "ItemDropRare";
+				} else if( rarityVal == 6 ) {
+					soundEvent = "ItemDropMythical";
+				} else if( rarityVal == 7 ) {
+					soundEvent = "ItemDropLegendary";
+				} else if( rarityVal == 8 ) {
+					soundEvent = "ItemDropAncient";
+				}
 
+				$.DispatchEvent( "PlaySoundEffect", soundEvent, "MOUSE" );
 			});
 
 			animTime += oDropList[ key ][ 'display_time' ];

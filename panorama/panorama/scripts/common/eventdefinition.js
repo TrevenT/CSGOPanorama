@@ -27,7 +27,8 @@
     $.DefineEvent( 'OpenSidebarPanel', 0, 'no args', 'open the sidebar from a abutton click from anywhere' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
 
-	$.DefineEvent( 'EndOfMatch_ShowNext', 0, '', "Notify the EndOfMatch controller to proceed to the next panel." );
+    $.DefineEvent( 'EndOfMatch_ShowNext', 0, '', "Notify the EndOfMatch controller to proceed to the next panel." );
+    $.DefineEvent( 'StreamPanelClosed', 0, '', "Notify that user has closed stream panel" );
 
 	$.DefineEvent( 'Scoreboard_CycleStats', 0, '', "Cycle the stats." );
 	$.DefineEvent( 'Scoreboard_OnEndOfMatch', 0, '', "Open the scoreboard for End of Match display." );

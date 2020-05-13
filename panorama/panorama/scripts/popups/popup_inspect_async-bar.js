@@ -14,6 +14,7 @@ var InspectAsyncActionBar = ( function()
 
 	var _Init = function( elPanel, itemId, funcGetSettingCallback, funcCallbackOnAction )
 	{
+		m_itemid = itemId;
 		m_worktype = funcGetSettingCallback( 'asyncworktype', '' );
 		m_toolid = funcGetSettingCallback( 'toolid', '' );
 		m_isDecodeableKeyless = ( funcGetSettingCallback( 'decodeablekeyless', 'false' ) === 'true' ) ? true : false;
@@ -21,6 +22,7 @@ var InspectAsyncActionBar = ( function()
 		m_showAsyncActionDesc = ( funcGetSettingCallback( 'asyncactiondescription', 'no' ) === 'yes' ) ? true : false;
 
 		                                      
+		                               
 		                               
 
 		if ( m_asynActionForceHide ||
@@ -33,13 +35,12 @@ var InspectAsyncActionBar = ( function()
 			return;
 		}
 
-		m_itemid = itemId;
 		elPanel.RemoveClass( 'hidden' );
 		
 		m_okButtonClass = funcGetSettingCallback( 'asyncworkbtnstyle', m_okButtonClass );
 
-		_SetUpButtonStates( elPanel, funcGetSettingCallback, funcCallbackOnAction );
 		_SetUpDescription( elPanel );
+		_SetUpButtonStates( elPanel, funcGetSettingCallback, funcCallbackOnAction );
 
 		if ( m_worktype === 'prestigecheck' )
 		{	                                                      
@@ -57,13 +58,21 @@ var InspectAsyncActionBar = ( function()
 
 	var _DoesNotMeetDecodalbeRequirements = function()
 	{
-		return m_worktype === 'decodeable' && ( !m_toolid && !m_isDecodeableKeyless );
+		if ( m_worktype === 'decodeable' )
+		{
+			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
+			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+				return false;
+
+			return ( !m_toolid && !m_isDecodeableKeyless );
+		}
+		return false;
 	};
 
 	var _PerformAsyncAction = function( funcGetSettingCallback, funcCallbackOnAction )
 	{
 		                                           
-		if ( m_worktype === 'useitem' )
+		if ( m_worktype === 'useitem' || m_worktype === 'usegift' )
 		{
 			InventoryAPI.UseTool( m_itemid, '' );
 		}
@@ -118,6 +127,30 @@ var InspectAsyncActionBar = ( function()
 	{
 		var elOK = elPanel.FindChildInLayoutFile( 'AsyncItemWorkAcceptConfirm' );
 
+		  
+		                        
+		  
+		if ( m_worktype === 'decodeable' )
+		{
+			var sRestriction = InventoryAPI.GetDecodeableRestriction( m_itemid );
+			if ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' )
+			{
+				                                        
+				elOK.visible = false;
+				
+				var elDescLabel = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDesc' );
+				elDescLabel.visible = false;
+				elDescLabel.SetDialogVariable( 'itemname', ItemInfo.GetName( m_itemid ) );
+				elDescLabel.text = $.Localize( '#popup_'+m_worktype+'_err_'+sRestriction, elDescLabel );
+				elDescLabel.AddClass( 'popup-capability__error' );
+
+				var elDescImage = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDescImage' );
+				elDescImage.visible = false;
+
+				return;
+			}
+		}
+
 		if( _HideOkButton() )
 		{
 			elOK.visible = false;
@@ -142,9 +175,6 @@ var InspectAsyncActionBar = ( function()
 		
 		if ( m_showAsyncActionDesc )
 		{
-			elDescLabel = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDesc' );
-			elDescImage = elPanel.FindChildInLayoutFile( 'AsyncItemWorkDescImage' );
-
 			elDescImage.itemid = m_toolid;
 
 			elDescLabel.SetDialogVariable( 'itemname', ItemInfo.GetName( m_toolid ) );

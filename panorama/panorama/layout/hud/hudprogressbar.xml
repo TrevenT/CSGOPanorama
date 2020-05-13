@@ -1,15 +1,15 @@
 <root>
-	<styles>
-		<include src="file://{resources}/styles/csgostyles.css" />
-		<include src="file://{resources}/styles/hud/hudprogressbar.css" />
-	</styles>
+  <styles>
+    <include src="file://{resources}/styles/csgostyles.css" />
+    <include src="file://{resources}/styles/hud/hudprogressbar.css" />
+  </styles>
 
-	<CSGOHudProgressBar hittest="false" class="hud-progress-bar">
-		<Panel>
-			<Panel class="hud-progress-bar-background">
-				<Panel class="hud-progress-bar-background-top" />
-				<Panel class="hud-progress-bar-background-bot" />
-			</Panel>
+  <CSGOHudProgressBar hittest="false" class="hud-progress-bar">
+    <Panel>
+      <Panel class="hud-progress-bar-background">
+        <Panel class="hud-progress-bar-background-top" />
+        <Panel class="hud-progress-bar-background-bot" />
+      </Panel>
 
       <Panel class="hud-progress-bar-layout">
         <Panel class="hud-progress-bar-circle">
@@ -24,9 +24,15 @@
 
         <Panel class="hud-progress-bar-info">
           <Label id="ActionLabel" class="hud-progress-bar-info-title"/>
-          <Label text="{t:d:duration}.{s:milliseconds}" class="hud-progress-bar-info-countdown-text" />
+                                                                                                                
+                                                                                                               
+                                                                                                                
+                                                                                                                
+                              
+               
+          <Label text="{t:d:duration}.{s:milliseconds} " class="hud-progress-bar-info-countdown-text" />
         </Panel>
       </Panel>
     </Panel>
-	</CSGOHudProgressBar>
+  </CSGOHudProgressBar>
 </root>

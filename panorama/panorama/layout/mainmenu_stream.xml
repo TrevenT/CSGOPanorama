@@ -1,0 +1,51 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/mainmenu_news.css" />
+		<include src="file://{resources}/styles/mainmenu_stream.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/mainmenu_stream.js" />
+	</scripts>
+	<snippets>
+		<snippet name="stream-panel">
+			<Panel class="full-height full-width top-bottom-flow">                               
+				<Panel class="news-panel-navbar">
+					<Label id="Title" html="true" text="#CSGO_Watch_Info_live" />
+					                  
+					<Panel id="StreamClose" class="content-navbar__extra-buttons">
+						<Button class="IconButton">
+							<Image src = "file://{images}/icons/ui/exit.svg" 
+									onactivate="StreamPanel.CloseStream();"/>
+						</Button>
+					</Panel>
+				</Panel>
+				<HTML id="StreamHTML" acceptsinput="false" acceptsfocus="false" focusonhover="false"
+					mousetracking="false" url="about:blank" />
+				<Panel class="news-panel-navbar news-panel-navbar__streamfeed">
+					<Button id="StreamVolumeMute" class="IconButton">
+						<Image id="VolumeImage" src = "file://{images}/icons/ui/unmuted.svg" />                                                    
+					</Button>
+					<Slider class="news-panel-streamfeed-volumeslider" direction="horizontal"
+						id="VolumeSlider"
+						/>                                                                  
+					<Panel class="news-panel-streamfeed-spacer"/>
+					                      
+					<Panel class="content-navbar__extra-buttons">
+						<Button class="IconButton" >
+							<Image src = "file://{images}/icons/ui/link.svg" onactivate="EmbeddedStreamAPI.OpenStreamInExternalBrowser();"/>
+						</Button>
+						<Label html="true" text="#CSGO_Watch_External_Stream" />
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+
+	</snippets>
+
+	<Panel class="news-panel-streamfeed hidden">                           
+		                                          
+	</Panel>
+</root>

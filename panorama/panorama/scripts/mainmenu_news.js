@@ -17,15 +17,16 @@ var NewsPanel = (function () {
 
 		elLister.RemoveAndDeleteChildren();
 
-		feed[ 'items' ].forEach( function( item, i ) {
-			var elEntry = $.CreatePanel('Panel', elLister, 'NewEntry' + i, {
+		feed[ 'items' ].forEach( function( item, i )
+		{
+			var elEntry = $.CreatePanel( 'Panel', elLister, 'NewEntry' + i, {
 				acceptsinput: true,
 				onactivate: 'SteamOverlayAPI.OpenURL( "' + item.link + '" );'
-			});
+			} );
 			elEntry.BLoadLayoutSnippet( 'news-full-entry' );
 			elEntry.FindChildInLayoutFile( 'NewsHeaderImage' ).SetImage( item.imageUrl );
 
-			var elEntryInfo = $.CreatePanel('Panel', elEntry, 'NewsInfo' + i );
+			var elEntryInfo = $.CreatePanel( 'Panel', elEntry, 'NewsInfo' + i );
 			elEntryInfo.BLoadLayoutSnippet( 'news-info' );
 
 			elEntryInfo.FindChildInLayoutFile( 'Date' ).text = item.date;
@@ -34,17 +35,31 @@ var NewsPanel = (function () {
 
 			         
 			elEntry.FindChildInLayoutFile( 'NewsEntryBlurTarget' ).AddBlurPanel( elEntryInfo );
-		});
-	}
+		} );
+	};
+
+	var _OnSteamIsPlaying = function()
+	{
+		$.GetContextPanel().SetHasClass( 'news-panel-style-video-playing', EmbeddedStreamAPI.IsVideoPlaying() );
+	};
+
+	var _ResetNewsEntryStyle = function()
+	{
+		$.GetContextPanel().RemoveClass( 'news-panel-style-video-playing' );
+	};
 
 	return {
 		GetRssFeed			: _GetRssFeed,
-		OnRssFeedReceived	: _OnRssFeedReceived
+		OnRssFeedReceived: _OnRssFeedReceived,
+		OnSteamIsPlaying: _OnSteamIsPlaying,
+		ResetNewsEntryStyle: _ResetNewsEntryStyle
 	};
 })();
 
 
 (function () {
 	NewsPanel.GetRssFeed();
-	$.RegisterForUnhandledEvent("PanoramaComponent_Blog_RSSFeedReceived", NewsPanel.OnRssFeedReceived );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_Blog_RSSFeedReceived", NewsPanel.OnRssFeedReceived );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_EmbeddedStream_VideoPlaying", NewsPanel.OnSteamIsPlaying );
+	$.RegisterForUnhandledEvent( "StreamPanelClosed", NewsPanel.ResetNewsEntryStyle );
 })();

@@ -85,7 +85,13 @@ var CapabilityDecodable = ( function()
 
 		_SetupHeader( m_caseId );
 		_SetCaseModelImage( m_caseId );
-		_ShowPurchase(( m_keyId ) ? '' : m_keytoSellId );
+
+		var sRestriction = InventoryAPI.GetDecodeableRestriction( m_caseId );
+		if ( ! ( sRestriction !== undefined && sRestriction !== null && sRestriction !== '' ) )
+		{
+			_ShowPurchase(( m_keyId ) ? '' : m_keytoSellId );
+		}
+		
 		_SetUpAsyncActionBar( m_caseId );
 		_SetCaseModelCamera( 1, false );
 
@@ -227,7 +233,19 @@ var CapabilityDecodable = ( function()
 
 		var items = [];
 		items.push( { label: 'Inspect', jsCallback: callBackFunc.bind( undefined, itemid, caseId, keyId ) } );
+
+		if ( MyPersonaAPI.GetLauncherType() !== "perfectworld" )
+		{
+			items.push( { label: '#SFUI_Store_Market_Link', jsCallback: _ViewOnMarket.bind( undefined, itemid ) } );
+		}
+
 		UiToolkitAPI.ShowSimpleContextMenu( '', 'ControlLibSimpleContextMenu', items );
+	};
+
+	var _ViewOnMarket = function( id )
+	{
+		SteamOverlayAPI.OpenURL( ItemInfo.GetMarketLinkForLootlistItem( id ));
+		StoreAPI.RecordUIEvent( "ViewOnMarket" );
 	};
 
 	var _GetDisplayWeightForScroll = function( itemid )

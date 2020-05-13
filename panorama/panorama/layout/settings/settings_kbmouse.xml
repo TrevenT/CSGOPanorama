@@ -70,7 +70,7 @@
 					<CSGOSettingsSlider text="#SFUI_MouseSensitivity" max="8" min="0.05" displayprecision="2" convar="sensitivity"/>
 					<Panel class="horizontal-separator"/>
 					                       
-					<CSGOSettingsSlider  text="#SFUI_MouseZoomSensitivity" max="1.0" min="0.1" displayprecision="2" convar="zoom_sensitivity_ratio_mouse"/>
+					<CSGOSettingsSlider  text="#SFUI_MouseZoomSensitivity" max="1.5" min="0.1" displayprecision="2" convar="zoom_sensitivity_ratio_mouse"/>
 					<Panel class="horizontal-separator"/>
 					                
 					<Panel class="SettingsMenuDropdownContainer">

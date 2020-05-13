@@ -20,7 +20,7 @@
 						texturewidth="128"
 						scaling="stretch-to-fit-preserve-aspect"
 						style="tooltip-position: bottom;"/>
-				<Label id="JsPlayerSkillLabel" class="player-card__text-subtitle" text=""/>
+				<Label id="JsPlayerSkillLabel" class="player-card__text-subtitle player-card__text-subtitle--multiline" text=""/>
 			</Panel>
 		</snippet>
 	</snippets>

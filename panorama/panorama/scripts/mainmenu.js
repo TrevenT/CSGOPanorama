@@ -481,6 +481,8 @@ var MainMenu = ( function() {
 
 	var _InitNewsAndStore = function ()
 	{	
+		_AddStream();
+		
 		var elNews = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsNewsPanel' );
 		elNews.BLoadLayout( 'file://{resources}/layout/mainmenu_news.xml', false, false );
 		
@@ -507,6 +509,12 @@ var MainMenu = ( function() {
 		_ShowNewsAndStore();
 	};
 
+	var _AddStream = function()
+	{
+		var elStream = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsStreamPanel' );
+		elStream.BLoadLayout( 'file://{resources}/layout/mainmenu_stream.xml', false, false );
+	};
+
 	var _ShowNewsAndStore = function ()
 	{
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );
@@ -518,8 +526,6 @@ var MainMenu = ( function() {
 		var elNews = $.FindChildInContext( '#JsNewsContainer' );
 		elNews.SetHasClass( 'hidden', true );
 	};
-
-
 
 	                                                                                                    
 	                     
@@ -721,6 +727,7 @@ var MainMenu = ( function() {
 		var keyId = ParamsList[ 0 ];
 		var caseId = ParamsList[ 1 ];
 		var storeId = ParamsList[ 2 ];
+		var showMarketLinkDefault = MyPersonaAPI.GetLauncherType() === "perfectworld" ? 'false' : 'true';
 
 		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( _OpenDecodeAfterInspect.bind( undefined, keyId, caseId, storeId ) );
 
@@ -732,6 +739,7 @@ var MainMenu = ( function() {
 			'&' + 'allowsave=false' +
 			'&' + 'showequip=false' +
 			'&' + 'showitemcert=false' +
+			'&' + 'showmarketlink='+ showMarketLinkDefault +
 			'&' + 'callback=' + JsInspectCallback,
 			'none'
 		);

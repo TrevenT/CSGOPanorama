@@ -29,7 +29,9 @@
 					<Label id="BodyText" html="true" class="news-entry__body" text="" />
 				</Panel>
 		</snippet>
+
 	</snippets>
+
 
 	<Panel class="news-panel">
 		<Panel class="news-panel-navbar">

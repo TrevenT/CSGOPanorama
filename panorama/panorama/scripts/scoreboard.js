@@ -49,13 +49,12 @@ var Scoreboard = ( function()
 	var UPDATE_INTERVAL_MIN = 0.1;
 
 	var _m_bInit;
-	                         			                                         
+	var _m_LocalPlayerID = "";			                                         
 	var GetLocalPlayerId = function()
 	{
-		var _m_LocalPlayerID = 0;
 		return function()
 		{
-			if ( !_m_LocalPlayerID )
+			if ( _m_LocalPlayerID == "" )
 				_m_LocalPlayerID = GameStateAPI.GetLocalPlayerXuid();
 			return _m_LocalPlayerID;
 		}
@@ -102,42 +101,45 @@ var Scoreboard = ( function()
 			}
 		}
 
+		                                                                                                     
 		function _CalculateAllCommends ()
 		{
+
 			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
 
-			                                                                      
-			if ( !localTeamName || GameStateAPI.IsDemoOrHltv() || IsTeamASpecTeam( localTeamName ) )
+			[ 'leader', 'teacher', 'friendly' ].forEach( function( stat )
 			{
-				_ChangeCommendDisplay( _m_TopCommends[ 'leader' ], 'leader', false );
-				_ChangeCommendDisplay( _m_TopCommends[ 'teacher' ], 'teacher', false );
-				_ChangeCommendDisplay( _m_TopCommends[ 'friendly' ], 'friendly', false );
-			}
-			else
-			{
-				_SortCommendLeaderboard( 'leader' );
-				_SortCommendLeaderboard( 'teacher' );
-				_SortCommendLeaderboard( 'friendly' );				
-			}
+				                                                                                 
+				                                                        
+
+				_SortCommendLeaderboard( stat );
+
+				_ChangeCommendDisplay( _m_TopCommends[ stat ], stat, false );
+
+				_m_TopCommends[ stat ] = _GetCommendBestXuid( stat );
+				_ChangeCommendDisplay( _m_TopCommends[ stat ], stat, true );          
+				
+				
+			} );
 		}
 
-		function _UpdateCommendForPlayer ( xuid, commendStatName, value )
+		function _UpdateCommendForPlayer ( xuid, stat, value )
 		{
-			var playerCommend = _m_CommendLeaderboards[ commendStatName ].find( p => p.m_xuid === xuid );
+			if ( value == 0 )
+				return;
+			
+			var playerCommend = _m_CommendLeaderboards[ stat ].find( p => p.m_xuid === xuid );
 
 			if ( !playerCommend )
 			{
-				_m_CommendLeaderboards[ commendStatName ].push( player_commend_t( xuid, value ) );
+				_m_CommendLeaderboards[ stat ].push( player_commend_t( xuid, value ) );
 			}
 			else
 			{
 				playerCommend.m_value = value;
 			}
 
-			                                  
-			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
-			if ( _m_oTeams[ localTeamName ] )
-				_m_oTeams[ localTeamName ].CalculateAllCommends();
+
 
 		}
 
@@ -148,19 +150,16 @@ var Scoreboard = ( function()
 			{
 				var index = _m_CommendLeaderboards[ stat ].findIndex( p => p.m_xuid === xuid );
 
-				if ( index )
+				if ( index != -1 )
 				{
 					_m_CommendLeaderboards[ stat ].splice( index, 1 );
 				}
 			} )
 			
-			                                         
-			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
-			if ( _m_oTeams[ localTeamName ] )
-				_m_oTeams[ localTeamName ].CalculateAllCommends();
+
 		}		
 
-		function _ChangeCommendDisplay ( xuid, commendStatName, turnon )
+		function _ChangeCommendDisplay ( xuid, stat, turnon )
 		{
 			var oPlayer = _m_oPlayers.GetPlayerByXuid( xuid );
 			if ( !oPlayer )
@@ -170,7 +169,7 @@ var Scoreboard = ( function()
 			if ( !elPlayer )
 				return;
 			
-			var elCommendationImage = elPlayer.FindChildTraverse( "id-sb-name__commendations__" + commendStatName );
+			var elCommendationImage = elPlayer.FindChildTraverse( "id-sb-name__commendations__" + stat );
 			if ( !elCommendationImage )
 				return;
 			
@@ -182,27 +181,15 @@ var Scoreboard = ( function()
 
 
 
-		function _SortCommendLeaderboard ( commendStatName )
+		function _SortCommendLeaderboard ( stat )
 		{
 			       
-			_m_CommendLeaderboards[ commendStatName ].sort( function( a, b ) { return b.m_value - a.m_value } );
-
-			var newBest = _GetCommendBestXuid( commendStatName );
-
-			                                               
-			if ( _m_TopCommends[ commendStatName ] != newBest )
-			{
-				_ChangeCommendDisplay( _m_TopCommends[ commendStatName ], commendStatName, false );           
-
-				_m_TopCommends[ commendStatName ] = newBest;
-
-				_ChangeCommendDisplay( _m_TopCommends[ commendStatName ], commendStatName, true );          
-			}
+			_m_CommendLeaderboards[ stat ].sort( function( a, b ) { return b.m_value - a.m_value } );
 		}
 
-		function _GetCommendBestXuid ( commendStatName )
+		function _GetCommendBestXuid ( stat )
 		{
-			switch ( commendStatName )
+			switch ( stat )
 			{
 				case 'leader': return _GetCommendTopLeaderXuid(  );
 				case 'teacher': return _GetCommendTopTeacherXuid(  );
@@ -1296,32 +1283,13 @@ var Scoreboard = ( function()
 						_TeamColorizeStat( stat, elLabel );
 					}
 
-					var bShowMeTheMoney = false;
+					var newStatValue = GameStateAPI.GetPlayerMoney( oPlayer.m_xuid );
 
-					if ( GameStateAPI.IsDemoOrHltv() )
+					oPlayer.m_oStats[ stat ] = newStatValue;
+
+					if ( oPlayer.m_oStats[ stat ] >= 0 )
 					{
-						bShowMeTheMoney = true;
-					}
-					else if ( GetLocalPlayerId() )
-					{
-						var localPlayerTeamNumber = ( GetLocalPlayerId() != 0 ) ? GameStateAPI.GetPlayerTeamNumber( GetLocalPlayerId() ) : 0;
-						var localPlayerIsSpectator = GameStateAPI.IsDemoOrHltv() || IsTeamASpecTeam( GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() ) )
-						
-						if ( GameStateAPI.GetAssociatedTeamNumber( oPlayer.m_xuid ) === localPlayerTeamNumber || localPlayerIsSpectator )
-							bShowMeTheMoney = true;
-					}
-
-					if ( bShowMeTheMoney )
-					{
-						var newStatValue = GameStateAPI.GetPlayerMoney( oPlayer.m_xuid );
-
-						oPlayer.m_oStats[ stat ] = newStatValue;
-
-						if ( newStatValue >= 0 )
-							elLabel.text = "$" + newStatValue;
-						 else
-							elLabel.text = "";
-						
+						elLabel.text = "$" + newStatValue;
 					}
 					else
 					{
@@ -1572,10 +1540,12 @@ var Scoreboard = ( function()
 			case 'skillgroup':
 				fn = function( oPlayer, bSilent = false )
 				{
+				
 					var newStatValue = GameStateAPI.GetPlayerCompetitiveRanking( oPlayer.m_xuid );
 
 					if ( ( newStatValue != -1 ) && ( oPlayer.m_oStats[ stat ] !== newStatValue ) )
 					{
+
 						oPlayer.m_oStats[ stat ] = newStatValue;
 
 						var elPlayer = oPlayer.m_elPlayer;
@@ -1680,6 +1650,8 @@ var Scoreboard = ( function()
 		switch ( mode )
 		{
 			case "scrimcomp2v2":
+				return "snippet_scoreboard-classic__row--wingman";
+			
 			case "competitive":
 				return "snippet_scoreboard-classic__row--comp";
 
@@ -2088,9 +2060,10 @@ var Scoreboard = ( function()
 
 	function _UpdateMatchInfo ()
 	{
+
 		if ( !_m_bInit )
 			return;
-
+		
 		                                            
 
 
@@ -2113,8 +2086,6 @@ var Scoreboard = ( function()
 			}
 		}
 
-		
-
 		if ( $( "#id-sb-meta__mode__image" ) )
 		    $( "#id-sb-meta__mode__image" ).SetImage( GameStateAPI.GetGameModeImagePath() );
 
@@ -2124,6 +2095,13 @@ var Scoreboard = ( function()
 		       
 		                            
 		       
+
+		if ( !GameStateAPI.IsDemoOrHltv() )
+		{
+			var localTeamName = GameStateAPI.GetPlayerTeamName( GetLocalPlayerId() );
+			if ( _m_oTeams[ localTeamName ] )
+				_m_oTeams[ localTeamName ].CalculateAllCommends();
+		}
 	}
 
 	function _UpdateRound ( rnd )
@@ -2198,7 +2176,12 @@ var Scoreboard = ( function()
 			{
 				var livingCount = oScoreData[ "rounddata" ][ rnd ][ "players_alive_" + teamName ];
 
-				for ( var i = 1; i <= 5; i++ )
+				var nPlayers = 5;
+
+				if ( GameStateAPI.GetGameModeInternalName( true ) == "scrimcomp2v2" )
+					nPlayers = 2;
+
+				for ( var i = 1; i <= nPlayers; i++ )
 				{
 					var img = elRnd.FindChildTraverse( "casualty-" + i );
 					if ( !img )
@@ -2352,7 +2335,6 @@ var Scoreboard = ( function()
 
 		_UpdateTeams();
 
-		
 
 		             
 		var jsoTime = GameStateAPI.GetTimeDataJSO();
@@ -2498,7 +2480,8 @@ var Scoreboard = ( function()
 			return;
 
 		if ( ( GameStateAPI.GetGameModeInternalName(true) === "competitive" ) ||
-			( GameStateAPI.GetGameModeInternalName(true)=== "gungametrbomb" ) )
+			( GameStateAPI.GetGameModeInternalName( true ) === "gungametrbomb" ) ||
+			( GameStateAPI.GetGameModeInternalName(true)=== "scrimcomp2v2" ) )
 		{
 			var midRound = Math.ceil( jsoTime[ "maxrounds" ] / 2 );
 			var lastRound = jsoTime[ "maxrounds" ];
@@ -2802,6 +2785,18 @@ var Scoreboard = ( function()
 		_UpdateMatchInfo();
 	};
 
+	function _RankRevealAll ()
+	{
+		for ( var i = 0; i < _m_oPlayers.GetCount(); i++ )
+		{
+			var oPlayer = _m_oPlayers.GetPlayerByIndex( i );
+
+			if ( typeof ( _m_oUpdateStatFns[ 'skillgroup' ] ) === 'function' )
+				_m_oUpdateStatFns[ 'skillgroup' ]( oPlayer, true );
+		}
+
+	}
+
 	function _UpdateScore () 
 	{
 		switch ( GameStateAPI.GetGameModeInternalName(true) )
@@ -3032,6 +3027,8 @@ var Scoreboard = ( function()
 		                                
 		       
 
+		RankRevealAll:						_RankRevealAll,
+
 	};
 
 
@@ -3074,6 +3071,7 @@ var Scoreboard = ( function()
 	                                                                                      
 	       
 
+	$.RegisterForUnhandledEvent( "GameState_RankRevealAll", Scoreboard.RankRevealAll );
 
 
 } )();
