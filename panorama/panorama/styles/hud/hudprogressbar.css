@@ -276,6 +276,7 @@
 	color: #ffffff;
 	text-shadow-fast: 1px 1px #000000;
 	margin-right: 8px;
+	overflow: noclip;
 }
 
 .hud-progress-bar-info-countdown-text

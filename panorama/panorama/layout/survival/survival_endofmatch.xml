@@ -65,11 +65,11 @@
 			<Panel class="eom-survival__damage">
 				<Panel id="JsSurvivalDamageList" class="eom-survival__damage__list">
 					<Panel id="JsSurvivalDamageGiven" class="eom-survival__damage__row" >
-						<Label class="eom-survival__damage__title stratum-font" text="Damage Given"/>
+						<Label class="eom-survival__damage__title stratum-font" text="#eom-survival-damage-given"/>
 						<Label id="JsSurvivalDamageGivenValue" class="eom-survival__damage__value stratum-font positiveColor" text=""/>
 					</Panel>
 					<Panel id="JsSurvivalDamageTaken" class="eom-survival__damage__row">
-						<Label class="eom-survival__damage__title stratum-font" text="Damage Taken"/>
+						<Label class="eom-survival__damage__title stratum-font" text="#eom-survival-damage-taken"/>
 						<Label id="JsSurvivalDamageTakenValue" class="eom-survival__damage__value stratum-font negativeColor" text=""/>
 					</Panel>
 				</Panel>

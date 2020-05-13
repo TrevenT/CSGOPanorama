@@ -582,7 +582,9 @@ var MainMenu = ( function() {
 		};
 
 		_ShowNewsAndStore();
-		_AddFeaturedPanel();
+
+		                                     
+		                      
 
 		          
 		                       
@@ -611,10 +613,9 @@ var MainMenu = ( function() {
 	          
 	                                     
 	 
-
 		                                                                          
-		                                                                                                              
-		                                                                                                            
+		                                                                                                         
+		                                                                                         
 		                                                    
 	 
 	          

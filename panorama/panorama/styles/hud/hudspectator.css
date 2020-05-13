@@ -1796,17 +1796,23 @@
     visibility: collapse;
 }
 
-#BestOfPipsText
+#BestOfPipsPanel 
 {
-    font-family: Stratum2, 'Arial Unicode MS';
-    font-size: 16px;
-    font-weight: medium;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
+	horizontal-align: center;
+	flow-children: right;
+}
 
-    color: #FFFFFFAA;
-    text-shadow: 1px 1px 1px 2.0 rgba(27, 27, 27, 0.68);
+#BestOfPipsText 
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+	font-weight: medium;
+	vertical-align: center;
+	text-align: center;
+	color: #FFFFFFAA;
+	text-shadow: 1px 1px 1px 2.0 rgba(27, 27, 27, 0.68);
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
 .BestOfPipsPanel_L
@@ -1814,9 +1820,7 @@
     flow-children: left;
     width: 100px;
     height: 40px;
-    x: -136px;
     margin-top: 5px;
-    horizontal-align: center;
 }
 
 .BestOfPipsPanel_R
@@ -1824,9 +1828,7 @@
     flow-children: right;
     width: 100px;
     height: 40px;
-    x: 136px;
     margin-top: 5px;
-    horizontal-align: center;
 }
 
 .BestOfPip

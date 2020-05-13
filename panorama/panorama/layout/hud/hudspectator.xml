@@ -207,18 +207,20 @@
       <Panel id="BestOfPips">
         <Panel class="hrTop" />
         <Panel class="hrBot" />
-        <Label id="BestOfPipsText"/>
-        <Panel id="BestOfPipsPanelL" class="BestOfPipsPanel_L">
-          <Image id="BestOfPipL1" class="BestOfPip" src="file://{images}/status_icons/icon_star.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-          <Image id="BestOfPipL2" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-          <Image id="BestOfPipL3" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-        </Panel>
-        <Panel id="BestOfPipsPanelR" class="BestOfPipsPanel_R">
-          <Image id="BestOfPipR1" class="BestOfPip" src="file://{images}/status_icons/icon_star.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-          <Image id="BestOfPipR2" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-          <Image id="BestOfPipR3" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
-        </Panel>
-      </Panel>
+		<Panel id="BestOfPipsPanel" class="BestOfPipsPanel">
+			<Panel id="BestOfPipsPanelL" class="BestOfPipsPanel_L">
+				<Image id="BestOfPipL1" class="BestOfPip" src="file://{images}/status_icons/icon_star.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+				<Image id="BestOfPipL2" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+				<Image id="BestOfPipL3" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+			</Panel>
+			<Label id="BestOfPipsText" text="#Spectator_Best_Of_Series"/>
+			<Panel id="BestOfPipsPanelR" class="BestOfPipsPanel_R">
+				<Image id="BestOfPipR1" class="BestOfPip" src="file://{images}/status_icons/icon_star.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+				<Image id="BestOfPipR2" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+				<Image id="BestOfPipR3" class="BestOfPip" src="file://{images}/status_icons/icon_star_empty.vtf" scaling="stretch-to-fit-x-preserve-aspect"/>
+			</Panel>
+		</Panel>
+	</Panel>
       <Panel id="ExtraMatchData">
         <Panel class="hrTop" />
         <Panel class="hrBot" />

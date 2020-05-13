@@ -157,7 +157,7 @@
 {
     transition-property: opacity, pre-transform-scale2d;
     transition-duration: 0.1s, 0.1s;
-    transition-delay: 0.1s;
+    transition-delay: 0.45s;
 }
 
 #jsItemTooltip.TooltipContainer.TooltipVisible
