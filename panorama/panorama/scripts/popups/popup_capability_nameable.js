@@ -242,23 +242,8 @@ var CapabilityNameable = ( function()
 
 	var _AcknowlegeNameTags = function()
 	{
-		var itemCount = InventoryAPI.GetUnacknowledgeItemsCount();
-		var newItemsList = [];
-
-		for ( var i = 0; i < itemCount; i++ )
-		{
-			var newItemId = InventoryAPI.GetUnacknowledgeItemByIndex( i );
-			newItemsList.push( newItemId );
-		}
-
-		newItemsList.forEach( itemId =>
-		{
-			if ( ItemInfo.ItemMatchDefName( itemId, 'name tag' ) )
-			{
-				InventoryAPI.AcknowledgeNewItembyItemID( itemId );
-				InventoryAPI.SetItemSessionPropertyValue( itemId, 'recent', '1' );
-			}
-		} );
+		var bShouldAcknowledge = true;
+		AcknowledgeItems.GetItemsByType( [ 'name tag' ], bShouldAcknowledge );
 	};
 
 	var _ClosePopup = function()

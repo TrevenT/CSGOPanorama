@@ -498,18 +498,21 @@ var PickemCommon = ( function()
 	{
 		var _ShowInpsectPopup = function( id )
 		{
-			UiToolkitAPI.ShowCustomLayoutPopupParameters(
-				'',
-				'file://{resources}/layout/popups/popup_inventory_inspect.xml',
-				'itemid=' + id
-				+ '&' +
-				'inspectonly=false'
-				+ '&' +
-				'asyncworkitemwarning=no'
-				+ '&' +
-				'storeitemid=' + id,
-				'none'
-			);
+			                                                
+			   	   
+			   	                                                               
+			   	              
+			   	       
+			   	                   
+			   	       
+			   	                         
+			   	       
+			   	                    
+			   	      
+			     
+
+			$.DispatchEvent( 'ShowTournamentStore' );
+			$.DispatchEvent( 'ShowTournamentStorePassPopup' );
 		};
 	
 		var _ActivatePass = function ( id )
@@ -526,7 +529,7 @@ var PickemCommon = ( function()
 
 		                                                                                                
 		var id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum );
-		if ( !id || id === '0' )
+		if (( !id || id === '0' ) && tournamentNum === g_ActiveTournamentInfo.eventid )
 		{	
 			                                                              
 			id = InventoryAPI.GetActiveTournamentCoinItemId( tournamentNum * -1 );

@@ -1,8 +1,16 @@
 "use strict";
 
-var MainMenuTournamentPassStatus = ( function() {
+var MainMenuTournamentPassStatus = ( function()
+{
+	var _m_schTimer = null;
+
+	var _m_bRegisteredForAllEvents = false;
+	var _m_InventoryUpdatedHandler = null;
+	var _m_cp = $.GetContextPanel();
 	var _Init = function()
 	{
+		_RegisterForInventoryUpdate();
+
 		if ( !MyPersonaAPI.IsConnectedToGC() )
 		{
 			return;
@@ -12,6 +20,35 @@ var MainMenuTournamentPassStatus = ( function() {
 		_SetImage();
 	};
 
+	var _RegisterForInventoryUpdate = function()
+	{
+		if ( _m_bRegisteredForAllEvents )
+			return;
+
+		_m_bRegisteredForAllEvents = true;
+
+		_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _Init );
+
+		_m_cp.RegisterForReadyEvents( true );
+
+		$.RegisterEventHandler( 'ReadyForDisplay', _m_cp, function()
+		{
+			if ( !_m_InventoryUpdatedHandler )
+			{
+				_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _Init );
+			}
+		} );
+
+		$.RegisterEventHandler( 'UnreadyForDisplay', _m_cp, function()
+		{
+			if ( _m_InventoryUpdatedHandler )
+			{
+				$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _m_InventoryUpdatedHandler );
+				_m_InventoryUpdatedHandler = null;
+			}
+		} );
+	};
+	
 	var _SetImage = function()
 	{
 		var elImage = $.GetContextPanel().FindChildInLayoutFile('id-tournament-pass-status-image');
@@ -68,7 +105,7 @@ var MainMenuTournamentPassStatus = ( function() {
 			
 			elImage.SetHasClass( 'pass', true );
 
-			$.GetContextPanel().style.backgroundImage = 'url("file://{images}/backgrounds/tournament_pass_bg_' + g_ActiveTournamentInfo.eventid + '.png")';
+			$.GetContextPanel().style.backgroundImage = 'url("file://{images}/tournaments/backgrounds/tournament_pass_bg_' + g_ActiveTournamentInfo.eventid + '.png")';
 			$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
 			$.GetContextPanel().style.backgroundSize = '100% 250%';
 			$.GetContextPanel().style.backgroundPosition = '50% 0%';
@@ -79,10 +116,10 @@ var MainMenuTournamentPassStatus = ( function() {
 			elImage.SetHasClass( 'pass', false );
 			EnableCountdownTimer( elDescLabel );
 
-			$.GetContextPanel().style.backgroundImage = 'url( "file://{resources}/videos/tournament_bg540p.webm" )';
+			$.GetContextPanel().style.backgroundImage = 'url( "file://{images}/tournaments/backgrounds/background_' + g_ActiveTournamentInfo.eventid + '.png" )';
 			$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
 			$.GetContextPanel().style.backgroundSize = 'cover';
-			$.GetContextPanel().style.backgroundPosition = '50% 25%';
+			$.GetContextPanel().style.backgroundPosition = '50% 40%';
 
 			onActivate = _ShowTournamentJournalPanel;
 			title = InventoryAPI.GetItemName( id );
@@ -100,23 +137,31 @@ var MainMenuTournamentPassStatus = ( function() {
 		var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status' );
 
 		elDescLabel.text = "#pickem_timer";
-		$.Schedule( 0.1, _Timer.bind( undefined, elPanel ) );
+		if ( !_m_schTimer )
+		{
+			_m_schTimer = $.Schedule( 0.1, _Timer.bind( undefined, elPanel ) );
+		}
 	};
 
 	var _ShowInpsectPopup = function( id )
 	{
-		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
-			'file://{resources}/layout/popups/popup_inventory_inspect.xml',
-			'itemid=' + id
-			+ '&' +
-			'inspectonly=false'
-			+ '&' +
-			'asyncworkitemwarning=no'
-			+ '&' +
-			'storeitemid=' + id,
-			'none'
-		);
+		                                                                         
+		$.DispatchEvent( 'ShowTournamentStore' );
+		$.DispatchEvent( 'ShowTournamentStorePassPopup' );
+
+		                                                                                   
+		                                                
+		   	   
+		   	                                                               
+		   	              
+		   	       
+		   	                   
+		   	       
+		   	                         
+		   	       
+		   	                    
+		   	      
+		     
 	};
 
 	var _ShowTournamentJournalPanel = function ( id )
@@ -140,6 +185,8 @@ var MainMenuTournamentPassStatus = ( function() {
 
 	var _Timer = function( elPanelParam )
 	{
+		_m_schTimer = null;
+
 		                                    
 		if ( !elPanelParam || !elPanelParam.IsValid() )
 			return;
@@ -154,7 +201,7 @@ var MainMenuTournamentPassStatus = ( function() {
 
 		elCountdown.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( secRemaining ) );
 		elCountdown.SetHasClass( 'hidden', ( secRemaining > 0 ) ? false : true );
-		$.Schedule( 30, _Timer.bind( null, elPanelParam ) );
+		_m_schTimer = $.Schedule( 30, _Timer.bind( null, elPanelParam ) );
 	};
 
 	var _ShowStatus = function( elPanel )
@@ -209,5 +256,4 @@ var MainMenuTournamentPassStatus = ( function() {
 	MainMenuTournamentPassStatus.Init();
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_UpdateConnectionToGC', MainMenuTournamentPassStatus.Init );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Store_PurchaseCompleted', MainMenuTournamentPassStatus.PurchaseComplete );
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', MainMenuTournamentPassStatus.Init );
 })();

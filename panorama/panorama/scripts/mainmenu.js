@@ -606,8 +606,9 @@ var MainMenu = ( function() {
 	var _AddFeaturedPanel = function()
 	{
 		                 
+		                                                                                 
 		                                                                      
-		var featuredXML = 'file://{resources}/layout/mainmenu_featured.xml';
+		var featuredXML = 'file://{resources}/layout/mainmenu_tournament_pass_status.xml';
 
 		var elPanel = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsFeaturedPanel' );
 		elPanel.BLoadLayout( featuredXML, false, false );

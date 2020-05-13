@@ -142,7 +142,12 @@ var matchInfo = ( function() {
         }
         else
         {
-            var coinLevel = InventoryAPI.GetItemAttributeValue( id, "upgrade level" );
+			var coinLevel = InventoryAPI.GetItemAttributeValue( id, "upgrade level" );
+			
+			var coinRedeemsPurchased = InventoryAPI.GetItemAttributeValue( id, "operation drops awarded 1" );
+			if ( coinRedeemsPurchased )                                                                          
+				coinLevel += coinRedeemsPurchased;
+
             var redeemed = InventoryAPI.GetItemAttributeValue( id, "operation drops awarded 0" );
             var redeemsAvailable = coinLevel - redeemed;
 

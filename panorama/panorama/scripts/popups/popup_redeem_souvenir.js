@@ -48,7 +48,12 @@ var PopupRedeemSouvenir = ( function()
             return;
         }
 
-        var coinLevel = InventoryAPI.GetItemAttributeValue( coinId, "upgrade level" );
+		var coinLevel = InventoryAPI.GetItemAttributeValue( coinId, "upgrade level" );
+		
+		var coinRedeemsPurchased = InventoryAPI.GetItemAttributeValue( coinId, "operation drops awarded 1" );
+		if ( coinRedeemsPurchased )                                                                          
+			coinLevel += coinRedeemsPurchased;
+
         var redeemed = InventoryAPI.GetItemAttributeValue( coinId, "operation drops awarded 0" );
         var redeemsAvailable = coinLevel - redeemed;
 

@@ -46,7 +46,6 @@ var mainmenu_watch_tournament = (function () {
 
 			pressedTab._oPickemData.oInitData = oInitData;
 			PickemCommon.Init( pressedTab );
-
 			_AddEventHandlers( pressedTab );
 		}
 
@@ -57,10 +56,10 @@ var mainmenu_watch_tournament = (function () {
 				                                                                     
 				                                                                                          
 				                          
-				if ( _m_activeTab._oPickemData )
-				{
-					PickemCommon.UnregisterEvents.bind( undefined, pressedTab );
-				}
+				                                   
+				    
+				   	                                              
+				    
 				
 				_m_activeTab.AddClass( 'tournament-content-container--hidden' );
 			}
@@ -100,7 +99,8 @@ var mainmenu_watch_tournament = (function () {
 
 	var _AddEventHandlers = function( elPanel )
 	{
-		$.RegisterEventHandler( 'ReadyForDisplay', elPanel, PickemCommon.ReadyForDisplay.bind( undefined, elPanel )  );
+		$.RegisterEventHandler( 'ReadyForDisplay', elPanel, PickemCommon.ReadyForDisplay.bind( undefined, elPanel ) );
+		$.RegisterEventHandler( 'UnreadyForDisplay', elPanel, PickemCommon.UnregisterEvents.bind( undefined, elPanel )  );
 
 		                                                                          
 		                                                       
@@ -295,7 +295,7 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
-			var tabIdToActivate = 'id-nav-pick-playoffs';
+			var tabIdToActivate = 'id-nav-pick-prelims';
 
 			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );	
 		}
@@ -310,9 +310,10 @@ var mainmenu_watch_tournament = (function () {
 
 	var _SetStyleOverridesForTournament = function( elParentPanel, tournamentNumber )
 	{
-		if ( tournamentNumber === 15 )
+		if ( tournamentNumber >= 15 )
 		{
-			elParentPanel.AddClass( 'tournament-' + tournamentNumber );
+			                                                                           
+			elParentPanel.AddClass( 'tournament-has-challenges' );
 		}
 	};
 
@@ -338,6 +339,7 @@ var mainmenu_watch_tournament = (function () {
     {
         var elLink = elPanel.FindChildInLayoutFile( 'JsTournamentInfoLink' );
 		var olinks = {
+			16: "https://csgomajor.starladder.com/",
 			15: "https://www.intelextrememasters.com/season-13/katowice/schedule/",
             14: "https://www.faceitmajor.com/",
             13: "http://www.eleague.com/major-2018",

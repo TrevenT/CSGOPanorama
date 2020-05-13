@@ -5,9 +5,12 @@ var InventorySearch = ( function (){
 	var m_elList = null;
 	var m_elSearchPanel = $.GetContextPanel();
 	var m_elSuggestedPanel = null;
+	var m_InventoryUpdatedHandler = null;
 
 	var _Init = function()
 	{
+		_RegisterForInventoryUpdate();
+		
 		var elTextEntry = m_elSearchPanel.FindChildInLayoutFile( 'InvSearchTextEntry' );
 		elTextEntry.SetPanelEvent( 'ontextentrychange', InventorySearch.OnEntryChanged );
  
@@ -15,18 +18,35 @@ var InventorySearch = ( function (){
 		_TextEntrySettings.SetTextEntryPanel( elTextEntry );
 
 		m_elSuggestedPanel = m_elSearchPanel.FindChildInLayoutFile( 'InvSearchSuggestions' );
-		                                                                                                            
-		                                                                                                             
-		                                                                                                                           
-		                                                                                                                           
-
 		m_elList = m_elSearchPanel.FindChildInLayoutFile( 'InvSearchPanel-List' );
 
 		_AddSortDropdownEntries();
-
 		_UpdateItemList();
 	};
 
+	var _RegisterForInventoryUpdate = function()
+	{
+		m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateItemList );
+		m_elSearchPanel.RegisterForReadyEvents( true );
+
+		$.RegisterEventHandler( 'ReadyForDisplay', m_elSearchPanel, function()
+		{
+			if ( !m_InventoryUpdatedHandler )
+			{
+				m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateItemList );
+			}
+		} );
+
+		$.RegisterEventHandler( 'UnreadyForDisplay', m_elSearchPanel, function()
+		{
+			if ( m_InventoryUpdatedHandler )
+			{
+				$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', m_InventoryUpdatedHandler );
+				m_InventoryUpdatedHandler = null;
+			}
+		} );
+	};
+	
 	var _UpdateItemList = function() 
 	{
 		if ( !m_elList )
@@ -200,6 +220,4 @@ var InventorySearch = ( function (){
 (function()
 {
 	 InventorySearch.Init();
-
-	 $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', InventorySearch.UpdateItemList );
 })();

@@ -7,6 +7,7 @@ var TournamentStore = ( function()
 	var m_ItemsToCategories;
 	var m_StyleForCategoriesInCart = "has-items-in-cart";                                                                      
 	var m_elTournamentCart;
+	var m_showLargePassContextMenu = false;
 	var m_MaxCartSize = 100;
 
 	                    
@@ -28,22 +29,7 @@ var TournamentStore = ( function()
 		{
 			var ids = [ ...arguments ];
 			var elPanel = ids.shift();                                                           
-			elPanel.SetPanelEvent( 'onactivate', function () {
-				var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParameters(
-					'',
-					'',
-					'file://{resources}/layout/context_menus/context_menu_add_to_cart.xml',
-					'items=' + ids.join( ',' )
-					+'&item_count_func_name=funcNumItemsInCart'
-				);
-				contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
-				                                                                                       
-				contextMenuPanel.FindChildTraverse( 'ItemContainer' ).Data.funcNumItemsInCart = function ( itemDefIdx )
-				{
-					return m_CartItems[ itemDefIdx ] ? m_CartItems[ itemDefIdx ] : 0;
-				}
-				$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
-			} );
+			elPanel.SetPanelEvent( 'onactivate', OnItemPressed.bind( undefined, ids ) );
 
 			function CalcItemCounts( itemIDs )
 			{
@@ -62,7 +48,7 @@ var TournamentStore = ( function()
 
 		var elOrgPanel = $( "#Org" );
 		elOrgPanel.BLoadLayoutSnippet( "ItemCategory" );
-		elOrgPanel.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images_econ}/econ/stickers/' + g_ActiveTournamentInfo.location + '/'+ g_ActiveTournamentInfo.organization + '.png' );
+		elOrgPanel.FindChildTraverse( "CategoryImage" ).SetImage( 'file://{images_econ}/econ/stickers/' + g_ActiveTournamentInfo.location + '/'+ g_ActiveTournamentInfo.organization + '_large.png' );
 		elOrgPanel.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_" + g_ActiveTournamentInfo.organization );
 		_ShowSaleTag( elOrgPanel, g_ActiveTournamentInfo.itemid_sticker );
 		
@@ -84,13 +70,24 @@ var TournamentStore = ( function()
 		var passItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
 		if ( StoreAPI.GetStoreItemSalePrice( passItemId, 1, '' ) )
 		{
-			var elMegaBundle = $( '#MegaBundle' );
-			elMegaBundle.BLoadLayoutSnippet( "ItemCategory" );
-			elMegaBundle.FindChildTraverse( "CategoryImage" ).itemid = passItemId;
-			elMegaBundle.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TournamentPass_" + g_ActiveTournamentInfo.location );
-			_ShowSaleTag( elMegaBundle,  g_ActiveTournamentInfo.itemid_pass );
-			SetItemsToOffer( elMegaBundle, g_ActiveTournamentInfo.itemid_pass );
+			var elPass = $( '#Pass' );
+			elPass.BLoadLayoutSnippet( "ItemCategory" );
+			elPass.FindChildTraverse( "CategoryImage" ).itemid = passItemId;
+			elPass.FindChildTraverse( "CategoryLabel" ).SetLocalizationString( "#CSGO_TournamentPass_" + g_ActiveTournamentInfo.location );
+			_ShowSaleTag( elPass, g_ActiveTournamentInfo.itemid_pass );
+			SetItemsToOffer.apply( undefined, [ elPass, ...g_ActiveTournamentPasses ] );
 		}
+
+		                                                                                                            
+		                                                             
+		    
+		   	                                  
+		   	                                                
+		   	                                                                    
+		   	                                                                                                                                   
+		   	                                                                
+		   	                                                                  
+		    
 
 		function SetupTeamPurchases( elRootPanel, arrTeamList )
 		{
@@ -118,6 +115,26 @@ var TournamentStore = ( function()
 		m_elTournamentCart = $( "#TournamentCart" );
 		$.GetContextPanel().SetDialogVariableInt( "num_items_in_cart", 0 );
 		$.DispatchEvent( "PlaySoundEffect", "inventory_inspect_weapon", "MOUSE" );
+	};
+
+	var OnItemPressed = function( ids )
+	{
+		var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParameters(
+			'',
+			'',
+			'file://{resources}/layout/context_menus/context_menu_add_to_cart.xml',
+			'items=' + ids.join( ',' ) +
+			'&item_count_func_name=funcNumItemsInCart'
+		);
+		contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
+		                                                                                       
+		contextMenuPanel.FindChildTraverse( 'ItemContainer' ).Data.funcNumItemsInCart = function( itemDefIdx )
+		{
+			return m_CartItems[ itemDefIdx ] ? m_CartItems[ itemDefIdx ] : 0;
+		}
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
+
+		return contextMenuPanel;
 	};
 
 	function _ShowSaleTag ( elPanel, storeDefIndx )
@@ -215,7 +232,7 @@ var TournamentStore = ( function()
 		},"" );
 	}
 
-	var _PurchaseCart = function ()
+	var _PurchaseCart = function()
 	{
 		var purchaseItems = BuildCartItemString();
 		
@@ -224,13 +241,35 @@ var TournamentStore = ( function()
 		                                                                                      
 		                                      
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
-	}
+	};
+
+	var _ShowTournamentStorePassPopup = function()
+	{
+		var elPass = $( '#Pass' );
+
+		if ( !elPass )
+		{
+			return;
+		}
+
+		m_showLargePassContextMenu = true;
+
+		var elContextPanel = OnItemPressed( [ g_ActiveTournamentInfo.itemid_pass, g_ActiveTournamentInfo.itemid_pack ] );
+		elContextPanel.AddClass( 'CartTournamentPasses' );
+		
+		$.Schedule( .1, function()
+		{
+			elContextPanel.FindChildInLayoutFile( 'ContextMenuBody' ).style.transform = 'translate3d( 0%, 0%, 0px );';
+		} );
+	
+	};
 			
 	return {
 		Init: _Init,
 		AddItemToCart: _AddItemToCart,
 		RemoveItemFromCart: _RemoveItemFromCart,
-		PurchaseCart: _PurchaseCart
+		PurchaseCart: _PurchaseCart,
+		ShowTournamentStorePassPopup : _ShowTournamentStorePassPopup
 	};
 } )();
 
@@ -239,6 +278,8 @@ var TournamentStore = ( function()
 	TournamentStore.Init();
 	$.RegisterForUnhandledEvent( 'AddItemToCart', TournamentStore.AddItemToCart );
 	$.RegisterForUnhandledEvent( 'RemoveItemFromCart', TournamentStore.RemoveItemFromCart );
+	$.RegisterForUnhandledEvent( 'ShowTournamentStorePassPopup', TournamentStore.ShowTournamentStorePassPopup );
+
 } )();
 
 

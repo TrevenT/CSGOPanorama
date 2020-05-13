@@ -34,7 +34,7 @@ Button.PopupButton
 	margin: 4px;
 	padding: 8px;
 	min-width: 230px;
-	height: 260px;
+	                    
 }
 
 
@@ -101,6 +101,14 @@ Button.PopupButton
 	transition-property: opacity, transform;
 	transition-duration: .20s;
 	transition-timing-function: ease-in-out;
+}
+
+.cart-controls-row
+{
+	flow-children: right;
+	horizontal-align: center;
+	width: 100%;
+	min-height: 52px;
 }
 
 .cart-controls .item__add-button

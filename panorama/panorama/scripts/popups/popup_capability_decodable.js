@@ -424,11 +424,14 @@ var CapabilityDecodable = ( function()
 
 			if ( ItemInfo.ItemDefinitionNameSubstrMatch( m_itemFromContainer, 'tournament_journal_' ) )
 			{
-				UiToolkitAPI.ShowCustomLayoutPopupParameters(
-					'',
-					'file://{resources}/layout/popups/popup_tournament_journal.xml',
-					'journalid=' + m_itemFromContainer
-				);
+				$.Schedule( 0.2, function()
+				{
+					UiToolkitAPI.ShowCustomLayoutPopupParameters(
+						'',
+						'file://{resources}/layout/popups/popup_tournament_journal.xml',
+						'journalid=' + m_itemFromContainer
+					);
+				} );
 			}
 			else
 			{
@@ -705,23 +708,8 @@ var CapabilityDecodable = ( function()
 
 	var _AcknowlegeMatchingKeys = function( matchtingKeyDefName )
 	{
-		var itemCount = InventoryAPI.GetUnacknowledgeItemsCount();
-		var newItemsList = [];
-
-		for ( var i = 0; i < itemCount; i++ )
-		{
-			var newItemId = InventoryAPI.GetUnacknowledgeItemByIndex( i );
-			newItemsList.push( newItemId );
-		}
-
-		newItemsList.forEach( itemId => 
-		{
-			if ( ItemInfo.ItemMatchDefName( itemId, matchtingKeyDefName ) )
-			{
-				InventoryAPI.AcknowledgeNewItembyItemID( itemId );
-				InventoryAPI.SetItemSessionPropertyValue( itemId, 'recent', '1' );
-			}
-		} );
+		var bShouldAcknowledge = true;
+		AcknowledgeItems.GetItemsByType( [ matchtingKeyDefName ], bShouldAcknowledge );
 	};
 
 	var _ShowUnlockAnimation = function()

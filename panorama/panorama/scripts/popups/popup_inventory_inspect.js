@@ -144,6 +144,18 @@ var InventoryInspect = ( function()
 		var storeItemId = $.GetContextPanel().GetAttributeString( "storeitemid", "" );
 		if( storeItemId )
 		{
+			var defName = ItemInfo.GetItemDefinitionName(  InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_charge, 0 ));
+			if ( ItemInfo.ItemMatchDefName( storeItemId, defName ) &&
+				ItemInfo.ItemMatchDefName( ItemId, defName ) )
+			{
+				                                                        
+				_ClosePopup();
+				$.DispatchEvent( 'ShowAcknowledgePopup', '', '' );
+				$.DispatchEvent( 'HideStoreStatusPanel', '' );
+
+				return;
+			}
+
 			_ClosePopup();
 			$.DispatchEvent( 'ShowAcknowledgePopup', '', ItemId );
 			$.DispatchEvent( 'HideStoreStatusPanel', '' );

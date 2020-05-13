@@ -1,0 +1,30 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/base.css" />
+		<include src="file://{resources}/styles/csgostyles.css" />
+		<include src="file://{resources}/styles/hud/hudguardian.css" />
+  </styles>
+
+	<CSGOHudGuardianPanel hittest="false" class="guardianpanel">
+   		<Panel class="guardianpanel-bg" />
+    	<Panel class="left-right-flow">
+			<Image class="Icon" src="file://{images_econ}/econ/stickers/berlin2019/star.png" scaling="stretch-to-fit-preserve-aspect" />
+				<Panel class="guardianpanel-content cl-hud-wash-color">
+					<Panel class="guardianpanel-header">	
+						<Image class="complete-image" src="file://{images}/icons/ui/checkbox.svg" scaling="stretch-to-fit-preserve-aspect" />
+						<Label id="MissionLabel" class="guardianpanel-header__text"/>
+					</Panel>
+					<Panel class="guardianpanel-body">
+						<Image id="WeaponImage" 
+						textureheight="14" 
+						scaling="stretch-to-fit-preserve-aspect" 
+						class="guardianpanel-body__image" />
+						<Label class="guardianpanel-body__current-progress" text="{d:cur_progress}"/>
+						<Label class="guardianpanel-body__goal" text="/{d:goal}"/>
+					</Panel>
+				</Panel>
+			
+			
+		</Panel>
+	</CSGOHudGuardianPanel>
+</root>

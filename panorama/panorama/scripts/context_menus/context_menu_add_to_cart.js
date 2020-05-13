@@ -79,6 +79,7 @@ var ContextMenuAddToCart = ( function (){
 			elItemEntry.BLoadLayoutSnippet( "Item" );
 			var itemID = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIdx, 0 );
 			var elItemImage = elItemEntry.FindChildTraverse( "ItemImage" );
+			elItemImage.large = true;
 			elItemImage.itemid = itemID;
 
 			var _ShowTooltip = function( itemID )

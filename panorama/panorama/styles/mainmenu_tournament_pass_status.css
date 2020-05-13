@@ -11,6 +11,7 @@
     transition-timing-function: ease-in-out;
 }
 
+.mainmenu-news-container-stream-active .tournament-pass-status,
 .tournament-pass-status.hidden
 {
     visibility: collapse;
@@ -34,7 +35,7 @@
 	sound-trans: "UIPanorama.store_item_rolloff";
 }
 
-.tournament-pass-status-container:hover
+.tournament-pass-status-container:hover .tournament-pass-status__image
 {
     brightness: 1.2;
 	transform: scale3d( 1.05, 1.05, 1.05 );
@@ -50,6 +51,10 @@
 {
     height: 112px;
     vertical-align: center;
+
+    transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
 }
 
 .tournament-pass-status__image.pass

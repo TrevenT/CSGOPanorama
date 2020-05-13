@@ -16,10 +16,10 @@
 		<snippet name="ItemCategory">
 			<Panel class="item-category">
 				<Button id="CategoryButton" class ="item-category-button">
-					<Label class="item-category__label" id="CategoryLabel"/>
 					<ItemImage texturewidth="68" textureheight="68" large="false" class="item-category__image" id="CategoryImage" scaling="stretch-to-fit-x-preserve-aspect" >
 						<Label class="item-category__cart-count only-visible-with-items" text="{d:num_in_cart}"/>
 					</ItemImage>
+					<Label class="item-category__label" id="CategoryLabel"/>
 				</Button>
 				<Label id="SaleTagLabel"
 					class="item-category-saletag hidden" html="false"
@@ -48,7 +48,8 @@
 				                                                        
 				<Panel class="other-purchases">
 					                                                       
-					<Panel class="other-purchases__button" id="MegaBundle"/>
+					<Panel class="other-purchases__button" id="Pass"/>
+					<Panel class="other-purchases__button" id="PassPack"/>
 					<Panel class="other-purchases__button" id="Capsules"/>
 					<Panel class="other-purchases__button scaleimage" id="Org"/>
 				</Panel>
@@ -72,8 +73,8 @@
 						<Panel id="Minors" class="team-grouping"/>
 					</Panel>
 				</Panel>
-
-				<Panel class="popup-capability__button-row" id="TournamentCart">
+			</Panel>
+							<Panel class="popup-capability__button-row" id="TournamentCart">
 					<Panel class="left-right-flow horizontal-align-right">
 						<Panel class="top-bottom-flow horizontal-align-right vertical-center only-visible-with-items">
 							<Label id="CartPrice" class="cart-controls__item_price" text="{s:price}"/>
@@ -90,7 +91,6 @@
 						<TextButton class="PopupButton" text="#GameUI_Close" onactivate="$.DispatchEvent( 'UIPopupButtonClicked', '' )" />
 					</Panel>
 				</Panel>
-			</Panel>
 		</Panel>
 	</PopupCustomLayout>
 </root>

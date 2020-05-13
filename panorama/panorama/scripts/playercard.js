@@ -8,12 +8,16 @@ var playerCard = ( function (){
 	var _m_bShownInFriendsList = false;
 	var _m_tooltipDelayHandle = false;
 	var _m_arrAdditionalSkillGroups = [ 'wingman', 'dangerzone' ];
+	var _m_InventoryUpdatedHandler = null;
+	var _m_cp = $.GetContextPanel();
 
 	var _Init = function()
 	{
 		_m_xuid = $.GetContextPanel().GetAttributeString( 'xuid', 'no XUID found' );
 		_m_isSelf = _m_xuid === MyPersonaAPI.GetXuid() ? true : false;
 		_m_bShownInFriendsList = $.GetContextPanel().GetAttributeString( 'data-slot', '' );
+
+		_RegisterForInventoryUpdate();
 
 		                                                                                              
 
@@ -24,6 +28,29 @@ var playerCard = ( function (){
 			FriendsListAPI.RequestFriendProfileUpdateFromScript( _m_xuid );
 
 		_FillOutFriendCard();
+	};
+
+	var _RegisterForInventoryUpdate = function()
+	{
+		_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateAvatar );
+		_m_cp.RegisterForReadyEvents( true );
+
+		$.RegisterEventHandler( 'ReadyForDisplay', _m_cp, function()
+		{
+			if ( !_m_InventoryUpdatedHandler )
+			{
+				_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateAvatar );
+			}
+		} );
+
+		$.RegisterEventHandler( 'UnreadyForDisplay', _m_cp, function()
+		{
+			if ( _m_InventoryUpdatedHandler )
+			{
+				$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _m_InventoryUpdatedHandler );
+				_m_InventoryUpdatedHandler = null;
+			}
+		} );
 	};
 	
 	var _FillOutFriendCard = function ()
@@ -694,7 +721,6 @@ var playerCard = ( function (){
 	playerCard.Init();
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_GC_Hello', playerCard.FillOutFriendCard );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_NameChanged', playerCard.UpdateName );
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', playerCard.UpdateAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_MedalsChanged', playerCard.UpdateAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_ProfileUpdated', playerCard.ProfileUpdated );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_PipRankUpdate', playerCard.SetAllSkillGroups );

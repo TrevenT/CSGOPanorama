@@ -22,6 +22,8 @@
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
+	height: fill-parent-flow ( 1 );
+	                            
 }
 
 Label {
@@ -32,8 +34,8 @@ Label {
 {
 	background-color: green;
 	horizontal-align: right;
-	vertical-align: bottom;
-	margin-right: 16px;
+	vertical-align: top;
+	                         
 
 	border-radius: 2px;
 
@@ -95,43 +97,46 @@ Label {
 .other-purchases__button {
 	vertical-align: center;
 	horizontal-align: center;
-	margin-right: 40px;
+	                         
 }
 
 .item-category.other-purchases__button {
-	margin-right: 40px;
-	margin-left: 40px;
+	margin-right: 8px;
+	margin-left: 8px;
 }
 
 .team-purchases {
 	flow-children: right;
+	                 
+	max-width: 1280px;
 	horizontal-align: center;
-	padding: 8px 0px;
+	padding: 0px 28px;
+	                            
 }
 
 .team-purchases-block {
 	border-radius: 0px;
 	flow-children: down;
-	margin: 1px;
+	margin: 0px 16px;
+	                               
 }
 
 .team-purchases__header {
-	horizontal-align: center;
-	font-size: 24px;
-	font-weight: light;
-	padding: 12px 0px 12px 0px;
+	horizontal-align: left;
+	font-size: 18px;
+	font-weight: medium;
+	padding: 4px 0px 4px 8px;
 	width: 100%;
-	text-align: center;
-	background-color: rgba(255, 255, 255, 0.03);
+	text-align: left;
+	color: rgb(19, 19, 19);
+	background-color: rgba(255, 255, 255, 0.164);
 	                                
 }
 
 .team-grouping {
-	flow-children: right-wrap;
-	width: 360px;
-	padding: 12px 0px;
-	background-color: rgba(0, 0, 0, 0.25);
-	height: 640px;
+	flow-children: down-wrap;
+	height: 660px;
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(#00000066), to(#00000000));
 }
 
    
@@ -139,10 +144,12 @@ Label {
    	                                                                   
   
 .item-category {
-	width: 168px;
-	margin: 8px 3px 8px 3px;
+	width: 180px;
+	margin: 1px;
+	padding: 8px;
 	flow-children: none;
 	context-menu-position: bottom;
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
 .item-category-button {
@@ -177,11 +184,19 @@ Label {
 	transition-timing-function: ease-in-out;
 }
 
+.other-purchases .item-category
+{
+	width: 200px;
+}
+
 .item-category__label {
-	font-size: 18px;
+	font-size: 14px;
 	horizontal-align: center;
 	text-align: center;
-	font-weight: medium;
+	font-weight: lighter;
+	height: 20px;
+	text-overflow: ellipsis;
+	font-family: notosans, 'Arial Unicode MS';
 }
 
 .item-category__cart-count {
@@ -196,6 +211,7 @@ Label {
 	width: 24px;
 	border-radius: 50%;
 	box-shadow: shadowOffset;
+	text-overflow: shrink;
 }
 
 .item-category__cart-count.cart 
@@ -242,4 +258,9 @@ Label {
 	font-weight: medium;
 	font-size: 17px;
 	margin-right: 8px;
+}
+
+.popup-capability__button-row
+{
+	height: 80px;
 }

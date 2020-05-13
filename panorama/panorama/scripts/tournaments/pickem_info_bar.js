@@ -16,6 +16,7 @@ var PickEmInfoBar = ( function()
 		var elParent = elPanel.FindChildTraverse( 'id-pickem-info' );
 		var elLink = elParent.FindChildTraverse( 'id-pickem-how-to-play' );
 		var olinks = {
+			16: "http://www.counter-strike.net/pickem/berlin2019#team_instructions",
 			15: "http://www.counter-strike.net/pickem/katowice2019#team_instructions",
 			14: "http://www.counter-strike.net/pickem/london2018#team_instructions",
 			13: "http://www.counter-strike.net/pickem/boston2018#team_instructions",
@@ -68,8 +69,14 @@ var PickEmInfoBar = ( function()
 		elLink.enabled = false;
 	};
 
-	var _UpdateTimer = function( elPanel )
+	var _UpdateTimer = function( elPanel, optbFromScheduledEvent )
 	{
+		if ( optbFromScheduledEvent && elPanel._oPickemData.oInitData.schPickEmInfoBarUpdateTimer )
+		{	                                                                                      
+			elPanel._oPickemData.oInitData.schPickEmInfoBarUpdateTimer = null;
+			                                                                             
+		}
+
 		var activeSectionIdx = elPanel._oPickemData.oInitData.sectionindex;
 		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
 		
@@ -98,7 +105,10 @@ var PickEmInfoBar = ( function()
 			elStatus.SetDialogVariable( 'time', FormatText.SecondsToSignificantTimeString( secRemaining ) );
 			elStatus.text = $.Localize( '#pickem_timer', elStatus );
 
-			$.Schedule( 1, _UpdateTimer.bind( undefined, elPanel ));
+			if ( !elPanel._oPickemData.oInitData.schPickEmInfoBarUpdateTimer )
+			{
+				elPanel._oPickemData.oInitData.schPickEmInfoBarUpdateTimer = $.Schedule( 1, _UpdateTimer.bind( undefined, elPanel, true ));
+			}
 			return;
 
 		}
@@ -190,6 +200,8 @@ var PickEmInfoBar = ( function()
 			
 			var pluralString = pointsNeeded === 1 ? $.Localize( '#pickem_point' ) : $.Localize( '#pickem_points' );
 			elPointsNeeded.SetDialogVariable( 'plural', pluralString );
+
+			elPointsNeededLabel.text = $.Localize( '#pickem_points_needed_next_level', elPointsNeeded );
 		}
 	};
 

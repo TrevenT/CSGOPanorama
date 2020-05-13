@@ -178,7 +178,7 @@
 	color: white;
 }
 
-.tournament-15 .pickem-group-worth-header
+.tournament-has-challenges .pickem-group-worth-header
 {
 	font-family: notosans, 'Arial Unicode MS';
 	font-style: italics;
@@ -892,7 +892,7 @@
 	color: white;
 }
 
-.tournament-15 .pickem-bracket-worth-header
+.tournament-has-challenges .pickem-bracket-worth-header
 {
 	font-family: notosans, 'Arial Unicode MS';
 	text-overflow: shrink;
@@ -931,10 +931,19 @@
 	height: 16px;
 }
 
-.tournament-15 #id-pickem-leaderboards,
-.tournament-15 .pickem-trophy-container,
-.tournament-15 #id-pickem-points-needed,
-.tournament-15 .pickem-group-team__owned
+.tournament-has-challenges #id-pickem-leaderboards,
+.tournament-has-challenges .pickem-trophy-container,
+.tournament-has-challenges #id-pickem-points-needed,
+.tournament-has-challenges .pickem-group-team__owned,
+.tournament-has-challenges #id-pickem-leaderboards,
+.tournament-has-challenges .pickem-trophy-container,
+.tournament-has-challenges #id-pickem-points-needed,
+.tournament-has-challenges .pickem-group-team__owned
 {
 	visibility: collapse;
+}
+
+.tournament-has-challenges .pickem-score-container
+{
+	vertical-align: center;
 }

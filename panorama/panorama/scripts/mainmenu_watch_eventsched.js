@@ -10,14 +10,37 @@ var mainmenu_watch_eventsched = (function () {
 	var _m_prevSchedeventsString = "";
 	var _m_IsPrime = false;
 	var _m_isPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld";
+	var _m_InventoryUpdatedHandle;
 
 
 	function _Init()
 	{
+
+		                                                                      
 		$.RegisterForUnhandledEvent( 'Tournaments_EventsReceived', _EventsReceived );
 		$.RegisterForUnhandledEvent( 'Tournaments_FavoritesReceived', _FavoritesReceived );
 		$.RegisterForUnhandledEvent( 'Tournaments_RequestMatch', _RequestMatchString );
-		$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _PopulateLister );
+		_m_InventoryUpdatedHandle = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _PopulateLister );
+
+		                            
+		_m_cP.RegisterForReadyEvents( true );
+		                                                                             
+		$.RegisterEventHandler( 'ReadyForDisplay', _m_cP, function ()
+		{
+			if ( !_m_InventoryUpdatedHandle )
+			{
+				_m_InventoryUpdatedHandle = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _PopulateLister );
+			}
+		} );
+		$.RegisterEventHandler( 'UnreadyForDisplay', _m_cP, function ()
+		{
+			if ( _m_InventoryUpdatedHandle )
+			{
+				$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _m_InventoryUpdatedHandle );
+				_m_InventoryUpdatedHandle = null;
+			}
+		} );
+
 	
 		TournamentsAPI.RequestFavorites();
 		TournamentsAPI.RequestTournaments();

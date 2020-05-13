@@ -9,7 +9,9 @@
 
 	<scripts>
 		<include src="file://{resources}/scripts/popups/popup_inspect_action-bar.js" />
+		<include src="file://{resources}/scripts/popups/popup_acknowledge_item.js" />
 		<include src="file://{resources}/scripts/popups/popup_inventory_inspect.js" />
+        <include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
 	</scripts>
 

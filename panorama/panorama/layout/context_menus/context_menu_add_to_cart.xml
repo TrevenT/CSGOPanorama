@@ -17,7 +17,7 @@
 					<Image class="item__image__inspect horizontal-center vertical-center" texturewidth="64" textureheight="-1" src="file://{images}/icons/ui/find.svg"/>
 				</ItemImage>
 				<Label class="item__item-name" text="{s:name}"/>
-				<Panel class="left-right-flow horizonatal-center full-width">
+				<Panel class="cart-controls-row">
 					<Panel class="cart-controls">
 						<Button id="RemoveItem" class="PopupButton">
 							<Label text="-" class="item__remove-button"/>

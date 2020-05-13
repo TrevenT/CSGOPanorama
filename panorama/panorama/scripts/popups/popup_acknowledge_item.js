@@ -186,6 +186,29 @@ var AcknowledgeItems = ( function()
 		return newItems;
 	};
 
+	var _GetItemsByType = function( afilters, bShouldAcknowledgeItems )
+	{
+		var aItems = _GetItems();
+
+		var filterByDefNames = function( oItem )
+		{
+			return afilters.includes( ItemInfo.GetItemDefinitionName( oItem.id ) );
+		};
+
+		var alist = aItems.filter( filterByDefNames );
+
+		if ( bShouldAcknowledgeItems )
+		{
+			_AcknowledgeAllItems.SetItemsToSaveAsNew( alist );
+			_AcknowledgeAllItems.AcknowledgeItems();
+		}
+
+		var aOnlyIds = [];
+		alist.forEach( function( oItem ) { aOnlyIds.push( oItem.id ); } );
+		return aOnlyIds;
+	};
+
+
 	var _GetUpdatedItem = function()
 	{
 		                                                  
@@ -204,6 +227,7 @@ var AcknowledgeItems = ( function()
 
 	var _ItemstoAcknowlegeRightAway = function( id )
 	{
+		           
 		                                                                 
 		                                                                   
 		
@@ -229,7 +253,7 @@ var AcknowledgeItems = ( function()
 			itemsToSave = items;
 		};
 
-		var _OnActivate = function()
+		var _AcknowledgeItems = function()
 		{
 			itemsToSave.forEach( function( item )
 			{
@@ -244,6 +268,11 @@ var AcknowledgeItems = ( function()
 					$.DispatchEvent( 'RefreshActiveInventoryList' );
 				}
 			} );
+		};
+
+		var _OnActivate = function()
+		{
+			_AcknowledgeItems();
 
 			                                          
 			                                     
@@ -263,6 +292,7 @@ var AcknowledgeItems = ( function()
 
 		return {
 			SetItemsToSaveAsNew: _SetItemsToSaveAsNew,
+			AcknowledgeItems: _AcknowledgeItems,
 			OnActivate: _OnActivate
 		};
 	} )();
@@ -276,6 +306,7 @@ var AcknowledgeItems = ( function()
 		Init				: _Init,
 		OnLoad 				: _OnLoad,
 		GetItems			: _GetItems,
+		GetItemsByType		: _GetItemsByType,
 		AcknowledgeAllItems	: _AcknowledgeAllItems,
 		SetIsCapabilityPopUpOpen: _SetIsCapabilityPopUpOpen
 	};
