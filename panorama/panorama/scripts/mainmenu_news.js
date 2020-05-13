@@ -22,6 +22,7 @@ var NewsPanel = (function () {
 			var elEntry = $.CreatePanel( 'Panel', elLister, 'NewEntry' + i, {
 				acceptsinput: true
 			} );
+
 			elEntry.BLoadLayoutSnippet( 'news-full-entry' );
 			elEntry.FindChildInLayoutFile( 'NewsHeaderImage' ).SetImage( item.imageUrl );
 

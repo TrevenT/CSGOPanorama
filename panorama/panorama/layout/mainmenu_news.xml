@@ -11,7 +11,7 @@
 
 	<snippets>
 		<snippet name="news-full-entry">
-			<Button class="news-entry">
+			<Button class="news-entry news-panel-style-short-entires">
 
 				                              
 
