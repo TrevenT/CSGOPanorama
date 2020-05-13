@@ -269,14 +269,14 @@ var ItemInfo = ( function() {
 	var _GetOrUpdateVanityCharacterSettings = function( optionalCharacterItemId, optionalState )
 	{
 		var oSettings = {
-			panel: '',
-			activity: '',                                                        
-			team: '',
-			charItemId: '',
-			loadoutSlot: '',
-			weaponItemId: '',
-			glovesItemId: '',
-			cameraPreset: '',
+			panel: undefined,
+			activity: undefined,                                                        
+			team: undefined,
+			charItemId: undefined,
+			loadoutSlot: undefined,
+			weaponItemId: undefined,
+			glovesItemId: undefined,
+			cameraPreset: undefined,
 			arrModifiers:  [],
 		};
 
