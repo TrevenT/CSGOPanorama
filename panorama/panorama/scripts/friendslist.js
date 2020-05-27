@@ -115,19 +115,18 @@ var friendsList = (function() {
 	var _UpdateAntiAddiction = function()
 	{
 		var elAAGroup = $.GetContextPanel().FindChildInLayoutFile( 'AntiAddiction' );
-		var numSec = _m_isPerfectWorld ? MyPersonaAPI.GetTimePlayedConsecutively() : 0;
-		if ( !numSec || numSec <= 0 )
+		var numSec = _m_isPerfectWorld ? MyPersonaAPI.GetAntiAddictionTimeRemaining() : -1;
+		if ( numSec < 0 )
 		{
 			elAAGroup.AddClass( 'hidden' );
 			return false;
 		}
-		if ( numSec < 61 ) numSec = 61;                                                      
 
 		elAAGroup.RemoveClass( 'hidden' );
 		var szSeverity = 'Green';
-		if ( numSec >= 5*3600 )            
+		if ( numSec <= 300 )                  
 			szSeverity = 'Red';
-		else if ( numSec > 3*3600 )             
+		else if ( numSec <= 1800 )                   
 			szSeverity = 'Yellow';
 
 		var elAAIcon = elAAGroup.FindChildInLayoutFile( 'AntiAddictionIcon' );
@@ -135,10 +134,15 @@ var friendsList = (function() {
 		elAAIcon.SetHasClass( 'anti-addiction-Yellow', 'Yellow' === szSeverity );
 		elAAIcon.SetHasClass( 'anti-addiction-Red', 'Red' === szSeverity );
 
-		elAAGroup.SetDialogVariable( 'aadesc', $.Localize( '#UI_AntiAddiction_Desc_' + szSeverity ) );
-		elAAGroup.SetDialogVariable( 'aatime', FormatText.SecondsToSignificantTimeString( numSec ) );
+		                                                                                                 
+		var strTimeRemainingSentence = ( numSec >= 60 )
+			? FormatText.SecondsToSignificantTimeString(numSec)
+			: $.Localize('#AntiAddiction_Label_TimeRemainingNone');
+		elAAGroup.SetDialogVariable( 'aatime', strTimeRemainingSentence );
 
-		var szLocalizedTooltip = $.Localize( '#UI_AntiAddiction_Tooltip_' + szSeverity, elAAGroup );
+		var szLocalizedTooltip = $.Localize( ( (numSec >= 60)
+			? '#UI_AntiAddiction_Tooltip_GameTime'
+			: '#UI_AntiAddiction_Tooltip_GameTimeNone' ), elAAGroup);
 		elAAGroup.SetPanelEvent( "onmouseover", function()
 		{
 			UiToolkitAPI.ShowTextTooltip( 'AntiAddiction', szLocalizedTooltip );
@@ -744,6 +748,7 @@ var friendsList = (function() {
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_Teammates_Refresh', friendsList.UpdateRecentsTabList );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_PartyBrowser_Refresh', friendsList.UpdateLobbiesTabList );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_FriendsList_NameChanged', friendsList.FriendsListNameChanged );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GcLogonNotificationReceived', friendsList.SetLocalPlayerAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', friendsList.SetLocalPlayerAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_MedalsChanged', friendsList.SetLocalPlayerAvatar );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_PartyBrowser_InviteConsumed', friendsList.UpdateIncomingInvitesContainer );

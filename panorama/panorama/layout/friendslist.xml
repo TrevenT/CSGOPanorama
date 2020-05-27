@@ -103,7 +103,7 @@
 			<Panel id="AntiAddictionIcon" class="anti-addiction__icon"/>
 			<Label id="AntiAddictionText"
 				class="anti-addiction__text"
-				text="#UI_AntiAddiction_Label_Composite" />
+				text="#AntiAddiction_Label_TimeRemaining" />
 		</Panel>
 
 		<Panel id="JsIncomingInvites" class="friendslist-incominginvites hidden">

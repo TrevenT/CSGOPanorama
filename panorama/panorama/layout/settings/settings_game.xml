@@ -263,7 +263,7 @@
 					                         
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#SFUI_Settings_LobbyDefaultAccess" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="lobby_default_privacy_bits1">
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="lobby_default_privacy_bits">
 							<Label text="#SFUI_Settings_LobbyAccessPrivate" value="0" id ="teamlobbyaccess0"/>
 							<Label text="#SFUI_Settings_LobbyAccessPublic" value="1" id ="teamlobbyaccess1"/>
 							    

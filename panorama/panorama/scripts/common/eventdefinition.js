@@ -35,7 +35,8 @@
     $.DefineEvent( 'Scoreboard_CycleStats', 0, '', "Cycle the stats." );
     
     $.DefineEvent( 'MainMenuSwitchVanity', 1, 'team', '' );
-    $.DefineEvent( 'MainMenuGoToCharacterLoadout', 1, 'team', '' );
+	$.DefineEvent( 'MainMenuGoToCharacterLoadout', 1, 'team', '' );
+	$.DefineEvent( 'MainMenuGoToSettings', 0, '', "Got to the settings screen." );
 
               
                                                                                                                     

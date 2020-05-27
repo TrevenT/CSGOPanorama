@@ -9,6 +9,7 @@ var CapabilityCanSticker = ( function()
 	var m_isSticker = false;
 	var m_isPatch = false;
 	var m_cP = null;
+	var m_toolToken = null;
 
 	var m_prevCameraSlot = null;
 
@@ -68,23 +69,14 @@ var CapabilityCanSticker = ( function()
 
 	function _SetToolName ()
 	{
-		var toolUpper = '';
-		var toolLower = '';
-
 		if ( m_isSticker )
 		{
-			toolUpper = $.Localize( "popup_can_stick_sticker_upper1" );
-			toolLower = $.Localize( "popup_can_stick_sticker_lower" );
+			m_toolToken = '_sticker';
 		}
 		else if ( m_isPatch )
 		{
-			toolUpper = $.Localize( "popup_can_stick_patch_upper1" );
-			toolLower = $.Localize( "popup_can_stick_patch_lower" );			
-		}
-
-		m_cP.SetDialogVariable( "tool_upper1", toolUpper );
-		m_cP.SetDialogVariable( "tool_lower", toolLower );
-		
+			m_toolToken = '_patch';		
+		}	
 	}
 
 	                                                                                                    
@@ -117,11 +109,11 @@ var CapabilityCanSticker = ( function()
 
 		if ( m_isRemoveStickers )
 		{
-			title = $.Localize( m_isPatch ? '#SFUI_InvContextMenu_can_stick_Wear_full' : '#SFUI_InvContextMenu_can_stick_Wear', m_cP ) ;
+			title = $.Localize( m_isPatch ? '#SFUI_InvContextMenu_can_stick_Wear_full' + m_toolToken : '#SFUI_InvContextMenu_can_stick_Wear' + m_toolToken, m_cP ) ;
 		}
 		else
 		{
-			title = $.Localize( '#SFUI_InvContextMenu_stick_use', m_cP ) ;
+			title = $.Localize( '#SFUI_InvContextMenu_stick_use' + m_toolToken, m_cP ) ;
 		}
 
 
@@ -137,8 +129,8 @@ var CapabilityCanSticker = ( function()
 		var elDescLabel = m_cP.FindChildInLayoutFile( 'CanStickerDesc' );
 
 		var desc = m_isRemoveStickers ?
-		$.Localize( m_isPatch ? '#popup_can_stick_scrape_full' : '#popup_can_stick_scrape', m_cP ) :
-		$.Localize( '#popup_can_stick_desc', m_cP );
+			( m_isPatch ? '#popup_can_stick_scrape_full' + m_toolToken : '#popup_can_stick_scrape' + m_toolToken ) :
+			'#popup_can_stick_desc';
 
 		elDescLabel.text = desc;
 		elDescLabel.visible = !m_isRemoveStickers;
@@ -146,19 +138,19 @@ var CapabilityCanSticker = ( function()
 
 	var _SetWarningText = function( toolId, itemId )
 	{
-
+		                                                                                                           
 		var warningText = _GetWarningTradeRestricted( toolId, itemId );
 
 		            
 		if ( m_isRemoveStickers )
 		{
-			warningText = $.Localize( m_isPatch ? '#popup_can_stick_scrape_full' : '#popup_can_stick_scrape', m_cP );
+			warningText = ( m_isPatch ? '#popup_can_stick_scrape_full' + m_toolToken : '#popup_can_stick_scrape' + m_toolToken );
 		}
 		else if ( !m_isRemoveStickers )
 		{
 			if ( !warningText )
 			{
-				warningText = $.Localize( '#SFUI_InvUse_Warning_use_can_stick', m_cP );
+				warningText = ( '#SFUI_InvUse_Warning_use_can_stick' + m_toolToken );
 			}	
 		}
 
@@ -185,7 +177,7 @@ var CapabilityCanSticker = ( function()
 					strSpecialParam = InventoryAPI.GetItemAttributeValue( toolId, "tradable after date" );
 					if ( strSpecialParam !== undefined && strSpecialParam !== null )
 					{
-						strSpecialWarning = _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_marketrestricted" );
+						strSpecialWarning = _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_marketrestricted" + m_toolToken );
 					}
 				}
 				else
@@ -214,7 +206,7 @@ var CapabilityCanSticker = ( function()
 			strSpecialParam = InventoryAPI.GetItemAttributeValue( toolId, "tradable after date" );
 			if ( strSpecialParam != undefined && strSpecialParam != null )
 			{
-				return _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_traderestricted" );
+				return _GetSpecialWarningString( strSpecialParam, "#popup_can_stick_warning_traderestricted" + m_toolToken );
 			}
 		}
 
@@ -224,9 +216,8 @@ var CapabilityCanSticker = ( function()
 	var _GetSpecialWarningString = function( strSpecialParam, warningText )
 	{
 		var elLabel = m_cP.FindChildInLayoutFile( 'CanStickerWarning' );
-		
 		elLabel.SetDialogVariable( 'date', strSpecialParam );
-		return $.Localize( warningText, elLabel );
+		return warningText;
 	}
 
 	var _ShowStickerIconsToApplyOrRemove = function( toolId, itemId )

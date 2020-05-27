@@ -39,7 +39,22 @@
 				</Panel>
 				<Panel class ="top-bottom-flow full-width">
 
-				                
+					                                     
+					<TooltipPanel id="MainMenuMovieSceneSelector" class="SettingsMenuDropdownContainer" tooltip="#GameUI_MainMenuMovieScene_Tooltip">
+						<Label text="#GameUI_MainMenuMovieScene" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="ui_mainmenu_bkgnd_movie">
+								<Label text="#SFUI_Map_de_anubis" value="anubis" id="ui_mainmenu_bkgnd_movie_anubis"/>
+								<Label text="#SFUI_Map_dz_blacksite" value="blacksite" id="ui_mainmenu_bkgnd_movie_blacksite"/>
+								<Label text="#SFUI_Map_de_chlorine" value="chlorine" id="ui_mainmenu_bkgnd_movie_chlorine"/>
+								<Label text="#SFUI_Map_de_cbble" value="cbble" id="ui_mainmenu_bkgnd_movie_cbble"/>
+								<Label text="#SFUI_Map_de_nuke" value="nuke" id="ui_mainmenu_bkgnd_movie_nuke"/>
+								<Label text="#SFUI_Map_coop_kasbah" value="sirocco_night" id="ui_mainmenu_bkgnd_movie_sirocco_night"/>
+								<Label text="#SFUI_Map_de_vertigo" value="vertigo" id="ui_mainmenu_bkgnd_movie_vertigo"/>
+								<Label text="#SFUI_Map_random" value="random" id="ui_mainmenu_bkgnd_movie_random"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+
+					                
 					<Panel class="SettingsMenuDropdownContainer">
 						<Label text="#GameUI_DisplayMode" class="half-width"/>
 						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id="ColorMode">
@@ -128,6 +143,16 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					                          
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_TextureStreaming_Info">
+						<Label text="#SFUI_Settings_TextureStreaming" class="half-width"/>
+						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id="TextureStreaming">
+							<Label text="#SFUI_Settings_Disabled" value="0" id="texturestreaming0" />
+							<Label text="#SFUI_Settings_Enabled" value="1" id="texturestreaming1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
 					                      
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_CPUDetail_Info">
 						<Label text="#SFUI_Settings_Effect_Detail" class="half-width"/>

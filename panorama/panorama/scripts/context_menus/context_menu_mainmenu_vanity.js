@@ -15,52 +15,59 @@ var MainMenuVanityContextMenu = ( function()
 		elContextMenuBodyNoScroll.RemoveAndDeleteChildren();
 		elContextMenuBodyWeapons.RemoveAndDeleteChildren();
 
+		  
+		                                                      
+		  
+		var fnAddVanityPopupMenuItem = function( idString, strItemNameString, fnOnActivate )
+		{
+			var elItem = $.CreatePanel( 'Button', elContextMenuBodyNoScroll, idString );
+			elItem.BLoadLayoutSnippet( 'snippet-vanity-item' );
+			var elLabel = elItem.FindChildTraverse( 'id-vanity-item__label' );
+			elLabel.text = $.Localize( strItemNameString );
+			elItem.SetPanelEvent( 'onactivate', fnOnActivate );
+			return elItem;
+		};
+
+		  
+		                                  
+		  
+		fnAddVanityPopupMenuItem( 'GoToMainMenuScenerySettings', '#GameUI_MainMenuMovieScene_Vanity',
+			function( paramTeam )
+			{
+				$.DispatchEvent( 'MainMenuGoToSettings' );
+				$.DispatchEvent( "SettingsMenu_NavigateToSetting", 'VideoSettings', 'MainMenuMovieSceneSelector' );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
+			}.bind( undefined, team )
+		).AddClass( 'BottomSeparator' );
+
+		  
+		                                         
+		  
 		                                                                                                
-		var strOtherTeamToPrecache;
-
-		if ( team == 2 )
-		{
-			strOtherTeamToPrecache = 'ct';
-			var elItem = $.CreatePanel( 'Button', elContextMenuBodyNoScroll, 'switchToCt' );
-			elItem.BLoadLayoutSnippet( 'snippet-vanity-item' );
-			var elLabel = elItem.FindChildTraverse( 'id-vanity-item__label' );
-			elLabel.text = $.Localize( '#mainmenu_switch_vanity_to_ct' );
-			elItem.SetPanelEvent( 'onactivate',function() 
+		var strOtherTeamToPrecache = ( ( team == 2 ) ? 'ct' : 't' );
+		fnAddVanityPopupMenuItem( 'switchTo_' + strOtherTeamToPrecache, '#mainmenu_switch_vanity_to_' + strOtherTeamToPrecache,
+			function( paramTeam )
 			{
-				$.DispatchEvent( "MainMenuSwitchVanity", 'ct' );
+				$.DispatchEvent( "MainMenuSwitchVanity", paramTeam );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
-			} );
-			                                    
-			elItem.SetFocus();
-		}
-		else
-		{
-			strOtherTeamToPrecache = 't';
-			var elItem = $.CreatePanel( 'Button', elContextMenuBodyNoScroll, 'switchToT' );
-			elItem.BLoadLayoutSnippet( 'snippet-vanity-item' );
-			var elLabel = elItem.FindChildTraverse( 'id-vanity-item__label' );
-			elLabel.text = $.Localize( '#mainmenu_switch_vanity_to_t' );
-			elItem.SetPanelEvent( 'onactivate', function() 
+			}.bind( undefined, strOtherTeamToPrecache )
+		).SetFocus();
+
+		  
+		                           
+		  
+		fnAddVanityPopupMenuItem( 'GoToLoadout', '#mainmenu_go_to_character_loadout',
+			function( paramTeam )
 			{
-				$.DispatchEvent( "MainMenuSwitchVanity", 't' );
+				$.DispatchEvent( "MainMenuGoToCharacterLoadout", paramTeam );
 				$.DispatchEvent( 'ContextMenuEvent', '' );
-			});
-			                                    
-			elItem.SetFocus();
-		}
-
-		var elItem = $.CreatePanel( 'Button', elContextMenuBodyNoScroll, 'GoToLoadout' );
-		elItem.BLoadLayoutSnippet( 'snippet-vanity-item' );
-		var elLabel = elItem.FindChildTraverse( 'id-vanity-item__label' );
-		elLabel.text = $.Localize( '#mainmenu_go_to_character_loadout' );
-		elItem.AddClass( 'BottomSeparator' );
-		elItem.SetPanelEvent( 'onactivate', function( team )
-		{
-			$.DispatchEvent( "MainMenuGoToCharacterLoadout", team );
-			$.DispatchEvent( 'ContextMenuEvent', '' );
-		}.bind( undefined, team ) );
+			}.bind( undefined, team )
+		).AddClass( 'BottomSeparator' );
 
 
+		  
+		                                   
+		  
 		var list = ItemInfo.GetLoadoutWeapons( team );
 
 		if ( list && list.length > 0 )

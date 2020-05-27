@@ -61,14 +61,9 @@ var MainMenu = ( function() {
 	var _SetBackgroundMovie = function()
 	{
 		var videoPlayer = $( '#MainMenuMovie' );
-		var defaultMovie = 'nuke';
 
-		                                                                 
-		var overrideMovie = '';
-		var backgroundMovie = !overrideMovie ? defaultMovie : overrideMovie;
-
-		                                                            
-		                                                                                   
+		                                                                                                
+		var backgroundMovie = GameInterfaceAPI.GetSettingString( 'ui_mainmenu_bkgnd_movie' );
 
 		                                                                                     
 		videoPlayer.SetAttributeString( 'data-type', backgroundMovie );
@@ -77,6 +72,13 @@ var MainMenu = ( function() {
 		videoPlayer.SetMovie( "file://{resources}/videos/" + backgroundMovie + ".webm" );
 		videoPlayer.SetSound( 'UIPanorama.BG_' + backgroundMovie );
 		videoPlayer.Play();
+
+		                                                     
+		var vanityPanel = $( '#JsMainmenu_Vanity' );
+		if ( vanityPanel )
+		{
+			_SetVanityLightingBasedOnBackgroundMovie( vanityPanel );
+		}
 	};
 
 	var _OnShowMainMenu = function()
@@ -130,7 +132,10 @@ var MainMenu = ( function() {
 		if ( _m_bGcLogonNotificationReceivedOnce ) return;
 		
 		var strFatalError = MyPersonaAPI.GetClientLogonFatalError();
-		if ( strFatalError )
+		if ( strFatalError
+			&& ( strFatalError !== "ShowGameLicenseNoOnlineLicensePW" )                                                                                               
+			&& ( strFatalError !== "ShowGameLicenseNoOnlineLicense" )	                                                                                              
+			)
 		{
 			_m_bGcLogonNotificationReceivedOnce = true;
 
@@ -201,6 +206,25 @@ var MainMenu = ( function() {
 
 			return;
 		}
+	}
+
+	var _m_numGameMustExitNowForAntiAddictionHandled = 0;
+	var _m_panelGameMustExitDialog = null;
+	var _GameMustExitNowForAntiAddiction = function()
+	{
+		                                                                       
+		if ( _m_panelGameMustExitDialog && _m_panelGameMustExitDialog.IsValid() ) return;
+
+		                                                            
+		if ( _m_numGameMustExitNowForAntiAddictionHandled >= 100 ) return;
+		++ _m_numGameMustExitNowForAntiAddictionHandled;
+
+		                                                                                       
+		_m_panelGameMustExitDialog =
+		UiToolkitAPI.ShowGenericPopupOneOptionBgStyle( "#GameUI_QuitConfirmationTitle", "#UI_AntiAddiction_ExitGameNowMessage", "",
+					"#GameUI_Quit", function() { GameInterfaceAPI.ConsoleCommand( "quit" ); },
+					"dim" );
+		                                                                                  
 	}
 
 	var _OnGcLogonNotificationReceived_ShowLicenseYesNoBox = function ( strTextMessage, pszOverlayUrlToOpen )
@@ -833,7 +857,13 @@ var MainMenu = ( function() {
 
 	var _SetVanityLightingBasedOnBackgroundMovie = function( vanityPanel )
 	{
-		var backgroundMap = $.GetContextPanel().FindChildInLayoutFile( 'MainMenuMovie' ).GetAttributeString( 'data-type', 'nuke' );
+		var backgroundMap = $.GetContextPanel().FindChildInLayoutFile( 'MainMenuMovie' ).GetAttributeString( 'data-type', 'anubis' );
+
+		                                                                                                  
+		                                                                             
+		                                                                                    
+		                                                                                   
+		                                                                
 
 		if ( backgroundMap === 'cbble' )
 		{
@@ -936,6 +966,11 @@ var MainMenu = ( function() {
 
 		_NavigateToTab( 'JsInventory', 'mainmenu_inventory' );
 	};
+
+	var _OpenSettings = function()
+	{
+		MainMenu.NavigateToTab('JsSettings', 'settings/settings');
+	}
 
 	var _InsureSessionCreated = function()
 	{
@@ -1594,9 +1629,11 @@ var MainMenu = ( function() {
 		OpenPlayMenu						: _OpenPlayMenu,
 		OpenWatchMenu						: _OpenWatchMenu,
 		OpenInventory						: _OpenInventory,
+		OpenSettings						: _OpenSettings,
 		OnHomeButtonPressed					: _OnHomeButtonPressed,
 		OnQuitButtonPressed					: _OnQuitButtonPressed,
 		OnEscapeKeyPressed					: _OnEscapeKeyPressed,
+		GameMustExitNowForAntiAddiction		: _GameMustExitNowForAntiAddiction,
 		GcLogonNotificationReceived			: _GcLogonNotificationReceived,
 		InventoryUpdated					: _InventoryUpdated,
 		OnInventoryInspect					: _OnInventoryInspect,
@@ -1611,6 +1648,7 @@ var MainMenu = ( function() {
 		ShowVote 							: _ShowVote,
 		ShowStoreStatusPanel				: _ShowStoreStatusPanel,
 		HideStoreStatusPanel				: _HideStoreStatusPanel,
+		SetBackgroundMovie					: _SetBackgroundMovie,
 		PauseMainMenuCharacter				: _PauseMainMenuCharacter,
 		ShowTournamentStore					: _ShowTournamentStore,
 		TournamentDraftUpdate				: _TournamentDraftUpdate,
@@ -1642,6 +1680,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'CSGOShowPauseMenu', MainMenu.OnShowPauseMenu);
 	$.RegisterForUnhandledEvent( 'CSGOHidePauseMenu', MainMenu.OnHidePauseMenu);
 	$.RegisterForUnhandledEvent( 'OpenSidebarPanel', MainMenu.ExpandSidebar);
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GameMustExitNowForAntiAddiction', MainMenu.GameMustExitNowForAntiAddiction );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GcLogonNotificationReceived', MainMenu.GcLogonNotificationReceived );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', MainMenu.InventoryUpdated );
 	$.RegisterForUnhandledEvent( 'InventoryItemPreview', MainMenu.OnInventoryInspect );
@@ -1668,6 +1707,8 @@ var MainMenu = ( function() {
 
 	$.RegisterForUnhandledEvent( "ForceRestartVanity", MainMenu.ForceRestartVanity );
 
+	$.RegisterForUnhandledEvent( "CSGOMainInitBackgroundMovie", MainMenu.SetBackgroundMovie );
+	$.RegisterForUnhandledEvent( "MainMenuGoToSettings", MainMenu.OpenSettings );
 	$.RegisterForUnhandledEvent( "MainMenuSwitchVanity", MainMenu.SwitchVanity );
 	$.RegisterForUnhandledEvent( "MainMenuGoToCharacterLoadout", MainMenu.GoToCharacterLoadout );
 	

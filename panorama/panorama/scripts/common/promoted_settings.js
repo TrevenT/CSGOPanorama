@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+	    id: "MainMenuMovieSceneSelector",
+	    loc_name: "#GameUI_MainMenuMovieScene",
+	    loc_desc: "#GameUI_MainMenuMovieScene_Tooltip",
+		section: "VideoSettings",
+		start_date: new Date( 'May 26, 2020' ), 
+		end_date: new Date( 'June 15, 2020' )
+	},
+	{
 	    id: "XhairShowObserverCrosshair",
 	    loc_name: "#GameUI_ShowObserverCrosshair",
 	    loc_desc: "#GameUI_ShowObserverCrosshair_Tooltip",
