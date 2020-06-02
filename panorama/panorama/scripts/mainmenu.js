@@ -61,8 +61,6 @@ var MainMenu = ( function() {
 	var _SetBackgroundMovie = function()
 	{
 		var videoPlayer = $( '#MainMenuMovie' );
-		if ( !( videoPlayer && videoPlayer.IsValid() ) )
-			return;
 
 		                                                                                                
 		var backgroundMovie = GameInterfaceAPI.GetSettingString( 'ui_mainmenu_bkgnd_movie' );
@@ -77,7 +75,7 @@ var MainMenu = ( function() {
 
 		                                                     
 		var vanityPanel = $( '#JsMainmenu_Vanity' );
-		if ( vanityPanel && vanityPanel.IsValid() )
+		if ( vanityPanel )
 		{
 			_SetVanityLightingBasedOnBackgroundMovie( vanityPanel );
 		}
