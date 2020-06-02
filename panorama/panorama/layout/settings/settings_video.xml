@@ -53,6 +53,7 @@
 								<Label text="#SFUI_Map_random" value="random" id="ui_mainmenu_bkgnd_movie_random"/>
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
 
 					                
 					<Panel class="SettingsMenuDropdownContainer">
