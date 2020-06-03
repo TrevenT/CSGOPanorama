@@ -71,6 +71,26 @@
 	font-family: Stratum2, 'Arial Unicode MS';
 }
 
+.news-panel-navbar .news-panel-navbar-logo
+{
+	vertical-align: center;
+	margin-right: 8px;
+}
+
+.news-panel-navbar-worldwide,
+.news-panel-navbar-pwglobal,
+.news-panel-navbar-pwchina
+{
+	visibility: collapse;
+}
+
+.worldwide .news-panel-navbar-worldwide,
+.perfectworld.steamglobal .news-panel-navbar-pwglobal,
+.perfectworld.steamchina .news-panel-navbar-pwchina
+{
+	visibility: visible;
+}
+
 .news-panel__list
 {
 	flow-children: down;

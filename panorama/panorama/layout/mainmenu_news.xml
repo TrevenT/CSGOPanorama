@@ -35,6 +35,9 @@
 
 	<Panel class="news-panel MainMenuModeOnly">
 		<Panel class="news-panel-navbar">
+			<Image class="news-panel-navbar-logo news-panel-navbar-worldwide" textureheight="22" texturewidth="-1" src="file://{images}/icons/ui/message.svg" />
+			<Image class="news-panel-navbar-logo news-panel-navbar-pwglobal" textureheight="22" texturewidth="-1" src="file://{images}/icons/ui/globe.svg" />
+			<Image class="news-panel-navbar-logo news-panel-navbar-pwchina" textureheight="22" texturewidth="-1" src="file://{images}/icons/ui/ct_silhouette.svg" />
 			<Label html="false" text="#SFUI_MainMenu_News_Title" />
 		</Panel>
 		<Panel id="NewsPanelLister" class="news-panel__list vscroll">
