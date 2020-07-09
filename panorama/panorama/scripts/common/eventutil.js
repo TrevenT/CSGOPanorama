@@ -8,7 +8,7 @@ var EventUtil = ( function ()
 
 	                                                                                                                                
 	   
-	                                                                                                                                      
+	                                                                                                                                   
 	                                                                                                                                    
 	                       
 	   
@@ -21,7 +21,13 @@ var EventUtil = ( function ()
 		5278,
 		5279,
 		5281,
-		5282
+		5282,
+
+		                    
+		5356,             
+		5339,         
+		5338,         
+		5376                     
 	];
 	_officialEventIds.forEach( item => _eventIdSet.add( item.toString() ) );
 
