@@ -326,6 +326,16 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					                       
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_FilterText_Title_Tooltip">
+						<Label text="#SFUI_Settings_FilterText_Title" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_filtertext_enabled">
+							<Label text="#SFUI_Settings_Disabled" value="0" id="sanitizenames0"/>
+							<Label text="#SFUI_Settings_Enabled" value="1" id="sanitizenames1"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+						
 					                     
 					<Panel class="SettingsMenuDropdownContainer" >
 						<Label text="#SFUI_Settings_HideAvatars_Title" class="half-width"/>

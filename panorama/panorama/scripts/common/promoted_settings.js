@@ -21,6 +21,16 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+		id: "SettingsCommunicationSettings",
+		                                           
+		                                        
+		loc_name: "#SFUI_Settings_FilterText_Title",
+		loc_desc: "#SFUI_Settings_FilterText_Title_Tooltip",
+		section: "GameSettings",
+		start_date: new Date( 'June 11, 2020' ), 
+		end_date: new Date( 'June 30, 2020' )
+	},
+	{
 	    id: "MainMenuMovieSceneSelector",
 	    loc_name: "#GameUI_MainMenuMovieScene",
 	    loc_desc: "#GameUI_MainMenuMovieScene_Tooltip",
