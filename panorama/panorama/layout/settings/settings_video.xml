@@ -179,6 +179,16 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_PlayerContrast_Info">
+						<Label text="#SFUI_Settings_PlayerContrast" class="half-width"/>
+						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id="PlayerContrast">
+							<Label text="#SFUI_Settings_PlayerConstrast_Disabled" value="0" id="playercontrastlevel0"/>
+							<Label text="#SFUI_Settings_PlayerConstrast_Enabled" value="1" id="playercontrastlevel1" />
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
 					                            
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_QueuedMode_Info">
 						<Label text="#SFUI_Settings_Multicore" class="half-width"/>
@@ -249,7 +259,7 @@
 					                       
 					<TooltipPanel id="TripleMonitor" class="SettingsMenuDropdownContainer" tooltip="#GameUI_TripleMonitor_Tooltip">
 						<Label text="#SFUI_Settings_Triple_Monitor" class="half-width"/>
-						<CSGOSettingsEnumDropDown convar="triple_monitor_mode" class="PopupButton White" id ="MotionBlur">
+						<CSGOSettingsEnumDropDown convar="triple_monitor_mode" class="PopupButton White" id ="TripleMonitorDropdown">
 							<Label text="#SFUI_Settings_Disabled" value="0" id="triplemonitor0" />
 							<Label text="#SFUI_Settings_Enabled" value="1" id="triplemonitor1"/>
 						</CSGOSettingsEnumDropDown>
