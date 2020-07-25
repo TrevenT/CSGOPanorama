@@ -254,6 +254,7 @@ var mainmenu_watch = ( function()
 		switch ( elTab.id )
 		{
 			case "JsStreams":
+				StreamsAPI.Refresh();
 				_PopulateStreamList( elTab );
 				break;
 			case "JsTournaments":
