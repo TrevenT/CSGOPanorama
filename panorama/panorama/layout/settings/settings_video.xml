@@ -45,7 +45,6 @@
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="ui_mainmenu_bkgnd_movie">
 								<Label text="#SFUI_Map_de_anubis" value="anubis" id="ui_mainmenu_bkgnd_movie_anubis"/>
 								<Label text="#SFUI_Map_dz_blacksite" value="blacksite" id="ui_mainmenu_bkgnd_movie_blacksite"/>
-								<Label text="#SFUI_Map_de_chlorine" value="chlorine" id="ui_mainmenu_bkgnd_movie_chlorine"/>
 								<Label text="#SFUI_Map_de_cbble" value="cbble" id="ui_mainmenu_bkgnd_movie_cbble"/>
 								<Label text="#SFUI_Map_de_nuke" value="nuke" id="ui_mainmenu_bkgnd_movie_nuke"/>
 								<Label text="#SFUI_Map_coop_kasbah" value="sirocco_night" id="ui_mainmenu_bkgnd_movie_sirocco_night"/>
