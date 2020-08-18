@@ -8,7 +8,12 @@ var dictPlayerStatusImage = {
 	6: "file://{images}/icons/ui/nemesis_dead.svg",
 	7: "file://{images}/icons/equipment/defuser.svg",
 	8: "file://{images}/icons/ui/VoteTeamSwitch.svg",
-	9: "file://{images}/icons/ui/switch_teams_dead.svg"
+	9: "file://{images}/icons/ui/switch_teams_dead.svg",
+	10: "file://{images}/icons/ui/two_stack_line.svg",                                 
+	11: "file://{images}/icons/ui/two_stack.svg",                                
+	12: "file://{images}/icons/ui/three_stack.svg",                                           
+	13: "file://{images}/icons/ui/four_stack.svg",                          
+	14: "file://{images}/icons/ui/five_stack.svg"                          
 };
 
 var dictRoundResultImage = {
