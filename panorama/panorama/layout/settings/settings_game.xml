@@ -326,15 +326,17 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					<Panel class ="top-bottom-flow full-width visible-if-not-perfectworld">
 					                       
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_FilterText_Title_Tooltip">
 						<Label text="#SFUI_Settings_FilterText_Title" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_filtertext_enabled">
-							<Label text="#SFUI_Settings_Disabled" value="0" id="sanitizenames0"/>
-							<Label text="#SFUI_Settings_Enabled" value="1" id="sanitizenames1"/>
-						</CSGOSettingsEnumDropDown>
+							<Button class="PopupButton White" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'https://' + SteamOverlayAPI.GetSteamStoreURL() + '/account/preferences#CommunityContentPreferences' );">
+								<Image src="file://{images}/icons/ui/link.svg"/>
+								<Label text="#SFUI_Settings_FilterText_Button"/>
+							</Button>						
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
+					</Panel>
 						
 					                     
 					<Panel class="SettingsMenuDropdownContainer" >

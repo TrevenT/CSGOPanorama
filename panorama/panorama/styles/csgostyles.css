@@ -3215,3 +3215,20 @@ EdgeScrollBar.Vertical #MaxButton
 	margin-left: 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3a863d ), to( #2d682f ) );
 }
+
+                                                                               
+                                                      				           
+                                                                               
+                                                                               
+
+.visible-if-perfectworld,
+.visible-if-not-perfectworld
+{
+	visibility: collapse;
+}
+
+.perfectworld .visible-if-perfectworld,
+.worldwide .visible-if-not-perfectworld
+{
+	visibility: visible;
+}

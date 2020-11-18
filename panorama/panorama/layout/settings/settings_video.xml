@@ -266,6 +266,16 @@
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 
+					                     
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_UberShader_Info">
+						<Label text="#SFUI_Settings_UberShader" class="half-width"/>
+						<CSGOSettingsEnumDropDown onuserinputsubmit="SettingsMenuShared.VideoSettingsOnUserInputSubmit()" class="PopupButton White" id ="UberShader">
+							<Label text="#SFUI_Settings_Disabled" value="0" id="ubershader0" />
+							<Label text="#SFUI_Settings_Enabled" value="1" id="ubershader1"/>
+							<Label text="#SFUI_Settings_Choice_Autodetect" value="9999999" id="ubershader2"/>
+						</CSGOSettingsEnumDropDown>
+					</TooltipPanel>
+
 				</Panel>
 			</Panel>
 		</CSGOVideoSettings>
