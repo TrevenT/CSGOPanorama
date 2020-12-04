@@ -103,6 +103,16 @@ function OnPopupCustomLayoutWeaponUpdate()
     );
 }
 
+function OnPopupCustomLayoutOpFull()
+{
+    ClearPopupsText();
+    UiToolkitAPI.ShowCustomLayoutPopupParameters(
+        '',
+        'file://{resources}/layout/popups/popup_operation_launch.xml',
+        'none'
+    );
+}
+
 function OnPopupCustomLayoutSurvivalEndOfMatch()
 {
     var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
@@ -611,6 +621,11 @@ function OnRssFeedReceived( feed )
   
     OpenControlsLib();
     NavigateToTab('ControlLibStyleGuide');
+
+	var elTime = $("#TimeZoo");
+	if (elTime) {
+		elTime.SetDialogVariableTime("time", 1605560584);
+	}
    
     jsPopupCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibPopupEvent );
     jsContextMenuCallbackHandle = UiToolkitAPI.RegisterJSCallback( OnControlsLibContextMenuEvent );

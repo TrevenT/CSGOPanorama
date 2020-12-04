@@ -243,13 +243,6 @@ var mainmenu_watch_eventsched = ( function()
 			var jsonEvents = JSON.parse( eventsAsString );
 			_m_arrEvents = EventUtil.AnnotateOfficialEvents( jsonEvents );
 			_m_arrEvents.sort( _StartDateCompareFunction );
-
-			_m_arrEvents.forEach( oEvent => 
-			{
-				if ( arrListOfOfficialEventIds.includes( oEvent.event_id ) || arrListOfOfficialEventIds.includes( Number(oEvent.event_id )) )
-					oEvent.is_official = true;
-			} );
-
 		}
 
 		if ( ADD_DEBUG_EVENT == 1 )
@@ -436,7 +429,7 @@ var mainmenu_watch_eventsched = ( function()
 			           
 
 			
-			if ( 'is_official' in oEvent && oEvent[ 'is_official'] == true )
+			if ( oEvent[ 'is_official'] )
 			{
 				var elEventBtn = elEvent.FindChildTraverse( 'id-eventsched__capsule__main__btn' );
 
@@ -445,7 +438,7 @@ var mainmenu_watch_eventsched = ( function()
 
 				elEvent.AddClass( 'eventsched-official' );
 			}
-			else if ( 'is_featured' in oEvent && oEvent[ 'is_featured' ] == true )
+			else if ( oEvent[ 'is_featured' ] )
 			{
 				elEvent.AddClass( 'eventsched-featured' );
 
@@ -577,7 +570,7 @@ var mainmenu_watch_eventsched = ( function()
 
 				for ( var idx in arrTeams )
 				{
-
+					
 					var nRow = Math.floor( idx / TEAMS_PER_ROW );
 
 					                                         
@@ -589,6 +582,8 @@ var mainmenu_watch_eventsched = ( function()
 					}
 
 					var oTeam = arrTeams[ idx ];
+
+	  				                                                
 
 					                                  
 					var elTeamButton = $.CreatePanel( "Button", elTeamSubContainer, 'button-' + oEvent[ 'event_id' ] + "_" + oTeam[ 'name' ] );
@@ -655,7 +650,8 @@ var mainmenu_watch_eventsched = ( function()
 							onTeamActivate_f = _OnTeamContextMenu.bind( undefined, xmlsrc, parms );
 							elTeamButton.AddClass( 'has_data' );
 						}
-						else
+
+                                                                                  
 						{
 							                                    
 							    
@@ -679,7 +675,8 @@ var mainmenu_watch_eventsched = ( function()
 								UiToolkitAPI.ShowSimpleContextMenu( '', 'externallink', items );
 							}
 
-							onTeamActivate_f = OnSimpleContextMenu.bind( undefined, oTeam[ 'link' ] );
+							if ( !onTeamActivate_f)
+								onTeamActivate_f = OnSimpleContextMenu.bind( undefined, oTeam[ 'link' ] );
 
 							xmlsrc = 'file://{resources}/layout/tooltips/tooltip_eventsched_team_simple.xml';
 

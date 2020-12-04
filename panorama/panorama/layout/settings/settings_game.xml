@@ -299,8 +299,9 @@
 					<Panel class="SettingsMenuDropdownContainer">
 					<Label text="#SFUI_Settings_PlayerPingMute_Title" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_player_ping_mute" >
-							<Label text="#GameUI_No" value="0" id="playerpingmute0" />
-							<Label text="#GameUI_Yes" value="1" id="playerpingmute1" />
+							<Label text="#SFUI_Settings_PlayerPingNoMute" value="0" id="playerpingmute0" />
+							<Label text="#SFUI_Settings_PlayerPingMuteSound" value="1" id="playerpingmute1" />
+							<Label text="#SFUI_Settings_PlayerPingDisabled" value="2" id="playerpingmute2" />
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 					<Panel class="horizontal-separator"/>
@@ -707,7 +708,6 @@
 					<CSGOSettingsSlider id="XhairFixedGap" text="#GameUI_CrosshairGap" displayprecision="1" max="5.0" min="-5.0" convar="cl_fixedcrosshairgap"/>
 					<Panel class="horizontal-separator"/>
 					
-					                 
 					<Panel id="XhairTStyle" class="SettingsMenuDropdownContainer">
 						<Label text="#GameUI_TStyle" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_crosshair_t">
@@ -715,6 +715,7 @@
 								<Label text="#GameUI_No" value="0" id="tstyle1"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
+					<Panel class="horizontal-separator"/>
 
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_ShowWeaponGap_Tooltip">
 					<Panel id="XhairUseWeaponGap" class="SettingsMenuDropdownContainer">
@@ -730,7 +731,7 @@
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_ShowObserverCrosshair_Tooltip">
 					<Panel id="XhairShowObserverCrosshair" class="SettingsMenuDropdownContainer">
 						<Label text="#GameUI_ShowObserverCrosshair" class="half-width"/>
-						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_show_observer_crosshair">
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_show_observer_crosshair" ondropdownselectionchanged="SettingsMenuGameSettings.OnCrosshairStyleChange()">
 								<Label text="#GameUI_No" value="0" id="showobs0"/>
 								<Label text="#GameUI_ShowObserverCrosshair_Friends" value="1" id="showobs1"/>
 								<Label text="#GameUI_Everyone" value="2" id="showobs2"/>
@@ -738,6 +739,17 @@
 					</Panel>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#GameUI_ObservedBotCrosshair_Tooltip">
+					<Panel id="XhairObservedBotCrosshair" class="SettingsMenuDropdownContainer">
+						<Label text="#GameUI_ObservedBotCrosshair" class="half-width"/>
+						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_observed_bot_crosshair">
+								<Label text="#GameUI_Always" value="0" id="showbotobs0"/>
+								<Label text="#GameUI_ObservedBotCrosshair_Takeover" value="1" id="showbotobs1"/>
+								<Label text="#GameUI_ObservedBotCrosshair_Default" value="2" id="showbotobs2"/>
+						</CSGOSettingsEnumDropDown>
+					</Panel>
+					</TooltipPanel>
 
 
 					     

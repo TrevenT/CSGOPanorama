@@ -39,7 +39,8 @@ DelayLoadPanel.Offscreen
 {
 	width: 100%;
 	height: 100%;
-	background-image: url( "file://{resources}/videos/op9_main.webm" );
+	background-image: url( "file://{resources}/videos/background_movie_op10.webm" );
+	brightness: .14;
 	background-repeat: no-repeat;
 	background-size: clip_then_cover;
 	background-position: 50% 50%;

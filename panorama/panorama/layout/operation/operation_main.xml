@@ -139,8 +139,7 @@
 						<ItemPreviewPanel id="id-op-main-inspect-model" 
 											class="op-main-rewards-inspect__model" 
 											mouse_rotate="true" 
-											enable_floorshadow="true"
-/>
+											enable_floorshadow="true"/>
 						<ItemImage id="id-op-main-inspect-image" class="op-main-rewards-inspect__image" scaling="stretch-to-fit-y-preserve-aspect"/>
 					</CSGOBlurTarget>
 

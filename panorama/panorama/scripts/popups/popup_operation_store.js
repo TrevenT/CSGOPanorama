@@ -3,11 +3,26 @@
 
 var CapabilityOperationStore = ( function()
 {
+	var _GetStarsCountForOperation = function()
+	{
+		var oi = OperationUtil.GetOperationInfo();
+		if ( oi.nRedeemableGoodsCount && oi.nRedeemableGoodsCount > 0 )
+			return oi.nRedeemableBalance;
+		else
+			return oi.nTierUnlocked;
+	};
+
+	var _CanUserDoShopping = function()
+	{
+		var oi = OperationUtil.GetOperationInfo();
+		return oi.bShopIsFreeForAll ? true : oi.bPremiumUser;
+	};
+
 	var _Init = function()
 	{
 		var nActiveSeason = GameTypesAPI.GetActiveSeasionIndexValue();
 
-		if( !OperationUtil.ValidateOperationInfo( nActiveSeason ) || !OperationUtil.GetOperationInfo().bPremiumUser )
+		if( !OperationUtil.ValidateOperationInfo( nActiveSeason ) || !_CanUserDoShopping() )
 		{
 			              
 			$.DispatchEvent( 'UIPopupButtonClicked', '' );
@@ -50,7 +65,7 @@ var CapabilityOperationStore = ( function()
 
 	var SetCurrrentStars = function( )
 	{
-		var starsEarned = OperationUtil.GetOperationInfo().nTierUnlocked;
+		var starsEarned = _GetStarsCountForOperation();
 		
 		$.GetContextPanel().SetDialogVariableInt( 'total_stars', starsEarned );
 		$.GetContextPanel().Data().starsEarned = starsEarned;
@@ -87,6 +102,7 @@ var CapabilityOperationStore = ( function()
 
 	return {
 		Init: _Init,
+		GetStarsCountForOperation: _GetStarsCountForOperation,
 		SetStarsLevelsAfterPurchase: _SetStarsLevelsAfterPurchase,
 		ClosePopup: _ClosePopup
 	};
@@ -224,7 +240,8 @@ var StarsShoppingCart = ( function()
 
 	var _UpdateStoreBasedOnCoinRank = function( nRank, bIsPreview = false )
 	{
-		var oStoreData = ARRAY_STORE_ITEMS.find( rank => rank.rank_restriction === nRank );
+		                                                         
+		var oStoreData = ARRAY_STORE_ITEMS[0];                                                                      
 
 		                                  
 		oStoreData.storeids.forEach( element => {
@@ -250,6 +267,7 @@ var StarsShoppingCart = ( function()
 				elRow.SetDialogVariable( 'store-item-original-price', ItemInfo.GetStoreOriginalPrice( fauxItemId, 1 ) );
 			}
 
+			elRow.SetHasClass( 'quantity-count1', starsCount === 1 );
 			elRow.SetDialogVariable( 'quantity_name', starsCount );
 			elRow.SetDialogVariable( 'store-item-name', ItemInfo.GetName( fauxItemId ) );
 			elRow.SetDialogVariable( 'store-item-sale-price', ItemInfo.GetStoreSalePrice( fauxItemId, 1 ) );
@@ -412,6 +430,7 @@ var StarsShoppingCart = ( function()
 			}
 
 			m_scheduleHandle = $.Schedule( 5, _CancelWaitforCallBack );
+			                                                                                          
 
 			$.GetContextPanel().FindChildInLayoutFile( 'op-Store-spinner' ).RemoveClass( 'hidden' );
 			btn.AddClass( 'hidden' );
@@ -434,6 +453,8 @@ var StarsShoppingCart = ( function()
 
 	var _CancelWaitforCallBack = function( )
 	{
+		                                                                                       
+		if ( !m_scheduleHandle ) return;                                                                                              
 		m_scheduleHandle = null;
 		
 		var elSpinner = $.GetContextPanel().FindChildInLayoutFile( 'op-Store-spinner' );
@@ -456,6 +477,7 @@ var StarsShoppingCart = ( function()
 
 	var _ResetTimeouthandle = function()
 	{
+		                                                                                                                                          
 		if ( m_scheduleHandle )
 		{
 			$.CancelScheduled( m_scheduleHandle );
@@ -577,7 +599,7 @@ var StarsShoppingCart = ( function()
 		var prevStars = $.GetContextPanel().Data().starsEarned;
 
 		OperationUtil.ValidateOperationInfo( OperationUtil.GetOperationInfo().nSeasonAccess );
-		var StarsEarned = OperationUtil.GetOperationInfo().nTierUnlocked;
+		var StarsEarned = CapabilityOperationStore.GetStarsCountForOperation();
 
 		if ( StarsEarned > prevStars )
 		{

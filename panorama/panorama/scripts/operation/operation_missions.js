@@ -79,16 +79,6 @@ var OperationMissions = ( function()
         _CancelMissionCardsTimer();
     };
 
-    var _InitMainMenuCard = function( elParent, nSeasonAccess )
-    {
-        var activeCardIndx = MissionsAPI.GetSeasonalOperationMissionCardActiveIdx( nSeasonAccess );
-        var jsoCardDetails = ( activeCardIndx === -1 ) ? 
-            MissionsAPI.GetSeasonalOperationMissionCardDetails( nSeasonAccess, 0 ) :
-            MissionsAPI.GetSeasonalOperationMissionCardDetails( nSeasonAccess, activeCardIndx );  
-        
-            OperationMissionCard.CreateMissionCard( jsoCardDetails, elParent );
-    };
-
     var _UpdateMissionCardsTimer = function( nSeasonAccess )
     {
                                                     
@@ -114,8 +104,7 @@ var OperationMissions = ( function()
     return {
         Init: _Init,
         OnReadyForDisplay: _ReadyForDisplay,
-        OnUnreadyForDisplay: _UnreadyForDisplay,
-        InitMainMenuCard: _InitMainMenuCard
+        OnUnreadyForDisplay: _UnreadyForDisplay
     };
 } )();
 

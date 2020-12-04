@@ -21,7 +21,7 @@ var PopupAddFriend = ( function(){
 		var onActivate = function()
 		{
 			SteamOverlayAPI.CopyTextToClipboard( yourCode );
-			UiToolkitAPI.ShowTextTooltip( 'JsPopupYourFriendCode', 'Copied your code to clipboard' );
+			UiToolkitAPI.ShowTextTooltip( 'JsPopupYourFriendCode', '#AddFriend_copy_code_Hint' );
 		}
 
 		var elYourCodeBtn = $( '#JsPopupYourFriendCode' );

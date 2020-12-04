@@ -18,7 +18,8 @@
 	<snippets>
 		<snippet name="store-row">
 			<Panel class="popup-operation-store-row">
-				<Label class="popup-operation-store-row__text" html="true" text="#op_stars_item_short_name"/>
+				<Label class="popup-operation-store-row__text popup-operation-store-row__text_stars1" html="true" text="#op_stars_item_short_name1"/>
+				<Label class="popup-operation-store-row__text popup-operation-store-row__text_stars_many" html="true" text="#op_stars_item_short_name"/>
 				<Panel class="popup-operation-store-row__price">
 					<Panel class="popup-operation-store-row__price-container">
 						<Label class="popup-operation-store-row__price__originalprice fixed-width" text="{s:store-item-original-price}"/>
@@ -85,7 +86,7 @@
 									<Label class="op-main__progress__label-count op-main__progress__label-count--light stratum-font " html="true" text="{s:store-item-stars-total}"/>
 								</Panel>
 							</Panel>
-							<Label class="op-main__progress__label-count stratum-font left-right-padding" html="true" text="+"/>
+							<Label id="id-operation-store-apply_plus_sign" class="op-main__progress__label-count stratum-font left-right-padding" html="true" text="+"/>
 							<Panel class="popup-operation-store-progress-panel--current">
 								<Panel class="op-main__progress">
 									<Image class="op-main__progress__glow" src="file://{images}/ui_textures/glow_radial.png"/>

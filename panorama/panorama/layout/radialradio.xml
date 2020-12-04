@@ -27,10 +27,14 @@
 	
 	<CSGORadialRadio class="RadialRadio">
 		<Panel id="backdrop" class="RadialRadioBackdrop">
-      <Panel class="RadialRadioBackdropCircle"/>
-    </Panel>
-    <Panel id="center-dead" class="RadialRadioCenterDot" force-no-composition-layer="true"/>
-		<Label id="item-selected-name" class="RadialRadioSegmentSelectedCenter-text" text="{s:WeaponIconSelected--name}"/>
+			<Panel id="backdropcircle" class="RadialRadioBackdropCircle"/>
+		</Panel>
+		<Panel id="center-dead" class="RadialRadioCenterDot" force-no-composition-layer="true"/>
+			<Panel class="RadialRadio-heading-container">
+				<Label id="chatwheel-heading-label" class="RadialRadioHeading-text" style="visibility: visible; position: 0.0px 0.0px 0.0px;" />
+				<Image id="" texturewidth="24" textureheight="20" class="RadialRadioHeading-image" src="file://{images}/icons/ui/middle_mouse_button.svg" />
+			</Panel>
+			<Label id="item-selected-name" class="RadialRadioSegmentSelectedCenter-text" text="{s:WeaponIconSelected--name}"/>
 	</CSGORadialRadio>
 	
 </root>

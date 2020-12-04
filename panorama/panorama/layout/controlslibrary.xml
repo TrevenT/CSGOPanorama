@@ -252,6 +252,9 @@
 						<Button class="PopupButton" onactivate="OnPopupCustomLayoutWeaponUpdate()">
 							<Label text="New Weapon"/>
 						</Button>
+						<Button class="PopupButton" onactivate="OnPopupCustomLayoutOpFull()">
+							<Label text="Operatation Fullscreen Launch"/>
+						</Button>
 						<Button class="PopupButton" onactivate="OnPopupCustomLayoutSurvivalEndOfMatch()">
 							<Label text="Survival End Of Match"/>
 						</Button>
@@ -483,6 +486,18 @@
 						<TextEntry class="text-transform-none" text="Test Text Entry"/>
 						<TextEntry class="text-transform-upper" text="Test Text Entry"/>
 						<TextEntry class="text-transform-lower" text="Test Text Entry"/>
+						<Panel id="TimeZoo" class="top-bottom-flow">
+							<Label text="Date/Time display:"/>
+							<Label text="t {t:time}"/>
+							<Label text="t:s {t:s:time}"/>
+							<Label text="t:l {t:l:time}"/>
+							<Label text="t:t {t:t:time}"/>
+							<Label text="t:T {t:T:time}"/>
+							<Label text="t:r {t:r:time}"/>
+							<Label text="t:d {t:d:time}"/>
+							<Label text="t:m {t:m:time}"/>
+							<Label text="t:e {t:e:time}"/>
+						</Panel>
 					</Panel>
 				</Panel>
 			</Panel>
@@ -521,6 +536,12 @@
 					<Panel class="top-bottom-flow FillParentFlow">
 						<Label class="fontSize-m fontWeight-light" text="Video Player, No Controls" />
 						<Movie id="VideoHeroPlayer" src="file://{resources}/videos/npc_dota_hero_dragon_knight.webm" controls="none" repeat="true" autoplay="onload" />
+					</Panel>
+					<Panel class="top-bottom-flow FillParentFlow">
+						<Label class="fontSize-m fontWeight-light" text="webm - no alpha" />
+						<Movie src="file://{resources}/videos/zoo_no_alpha.webm" controls="none" repeat="true" autoplay="onload" />
+						<Label class="fontSize-m fontWeight-light" text="webm - alpha" />
+						<Movie src="file://{resources}/videos/zoo_alpha.webm" controls="none" repeat="true" autoplay="onload" />
 					</Panel>
 				</Panel>
 			</Panel>

@@ -271,7 +271,7 @@ var watchTile = ( function() {
         if ( elMatchMapIcon )
         {
             $.RegisterEventHandler( 'ImageFailedLoad', elMatchMapIcon, setDefaultMapImage.bind( undefined, elMatchMapIcon ) );
-            elMatchMapIcon.SetImage( "file://{images}/map_icons/map_icon_"+mapName+".png" );
+            elMatchMapIcon.SetImage( "file://{images}/map_icons/map_icon_"+mapName+".svg" );
 		}
 		
 		if ( elSkillGroupImg )

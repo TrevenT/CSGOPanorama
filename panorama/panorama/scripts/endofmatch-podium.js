@@ -132,14 +132,14 @@ var EOM_Podium = ( function () {
 				)
 
 				elPlayerCardContextMenu.AddClass( "ContextMenu_NoArrow" );
-				_m_hDenyInputToGame = UiToolkitAPI.AddDenyMouseInputToGame( elPlayerCardContextMenu, "ScoreboardPlayercard" );
+				_m_hDenyInputToGame = UiToolkitAPI.AddDenyInputFlagsToGame(elPlayerCardContextMenu, "ScoreboardPlayercard", "CaptureMouse" );
 
 
 			} );
 
 			function _OnPlayerCardDismiss ()
 			{
-				UiToolkitAPI.ReleaseDenyMouseInputToGame( _m_hDenyInputToGame );
+				UiToolkitAPI.ReleaseDenyInputFlagsToGame( _m_hDenyInputToGame );
 			}
 		}
 

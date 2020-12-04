@@ -94,8 +94,7 @@
 				<ItemPreviewPanel id="id-tiers-inspect-model" 
 									class="op-tier__inspect__model" 
 									mouse_rotate="true" 
-									enable_floorshadow="true"
-/>
+									enable_floorshadow="true"/>
 				<ItemImage id="id-tiers-inspect-image" class="op-tier__inspect__image"/>
 				<Panel class="op-tier__inspect___footer">
 						<Panel class="op-tier__inspect__title_container">

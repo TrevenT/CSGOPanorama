@@ -62,7 +62,7 @@
 			<Panel id="MainMenuInput">                                              
 				
 				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatLinesContainerBg mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
-					<CSGOBlurTarget id="MainMenuBackground" blurrects="id-mainmenu-mission-card-bg id-op-mainmenu-top mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel id-op-mainmenu-rewards id-op-mainmenu-missions">
+					<CSGOBlurTarget id="MainMenuBackground" blurrects="id-mainmenu-mission-card-bg id-op-mainmenu-top mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel id-op-mainmenu-rewards id-op-mainmenu-missions id-op-mainmenu-stats">
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      
 						<CSGOBackbufferImagePanel class="full-width full-height PauseMenuModeOnly" />
@@ -86,6 +86,12 @@
 						                                                       
 					</Panel >
 
+					                                                                            
+					                                                                   
+						                                                                                            
+					         
+					   
+					
 					<Panel id="JsMainMenuContent" class="mainmenu-content mainmenu-content--offscreen">
 						<Panel class="mainmenu-content__blur">
 							<Panel id="mainmenu-content__blur-target"/>
@@ -206,6 +212,7 @@
 								<Label class="navbar-btn__notification-text" text="{d:num_settings}"/> 
 							</Panel>
 						</RadioButton>
+				
 						                                          
 						               
 						                                        
@@ -291,5 +298,8 @@
 
 		                                                                                                             
 		<Panel id="SteamNotificationsPlaceholder" hittest="false" />
+
+		                                                                                                  
+		<Panel id="MainMenuFullScreenBlackCoverPlaque"/>
 	</CSGOMainMenu>
 </root>

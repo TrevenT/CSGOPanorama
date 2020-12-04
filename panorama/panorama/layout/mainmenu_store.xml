@@ -2,8 +2,9 @@
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/mainmenu.css" />
+		<include src="file://{resources}/styles/operation/operation_shared.css" />
 		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
-        <include src="file://{resources}/styles/mainmenu_news.css" />
+		<include src="file://{resources}/styles/mainmenu_news.css" />
 		<include src="file://{resources}/styles/mainmenu_store.css" />
 
 
@@ -12,6 +13,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
+		<include src="file://{resources}/scripts/operation/operation_util.js"/>
 		<include src="file://{resources}/scripts/mainmenu_store.js" />
 	</scripts>
 
@@ -205,6 +207,45 @@
 				<Label id="StorePanelTournamentGameLabel"
 					class="store-panel__tournament-label game" html="true"
 					text="#CSGO_PickEm_Watch_Tab"/>
+			</Button>
+		</snippet>
+
+		<snippet name="OperationStore">
+			<Button class="store-panel__operation-banner"
+				onactivate="OperationUtil.OpenPopupCustomLayoutOperationStore();">
+				<Panel class="store-panel__operation-images-container">
+					<ItemImage id="id-store-operation-char0" 
+						class="store-panel__operation-image-char0" 
+						scaling="stretch-to-fit-y-preserve-aspect" />
+					<ItemImage id="id-store-operation-char1" 
+						class="store-panel__operation-image-char1" 
+						scaling="stretch-to-fit-y-preserve-aspect" />
+				</Panel>
+				<Panel class="store-panel__operation-items-fade"/>
+					<Panel class="store-panel__operation-items-container">
+						<ItemImage id="id-store-operation-item0" 
+							class="store-panel__operation-image" 
+							scaling="stretch-to-fit-y-preserve-aspect" />
+						<ItemImage id="id-store-operation-item1" 
+							class="store-panel__operation-image" 
+							scaling="stretch-to-fit-y-preserve-aspect" />
+						<ItemImage id="id-store-operation-item2" 
+							class="store-panel__operation-image" 
+							scaling="stretch-to-fit-y-preserve-aspect" />
+					</Panel>
+				                                                 
+					                                                           
+					                                              
+				<Panel class="store-panel__operation-labels-container">
+					<Label class="store-panel__operation-title" html="true"
+						text="#op_stars_shop_title"/>
+					<Label class="store-panel__operation-desc" html="true"
+						text="#op_store_mainmenu_desc"/>
+					<Panel id="id-store-operation-balance-container" class="store-panel__operation-balance-container" >
+						<Label id="id-store-operation-balance" class="op-store-shop-balance__text stratum-font fontSize-m" text="#op_stars_earned" html="true"/>
+						<Image class="op-store-shop-balance__icon" src="file://{images}/icons/ui/icon_star_multi.svg" scaling="stretch-to-fit-preserve-aspect" texturewidth="22" textureheight="-1"/>
+					</Panel>
+				</Panel>
 			</Button>
 		</snippet>
 

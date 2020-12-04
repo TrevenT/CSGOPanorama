@@ -123,6 +123,12 @@
 	height: fit-children;
 }
 
+.map-selection-list--competitive-section-container.has-selection-list-section--type-capt
+{
+	overflow: clip clip;
+	height: 100%;
+}
+
 .map-selection-list-section
 {
 	width: 72%;
@@ -144,6 +150,17 @@
 	flow-children: down;
 	border-right: 0px solid rgba(255, 255, 255, 0.00);
 	padding: 0px 16px;
+}
+
+.map-selection-list--competitive-section-container.has-selection-list-section--type-capt .map-selection-list-section:not(.map-selection-list-section--type-capt)
+{
+	overflow: clip scroll;
+	height: 100%;
+}
+
+.map-selection-list-section.map-selection-list-section--type-capt
+{
+	height: 100%;
 }
 
 .map-selection-list-section__header
@@ -261,6 +278,41 @@
 	transition-timing-function: ease-in-out;
 }
 
+.map-selection-list-section--type-capt .map-selection-btn
+{
+	margin-left: 0px;
+	margin-right: 0px;
+	width: 100%;
+	                                  
+	height: fill-parent-flow( 1 );
+}
+
+.map-selection-list-section-header__text_activedutymaps
+{
+	visibility: collapse;
+}
+
+                                           
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp .map-selection-list-section__header Label,
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp .map-selection-list-section__header Button,
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp ToggleButton .TickBox,
+.play-menu__lobbymapveto_activated .play-menu-get-prime
+{
+	opacity: 0;
+}
+
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp ToggleButton:not(.map-selection-btn-activedutymap)
+{
+	visibility: collapse;
+}
+
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp .map-selection-list-section__header Label.map-selection-list-section-header__text_activedutymaps
+{
+	opacity: 1;
+	visibility: visible;
+}
+                                                  
+
 .map-selection-btn:enabled:Hover .map-selection-btn__screenshot
 {
 	pre-transform-scale2d: 1.02, 1.02;
@@ -277,7 +329,8 @@
 	sound: "UIPanorama.submenu_contents_rollover";
 }
 
-.map-selection-btn:selected .map-selection-btn__screenshot
+.map-selection-btn:selected .map-selection-btn__screenshot,
+.play-menu__lobbymapveto_activated .map-selection-btn .map-selection-btn__screenshot
 {
 	pre-transform-scale2d: 1.2, 1.2;
 
@@ -286,7 +339,8 @@
 	transition-timing-function: ease-in-out;
 }
 
-.map-selection-btn:selected
+.map-selection-btn:selected,
+.play-menu__lobbymapveto_activated .map-selection-btn
 {
 	border: 7px solid white;
 	box-shadow: white 0px 0px 4px 0px;
@@ -375,20 +429,20 @@
 	opacity: .5;
 	brightness: .3;
 	wash-color: none;
-	
 }
 
 .map-selection-list:disabled .map-selection-btn .map-selection-btn__screenshot,
 .map-selection-list:disabled .map-selection-btn:selected .map-selection-btn__map-icon,
 .map-selection-list.is-client .map-selection-btn:selected .map-selection-btn__map-icon
-
 {
 	pre-transform-scale2d: 1, 1;
 	opacity: 1;
 }
 
 .map-selection-list:disabled .map-selection-btn:selected,
-.map-selection-list.is-client .map-selection-btn:selected
+.map-selection-list.is-client .map-selection-btn:selected,
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt.map-selection-list:disabled .map-selection-list-section--type-comp .map-selection-btn,
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt.map-selection-list.is-client .map-selection-list-section--type-comp .map-selection-btn
 {
 	border: 7px solid rgb(148, 147, 147);
 	box-shadow: shadowOffset;
@@ -449,8 +503,8 @@
 
 .map-selection-info__new.map-selection-info__unranked
 {
-	background-color: brown;
-	border: 1px solid rgb(233, 98, 68);
+	background-color: #709f70;
+	border: 1px solid positiveColor;
 	text-transform: uppercase;
 }
 
@@ -482,6 +536,41 @@ RadioButton .map-selection-info__new
 	horizontal-align: center;
 	vertical-align: bottom;
 	visibility: visible;
+}
+
+.map-selection-list-section--type-capt .map-selection-info
+{
+	vertical-align: top;
+	flow-children: down;
+}
+
+.map-selection-info__map-capt
+{
+	text-align: left;
+	text-overflow: clip;
+	font-size: 17px;
+	font-weight: lighter;
+	margin: 4% 10% 0% 10%;
+	height: fit-children;
+	width: fit-children;
+	vertical-align: top;
+	text-overflow: ellipsis;
+	visibility: collapse;
+}
+
+.map-selection-list-section--type-capt .map-selection-info__map-capt
+{
+	visibility: visible;
+}
+
+.map-selection-list-section--type-capt .map-selection-info__wait-time-block
+{
+	opacity: 0;
+}
+
+.map-selection-list-section--type-capt .map-selection-info__map-name
+{
+	visibility: collapse;
 }
 
 .map-selection-info__wait-time-block.hidden,
@@ -585,6 +674,86 @@ RadioButton .map-selection-info__new
 	padding-left: 64px;
 	vertical-align: bottom;
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.play-menu-controls-lobby-count
+{
+	width: fit-children;
+	flow-children: right;
+	vertical-align: center;
+	margin-right: -25px;
+	padding: 10px;
+}
+
+.play-menu-controls-lobby-count .play-menu-controls-lobby-icon
+{
+	margin-left: 2px;
+	visibility: collapse;
+}
+
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-1 .play-menu-controls-lobby-icon,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-2 .play-menu-controls-lobby-icon,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-3 .play-menu-controls-lobby-icon,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-4 .play-menu-controls-lobby-icon,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5 .play-menu-controls-lobby-icon
+{
+	visibility: visible;
+	wash-color: disabledColor;
+}
+
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-1 .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-1,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-2 .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-2,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-3 .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-3,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-4 .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-4,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5 .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-5
+{	                                                                                            
+	wash-color: white;
+}
+
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-1.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-1,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-2.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-2,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-3.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-3,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-4.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-4,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-5
+{	                                                                                          
+	wash-color: positiveColor;
+}
+
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-1,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-2,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-3,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-4,
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host .play-menu-controls-lobby-icon.play-menu-controls-lobby-icon-5
+{	                                                               
+	animation-name: play-menu-controls-lobby-count-full-team;
+	animation-duration: 1.8s;
+    animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	                         
+	
+	transition-property: border;
+	opacity:1.0;
+}
+
+@keyframes play-menu-controls-lobby-count-full-team
+{
+    0% {
+		transform: scale3d( .9, .9, .9);
+		              
+	}
+    55% {
+		img-shadow: 1px 1px 1px 1.0 #ffffff;
+		transform: scale3d( 1, 1, 1);
+		brightness:1.8;
+	}
+	100% {
+		transform: scale3d( .9, .9, .9);
+	}
+}
+
+.play-menu-controls-lobby-count.play-menu-controls-lobby-count-5.play-menu-controls-lobby-count-host
+{	                                                                                          
+	                          
 }
 
 .play-menu-controls-actions-bar__right

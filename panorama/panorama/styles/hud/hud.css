@@ -27,9 +27,17 @@ CSGOHud,
 	height: 100%;
 
 	-s2-mix-blend-mode: opaque;
-	blur: fastgaussian( 2, 2, 3 );
+	blur: fastgaussian( 2, 2, 4 );
 }
 
+.HudBlurLess
+{
+	width: 100%;
+	height: 100%;
+
+	-s2-mix-blend-mode: opaque;
+	blur: fastgaussian( 1, 1, 3 );
+}
 
 @keyframes 'blur-fade-in'
 {
@@ -166,7 +174,7 @@ CSGOHud,
 #HudTeamCounter
 {
 	width: 1024px;
-	height: 178px;
+	height: 250px;
 	
 	horizontal-align: center;
 	opacity: 1.0;

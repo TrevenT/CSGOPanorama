@@ -20,7 +20,7 @@
 {
 	width: 100%;
 	height: 100%;
-	blur: fastgaussian( 4, 4, 3);
+	blur: fastgaussian( 6, 6, 3 );
 	                                 
 }
 
@@ -29,13 +29,6 @@
 	width: 100%;
 	height: 200px;
 	background-color: rgba(0, 0, 0, 0.5);
-}
-
-.op-main-movie
-{
-	width: 1920px;
-	height: 1080px;
-	overflow: noclip;
 }
 
                   
@@ -162,7 +155,8 @@
 	letter-spacing: 5px;
 	font-weight: medium;
 	text-transform: uppercase;
-	color: opAccentColor;
+	color: opTenYellow;
+	opacity: .5;
 	                         
 	-s2-mix-blend-mode: SRGBadditive;
 }
@@ -452,7 +446,7 @@
 .op-main-reward
 {
 	width: 175px;
-	horizontal-align: left;
+	horizontal-align: left; 
 	horizontal-align: center;
 	flow-children: none;
 	                                           

@@ -17,10 +17,6 @@ var matchInfo = ( function() {
     
     function _ShowMatchSpinner( value, tab )
     {
-        if ( tab == undefined )
-        {
-            tab = _m_activeTab;
-        }
         if ( tab )
         {
             var elSpinner = tab.FindChildInLayoutFile( "id-match-spinner" );
@@ -40,10 +36,6 @@ var matchInfo = ( function() {
     
     function _SetMatchMessage( value, show, tab )
     {
-        if ( tab == undefined )
-        {
-            tab = _m_activeTab;
-        }
         if ( tab )
         {
             var elMessage = tab.FindChildInLayoutFile( "id-match-message" );
@@ -949,7 +941,7 @@ var matchInfo = ( function() {
         if ( elMatchMapIcon )
         {
             $.RegisterEventHandler( 'ImageFailedLoad', elMatchMapIcon, setDefaultMapImage.bind( undefined, elMatchMapIcon ) );
-            elMatchMapIcon.SetImage( "file://{images}/map_icons/map_icon_"+rawMapName+".png" );
+            elMatchMapIcon.SetImage( "file://{images}/map_icons/map_icon_"+rawMapName+".svg" );
         }
 
         var matchDuration = MatchInfoAPI.GetMatchDuration( elParentPanel.matchId );

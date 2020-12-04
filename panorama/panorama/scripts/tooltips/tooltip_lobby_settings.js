@@ -156,6 +156,11 @@ var TooltipLobby = ( function ()
 			return;
 		
 		var mapsList = m_GameSettings.mapgroupname.split(',');
+		if ( mapsList.includes( 'mg_lobby_mapveto' ) )
+		{
+			mapsList = [ 'mg_lobby_mapveto' ];
+		}
+
 		var elMapsSection = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipMapsList' );
 
 		elMapsSection.RemoveAndDeleteChildren();

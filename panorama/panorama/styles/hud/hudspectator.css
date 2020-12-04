@@ -1714,12 +1714,15 @@
     vertical-align: middle;
     width: 460px;
     height: 22px;
+
 }
+
 
 .PickemProgressbar .ProgressBarLeft
 {
     background-color: gradient( linear, 0% 0%, 100% 0%, from( #16496aFF ), to( #1e84c5FF ) );
 }
+
 
 .PickemProgressbar .ProgressBarRight
 {
@@ -2270,4 +2273,26 @@
 .hidden 
 {
 	visibility: collapse;
+}
+
+
+.ShowOdds .PickemProgressbar
+{
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #d6ad20FF ), to( #8f7025FF ) ); 
+}
+
+.ShowOdds .PickemProgressbar.PickemProgressbarR {
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #1e84c5FF ), to( #16496aFF ) );
+
+}
+
+.ShowOdds .PickemProgressbar .ProgressBarLeft
+{
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+}
+
+.ShowOdds .PickemProgressbar .ProgressBarRight{
+    visibility:collapse;
 }

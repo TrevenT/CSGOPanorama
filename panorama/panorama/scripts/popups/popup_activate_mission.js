@@ -170,8 +170,17 @@ function LaunchMission ()
 
         if ( LobbyAPI.IsSessionActive() )
         {
-                                                                                                             
-            var settings = {
+			                                                                                                 
+			
+			var bStartMatchmaking = true;
+			var sStageMatchmaking = '';
+			if ( mapGroup === 'mg_lobby_mapveto' )
+			{
+				sStageMatchmaking = '1';
+				mapGroup = LobbyAPI.GetSessionSettings().game.mapgroupname + ',' + mapGroup;
+			}
+			
+			var settings = {
                 update: {
                     Options: {
                         action: "custommatch",
@@ -193,7 +202,6 @@ function LaunchMission ()
 
             LobbyAPI.UpdateSessionSettings( settings );
 
-            var bStartMatchmaking = true;
             if ( ( gameType === 'cooperative' ) && ( PartyListAPI.GetCount() <= 1 ) )
             {
                                                           
@@ -204,7 +212,7 @@ function LaunchMission ()
             
             if ( bStartMatchmaking )
             {
-                LobbyAPI.StartMatchmaking( '', '', '', '' );
+                LobbyAPI.StartMatchmaking( '', '', '', sStageMatchmaking );
             }
 
             _ClosePopUp();

@@ -56,6 +56,9 @@
 					<Label allowrawtext="true" text="Vs 2CT"/>
 				</RadioButton>				
 
+				<RadioButton selected="false" group="tests" onactivate="LayoutTab('Chatwheel', 'file://{resources}/layout/tests/chatwheel.xml')" >
+					<Label allowrawtext="true" text="Chatwheel"/>
+				</RadioButton>
 
 			</Panel>
 		</Panel>

@@ -16,13 +16,17 @@
 
                       
 
-                                                                           
-                            
-                                                                           
+                                                                   
                                
+                                                                         
+                                                                    
+                                      
   
 
-.guardianpanel.guardianpanel.mission-complete
+.guardianpanel.mission-segment1-complete,
+.guardianpanel.mission-segment2-complete,
+.guardianpanel.mission-segment3-complete,
+.guardianpanel.mission-complete
 {
 	sound: "UI.ArmsRace.BecomeMatchLeader";
 }
@@ -76,7 +80,7 @@
 	vertical-align: center;
 	                           
 	                     
-	                   
+	padding-top: 4px;
 	                      
 	
 }
@@ -97,8 +101,20 @@ Label.guardianpanel-header__text
 	flow-children: right;
 	width: fit-children;
 	horizontal-align: left;
-	padding: 1px 0px 6px 0px;
+	padding: 1px 0px 4px -5px;
 	                       
+}
+
+.victim_distancepanel-body
+{
+	flow-children: right;
+	width: fit-children;
+	horizontal-align: left;
+	padding: -4px 0px 4px 0px;
+	                       	
+	opacity: 0;
+	visibility: collapse;
+
 }
 
 .guardianpanel-body__image
@@ -131,6 +147,63 @@ Label.guardianpanel-header__text
 	text-shadow-fast: 1px 1px #000000;
 }
 
+.guardianpanel-body__victim-distance-label
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 16px;
+	font-weight: medium;
+	text-shadow-fast: 1px 1px #000000;
+	letter-spacing: 0px;
+	text-transform: uppercase;
+	
+}
+
+.guardianpanel-body__victim-distance-meters-success
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 17px;
+	color: #16ae16;
+	font-weight: bold;
+	text-shadow-fast: 1px 1px #000000;
+	letter-spacing: .18px;
+	text-transform: uppercase;
+}
+
+.guardianpanel-body__victim-distance-meters-failure
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-size: 17px;
+	font-weight: bold;
+	color: red;
+	text-shadow-fast: 1px 1px #000000;
+	letter-spacing: .18px;
+	text-transform: uppercase;
+}
+
+.guardianpanel-body__progress-stars 
+{
+	margin: 2px 0px;
+}
+
+#star0,#star1,#star2,.op-mission-card__mission__icon--filled-star
+{
+	visibility: collapse;
+}
+
+.missionstars1 #star0, .missionstars2 #star0, .missionstars3 #star0,
+.missionstars2 #star1, .missionstars3 #star1, .missionstars3 #star2
+{
+	visibility: visible;
+	padding-right: 4px;
+}
+
+.missioncomplete1 #star0 .op-mission-card__mission__icon--filled-star, .missioncomplete2 #star0 .op-mission-card__mission__icon--filled-star, .missioncomplete3 #star0 .op-mission-card__mission__icon--filled-star,
+.missioncomplete2 #star1 .op-mission-card__mission__icon--filled-star, .missioncomplete3 #star1 .op-mission-card__mission__icon--filled-star, .missioncomplete3 #star2 .op-mission-card__mission__icon--filled-star
+{
+	visibility: visible;
+}
+
+
 @keyframes progress-made 
 {
 	0%
@@ -157,6 +230,65 @@ Label.guardianpanel-header__text
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1;
 }
+
+@keyframes victim-killed 
+{
+	0%
+	{
+		transform: translateX( -400px );
+
+		opacity: 0;
+    }
+	
+	5%
+    {
+		transform: translateX( 0px );
+
+		opacity: 1;
+	}
+
+	6%
+	{
+		transform: scale3d( 1, 1, 1 );
+		brightness: 1;
+	}
+	
+	9%
+	{
+		transform: scale3d( 1.2, 1.2, 1 );
+		brightness: 1.8;
+	}
+
+	16%
+	{
+		transform: scale3d( 1, 1, 1 );
+		brightness: 1;
+	}
+
+	95%
+	{
+		transform: translateX( 0px );
+
+		opacity: 1;
+	}
+	
+	99%
+	{
+		transform: translateX( -400px );
+
+		opacity: 0;
+	}
+}
+
+.victim-killed .victim_distancepanel-body
+{
+    animation-name: victim-killed;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+
 
 @keyframes hide-for-competitive 
 {

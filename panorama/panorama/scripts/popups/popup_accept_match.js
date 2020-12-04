@@ -172,16 +172,23 @@ var PopupAcceptMatch = ( function(){
 		                                                                                                                                                 
 		
 		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.mode );
+		labelData.SetDialogVariable ( 'mode', mode );
 
 		if ( ( m_lobbySettings.mode === 'competitive' ) &&
 			( GameTypesAPI.GetMapGroupAttribute( 'mg_'+map, 'competitivemod' ) === 'unranked' ) )
 		{
-			labelData.SetDialogVariable ( 'modifier', $.Localize( '#SFUI_RankType_Modifier_Unranked' ) );
-			strLocalize = '#match_ready_match_data_modifier';
+			labelData.SetDialogVariable ( 'mode', $.Localize( '#SFUI_RankType_Modifier_Unranked' ) );
+			                                                                                                
+			                                                    
 			$.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchWarning' ).RemoveClass( 'hidden' );
 		}
 
-		labelData.SetDialogVariable ( 'mode', mode );
+		if ( ( m_lobbySettings.mode === 'competitive' ) && ( map === 'lobby_mapveto' ) )
+		{
+			strLocalize = '#match_ready_match_data_map';
+			$('#AcceptMatchModeIcon').SetImage( "file://{images}/icons/ui/competitive_teams.svg" );
+		}
+
 		labelData.SetDialogVariable ( 'map', $.Localize ( '#SFUI_Map_' + map ));
 		labelData.text = $.Localize( strLocalize, labelData );
 

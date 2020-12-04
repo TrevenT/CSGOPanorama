@@ -2905,6 +2905,12 @@ EdgeScrollBar.Vertical #MaxButton
 	overflow: noclip;
 }
 
+.overflow-clip
+{
+	overflow: clip;
+}
+
+
 .left-right-flow
 {
 	flow-children: right;
@@ -3054,6 +3060,11 @@ EdgeScrollBar.Vertical #MaxButton
 	padding-bottom: 16px;
 }
 
+.bottom-padding-large
+{
+	padding-bottom: 32px;
+}
+
 .top-padding
 {
 	padding-top: 8px;
@@ -3116,6 +3127,11 @@ EdgeScrollBar.Vertical #MaxButton
 .left-margin-32
 {
 	margin-left: 32px;
+}
+
+.top-margin-24
+{
+	margin-top: 24px;
 }
 
 .z-index-2

@@ -61,6 +61,9 @@ var SettingsMenuGameSettings = ( function() {
 
 		$( "#CrosshairEditorPreview" ).SetHasClass( "dynamic-crosshair", nStyle === 0 || nStyle === 2 || nStyle === 3 ); 
 
+		let obsCrosshairs = parseInt( GameInterfaceAPI.GetSettingString( 'cl_show_observer_crosshair' ) );
+		$( "#XhairObservedBotCrosshair" ).visible = (obsCrosshairs === 2);
+
 }
 
     return {

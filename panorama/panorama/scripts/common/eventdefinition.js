@@ -27,6 +27,7 @@
     $.DefineEvent( 'OpenPlayMenu', 0, 'no args', 'opens the play menu from anywhere. EXAMPLE from party menu settings button from client' );
     $.DefineEvent( 'OpenInventory', 0, 'no args', 'opens the inventory menu from anywhere.' );
     $.DefineEvent( 'OpenWatchMenu', 0, 'no args', 'opens the watch menu from anywhere.' );
+    $.DefineEvent( 'OpenStatsMenu', 0, 'no args', 'opens the stats page from anywhere.' );
     $.DefineEvent( 'OpenSidebarPanel', 1, 'auto close', 'open the sidebar from a abutton click from anywhere pass setting if you wasnt it to autoclose' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
     $.DefineEvent( 'HideMainMenuNewsPanel', 0, 'no args', 'hide mainmenu news panel' )
@@ -73,6 +74,7 @@
 
                                                                                                                             
                                                                                                                       
+    $.DefineEvent( 'PlayMenu_GoTeamMatchmaking_CodeGenerated', 0, 'no args', 'Updates the generated direct challenge code in UI' );
     $.DefineEvent( 'FriendInvitedFromContextMenu', 1, 'xuid', 'invite friend from the playercard. Make the invite anim snow immediately instead of waiting for the callback that can take a long time.' );
     $.DefineEvent( 'CapabilityPopupIsOpen', 1, 'bActive', 'User is using the name tag or opening a case, or stickering.  Using one of the capabilites' );
     $.DefineEvent( 'PromptShowSelectItemForCapabilityPopup', 5, 'titletxt,msgtxt,capability, itemid, itemid2', 'Show popup in Inventory before dispatching ShowSelectItemForCapabilityPopup' );
@@ -100,6 +102,7 @@
 
 	$.DefinePanelEvent( "Scoreboard_ApplyPlayerCrosshairCode", 1, "xuid", "Fired to handle confirmation popup when copying player crosshair codes" )
 
-	
-
+    $.DefineEvent( 'PlayerStats_PopupSingleMatch', 1, 'matchid', '' );
+    $.DefineEvent( 'PlayerStats_DismissSingleMatch', 1, 'matchid', '' );
+    $.DefineEvent( 'PlayerStats_MatchListerGoToMostRecent', 0, "", "" );
 } )();

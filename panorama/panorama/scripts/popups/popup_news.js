@@ -52,9 +52,8 @@ var PopupNews = ( function()
 
 	var _Close = function()
 	{
-		var setVersionTo = $.GetContextPanel().GetAttributeString( "uisettingversion", '0' );
-
-		GameInterfaceAPI.SetSettingString( 'ui_popup_weaponupdate_version', setVersionTo );
+		                                                                                        
+		                                                                                      
 		$.DispatchEvent( 'UIPopupButtonClicked', '' );
 	};
 

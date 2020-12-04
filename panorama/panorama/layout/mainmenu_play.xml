@@ -42,6 +42,7 @@
 							<Label id="MapGroupWaitTimeLabel" class="fontSize-s"/>
 						</Panel>
 						<Label id="MapGroupName" class="map-selection-info__map-name fontSize-l"/>
+						<Label class="map-selection-info__map-capt" text="#play_maps_section_detailed_rules_capt" html="true"/>
 					</Panel>
 				</Panel>
 			</Panel>
@@ -107,6 +108,7 @@
 			<Panel class="map-selection-list-section">
 				<Panel id="play-maps-section-header-container" class="map-selection-list-section__header">
 					<Label id="play-maps-section-header" class="map-selection-list-section-header__text" text=""/>
+					<Label class="map-selection-list-section-header__text map-selection-list-section-header__text_activedutymaps" text="#play_maps_section_capt_maps_header"/>
 					<Button id="play-maps-section-header-more-info" class="IconButton horizontal-align-right">
 						<Image class="right-margin-medium" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/info.svg" />
 					</Button>
@@ -172,6 +174,10 @@
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeSurvival"/>
 					</RadioButton>
+					<RadioButton id='skirmish_retakes'
+								group="gamemodes" >
+						<Label text="#SFUI_GameModeRetakes"/>
+					</RadioButton>
 					<RadioButton id='cooperative'  
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeCooperative"
@@ -222,6 +228,17 @@
 						</Button>
 					</Panel>
 					<Panel class="play-menu-controls-actions-bar__right">
+						<Panel id="PlayMenuControlLobbyUserIcons" class="play-menu-controls-lobby-count"
+							style="tooltip-position: top left;"
+							onmouseover="UiToolkitAPI.ShowTextTooltip( 'PlayMenuControlLobbyUserIcons', '#PopupGoTeamMatchmaking_Tooltip_SearchUI' );"
+							onmouseout="UiToolkitAPI.HideTextTooltip();"
+							>
+							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-1" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-2" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-3" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-4" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-5" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+						</Panel>
 						<Panel class="play-menu-controls-action-bar__right__go-cancel">
 							<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
 								<Label text="#SFUI_Lobby_StartMatchButton" />

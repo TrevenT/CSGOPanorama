@@ -3,11 +3,28 @@
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/settings/settings.css" />
 		<include src="file://{resources}/styles/mainmenu.css"/>
+		<include src="file://{resources}/styles/radialradio.css"/>
 	</styles>
 
 	<scripts>
 		<include src="file://{resources}/scripts/settingsmenu_shared.js" />
+		<include src="file://{resources}/scripts/settingsmenu_chatwheel.js" />
 	</scripts>
+
+	<snippets>
+		<snippet name="ChatWheelOptionPanel">
+			<Button class="RadialRadioSettingsSingleOptionPanel">
+				<Image id="chat-wheel-option-icon" class="RadialRadioSettingsOptionImage" textureheight="24" scaling="none" />
+				<Label id="chat-wheel-option-label" class="RadialRadioSettingsOptionLabel" text="Some Text"/>
+			</Button>
+		</snippet>
+		<snippet name="ChatWheelHeadingPanel">
+			<Button class="RadialRadioSettingsHeadingPanel">
+				<Image id="chat-wheel-option-icon" class="RadialRadioSettingsOptionImage" textureheight="24" scaling="none" />
+				<Label id="chat-wheel-option-label" class="RadialRadioSettingsHeadingLabel" text="Some Text"/>
+			</Button>
+		</snippet>
+	</snippets>
 
 	<Panel useglobalcontext="true" class="SettingsMenuTab" >
 
@@ -22,11 +39,14 @@
 					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsWeaponBinds')" group="SettingsKbMouse">
 						<Label text="#settings_weapon_binds_section"/>
 					</RadioButton> 
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsUiBinds')" group="SettingsKbMouse">
+						<Label text="#settings_ui_binds_section"/>
+					</RadioButton>
 					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsCommBinds')" group="SettingsKbMouse">
 						<Label text="#settings_comm_binds_section"/>
 					</RadioButton>
-					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsUiBinds')" group="SettingsKbMouse">
-						<Label text="#settings_ui_binds_section"/>
+					<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsChatWheel')" group="SettingsKbMouse">
+						<Label text="#settings_ui_chatwheel_section"/>
 					</RadioButton>
 				</Panel>
 			</Panel>
@@ -217,6 +237,30 @@
 				</Panel>
 			</Panel>
 
+			                            
+			<Panel id="SettingsUiBinds" class="SettingsBackground">
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_ui_binds_section" />
+				</Panel>
+				<Panel class ="top-bottom-flow full-width">
+
+					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_Menu_Scoreboard" id="ScoreBinder" bind="+showscores"/>
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_ShowTeamEquipment" id="ShowTeamEquipmentBinder" bind="+cl_show_team_equipment"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_CallVote" id="VoteBinder" bind="callvote"/>
+					<Panel class="horizontal-separator"/>
+					
+					<CSGOSettingsKeyBinder text="#SFUI_ChooseTeam" id="TeamBinder" bind="teammenu"/>
+					<Panel class="horizontal-separator"/>
+
+					<CSGOSettingsKeyBinder text="#SFUI_ToggleConsole" id="ConsoleBinder" bind="toggleconsole"/>
+
+				</Panel>
+			</Panel>
+
 			                                       
 			<Panel id="SettingsCommBinds" class="SettingsBackground">
 				<Panel class="SettingsSectionTitleContianer">
@@ -257,30 +301,112 @@
 				</Panel>
 			</Panel>
 						
-			                            
-			<Panel id="SettingsUiBinds" class="SettingsBackground">
+						
+			                          
+			<Panel id="SettingsChatWheel" class="SettingsBackground" onmouseactivate="SettingsMenuChatwheel.ClickChatwheelPanel();">
 				<Panel class="SettingsSectionTitleContianer">
-					<Label class="SettingsSectionTitleLabel" text="#settings_ui_binds_section" />
+					<Label class="SettingsSectionTitleLabel" text="#settings_ui_chatwheel_section" />
 				</Panel>
-				<Panel class ="top-bottom-flow full-width">
 
-					<CSGOSettingsKeyBinder text="#SFUI_TitlesTXT_Menu_Scoreboard" id="ScoreBinder" bind="+showscores"/>
+				<Panel class="top-bottom-flow full-width">
+					<CSGOSettingsKeyBinder text="#settings_chatwheel1" id="ChatwheelBinder1" bind="+radialradio"/>
 					<Panel class="horizontal-separator"/>
+					<CSGOSettingsKeyBinder text="#settings_chatwheel2" id="ChatwheelBinder2" bind="+radialradio2"/>
+					<Panel class="horizontal-separator"/>
+					<CSGOSettingsKeyBinder text="#settings_chatwheel3" id="ChatwheelBinder3" bind="+radialradio3"/>
+					<Panel class="horizontal-separator"/>
+				</Panel>
+
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_ui_chatwheel_phrases" style="margin-top: 80px;" />
+				</Panel>
+				
+				<Panel class ="left-right-flow full-width">
 					
-					<CSGOSettingsKeyBinder text="#SFUI_ShowTeamEquipment" id="ShowTeamEquipmentBinder" bind="+cl_show_team_equipment"/>
-					<Panel class="horizontal-separator"/>
+					<Panel class ="top-bottom-flow RadialRadioSettingsNavPanel">
+						<Panel class="content-navbar__tabs content-navbar__tabs--small">
+							<RadioButton onactivate="SettingsMenuChatwheel.ActivateChatwheel(0)" group="SettingsChatwheel" selected="true">
+								<Label text="#settings_chatwheel1"/>
+							</RadioButton>
 
-					<CSGOSettingsKeyBinder text="#SFUI_CallVote" id="VoteBinder" bind="callvote"/>
-					<Panel class="horizontal-separator"/>
-					
-					<CSGOSettingsKeyBinder text="#SFUI_ChooseTeam" id="TeamBinder" bind="teammenu"/>
-					<Panel class="horizontal-separator"/>
+							<RadioButton onactivate="SettingsMenuChatwheel.ActivateChatwheel(1)" group="SettingsChatwheel">
+								<Label text="#settings_chatwheel2"/>
+							</RadioButton>
 
-					<CSGOSettingsKeyBinder text="#SFUI_ToggleConsole" id="ConsoleBinder" bind="toggleconsole"/>
-					<Panel class="horizontal-separator"/>
+							<RadioButton onactivate="SettingsMenuChatwheel.ActivateChatwheel(2)" group="SettingsChatwheel">
+								<Label text="#settings_chatwheel3"/>
+							</RadioButton>
+						</Panel>
+
+						<Panel class="horizontal-separator"/>
+
+						<Panel class="RadialRadioSettingsPanel">
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(0);" id="radio-segment-0" class="RadialRadioSettingsSegment" style="x: 0px; y: -110px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Top" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(1);" id="radio-segment-1" class="RadialRadioSettingsSegment" style="x: 140px; y: -50px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Top Right" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(2);" id="radio-segment-2" class="RadialRadioSettingsSegment" style="x: 200px; y: 10px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Right" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(3);" id="radio-segment-3" class="RadialRadioSettingsSegment" style="x: 140px; y: 70px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Bottom Right" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(4);" id="radio-segment-4" class="RadialRadioSettingsSegment" style="x: 0px; y: 130px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Bottom" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(5);" id="radio-segment-5" class="RadialRadioSettingsSegment" style="x: -140px; y: 70px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Bottom Left" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(6);" id="radio-segment-6" class="RadialRadioSettingsSegment" style="x: -200px; y: 10px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Left" />
+							</Button>
+
+							<Button onactivate="SettingsMenuChatwheel.ActivateSegment(7);" id="radio-segment-7" class="RadialRadioSettingsSegment" style="x: -140px; y: -50px;">
+								<Image id="segment-icon" style="position: 4.0px 8.0px 0.0px; width: 32.0px; height: 32.0px;" textureheight="32" />
+								<Label id="segment-label" class="RadialRadioSettingsSegmentText" text="Top Left" />
+							</Button>
+
+						</Panel>	
+					</Panel>
+
+					                                          
+					<Panel class="top-bottom-flow">
+						<Panel  id="" class="RadialRadioSettingsSearch">
+							<Image class="" src="file://{images}/icons/ui/find.svg" texturewidth="22" textureheight="22" style="y:12px;"/>
+							<Panel style="position: 28.0px 10.0px 0.0px; width:2px; height:28px; background-color:#ffffff99;" />
+							<TextEntry id="RadialRadioSettingsSearchText"
+							class=""
+							placeholder="#inv_search_default"
+							ontextentrychange="$.Msg('Search change'); SettingsMenuChatwheel.SearchChanged();" />
+							<Panel  class="horizontal-align-right left-right-padding">
+								<DropDown class="PopupButton White" id="InvSortDropdown" menuclass="DropDownMenu Width-250" oninputsubmit=""></DropDown>
+							</Panel>
+						</Panel>
+
+						<Panel id="chatwheel-settings-list" class="RadialRadioSettingsScrollableOptionsPanel">
+							                                         
+						</Panel>
+					</Panel>
 
 				</Panel>
 			</Panel>
+
 		</Panel>
 
 		<Panel class="content-controls-actions-bar">

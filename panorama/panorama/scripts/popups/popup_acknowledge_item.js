@@ -71,11 +71,11 @@ var AcknowledgeItems = ( function()
 		{
 			var tier = ItemInfo.GetRewardTier( item.id );
 			
-			if ( tier && tier > 0 )
-			{
-				elItemTile.FindChildInLayoutFile( 'AcknowledgeItemOperationTier' ).SetHasClass( 'hide', false );
-				elItemTile.SetDialogVariableInt( 'reward_tier', ( tier + 1 ) );
-			}
+			                          
+			    
+			   	                                                                                                
+			   	                                                                                                                                                                           
+			    
 		}
 
 		var rarityColor = ItemInfo.GetRarityColor( item.id );
@@ -280,7 +280,7 @@ var AcknowledgeItems = ( function()
 		var rewardItems = newItems.filter( item => item.pickuptype === "quest_reward" );
 		var otherItems = newItems.filter( item => item.pickuptype !== "quest_reward" );
 	
-		return rewardItems.concat( otherItems );;
+		return rewardItems.concat( otherItems );
 	};
 
 	var _GetItemsByType = function( afilters, bShouldAcknowledgeItems )
@@ -386,7 +386,8 @@ var AcknowledgeItems = ( function()
 			}
 
 			$.DispatchEvent( 'UIPopupButtonClicked', '' );
-			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.inventory_new_item_accept', 'MOUSE' );			
+			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.inventory_new_item_accept', 'MOUSE' );
+
 		};
 
 		return {

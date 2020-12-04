@@ -1,6 +1,7 @@
                                        
 
 @define winPanelPosY: 210px;
+@define winPanelPosYRoundEndReport: 120px;
 @define winPanelPosYSurvival: 0px;
 @define winPanelWidth: 1020px;
 @define winPanelHeight: 78px;
@@ -29,6 +30,24 @@ CSGOHudWinPanel Label
 	flow-children: down;
 }
 
+.WinPanelRoot.ShowRoundEndReport {
+	y: winPanelPosYRoundEndReport;
+}
+
+.ShowRoundEndReport #RoundImpactScoreReport,
+.ShowRoundEndReport #RoundImpactScoreMain {
+	visibility: visible;
+}
+
+.ShowRoundEndReport #WinPanelRow,
+.ShowRoundEndReport #TeamLogoDefault,
+.ShowRoundEndReport #TeamLogo,
+.ShowRoundEndReport #Funfact
+{
+	visibility: collapse;
+}
+
+
 .WinPanelRoot--SurvivalVictory.WinPanelRoot,
 .WinPanelRoot--SurvivalDeath.WinPanelRoot
 {
@@ -38,7 +57,14 @@ CSGOHudWinPanel Label
 	y: winPanelPosYSurvival;
 }
 
-.WinPanelRoot--ShowAnim
+.WinPanelFadeParent
+{
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.WinPanelRoot--ShowAnim .WinPanelFadeParent
 {
 	opacity: 1.0;
 	animation-name: WinPanelRootShowAnim;
@@ -47,8 +73,8 @@ CSGOHudWinPanel Label
 	animation-iteration-count: 1;
 }
 
-.WinPanelRoot--SurvivalVictory.WinPanelRoot--ShowAnim,
-.WinPanelRoot--SurvivalDeath.WinPanelRoot--ShowAnim
+.WinPanelRoot--SurvivalVictory.WinPanelRoot--ShowAnim .WinPanelFadeParent,
+.WinPanelRoot--SurvivalDeath.WinPanelRoot--ShowAnim .WinPanelFadeParent
 {
 	opacity: 1.0;
 	animation-name: WinPanelRootShowAnimSurvival;
@@ -57,7 +83,7 @@ CSGOHudWinPanel Label
 	animation-iteration-count: 1;
 }
 
-.WinPanelRoot--HideAnim
+.WinPanelRoot--HideAnim .WinPanelFadeParent
 {
 	opacity: 0.0;
 	animation-name: WinPanelRootHideAnim;

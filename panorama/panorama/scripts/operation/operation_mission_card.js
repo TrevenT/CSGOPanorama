@@ -7,7 +7,7 @@ var OperationMissionCard = ( function()
 	var _m_missionBacklogIndex = 0;
 	var _m_missionUnlockTimerHandler = null;
 
-	var _GetMissionCardDetails = function( i, elParent)
+	var _GetMissionCardDetails = function( i, elParent, isPrev = false )
 	{
 		var nSeasonAccess = OperationUtil.GetOperationInfo().nSeasonAccess;
 		var strCardDetails = 'Mission card #' + i;
@@ -48,7 +48,11 @@ var OperationMissionCard = ( function()
 				}
 			} );
 
-			elMissonCard.AddClass( 'show' );
+			elMissonCard.ToggleClass( 'show' );
+
+			elMissonCard.SetHasClass( 'prev', isPrev );
+			elMissonCard.SetHasClass( 'next', !isPrev );
+			
 			_CancelUnlockTimer();
 			_UpdateUnlockTimer( elMissonCard );
 			return elMissonCard;
@@ -96,7 +100,7 @@ var OperationMissionCard = ( function()
 
 	var _FillOutMissionCard = function( elMissionCard, jsoCardDetails, idx )
 	{
-		elMissionCard.FindChildInLayoutFile( 'id-mission-card-bg' ).SetImage( "file://{images}/operations/op9/mission_" + idx + ".png" );
+		                                                                                                                                     
 		elMissionCard.FindChildInLayoutFile( 'id-mission-card-tag' ).SetHasClass( 'hidden', idx !== OperationUtil.GetOperationInfo().nActiveCardIndex );
 		
 		elMissionCard.SetDialogVariable( 'mission_name', $.Localize( jsoCardDetails.name ));
@@ -126,7 +130,7 @@ var OperationMissionCard = ( function()
 		}
 
 		                                        
-		if ( elMissionCard.Data().idx === _m_missionBacklogIndex )
+		if ( elMissionCard.IsValid() && elMissionCard.Data().idx === _m_missionBacklogIndex )
 		{
 			var seconds = InventoryAPI.GetSecondsUntilNextMission();
 
@@ -163,8 +167,21 @@ var OperationMissionCard = ( function()
 		for ( var iMission = 0; iMission< jsoCardDetails.quests.length; iMission++ )
 		{
 			var missionID = jsoCardDetails.quests[ iMission];
-			if ( MissionsAPI.GetQuestPoints( missionID, "remaining" ) <= 0 )
-				totalCardPoints += parseInt( MissionsAPI.GetQuestDefinitionField( missionID, 'operational_points' ) );
+			var numThresholds = MissionsAPI.GetQuestPoints( missionID, "count" );
+			var goal = MissionsAPI.GetQuestPoints( missionID, "goal" );
+			var remaining = MissionsAPI.GetQuestPoints( missionID, "remaining" );
+			if ( remaining > 0 )
+			{
+				var numLoops = numThresholds;
+				for ( var i = 0; i < numLoops; ++ i )
+				{
+					if ( ( goal - remaining ) < MissionsAPI.GetQuestPoints( missionID, "goal" + i ) )
+						-- numThresholds;
+					else
+						break;
+				}
+			}
+			totalCardPoints += parseInt( MissionsAPI.GetQuestDefinitionField( missionID, 'operational_points' ) ) * numThresholds;
 		}
 
 		var nEarnedPoints = totalCardPoints > jsoCardDetails.operational_points ? jsoCardDetails.operational_points : totalCardPoints;
@@ -209,6 +226,12 @@ var OperationMissionCard = ( function()
 		elMission.FindChildInLayoutFile( 'id-mission-name' ).text = InventoryAPI.GetItemName( MissionItemID );
 		elMission.FindChildInLayoutFile( 'id-mission-desc' ).SetLocalizationString( MissionsAPI.GetQuestDefinitionField( missionId, "loc_description" ) );
 
+		var numMissionSegments = MissionsAPI.GetQuestPoints( missionId, 'count' );
+		for ( var i = 1; i <= 3; ++ i )
+		{
+			elMission.SetHasClass( 'missionsegments' + i, numMissionSegments === i );
+		}
+
 		MissionsAPI.ApplyQuestDialogVarsToPanelJS( missionId, elMission);
 
 		var stars = MissionsAPI.GetQuestDefinitionField( missionId, 'operational_points' );
@@ -221,6 +244,10 @@ var OperationMissionCard = ( function()
 		{
 			elMission.SetDialogVariable( 'stars_plural', $.Localize( '#op_mission_plural_star'));
 		}
+		for ( var i = 1; i <= 3; ++ i )
+		{
+			elMission.SetHasClass( 'missionstars' + i, stars === ''+i );
+		}
 
 		var goal = MissionsAPI.GetQuestPoints( missionId, "goal" );
 		if ( !goal || goal === -1 )
@@ -232,16 +259,29 @@ var OperationMissionCard = ( function()
 
 		                                      
 		var gameMode = InventoryAPI.GetQuestGameMode( MissionItemID );
+		var mapGroup = InventoryAPI.GetQuestMapGroup( MissionItemID );
+		if ( !mapGroup )
+		{
+			mapGroup = 'mg_' + InventoryAPI.GetQuestMap( MissionItemID );
+		}
+		if ( mapGroup === 'mg_lobby_mapveto' )
+		{
+			gameMode = 'competitive_teams';
+		}
+
 		var bReplayableMission = ( gameMode === 'cooperative' || gameMode === 'coopmission' );
 		var remaining = MissionsAPI.GetQuestPoints( missionId, "remaining" );
 		elMission.FindChildInLayoutFile( 'id-mission-card-icon-locked' ).visible = !elMissonCard.Data().isunlocked;
 		elMission.FindChildInLayoutFile( 'id-mission-card-icon-complete' ).visible = !bReplayableMission &&
 			remaining === 0 &&
 			elMissonCard.Data().isunlocked;
-		
-		elMission.FindChildInLayoutFile( 'id-mission-card-icon-play' ).visible = remaining !== 0 && elMissonCard.Data().isunlocked && currentlyPlayingMissionId !== missionId;
+
+		var elIcon = elMission.FindChildInLayoutFile( 'id-mission-card-icon-play' );
+		elIcon.visible = remaining !== 0 && elMissonCard.Data().isunlocked && currentlyPlayingMissionId !== missionId;
+		elIcon.SetImage( 'file://{images}/icons/ui/' + gameMode + '.svg' );
+		elIcon.SetHasClass( 'nocolor', ( gameMode.startsWith( 'competitive' ) || gameMode === 'survival' ))
+
 		elMission.FindChildInLayoutFile( 'id-mission-card-spinner' ).visble = elMissonCard.Data().isunlocked && currentlyPlayingMissionId === missionId;
-		elMission.FindChildInLayoutFile( 'id-mission-card-icon-play' ).SetImage( 'file://{images}/icons/ui/' + gameMode + '.svg' );
 
 		                                            
 		elMission.FindChildInLayoutFile( 'id-mission-card-icon-replay' ).visible = bReplayableMission &&
@@ -268,16 +308,34 @@ var OperationMissionCard = ( function()
 
 		var isSingleMatch = MissionsAPI.GetQuestDefinitionField( missionId, "singlematch" ) === '1' ? true : false;
 
-		if ( !isSingleMatch && !bReplayableMission )
+		  
+		                                                                   
+		  
+		var nGoalsAlreadyDisplayed = 0;
+		for ( var iSegment = numMissionSegments; iSegment --> 0; )
 		{
-			var progressPercent = ( earned / goal ) * 100;
-			var elBar = elMission.FindChildInLayoutFile( 'op_mission-card-bar' );
+			var elSegment = elMission.FindChildInLayoutFile( 'segment' + iSegment );
+			var elBar = elSegment.FindChildInLayoutFile( 'op_mission-card-bar' );
+			
+			var nSegmentGoal = MissionsAPI.GetQuestPoints( missionId, 'goal' + iSegment );
+			var nSegmentIncrementalGoalDelta = nSegmentGoal - nGoalsAlreadyDisplayed;
+			var nSegmentEarned = earned - nGoalsAlreadyDisplayed;
+			if ( nSegmentEarned < 0 ) nSegmentEarned = 0;
+			if ( nSegmentEarned > nSegmentIncrementalGoalDelta ) nSegmentEarned = nSegmentIncrementalGoalDelta;
+			
+			                                                                                
+			if ( remaining === 0 ) nSegmentEarned = nSegmentIncrementalGoalDelta;
+
+			                                    
+			var progressPercent = ( nSegmentEarned / nSegmentIncrementalGoalDelta ) * 100;
 			elBar.style.width = progressPercent + '%;';
-		}
-		else if( remaining === 0 )
-		{
-			var elBar = elMission.FindChildInLayoutFile( 'op_mission-card-bar' );
-			elBar.style.width = '100%;';
+
+			                                                
+			elSegment.SetHasClass( 'complete', ( nSegmentEarned === nSegmentIncrementalGoalDelta ) );
+			elSegment.SetDialogVariableInt( 'mission_points_goal', nSegmentGoal );
+			elSegment.SetDialogVariableInt( 'mission_points_earned', ( earned > nSegmentGoal ) ? nSegmentGoal : earned );
+
+			nGoalsAlreadyDisplayed = nSegmentGoal;
 		}
 
 		elMission.SetPanelEvent( 'onactivate', _SetMissionOnActivate.bind( undefined, elMissonCard.Data().missionCardId, MissionItemID, nSeasonAccess ) );
@@ -285,6 +343,21 @@ var OperationMissionCard = ( function()
 
 	var _SetMissionOnActivate = function( missionCardId, MissionItemID, nSeasonAccess )
 	{
+		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
+
+		if ( OperationUtil.IsMissionLockedBehindPremiumOperationPass( missionCardId, MissionItemID, nSeasonAccess ) )
+		{
+			var sFauxPassItemID = OperationUtil.GetPassFauxId();
+			var sOperationPassName = ItemInfo.GetName( sFauxPassItemID );
+
+			UiToolkitAPI.ShowGenericPopupYesNo( sOperationPassName,                                                           
+					"#op_mission_requires_premium_pass", "",
+					function() { OperationUtil.OpenUpSell(); },
+					function() {} 
+				);
+			return;
+		}
+
 		UiToolkitAPI.ShowCustomLayoutPopupParameters( 
 			'',
 			'file://{resources}/layout/popups/popup_activate_mission.xml',
@@ -294,9 +367,6 @@ var OperationMissionCard = ( function()
 			'&' + 'questItemID=' + MissionItemID +
 			'&' + 'spinner=1'
 		);
-
-		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
-
 	};
 
 	return {

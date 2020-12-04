@@ -9,7 +9,7 @@
 
     <Panel class="MatchTile MatchTile--Collapse">
         <Panel class="MatchMap MatchTile--Spacing">
-            <Image id="mapicon" class="MatchMap__Icon"/>
+            <Image id="mapicon" class="MatchMap__Icon" texturewidth="80" textureheight="-1"/>
             <Label id="mapname" class="MatchInfo__MapName--LiveTile" text="Map Name"/>
         </Panel>
         <Panel class="MatchInfoContainer MatchTile--Spacing">

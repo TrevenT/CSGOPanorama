@@ -622,8 +622,8 @@ Button.event_datum--link {
 .eventsched__teams__teamlogo {
 
 
-  	            
-
+	min-width: 26px;
+	min-height: 26px;
 
 	margin: 4px;
 

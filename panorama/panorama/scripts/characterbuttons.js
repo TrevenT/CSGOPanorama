@@ -152,10 +152,6 @@ var CharacterButtons = ( function() {
 		var elCheer = elButtons.FindChildInLayoutFile( 'PlayCheer' );
 		elCheer.enabled = cheer != undefined && cheer != "";
 	
-		var vo = ItemInfo.GetVoPrefix( modelPanelSettings.charItemId );
-		var elVO = elButtons.FindChildInLayoutFile( 'PreviewModelVoice' );
-		elVO.enabled =  vo != undefined &&  vo != "";
-
 		                                                                        
 		elButtons.Data().m_characterToolbarButtonSettings = characterToolbarButtonSettings;
 		elButtons.Data().m_modelPanelSettings = modelPanelSettings;

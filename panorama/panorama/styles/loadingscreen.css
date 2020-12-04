@@ -238,7 +238,8 @@
 
 .loading-screen-content__titles
 {
-    flow-children: down;
+	flow-children: down;
+	max-width: 250px;
 }
 
 .loading-screen-content__info__text-title
@@ -289,7 +290,6 @@
 {
     font-family: Stratum2, 'Arial Unicode MS';
 	font-size: 28px;
-	                       
 	color: white;
 	text-overflow: shrink;
     vertical-align: center;

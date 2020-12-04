@@ -707,6 +707,7 @@ var Scoreboard = ( function()
 	var sortOrder_default = {
 
 		'score': 0,
+		'risc' : 0,
 		'mvps': 0,
 		'kills': 0,
 		'assists': 0,
@@ -718,6 +719,8 @@ var Scoreboard = ( function()
 		'idx': -1,
 		                                                              
 		                                                                	
+		'damage': 0,
+		'avgrisc': 0,
 		'money': 0,
 		'hsp': 0,
 		'kdr': 0,
@@ -729,6 +732,7 @@ var Scoreboard = ( function()
 	var sortOrder_reverse = {
 
 		'score': -1,
+		'risc' : -1,
 		'mvps': -1,
 		'kills': -1,
 		'assists': -1,
@@ -740,6 +744,8 @@ var Scoreboard = ( function()
 		'idx': 0,
 		                                                              
 		                                                                	
+		'damage': 0,
+		'avgrisc': 0,
 		'money': 0,
 		'hsp': 0,
 		'kdr': 0,
@@ -747,7 +753,6 @@ var Scoreboard = ( function()
 		'utilitydamage': 0,
 		'enemiesflashed' :0,
 	};
-
 
 	var sortOrder_dm = {
 
@@ -776,6 +781,35 @@ var Scoreboard = ( function()
 		'kills': 0,
 		'assists': 0,
 		'deaths': -1,           
+	}
+
+	var sortOrder_tmm = {
+
+		'damage': 0,
+		'kills': 0,
+		'risc' : 0,
+		'mvps': 0,
+		'assists': 0,
+		'deaths': -1,           
+		'leader': 0,
+		'teacher': 0,
+		'friendly': 0,
+		'rank': 0,
+		'idx': -1,
+		                                                              
+		                                                                	
+		'score' : 0,
+		'avgrisc': 0,
+		'money': 0,
+		'hsp': 0,
+		'kdr': 0,
+		'adr':0,
+		'utilitydamage': 0,
+		'enemiesflashed' :0,
+
+
+
+
 	}
 
 	function _lessthan( x , y )
@@ -1105,12 +1139,13 @@ var Scoreboard = ( function()
 			case 'hsp':
 			case 'utilitydamage':
 			case 'enemiesflashed':
+			case 'damage':
 				fn = function( oPlayer, bSilent = false )
 				{
 					_GenericUpdateStat( oPlayer, stat, _GetMatchStatFn( stat ), bSilent );
 				};
 				break;
-
+			
 			case 'kdr':
 				fn = function( oPlayer, bSilent = false )
 				{
@@ -1563,6 +1598,12 @@ var Scoreboard = ( function()
 		var mode = MockAdapter.GetGameModeInternalName( false );
 		var skirmish = MockAdapter.GetGameModeInternalName( true );
 
+		if ( GameStateAPI.IsQueuedMatchmakingMode_Team() )
+		{
+			return "snippet_scoreboard-classic__row--teammatchmaking";
+		}
+
+
 		switch ( mode )
 		{
 			case "scrimcomp2v2":
@@ -1595,7 +1636,6 @@ var Scoreboard = ( function()
 				
 			default:
 				return "snippet_scoreboard-classic__row--casual";
-
 		}
 
 	}
@@ -1679,7 +1719,6 @@ var Scoreboard = ( function()
 
 				                           
 				elLabelSet = $.CreatePanel( "Panel", elSetLabels, LabelSetId );
-				elLabelSet.AddClass( 'sb-row--labels' );
 				elLabelSet.AddClass( 'sb-row__set' );
 				elLabelSet.AddClass( 'no-hover' );
 
@@ -1729,6 +1768,7 @@ var Scoreboard = ( function()
 				}
 				else
 				{
+
 					elStatLabel.text = $.Localize( "#Scoreboard_" + stat );
 				}
 			}
@@ -1829,6 +1869,7 @@ var Scoreboard = ( function()
 
 		_Helper_LoadSnippet( oPlayer.m_elPlayer, _GetPlayerRowForGameMode() );
 
+		var idx = 0;
 		function _InitStatCell ( elStatCell, oPlayer )
 		{
 			if ( !elStatCell || !elStatCell.IsValid() )
@@ -1879,6 +1920,9 @@ var Scoreboard = ( function()
 					elSet = $.CreatePanel( "Panel", elSetContainer, setId );
 					elSet.AddClass( 'sb-row__set' );
 					elSet.AddClass( 'no-hover' );
+
+					                         
+					idx = 0;
 				}
 
 				                           
@@ -1890,6 +1934,10 @@ var Scoreboard = ( function()
 					elSet.AddClass( 'hidden' );
 				}
 			}
+
+			                             
+			if ( idx++ % 2 )
+			elStatCell.AddClass( "sb-row__cell--dark" );			
 
 			if ( !isHidden )
 			{
@@ -1956,7 +2004,7 @@ var Scoreboard = ( function()
 				elPlayerCardContextMenu.AddClass( "ContextMenu_NoArrow" );
 				if ( !_m_hDenyInputToGame )
 				{
-					_m_hDenyInputToGame = UiToolkitAPI.AddDenyMouseInputToGame( elPlayerCardContextMenu, "ScoreboardPlayercard" );
+					_m_hDenyInputToGame = UiToolkitAPI.AddDenyInputFlagsToGame(elPlayerCardContextMenu, "ScoreboardPlayercard", "CaptureMouse" );
 				}
 
 			} );
@@ -1970,7 +2018,7 @@ var Scoreboard = ( function()
 		_m_arrSortingPausedRefGetCounter--;
 		if ( _m_hDenyInputToGame )
 		{
-			UiToolkitAPI.ReleaseDenyMouseInputToGame( _m_hDenyInputToGame );
+			UiToolkitAPI.ReleaseDenyInputFlagsToGame( _m_hDenyInputToGame );
 			_m_hDenyInputToGame = null;
 		}
 	}
@@ -2003,16 +2051,29 @@ var Scoreboard = ( function()
 				if ( ( GameStateAPI.GetGameModeInternalName( true ) === 'competitive' ) &&
 					( GameTypesAPI.GetMapGroupAttribute( 'mg_'+GameStateAPI.GetMapBSPName(), 'competitivemod' ) === 'unranked' ) )
 				{
-					strLocalizeScoreboardTitle = "{s:gamemode_name} | " + $.Localize( '#SFUI_RankType_Modifier_Unranked', _m_cP ) + " | {s:map_name}";
+					strLocalizeScoreboardTitle = $.Localize( '#SFUI_RankType_Modifier_Unranked', _m_cP ) + " | {s:map_name}";
+				}
+				else if ( GameStateAPI.IsQueuedMatchmakingMode_Team() )
+				{
+					var sMapName = "{s:map_name}";
+					if ( GameStateAPI.GetMapBSPName() === 'lobby_mapveto' )
+						sMapName = $.Localize( "#matchdraft_arena_name", _m_cP );
+					strLocalizeScoreboardTitle = $.Localize( "#SFUI_GameModeCompetitiveTeams", _m_cP ) + " | " + sMapName;
 				}
 				
 				elMapLabel.text =  $.Localize( strLocalizeScoreboardTitle, _m_cP );
 			}
+
 		}
 
 		if ( $( "#id-sb-meta__mode__image" ) )
-			$( "#id-sb-meta__mode__image" ).SetImage( MockAdapter.GetGameModeImagePath() );
-
+		{
+			if ( GameStateAPI.IsQueuedMatchmakingMode_Team() )
+				$( "#id-sb-meta__mode__image" ).SetImage( "file://{images}/icons/ui/competitive_teams.svg" );
+			else
+				$( "#id-sb-meta__mode__image" ).SetImage( MockAdapter.GetGameModeImagePath() );
+		}
+		
 		if ( $( "#sb-meta__labels__map" ) )
 			$( "#sb-meta__labels__map" ).SetImage( "file://{images}/map_icons/map_icon_" + MockAdapter.GetMapBSPName() + ".svg" );
 
@@ -3076,6 +3137,9 @@ var Scoreboard = ( function()
 
 	function _GetSortOrderForMode ( mode )
 	{
+		if ( GameStateAPI.IsQueuedMatchmakingMode_Team() )
+			return sortOrder_tmm;
+
 		switch ( mode )
 		{
 			case "gungameprogressive":            

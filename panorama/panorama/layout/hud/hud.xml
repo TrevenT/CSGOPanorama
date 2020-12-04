@@ -7,12 +7,18 @@
 	<CSGOHud hittest="false">
 		                                                                           
 		
+		<CSGOHudBlurTarget blurrects="RoundImpactScoreMain MapDraft" class="HudBlurLess" hittest="false" hittestchildren="false">
+			<CSGOBackbufferImagePanel class="full-width full-height" />
+		</CSGOHudBlurTarget>
+
 		                                                                                     
 		<Panel id="HudInWorld" hittest="false" hittestchildren="false">
 			<CSGOHudDamageIndicator id="HudDamageIndicator"/>
 			<CSGOHudReticle id="HudReticle"/>
 		</Panel>
-		
+
+		<Frame id="MapDraft" class="full-width full-height" src="file://{resources}/layout/mapdraft.xml"/>
+
 		            
 		<CCSGOTabletPanoLayer id="TabletPanoLayer" offscreen-composition-layer="true" />
 		<CSGOSurvivalBuyMenu id="SurvivalBuyMenu"/>
@@ -86,6 +92,9 @@
 		                                                                
 		<CSGOHudRadio id="HudRadio" hittest="false" hittestchildren="false" />
 
+		                          
+		<CSGORetakePanel id="HudRetake" hittest="false" hittestchildren="false" />
+
 		                                                                   
 		<Panel id="HudBottomRight" hittest="false" hittestchildren="false">
 			<CSGOHudWeaponSelection id="HudWeaponSelection"/>
@@ -112,8 +121,9 @@
 		<CSGOMapOverview id="MapOverview"/>
 
 		<CSGOQuickInventory id="QuickInventory"/>
-    <CSGORadialRadio id="RadialRadio"/>
-		
+		<CSGORadialRadio id="RadialRadio"/>
+		<CSGORetakeLoadout id="RetakeLoadout"/>
+
 		<CSGOBuyMenu id="BuyMenu" />
 
 		                                                                                                               

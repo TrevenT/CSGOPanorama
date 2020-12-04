@@ -2,8 +2,11 @@
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
 		<include src="file://{resources}/styles/hud/hudteamcounter.css" />
-    <include src="file://{resources}/styles/hud/hudvoicestatus.css" />
+    	<include src="file://{resources}/styles/hud/hudvoicestatus.css" />
 	</styles>
+
+	<scripts>
+	</scripts>
 
 	<snippets>
 
@@ -13,7 +16,7 @@
 				                                             
 				<Panel id="Visible" class="AvatarL">
 
-					<Panel id="AvatarL__ImageBG">
+					<Panel id="AvatarL__ImageBG" class="avatarl__imagebg">
 						<CSGOAvatarImage id="AvatarImage" class="Avatar__CommonMargin AvatarL__Internal"/>
 						<CSGOAvatarHealthBar id="HealthBar" class="Avatar__HealthMargin AvatarL__HealthBar"/>
 					</Panel>
@@ -102,24 +105,27 @@
 
 			<Panel id="TeamCounter">
 				                           
-				<Panel id="TeamLargeCT" class="Team__Large">
-					                                                     
-				</Panel>
-				<Panel id="TeamSmallContainerCT">
-					<Panel id="TeamSmallCT__Row1" class="Team__SmallCT">
-						                                                                           
+				<Panel class="team__large_container--left">
+					<Panel id="TeamLargeCT" class="Team__Large">
+						                                                     
 					</Panel>
-					<Panel id="TeamSmallCT__Row2" class="Team__SmallCT">
-						                                                                           
+					<Panel id="TeamSmallContainerCT">
+						<Panel id="TeamSmallCT__Row1" class="Team__SmallCT">
+							                                                                           
+						</Panel>
+						<Panel id="TeamSmallCT__Row2" class="Team__SmallCT">
+							                                                                           
+						</Panel>
 					</Panel>
-				</Panel>
-				
+					
 
-				                                                      
-				<Panel id="AliveBackgroundCT" class="TeamCounter__AliveCT">
-					<Label id="AliveCountCT" class="TeamCounter__AliveCount"/>
-					<Image id="AliveSkullCT" class="TeamCounter__AliveSkull" src="file://{images}/hud/teamcounter/teamcounter_aliveskull.png" />
-					<Label id="AliveTextCT" class="TeamCounter__AliveText" text="#SFUI_PlayerCount_Alive"/>
+					                                                      
+					<Panel id="AliveBackgroundCT" class="TeamCounter__AliveCT">
+						<Label id="AliveCountCT" class="TeamCounter__AliveCount"/>
+						<Image id="AliveSkullCT" class="TeamCounter__AliveSkull" src="file://{images}/hud/teamcounter/teamcounter_aliveskull.png" />
+						<Label id="AliveTextCT" class="TeamCounter__AliveText" text="#SFUI_PlayerCount_Alive"/>
+					</Panel>
+
 				</Panel>
 
 				                                        
@@ -154,24 +160,27 @@
 					                                                     
 				</Panel>
 
-				                                                      
-				<Panel id="AliveBackgroundT" class="TeamCounter__AliveT">
-					<Label id="AliveCountT" class="TeamCounter__AliveCount"/>
-					<Image id="AliveSkullT" class="TeamCounter__AliveSkull" src="file://{images}/hud/teamcounter/teamcounter_aliveskull.png" />
-					<Label id="AliveTextT" class="TeamCounter__AliveText" text="#SFUI_PlayerCount_Alive"/>
-				</Panel>
+				<Panel class="team__large_container--right">
 
-				                            
-				<Panel id="TeamLargeT" class="Team__Large">
-					                                                     
-				</Panel>
-
-				<Panel id="TeamSmallContainerT">
-					<Panel id="TeamSmallT__Row1" class="Team__SmallT">
-						                                                                           
+					                                                      
+					<Panel id="AliveBackgroundT" class="TeamCounter__AliveT">
+						<Label id="AliveCountT" class="TeamCounter__AliveCount"/>
+						<Image id="AliveSkullT" class="TeamCounter__AliveSkull" src="file://{images}/hud/teamcounter/teamcounter_aliveskull.png" />
+						<Label id="AliveTextT" class="TeamCounter__AliveText" text="#SFUI_PlayerCount_Alive"/>
 					</Panel>
-					<Panel id="TeamSmallT__Row2" class="Team__SmallT">
-						                                                                           
+
+					                            
+					<Panel id="TeamLargeT" class="Team__Large">
+						                                                     
+					</Panel>
+
+					<Panel id="TeamSmallContainerT">
+						<Panel id="TeamSmallT__Row1" class="Team__SmallT">
+							                                                                           
+						</Panel>
+						<Panel id="TeamSmallT__Row2" class="Team__SmallT">
+							                                                                           
+						</Panel>
 					</Panel>
 				</Panel>
 
@@ -193,6 +202,7 @@
 					</Panel>
 				</Panel>
 			</Panel>
+
 
 		</Panel>
 

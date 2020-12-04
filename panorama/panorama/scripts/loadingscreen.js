@@ -52,7 +52,15 @@ var LoadingScreen = ( function() {
 			$.RegisterEventHandler('ImageFailedLoad', $('#LoadingScreenOverview'), mapOverviewFailed.bind(undefined));
 
 			var elOverview = $( '#LoadingScreenOverview' );
-			elOverview.SetImage('file://{images_overviews}/' + mapName + '_radar.dds');
+			
+			if( mapName === "lobby_mapveto" )
+			{
+				elOverview.SetImage('file://{images}/overheadmaps/' + mapName +'.png');
+			}
+			else
+			{
+				elOverview.SetImage('file://{images_overviews}/' + mapName + '_radar.dds');
+			}
 
 			$( '#LoadingScreenIcon' ).AddClass('show');
 			elBackgroundImage.AddClass('show');
@@ -73,7 +81,10 @@ var LoadingScreen = ( function() {
 		    else
 		        $( '#LoadingScreenGameMode' ).SetLocalizationString( '#sfui_gamemode_' + gameMode );
 			
-			$('#LoadingScreenGameModeIcon').SetImage('file://{images}/icons/ui/' + gameMode + '.svg');
+			if ( GameStateAPI.IsQueuedMatchmakingMode_Team() || mapName === 'lobby_mapveto' )
+				$('#LoadingScreenGameModeIcon').SetImage( "file://{images}/icons/ui/competitive_teams.svg" );
+			else
+				$('#LoadingScreenGameModeIcon').SetImage('file://{images}/icons/ui/' + gameMode + '.svg');
 
 			if ( descriptionText != "" )
 			    $( '#LoadingScreenModeDesc' ).SetProceduralTextThatIPromiseIsLocalizedAndEscaped( descriptionText, false );

@@ -39,7 +39,7 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuCore
 
 CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 {
-	blur: fastgaussian(  4, 4, 5 );
+	blur: fastgaussian( 4, 4, 5);
 }
 
 #MainMenuForeground
@@ -48,6 +48,14 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 
 .MainMenuRootPanel
 {
+}
+
+#MainMenuFullScreenBlackCoverPlaque
+{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	color: black;
 }
 
 .MainMenuContainer

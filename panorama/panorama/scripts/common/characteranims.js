@@ -66,12 +66,11 @@ var CharacterAnims = ( function()
 			default:
 				return '';
 			
-		}		
-
+		}
 	}
 	
 
-	var _PlayAnimsOnPanel = function ( importedSettings, bDontStompModel = false )
+	var _PlayAnimsOnPanel = function ( importedSettings, bDontStompModel = false, makeDeepCopy = true )
 	{
 		  
 		                                                       
@@ -87,7 +86,7 @@ var CharacterAnims = ( function()
 			return;
 		}
 
-		var settings = ItemInfo.DeepCopyVanityCharacterSettings( importedSettings );
+		var settings = makeDeepCopy ? ItemInfo.DeepCopyVanityCharacterSettings( importedSettings ) : importedSettings;
 
 		if ( !settings.team || settings.team == "" )
 			settings.team = 'ct';

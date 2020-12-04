@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+		id: "SettingsChatWheel",
+		loc_name: "#settings_ui_chatwheel_section",
+		loc_desc: "#Chatwheel_description",
+		section: "KeybdMouseSettings",
+		start_date: new Date( 'November 25, 2020' ), 
+		end_date: new Date( 'April 30, 2021' ),
+	},
+	{
 		id: "SettingsCommunicationSettings",
 		                                           
 		                                        

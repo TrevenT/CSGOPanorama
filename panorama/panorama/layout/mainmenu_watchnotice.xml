@@ -12,7 +12,6 @@
 		<include src="file://{resources}/scripts/mainmenu_watchnotice.js" />
 		<include src="file://{resources}/scripts/watch_events_debug.js" />
 		<include src="file://{resources}/scripts/watchmatchtile.js" />
-		<include src="file://{resources}/scripts/watch_events_official_list.js" />
 	</scripts>
 
 	<snippets>

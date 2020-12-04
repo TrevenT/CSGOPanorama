@@ -4,7 +4,12 @@ CSGOHudAlerts
 {
 	width: 883px;
 	height: 64px;
-    horizontal-align:center;
+	horizontal-align:center;
+}
+
+.round-end-report-visible CSGOHudAlerts
+{
+	transform: translateY(100px);
 }
 
 #AlertBg

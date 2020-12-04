@@ -1,6 +1,5 @@
                                                              
-
-"use strict";
+'use strict';
 
 var TintSprayIcon = ( function ()
 {
@@ -8,13 +7,12 @@ var TintSprayIcon = ( function ()
 	{
 		if ( InventoryAPI.DoesItemMatchDefinitionByName( itemId, 'spraypaint' ) || InventoryAPI.DoesItemMatchDefinitionByName( itemId, 'spray' ) )
 		{
-			InventoryAPI.GetSprayTintColorCode( itemId );
-
 			var colorTint = InventoryAPI.GetSprayTintColorCode( itemId );
 			
 			if ( colorTint )
 			{
 				elImage.style.washColor = colorTint;
+				                                   
 			}
 			else
 			{
@@ -27,7 +25,22 @@ var TintSprayIcon = ( function ()
 		}
 	};
 
+	                                                                                 
+	   
+	                                              
+	    
+	   	                                                                                                                        
+	   	                                                                                       
+	   		                                                                       
+	   
+	   	                                                                                                                                          
+	   	 
+	   		                                                                                           
+	   	 
+	     
+
 	return{
 		CheckIsSprayAndTint : _Tint                                   
+		                            
 	};
 })();

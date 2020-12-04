@@ -56,6 +56,11 @@
 	flow-children: right;
 }
 
+.store-panel__carousel-page.store-panel__carousel-page--single
+{
+	padding: 0px 0px;
+}
+
 .store-panel__carousel__item
 {
 	width: 172px;
@@ -426,7 +431,7 @@
 	vertical-align: bottom;
 	font-weight: light;
 	font-family: Stratum2, 'Arial Unicode MS';
-	color:  gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), to( #a5a5a5 ) );
+	color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), to( #a5a5a5 ) );
 }
 
 .store-panel__tournament-label.game 
@@ -533,5 +538,101 @@
 #StoreNaveBarWalletBalance.hidden
 {
 	visibility: collapse;
+}
+
+.store-panel__operation-banner
+{
+	width: 100%;
+	height: 250px;
+	padding: 0px;
+	background-color:  #241505de;
+	background-image: url('file://{resources}/videos/background_movie_op10.webm');
+	background-size: cover;
+	background-img-opacity: 0.75;
+}
+
+.store-panel__operation-images-container
+{
+	width: 100%;
+	height: 100%;
+}
+
+.store-panel__operation-image-char0,
+.store-panel__operation-image-char1
+{
+	width: 256px;
+	vertical-align: bottom;
+	horizontal-align: right;
+	z-index: 1;
+}
+
+.store-panel__operation-image-char1
+{
+	transform: translateX( -150px);
+	z-index: 1;
+	
+}
+
+.store-panel__operation-items-fade
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #1a0f00f3 ), to( #2b1c0100 ) );
+}
+
+.store-panel__operation-items-container
+{
+	flow-children: left;
+	vertical-align: bottom;
+	padding-left: 16px;
+	margin-bottom: 8px;
+}
+
+.store-panel__operation-image
+{
+	width: 112px;
+}
+
+.store-panel__operation-labels-container
+{
+	flow-children: down;
+	margin-top: 24px;
+	margin-left: 32px;
+}
+
+.store-panel__operation-title
+{
+	font-size: 18px;
+	font-weight: black;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenDark;
+	background-color: opTenYellow;
+	padding: 4px 8px;
+	margin-bottom: 4px;
+	text-transform: uppercase;
+}
+
+.store-panel__operation-desc
+{
+	font-size: 14px;
+	font-weight: light;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenYellow;
+	background-color: opTenDark;
+	padding: 4px 8px;
+	margin-bottom: 4px;
+}
+
+.store-panel__operation-balance-container
+{
+	background-color: opTenDark;
+	padding: 4px 8px;
+	flow-children: right;
+	wash-color: opTenYellow;
+}
+
+.store-panel__operation-balance-container Label
+{
+	font-size: 14px;
 }
 

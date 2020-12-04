@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="file://{resources}/styles/csgostyles.css" />
-		<include src="file://{resources}/styles/scoreboard.css" />
+		<include src="file://{resources}/styles/matchinfo_scoreboard.css" />
         <include src="file://{resources}/styles/matchinfo.css" />
 		<include src="file://{resources}/styles/mainmenu.css" />
 		<include src="file://{resources}/styles/mainmenu_play.css" />
@@ -91,7 +91,7 @@
                 <Panel id="Scoreboard" class="mi-sb-main ">
                                  
                     <Panel id="meta" class="mi-sb-meta">
-                        <Image id="id-mi-map-icon" class="mi-meta__map-icon"/>
+                        <Image id="id-mi-map-icon" class="mi-meta__map-icon" texturewidth="80" textureheight="-1"/>
                         <Panel class="mi-meta__labels">
                             <Panel class="top-bottom-flow">
                                 <Label class="mi-meta__labels--bold" text="#CSGO_Watch_Info_3" />

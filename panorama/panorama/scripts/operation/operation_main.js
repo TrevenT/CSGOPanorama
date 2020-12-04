@@ -1098,27 +1098,16 @@ var OperationMain = ( function()
 		}
 	};
 
-	var _UnblurMenu = function()
-	{
-		_m_cp.SetHasClass( 'blur', false );
-	};
-
-	var _BlurMenu = function()
-	{
-		_m_cp.SetHasClass( 'blur', true );
-	};
-
 	return {
 		Init: _Init,
 		CheckUsersOperationStatus: _CheckUsersOperationStatus,
-		UnblurMenu: _UnblurMenu,
-		BlurMenu: _BlurMenu
 	};
 } )();
 
 (function () {
+
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', OperationMain.CheckUsersOperationStatus );
-	$.RegisterForUnhandledEvent( 'UnblurOperationPanel', OperationMain.UnblurMenu );
-	$.RegisterForUnhandledEvent( 'BlurOperationPanel', OperationMain.BlurMenu );
+	                                                                                                          
+	                                                                                                      
 })();
 

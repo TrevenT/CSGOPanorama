@@ -6,7 +6,7 @@
 
 @define left-panel-width: 80px;
 
-
+@define sb-row-width: 830px;
 
 @define timeline-round-width: 20px;
 
@@ -158,6 +158,7 @@ Label {
 	
 	width: left-panel-width;                                            
 
+	margin-right: 10px;
 	
  }
 
@@ -214,7 +215,7 @@ Label {
 
 .sb-team__data {
 
-	padding-left: 10px;
+  	                   
 	                               
 	horizontal-align: left;
 }
@@ -576,7 +577,7 @@ Button.sb-row__cell:hover {
 
 .sb-row {
 
-	width: fit-children;
+	width: sb-row-width;
 	flow-children: right;
 
 	horizontal-align: left;
@@ -617,7 +618,7 @@ Button.sb-row__cell:hover {
 	transition-duration: 0.1s;
 	transition-timing-function: ease-in-out;
 
-	width: 235px;
+  	             
 
 	flow-children: right;
 }
@@ -668,13 +669,13 @@ background-color: rgba(255, 238, 0, 0.07);
 
 	vertical-align: middle;
 
-	width: 40px;
+	width: 45px;
 
 	background-color: cell-background-light;
 }
 
 .sb-row__cell Label {
-	font-size: 18px;
+	font-size: 16px;
 
 	margin-right: 6px;
 	margin-left: 6px;
@@ -739,20 +740,16 @@ background-color: rgba(255, 238, 0, 0.07);
 .sb-row__cell--rank,
 .sb-row__cell--avatar,
 .sb-row__cell--name,
-.sb-row__cell--flair,
-.sb-row__cell--kills,
-.sb-row__cell--deaths,
-.sb-row__cell--kdr,
-.sb-row__cell--utilitydamage,
-.sb-row__cell--score,
+.sb-row__cell--flair
 {
 	background-color: cell-background-dark;
 }
 
-.sb-row__cell--score
+.sb-row__cell--dark
 {
 	background-color: cell-background-dark;
 }
+
 
 
 .sb-row__cell--ping {
@@ -867,7 +864,7 @@ Label.sb-row__cell--ping__label--bot {
 }
 
 .sb-row__cell--name {
-	width: 400px;
+	width: fill-parent-flow(1);
 	flow-children: left;
 }
 
@@ -932,7 +929,7 @@ Label.sb-row__cell--ping__label--bot {
                                                                      
 
 .sb-row__cell--money {
-	width: 70px;
+	width: 64px;	
 }
 
 #id-sb-row__cell--money__label
@@ -941,12 +938,14 @@ Label.sb-row__cell--ping__label--bot {
 	width: 100%;
 }
 
-.sb-row__cell--kills {
+.sb-row__cell--kills,
+.sb-row__cell--deaths,
+.sb-row__cell--assists,
+.sb-row__cell--enemiesflashed {
 
+	width: 35px;
 }	
 
-.sb-row__cell--deaths {
-}
 
 .sb-row__cell--mvps {
 	                           
@@ -955,7 +954,7 @@ Label.sb-row__cell--ping__label--bot {
 
 	                                     
 
-	width: 45px;
+	width: 46px;
 }	
 
 .sb-row__cell--mvps__star {
@@ -979,38 +978,48 @@ Label.sb-row__cell--mvps__count {
 }
 
 .sb-row__cell--score {
-	width: 52px;
+
+
 }	
 
 .sb-row__cell--hsp {
-	width: 45px;
+
 }	
 
 .sb-row__cell--kdr {
-	width: 55px;
+
+	width: 50px;
 }
 
 .sb-row__cell--adr {
+
+
+}	
+
+
+.sb-row__cell--damage {
+
 	width: 50px;
 }	
 
 .sb-row__cell--utilitydamage {
-	width: 45px;
+
+
 }	
 
-.sb-row__cell--enemiesflashed {
-}
+
 
 .sb-row--labels {
 
+	width: sb-row-width;
 	flow-children: right;
-	padding-left: 10px;
 }
 
 
 .sb-row--labels .sb-row__set {
 
 	padding-left: 0px;
+	flow-children: right;
 }
 
 
@@ -1649,11 +1658,6 @@ Label.sb-row__cell--mvps__count {
  }
 
 
- .eom-scoreboard .sb-row__cell--money:not(.sb-row__cell--label)
-{
-	background-color: cell-background-dark;
-}
-
  .eom-scoreboard .sb-meta,
  {
 	 height: fit-children;
@@ -1784,3 +1788,12 @@ Label.sb-row__cell--mvps__count {
 	background-color: rgba(1, 49, 65, 0.5);
 }
 
+.round-end-report-visible .sb-main {
+
+	transform: translateY( 150px);
+}
+
+.round-end-report-visible .eom-scoreboard .sb-main {
+
+	transform: translateY( 0px);
+}

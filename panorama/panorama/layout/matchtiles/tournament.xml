@@ -26,7 +26,7 @@
 				</Panel>
 				<Panel class="left-right-flow">
 					<Panel class="vertical-center no-flow">
-						<Image id="mapicon" class="MatchMap__Icon"/>
+						<Image id="mapicon" class="MatchMap__Icon" texturewidth="80" textureheight="-1"/>
 					</Panel>
 					<Panel class="top-bottom-flow MatchInfo__Tournament__SmallContainer">
 						<Label id="mapname" class="MatchInfo" text="Map Name"/>

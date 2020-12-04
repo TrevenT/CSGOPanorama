@@ -16,6 +16,8 @@ function MatchmakingStatus( elMatchStatus )
 		_handler_HidePauseMenu,
 		_handler_ShowPauseMenu,
 		_handler_ShowMainMenu;
+	
+	var _m_showMatchingMissions = true;
 
 	var _BCanShow = function()
 	{
@@ -85,7 +87,7 @@ function MatchmakingStatus( elMatchStatus )
 
 		_m_elStatusPanel.SetHasClass( 'hidden', false );
 
-		 _UpdateStatusPanel( lobbySettings );
+		_UpdateStatusPanel( lobbySettings );
 	};
 
 	var _UpdateStatusPanel = function( lobbySettings )
@@ -95,6 +97,7 @@ function MatchmakingStatus( elMatchStatus )
 		_UpdateSearchWaitPanel( lobbySettings );
 		_SearchPanelSearching( lobbySettings );
 		_ShowMatchmakingWarnings( lobbySettings );
+		_CheckForMatchingMissions( lobbySettings );
 	};
 
 	var _UpdateSearchWaitPanel = function( lobbySettings )
@@ -118,6 +121,7 @@ function MatchmakingStatus( elMatchStatus )
 		if ( !lobbySettings || !_IsSeaching() )
 		{
 			elStatusSearching.AddClass( 'hidden' );
+			_m_showMatchingMissions = true;
 			_CancelSearchTimeUpdate();
 			return;
 		}
@@ -158,6 +162,21 @@ function MatchmakingStatus( elMatchStatus )
 		elStatusWarnings.SetHasClass( 'hidden', !isWarning );
 		if( isWarning )
 			elStatusWarnings.FindChild( 'MatchStatusWarningLabel' ).text = $.Localize( serverWarning );
+	};
+
+	var _CheckForMatchingMissions = function( lobbySettings )
+	{
+		var nSeasonAccess = GameTypesAPI.GetActiveSeasionIndexValue();
+		if ( nSeasonAccess < 0 || nSeasonAccess === null )
+		{
+			return;
+		}
+		
+		if ( _IsSeaching() && lobbySettings && lobbySettings.mapgroupname && _m_showMatchingMissions )
+		{
+			OperationUtil.MissionsThatMatchYourMatchMakingSettings( lobbySettings.mode, lobbySettings.mapgroupname.split( ',' ), nSeasonAccess );
+			_m_showMatchingMissions = false;
+		}
 	};
 
 	                                                                                                    

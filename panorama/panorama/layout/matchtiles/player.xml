@@ -11,7 +11,7 @@
         <Panel class="full-width full-height">
             <Panel class="MatchTile">
                 <Panel class="MatchMap">
-                    <Image id="mapicon" class="MatchMap__Icon"/>
+                    <Image id="mapicon" class="MatchMap__Icon" texturewidth="80" textureheight="-1"/>
                     <Label id="mapname" class="MatchInfo MatchInfo__MapName" text="Map Name"/>
                 </Panel>
                 <Panel class="MatchInfoContainer">

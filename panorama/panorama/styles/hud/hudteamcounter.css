@@ -93,6 +93,14 @@ CSGOHudTeamCounter Label
     vertical-align: top;
 }
 
+#TeamLargeCT,
+#TeamSmallContainerCT {
+    horizontal-align: right;
+}
+#TeamLargeT,
+#TeamSmallContainerT {
+    horizontal-align: left;
+}
 
 #TeamSmallContainerCT,
 #TeamSmallContainerT
@@ -133,6 +141,30 @@ CSGOHudTeamCounter Label
 {
     margin-bottom: 2px;
 }
+
+
+.team__large_container--left {
+    horizontal-align: right;
+    width: fill-parent-flow( 1.0);
+}
+
+.team__large_container--right {
+    horizontal-align: left;
+    width: fill-parent-flow( 1.0);
+}
+
+.TeamCounter__Align--Bottom .team__large_container--left,
+.TeamCounter__Align--Bottom .team__large_container--right {
+    vertical-align:bottom;
+}
+
+.TeamCounter__Align--Top .team__large_container--left,
+.TeamCounter__Align--Top .team__large_container--right {
+    vertical-align:top;
+}
+
+
+
 
                                                                                
    
@@ -415,10 +447,13 @@ CSGOHudTeamCounter Label
 .AvatarL
 {
     width: AvatarLBGWidth;
-                           
     height: AvatarLBGWidth;
     margin-left: 1px;
     margin-right: 1px;
+
+    overflow: noclip;
+
+
 }
 
 #AvatarL__ImageBG
@@ -827,6 +862,7 @@ CSGOHudTeamCounter Label
 {
     flow-children: right;
     horizontal-align: center;
+    width: 100%;
 }
 
 .Team__All
@@ -834,6 +870,7 @@ CSGOHudTeamCounter Label
     flow-children: right;
     width: fit-children;
     height: fit-children;
+    horizontal-align: center;
 }
 
 .Team__Large
@@ -878,7 +915,7 @@ CSGOHudTeamCounter Label
 
 .TeamCounter__AliveT
 {
-    y: 8px;
+    y: 0px;
     width: 51px;
     height: 55px;
     margin-left: 3px;
@@ -892,7 +929,7 @@ CSGOHudTeamCounter Label
 {
     horizontal-align: center;
     text-align: center;
-    margin-top: 2px;
+    margin-top: 0px;
     margin-bottom: -8px;
     
 
@@ -908,7 +945,8 @@ CSGOHudTeamCounter Label
     text-align: center;
     font-size: 12px;
     text-shadow: 1px 1px 1px 2.0 #000000;
-    color: #afafaf;
+    margin-bottom: 4px;
+    color: white;
 }
 
 .TeamCounter__AliveSkull
@@ -1225,6 +1263,9 @@ CSGOHudTeamCounter Label
 {
     flow-children: none;
     horizontal-align: center;
+
+	transform: translatez(-10px);
+
 }
 
 .JoinPanel

@@ -15,6 +15,10 @@ var Avatar = ( function()
 				_SetTeamColor( elAvatar, xuid );
 				_SetLobbyLeader( elAvatar );
 				break;
+			case 'flair':
+				_SetImage( elAvatar, xuid );
+				_SetFlair( elAvatar, xuid );
+				break;
 			default:
 				_SetImage( elAvatar, xuid );
 				_SetTeamColor( elAvatar, xuid );
@@ -149,7 +153,8 @@ var Avatar = ( function()
 
 	return {
 		Init: _Init,
-		UpdateTalkingState : _UpdateTalkingState
+		UpdateTalkingState: _UpdateTalkingState,
+		SetFlair: _SetFlair,
 	};
 })();
 

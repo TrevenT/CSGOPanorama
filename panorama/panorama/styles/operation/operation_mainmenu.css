@@ -69,9 +69,10 @@
 .op-mainmenu__title__prefix--btn-container
 {
 	                                          
-	width: 100%;
+	width: fit-children;
 	flow-children: right;
 	vertical-align: bottom;
+	horizontal-align: center;
 }
 
 .op-mainmenu__title__prefix--btn
@@ -96,7 +97,7 @@
 
 .op-mainmenu__title__prefix--btn Label
 {
-	font-size: 14px;
+	font-size: 22px;
 	text-overflow: noclip;
 	width: 240px;
 	text-shadow:2px 2px 2px #000000;
@@ -114,7 +115,7 @@
 
 .op-mainmenu__title__prefix--btn:hover Label
 {
-	color: opAccentColorLight;
+	color: opTenYellow;
 
 	transition-property: color;
 	transition-duration: 0.20s;
@@ -144,7 +145,7 @@
 
 #id-op-mainmenu-upsell-store-image
 {
-	height: 96px;
+	height: 128px;
 	brightness: .5;
 }
 
@@ -172,14 +173,20 @@
 .op-mainmenu__unlock-text Label
 {
 	font-family: Stratum2, 'Arial Unicode MS';
-	color: opAccentColorLight;
+	color: opTenDark;
 	font-size: 14px;
 	padding: 6px;
 	text-align: center;
 	font-weight: medium;
 	vertical-align: center;
-	background-color: opAccentColor;
+	background-color: opTenYellow;
 	text-overflow: clip;
+}
+
+.op-mainmenu__unlock-text Label:hover
+{
+	color: opTenYellow;
+	background-color: opTenDark;
 }
 
 #id-op-reward-open-operation-hub
@@ -285,7 +292,7 @@
 	                                     
 	-s2-mix-blend-mode: SRGBadditive;
 
-	background-image: url( "file://{images}/operations/circuit.png" );
+	                                                                        
 	background-repeat: repeat;
 	background-size: auto auto;
 	background-position: 160% 50%;
@@ -294,11 +301,11 @@
 .op-mainmenu__operation-bg--missions
 {
 	transform: rotateZ( 0deg ) translateX( 0% );
-	background-image: url( "file://{images}/operations/circuit.png" );
+	                                                                       
 	background-repeat: repeat;
-	background-size: 90% auto;
-	background-position: 450% 0%;
-	opacity: .03;
+	background-size: cover;
+	background-position: 50% 50%;
+	opacity: .02;
 	-s2-mix-blend-mode: SRGBadditive;
 }
 
@@ -309,7 +316,7 @@
 	                
 	               
 	padding: 6px;
-	wash-color: opAccentColorLight;
+	wash-color: opTenYellow;
 
 	transition-property: wash-color;
 	transition-duration: 0.20s;
@@ -325,7 +332,7 @@
 .op-mainmenu__arrow_btn
 {
 	padding: 6px;
-	background-color: opAccentColorBlack;
+	background-color: opTenDark;
 	vertical-align: top;
 	margin: 0px 0px 0px 2px;
 
@@ -342,7 +349,7 @@
 
 .op-mainmenu__arrow_btn Image
 {
-	wash-color: opAccentColorLight;
+	wash-color: opTenYellow;
 }
 
 .op-mainmenu__arrow_btn Image
@@ -683,8 +690,247 @@
 {
 	height: fill-parent-flow( 0.7 );
 	width: 100%;
-	background-color: opTrasparentGradient;
+	background-color: #4e3d05e0;
 	margin-bottom: 16px;
 }
+
+           
+.op-mainmenu__stats
+{
+	height: fill-parent-flow( 0.2 );
+	width: 100%;
+	background-color: #3d2f00bb;
+	                          
+
+	transition-property: brightness;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mainmenu__stats:hover
+{
+	brightness: 2;
+
+	transition-property: brightness;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mainmenu__stats__container
+{
+	flow-children: down;
+	horizontal-align: center;
+}
+
+.op-mainmenu__stats__match-date
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenYellow;
+	font-size: 14px;
+	text-align: center;
+	horizontal-align: center;
+	font-weight: medium;
+	padding-top: 8px;
+}
+
+.avatar-image__icon:hover {
+	brightness: 1.5;
+
+	transition-property: brightness;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-mainmenu__stats__match
+{
+	width: fit-children;
+	padding: 0px 32px;
+}
+
+.op-mainmenu__stats__match__win-loss--green,
+.op-mainmenu__stats__match__win-loss--yellow,
+.op-mainmenu__stats__match__win-loss--red
+{
+	height: 16px;
+	width: 16px;
+	border-radius: 50%;
+	box-shadow: shadowOffset;
+	vertical-align: center;
+}
+
+.op-mainmenu__stats__match__map-icon
+{
+	height: 48px;
+	vertical-align: center;
+	margin: 0px 12px;
+}
+
+.op-mainmenu__stats__match__map-name
+{
+	vertical-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenYellow;
+	font-size: 28px;
+	font-weight: medium;
+}
+
+.op-mainmenu__stats__match__map-score
+{
+	vertical-align: center;
+	horizontal-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenYellow;
+	font-size: 28px;
+	font-weight: black;
+	text-align: center;
+	width: fill-parent-flow ( 1 );
+}
+
+#id-op-mainmenu-stats-match-teammates .avatar-image__icon
+{
+	height: 42px;
+	width: 42px;
+	margin: 0px 2px;
+}
+
+.op-mainmenu__stats__match__win-loss--green
+{
+	background-color: positiveColor;
+}
+
+.op-mainmenu__stats__match__win-loss--yellow
+{
+	background-color: warningColor;
+}
+
+.op-mainmenu__stats__match__win-loss--red
+{
+	background-color: negativeColor;
+}
+
+.op-mainmenu__stats__data
+{
+	flow-children: down-wrap;
+	height:fill-parent-flow(1);
+	horizontal-align: center;
+}
+
+@define stat-width: 80px;
+@define stat-padding: 16px;
+
+                                          
+.op-mainmenu__stats__data--three-columns
+{
+	width: 68%;
+}
+
+                                          
+.op-mainmenu__stats__data--two-columns
+{
+	width: 38%;
+}
+
+                                      
+.op-mainmenu__stats__data--one-columns
+{
+	width: 19%;
+}
+
+.op-mainmenu__stats__data_container
+{
+	flow-children: right;
+}
+
+.op-mainmenu__stats__stat
+{
+	width: stat-width;
+	text-align: left;
+	padding: 4px 0px 4px stat-padding;
+	horizontal-align: center;
+	font-weight: lighter;
+	white-space: nowrap;
+	text-overflow: shrink;
+}
+
+.op-mainmenu__stats__value
+{
+	width: stat-width;
+	text-align: right;
+	font-weight: bold;
+	padding: 4px stat-padding 4px 0px;
+	border-right: 1px solid rgba(219, 219, 219, 0.164);
+	horizontal-align: center;
+}
+
+.op-mainmenu__stats__value--no-border
+{
+	border-right: 0px solid rgba(219, 219, 219, 0);
+}
+
+
+.no-match-data.op-mainmenu__stats
+{
+	height: fill-parent-flow( 0.06 );
+}
+
+.no-match-data .op-mainmenu__stats__top-section
+{
+	height: 100%;
+}
+
+.no-match-data .op-header
+{
+	border: 0px solid black;
+	vertical-align: center;
+}
+
+.no-match-data #id-op-mainmenu-stats-section
+{
+	visibility: collapse;
+}
+
+.op-mainmenu__stats__upsell-container
+{
+	width: 100%;
+	height: fill-parent-flow( 1 );
+}
+
+.op-mainmenu__stats__upsell-image
+{
+	width: 640px;
+	brightness: .4;
+	blur:gaussian( 2, 2, 1 );
+}
+
+.op-mainmenu__stats__upsell-info
+{
+	margin-left: 32px;
+	margin-right: 32px;
+	margin-top: 32px;
+	flow-children: right;
+	vertical-align: center;
+}
+
+#id-op-mainmenu-stats-store-image
+{
+	width: 128px;
+	margin-right: 16px;
+}
+
+
+.store-panel__operation-desc
+{
+	font-size: 16px;
+	font-weight: medium;
+	font-family: Stratum2, 'Arial Unicode MS';
+	color: opTenYellow;
+	                                  
+	width: fit-children;
+	text-align: left;
+	horizontal-align: left;
+}
+
+
+
 
 

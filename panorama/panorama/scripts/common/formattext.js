@@ -155,6 +155,51 @@ var FormatText = ( function ()
 		return integer;
 	}
 
+
+	var _SplitAbbreviateNumber = function( number, fixed = 0 )
+	{
+		                                           
+		if ( number < 0 )
+			return -1;
+		
+		var pow10 = Math.log10( number ) | 0;
+		
+		var stringToken = "";
+
+		var locFilePrefix = "NumberAbbreviation_suffix_E";
+		do
+		{
+			stringToken = locFilePrefix + [ pow10 ];
+
+			                                                                                    
+			if ( $.Localize( stringToken ) != stringToken )
+				break;
+			
+		} while ( --pow10 > 0 );
+
+		if ( $.Localize( stringToken ) == stringToken  )
+			return [number, ''];
+
+		var scale = Math.pow(10, pow10 );
+
+		                   
+		var scaledNumber = number / scale;
+
+		                                                    
+		var decimals = scaledNumber < 10.0 ? 1 : 0;
+		
+		                                                                     
+		var finalNum = scaledNumber.toFixed( fixed ).replace( /\.0+$/, '' );
+
+		var result = [];
+
+		result[ 0 ] = finalNum;
+		result[ 1 ] = $.Localize( stringToken );
+
+		return result;
+	}
+
+
 	                                                                                   
 	                                                               
 	var _AbbreviateNumber = function( number )
@@ -208,6 +253,23 @@ var FormatText = ( function ()
 		return result;
 	}
 
+
+	function _CapitalizeFirstLetterOfEachWord ( sentence )
+	{
+		return sentence.replace( /\w\S*/g, function( txt )
+		{
+			return txt.charAt( 0 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
+		} );
+	}
+
+	function _ForceSign ( num )
+	{
+		if ( Number( num ) >= 0 )
+			return '+' + num;
+		else
+			return String(num);
+	}
+
 	return{
 	    SetFormattedTextOnLabel                     : _SetFormattedTextOnLabel,                                                                 
 	    ClearFormattedTextFromLabel                 : _ClearFormattedTextFromLabel,                                                                 
@@ -215,5 +277,8 @@ var FormatText = ( function ()
 		SecondsToSignificantTimeString				: _SecondsToSignificantTimeString,                                               
 		PadNumber									: _PadNumber,                                                                               
 		AbbreviateNumber							: _AbbreviateNumber,                                                                   	
+		SplitAbbreviateNumber						: _SplitAbbreviateNumber,                                                                      
+		CapitalizeFirstLetterOfEachWord				: _CapitalizeFirstLetterOfEachWord,                                                                                
+		ForceSign									: _ForceSign,                                                 
 	};
 })();

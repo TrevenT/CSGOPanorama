@@ -24,6 +24,8 @@ var MainMenu = ( function() {
 	var _m_storePopupElement = null;
 	var m_TournamentPickBanPopup = null;
 
+	var _m_hOnEngineSoundSystemsRunningRegisterHandle = null;
+
 	                                         
 	let nNumNewSettings = UpdateSettingsMenuAlert();
 
@@ -55,6 +57,18 @@ var MainMenu = ( function() {
 		{
 			$( '#MainMenuContainerPanel' ).TriggerClass( 'show' );
 			_m_playedInitalFadeUp = true;
+
+			if ( GameInterfaceAPI.GetEngineSoundSystemsRunning() )
+			{
+				                                           
+				                                                            
+				_ShowOperationLaunchPopup();
+			}
+			else
+			{
+				                                                                                                                  
+				_m_hOnEngineSoundSystemsRunningRegisterHandle = $.RegisterForUnhandledEvent( "PanoramaComponent_GameInterface_EngineSoundSystemsRunning", MainMenu.ShowOperationLaunchPopup );
+			}
 		}
 	};
 
@@ -867,6 +881,9 @@ var MainMenu = ( function() {
 		                                                                                   
 		                                                                
 
+		                                                                                                                 
+		vanityPanel.RestoreLightingState();
+
 		if ( backgroundMap === 'cbble' )
 		{
 			vanityPanel.SetFlashlightAmount( 1.0 );
@@ -965,8 +982,14 @@ var MainMenu = ( function() {
 	{
 		                                           	
 		_PauseMainMenuCharacter();
-
 		_NavigateToTab( 'JsInventory', 'mainmenu_inventory' );
+	};
+
+	var _OpenStatsMenu = function()
+	{
+		                                           	
+		_PauseMainMenuCharacter();
+		_NavigateToTab('JsPlayerStats', 'mainmenu_playerstats');
 	};
 
 	var _OpenSettings = function()
@@ -993,6 +1016,9 @@ var MainMenu = ( function() {
 
 			var elPlayButton = $( '#MainMenuNavBarPlay' );
 			if( elPlayButton && !elPlayButton.BHasClass( 'mainmenu-navbar__btn-small--hidden' ) ) {
+
+				GameInterfaceAPI.SetSettingString('panorama_play_movie_ambient_sound', '1');
+				$.DispatchEvent( 'PlaySoundEffect', 'mainmenu_press_home', 'MOUSE' );
 				$.DispatchEvent('PlayMainMenuMusic', true, true );
 			}
 		}
@@ -1010,13 +1036,14 @@ var MainMenu = ( function() {
 	var _UpdateInventoryBtnAlert = function()
 	{
 		var aNewItems = AcknowledgeItems.GetItems();
-		var aOperationItems = aNewItems.filter( item => 'quest_reward' === ItemInfo.GetItemPickUpMethod( item.id ) );
 
-		                                                                            
-		if ( aOperationItems.length > 0 && !GameStateAPI.IsConnectedOrConnectingToServer() )
-		{
-			_ShowAcknowledgePopup( '', '' );
-		}
+		                                                                                                                
+		                                                                                  
+		                                                                                              
+		                                                                                       
+		    
+		   	                                
+		    
 		
 		var count = aNewItems.length;
 		var elNavBar = $.GetContextPanel().FindChildInLayoutFile('JsMainMenuNavBar'),
@@ -1479,6 +1506,34 @@ var MainMenu = ( function() {
 		}
 	};
 
+	var _ShowOperationLaunchPopup = function()
+	{
+		if ( _m_hOnEngineSoundSystemsRunningRegisterHandle )
+		{
+			                                                                                                    
+			$.UnregisterForUnhandledEvent( "PanoramaComponent_GameInterface_EngineSoundSystemsRunning", _m_hOnEngineSoundSystemsRunningRegisterHandle );
+			_m_hOnEngineSoundSystemsRunningRegisterHandle = null;
+		}
+
+		var setVersionTo = '2';
+		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
+
+		if ( currentVersion !== setVersionTo )
+		{
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'',
+				'file://{resources}/layout/popups/popup_operation_launch.xml',
+				'uisettingversion=' + setVersionTo,
+				'none'
+			);
+		}
+
+		                                                                                   
+		var elCoverPlaque = $( '#MainMenuFullScreenBlackCoverPlaque' );
+		if ( elCoverPlaque )
+			elCoverPlaque.visible = false;
+	};
+
 	var _PauseMainMenuCharacter = function()
 	{
 		var vanityPanel = $( '#JsMainmenu_Vanity' );
@@ -1630,6 +1685,7 @@ var MainMenu = ( function() {
 		OnEquipSlotChanged	 				: _OnEquipSlotChanged,
 		OpenPlayMenu						: _OpenPlayMenu,
 		OpenWatchMenu						: _OpenWatchMenu,
+		OpenStatsMenu						: _OpenStatsMenu,
 		OpenInventory						: _OpenInventory,
 		OpenSettings						: _OpenSettings,
 		OnHomeButtonPressed					: _OnHomeButtonPressed,
@@ -1645,6 +1701,7 @@ var MainMenu = ( function() {
 		UpdateOverwatch						: _UpdateOverwatch,
 		UpdateNotifications					: _UpdateNotifications,
 		ShowAcknowledgePopup				: _ShowAcknowledgePopup,
+		ShowOperationLaunchPopup			: _ShowOperationLaunchPopup,
 		ResetAcknowlegeHandler				: _ResetAcknowlegeHandler,
 		ShowNotificationBarTooltip			: _ShowNotificationBarTooltip,
 		ShowVote 							: _ShowVote,
@@ -1677,6 +1734,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'OpenPlayMenu', MainMenu.OpenPlayMenu );
 	$.RegisterForUnhandledEvent( 'OpenInventory', MainMenu.OpenInventory );
 	$.RegisterForUnhandledEvent( 'OpenWatchMenu', MainMenu.OpenWatchMenu );
+	$.RegisterForUnhandledEvent( 'OpenStatsMenu', MainMenu.OpenStatsMenu );
 	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', MainMenu.OnShowMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOHideMainMenu', MainMenu.OnHideMainMenu);
 	$.RegisterForUnhandledEvent( 'CSGOShowPauseMenu', MainMenu.OnShowPauseMenu);
