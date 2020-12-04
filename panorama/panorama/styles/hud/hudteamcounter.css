@@ -903,26 +903,28 @@ CSGOHudTeamCounter Label
 
 .TeamCounter__AliveCT
 {
-    y: 8px;
     width: 51px;
     height: 55px;
     margin-right: 3px;
     flow-children: down;
 	background-image: url( "file://{images}/hud/teamcounter/teamcounter_alivebgCT.png" );
     background-repeat: no-repeat;
-	background-size: 100% 100%;
+    background-size: 100% 100%;
+    
+    horizontal-align: right;
 }
 
 .TeamCounter__AliveT
 {
-    y: 0px;
     width: 51px;
     height: 55px;
     margin-left: 3px;
     flow-children: down;
 	background-image: url( "file://{images}/hud/teamcounter/teamcounter_alivebgT.png" );
     background-repeat: no-repeat;
-	background-size: 100% 100%;
+    background-size: 100% 100%;
+    
+    horizontal-align: left;
 }
 
 .TeamCounter__AliveCount
