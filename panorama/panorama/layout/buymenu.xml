@@ -149,7 +149,10 @@
 							</Panel>
 						<Image id="TeamLogo" class="team-logo" src="file://{images}/icons/ct_logo.svg"/>
 					</Panel>
-					<Label id="PurchaseFailureLabel" class="buymenu__purchase-failure" />
+					<Panel class="buymenu__purchase-failure-container">
+						<Label id="PurchaseFailureLabel" class="buymenu__purchase-failure" />
+						<Label id="BuyForTeammateHintLabel" class="buymenu__purchase-failure buymenu__purchase-failure--teammate Hidden" text="#BuyMenu_BuyForTeammate_hint"/>
+					</Panel>
 
 					<Panel class="team-equip-container--all">
 						                                                                                              
@@ -175,7 +178,7 @@
 					<Panel class="vline" />
 
 					<Panel id="PreviewPanelContainer" class="">
-            			<Panel class="hrTop" />
+						<Panel class="hrTop" />
 						<Panel class="category-preview"> 
 							<Label text="{s:category}" class="category-preview__label"/>
 							<Panel id="CategoryPreview" class="category-image-container" >
@@ -183,7 +186,7 @@
 									                                                                  
 									                                                                           
 								   
-              				</Panel>
+							</Panel>
 						</Panel>
 
 						                                               
@@ -239,6 +242,7 @@
 			</Panel>
 			<Panel id="BuyMenuNavBar" class="buymenu-navbar">
 				<Panel class="vertical-center left-right-flow horizontal-align-right">
+					<Label id="BuyForTeammateLabel" class="buymenu__for-teammate" text="#BuyMenu_BuyForTeammate"/>
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'rebuy' )">
 						<Label text="#BuyMenu_Buyprev" />
 					</Button>

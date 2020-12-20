@@ -21,6 +21,14 @@ var g_PromotedSettings = [
 					                                    
 	  
 	{
+		id: "BuyMenuDonationKey",
+		loc_name: "#SFUI_Settings_BuyWheelDonateKey",
+		loc_desc: "#SFUI_Settings_BuyWheelDonateKey_Info",
+		section: "GameSettings",
+		start_date: new Date( 'December 17, 2020' ), 
+		end_date: new Date( 'April 31, 2021' ),
+	},
+	{
 		id: "SettingsChatWheel",
 		loc_name: "#settings_ui_chatwheel_section",
 		loc_desc: "#Chatwheel_description",
@@ -102,17 +110,6 @@ var g_PromotedSettings = [
 		start_date: new Date( 'September 18, 2019' ), 
 		end_date: new Date( 'January 30, 2020' )
 	},
-
-	          
-	 
-		                        
-		                                
-		                                     
-		                        
-		                                              
-		                                        
-	 
-	          	
 ];
 
 var PromotedSettingsUtil = ( function ()

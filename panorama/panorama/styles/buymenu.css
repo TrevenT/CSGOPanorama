@@ -168,6 +168,15 @@
 	padding-top: 25px;
 }
 
+.buymenu__purchase-failure-container
+{
+	position: 0px 176px 0px;
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children: down;
+	height: 68px;
+}
+
 
 .buymenu__purchase-failure
 {
@@ -177,7 +186,7 @@
 	text-shadow:2px 2px 2px #000000;
 	text-align: center;
 	height: 68px;
-	padding-bottom: 20px;
+	                          
 	width: buywheel-height;
 
 	animation-name: failure-pulse; 
@@ -186,15 +195,39 @@
 	animation-iteration-count: 2;
 
 	horizontal-align: center;
-	vertical-align: center;
 	brightness: 1;
-	position: 0px 178px 0px;
+
 	background-color: #33333300;
+
+	transition-property: height, opacity;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in-out;
+}
+
+.buymenu__purchase-failure--teammate
+{
+	color: warningColor;
 }
 
 .buymenu__purchase-failure.Hidden{
 
-	visibility:collapse;
+	                           
+	height: 0px;
+	padding-bottom: 0px;
+	opacity: 0;
+}
+
+.buymenu__for-teammate{
+	font-family: notosans, Stratum2;
+	font-size: 18px;
+	font-weight: medium;
+	text-transform: uppercase;
+	color: rgb(161, 161, 161);
+	padding-right:16px;
+}
+
+.buymenu__for-teammate.active{
+	color: rgb(161, 161, 161);
 }
 
 #PurchaseFailureLabel {

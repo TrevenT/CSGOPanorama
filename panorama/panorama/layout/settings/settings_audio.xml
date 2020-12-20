@@ -17,7 +17,7 @@
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsAudioSettings')" group="SettingsAudio">
 					<Label text="#settings_audio_section"/>
 				</RadioButton>
-				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsMusicettings')" group="SettingsAudio">
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsMusicSettings')" group="SettingsAudio">
 					<Label text="#settings_music_section"/>
 				</RadioButton>
 			</Panel>
@@ -124,7 +124,7 @@
 			</Panel>
 
 			                               
-			<Panel id="SettingsMusicettings" class="SettingsBackground">
+			<Panel id="SettingsMusicSettings" class="SettingsBackground">
 				<Panel class="SettingsSectionTitleContianer">
 					<Label class="SettingsSectionTitleLabel" text="#settings_music_section" />
 				</Panel>

@@ -18,30 +18,35 @@
 		</Panel>
 	<Panel class="content-navbar content-navbar--short">
 		<Panel id="GameModeSelectionRadios" class="content-navbar__tabs">
+			<RadioButton id="PromotedSettingsRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "Promoted" )'>
+				<Label class="" text="#settings_new"/>
+			</RadioButton>
 
-			  <RadioButton id="PromotedSettingsRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "Promoted" )'>
-				  <Label class="" text="#settings_new"/>
-			  </RadioButton>
+			<RadioButton id="VideoRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("VideoSettings")'>
+				<Label class="" text="#settings_video"/>
+			</RadioButton>
 
-			  <RadioButton id="VideoRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("VideoSettings")'>
-				  <Label class="" text="#settings_video"/>
-			  </RadioButton>
+			<RadioButton id="AudioRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("AudioSettings")'>
+				<Label class="" text="#settings_audio"/>
+			</RadioButton>
 
-			  <RadioButton id="AudioRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("AudioSettings")'>
-				  <Label class="" text="#settings_audio"/>
-			  </RadioButton>
+			<RadioButton id="GameRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("GameSettings")'>
+				<Label class="" text="#settings_game"/>
+			</RadioButton>
 
-			  <RadioButton id="GameRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("GameSettings")'>
-				  <Label class="" text="#settings_game"/>
-			  </RadioButton>
+			<RadioButton id="KBMouseRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "KeybdMouseSettings" )'>
+				<Label class="" text="#settings_keyboard_mouse"/>
+			</RadioButton>
 
-			  <RadioButton id="KBMouseRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab( "KeybdMouseSettings" )'>
-				  <Label class="" text="#settings_keyboard_mouse"/>
-			  </RadioButton>
+			<RadioButton id="ControllerRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("ControllerSettings")'>
+				<Label class="" text="#settings_controller"/>
+			</RadioButton>
+			<Panel class="game-mode-selection-radios-spacer"></Panel>
 
-			  <RadioButton id="ControllerRadio" group="SettingsNavBar" onactivate='SettingsMenu.NavigateToTab("ControllerSettings")'>
-				  <Label class="" text="#settings_controller"/>
-			  </RadioButton>
+			<RadioButton id="SearchRadio" group="SettingsNavBar" class="content-navbar__tabs--small-image" onactivate='SettingsMenu.NavigateToTab("Search")'>
+				<Image texturewidth="-1" textureheight="32" class="" src="file://{images}/icons/ui/find.svg"/>
+				<Label class="" text="#settings_search"/>
+			</RadioButton>
 
 			      
 			                                      
@@ -58,12 +63,3 @@
 
 	</Panel>
 </root>
-
-     
-          
-              
-     
-     
-     
-       
-   

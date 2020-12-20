@@ -13,8 +13,8 @@ var SettingsMenu = ( function () {
 			radioid: "PromotedSettingsRadio"
 		},
 		KeybdMouseSettings: {
-			xml: 'settings_kbmouse',
-			radioid: "KBMouseRadio"
+			xml: 'settings_kbmouse',                            
+			radioid: "KBMouseRadio"                                            
 		},
 		ControllerSettings: {
 			xml: 'settings_controller',
@@ -31,6 +31,10 @@ var SettingsMenu = ( function () {
 		VideoSettings: {
 			xml: "settings_video",
 			radioid: "VideoRadio"
+		},
+		Search: {
+			xml: "settings_search",
+			radioid: "SettingsRadio"
 		}
 	};
 
@@ -130,18 +134,18 @@ var SettingsMenu = ( function () {
         }
     }
 
-    var _OnSettingsMenuShown = function ()
-    {
-                                                                                     
-                                                                                           
-                                                       
-        SettingsMenuShared.NewTabOpened( activeTab );
-    }
-    
+	var _OnSettingsMenuShown = function ()
+	{
+		                                                                             
+		                                                                                   
+		                                               
+		SettingsMenuShared.NewTabOpened( activeTab );
+	}
+
 	var _OnSettingsMenuHidden = function ()
 	{
-                                           
-        GameInterfaceAPI.ConsoleCommand( "host_writeconfig" );
+	                                   
+	GameInterfaceAPI.ConsoleCommand( "host_writeconfig" );
 	}
 
 	var _NavigateToSetting = function ( tab, id )
@@ -150,16 +154,34 @@ var SettingsMenu = ( function () {
 		$.DispatchEvent( "Activated", $( "#" + tabInfo[ tab ].radioid ), "mouse" );
 		SettingsMenuShared.ScrollToId( id );                     
 	}
+	var _NavigateToSettingPanel = function( tab, p )
+	{
+		$.DispatchEvent( "Activated", $( "#" + tabInfo[ tab ].radioid ), "mouse" );
+		p.ScrollParentToMakePanelFit(3, false);
+		p.AddClass('Highlight');
+		var kfs = p.CreateCopyOfCSSKeyframes( 'settings-highlight' );
+		p.UpdateCurrentAnimationKeyframes( kfs )
+	}
 
-    return {
+	var _Init = function( )
+	{
+		                                                             
+		for (let tab in tabInfo) {
+			if ( tab !== "Promoted" && tab !== "Search" )
+				_NavigateToTab(tab);
+		}
+	}
 
-        NavigateToTab	                : _NavigateToTab,
-        NavigateToSetting	            : _NavigateToSetting,
-        AccountPrivacySettingsChanged   : _AccountPrivacySettingsChanged,
-        OnSettingsMenuShown             : _OnSettingsMenuShown,
-        OnSettingsMenuHidden            : _OnSettingsMenuHidden
-    };
-    
+	return {
+		Init                            : _Init,
+		NavigateToTab	                : _NavigateToTab,
+		NavigateToSetting	            : _NavigateToSetting,
+		NavigateToSettingPanel	        : _NavigateToSettingPanel,
+		AccountPrivacySettingsChanged   : _AccountPrivacySettingsChanged,
+		OnSettingsMenuShown             : _OnSettingsMenuShown,
+		OnSettingsMenuHidden            : _OnSettingsMenuHidden
+};
+
 } )() ;
 
                                                                                                     
@@ -167,6 +189,8 @@ var SettingsMenu = ( function () {
                                                                                                     
 (function ()
 {
+	SettingsMenu.Init();
+
 	if ( PromotedSettingsUtil.GetUnacknowledgedPromotedSettings().length > 0 )
 	{
 		SettingsMenu.NavigateToTab( 'Promoted' );
@@ -180,13 +204,14 @@ var SettingsMenu = ( function () {
 		SettingsMenu.NavigateToTab( 'GameSettings' );
 	}
 
-    MyPersonaAPI.RequestAccountPrivacySettings();
-    $.RegisterForUnhandledEvent( "PanoramaComponent_MyPersona_AccountPrivacySettingsChanged", 
-        SettingsMenu.AccountPrivacySettingsChanged );
+	MyPersonaAPI.RequestAccountPrivacySettings();
+	$.RegisterForUnhandledEvent( "PanoramaComponent_MyPersona_AccountPrivacySettingsChanged", 
+		SettingsMenu.AccountPrivacySettingsChanged );
 
-    $.RegisterEventHandler( 'ReadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuShown );
+	$.RegisterEventHandler( 'ReadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuShown );
 	$.RegisterEventHandler( 'UnreadyForDisplay', $( '#JsSettings' ), SettingsMenu.OnSettingsMenuHidden );
 	$.RegisterForUnhandledEvent( 'SettingsMenu_NavigateToSetting',  SettingsMenu.NavigateToSetting );
+	$.RegisterForUnhandledEvent( 'SettingsMenu_NavigateToSettingPanel',  SettingsMenu.NavigateToSettingPanel );
 	
 })();
 

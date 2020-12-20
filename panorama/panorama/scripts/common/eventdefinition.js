@@ -97,6 +97,7 @@
     $.DefineEvent( 'MainMenu_OnGoToCharacterLoadoutPressed', 0, '', '' );
     $.DefineEvent( 'MainMenu_OnLockVanityModelToggle', 0, '', '' );
 	$.DefineEvent( 'SettingsMenu_NavigateToSetting', 2, 'category, settingPanelID', 'Takes cateogry eg "GAME" or "KBMOUSE" and contained setting ID, opens that category and scrolls to the settting matching the id.' );
+	$.DefineEvent( 'SettingsMenu_NavigateToSettingPanel', 2, 'category, settingPanel', 'Navigates to a setting by panel handle' );
 
 	$.DefinePanelEvent( "MainMenu_PromotedSettingsViewed", 0, "", "Fired when user views new settings." )
 

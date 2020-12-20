@@ -259,3 +259,69 @@ CSGOSettingsEnumDropDown:hover
 	              
 	              
 }
+
+
+.setting-search-textentry
+{
+	height: 54px;
+	width: 512px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	padding-top: 10px;
+	font-size: 20px;
+	color: white;
+	border-radius: 0px;
+	border: 0px solid rgba(255, 255, 255, 1);
+	border-bottom: 2px solid rgba(255, 255, 255, 1);
+
+	transition-property: border;
+	transition-duration: 0.2s;
+}
+
+.setting-search-textentry:focus
+{
+	border-bottom: 6px solid rgba(255, 255, 255, 1);
+	box-shadow: none;
+
+	transition-property: border;
+	transition-duration: 0.2s;
+}
+
+.setting-search-textentry #PlaceholderText
+{
+	color: rgb(221, 221, 221);
+	font-size: 20px;
+	height: 64px;
+}
+
+.setting-search-result
+{ 
+	horizontal-align: center;
+	width: 940px;
+	height: 64px;
+	margin: 0px 32px;
+	border-radius: 3px;
+}
+
+.setting-search-result Label
+{
+	padding-left: 8px;
+}
+
+.setting-search-result:hover
+{
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000), color-stop( 0, #00000070 ), to( #00000070 ) );
+	box-shadow: none;
+	transition-property: background-color;
+	transition-duration: 0s;
+	transition-timing-function: ease-in-out;
+}
+
+.setting-search-recently-added-header
+{
+	horizontal-align: center;
+	width: 940px;
+	height: 32px;
+	margin: 16px 32px;
+	border-radius: 3px;
+}

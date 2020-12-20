@@ -1,6 +1,7 @@
 <root>
 	<styles>
     <include src="file://{resources}/styles/csgostyles.css" />
+    <include src="file://{resources}/styles/settings/settings.css" />
     <include src="file://{resources}/styles/settings/settings_slider.css" />
 	</styles>
   

@@ -553,8 +553,19 @@
 						</CSGOSettingsEnumDropDown>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
-					
-					                                                       
+
+                                               
+          <TooltipPanel id="BuyMenuDonationKey" class="SettingsMenuDropdownContainer" tooltip="#SFUI_Settings_BuyWheelDonateKey_Info">
+            <Label text="#SFUI_Settings_BuyWheelDonateKey" class="half-width"/>
+            <CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_buywheel_donate_key">
+              <Label text="#SFUI_Settings_BuyWheelDonateKey_LeftCtrl"  value="0" id ="buywheeldonatekey0"/>
+              <Label text="#SFUI_Settings_BuyWheelDonateKey_LeftAlt"   value="1" id ="buywheeldonatekey1"/>
+              <Label text="#SFUI_Settings_BuyWheelDonateKey_LeftShift" value="2" id ="buywheeldonatekey2"/>
+            </CSGOSettingsEnumDropDown>
+          </TooltipPanel>
+          <Panel class="horizontal-separator"/>
+
+                                                                 
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_radial_wep_last_wep_on_tap_Info">
 						<Label text="#SFUI_radial_wep_last_wep_on_tap" class="half-width"/>
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="cl_quickinventory_lastinv">
