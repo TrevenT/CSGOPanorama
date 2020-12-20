@@ -470,7 +470,7 @@
 #id-op-inspect-shop-get-confirm.hide
 {
 	visibility: visible;
-	ui-scale: 0%;
+	ui-scale: 0.1%;
 	opacity: 0;
 
 	transform: translateY( 100% );

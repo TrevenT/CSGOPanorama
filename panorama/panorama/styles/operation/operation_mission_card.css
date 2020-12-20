@@ -410,12 +410,6 @@
     border-radius: 2px;
 }
 
-.complete .op_mission-card__bar
-{
-                                                                  
-    height: 4px;
-}
-
 .op_mission-card__bar__inner
 {
 	width: 0%;

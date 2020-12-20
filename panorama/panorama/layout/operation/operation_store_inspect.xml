@@ -101,7 +101,7 @@
 				</Panel>
 				<Panel class="op-store-inspect-actions-bar">
 					<Panel class="top-bottom-flow horizontal-center">
-						<Panel id="id-op-inspect-shop-balance-panel" class="left-right-flow horizontal-align-left margin bottom-margin visible-if-windows">
+						<Panel id="id-op-inspect-shop-balance-panel" class="left-right-flow horizontal-align-left margin bottom-margin">
 							<Panel class="left-right-flow horizontal-align-right">
 								<Panel class="op-store-shop-balance-container op-store-shop-balance-container--inspect" >
 									<Label class="op-store-shop-balance__text stratum-font fontSize-m" text="#op_stars_earned" html="true"/>
@@ -114,7 +114,7 @@
 							</Button>
 						</Panel>
 
-						<Panel id="id-op-inspect-shop-get-reward" class="left-right-flow horizontal-align-left visible-if-windows">
+						<Panel id="id-op-inspect-shop-get-reward" class="left-right-flow horizontal-align-left">
 							<Panel class="op-store-shop-balance-container op-store-shop-balance-container--inspect" >
 								<Label id="id-op-store-inspect-get-reward-text"  class="op-store-progress__pass-upsell__desc stratum-font fontSize-l" text="" html="true"/>
 							</Panel>
@@ -131,7 +131,7 @@
 						class="PopupButton horizontal-align-right right-margin-32 vertical-align-bottom" >
 						<Label text="#SFUI_Back" html="true" onactivate="$.DispatchEvent( 'UIPopupButtonClicked', '' );"/>
 					</Button>
-					<Panel id="id-op-inspect-shop-get-confirm" class="left-right-flow right-margin-32 hide-if-windows horizontal-center">
+					<Panel id="id-op-inspect-shop-get-confirm" class="left-right-flow right-margin-32 hide horizontal-center">
 						<Panel class="op-store-shop-balance-container" >
 							<Label class="op-store-shop-balance__text stratum-font fontSize-l" text="#op_stars_use_confirm" html="true"/>
 							<Image class="op-store-shop-balance__icon" src="file://{images}/icons/ui/icon_star_multi.svg" scaling="stretch-to-fit-preserve-aspect" texturewidth="22" textureheight="-1"/>
