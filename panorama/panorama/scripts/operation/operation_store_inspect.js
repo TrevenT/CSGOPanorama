@@ -506,6 +506,7 @@ var OperationStoreInspect = ( function()
 
 		var elConfrimRow = _m_cp.FindChildInLayoutFile( 'id-op-inspect-shop-get-confirm' );
 		elConfrimRow.SetHasClass( 'hide', !bshow );
+		elConfrimRow.SetHasClass( 'hide-if-windows', !bshow );
 
 		_m_cp.FindChildInLayoutFile("id-op-inspect-all-models-container").SetHasClass( 'in-confirm-mode', bshow );
 		_m_cp.FindChildInLayoutFile("id-op-inspect-all-models-container").hittestchildren = !bshow;

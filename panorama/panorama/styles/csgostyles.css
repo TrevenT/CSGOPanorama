@@ -3237,6 +3237,21 @@ EdgeScrollBar.Vertical #MaxButton
                                                                                
                                                                                
 
+.platform-windows .hide-if-windows
+{
+	visibility: collapse;
+}
+
+.visible-if-windows
+{
+	visibility: collapse;
+}
+
+.platform-windows .visible-if-windows
+{
+	visibility: visible;
+}
+
 .visible-if-perfectworld,
 .visible-if-not-perfectworld
 {
