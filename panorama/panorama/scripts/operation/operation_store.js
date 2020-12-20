@@ -3,7 +3,7 @@
 var OperationStore = ( function() 
 {
 	var _m_cp = $.GetContextPanel();
-	var _m_nSeasonAccess;
+	var _m_nSeasonAccess = null;
 	var _oTileId = "id-op-store-tile-";
 	var _m_tilesLoaded = false;
 	var _m_placeBarSegments = false;

@@ -278,7 +278,7 @@ var OperationMainMenu = ( function()
 
 		_m_oLastMatch = DeepStatsAPI.GetLastCachedMatchJS();
 
-		var bHasMatchData = _m_oLastMatch != null;
+		var bHasMatchData = _m_oLastMatch != null && _m_oLastMatch.matches.length > 0;
 		elStatPanel.SetHasClass( 'no-match-data', !bHasMatchData );
 
 		if( !bHasMatchData )

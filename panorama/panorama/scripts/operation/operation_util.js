@@ -28,7 +28,7 @@ var OperationUtil = ( function () {
 		                                                                          
 		m_nSeasonAccess = nSeasonAccess;
 		
-		if ( nSeasonAccess < 0 || nSeasonAccess === null )
+		if ( nSeasonAccess < 0 || nSeasonAccess === null || nSeasonAccess === undefined )
 			return false;
 		
 		m_nSeasonAccess = nSeasonAccess;
