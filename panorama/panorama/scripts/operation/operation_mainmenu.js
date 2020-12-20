@@ -8,6 +8,7 @@ var OperationMainMenu = ( function()
 	var _m_cp = $.GetContextPanel();
 	var _m_oNamesFlipModule = null;
 	var _m_oNamesFlipModuleMissions = null;
+	var _m_DeepStatsEvtHandle = null;
 
 	var _m_oLastMatch = null;
 
@@ -80,6 +81,10 @@ var OperationMainMenu = ( function()
 		}
 
 		_ShowUpdatePanelBasedOnStatus( oStatus );
+		if ( _m_DeepStatsEvtHandle === null ) 
+		{
+			_m_DeepStatsEvtHandle = $.RegisterForUnhandledEvent( 'DeepStatsReceived', OperationMainMenu.OnStatsReceived );
+		}
 		_m_cp.RemoveClass( 'hidden' );
 		$.DispatchEvent( 'HideMainMenuNewsPanel' );
 	};
@@ -193,7 +198,7 @@ var OperationMainMenu = ( function()
 
 	var _ShouldShowStorePanel = function()
 	{
-		return _m_nSeasonIndex >= 9;
+		return _m_nSeasonIndex !== null && _m_nSeasonIndex >= 9;
 	};
 
 	                    
@@ -206,9 +211,13 @@ var OperationMainMenu = ( function()
 
 		if ( !oMatch )
 			return;
+
+		var oStatus = OperationUtil.GetOperationInfo();
 		
-		if ( _m_oLastMatch.matches[ 0 ].player.match_id != oMatch.matches[ 0 ].player.match_id )
-			_ShowStatsPanel();
+		if ( _m_oLastMatch !== null && _m_oLastMatch.matches[ 0 ].player.match_id != oMatch.matches[ 0 ].player.match_id )
+		{
+			_ShowStatsPanel( oStatus );
+		}
 	}
 
 	var _ShowStatsPanel = function ( oStatus )
@@ -224,7 +233,6 @@ var OperationMainMenu = ( function()
 
 		elStatPanel.SetHasClass( 'hide', false );
 
-		var sUserOwnedOperationPassItemID = InventoryAPI.GetActiveSeasonPassItemId();
 		if( !oStatus.bPremiumUser )
 		{
 			_m_cp.FindChildInLayoutFile( 'id-op-mainmenu-stats-section' ).SetHasClass( 'hide', true );
@@ -609,7 +617,6 @@ var OperationMainMenu = ( function()
 {
 	$.RegisterForUnhandledEvent( 'CSGOShowMainMenu', OperationMainMenu.ShowMainMenu );
 	$.RegisterForUnhandledEvent( 'CSGOHideMainMenu', OperationMainMenu.HideMainMenu );
-	$.RegisterForUnhandledEvent( 'DeepStatsReceived', OperationMainMenu.OnStatsReceived );
 
 	OperationMainMenu.Init();
 } )();

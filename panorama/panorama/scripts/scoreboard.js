@@ -1483,7 +1483,10 @@ var Scoreboard = ( function()
 					var isEnemyTeamMuted = GameInterfaceAPI.GetSettingString( "cl_mute_enemy_team" ) == "1";
 					var isEnemy = MockAdapter.ArePlayersEnemies( oPlayer.m_xuid, GetLocalPlayerId() );
 
-					oPlayer.m_elPlayer.SetHasClass( 'muted', isMuted || ( isEnemy && isEnemyTeamMuted ) );
+					var hasComAbusePenalty = MockAdapter.HasCommunicationAbuseMute( oPlayer.m_xuid );
+					var isLocalPlayer = oPlayer.m_xuid == GetLocalPlayerId();
+
+					oPlayer.m_elPlayer.SetHasClass( 'muted', isMuted || ( isEnemy && isEnemyTeamMuted ) || ( isLocalPlayer && hasComAbusePenalty ));
 
 				}
 				break;
