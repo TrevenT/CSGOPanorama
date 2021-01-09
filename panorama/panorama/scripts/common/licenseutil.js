@@ -20,6 +20,10 @@ var LicenseUtil = ( function ()
 		case "free_pw":
 			szMessageText = "#SFUI_LoginLicenseAssist_NoOnlineLicense_PW";
 			break;
+		case "free_sc":                                                                          
+			szMessageText = "#SFUI_LoginLicenseAssist_NoOnlineLicense_SC";
+			szButtonText = "#Store_Register_License";
+			break;
 		case "purchased":
 			return false;
 		}
@@ -28,6 +32,20 @@ var LicenseUtil = ( function ()
 			license_msg : szMessageText,
 			license_act : szButtonText
 		};
+	}
+	
+	var _BuyLicenseForRestrictions = function( restrictions )
+	{
+		if ( restrictions.license_act === "#Store_Register_License" ) {
+			UiToolkitAPI.ShowCustomLayoutPopupParameters(
+				'',
+				'file://{resources}/layout/popups/popup_license_register.xml',
+				'message=Store_Register_License' +
+				'&' + 'spinner=1'
+			);
+		} else {
+			MyPersonaAPI.ActionBuyLicense();
+		}
 	}
 
 	var _ShowLicenseRestrictions = function( restrictions )
@@ -39,7 +57,7 @@ var LicenseUtil = ( function ()
 				$.Localize( restrictions.license_act ),
 				$.Localize( restrictions.license_msg ),
 				'',
-				function() { MyPersonaAPI.ActionBuyLicense(); },
+				_BuyLicenseForRestrictions.bind( null, restrictions ),
 				function() {}
 			);
 		}
@@ -47,6 +65,7 @@ var LicenseUtil = ( function ()
 
 	return{
 		GetCurrentLicenseRestrictions : _GetCurrentLicenseRestrictions,
+		BuyLicenseForRestrictions : _BuyLicenseForRestrictions,
 		ShowLicenseRestrictions : _ShowLicenseRestrictions
 	};
 })();

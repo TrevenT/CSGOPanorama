@@ -2,7 +2,7 @@
 
 var PopupPrimeStatus = ( function ()
 {
-	var m_bIsPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld" ? true : false;
+	var m_bIsPerfectWorld = ( ( MyPersonaAPI.GetLauncherType() === "perfectworld" ) && !GameInterfaceAPI.HasCommandLineParm( '-forceperfectworld' ) ) ? true : false;
 	var m_btnActivate = $( '#ActivateButton' );
 	var m_btnPurchase = $( '#PurchaseButton' );
 	var m_btnClose = $( '#CloseButton' );
@@ -232,7 +232,10 @@ var PopupPrimeStatus = ( function ()
 		}
 
 		               
-		m_btnPurchase.SetPanelEvent( 'onactivate', function() { SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sub/54029' ); $.DispatchEvent( 'UIPopupButtonClicked', '' );} );
+		m_btnPurchase.SetPanelEvent('onactivate', function () {
+			SteamOverlayAPI.OpenURL( _GetStoreUrl() + '/sub/54029');
+			$.DispatchEvent('UIPopupButtonClicked', '');
+		});
 	}
 
 	function _SetFailedStatusError()
@@ -264,14 +267,19 @@ var PopupPrimeStatus = ( function ()
 		_UpdateStatus( "check", "#SFUI_Elevated_Status_Verified", "ok_status" );
 	}
 
+	function _GetStoreUrl()
+	{
+		return 'https://store.' +
+			((SteamOverlayAPI.GetAppID() == "710") ? 'beta.' : '') +
+			((MyPersonaAPI.GetSteamType() === 'china') ? 'steamchina' : 'steampowered') + '.com';
+	}
+
 	function _GetSteamUrl( m_bIsPerfectWorld )
 	{
 		if( m_bIsPerfectWorld )
 			return "https://members.csgo.com.cn/steam/link";
-		if( SteamOverlayAPI.GetAppID() == "710" )
-			return "https://store.beta.steampowered.com/phone/add";
 		else
-			return "https://store.steampowered.com/phone/add";
+			return _GetStoreUrl() + "/phone/add";
 	}
 
 	function _ShowWarningPanel()

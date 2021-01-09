@@ -13,6 +13,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
+		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/operation/operation_util.js"/>
 		<include src="file://{resources}/scripts/mainmenu_store.js" />
 	</scripts>
@@ -257,7 +258,7 @@
 				html="true" text="#SFUI_LoginLicenseAssist_NoOnlineLicense"/>
 			<TextButton id="StorePanelLicenseBannerButton"
 				class="store-panel-license-banner__button PopupButton Positive"
-				onactivate="MyPersonaAPI.ActionBuyLicense();"
+				onactivate="MainMenuStore.ActionBuyLicense();"
 				selected="false" html="true"
 				text="#Store_Get_License"/>
 		</Panel>

@@ -503,9 +503,9 @@
 	vertical-align: bottom;
 
 	height: 35px;
-	width: 50px;
+	width: 60px;
 
-	transform: translateX( -20px);
+	transform: translateX( -30px);
 
   	             
 
@@ -523,14 +523,15 @@
 	horizontal-align: center;
 	vertical-align:center;
 
-	width: 100%;
+  	             
 }
 
 .ris-dmg__value {
 	flow-children: right;
 
-	width: 50%;
-	padding: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
+
 
 }
 
@@ -606,7 +607,6 @@
 
 .ris-dmg__hits {
 
-	width: 50%;
 	padding-left: 2px;
 
 	horizontal-align:center;
@@ -626,7 +626,7 @@
 	background-color: gradient( linear, 0% 100%, 0% 0%, from( #ffffff00 ), color-stop( 0.6,#ffffff05 ), to( #ffffff20 ) );
 
 		               
-	transform: translateX( event-bar-offset ) translateY( 70px);
+	transform: translateX( event-bar-offset ) translateY( 69px);
 
 	transform-origin: 0% 0%;
 

@@ -605,10 +605,10 @@ var HudWinPanel = ( function()
 		                                                                                                      
 		if ( oDamage )
 		{
-			var healthRemoved = oDamage[ 'health_removed' ];
-			var nHits = oDamage[ 'num_hits' ];
-			var returnedHealthRemoved = oDamage[ 'return_health_removed' ];
-			var nReturnHits = oDamage[ 'num_return_hits' ];
+			var healthRemoved = oDamage[ 'health_removed' ] ? oDamage[ 'health_removed' ] : 0;
+			var nHits = oDamage[ 'num_hits' ] ? oDamage[ 'num_hits' ] : 0;
+			var returnedHealthRemoved = oDamage[ 'return_health_removed' ] ? oDamage[ 'return_health_removed' ] : 0;
+			var nReturnHits = oDamage[ 'num_return_hits' ] ? oDamage[ 'num_return_hits' ] : 0;
 
 			_UpdateDamage( victimData[ 'xuid'], healthRemoved, nHits, returnedHealthRemoved, nReturnHits );
 		}

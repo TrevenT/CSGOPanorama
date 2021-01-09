@@ -210,40 +210,44 @@ var MainMenuStore = ( function()
 
 						var aCharItemIds = [];
 						var aItemIds = [];
-						aRewards.forEach( function ( reward, index ) {
-							                         
-							if ( reward.containerType === "isCharacterLootlist" )
-							{
-								reward.lootlist.forEach( function ( id ) {
-									aCharItemIds.push( id );
-								});
-							}
-							else if ( reward.containerType !== "isGraffitiBox" )
-							{
-								reward.lootlist.forEach( function ( id ) {
-									aItemIds.push( id );
-								});
-							}
-						});
 
-						var aIds = GetRandomIds( aCharItemIds, 2 );
-						elpanel.FindChildInLayoutFile( 'id-store-operation-char0' ).itemid = aIds[0];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-char1' ).itemid = aIds[1];
-
-						aIds= [];
-						aIds = GetRandomIds( aItemIds, 3 );
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item0' ).itemid = aIds[0];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item1' ).itemid = aIds[1];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item2' ).itemid = aIds[2];
-
-						var elBalance = m_elStore.FindChildInLayoutFile( 'id-store-operation-balance-container' );
-						var isPremium = OperationUtil.GetOperationInfo().bPremiumUser;
-						var nBalance = OperationUtil.GetOperationInfo().nRedeemableBalance;
-						elBalance.visible = isPremium;
-						
-						if( isPremium )
+						if( aRewards && ( aRewards.length > 0 ))
 						{
-							m_elStore.SetDialogVariableInt( "your_stars", nBalance );
+							aRewards.forEach( function ( reward, index ) {
+								                         
+								if ( reward.containerType === "isCharacterLootlist" )
+								{
+									reward.lootlist.forEach( function ( id ) {
+										aCharItemIds.push( id );
+									});
+								}
+								else if ( reward.containerType !== "isGraffitiBox" )
+								{
+									reward.lootlist.forEach( function ( id ) {
+										aItemIds.push( id );
+									});
+								}
+							});
+	
+							var aIds = GetRandomIds( aCharItemIds, 2 );
+							elpanel.FindChildInLayoutFile( 'id-store-operation-char0' ).itemid = aIds[0];
+							elpanel.FindChildInLayoutFile( 'id-store-operation-char1' ).itemid = aIds[1];
+	
+							aIds= [];
+							aIds = GetRandomIds( aItemIds, 3 );
+							elpanel.FindChildInLayoutFile( 'id-store-operation-item0' ).itemid = aIds[0];
+							elpanel.FindChildInLayoutFile( 'id-store-operation-item1' ).itemid = aIds[1];
+							elpanel.FindChildInLayoutFile( 'id-store-operation-item2' ).itemid = aIds[2];
+	
+							var elBalance = m_elStore.FindChildInLayoutFile( 'id-store-operation-balance-container' );
+							var isPremium = OperationUtil.GetOperationInfo().bPremiumUser;
+							var nBalance = OperationUtil.GetOperationInfo().nRedeemableBalance;
+							elBalance.visible = isPremium;
+							
+							if( isPremium )
+							{
+								m_elStore.SetDialogVariableInt( "your_stars", nBalance );
+							}
 						}
 					}
 				}
@@ -290,6 +294,12 @@ var MainMenuStore = ( function()
 	var _GetRandom = function ( min, max )
 	{
 		return Math.floor(Math.random() * (max - min)) + min;
+	};
+
+	var _ActionBuyLicense = function ()
+	{
+		var restrictions = LicenseUtil.GetCurrentLicenseRestrictions();
+		LicenseUtil.BuyLicenseForRestrictions( restrictions );
 	};
 
 	var _CheckLicenseScreen = function()
@@ -1061,7 +1071,8 @@ var MainMenuStore = ( function()
 
 	return {
 		Init: _Init,
-		CheckLicenseScreen : _CheckLicenseScreen,
+		CheckLicenseScreen: _CheckLicenseScreen,
+		ActionBuyLicense: _ActionBuyLicense,
 		AccountWalletUpdated : _AccountWalletUpdated,
 		OnNavigateTab: _OnNavigateTab,
 		RefreshCoupons : _RefreshCoupons,
