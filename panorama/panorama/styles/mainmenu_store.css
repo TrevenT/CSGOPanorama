@@ -636,3 +636,26 @@
 	font-size: 14px;
 }
 
+.store-panel__proteams
+{
+	width: 100%;
+	height: 250px;
+	padding: 0px;
+	background-color:  #241505de;
+	background-image: url('file://{images}/ui_textures/store_proteams_bg.png');
+	background-size: cover;
+	background-img-opacity: 0.9;
+	flow-children: right;
+}
+
+.store-panel__proteams .store-panel__carousel__item
+{
+	width: fill-parent-flow( 1 );
+}
+
+.store-panel__proteams .store-panel__carousel__item .store-panel__carousel__item__image
+{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+

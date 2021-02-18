@@ -73,6 +73,8 @@
               <Image id="ItemIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/watch.svg" textureheight="128"/>
               <Image id="DangerIcon" class="playerping__icon playerping__icon--top" src="file://{images}/icons/ui/alert.svg" textureheight="128"/>
             </Panel>
+	    <Label id="LocationLabel" html="true" class="playerping__locationlabel" text="Some test text here" />
+
           </Panel>
 
 

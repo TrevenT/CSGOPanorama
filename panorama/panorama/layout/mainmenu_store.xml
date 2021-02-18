@@ -250,6 +250,11 @@
 			</Button>
 		</snippet>
 
+		<snippet name="ProTeams">
+			<Panel class="store-panel__proteams" hittest="false">
+				                            
+			</Panel >
+		</snippet>
 	</snippets>
 
 	<Panel class="news-panel news-panel--store-container MainMenuModeOnly" useglobalcontext="true">

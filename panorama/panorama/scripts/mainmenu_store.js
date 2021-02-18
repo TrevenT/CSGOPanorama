@@ -16,145 +16,15 @@ var MainMenuStore = ( function()
 			return;
 
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
-		
-		var itemsByCategory = {};	
-		
+		var itemsByCategory = {};
+
 		                                               
 		if ( ( NewsAPI.GetActiveTournamentEventID() !== 0 )
 			&& ( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_sticker, 0 ), 1, '' ) )
 			)
 		{
 			m_elStore.SetDialogVariable( "tournament_name", $.Localize( "#CSGO_Tournament_Event_Location_" + NewsAPI.GetActiveTournamentEventID() ) );
-			itemsByCategory.tournament = [
-				{
-					snippet_name: "TournamentStore",
-					load_func: function ( elpanel ) {
-						var itemsCount = g_ActiveTournamentTeams.length;
-						var randomItemsIndex = [];
-						var count = 0;
-				
-						while ( count < 7 )
-						{
-							var random = _GetRandom( 0, itemsCount );
-							var filteredIndexes = randomItemsIndex.filter(index => index === random );
-				
-							if( filteredIndexes.length === 0  )
-							{
-								randomItemsIndex.push(random);
-								count++;
-							}
-						}
-				
-						var elImagesContainer = elPanel.FindChildInLayoutFile( 'id-store-tournament-items-container' );
-						var itemTypes = [
-							'itemid_sticker',
-							'itemid_pass'
-						];
-						var offset = 78;
-				
-						_ShowSaleTag( );
-						
-						for( var i = 0; i < randomItemsIndex.length ; i++ )
-						{
-							var elImage = elImagesContainer.FindChildInLayoutFile( 'id-store-tournament-item' + i );
-							var defIndex = 0;
-				
-							if( i === 0 )
-							{
-								var randomItemType = _GetRandom( 0, itemTypes.length );
-								defIndex = g_ActiveTournamentInfo[ itemTypes[ randomItemType ]];
-							}
-							else
-							{
-								                                     
-								var randomItemType = _GetRandom( 0, itemTypes.length - 1 );
-								defIndex = g_ActiveTournamentTeams[ randomItemsIndex[i]][ itemTypes[ randomItemType ]];
-							}
-							
-							elImage.itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex, 0 );
-							elImage.style.x = ( offset*i ) + 'px';
-							var scaleOffset = 1 - ( 0.08 * i );
-							elImage.style.transform = 'scale3d( '+ scaleOffset +','+ scaleOffset +','+ scaleOffset +')';
-							elImage.style.zIndex = 10-i;
-							if( i > randomItemsIndex.length/2 )
-							{
-								elImage.style.blur = 'gaussian( 4, 4,' + 1 +')';
-							}
-						}
-				
-						function _ShowSaleTag ()
-						{
-							var itemsThatGoOnSale = [
-								g_ActiveTournamentInfo.itemid_sticker,
-								g_ActiveTournamentInfo.itemid_pass,
-								g_ActiveTournamentInfo.itemid_pack,
-								g_ActiveTournamentInfo.itemid_charge
-							];
-				
-							var itemsWithSaleReduction = [];
-							itemsThatGoOnSale.forEach( itemDefIndex =>
-							{
-								var reduction = ItemInfo.GetStoreSalePercentReduction( itemDefIndex, 1 );
-								
-								if ( reduction )
-								{
-									var oItem = { defindex: itemDefIndex, reduction: reduction };
-									itemsWithSaleReduction.push( oItem );
-								}
-							} );
-				
-							var aSorted = itemsWithSaleReduction.sort(function (a, b) {
-								return parseInt( a.reduction ) - parseInt( b.reduction );
-							});
-							
-							var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
-							elPrecent.SetHasClass( 'hidden', aSorted.length < 1 ? true : false );
-							
-							if ( aSorted.length >= 1 )
-							{
-								var itemName = aSorted[0].defindex === g_ActiveTournamentInfo.itemid_sticker ?
-									$.Localize( '#store_tournament_reduction_strickers' ) :
-									ItemInfo.GetName( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( aSorted[0].defindex , 0 ));
-								
-								elPrecent.SetDialogVariable( 'reduction', aSorted[ 0 ].reduction );
-								elPrecent.SetDialogVariable( 'reduction_name', itemName );
-							}
-						}
-						
-						elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
-						                                                                                       
-						                                                   
-				
-						                             
-						    
-						   	                               
-						   	                                 
-				
-						   		                                                                               
-						   		                                                
-				
-						   		                                                    
-						   		 
-						   			                                    
-						   			                                               
-						   				       
-				
-						   			                                                                                            
-						   			                   
-						   				       
-				
-						   			                                                                                 
-						   			                                                                                                   
-						   			                                                                         
-						   			                                                                  
-						   		 
-				
-						   		                                                              
-						   	 
-						     
-					}
-				}
-			];
+			itemsByCategory.tournament = _OperationTournamentSetupObj();
 		}
 
 		                                                   
@@ -169,89 +39,15 @@ var MainMenuStore = ( function()
 
 		if( OperationUtil.ValidateCoinAndSeasonIndex( nSeasonIndex, oStatus.nCoinRank ) )
 		{
-			itemsByCategory.operation = [
-				{
-					snippet_name: "OperationStore",
-					load_func: function ( elpanel ) {
+			itemsByCategory.operation = _OperationStoreSetupObj();
+		}
 
-						var aRewards = OperationUtil.GetRewardsData();
-						
-						function GetRandomItem ( aItemList )
-						{
-							var min = 0;
-							var max = aItemList.length - 1;
-							
-							return aItemList[Math.floor(Math.random() * (max - min + 1) + min)];
-						}
+		                                       
+		var aProTeams = _ProTeamsItems();
 
-						function GetRandomIds( aItemIds, nNeeded )
-						{
-							var aIndexes = [];
-
-							for ( var i = 0; i < nNeeded; i++ )
-							{
-								var temp = GetRandomItem( aItemIds );
-
-								if( aIndexes.indexOf( temp ) > -1 )
-								{
-									var count = 0;
-									while( aIndexes.indexOf( temp ) > -1 && count < 15 )
-									{
-										temp = GetRandomItem( aItemIds );
-										count++;
-									}
-								}
-
-								aIndexes.push( temp );
-							}
-
-							return aIndexes;
-						}
-
-						var aCharItemIds = [];
-						var aItemIds = [];
-
-						if( aRewards && ( aRewards.length > 0 ))
-						{
-							aRewards.forEach( function ( reward, index ) {
-								                         
-								if ( reward.containerType === "isCharacterLootlist" )
-								{
-									reward.lootlist.forEach( function ( id ) {
-										aCharItemIds.push( id );
-									});
-								}
-								else if ( reward.containerType !== "isGraffitiBox" )
-								{
-									reward.lootlist.forEach( function ( id ) {
-										aItemIds.push( id );
-									});
-								}
-							});
-	
-							var aIds = GetRandomIds( aCharItemIds, 2 );
-							elpanel.FindChildInLayoutFile( 'id-store-operation-char0' ).itemid = aIds[0];
-							elpanel.FindChildInLayoutFile( 'id-store-operation-char1' ).itemid = aIds[1];
-	
-							aIds= [];
-							aIds = GetRandomIds( aItemIds, 3 );
-							elpanel.FindChildInLayoutFile( 'id-store-operation-item0' ).itemid = aIds[0];
-							elpanel.FindChildInLayoutFile( 'id-store-operation-item1' ).itemid = aIds[1];
-							elpanel.FindChildInLayoutFile( 'id-store-operation-item2' ).itemid = aIds[2];
-	
-							var elBalance = m_elStore.FindChildInLayoutFile( 'id-store-operation-balance-container' );
-							var isPremium = OperationUtil.GetOperationInfo().bPremiumUser;
-							var nBalance = OperationUtil.GetOperationInfo().nRedeemableBalance;
-							elBalance.visible = isPremium;
-							
-							if( isPremium )
-							{
-								m_elStore.SetDialogVariableInt( "your_stars", nBalance );
-							}
-						}
-					}
-				}
-			];
+		if ( aProTeams )
+		{
+			itemsByCategory.proteams = aProTeams;
 		}
 
 		                                                             
@@ -290,6 +86,266 @@ var MainMenuStore = ( function()
 		_SortTabs();
 		_AccountWalletUpdated();
 	};
+
+	var _OperationTournamentSetupObj = function()
+	{
+		var tournament = [
+			{
+				snippet_name: "TournamentStore",
+				load_func: function ( elpanel ) {
+					var itemsCount = g_ActiveTournamentTeams.length;
+					var randomItemsIndex = [];
+					var count = 0;
+			
+					while ( count < 7 )
+					{
+						var random = _GetRandom( 0, itemsCount );
+						var filteredIndexes = randomItemsIndex.filter(index => index === random );
+			
+						if( filteredIndexes.length === 0  )
+						{
+							randomItemsIndex.push(random);
+							count++;
+						}
+					}
+			
+					var elImagesContainer = elPanel.FindChildInLayoutFile( 'id-store-tournament-items-container' );
+					var itemTypes = [
+						'itemid_sticker',
+						'itemid_pass'
+					];
+					var offset = 78;
+			
+					_ShowSaleTag( );
+					
+					for( var i = 0; i < randomItemsIndex.length ; i++ )
+					{
+						var elImage = elImagesContainer.FindChildInLayoutFile( 'id-store-tournament-item' + i );
+						var defIndex = 0;
+			
+						if( i === 0 )
+						{
+							var randomItemType = _GetRandom( 0, itemTypes.length );
+							defIndex = g_ActiveTournamentInfo[ itemTypes[ randomItemType ]];
+						}
+						else
+						{
+							                                     
+							var randomItemType = _GetRandom( 0, itemTypes.length - 1 );
+							defIndex = g_ActiveTournamentTeams[ randomItemsIndex[i]][ itemTypes[ randomItemType ]];
+						}
+						
+						elImage.itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex, 0 );
+						elImage.style.x = ( offset*i ) + 'px';
+						var scaleOffset = 1 - ( 0.08 * i );
+						elImage.style.transform = 'scale3d( '+ scaleOffset +','+ scaleOffset +','+ scaleOffset +')';
+						elImage.style.zIndex = 10-i;
+						if( i > randomItemsIndex.length/2 )
+						{
+							elImage.style.blur = 'gaussian( 4, 4,' + 1 +')';
+						}
+					}
+			
+					function _ShowSaleTag ()
+					{
+						var itemsThatGoOnSale = [
+							g_ActiveTournamentInfo.itemid_sticker,
+							g_ActiveTournamentInfo.itemid_pass,
+							g_ActiveTournamentInfo.itemid_pack,
+							g_ActiveTournamentInfo.itemid_charge
+						];
+			
+						var itemsWithSaleReduction = [];
+						itemsThatGoOnSale.forEach( itemDefIndex =>
+						{
+							var reduction = ItemInfo.GetStoreSalePercentReduction( itemDefIndex, 1 );
+							
+							if ( reduction )
+							{
+								var oItem = { defindex: itemDefIndex, reduction: reduction };
+								itemsWithSaleReduction.push( oItem );
+							}
+						} );
+			
+						var aSorted = itemsWithSaleReduction.sort(function (a, b) {
+							return parseInt( a.reduction ) - parseInt( b.reduction );
+						});
+						
+						var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
+						elPrecent.SetHasClass( 'hidden', aSorted.length < 1 ? true : false );
+						
+						if ( aSorted.length >= 1 )
+						{
+							var itemName = aSorted[0].defindex === g_ActiveTournamentInfo.itemid_sticker ?
+								$.Localize( '#store_tournament_reduction_strickers' ) :
+								ItemInfo.GetName( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( aSorted[0].defindex , 0 ));
+							
+							elPrecent.SetDialogVariable( 'reduction', aSorted[ 0 ].reduction );
+							elPrecent.SetDialogVariable( 'reduction_name', itemName );
+						}
+					}
+					
+					elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
+					                                                                                       
+					                                                   
+			
+					                             
+					    
+					   	                               
+					   	                                 
+			
+					   		                                                                               
+					   		                                                
+			
+					   		                                                    
+					   		 
+					   			                                    
+					   			                                               
+					   				       
+			
+					   			                                                                                            
+					   			                   
+					   				       
+			
+					   			                                                                                 
+					   			                                                                                                   
+					   			                                                                         
+					   			                                                                  
+					   		 
+			
+					   		                                                              
+					   	 
+					     
+				}
+			}
+		];
+
+		return tournament;
+	};
+
+	var _OperationStoreSetupObj = function()
+	{
+		var operation = [
+			{
+				snippet_name: "OperationStore",
+				load_func: function ( elpanel ) {
+
+					var aRewards = OperationUtil.GetRewardsData();
+					
+					function GetRandomItem ( aItemList )
+					{
+						var min = 0;
+						var max = aItemList.length - 1;
+						
+						return aItemList[Math.floor(Math.random() * (max - min + 1) + min)];
+					}
+
+					function GetRandomIds( aItemIds, nNeeded )
+					{
+						var aIndexes = [];
+
+						for ( var i = 0; i < nNeeded; i++ )
+						{
+							var temp = GetRandomItem( aItemIds );
+
+							if( aIndexes.indexOf( temp ) > -1 )
+							{
+								var count = 0;
+								while( aIndexes.indexOf( temp ) > -1 && count < 15 )
+								{
+									temp = GetRandomItem( aItemIds );
+									count++;
+								}
+							}
+
+							aIndexes.push( temp );
+						}
+
+						return aIndexes;
+					}
+
+					var aCharItemIds = [];
+					var aItemIds = [];
+
+					if( aRewards && ( aRewards.length > 0 ))
+					{
+						aRewards.forEach( function ( reward, index ) {
+							                         
+							if ( reward.containerType === "isCharacterLootlist" )
+							{
+								reward.lootlist.forEach( function ( id ) {
+									aCharItemIds.push( id );
+								});
+							}
+							else if ( reward.containerType !== "isGraffitiBox" )
+							{
+								reward.lootlist.forEach( function ( id ) {
+									aItemIds.push( id );
+								});
+							}
+						});
+
+						var aIds = GetRandomIds( aCharItemIds, 2 );
+						elpanel.FindChildInLayoutFile( 'id-store-operation-char0' ).itemid = aIds[0];
+						elpanel.FindChildInLayoutFile( 'id-store-operation-char1' ).itemid = aIds[1];
+
+						aIds= [];
+						aIds = GetRandomIds( aItemIds, 3 );
+						elpanel.FindChildInLayoutFile( 'id-store-operation-item0' ).itemid = aIds[0];
+						elpanel.FindChildInLayoutFile( 'id-store-operation-item1' ).itemid = aIds[1];
+						elpanel.FindChildInLayoutFile( 'id-store-operation-item2' ).itemid = aIds[2];
+
+						var elBalance = m_elStore.FindChildInLayoutFile( 'id-store-operation-balance-container' );
+						var isPremium = OperationUtil.GetOperationInfo().bPremiumUser;
+						var nBalance = OperationUtil.GetOperationInfo().nRedeemableBalance;
+						elBalance.visible = isPremium;
+						
+						if( isPremium )
+						{
+							m_elStore.SetDialogVariableInt( "your_stars", nBalance );
+						}
+					}
+				}
+			}
+		];
+		return operation;
+	};
+
+	var _ProTeamsItems = function()
+	{
+		
+		var aItemIds = [ 
+			InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 4743 , 0 ),
+			InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 4744 , 0 ),
+			InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 4745 , 0 )
+		];
+
+		var firstIdPrice = ItemInfo.GetStoreSalePrice( aItemIds[0], 1 );
+		                             
+		if( firstIdPrice === "" || firstIdPrice === undefined || firstIdPrice === null || !_BAllowDisplayingItemInStore( aItemIds[0] ))
+		{
+			return null;
+		}
+		
+		                                   
+		var proteams = [
+			{
+				snippet_name: "ProTeams",
+				load_func: function ( elpanel ) {
+					
+					aItemIds.forEach( id => {
+							var elItem = $.CreatePanel( 'Panel', elpanel, id );
+							elItem.BLoadLayoutSnippet( 'StoreEntry' );
+							$.Schedule( .1, function(){ _FillOutItemData( elItem, id, { useItemId: true, newTagOverride: true } ) });
+							elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined,id, id, 'newstore' ))
+						}
+					)
+				}
+			}
+		];
+
+		return proteams
+	}
 
 	var _GetRandom = function ( min, max )
 	{
@@ -742,14 +798,14 @@ var MainMenuStore = ( function()
 
 	var _PopulateCarousel = function( elCarousel, itemList, i, type )
 	{
-		var itemsPerPage = type === ( "tournament" || "operation" ) ? 1 : 4;
+		var itemsPerPage = ( type === "tournament" || type === "operation" || type === "proteams" ) ? 1 : 4;
 		var elPage = null;
 
 		if ( i % itemsPerPage === 0 )
 		{
 			elPage = $.CreatePanel( 'Panel', elCarousel, 'Page-'+(i/itemsPerPage) );
 			elPage.BLoadLayoutSnippet( 'StoreCarouselPage' );
-			elPage.SetHasClass( 'store-panel__carousel-page--single', type === "operation" );
+			elPage.SetHasClass( 'store-panel__carousel-page--single', ( type === "operation" || type === "proteams" ) );
 		}
 		else
 		{
@@ -771,7 +827,7 @@ var MainMenuStore = ( function()
 		else if ( typeof itemList[ i ] == "string" && InventoryAPI.IsValidItemID( itemList[ i ] ) )
 		{
 			elItem.BLoadLayoutSnippet( 'StoreEntry' );
-			_FillOutItemData( elItem, itemList[ i ], type );
+			_FillOutItemData( elItem, itemList[ i ], { isMarketItem: type === 'market' } );
 
 			                                                                   
 			var activationType = type;
@@ -801,7 +857,7 @@ var MainMenuStore = ( function()
 		}
 	};
 
-	var _FillOutItemData = function( elItem, id, type )
+	var _FillOutItemData = function( elItem, id, oSettings )
 	{
 		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
 		var LootListItemID = '';
@@ -809,7 +865,7 @@ var MainMenuStore = ( function()
 		if( ItemInfo.GetLootListCount( id ) > 0 )
 			LootListItemID = InventoryAPI.GetLootListItemIdByIndex( id, 0 );
 
-		elImage.itemid =  ( type !== 'market' && LootListItemID ) ? LootListItemID : id;
+		elImage.itemid = ( !oSettings.isMarketItem && !oSettings.useItemId && LootListItemID ) ? LootListItemID : id;
 
 		var elName = elItem.FindChildInLayoutFile( 'StoreItemName' );
 		elName.text = ItemInfo.GetName( id );
@@ -839,7 +895,7 @@ var MainMenuStore = ( function()
 		}
 
 		var elPrice = elItem.FindChildInLayoutFile( 'StoreItemPrice' );
-		elPrice.text = ( type === 'market' ) ? $.Localize( '#SFUI_Store_Market_Link' ) : ItemInfo.GetStoreSalePrice( id, 1 );
+		elPrice.text = ( oSettings.isMarketItem ) ? $.Localize( '#SFUI_Store_Market_Link' ) : ItemInfo.GetStoreSalePrice( id, 1 );
 	};
 
 	var _PrimeStoreItem = function( elItem, id, type )
@@ -936,6 +992,8 @@ var MainMenuStore = ( function()
 		NewPostition( tabList.find(function (obj) { return obj.id === 'prime'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'tournament'; } ) );
 		NewPostition( tabList.find(function (obj) { return obj.id === 'operation'; } ) );
+		NewPostition( tabList.find(function (obj) { return obj.id === 'proteams'; } ) );
+
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};
