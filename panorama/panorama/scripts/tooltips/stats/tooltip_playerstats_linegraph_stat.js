@@ -15,7 +15,7 @@ var PlayerStatsLineGraphStatTooltip = ( function()
 		
 		var date = new Date( unixtime );
 
-		$.GetContextPanel().SetDialogVariable( 'date', DateUtil.Get_UUU_MMM_dd( date ) );
+		DateUtil.PopulateDateFormatStrings( $.GetContextPanel(), date );
 
 		var statname = $.Localize( "#playerstat_name_" + stat_index ).toUpperCase();
 		$.GetContextPanel().SetDialogVariable( 'statname', statname );

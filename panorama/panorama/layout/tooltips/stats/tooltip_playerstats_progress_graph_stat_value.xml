@@ -27,7 +27,7 @@
 		                     
 
 		<Panel class="playerstats-tt__root">
-			<Label class="playerstats-tt__header" text="{s:date}" />
+			<Label class="playerstats-tt__header" text="#dateutil_weekday_short_month_padded_day" />
 			<Frame id="TTMatch" snippet="snippet-match" class="tt__graph-stat-value__match" />
 
 			<Panel class="left-right-flow horizontal-center">

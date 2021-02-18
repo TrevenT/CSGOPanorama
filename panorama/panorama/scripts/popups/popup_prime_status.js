@@ -34,7 +34,14 @@ var PopupPrimeStatus = ( function ()
 		m_btnActivate.visible = false;                                                                                
 		                                                                                                                                                                                            
 		m_btnCheckStatus.visible = false;                                                                                                                                  
-		m_btnPurchase.visible = strState !== "elevated" && !m_bIsPerfectWorld ? true : false;
+
+		                         
+		var bCanPurchasePrimeStatus = ( strState !== "elevated" && !m_bIsPerfectWorld );
+		if ( bCanPurchasePrimeStatus && (MyPersonaAPI.GetSteamType() !== 'china') && ( MyPersonaAPI.GetLauncherType() === "perfectworld" ) )
+		{
+			bCanPurchasePrimeStatus = false;                                                                                                                                                 
+		}
+		m_btnPurchase.visible = bCanPurchasePrimeStatus ? true : false;
 		
 		                                                                             
 		                                                                                       

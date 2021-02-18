@@ -652,7 +652,7 @@ var playerstats = ( function()
 				startDate.setDate( startDate.getDate() - _m_days + 1 );
 			}
 
-			elStart.SetDialogVariable( 'start_of_time', DateUtil.MMM_dd( startDate ) );
+			DateUtil.PopulateDateFormatStrings( elStart, startDate );
 		}
 	}
 

@@ -210,7 +210,8 @@ var MatchLister = ( function ()
 
 				var elDayTitle = $.CreatePanel( "Panel", elDayContainer, 'title-' + dateKey );
 				elDayTitle.BLoadLayoutSnippet( 'snippet-separator' );
-				elDayTitle.SetDialogVariable( 'separator_title', DateUtil.FullMonth_dd( matchDate ) );
+
+				DateUtil.PopulateDateFormatStrings( elDayTitle, matchDate );
 
 				                          
 				var arrChildren = elLister.Children();

@@ -313,7 +313,7 @@
 				                                         
 			        		
    
-			<Label id="Abandoned" text="{s:abandoned}" class="horizontal-align-right"/>							
+			<Label id="Abandoned" text="{s:abandoned}" class="horizontal-align-right" style="width:150px;margin-top:30px;"/>							
 		</Panel>
 
 

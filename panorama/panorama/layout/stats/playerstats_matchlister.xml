@@ -39,7 +39,7 @@
 
 		<snippet name="snippet-separator">
 			<Panel class="separator__root" >
-				<Label class="separator__title" text="#playerstats_matchlister_separator" />
+				<Label class="separator__title" text="#dateutil_full_month_padded_day" />
 			</Panel>
 		</snippet>
 

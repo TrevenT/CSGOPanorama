@@ -27,7 +27,7 @@
 		                     
 
 		<Panel class="playerstats-tt__root">
-			<Label class="playerstats-tt__header" text="{s:date}" />
+			<Label class="playerstats-tt__header" text="#dateutil_weekday_short_month_padded_day" />
 			<Panel class="left-right-flow horizontal-center">
 				<Label class="playerstats-tt__stat-name" text="{s:statname}" />
 				<Label class="playerstats-tt__stat-value" text="{s:statvalue}" />

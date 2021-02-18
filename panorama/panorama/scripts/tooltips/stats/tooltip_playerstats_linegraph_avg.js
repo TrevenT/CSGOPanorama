@@ -41,7 +41,7 @@ var PlayerStatsLineGraphAvgTooltip = ( function()
 
 		var date = new Date( unixtime );
 
-		$.GetContextPanel().SetDialogVariable( 'date', DateUtil.UUU_MMM_dd( date ) );
+		DateUtil.PopulateDateFormatStrings( $.GetContextPanel(), date );
 
 		var statname = $.Localize( "#playerstat_name_" + stat_index );
 		$.GetContextPanel().SetDialogVariable( 'statname', statname );

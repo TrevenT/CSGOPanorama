@@ -1284,7 +1284,7 @@ var PlayMenu = ( function()
 			}
 			else
 			{
-				var isPerfectWorld = MyPersonaAPI.GetLauncherType() == "perfectworld" ? true : false;
+				var isPerfectWorld = ( ( MyPersonaAPI.GetLauncherType() === "perfectworld" ) && !GameInterfaceAPI.HasCommandLineParm( '-forceperfectworld' ) ) ? true : false;
 				tooltipText = isPerfectWorld ? '#tooltip_prime_not_enrolled_pw_1' : '#tooltip_prime_not_enrolled_1';
 			}
 

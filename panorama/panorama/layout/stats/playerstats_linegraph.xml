@@ -42,8 +42,8 @@
 					<UICanvas id="Graph2" class="graph-body"/>
 				</Panel>
 
-				<Label id="LinegraphStartLabel" class="linegraph__xaxis_label" text="{s:start_of_time}"/>
-				<Label id="LinegraphTodayLabel" class="linegraph__xaxis_label" text="#today"/>
+				<Label id="LinegraphStartLabel" class="linegraph__xaxis_label" text="#dateutil_short_month_padded_day"/>
+				<Label id="LinegraphTodayLabel" class="linegraph__xaxis_label" text="#LOC_Date_Today"/>
 				<Label id="MinHistogramGuideline" class="linegraph__yaxis_label" text="{d:stat_min}%"/>
 				<Label id="MaxHistogramGuideline" class="linegraph__yaxis_label" text="{d:stat_max}%"/>
 				<Label id="HistogramAverage" class="linegraph__yaxis_label" text="{d:stat_ranking}%"/>
