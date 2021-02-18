@@ -30,8 +30,6 @@ var EOM_Voting = (function () {
 
 		$.RegisterForUnhandledEvent( 'EndOfMatch_Shutdown', _CancelUpdateJob );
 		
-		_m_pauseBeforeEnd = oTime[ "time" ];
-
 		                        
 		var oMatchEndVoteData = MockAdapter.NextMatchVotingData( _m_cP );
 
@@ -343,8 +341,6 @@ var EOM_Voting = (function () {
 		if ( _DisplayMe() )
 		{
 			EndOfMatch.SwitchToPanel( 'eom-voting' );
-
-			$.Schedule( _m_pauseBeforeEnd, _End );
 		}
 		else
 		{
