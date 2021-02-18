@@ -74,7 +74,7 @@ var SettingsMenuSearch = ( function() {
 				if ( ShouldSearchPanelText( setting ) ) {
 					                                                      
 					var bPass = arrStrings.every( s => {
-						var search = new RegExp( s, "gi" );
+						var search = new RegExp( s, "giu" );
 						return search.test( setting.text );
 					});
 					if ( bPass ) {
