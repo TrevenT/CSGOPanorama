@@ -1086,8 +1086,15 @@ var MainMenuStore = ( function()
 
 	var _AccountWalletUpdated = function()
 	{
-		var balance = ( MyPersonaAPI.GetLauncherType() === 'perfectworld' ) ? StoreAPI.GetAccountWalletBalance() : '';
 		var elBalance = m_elStore.FindChildInLayoutFile( 'StoreNaveBarWalletBalance' );
+		if ( ( MyPersonaAPI.GetLauncherType() === 'perfectworld' ) && (MyPersonaAPI.GetSteamType() !== 'china') )
+		{
+			elBalance.RemoveClass( 'hidden' );
+			elBalance.text = '#Store_SteamChina_Wallet';
+			return;
+		}
+
+		var balance = ( MyPersonaAPI.GetLauncherType() === 'perfectworld' ) ? StoreAPI.GetAccountWalletBalance() : '';
 		if ( balance === '' || balance === undefined || balance === null )
 		{
 			elBalance.AddClass( 'hidden' );
