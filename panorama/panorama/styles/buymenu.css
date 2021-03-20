@@ -1070,11 +1070,13 @@
 	flow-children: down;
 	padding: 4px 4px 4px 4px;
 	min-width: 180px;
-	font-family: Stratum2, 'Arial Unicode MS';
 	overflow:noclip;
 }
 
-
+.buywheel-item__textbox Label
+{
+	font-family: Stratum2, 'Arial Unicode MS';
+}
 
 .buywheel-item__name
 {

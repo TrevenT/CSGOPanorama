@@ -1,0 +1,17 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/context_menus/context_menu_base.css" />
+		<include src="file://{resources}/styles/context_menus/context_menu_store_linked_items.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/context_menus/context_menu_store_linked_items.js" />
+	</scripts>
+
+	
+	<Panel class="store-linked-items" onload="StoreLinkedItems.Init();">
+
+	</Panel>
+
+</root>

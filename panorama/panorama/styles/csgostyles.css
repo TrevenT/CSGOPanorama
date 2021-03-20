@@ -730,7 +730,7 @@ HTMLVerticalScrollBar.MouseDown .ScrollThumb,
                                                                                
                                                                                
                                                                                
-.ContextMenu,
+.ContextMenu
 {
 	width: 100%;
 	height: 100%;
@@ -3240,6 +3240,12 @@ EdgeScrollBar.Vertical #MaxButton
 	vertical-align: center;
 	margin-left: 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3a863d ), to( #2d682f ) );
+}
+
+.store-panel__carousel__item-linked__sale .store-sale-tag__text
+{
+	font-size: 12px;
+	padding: 1.5px;
 }
 
                                                                                

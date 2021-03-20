@@ -140,17 +140,75 @@
 	padding-right: 10px;
 }
 
+.store-panel__carousel__item__images-linked
+{
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel__carousel__item__images-linked:Hover
+{
+	transform: scale3d( 1.05, 1.05, 1.05 );
+	brightness: 1.2;
+
+	transition-property: brightness, transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rollover";
+}
+
 .store-panel__carousel__item__image
 {
 	height: fill-parent-flow( 1 );
 	padding-top: 4px;
 	horizontal-align: center;
+	img-shadow: 2px 2px 6px #000000;
 
 	transition-property: brightness, transform;
 	transition-duration: .20s;
 	transition-timing-function: ease-in-out;
 
 	sound-trans: "UIPanorama.store_item_rolloff";
+}
+
+.store-panel__carousel__item__images-linked
+{
+	
+	height: fill-parent-flow( 1 );
+	padding-top: 4px;
+	horizontal-align: center;
+
+	transition-property: transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
+	sound-trans: "UIPanorama.store_item_rolloff";
+}
+
+.store-panel__carousel__item__images-linked:Hover .store-panel__carousel__item__image--shadow
+{
+	transform: translateX( 0px ) translateY( 12px );
+	transition-property: transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel__carousel__item__image--offset
+{
+	transform: translateX( 6px ) translateY( 15px );
+	brightness: 0.3;
+}
+
+.store-panel__carousel__item__images-linked:Hover .store-panel__carousel__item__image--offset
+{
+	brightness: 0.6;
+	transform: translateX( 5px ) translateY( -12px );
+	transition-property: transform, brightness;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+
 }
 
 .store-panel__carousel__item__image:hover,
@@ -200,6 +258,19 @@
 	border-radius: 3px;
 	vertical-align: top;
 	box-shadow: shadowOffset;
+}
+
+.store-panel__carousel__item__image--offset .store-panel__carousel__item__stattrak
+{
+	transform:  translateX( 60px ) translateY( -10px );
+	transition-property: transform;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.store-panel__carousel__item__images-linked:Hover .store-panel__carousel__item__stattrak
+{
+	transform:  translateX( 60px ) translateY( 8px );
 }
 
 .store-panel__carousel__item__stattrak.hidden
@@ -342,7 +413,6 @@
 	background-position: 50% 50%;
 	background-size: 100%;
 	                                                 
-
 	                           
 }
 

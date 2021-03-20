@@ -9,7 +9,7 @@
 {
 	padding: 8px 0px;
 	flow-children: down;
-	width:fit-children;
+	width: fit-children;
 	background-color: contextMenuBackground;
     opacity: 1;
 	box-shadow: shadowOffset;

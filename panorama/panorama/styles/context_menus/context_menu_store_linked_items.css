@@ -1,0 +1,16 @@
+#ContextMenuBody.LeftArrowVisible #Contents
+{
+	overflow: squish;
+	box-shadow: shadowOffset;
+	margin: 8px;
+}
+
+#Contents.store-linked-items
+{
+	width: fit-children;
+	height: 220px;
+	                             
+	flow-children: right;
+	padding: 12px;
+}
+
