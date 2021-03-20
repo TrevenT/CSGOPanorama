@@ -198,6 +198,7 @@
 .store-panel__carousel__item__image--offset
 {
 	transform: translateX( 6px ) translateY( 15px );
+	height: 100%;
 	brightness: 0.3;
 }
 

@@ -10,7 +10,7 @@
 	</scripts>
 
 	
-	<Panel class="store-linked-items" onload="StoreLinkedItems.Init();">
+	<Panel class="store-linked-items" onload="StoreLinkedItems.Init();" acceptsinput="true" acceptsfocus="true">
 
 	</Panel>
 

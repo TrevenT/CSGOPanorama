@@ -824,7 +824,6 @@ var MainMenuStore = ( function()
 	{
 		var itemsPerPage = ( type === "tournament" || type === "operation" || type === "proteams" ) ? 1 : 4;
 		var elPage = null;
-		
 
 		if ( i % itemsPerPage === 0 )
 		{
@@ -837,7 +836,10 @@ var MainMenuStore = ( function()
 			elPage = elCarousel.FindChildInLayoutFile( 'Page-'+Math.floor(i/itemsPerPage) );
 		}
 
-		var elItem = $.CreatePanel( 'Panel', elPage, itemList[ i ] );
+		var panelName = ( typeof itemList[ i ] === "object" && type === "coupons" && itemList[ i ].linkedid ) ? 
+			itemList[ i ].linkedid : itemList[ i ];
+			
+		var elItem = $.CreatePanel( 'Panel', elPage, panelName );
 		                                                              
 		
 		if ( itemList[ i ] === 'prime' )
