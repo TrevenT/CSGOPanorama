@@ -1,768 +1,779 @@
-
-
-.op-store-progress
-{
-	height: 150px;
-	width: 100%;
-	horizontal-align: center;
-	margin-left: 32px;
-	margin-right: 32px;
-	flow-children: down;
-}
-
-.op-store-progress__pass-upsell
-{
-	horizontal-align: left;
-	vertical-align: center;
-	height:53px;
-	width: fit-children;
-	flow-children: right;
-}
-
-#id-op-store-progress-pass-upsell
-{
-	horizontal-align: right;
-}
-
-.op-store-progress__pass-upsell__box-end
-{
-	height: 53px;
-	vertical-align: center;
-	wash-color: opTenDark;
-	transform: translateX(1px);
-}
-
-.op-store-progress__pass-upsell__desc,
-.op-store-shop-balance__text
-{
-	color: opTenYellow;
-	background-color: opTenDark;
-	font-weight: light;
-	padding: 10px 5px;
-	text-overflow: shrink;
-}
-
-.op-store-progress__missions
-{
-	vertical-align: center;
-	flow-children: down;
-	horizontal-align: right;
-}
-
-.op-store-tiles-hide .op-store-progress__pass-upsell__desc,
-.op-store-tiles-hide #id-op-store-shop-balance-panel,
-.op-store-tiles-hide .balance__text
-{
-	transform: translateX( 100% );
-	opacity: 0;
-
-	transition-property: transform, opacity;
-	transition-duration: .50s;
-	transition-delay: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__pass-upsell__text-btn
-{
-	                       
-	background-color: opTenYellow;
-	padding: 10px 8px;
-	vertical-align: center;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__pass-upsell__text-btn--fit-children
-{
-	width: fit-children;
-}
-
-.op-store-progress__pass-upsell__text-btn.cancel-btn
-{
-	background-color: #b3aa7a;
-	margin-left: 2px;
-}
-
-.op-store-progress__pass-upsell__text-btn Label,
-.op-store-progress__pass-upsell__text-btn.medium-font Label,
-.op-store-progress__pass-upsell__text-btn-dark
-{
-	color: opTenDark;
-	text-transform: uppercase;
-	font-size: 24px;
-	font-weight: bold;
-
-	transition-property: color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__pass-upsell__text-btn.medium-font Label
-{
-	font-size: 18px;
-	color: opTenDark;
-}
-
-.op-store-shop-balance__more-points-btn
-{
-	padding: 10px 10px;
-}
-
-.op-store-progress__top
-{
-	height: 64px;
-	width:100%;
-}
-
-.op-store-progress__bar-section
-{
-	height: fit-children;
-	width: 100%;
-	flow-children: down;
-	vertical-align: center;
-}
-
-.op-store-progress__bar
-{
-	width:100%;
-	padding: 0px 3px;
-	flow-children: right;
-	horizontal-align: center;
-	transform-origin: 0% 50%;
-}
-
-.op-store-progress__bar__dot
-{
-	height: 16px;
-	width: 0px;
-	background-color: rgba(0, 0, 0, 0.7);
-	vertical-align: center;
-
-	transition-property: background-color;
-	transition-duration: .5s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__bar__dot.filled
-{
-	background-color: opTenYellow;
-
-	transition-property: background-color;
-	transition-duration: .75s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__bar__dot__center
-{
-	vertical-align: center;
-	horizontal-align: center;
-	width: 4px;
-	height: 4px;
-	background-color: opTenYellow;
-	border-radius: 50%;
-}
-
-.op-store-progress__bar__dot.filled .op-store-progress__bar__dot__center
-{
-	background-color: opTenDark;
-}
-
-.op-store-progress__bar__icon-container
-{
-	width: 60px;
-	height: 60px;
-	transform: scale3d(1.05, 1.05, 1);
-	z-index: 2;
-}
-
-.op-store-progress__bar__icon
-{
-	width: 60px;
-	height: 58px;
-	border-radius: 50%;
-	vertical-align: center;
-	border: 3px solid rgba(0, 0, 0, 0.7);
-
-	transition-property: background-color;
-	transition-duration: .75s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-progress__bar__icon-container.filled .op-store-progress__bar__icon
-{
-	border: 3px solid opTenYellow;
-}
-
-.op-store-progress__bar-number
-{
-	horizontal-align: center;
-	transform: translateY( 40px );
-	font-size: 14px;
-	font-weight: bold;
-	color:rgb(0, 0, 0);
-}
-
-.op-store-progress__bar__icon-container.filled .op-store-progress__bar-number
-{
-	color: opTenYellow;
-}
-
-.op-store-progress__bar__indicator-container
-{
-	z-index: 3;
-	padding-top: 5px;
-	horizontal-align: center;
-	transform: translateY(20px);
-}
-
-.op-store-progress__bar__indicator
-{
-	wash-color: opTenYellow;
-	z-index: 3;
-	padding: 0px 10px 10px 0px;
-	img-shadow: 2px 2px 3px #000000;
-}
-
-.op-store-progress__bar__indicator-text
-{
-	transform: translateY(-12px);
-}
-
-.op-store-shop-title-container
-{
-	padding: 0px 32px 16px 32px;
-	flow-children: down;
-}
-
-.op-store-shop-balance-container
-{
-	                   
-	margin-right: 2px;
-	max-height: 48px;
-	padding: 0px 10px;
-	flow-children: right;
-	vertical-align: center;
-	horizontal-align: right;
-	background-color: opTenDark;
-}
-
-.op-store-shop-balance__icon
-{
-	wash-color: opTenYellow;
-	margin: 0px 8px;
-	vertical-align: center;
-}
-
-.op-store-items-rows-container
-{
-	flow-children: down;
-	height: fit-children;
-	width: 100%;
-	                       
-	                                                                         
-	                           
-	perspective: 500;
-	perspective-origin: 50% 50%;
-}
-
-.op-store-items-row
-{
-	padding: 4px 32px;
-	width:100%;
-	flow-children: right;
-}
-
-.op-store-tiles-hide .op-store-item-tile-container
-{
-	transform: translateZ(20px) rotateX(60deg);
-	z-index: 1;
-	
-	transition-property: transform, box-shadow, brightness;
-	transition-duration: .6s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-shop-title-section
-{
-	width: 100%;
-	border-top: 1px solid rgba(219, 188, 9, 0.603);
-	padding-top: 16px;
-}
-
-.op-store-item-tile-container
-{
-	width: fill-parent-flow( 1.0 );
-	height: fit-children;
-	transform: translateZ(0px) rotateX(0deg);
-	brightness: .75;
-	margin: 0px 0px 5px 5px;
-	z-index: 1;
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #68645e ), to (  #302a20 ) );
-	perspective-origin: 50% 50%;
-	perspective: 100;
-
-	transition-property: transform, box-shadow, brightness;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container.op-store-item-tile-reward_ui_order1
-{
-	width: fill-parent-flow( 1 );
-}
-
-.op-store-item-tile-container.op-store-item-tile-reward_ui_order1.op-store-item-tile-reward_ui_row0
-{
-	width: fill-parent-flow( 0.5 );
-}
-
-.op-store-item-tile-container.op-store-item-tile-reward_ui_order3,
-.op-store-item-tile-container.op-store-item-tile-reward_ui_order2
-{
-	width: fill-parent-flow( 0.5 );
-}
-
-.op-store-item-tile
-{
-	width: fill-parent-flow( 1 );
-	height: 180px;
-	z-index: 2;
-}
-
-.op-store-item-tile__title
-{
-	width: 100%;
-	background-color: opTenDark;
-	padding: 4px 0px 4px 8px;
-	vertical-align: top;
-	z-index: 2;
-	font-size: 14px;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__image
-{
-	z-index: 1;
-	vertical-align: top;
-	height: 100%;
-	width: 100%;
-	transform: translateY( 12px );
-	background-repeat: no-repeat;
-	background-size: clip_then_cover;
-}
-
-.op-store-item-tile__image.case
-{
-	padding: 40px;
-	vertical-align: center;
-	horizontal-align: center;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-}
-
-.op-store-item-tile__image.center
-{
-	vertical-align: center;
-	horizontal-align: center;
-	transform-origin: 50% 50%;
-	transform: scale3d( .75, .75, 1);
-	z-index: 5;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-
-	transition-property: transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__image.right-top
-{
-	vertical-align: center;
-	horizontal-align: center;
-	transform: scale3d( .35, .35, 1) translateX(30%) translateY(-18%);
-	z-index: 4;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-	brightness: .5;
-}
-
-.op-store-item-tile__image.right-bottom
-{
-	vertical-align: center;
-	horizontal-align: center;
-	transform: scale3d( .35, .35, 1) translateX(30%) translateY(18%);
-	z-index: 3;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-	brightness: .5;
-}
-
-.op-store-item-tile__image.left-bottom
-{
-	vertical-align: center;
-	horizontal-align: center;
-	transform: scale3d( .35, .35, 1) translateX(-30%) translateY(18%);
-	z-index: 2;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-	brightness: .5;
-}
-
-.op-store-item-tile__image.noshadow
-{
-	img-shadow: none;
-}
-
-.op-store-item-tile__image.left-top
-{
-	vertical-align: center;
-	horizontal-align: center;
-	transform: scale3d( .35, .35, 1) translateX(-30%) translateY(-18%);
-	z-index: 1;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-	brightness: .5;
-}
-
-.op-store-item-tile__bg
-{
-	width: 100%;
-	height: 100%;
-	-s2-mix-blend-mode: additive;
-	opacity: 1; 
-
-	transition-property: brightness, blur;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__item,
-.op-store-item-tile__icon--weapon
-{
-	height: 80%;
-	vertical-align: center;
-	horizontal-align: center;
-	transform-origin: 50% 50%;
-	z-index: 2;
-
-	transition-property: transform, blur;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__char-model
-{
-	height: 100%;
-	width: 100%;
-	vertical-align: center;
-	horizontal-align: left;
-	z-index: 4;
-
-	transition-property: opacity;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-	                             
-}
-
-.op-store-item-tile__char-model.hide
-{
-	opacity: 0;
-
-	transition-property: opacity;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__item--char0,
-.op-store-item-tile__item--char1,
-.op-store-item-tile__item--char3,
-.op-store-item-tile__item--char4
-{
-	blur: gaussian( 1.2 );
-
-	transition-property: opacity, transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char0,
-.op-store-item-tile-container:hover .op-store-item-tile__item--char1,
-.op-store-item-tile-container:hover .op-store-item-tile__item--char3,
-.op-store-item-tile-container:hover .op-store-item-tile__item--char4
-{
-	blur: gaussian( 0 );
-
-	transition-property: opacity, transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__item--char0
-{
-	horizontal-align: left;
-	transform: translateX(8%);
-	brightness: .3;
-	z-index: 2;
-}
-
-.op-store-item-tile__item--char0.small-char-tile
-{
-	transform: translateX(-5%);
-}
-
-.op-store-item-tile__item--char1
-{
-	transform: translateX(20%);
-	z-index: 3;
-	brightness: .6;
-}
-
-.op-store-item-tile__item--char1.small-char-tile
-{
-	transform: translateX(7%);
-}
-
-.op-store-item-tile__item--char2
-{
-	horizontal-align: center;
-	transform: translateZ(200px);
-	z-index: 4;
-	opacity: 1;
-
-	transition-property: opacity, transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__item--char2.hide
-{
-	opacity: 0;
-	visibility: visible;
-
-	transition-property: opacity, transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__item--char3
-{
-	horizontal-align: right;
-	brightness: .6;
-	z-index: 3;
-	transform: translateX(-20%);
-}
-
-.op-store-item-tile__item--char3.small-char-tile
-{
-	transform: translateX(0%);
-}
-
-.op-store-item-tile__item--char4
-{
-	horizontal-align: right;
-	transform: translateX(-8%);
-	brightness: .3;
-	z-index: 2;
-	
-}
-
-.op-store-item-tile__item--char4.small-char-tile
-{
-	transform: translateX(-10%);
-}
-
-.op-store-item-tile__fade
-{
-	width: 100%;
-	height: 100%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff00 ), to( #ffffff ) );
-	z-index: 2;
-	-s2-mix-blend-mode: multiply;
-}
-
-.op-store-item-tile__icon
-{
-	width: 160px;
-	height: 160px;
-	z-index: 4;
-	vertical-align: center;
-	horizontal-align: center;
-	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
-
-	transition-property: transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__price
-{
-	flow-children: right;
-	horizontal-align: right;
-	vertical-align: bottom;
-	background-color: opTenDark;
-	width: fit-children;
-	height: fit-children;
-	z-index: 4;
-	padding: 0px 4px;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__price_text
-{
-	color: opTenYellow;
-}
-
-.op-store-item-tile-container:hover 
-{
-	transform: translateZ(20px) rotateX(2deg);
-	box-shadow: shadowOffset;
-	brightness: 1.2;
-	z-index: 5;
-	sound: "UIPanorama.mainmenu_rollover";
-
-	transition-property: transform, box-shadow, brightness;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__price,
-.op-store-item-tile-container:hover .op-store-item-tile__title,
-{
-	background-color: opTenYellow;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-
-.op-store-item-tile-container:hover .op-store-item-tile__price_text,
-.op-store-item-tile-container:hover .op-store-item-tile__title
-{
-	color: opTenDark;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char0
-{
-	transform: translateX(0%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char0.small-char-tile
-{
-	transform: translateX(-15%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char1
-{
-	transform: translateX(16%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char1.small-char-tile
-{
-	transform: translateX(-0%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char2
-{
-	transform: translateZ(260px);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char3
-{
-	transform: translateX(-16%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char3.small-char-tile
-{
-	transform: translateX(16%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char4
-{
-	transform: translateX(0%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__item--char4.small-char-tile
-{
-	transform: translateX(0%);
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__icon
-{
-	transform: translateX(-25%);
-
-	transition-property: transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__image.center
-{
-	transform: scale3d( 1, 1, 1);
-
-	transition-property: transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__icon--weapon
-{
-	transform: translateX(15%);
-
-	transition-property: transform;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-item-tile__bg
-{
-	width: 100%;
-	height: 100%;
-	blur: gaussian( 6 );
-	brightness: 0;
-
-	transition-property: brightness, blur;
-	transition-duration: 1s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__price-container
-{
-	background-color: opTenYellow;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile__price:hover,
-.op-store-progress__pass-upsell__text-btn:hover,
-.op-store-item-tile__price-container:hover
-{
-	background-color: opTenDark;
-
-	transition-property: background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.op-store-item-tile-container:hover .op-store-shop-balance__icon,
-.op-store-item-tile__price-container:hover .op-store-progress__pass-upsell__box-end-right
-{
-	wash-color: opTenDark;
-}
-
-.op-store-progress__pass-upsell__text-btn:hover Label
-{
-	color: opTenYellow;
-
-	transition-property: color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
+
+
+.op-store-progress
+{
+	height: 150px;
+	width: 100%;
+	horizontal-align: center;
+	margin-left: 32px;
+	margin-right: 32px;
+	flow-children: down;
+}
+
+.op-store-progress__pass-upsell
+{
+	horizontal-align: left;
+	vertical-align: center;
+	height:53px;
+	width: fit-children;
+	flow-children: right;
+}
+
+#id-op-store-progress-pass-upsell
+{
+	horizontal-align: right;
+}
+
+.op-store-progress__pass-upsell__box-end
+{
+	height: 53px;
+	vertical-align: center;
+	wash-color: opTenDark;
+	transform: translateX(1px);
+}
+
+.op-store-progress__pass-upsell__desc,
+.op-store-shop-balance__text
+{
+	color: opTenYellow;
+	background-color: opTenDark;
+	font-weight: light;
+	padding: 10px 5px;
+	text-overflow: shrink;
+}
+
+.op-store-shop-getreward-flags-disclaimer
+{
+	font-size: 14px;
+	margin-top: -20px;
+	margin-left: 10px;
+	background-color: #00000000;
+	z-index: 2;
+	transform: translateY(20px);
+
+}
+
+.op-store-progress__missions
+{
+	vertical-align: center;
+	flow-children: down;
+	horizontal-align: right;
+}
+
+.op-store-tiles-hide .op-store-progress__pass-upsell__desc,
+.op-store-tiles-hide #id-op-store-shop-balance-panel,
+.op-store-tiles-hide .balance__text
+{
+	transform: translateX( 100% );
+	opacity: 0;
+
+	transition-property: transform, opacity;
+	transition-duration: .50s;
+	transition-delay: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__pass-upsell__text-btn
+{
+	                       
+	background-color: opTenYellow;
+	padding: 10px 8px;
+	vertical-align: center;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__pass-upsell__text-btn--fit-children
+{
+	width: fit-children;
+}
+
+.op-store-progress__pass-upsell__text-btn.cancel-btn
+{
+	background-color: #b3aa7a;
+	margin-left: 2px;
+}
+
+.op-store-progress__pass-upsell__text-btn Label,
+.op-store-progress__pass-upsell__text-btn.medium-font Label,
+.op-store-progress__pass-upsell__text-btn-dark
+{
+	color: opTenDark;
+	text-transform: uppercase;
+	font-size: 24px;
+	font-weight: bold;
+
+	transition-property: color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__pass-upsell__text-btn.medium-font Label
+{
+	font-size: 18px;
+	color: opTenDark;
+}
+
+.op-store-shop-balance__more-points-btn
+{
+	padding: 10px 10px;
+}
+
+.op-store-progress__top
+{
+	height: 64px;
+	width:100%;
+}
+
+.op-store-progress__bar-section
+{
+	height: fit-children;
+	width: 100%;
+	flow-children: down;
+	vertical-align: center;
+}
+
+.op-store-progress__bar
+{
+	width:100%;
+	padding: 0px 3px;
+	flow-children: right;
+	horizontal-align: center;
+	transform-origin: 0% 50%;
+}
+
+.op-store-progress__bar__dot
+{
+	height: 16px;
+	width: 0px;
+	background-color: rgba(0, 0, 0, 0.7);
+	vertical-align: center;
+
+	transition-property: background-color;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__bar__dot.filled
+{
+	background-color: opTenYellow;
+
+	transition-property: background-color;
+	transition-duration: .75s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__bar__dot__center
+{
+	vertical-align: center;
+	horizontal-align: center;
+	width: 4px;
+	height: 4px;
+	background-color: opTenYellow;
+	border-radius: 50%;
+}
+
+.op-store-progress__bar__dot.filled .op-store-progress__bar__dot__center
+{
+	background-color: opTenDark;
+}
+
+.op-store-progress__bar__icon-container
+{
+	width: 60px;
+	height: 60px;
+	transform: scale3d(1.05, 1.05, 1);
+	z-index: 2;
+}
+
+.op-store-progress__bar__icon
+{
+	width: 60px;
+	height: 58px;
+	border-radius: 50%;
+	vertical-align: center;
+	border: 3px solid rgba(0, 0, 0, 0.7);
+
+	transition-property: background-color;
+	transition-duration: .75s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-progress__bar__icon-container.filled .op-store-progress__bar__icon
+{
+	border: 3px solid opTenYellow;
+}
+
+.op-store-progress__bar-number
+{
+	horizontal-align: center;
+	transform: translateY( 40px );
+	font-size: 14px;
+	font-weight: bold;
+	color:rgb(0, 0, 0);
+}
+
+.op-store-progress__bar__icon-container.filled .op-store-progress__bar-number
+{
+	color: opTenYellow;
+}
+
+.op-store-progress__bar__indicator-container
+{
+	z-index: 3;
+	padding-top: 5px;
+	horizontal-align: center;
+	transform: translateY(20px);
+}
+
+.op-store-progress__bar__indicator
+{
+	wash-color: opTenYellow;
+	z-index: 3;
+	padding: 0px 10px 10px 0px;
+	img-shadow: 2px 2px 3px #000000;
+}
+
+.op-store-progress__bar__indicator-text
+{
+	transform: translateY(-12px);
+}
+
+.op-store-shop-title-container
+{
+	padding: 0px 32px 16px 32px;
+	flow-children: down;
+}
+
+.op-store-shop-balance-container
+{
+	                   
+	margin-right: 2px;
+	max-height: 48px;
+	padding: 0px 10px;
+	flow-children: right;
+	vertical-align: center;
+	horizontal-align: right;
+	background-color: opTenDark;
+}
+
+.op-store-shop-balance__icon
+{
+	wash-color: opTenYellow;
+	margin: 0px 8px;
+	vertical-align: center;
+}
+
+.op-store-items-rows-container
+{
+	flow-children: down;
+	height: fit-children;
+	width: 100%;
+	                       
+	                                                                         
+	                           
+	perspective: 500;
+	perspective-origin: 50% 50%;
+}
+
+.op-store-items-row
+{
+	padding: 4px 32px;
+	width:100%;
+	flow-children: right;
+}
+
+.op-store-tiles-hide .op-store-item-tile-container
+{
+	transform: translateZ(20px) rotateX(60deg);
+	z-index: 1;
+	
+	transition-property: transform, box-shadow, brightness;
+	transition-duration: .6s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-shop-title-section
+{
+	width: 100%;
+	border-top: 1px solid rgba(219, 188, 9, 0.603);
+	padding-top: 16px;
+}
+
+.op-store-item-tile-container
+{
+	width: fill-parent-flow( 1.0 );
+	height: fit-children;
+	transform: translateZ(0px) rotateX(0deg);
+	brightness: .75;
+	margin: 0px 0px 5px 5px;
+	z-index: 1;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #68645e ), to (  #302a20 ) );
+	perspective-origin: 50% 50%;
+	perspective: 100;
+
+	transition-property: transform, box-shadow, brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container.op-store-item-tile-reward_ui_order1
+{
+	width: fill-parent-flow( 1 );
+}
+
+.op-store-item-tile-container.op-store-item-tile-reward_ui_order1.op-store-item-tile-reward_ui_row0
+{
+	width: fill-parent-flow( 0.5 );
+}
+
+.op-store-item-tile-container.op-store-item-tile-reward_ui_order3,
+.op-store-item-tile-container.op-store-item-tile-reward_ui_order2
+{
+	width: fill-parent-flow( 0.5 );
+}
+
+.op-store-item-tile
+{
+	width: fill-parent-flow( 1 );
+	height: 180px;
+	z-index: 2;
+}
+
+.op-store-item-tile__title
+{
+	width: 100%;
+	background-color: opTenDark;
+	padding: 4px 0px 4px 8px;
+	vertical-align: top;
+	z-index: 2;
+	font-size: 14px;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__image
+{
+	z-index: 1;
+	vertical-align: top;
+	height: 100%;
+	width: 100%;
+	transform: translateY( 12px );
+	background-repeat: no-repeat;
+	background-size: clip_then_cover;
+}
+
+.op-store-item-tile__image.case
+{
+	padding: 40px;
+	vertical-align: center;
+	horizontal-align: center;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+}
+
+.op-store-item-tile__image.center
+{
+	vertical-align: center;
+	horizontal-align: center;
+	transform-origin: 50% 50%;
+	transform: scale3d( .75, .75, 1);
+	z-index: 5;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__image.right-top
+{
+	vertical-align: center;
+	horizontal-align: center;
+	transform: scale3d( .35, .35, 1) translateX(30%) translateY(-18%);
+	z-index: 4;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+	brightness: .5;
+}
+
+.op-store-item-tile__image.right-bottom
+{
+	vertical-align: center;
+	horizontal-align: center;
+	transform: scale3d( .35, .35, 1) translateX(30%) translateY(18%);
+	z-index: 3;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+	brightness: .5;
+}
+
+.op-store-item-tile__image.left-bottom
+{
+	vertical-align: center;
+	horizontal-align: center;
+	transform: scale3d( .35, .35, 1) translateX(-30%) translateY(18%);
+	z-index: 2;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+	brightness: .5;
+}
+
+.op-store-item-tile__image.noshadow
+{
+	img-shadow: none;
+}
+
+.op-store-item-tile__image.left-top
+{
+	vertical-align: center;
+	horizontal-align: center;
+	transform: scale3d( .35, .35, 1) translateX(-30%) translateY(-18%);
+	z-index: 1;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+	brightness: .5;
+}
+
+.op-store-item-tile__bg
+{
+	width: 100%;
+	height: 100%;
+	-s2-mix-blend-mode: additive;
+	opacity: 1; 
+
+	transition-property: brightness, blur;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__item,
+.op-store-item-tile__icon--weapon
+{
+	height: 80%;
+	vertical-align: center;
+	horizontal-align: center;
+	transform-origin: 50% 50%;
+	z-index: 2;
+
+	transition-property: transform, blur;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__char-model
+{
+	height: 100%;
+	width: 100%;
+	vertical-align: center;
+	horizontal-align: left;
+	z-index: 4;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+	                             
+}
+
+.op-store-item-tile__char-model.hide
+{
+	opacity: 0;
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__item--char0,
+.op-store-item-tile__item--char1,
+.op-store-item-tile__item--char3,
+.op-store-item-tile__item--char4
+{
+	blur: gaussian( 1.2 );
+
+	transition-property: opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char0,
+.op-store-item-tile-container:hover .op-store-item-tile__item--char1,
+.op-store-item-tile-container:hover .op-store-item-tile__item--char3,
+.op-store-item-tile-container:hover .op-store-item-tile__item--char4
+{
+	blur: gaussian( 0 );
+
+	transition-property: opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__item--char0
+{
+	horizontal-align: left;
+	transform: translateX(8%);
+	brightness: .3;
+	z-index: 2;
+}
+
+.op-store-item-tile__item--char0.small-char-tile
+{
+	transform: translateX(-5%);
+}
+
+.op-store-item-tile__item--char1
+{
+	transform: translateX(20%);
+	z-index: 3;
+	brightness: .6;
+}
+
+.op-store-item-tile__item--char1.small-char-tile
+{
+	transform: translateX(7%);
+}
+
+.op-store-item-tile__item--char2
+{
+	horizontal-align: center;
+	transform: translateZ(200px);
+	z-index: 4;
+	opacity: 1;
+
+	transition-property: opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__item--char2.hide
+{
+	opacity: 0;
+	visibility: visible;
+
+	transition-property: opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__item--char3
+{
+	horizontal-align: right;
+	brightness: .6;
+	z-index: 3;
+	transform: translateX(-20%);
+}
+
+.op-store-item-tile__item--char3.small-char-tile
+{
+	transform: translateX(0%);
+}
+
+.op-store-item-tile__item--char4
+{
+	horizontal-align: right;
+	transform: translateX(-8%);
+	brightness: .3;
+	z-index: 2;
+	
+}
+
+.op-store-item-tile__item--char4.small-char-tile
+{
+	transform: translateX(-10%);
+}
+
+.op-store-item-tile__fade
+{
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff00 ), to( #ffffff ) );
+	z-index: 2;
+	-s2-mix-blend-mode: multiply;
+}
+
+.op-store-item-tile__icon
+{
+	width: 160px;
+	height: 160px;
+	z-index: 4;
+	vertical-align: center;
+	horizontal-align: center;
+	img-shadow: 0px 0px 64px 8.0 rgba(0, 0, 0, 0.219);
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__price
+{
+	flow-children: right;
+	horizontal-align: right;
+	vertical-align: bottom;
+	background-color: opTenDark;
+	width: fit-children;
+	height: fit-children;
+	z-index: 4;
+	padding: 0px 4px;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__price_text
+{
+	color: opTenYellow;
+}
+
+.op-store-item-tile-container:hover 
+{
+	transform: translateZ(20px) rotateX(2deg);
+	box-shadow: shadowOffset;
+	brightness: 1.2;
+	z-index: 5;
+	sound: "UIPanorama.mainmenu_rollover";
+
+	transition-property: transform, box-shadow, brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__price,
+.op-store-item-tile-container:hover .op-store-item-tile__title,
+{
+	background-color: opTenYellow;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+
+.op-store-item-tile-container:hover .op-store-item-tile__price_text,
+.op-store-item-tile-container:hover .op-store-item-tile__title
+{
+	color: opTenDark;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char0
+{
+	transform: translateX(0%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char0.small-char-tile
+{
+	transform: translateX(-15%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char1
+{
+	transform: translateX(16%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char1.small-char-tile
+{
+	transform: translateX(-0%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char2
+{
+	transform: translateZ(260px);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char3
+{
+	transform: translateX(-16%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char3.small-char-tile
+{
+	transform: translateX(16%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char4
+{
+	transform: translateX(0%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__item--char4.small-char-tile
+{
+	transform: translateX(0%);
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__icon
+{
+	transform: translateX(-25%);
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__image.center
+{
+	transform: scale3d( 1, 1, 1);
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__icon--weapon
+{
+	transform: translateX(15%);
+
+	transition-property: transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-item-tile__bg
+{
+	width: 100%;
+	height: 100%;
+	blur: gaussian( 6 );
+	brightness: 0;
+
+	transition-property: brightness, blur;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__price-container
+{
+	background-color: opTenYellow;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile__price:hover,
+.op-store-progress__pass-upsell__text-btn:hover,
+.op-store-item-tile__price-container:hover
+{
+	background-color: opTenDark;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.op-store-item-tile-container:hover .op-store-shop-balance__icon,
+.op-store-item-tile__price-container:hover .op-store-progress__pass-upsell__box-end-right
+{
+	wash-color: opTenDark;
+}
+
+.op-store-progress__pass-upsell__text-btn:hover Label
+{
+	color: opTenYellow;
+
+	transition-property: color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}

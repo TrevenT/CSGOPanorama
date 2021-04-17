@@ -7,6 +7,7 @@ var OperationStoreInspect = ( function()
 	var _m_rewardtype = '';
 	var _m_rewardIndex = undefined;
 	var _m_rewardCost = undefined;
+	var _m_rewardFlags = undefined;
 	var _m_cp = $.GetContextPanel();
 	var _m_rewardImagePath = '';
 	var _m_nSeasonAccess = 0;
@@ -49,6 +50,7 @@ var OperationStoreInspect = ( function()
 		_m_rewardImagePath = oReward.imagePath;
 		_m_rewardIndex = Number( oReward.idx );
 		_m_rewardCost = oReward.points;
+		_m_rewardFlags = oReward.flags;
 
 		                                       
 
@@ -428,6 +430,15 @@ var OperationStoreInspect = ( function()
 		_m_cp.SetDialogVariableInt( "your_stars", OperationUtil.GetOperationInfo().nRedeemableBalance );
 		_m_cp.SetDialogVariable( "cost_stars", _m_rewardCost );
 		_m_cp.SetDialogVariable( "item_name", ItemInfo.GetName( _m_rewardId ));
+
+		if ( _m_rewardFlags )
+		{
+			var elFlagsNotice = _m_cp.FindChildInLayoutFile( 'id-op-inspect-shop-get-confirm-flags-notice-' + _m_rewardFlags );
+			if ( elFlagsNotice )
+			{
+				elFlagsNotice.RemoveClass( 'hide' );
+			}
+		}
 
 		var bSingularReward = ( _m_rewardtype === "isWeaponsCase" || 
 			( _m_rewardtype === "isCharacterLootlist" && _m_aLootist.length === 1 ) );

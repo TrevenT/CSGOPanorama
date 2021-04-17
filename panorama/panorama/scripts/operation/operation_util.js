@@ -171,6 +171,7 @@ var OperationUtil = ( function () {
 
 		var aRewardDataFields = [
 			{ objHandle:'points', value: 'points'},
+			{ objHandle:'flags', value: 'flags'},
 			{ objHandle:'uiOrder', value: 'ui_order'},
 			{ objHandle:'imagePath', value: 'ui_image'},
 			{ objHandle:'imagePathInspect', value: 'ui_image_inspect'},

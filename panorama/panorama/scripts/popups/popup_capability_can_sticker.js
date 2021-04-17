@@ -170,10 +170,13 @@ var CapabilityCanSticker = ( function()
 
 		if ( !bIsPerfectWorld )
 		{
+			                                                                                                                                           
+			                                                                                                                                           
 			if ( InventoryAPI.IsMarketable( itemId ) )
 			{
-				if ( !InventoryAPI.IsMarketable( toolId ) )
-				{
+				if ( !InventoryAPI.IsPotentiallyMarketable( toolId ) )
+				{	                                                                                                                                                             
+					                                                                                                                                   
 					strSpecialParam = InventoryAPI.GetItemAttributeValue( toolId, "tradable after date" );
 					if ( strSpecialParam !== undefined && strSpecialParam !== null )
 					{
