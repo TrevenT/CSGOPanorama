@@ -1040,7 +1040,7 @@ var MainMenuStore = ( function()
 		                                                                               
 		                                                                               
 		  
-		var tabsorder = [ 'coupons', 'proteams', 'operation',
+		var tabsorder = [ 'proteams', 'operation', 'coupons',
 			'tournament', 'prime', 'newstore',
 			'store', 'keys', 'market' ];
 
@@ -1056,11 +1056,14 @@ var MainMenuStore = ( function()
 		tabelements.forEach( fnMoveToFront );
 		tabelements.reverse();
 
-		var nCategoryIdx = MyPersonaAPI.GetAccountCategory( 'store1' );
-		if ( nCategoryIdx > 0 && nCategoryIdx < tabelements.length )
-		{
-			fnMoveToFront( tabelements[nCategoryIdx] );
-		}
+		  
+		                                                                         
+		                                                               
+		                                                            
+		 
+			                                           
+		 
+		  
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};
