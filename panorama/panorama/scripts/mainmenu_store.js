@@ -1032,24 +1032,35 @@ var MainMenuStore = ( function()
 		var elParent = $.GetContextPanel().FindChildInLayoutFile( 'StoreNaveBar' );
 		var tabList = elParent.Children();
 
-		var NewPostition = function( elToMove )
+		  
+		                                                                  
+		                                                                               
+		                                                                            
+		                          
+		                                                                               
+		                                                                               
+		  
+		var tabsorder = [ 'coupons', 'proteams', 'operation',
+			'tournament', 'prime', 'newstore',
+			'store', 'keys', 'market' ];
+
+		var dict = {};
+		tabsorder.forEach( ( tabid, idx ) => dict[tabid] = idx );
+
+		var tabelements = [];
+		tabelements.length = tabsorder.length;
+		tabList.forEach( obj => dict.hasOwnProperty( obj.id ) ? tabelements[ dict[obj.id] ] = obj : null );
+
+		var fnMoveToFront = obj => obj ? elParent.MoveChildBefore( obj, elParent.Children()[0] ) : null;
+		tabelements.reverse();
+		tabelements.forEach( fnMoveToFront );
+		tabelements.reverse();
+
+		var nCategoryIdx = MyPersonaAPI.GetAccountCategory( 'store1' );
+		if ( nCategoryIdx > 0 && nCategoryIdx < tabelements.length )
 		{
-			if ( elToMove )
-			{
-				elParent.MoveChildBefore( elToMove, elParent.Children()[ 0 ] );
-			}
-		};
-
-		NewPostition( tabList.find(function (obj) { return obj.id === 'market'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'keys'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'store'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'newstore'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'prime'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'tournament'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'operation'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'proteams'; } ) );
-		NewPostition( tabList.find(function (obj) { return obj.id === 'coupons'; } ) );
-
+			fnMoveToFront( tabelements[nCategoryIdx] );
+		}
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};
