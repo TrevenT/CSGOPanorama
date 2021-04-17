@@ -1515,6 +1515,13 @@ var MainMenu = ( function() {
 			_m_hOnEngineSoundSystemsRunningRegisterHandle = null;
 		}
 
+		                                                                                   
+		var elCoverPlaque = $( '#MainMenuFullScreenBlackCoverPlaque' );
+		if ( elCoverPlaque )
+			elCoverPlaque.visible = false;
+			
+		return;                                                                                                  
+
 		var setVersionTo = '2';
 		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
 
@@ -1527,11 +1534,6 @@ var MainMenu = ( function() {
 				'none'
 			);
 		}
-
-		                                                                                   
-		var elCoverPlaque = $( '#MainMenuFullScreenBlackCoverPlaque' );
-		if ( elCoverPlaque )
-			elCoverPlaque.visible = false;
 	};
 
 	var _PauseMainMenuCharacter = function()

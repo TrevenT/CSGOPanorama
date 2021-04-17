@@ -523,6 +523,9 @@ var OperationUtil = ( function () {
 
 	var _IsMissionLockedBehindPremiumOperationPass = function( missionCardId, MissionItemID, nSeasonAccess )
 	{
+		                                     
+		return false;
+
 		                                                                                          
 		var gameMode = InventoryAPI.GetQuestGameMode( MissionItemID );
 		if ( gameMode !== 'competitive' )

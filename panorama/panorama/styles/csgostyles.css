@@ -203,6 +203,11 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
 	text-align: right;
 }
 
+.text-align-left
+{
+	text-align: left;
+}
+
 .text-uppercase
 {
 	text-transform: uppercase;

@@ -293,10 +293,10 @@
 }
 
                                            
+                                                           
 .play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp .map-selection-list-section__header Label,
 .play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp .map-selection-list-section__header Button,
-.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp ToggleButton .TickBox,
-.play-menu__lobbymapveto_activated .play-menu-get-prime
+.play-menu__lobbymapveto_activated .has-selection-list-section--type-capt .map-selection-list-section--type-comp ToggleButton .TickBox
 {
 	opacity: 0;
 }
@@ -377,6 +377,12 @@
 	width: 100%;
 	height: 32px;
 	flow-children: right;
+	overflow: noclip;
+}
+
+.map-selection-btn__top-icon-row.tall
+{
+	height: 64px;
 }
 
 .map-selection-btn__groupmap-icons
@@ -513,13 +519,33 @@
 	font-size: 18px;
 }
 
+.map-selection-list .map-selection-btn .map-selection-info__new--star
+{
+	height: 64px;
+	width: 64px;
+
+	background-image: url( "file://{images}/ui_textures/yellow_star.png" );
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.map-selection-list .map-selection-btn .map-selection-info__new--star Label
+{
+	position: 0px 0px 0px;
+	width: 100%;
+	text-align: center;
+	margin-left: 0px;
+	font-weight: bold;
+	transform: rotateZ(-10deg);
+}
+
 ToggleButton .map-selection-info__new,
 RadioButton .map-selection-info__new
 {
 	position: 0px 0px 0px;
 	margin-left: 0px;
 }
-
 
                                                                  
 .map-selection-btn-container--large .map-selection-info__map-name
@@ -547,14 +573,16 @@ RadioButton .map-selection-info__new
 .map-selection-info__map-capt
 {
 	text-align: left;
-	text-overflow: clip;
+	text-overflow: noclip;
 	font-size: 17px;
 	font-weight: lighter;
-	margin: 4% 10% 0% 10%;
+	margin: 0px;
+	padding:8% 5%;
+	background-color: #000000c0;
 	height: fit-children;
-	width: fit-children;
+	width: 83%;
+	horizontal-align: center;
 	vertical-align: top;
-	text-overflow: ellipsis;
 	visibility: collapse;
 }
 
@@ -574,7 +602,8 @@ RadioButton .map-selection-info__new
 }
 
 .map-selection-info__wait-time-block.hidden,
-.map-selection-info__new.hidden
+.map-selection-info__new.hidden,
+.map-selection-info__new--star.hidden
 {
 	visibility: collapse;
 }

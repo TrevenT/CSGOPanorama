@@ -29,6 +29,9 @@
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
 						<Image id="ActiveGroupIcon" class="right-margin" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
 						<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
+						<Panel id="MapGroupNewTagYellowLarge" class="map-selection-info__new--star">
+							<Label class="" text='#SFUI_Workshop_New_Map'/>
+						</Panel>
 						<Label id="MapGroupUnrankedTag" class="map-selection-info__new map-selection-info__unranked stratum-font hidden" text='#SFUI_RankType_Modifier_Unranked'/>
 					</Panel>
 					                           
@@ -42,7 +45,7 @@
 							<Label id="MapGroupWaitTimeLabel" class="fontSize-s"/>
 						</Panel>
 						<Label id="MapGroupName" class="map-selection-info__map-name fontSize-l"/>
-						<Label class="map-selection-info__map-capt" text="#play_maps_section_detailed_rules_capt" html="true"/>
+						<Label class="map-selection-info__map-capt" text="#play_maps_section_detailed_rules_capt_limitedtime" html="true"/>
 					</Panel>
 				</Panel>
 			</Panel>

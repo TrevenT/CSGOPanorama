@@ -194,7 +194,7 @@ var PlayMenu = ( function()
 											MyPersonaAPI.GetMyOfficialTeamName(),
 											_GetTournamentOpponent(),
 											stage
-										 );
+										);
 			}
 		} );
 
@@ -220,6 +220,27 @@ var PlayMenu = ( function()
 		                                            
 		_SyncDialogsFromSessionSettings( LobbyAPI.GetSessionSettings() );
 		_ApplySessionSettings();
+
+		                         
+		_ShowNewMatchmakingModePopup();
+	};
+
+	var _ShowNewMatchmakingModePopup = function()
+	{
+		var setVersionTo = '3';
+		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
+
+		if ( currentVersion !== setVersionTo )
+		{	                                 
+			GameInterfaceAPI.SetSettingString( 'ui_popup_weaponupdate_version', setVersionTo );
+			UiToolkitAPI.ShowCustomLayoutPopup( 'prime_status', 'file://{resources}/layout/popups/popup_premier_matchmaking.xml' );
+			                                               
+			  	   
+			  	                                                              
+			  	                                   
+			  	      
+			    
+		}
 	};
 
 	var _SetGameModeRadioButtonAvailableTooltip = function( gameMode, isAvailable, txtTooltip )
@@ -889,7 +910,7 @@ var PlayMenu = ( function()
 					return '256'
 				else if ( m_gameModeSetting === 'coopmission' )
 					return '256'
-					 
+					
 				return '116';
 			}
 		}
@@ -1102,7 +1123,10 @@ var PlayMenu = ( function()
 		var isUnrankedCompetitive = ( m_gameModeSetting === 'competitive' ) && _IsValveOfficialServer( m_serverSetting ) && ( GameTypesAPI.GetMapGroupAttribute( mapName, 'competitivemod' ) === 'unranked' );
 		var isNew = !isUnrankedCompetitive  && ( GameTypesAPI.GetMapGroupAttribute( mapName, 'showtagui' ) === 'new' );
 
-		elMapPanel.FindChildInLayoutFile( 'MapGroupNewTag' ).SetHasClass( 'hidden', !isNew );
+		elMapPanel.FindChildInLayoutFile( 'MapGroupNewTag' ).SetHasClass( 'hidden', !isNew || mapName === "mg_lobby_mapveto");
+		elMapPanel.FindChildInLayoutFile( 'MapGroupNewTagYellowLarge' ).SetHasClass( 'hidden', mapName !== "mg_lobby_mapveto" );
+		elMapPanel.FindChildInLayoutFile( 'MapSelectionTopRowIcons' ).SetHasClass( 'tall', mapName === "mg_lobby_mapveto" );
+
 		elMapPanel.FindChildInLayoutFile( 'MapGroupUnrankedTag' ).SetHasClass( 'hidden', !isUnrankedCompetitive );
 	};
 
