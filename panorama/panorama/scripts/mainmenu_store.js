@@ -29,12 +29,18 @@ var MainMenuStore = ( function()
 
 		                                                   
 		var nSeasonIndex = GameTypesAPI.GetActiveSeasionIndexValue();
+		nSeasonIndex = 9;                                                                                                                   
 		OperationUtil.ValidateOperationInfo( nSeasonIndex );
 		var oStatus = OperationUtil.GetOperationInfo();
 
 		if ( nSeasonIndex && nSeasonIndex > 0 )
 		{
-			m_elStore.SetDialogVariable( "operation_name", $.Localize( "#" + GameTypesAPI.GetActiveSeasionCodeName() + '_name' ) );
+			var opname = GameTypesAPI.GetActiveSeasionCodeName();
+			if ( !opname )
+			{
+				opname = 'op' + ( nSeasonIndex + 1 );
+			}
+			m_elStore.SetDialogVariable( "operation_name", $.Localize( "#" + opname + '_name' ) );
 		}
 
 		if( OperationUtil.ValidateCoinAndSeasonIndex( nSeasonIndex, oStatus.nCoinRank ) )
@@ -1064,6 +1070,12 @@ var MainMenuStore = ( function()
 			                                           
 		 
 		  
+
+		                                                                                                                  
+		var nCategoryIdx = Math.floor( Math.random() * 3 );
+		fnMoveToFront( tabelements[nCategoryIdx] );
+		var nCategoryIdx2 = Math.floor( Math.random() * 2 );
+		fnMoveToFront( tabelements[ nCategoryIdx2 + ( ( nCategoryIdx2 >= nCategoryIdx ) ? 1 : 0 ) ] );
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};
