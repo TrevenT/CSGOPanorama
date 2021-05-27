@@ -203,6 +203,8 @@ var TeamSelectMenu = ( function (){
 		if ( team == "CT" )
 		{
 			elChar = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharCT' );
+			if ( !elChar )
+				return;
 
 			_SetCharacterAnim( elChar,
 				{
@@ -214,6 +216,8 @@ var TeamSelectMenu = ( function (){
 		else if ( team == "TERRORIST" )
 		{
 			elChar = $.GetContextPanel().FindChildInLayoutFile( 'TeamCharT' );
+			if ( !elChar )
+			return;
 
 			_SetCharacterAnim( elChar,
 				{

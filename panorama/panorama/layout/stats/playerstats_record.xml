@@ -282,7 +282,7 @@
 					<Panel id="Wep4" class="full-width weapons__row">
 						
 						                    
-						<Image id="WeaponImage" class="horizontal-align-left" />
+						<Image id="WeaponImage" class="horizontal-align-left" scaling="stretch-to-fit-preserve-aspect"/>
 
 						            
 						<Label class="value normal-value--no-align horizontal-center weapons__row__kd" text="{s:score}" />
