@@ -676,8 +676,10 @@ var MainMenu = ( function() {
 		elStore.BLoadLayout( 'file://{resources}/layout/mainmenu_store.xml', false, false );
 
 		                             
-		var elOperationStoreBalanceReminder = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsOpBalance' );
-		elOperationStoreBalanceReminder .BLoadLayout( 'file://{resources}/layout/mainmenu_operation_balance_reminder.xml', false, false );
+		                                                                                          
+		                                                                                                                             
+		                                                                                                                                     
+		      
 		
 		$.FindChildInContext( '#JsNewsContainer' ).OnPropertyTransitionEndEvent = function ( panelName, propertyName )
 		{
