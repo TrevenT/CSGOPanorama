@@ -62,7 +62,7 @@
 			<Panel id="MainMenuInput">                                              
 				
 				<CSGOBlurTarget id="MainMenuCore" blurrects="ChatLinesContainerBg mainmenu-sidebar__blur-target CSGOLoadingScreen JsMainMenuNavBar eom-winner">
-					<CSGOBlurTarget id="MainMenuBackground" blurrects="id-mainmenu-mission-card-bg id-op-mainmenu-top mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel id-op-mainmenu-rewards id-op-mainmenu-missions id-op-mainmenu-stats">
+					<CSGOBlurTarget id="MainMenuBackground" blurrects="id-mainmenu-mission-card-bg id-op-mainmenu-top mainmenu-content__blur-target JsNewsPanel id-tournament-pass-status JsStorePanel JsStreamPanel JsWatchNoticePanel id-op-mainmenu-rewards id-op-mainmenu-missions JsLastMatch">
 						<Panel class="mainmenu-vanity__vignette" hittest="false"/>
 						                                                      
 						<CSGOBackbufferImagePanel class="full-width full-height PauseMenuModeOnly" />
@@ -186,6 +186,18 @@
 							<Image textureheight="34" texturewidth="-1" src="file://{images}/icons/ui/watch_tv.svg" />
 							<Panel id="MainMenuWatchAlert" class="navbar-btn__notification hidden">
 								<Label id="MainMenuWatchAlertText" class="navbar-btn__notification-text" text="#Store_Price_New"/>
+							</Panel>
+						</RadioButton>
+						                                             
+						<RadioButton id="MainMenuNavBarStats"
+									class="mainmenu-navbar__btn-small colored-icon MainMenuModeOnly"
+									group="NavBar"
+									onactivate="MainMenu.NavigateToTab('JsPlayerStats', 'mainmenu_playerstats'); MainMenu.StatsBtnPressedUpdateAlert();"
+									onmouseover="UiToolkitAPI.ShowTextTooltip( 'MainMenuNavBarStats', '#tooltip_navbar_stats' );"
+									onmouseout="UiToolkitAPI.HideTextTooltip();">
+							<Image textureheight="34" texturewidth="-1" src="file://{images}/icons/ui/stats_logo.svg" />
+							<Panel id="MainMenuSubscriptionAlert" class="navbar-btn__notification hidden">
+								<Label id="MainMenuSubscriptionAlertText" class="navbar-btn__notification-text" text="#Store_Price_New"/>
 							</Panel>
 						</RadioButton>
 						                                                 

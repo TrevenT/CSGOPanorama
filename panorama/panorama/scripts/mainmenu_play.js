@@ -227,6 +227,7 @@ var PlayMenu = ( function()
 
 	var _ShowNewMatchmakingModePopup = function()
 	{
+		return;                                                                                 
 		var setVersionTo = '3';
 		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
 
@@ -777,6 +778,9 @@ var PlayMenu = ( function()
 
 	var _GetCategoryForMapName = function( mapName )
 	{
+		  
+		                                                                                              
+		  
 		if ( mapName === 'mg_lobby_mapveto' || mapName === 'lobby_mapveto' )
 		{
 			return 'capt';
@@ -785,8 +789,13 @@ var PlayMenu = ( function()
 		{
 			return 'comp';
 		}
-		                                                                                            
-		                                     
+
+		  
+		  
+		                                                                                                  
+		  
+		                                                                                                                 
+		  
 	};
 
 	var _GetCreateMapListSection = function( type, container )

@@ -301,15 +301,24 @@ var OperationUtil = ( function () {
 		return totalPoints;
 	};
 
-	function _IfOperationEndedGetExtendedSeasonWithRedeemableBalance()
+	function _IfOperationEndedGetExtendedSeasonWithRedeemableBalance( bAlwaysShowOperationEndedMessageBox )
 	{
 		var nActiveSeason = 9;                                                                                                                   
-		_ValidateOperationInfo( nActiveSeason );
-		if ( m_numRedeemableBalance <= 0 )
+		
+		if ( bAlwaysShowOperationEndedMessageBox )
 		{
-			UiToolkitAPI.ShowGenericPopup( '#op_stars_shop_title', '#op_stars_shop_operation_over', "" );
-			return -1;
+			nActiveSeason = -1;
 		}
+		else
+		{
+			_ValidateOperationInfo( nActiveSeason );
+			if ( m_numRedeemableBalance <= 0 )
+				nActiveSeason = -1;
+		}
+			
+		if ( nActiveSeason < 0 )
+			UiToolkitAPI.ShowGenericPopup( '#op_stars_shop_title', '#op_stars_shop_operation_over', "" );
+			
 		return nActiveSeason;
 	}
 
@@ -335,14 +344,14 @@ var OperationUtil = ( function () {
 
 	function _OpenPopupCustomLayoutOperationStore()
 	{
+		$.DispatchEvent( 'ContextMenuEvent', '' );
+
 		var nActiveSeason = GameTypesAPI.GetActiveSeasionIndexValue();
 		if ( nActiveSeason < 0 )
 			nActiveSeason = _IfOperationEndedGetExtendedSeasonWithRedeemableBalance();
 
 		if ( nActiveSeason < 0 )
 			return;
-
-		$.DispatchEvent( 'ContextMenuEvent', '' );
 
 		var elPanel = UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -421,9 +430,18 @@ var OperationUtil = ( function () {
 		}
 
 		$.DispatchEvent( 'PlaySoundEffect', 'tab_mainmenu_inventory', 'MOUSE' );
+
+		                                                
+		var nActiveSeason = GameTypesAPI.GetActiveSeasionIndexValue();
+		if ( nActiveSeason < 0 )
+		{
+			_IfOperationEndedGetExtendedSeasonWithRedeemableBalance( true );
+			return;
+		}
+
 		var passId = InventoryAPI.GetActiveSeasonPassItemId();
 
-		if (( m_bPremiumUser || bForceOpenStarsPurchase ))
+		if ( m_bPremiumUser || bForceOpenStarsPurchase )
 		{
 			_OpenStarStore();
 		}

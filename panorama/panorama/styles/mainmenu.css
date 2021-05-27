@@ -448,11 +448,19 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 	background-color: none;
 	box-shadow: none;
 
-	transition-property:  wash-color, background-color;
+	transition-property:  wash-color, background-color, brightness;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 
 	sound: "UIPanorama.mainmenu_rollover";
+}
+
+.mainmenu-navbar__btn-small.colored-icon:selected Image,
+.mainmenu-navbar__btn-small.colored-icon:enabled:hover Image,
+.mainmenu-navbar__btn-small.colored-icon:enabled:hover Image
+{
+	brightness: .3;
+	wash-color: none;
 }
 
   

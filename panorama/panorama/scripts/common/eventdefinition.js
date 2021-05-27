@@ -28,6 +28,7 @@
     $.DefineEvent( 'OpenInventory', 0, 'no args', 'opens the inventory menu from anywhere.' );
     $.DefineEvent( 'OpenWatchMenu', 0, 'no args', 'opens the watch menu from anywhere.' );
     $.DefineEvent( 'OpenStatsMenu', 0, 'no args', 'opens the stats page from anywhere.' );
+    $.DefineEvent( 'OpenSubscriptionUpsell', 0, 'no args', 'Open the upsell popup' );
     $.DefineEvent( 'OpenSidebarPanel', 1, 'auto close', 'open the sidebar from a abutton click from anywhere pass setting if you wasnt it to autoclose' );
     $.DefineEvent( 'StartDecodeableAnim', 0, 'no args', 'tells the decode panel to play the animation' );
     $.DefineEvent( 'HideMainMenuNewsPanel', 0, 'no args', 'hide mainmenu news panel' )

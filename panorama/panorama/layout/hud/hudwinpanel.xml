@@ -77,7 +77,8 @@
 			<Panel id="RoundImpactScoreMain" class="ris__main hidden">
 
 				            
-				<Panel class="ris__top " >
+				<Panel class="ris__top" >
+					<Image class="ris__top__logo" src="file://{images}/icons/ui/stats_logo.svg" texturewidth="32" textureheight="32"/>
 					<Image id="RisTeamLogo" class="ris__top__logo perma-hide" />
 					<Label class="ris__top__title" text="#ris_team-title"/>
 				</Panel>

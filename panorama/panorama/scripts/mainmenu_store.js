@@ -29,7 +29,7 @@ var MainMenuStore = ( function()
 
 		                                                   
 		var nSeasonIndex = GameTypesAPI.GetActiveSeasionIndexValue();
-		nSeasonIndex = 9;                                                                                                                   
+		nSeasonIndex = null;                                                                                              
 		OperationUtil.ValidateOperationInfo( nSeasonIndex );
 		var oStatus = OperationUtil.GetOperationInfo();
 
@@ -45,7 +45,7 @@ var MainMenuStore = ( function()
 
 		if( OperationUtil.ValidateCoinAndSeasonIndex( nSeasonIndex, oStatus.nCoinRank ) )
 		{
-			itemsByCategory.operation = _OperationStoreSetupObj();
+			itemsByCategory.operation = _OperationStoreSetupObj( nSeasonIndex );
 		}
 
 		                                       
@@ -229,13 +229,14 @@ var MainMenuStore = ( function()
 		return tournament;
 	};
 
-	var _OperationStoreSetupObj = function()
+	var _OperationStoreSetupObj = function( nSeasonIndex )
 	{
 		var operation = [
 			{
 				snippet_name: "OperationStore",
 				load_func: function ( elpanel ) {
 
+					OperationUtil.ValidateOperationInfo( nSeasonIndex );
 					var aRewards = OperationUtil.GetRewardsData();
 					
 					function GetRandomItem ( aItemList )

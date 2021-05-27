@@ -8,7 +8,7 @@
 
 @define record-value-color: gold;
 
-@define no-data-ghost-bg: rgba( 128,128,128,0.1);
+@define no-data-ghost-bg: rgba( 0, 0, 0, 0.15);
 
 @define dark-panel-bg: rgba(20, 20, 20, 0.5);                                                                                                                                                                          
 @define radiobutton-hover: rgba(50,50,50,0.8);                                                                                                                                                                             
@@ -16,12 +16,12 @@
 
 
 #statspage {
-  	                            
+	                                  
 
-	background-color: gradient( radial, 4% 4%, 0% 0%, 100% 100%,
-	from( #3d2f00 ),
-	color-stop ( 0.3, #3d2f00bb ),
-	to( #9D792720 ) );
+	                                                               
+	                
+	                              
+	                     
 
 }
 
@@ -48,9 +48,67 @@ RadioButton Label {
 	margin: 0px;
 }
 
-.content-navbar--title {
-	height: 64px;
+                           
+	             
+    
+
+.subscription-status
+{
+	height: 100%;
+	width: fit-children;
+	                           
+	horizontal-align: right;
+	flow-children: right;
 }
+
+.subscription-status.stats-subscription-expired
+{
+
+}
+
+.subscription-status.stats-subscription-lastday .id-subscription-status-desc
+{
+	visibility: collapse;
+}
+
+.subscription-status.stats-subscription-active .subscription-status__icon
+{
+	visibility: collapse;
+}
+
+.subscription-status__block
+{
+	padding-left: 12px;
+	vertical-align: center;
+	flow-children: down;
+	margin-right: 16px;
+}
+
+.subscription-status__icon
+{
+	vertical-align: center;
+}
+
+.subscription-status__label--small
+{
+	font-weight: normal;
+	color:white;
+	font-size: 20px;
+	font-family: stratum2Font;
+}
+
+.subscription-status__label--yellow
+{
+	wash-color: rgb(229, 233, 17);
+	text-shadow: 1px 1px 1px 1.5 #00000062;
+}
+
+.subscription-status__label--green
+{
+	wash-color: #60ec77;
+	text-shadow: 1px 1px 1px 1.5 #00000062;
+}
+
 
 .content-navbar--dropdown DropDown {
 	min-width: 290px;
@@ -58,14 +116,82 @@ RadioButton Label {
 
 .content-navbar--dropdown {
 	padding-left: 8px;
-	border-bottom: 1px solid transparent;	
+	border-bottom: 1px solid transparent;
 }
 
 .content-navbar__logo {
 	margin-right: 20px;
-	height: 54px;
+	height: 72px;
 	width: height-percentage( 100% );
+}
 
+.content-navbar__manage-btn
+{
+	flow-children: right;
+	border: 1px solid rgba(112, 112, 112, 0.37);
+	border-radius: 3px;
+	padding: 6px;
+	-s2-mix-blend-mode: SRGBadditive;
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+}
+
+.content-navbar__manage-btn__icon
+{
+	vertical-align: center;
+	wash-color: rgb( 99, 99, 99 );
+	margin-right:8px;
+	transform: translateY( -1px );
+}
+
+.content-navbar__manage-btn:hover
+{
+	background-color: rgba(107, 107, 107, 0.089);
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+}
+
+Button.content-navbar__manage-btn Label
+{
+	font-size: 14px;
+	vertical-align: center;
+	color: rgb(94, 94, 94);
+	text-transform: uppercase;
+	margin-left: 0px;
+}
+
+.content-navbar__subscribe-btn
+{
+	border: 1px solid #60ec7e;
+	border-radius: 3px;
+	padding: 6px;
+	background-color: #0b50177a;
+	                                       
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+}
+
+.content-navbar__subscribe-btn:hover
+{
+	background-color: #042c0bb9;
+
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+}
+
+TextButton.content-navbar__subscribe-btn Label
+{
+	font-size: 16px;
+	color: #60ec77;
+	text-transform: uppercase;
+	margin-left: 0px;
 }
 
 .playerstats-std-bg {
@@ -902,7 +1028,7 @@ Label.playerstats-tt__value {
 
 .no-data .horizontal-divider,
 .no-data .vertical-divider {
-	border: 1px solid rgba(255,255,255,0.02);
+	border: 1px solid rgba(255,255,255,0.00);
 }
 
 .no-data .stats-panel{
@@ -925,7 +1051,8 @@ background-color: rgba(0,0,0,0);
 
 .no-data #GraphContainerBG {
 	border-color:transparent;
-	background-color: no-data-ghost-bg;
+	                                         
+	opacity: 0;
 }
 
 .no-data DropDown{

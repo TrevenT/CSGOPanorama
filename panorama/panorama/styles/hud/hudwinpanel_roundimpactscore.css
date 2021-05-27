@@ -79,6 +79,8 @@
 	background-color: rgba( 40,40,40,0.9);
 
 	flow-children: right;
+
+	padding-left: 8px;
 }
 
 .ris__center {
@@ -167,22 +169,19 @@
 }
 
 .ris__top__logo {
-	width: 32px;
-	height: 32px;
+	width: 20px;
+	height: 20px;
 
 	vertical-align:center;
-	margin: 8px;
 }
 
 .ris__top__title {
 
 		text-align: center;
-		font-size: 18px;
-		font-family: Stratum2 Bold, 'Arial Unicode MS';
+		font-size: 16px;
+		font-family: Stratum2, 'Arial Unicode MS';
 		letter-spacing: 1px;
 		vertical-align:center;
-		vertical-align: top;
-		margin-top: 5px;
 		margin-left: 5px;
 	
 	                          

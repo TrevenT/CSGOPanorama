@@ -3191,7 +3191,8 @@ EdgeScrollBar.Vertical #MaxButton
 	transition-timing-function: ease-in-out;
 }
 
-#MainMenuWatchAlert.navbar-btn__notification
+#MainMenuWatchAlert.navbar-btn__notification,
+#MainMenuSubscriptionAlert.navbar-btn__notification
 {
 	margin-left: 8px;
 }

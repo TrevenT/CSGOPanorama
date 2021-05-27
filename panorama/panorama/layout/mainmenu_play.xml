@@ -177,10 +177,6 @@
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeSurvival"/>
 					</RadioButton>
-					<RadioButton id='skirmish_retakes'
-								group="gamemodes" >
-						<Label text="#SFUI_GameModeRetakes"/>
-					</RadioButton>
 					<RadioButton id='cooperative'  
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeCooperative"

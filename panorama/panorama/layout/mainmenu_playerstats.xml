@@ -20,19 +20,35 @@
 
 	</scripts>
 
-	<Panel class="mainmenu-content__container">
+	<Panel class="mainmenu-content__container" acceptsinput="true" acceptsfocus="true" hittest="false">
 
-		<Panel id="statspage" class="top-bottom-flow full-width full-height">
+		<Panel id="statspage" class="top-bottom-flow full-width full-height" hittest="false">
 			              
 			<Panel class="content-navbar content-navbar--title">
-				<Panel class="left-right-flow full-width vertical-center">
-					<Image src="file://{images}/icons/ui/broken_fang.svg" texturewidth="68" textureheight="-1" class="content-navbar__logo"/>
-					<Label id="" class="content-navbar__title" text="#SFUI_MainMenu_OperationStats"/>
+				<Panel class="left-right-flow vertical-center">
+					<Image src="file://{images}/icons/ui/stats_logo.svg" texturewidth="72" textureheight="-1" class="content-navbar__logo"/>
+					<Panel class="top-bottom-flow vertical-center">
+						<Panel class="left-right-flow">
+							<Label id="" class="content-navbar__title" text="#SFUI_MainMenu_Stats"/>
+							<Panel class="horizontal-align-right vertical-center left-right-padding left-right-flow">
+								<Button id="id-manage-subscription" class="content-navbar__manage-btn hide" onactivate="MyPersonaAPI.ActionManageRecurringSubscription();" >
+									<Image class="content-navbar__manage-btn__icon" texturewidth="14" textureheight="-1" src="file://{images}/icons/ui/link.svg" />
+									<Label class="content-navbar__manage-btn__label" text="#playerstats_link"/>
+								</Button>
+
+								<TextButton id="id-get-subscription" html="false"
+									class="content-navbar__subscribe-btn hide"
+									onactivate="$.DispatchEvent( 'OpenSubscriptionUpsell' );"
+									text="#playerstats_link_get"/>
+							</Panel>
+						</Panel>
+						<Label id="id-subscription-status-desc" class="subscription-status__label--small" text="#playerstats_subscription_not_enrolled" html="true"/>
+					</Panel>
 				</Panel>
 			</Panel>
 
 			                
-			<Panel class="content-navbar content-navbar--short content-navbar--dropdown" style="background-color:contentPanelBackground;">
+			<Panel class="content-navbar content-navbar--short content-navbar--dropdown" style="background-color:contentPanelBackground;" hittest="false">
 				<Panel class="vertical-center left-right-flow">
 
 					<DropDown class="PopupButton" id="id-playerstats__range" menuclass="DropDownMenu Width-300" oninputsubmit="playerstats.OnTimeRangeChanged()">		
@@ -40,14 +56,12 @@
 						<Label text="#playerstats_past_30" group="playerstats-range" id="30d" value="30"/>
 						<Label text="#playerstats_past_90" group="playerstats-range" id="90d" value="90"/>	
 						<Label text="#playerstats_alltime" group="playerstats-range" id="alltime" value="-1"/>	
-					</DropDown>		
+					</DropDown>
 
 					<DropDown class="PopupButton" id="id-playerstats__mode" menuclass="DropDownMenu Width-300">
 						<Label text="#playerstats_mode_comp_all"		group="playerstats-mode" id="mode_id_11" value="240"	class="DropDownChild playerstats_mode_label_primary"		/>
 						<Label text="#playerstats_mode_comp_capt"		group="playerstats-mode" id="mode_id_12" value="16" 	class="DropDownChild playerstats_mode_label_primary"	/>
 						<Label text="#playerstats_mode_comp_active"		group="playerstats-mode" id="mode_id_13" value="32" 	class="DropDownChild playerstats_mode_label_primary"	/>
-						<Label text="#playerstats_mode_comp_other"		group="playerstats-mode" id="mode_id_14" value="64" 	class="DropDownChild playerstats_mode_label_primary"	/>
-						<Label text="#playerstats_mode_comp_scrim"		group="playerstats-mode" id="mode_id_15" value="128"	class="DropDownChild playerstats_mode_label_primary"	/>
 						<Label text=""	group="playerstats-mode" disabled="true" class="DropDownChild playerstats_mode_label_primary_section" />
 						<Label text="#playerstats_mode_2v2_all"			group="playerstats-mode" id="mode_id_16" value="12288"	class="DropDownChild playerstats_mode_label_primary"	/>
 						<Label text="#playerstats_mode_2v2_active"		group="playerstats-mode" id="mode_id_17" value="4096"	class="DropDownChild playerstats_mode_label_primary"	/>

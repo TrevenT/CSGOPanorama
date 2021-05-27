@@ -10,9 +10,6 @@ var playerstats = ( function()
 	var _m_visible;
 	var _m_timedOutWhileAway;
 
-	var _m_mode = _InitializeModeFilterFromSettings();
-	var _m_days = _GetTimeRangeFilter();
-
 	var _m_elSingleMatch;                           
 
 	var _m_LineGraph = $.GetContextPanel().FindChildTraverse( 'id-playerstats__linegraph' );
@@ -73,17 +70,30 @@ var playerstats = ( function()
 
 	var strStatTotalPrefix = "stat_total_";
 	var strStatAveragePrefix = "stat_average_";
+	var _m_InventoryUpdatedHandler = null;
+	var _m_SubscriptionStatusChangeUpdatedHandler = null;
 	
+	var _m_mode = _InitializeModeFilterFromSettings();                                                        
+	var _m_days = _InitializeTimeRangeFilter();                                                
+
 	                                        
 	    
 	   	                                                                                               
 	   	                                                                                                   
 	       
 
-
-	function _GetTimeRangeFilter ()
+	function _InitializeTimeRangeFilter()
 	{
-		return parseInt( $.GetContextPanel().FindChildTraverse( 'id-playerstats__range' ).GetSelected().GetAttributeString( "value", "" ));
+		var ival = parseInt( $.GetContextPanel().FindChildTraverse( 'id-playerstats__range' ).GetSelected().GetAttributeString( "value", "" ));
+		                                                    
+
+		var nDays = parseInt( ival );
+		_m_MapGraph.timerangeindays = nDays;
+		_m_LineGraph.timerangeindays = nDays;
+		_m_WeaponGraph.timerangeindays = nDays;
+		_m_Heatmap.timerangeindays = nDays;
+
+		return ival;
 	}
 
 	function _InitializeModeFilterFromSettings()
@@ -91,6 +101,56 @@ var playerstats = ( function()
 		var elDropdown = $.GetContextPanel().FindChildTraverse('id-playerstats__mode');
 		var val = GameInterfaceAPI.GetSettingString( 'ui_deepstats_toplevel_mode' );
 		var valID = null;
+
+		                                                       
+		var lastMatch = DeepStatsAPI.GetLastCachedMatchJS();
+		if ( lastMatch && lastMatch.matches.length > 0 )
+		{
+			var oMatch = lastMatch.matches[ 0 ].player;
+			var mode = DeepStatsAPI.GetMatchTypeString( oMatch.mm_game_mode );
+			switch ( mode )
+			{
+				default:
+					                                                                        
+
+				case "Competitive":
+				case "CompetitiveCaptains":
+				case "CompetitiveScrimmage":
+					                                                                         
+					val = 240;
+					valID = "mode_id_11";
+					break;
+				
+				case "Wingman":
+					                                                                     
+					val = 12288;
+					valID = "mode_id_16";
+					break;
+			}
+
+			                                                                     
+			var timestamp = DeepStatsAPI.MatchIDToLocalTime( oMatch.match_id );
+			                                                                                
+			                                                                          
+			timestamp += 1606723200 - DeepStatsAPI.MatchIDToLocalTime( "3450411799665595200" );
+			                               
+			var ndaysago = NewsAPI.GetNumSecondsTillGcTimestamp( timestamp );
+			if ( ndaysago && ( ndaysago < 0 ) )
+			{
+				ndaysago = Math.floor( ( -ndaysago ) / ( 24*3600 ) );
+				var nSelectID;
+				if ( ndaysago < 14 ) {}
+				else if ( ndaysago < 30 ) { nSelectID = "30d"; }
+				else if ( ndaysago < 90 ) { nSelectID = "90d"; }
+				else { nSelectID = "alltime"; }
+				if ( nSelectID )
+				{
+					                                                                                          
+					$.GetContextPanel().FindChildTraverse( 'id-playerstats__range' ).SetSelected( nSelectID );
+				}
+			}
+		}
+
 		elDropdown.AccessDropDownMenu().Children().forEach( function( ch )
 		{
 			if ( val === ch.GetAttributeString( "value", "" ) )
@@ -113,8 +173,18 @@ var playerstats = ( function()
 		
 		_m_mode = val;
 		$.GetContextPanel().AddClass( 'mode' + _m_mode );
+		_SetModeToEmbeddedControls();
 		elDropdown.SetPanelEvent( 'oninputsubmit', _OnModeChanged.bind( undefined ) );
 		return val;
+	}
+
+	function _SetModeToEmbeddedControls()
+	{
+		var nMode = parseInt( _m_mode );
+		_m_LineGraph.gamemode = nMode;
+		_m_MapGraph.gamemode = nMode;
+		_m_WeaponGraph.gamemode = nMode;
+		_m_Heatmap.gamemode = nMode;
 	}
 
 	function _GetModeFilter ()
@@ -243,14 +313,25 @@ var playerstats = ( function()
 		_InitMatchLister( _m_elMatchHistory );
 		MatchLister.Populate( _m_elMatchHistory, _m_days, _m_mode, '' );
 
+		if ( !_m_InventoryUpdatedHandler )
+		{
+			_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateSubscriptionStatus );
+		}
+		if ( !_m_SubscriptionStatusChangeUpdatedHandler )
+		{
+			_m_SubscriptionStatusChangeUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_RecurringSubscriptionStatusChange', _UpdateSubscriptionStatus );
+		}
+
 		$.RegisterForUnhandledEvent( 'DeepStatsReceived', _OnStatsReceived );
 		$.RegisterForUnhandledEvent( 'StatsProgressGraph_OnGraphUpdated', _UpdateLineGraph );
 		$.RegisterEventHandler( 'ReadyForDisplay', $.GetContextPanel(), _OnReadyForDisplay );
 		$.RegisterEventHandler( 'UnreadyForDisplay', $.GetContextPanel(), _OnUnreadyForDisplay );
 		$.RegisterForUnhandledEvent( 'DeepStatsTimeoutGiveUp', _OnDeepStatsTimeOut );
 
-		                                              
-		$.RegisterEventHandler( 'DeepStatsPanel_OnStatDownloadProgress', _m_LineGraph, function() {$.Schedule( 0.01, _OnStatDownloadProgress )} );
+		                                                                                                              
+		$.RegisterEventHandler( 'DeepStatsPanel_OnStatDownloadProgress', _m_LineGraph, function() {$.Schedule( 0.01, _OnStatDownloadProgress_LineGraph )} );
+		$.RegisterEventHandler( 'DeepStatsPanel_OnStatDownloadProgress', _m_MapGraph, function() {$.Schedule( 0.01, _OnStatDownloadProgress_MapGraph )} );
+		$.RegisterEventHandler( 'DeepStatsPanel_OnStatDownloadProgress', _m_WeaponGraph, function() {$.Schedule( 0.01, _OnStatDownloadProgress_WeaponGraph )} );
 
 		$.GetContextPanel().RegisterForReadyEvents( true );
 		$.GetContextPanel().SetReadyForDisplay( false );
@@ -259,7 +340,7 @@ var playerstats = ( function()
 		var elRoot = $.GetContextPanel().FindChildTraverse( 'id-playerstats__record' );
 		elRoot.RemoveClass( 'prereveal' );
 
-
+		_UpdateSubscriptionStatus();
 
 		                                       
 		var arrPanelsToAnimateIn = $.GetContextPanel().FindChildrenWithClassTraverse( 'rotatein' );
@@ -282,7 +363,7 @@ var playerstats = ( function()
 			
 	}
 
-	function _OnReadyForDisplay ()
+	function _OnReadyForDisplay()
 	{
 		_m_visible = true;
 
@@ -292,15 +373,36 @@ var playerstats = ( function()
 			_m_timedOutWhileAway = false;
 		}
 
+		if ( !_m_InventoryUpdatedHandler )
+		{
+			_m_InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _UpdateSubscriptionStatus );
+		}
+		if ( !_m_SubscriptionStatusChangeUpdatedHandler )
+		{
+			_m_SubscriptionStatusChangeUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_RecurringSubscriptionStatusChange', _UpdateSubscriptionStatus );
+		}
+
 		_OnModeChanged();
+		_UpdateSubscriptionStatus();
 	}
 
-	function _OnUnreadyForDisplay ()
+	function _OnUnreadyForDisplay()
 	{
 		_m_visible = false;
 		Scheduler.Cancel( 'RECORD' );
-		Scheduler.Cancel( 'MATCHES' );	
+		Scheduler.Cancel( 'MATCHES' );
 		Scheduler.Cancel();
+
+		if ( _m_InventoryUpdatedHandler )
+		{
+			$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', _m_InventoryUpdatedHandler );
+			_m_InventoryUpdatedHandler = null;
+		}
+		if ( _m_SubscriptionStatusChangeUpdatedHandler )
+		{
+			$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_RecurringSubscriptionStatusChange', _m_SubscriptionStatusChangeUpdatedHandler );
+			_m_SubscriptionStatusChangeUpdatedHandler= null;
+		}
 	}
 
 	function _OnDeepStatsTimeOut ()
@@ -399,7 +501,84 @@ var playerstats = ( function()
 		});
 
 		return [ DeepStatsAPI.GetXUIDByAccountID(bestMate), bestRatio ] ;
-	}	
+	}
+
+	function _UpdateSubscriptionStatus()
+	{
+		var strGetSubscriptionGreenButton = '';                                              
+
+		var labelDesc = $.GetContextPanel().FindChildInLayoutFile( 'id-subscription-status-desc' );
+		var rtRecurringSubscriptionNextBillingCycle = InventoryAPI.GetCacheTypeElementFieldByIndex( 'RecurringSubscription', 0, 'time_next_cycle' );
+		if ( rtRecurringSubscriptionNextBillingCycle )
+		{
+			                                                          
+			                                                                                     
+			var numSecondsTillNextBillingCycle = NewsAPI.GetNumSecondsTillGcTimestamp( rtRecurringSubscriptionNextBillingCycle );
+			if ( numSecondsTillNextBillingCycle < 60 )
+			{
+				                                                                                                
+				          
+				labelDesc.text = $.Localize( '#playerstats_subscription_expired', labelDesc );
+				labelDesc.SetHasClass( 'subscription-status__label--yellow', true );
+				labelDesc.SetHasClass( 'subscription-status__label--green', false );
+				strGetSubscriptionGreenButton = "#playerstats_link_reactivate";
+			}
+			else
+			{
+				var status = MyPersonaAPI.GetMyRecurringSubscriptionStatus();
+				                                                  
+
+				                         
+				var decString = status ? '#playerstats_subscription_' + status
+					: '#playerstats_subscription_renew_unknown';
+					
+				labelDesc.SetHasClass( 'subscription-status__label--yellow', status === 'renew_manually' );
+				labelDesc.SetHasClass( 'subscription-status__label--green', status === 'renew_automatically' );
+				
+				if ( numSecondsTillNextBillingCycle <= 24*3600 && status === 'renew_manually' )
+				{
+					                          
+					                                                                      
+					labelDesc.text = $.Localize( '#playerstats_subscription_expire_warning' );
+				}
+				else
+				{
+					                                       
+					var daysLeft = Math.floor( numSecondsTillNextBillingCycle / (( 24*3600 ) + 1 ));
+	
+					                                                                                                                                   
+					labelDesc.SetDialogVariableInt( "days", daysLeft );
+					var daysString = numSecondsTillNextBillingCycle <= ( 24*3600 ) ? $.Localize( '#SFUI_Store_Timer_Day' ) : $.Localize( '#SFUI_Store_Timer_Days' );
+					labelDesc.SetDialogVariable( "daystext", daysString );
+					labelDesc.text = $.Localize( decString, labelDesc );
+				}
+			}
+		}
+		else
+		{
+			                                                                               
+			                                                                   
+			labelDesc.text = $.Localize( '#playerstats_subscription_not_enrolled', labelDesc );
+			labelDesc.SetHasClass( 'subscription-status__label--yellow', false );
+			labelDesc.SetHasClass( 'subscription-status__label--green', false );
+			strGetSubscriptionGreenButton = "#playerstats_link_get";
+		}
+
+		                                                                                                        
+		var btnGetSubscription = $.GetContextPanel().FindChildInLayoutFile( 'id-get-subscription' );
+		var btnManageSubscription = $.GetContextPanel().FindChildInLayoutFile( 'id-manage-subscription' );
+		if ( strGetSubscriptionGreenButton )
+		{
+			btnGetSubscription.text = $.Localize( "#playerstats_link_get" );
+			btnGetSubscription.SetHasClass( 'hide', false );
+			btnManageSubscription.SetHasClass( 'hide', true );
+		}
+		else
+		{
+			btnGetSubscription.SetHasClass( 'hide', true );
+			btnManageSubscription.SetHasClass( 'hide', false );
+		}
+	}
 
 	function _CreateTooltip ( elPanel, text, title = '', additionalClass = null,fnon = null, fnoff = null )
 	{
@@ -453,7 +632,7 @@ var playerstats = ( function()
 		if ( ( !arrMatches || arrMatches.length == 0 ) && oDeepStats.status != 'complete' )
 		{
 			Scheduler.Schedule( 1.0, _UpdateYourRecordAsycDeepstats, 'RECORD' );
-		 	return;
+			return;
 		}
 
 		                    
@@ -501,9 +680,9 @@ var playerstats = ( function()
 	}
 
 
-	function _OnStatDownloadProgress ()
+	function _OnStatDownloadProgress_LineGraph()
 	{
-		                                   
+		                                             
 
 		var elRecordFrame = $.GetContextPanel().FindChildTraverse( 'PlayerStatsRecordFrame' );
 
@@ -577,11 +756,19 @@ var playerstats = ( function()
 			
 			DigitPanelFactory.SetDigitPanelString( elKills, string, bAbbreviate ? suffix : '' );
 		}
+	}
+
+	function _OnStatDownloadProgress_MapGraph()
+	{
+		                                            
+
+		var elRecordFrame = $.GetContextPanel().FindChildTraverse( 'PlayerStatsRecordFrame' );
 
 		var elBestMap = elRecordFrame.FindChildTraverse( 'BestMap' );
 		if ( elBestMap )
 		{
 			var mapString = DeepStatsAPI.MapIDToString( _m_MapGraph.best_map );
+			                                                                                                  
 
 			var bValid = mapString != '';
 			                        
@@ -596,6 +783,15 @@ var playerstats = ( function()
 				IconUtil.SetupFallbackMapIcon( elMapIcon, 'file://{images}/map_icons/map_icon_NONE.png' );
 			}
 		}
+		
+		_UpdateYourRecordAsycDeepstats();
+	}
+
+	function _OnStatDownloadProgress_WeaponGraph()
+	{
+		                                               
+
+		var elRecordFrame = $.GetContextPanel().FindChildTraverse( 'PlayerStatsRecordFrame' );
 
 		var arrWeapons = _m_WeaponGraph.GetWeaponScores();	
 		var elBestWeaponContainer = elRecordFrame.FindChildTraverse( "BestWeapons" );
@@ -614,12 +810,8 @@ var playerstats = ( function()
 				elWeaponPanel.SetDialogVariable( "total", weaponScore.total );
 				var itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( weaponScore.weapon_id, 0 )
 				_CreateTooltip( elWeaponPanel, ItemInfo.GetName( itemid ));
-
-		});
-
+			});
       	}
-		_UpdateYourRecordAsycDeepstats();
-
 	}
 
 
@@ -815,7 +1007,7 @@ var playerstats = ( function()
 					elStatRankLabel.SetDialogVariable( 'tt_value', valueNormal + _GetUnitSuffix( index ) );
 					elStatRankLabel.SetDialogVariable( 'tt_rank', rank );
 
-					tt_text = $.Localize( '#playerstats_percentile', elStatRankLabel );
+					tt_text = $.Localize( '#playerstats_percentile_subscribers', elStatRankLabel );
 				}
 				else
 				{
@@ -843,11 +1035,7 @@ var playerstats = ( function()
 			GameInterfaceAPI.SetSettingString( 'ui_deepstats_toplevel_mode', _m_mode );
 		}
 
-		var nMode = parseInt( _m_mode );
-		_m_LineGraph.gamemode = nMode;
-		_m_MapGraph.gamemode = nMode;
-		_m_WeaponGraph.gamemode = nMode;
-		_m_Heatmap.gamemode = nMode;
+		_SetModeToEmbeddedControls();
 
 		Scheduler.Cancel();
 
@@ -863,15 +1051,9 @@ var playerstats = ( function()
 	{
 
 		                     
-		_m_days = $.GetContextPanel().FindChildTraverse( 'id-playerstats__range' ).GetSelected().GetAttributeString( 'value', '' );
+		_m_days = _InitializeTimeRangeFilter();
 
-		var nDays = parseInt( _m_days );
-		_m_MapGraph.timerangeindays = nDays;
-		_m_LineGraph.timerangeindays = nDays;
-		_m_WeaponGraph.timerangeindays = nDays;
-		_m_Heatmap.timerangeindays = nDays;
-
-		Scheduler.Cancel();
+		Scheduler.Cancel();`	`
   		                               
 
   		                   
@@ -910,10 +1092,9 @@ var playerstats = ( function()
 	
 	                      
 	return {
-
 		Init:							_Init,
 		OnModeChanged: 					_OnModeChanged,
-		OnTimeRangeChanged:				_OnTimeRangeChanged,
+		OnTimeRangeChanged:				_OnTimeRangeChanged
 	};
 
 } )();
@@ -924,5 +1105,4 @@ var playerstats = ( function()
 ( function()
 {
 	playerstats.Init();
-
 } )();
