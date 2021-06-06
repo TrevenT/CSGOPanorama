@@ -26,6 +26,11 @@ var EOM_Rank = (function () {
 			return false;
 		}
 
+		if( MyPersonaAPI.GetElevatedState() !== 'elevated' )
+		{
+			return false;
+		}
+
 		var xPPerLevel = MyPersonaAPI.GetXpPerLevel();
 		
 		var xp_t = ( function( reason, xp )
@@ -424,5 +429,4 @@ var EOM_Rank = (function () {
 (function () {
 
 	EndOfMatch.RegisterPanelObject( EOM_Rank );
-
 })();

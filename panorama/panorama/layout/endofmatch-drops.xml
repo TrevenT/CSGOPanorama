@@ -18,7 +18,7 @@
 			<Panel class="eom-drops__item">
 				<Panel id="id-item-rarity" class="eom-drops__item__rarity"/>
 				<Panel id="id-item-image-name-owner" class="eom-drops__item-image-name-owner">
-					<Panel>
+					<Panel class="full-width">
 						<Panel class="item-tile__bg"/>
 						<ItemImage id="id-item-image" class="eom-drops__item__image" scaling="stretch-to-fit-preserve-aspect"/>
 					</Panel>
@@ -33,7 +33,6 @@
 			</Panel>
 		</snippet>
 	</snippets>
-
 
 	<CSGOEndOfMatchItemDropsPanel class="eom-panel eom-drops" useglobalcontext="true" />
 	

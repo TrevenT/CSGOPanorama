@@ -37,6 +37,10 @@
 					<Label class="tooltip-player-xp__subtitle" id="LobbyTooltipPrime" text="" />
 				</Panel>
 				<Panel class="tooltip-player-setting" >
+					<Image class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/prime_active.png" textureheight="16" texturewidth="16"/>
+					<Label class="tooltip-player-xp__subtitle" id="LobbyTooltipRanked" text="" />
+				</Panel>
+				<Panel class="tooltip-player-setting" >
 					<Image class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/settings.svg" textureheight="16" texturewidth="16"/>
 					<Label class="tooltip-player-xp__subtitle" id="LobbyTooltipPermissions" text="" />
 			

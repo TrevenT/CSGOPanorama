@@ -65,12 +65,25 @@
 			<Panel class="store-panel__carousel__item"  hittest="true">
 				<Panel class="store-panel__carousel__item_primecontainer">
 					<ItemImage id="StoreItemImage" textureheight="80px" texturewidth="-1px" class="store-panel__carousel__item__image--prime"
-						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/prime.svg" />
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/prime_active.png" />
 					<Label class="store-panel__carousel__item__name stratum-font" html="true" text="#SFUI_Elevated_Status_SaleName"/>
+					<Label id="StoreItemSalePrice" class="store-panel__carousel__item__name saleprice" html="true" text=""/>
 				</Panel>
 				<Panel class="store-panel__carousel__item_primecontainer_detailed">
 					<Label id="StoreItemName" class="store-panel__carousel__item_primecontainer_title stratum-font" text="#SFUI_Elevated_Status_Sale_action"/>
 					<Label class="store-panel__carousel__item_prime_details stratum-font bottom-padding-medium" html="true" text="#SFUI_Elevated_Status_SaleDetails_desc"/>
+
+					<Panel class="left-right-flow bottom-padding">
+						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/trophy.svg" />
+						<Label class="store-panel__carousel__item_prime_details stratum-font" html="true" text="#SFUI_Elevated_Status_SaleDetails_4"/>
+					</Panel>
+
+										<Panel class="left-right-flow bottom-padding">
+						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"
+						scaling="stretch-to-fit-x-preserve-aspect" src="file://{images}/icons/ui/leader.svg" />
+						<Label class="store-panel__carousel__item_prime_details stratum-font" html="true" text="#SFUI_Elevated_Status_SaleDetails_5"/>
+					</Panel>
 
 					<Panel class="left-right-flow bottom-padding">
 						<ItemImage id="StoreItemImage" textureheight="18px" texturewidth="-1px" class="store-panel__carousel__item_primecontainer_icon"

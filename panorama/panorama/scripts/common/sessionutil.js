@@ -12,9 +12,8 @@ var SessionUtil = ( function ()
 		   		                                                   
 		   		                                
 		  
-		                                                                                                                  
-		                               
-		return true;
+		var bPrimeQueueSupported = ( gameModeSettingName === 'competitive' || gameModeSettingName === 'scrimcomp2v2' || gameModeSettingName === 'survival' );
+		return bPrimeQueueSupported;
 	};
 
 	var _GetMaxLobbySlotsForGameMode = function( gameMode )

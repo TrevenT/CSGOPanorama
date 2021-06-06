@@ -13,7 +13,6 @@ var EOM_Drops = (function () {
 
 	var _DisplayMe = function()
 	{
-
 		var oDropList = MockAdapter.DropListJSO( _m_cP );
 		var numDrops = Object.keys( oDropList ).length;
 
@@ -24,9 +23,20 @@ var EOM_Drops = (function () {
 
 		var animTime = 0;
 
+		for (const [ key, value ] of Object.entries( oDropList ))
+		{
+			if( oDropList[key].reason === 3 && !oDropList[key].is_local )
+			{
+				                                                
+				delete oDropList[key];
+			};
+		}
+
+		numDrops = Object.keys( oDropList ).length;
+		
 		                                                                      
 		Object.keys( oDropList ).forEach( function( key, index )
-		{
+		{	
 			$.Schedule( animTime, function()
 			{
 				var elDropContainer = $.CreatePanel( "Panel", _m_cP, "drop_" + index );
@@ -35,22 +45,46 @@ var EOM_Drops = (function () {
 				var itemId = oDropList[ key ].item_id;
 
 				itemId = InventoryAPI.IsItemInfoValid( itemId ) ? itemId : oDropList[ key ].faux_item_id;
+				var isAdDrop = oDropList[ key ].reason === 3;
+				elDropContainer.SetHasClass( 'non-prime-ad-drop', isAdDrop );
 
 				         
 				var color = ItemInfo.GetRarityColor( itemId );
 				if ( color )
 				{
-					elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).style.backgroundColor = color;
+					if( isAdDrop )
+					{
+						elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).style.backgroundColor = 'grey';
+					}
+					else
+					{
+						elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).style.backgroundColor = color;
+					}
 				}
 
 				elDropContainer.FindChildInLayoutFile( 'id-item-rarity' ).AddClass( 'reveal' );
 
 				             
-				elDropContainer.FindChildInLayoutFile( 'id-item-image' ).itemid = itemId;
+				if( isAdDrop )
+				{
+					elDropContainer.FindChildInLayoutFile( 'id-item-image' ).SetImage( 'file://{images}/ui_textures/nonprime_item_icon_1.png' );
+				}
+				else
+				{
+					elDropContainer.FindChildInLayoutFile( 'id-item-image' ).itemid = itemId;
+				}
 
 				            
-				var fmtName = ItemInfo.GetFormattedName( itemId );
-				fmtName.SetOnLabel( elDropContainer.FindChildInLayoutFile( 'id-item-name' ) );
+				var elNameLabel = elDropContainer.FindChildInLayoutFile( 'id-item-name' );
+				if( isAdDrop )
+				{
+					elNameLabel.text = oDropList[ key ].is_local ? $.Localize( "#elevated_status_ad_drop" ) : '';
+				}
+				else
+				{
+					var fmtName = ItemInfo.GetFormattedName( itemId );
+					fmtName.SetOnLabel(elNameLabel );
+				}
 
 				              
 				var elOwnerLabel = elDropContainer.FindChildInLayoutFile( "id-item-owner-name" );
@@ -72,7 +106,7 @@ var EOM_Drops = (function () {
 				         
 				var rarityVal = InventoryAPI.GetItemRarity( itemId );
 				var soundEvent = "ItemDropCommon";
-				if ( oDropList[ key ].is_local && rarityVal < 3 )
+				if (( oDropList[ key ].is_local && rarityVal < 3 ) || oDropList[key].reason === 3 )
 				{
 					soundEvent = "ItemRevealSingleLocalPlayer";
 				}

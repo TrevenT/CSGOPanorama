@@ -830,7 +830,8 @@ CSGOEndOfMatch.mainmenu-content__container
 	height: 96px;
 	horizontal-align: center;
 	vertical-align: middle;
-	tooltip-position: bottom;
+	tooltip-position: right;
+	tooltip-body-position: 50% 100%;
 	background-color: gradient( linear, 0% 100%, 0% 99%, from( white ), color-stop( 0, #ffffff00 ), to( #ffffff00 ) );
 	flow-children: right;
 	sound-trans: "";

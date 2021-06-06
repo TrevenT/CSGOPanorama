@@ -24,7 +24,7 @@
 		<Panel id="id-accept-match" class="accept-match accept-match-container">
 			<Panel id="AcceptMatchWarning" class="accept-match-warning hidden">
 				<Image class="vertical-center right-padding" texturewidth="-1" textureheight="24" src="file://{images}/icons/ui/info.svg" />
-				<Label class="accept-match-warning--label" html="true" text="#match_ready_match_unranked_warning"/>
+				<Label class="accept-match-warning--label" html="true" text="#match_ready_match_unranked_warning_2"/>
 			</Panel>			
 			<Panel class="accept-match__bg">
 				<Panel id="AcceptMatchMapImage" class="accept-match__map"/>

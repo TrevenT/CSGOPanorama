@@ -140,12 +140,20 @@
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentTeamDropdown" menuclass="DropDownMenu Width-300" />
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentStageDropdown" menuclass="DropDownMenu Width-300" />
 
-					<Button id="PrimeStatusButton" class="PopupButton play-menu-get-prime" >
-						<Panel class="play-menu-primestatus" >
-							<Image class="play-menu-primestatus-image" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/prime.svg" />
-						</Panel>
-						<Label id="PrimeStatusButtonLabel" text="#SFUI_Elevated_Status_Title" html="true"/>
-					</Button>
+					<Panel id="PrimeStatusPanel" class="left-right-flow vertical-center">
+						<Panel class="play-menu-primestatus-image" />
+						<TooltipPanel tooltip="#tooltip_prime_not_enrolled_2" class="vertical-center">
+							<Button id="id-play-menu-get-prime" class="play-menu-get-prime" >
+								<Label id="PrimeStatusButtonLabel" text="#elevated_status_btn_no_price" html="true"/>
+							</Button>
+						</TooltipPanel>
+						<ToggleButton id="id-play-menu-toggle-prime" html="true" class="play-menu-toggle-prime" onactivate="">
+							<Panel id="id-play-menu-toggle-slider" class="play-menu-prime-toggle__slider-pill">
+								<Panel class="play-menu-prime-toggle__slider"/>
+							</Panel>
+						</ToggleButton>
+						<Label id="PrimeStatusLabelNA" class="play-menu-prime-mode-not-prime-label stratum-font fontWeight-Medium fontSize-m fontcolor-white" text="#elevated_status_toggle_non_prime" html="true"/>
+					</Panel>
 				</Panel>
 
 			</Panel>
@@ -155,10 +163,12 @@
 					<RadioButton id='competitive' 
 								group="gamemodes" >
 						<Label text="#SFUI_GameModeCompetitive"/>
+						<Panel id="GameModeAlert" class="navbar-btn__notification-dot hidden"/>
 					</RadioButton>
 					<RadioButton id='scrimcomp2v2'
 								group="gamemodes" >
 							<Label text="#SFUI_GameModeScrimComp2v2"/>
+							<Panel id="GameModeAlert" class="navbar-btn__notification-dot hidden"/>
 					</RadioButton>
 					<Panel class="game-mode-selection-radios-spacer"></Panel>
 					<RadioButton id='casual' 

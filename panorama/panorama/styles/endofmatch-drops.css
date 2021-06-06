@@ -83,15 +83,12 @@
 	flow-children: down;
 	transform-origin: 50% 0%;
 	background-color: rgba(22, 16, 16, 0.281);
-	            
-
-	                                   
-	                     
-	                          
-	                                       
-	                                
 }
 
+.non-prime-ad-drop .eom-drops__item-image-name-owner
+{
+	background-color: textBlueGradient;
+}
 
 .eom-drops__item__image
 {
@@ -103,7 +100,7 @@
 
 .item-tile__bg
 {
-	width: 200px;
+	width: 202px;
 	height: 100%;
 }
 
@@ -136,6 +133,19 @@
 	margin-left: 8px;
 	margin-top: 4px;
 	max-height: 42px;
+}
+
+.non-prime-ad-drop .item-tile__name
+{
+	text-align: left;
+	width: 100%;
+	vertical-align: center;
+	horizontal-align: left;
+	margin: 0px;
+	padding: 4px;
+	font-weight: medium;
+	font-family: Stratum2, 'Arial Unicode MS';
+	text-overflow: shrink;
 }
 
 .eom-drops__item__owner-container

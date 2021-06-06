@@ -231,6 +231,11 @@ var EOM_Characters = ( function()
 
 	function _ShouldDisplayCommendsInMode ( mode )
 	{
+		if ( MyPersonaAPI.GetElevatedState() !== "elevated" )
+		{
+			return false; 
+		}
+		
 		switch ( mode )
 		{
 			case "scrimcomp2v2":

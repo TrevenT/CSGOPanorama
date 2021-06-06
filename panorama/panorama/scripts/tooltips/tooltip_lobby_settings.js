@@ -108,10 +108,31 @@ var TooltipLobby = ( function ()
 
 	var _SetPrimeStatus = function ()
 	{
-		var displayText = m_GameSettings.prime === 1 ? '#prime_only_label' : '#prime_priority_label';
+		var isLocalPlayerPrime = MyPersonaAPI.GetElevatedState() === "elevated";
+		var displayText = !isLocalPlayerPrime ? '#prime_not_enrolled_label' :
+			( m_GameSettings.prime === 1 && SessionUtil.AreLobbyPlayersPrime() )
+				? '#prime_only_label' : '#prime_priority_label';
+		
 		var elPrimeText = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipPrime' );
 		elPrimeText.text = $.Localize( displayText );
-		elPrimeText.GetParent().visible = SessionUtil.AreLobbyPlayersPrime();
+		                                                                        
+
+		_SetRankedStatus( isLocalPlayerPrime )
+	}
+
+	var _SetRankedStatus = function( isLocalPlayerPrime )
+	{
+		var elRankedText = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipRanked' );
+		
+		if ( !isLocalPlayerPrime || !SessionUtil.DoesGameModeHavePrimeQueue( m_GameSettings.mode ) )
+		{
+			elRankedText.GetParent().visible = false;
+			return
+		}
+
+		elRankedText.GetParent().visible = true;
+		var isRanked = m_GameSettings.prime === 1 && SessionUtil.AreLobbyPlayersPrime()
+		elRankedText.text = isRanked ? $.Localize( "#prime_ranked" ) : $.Localize( "#prime_unranked" );
 	}
 
 	var _Permissions = function ()
@@ -138,10 +159,6 @@ var TooltipLobby = ( function ()
 
 	var _SetMode = function ()
 	{
-		var gameMode = m_GameSettings.mode;
-		var gameMode = m_GameSettings.type;
-	
-
 		var elGameModeTitle = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipGameMode');
 		elGameModeTitle.FindChild( 'SettingText' ).text =  $.Localize('SFUI_GameMode' + m_GameSettings.mode );
 		elGameModeTitle.FindChild( 'SettingImage' ).SetImage( 'file://{images}/icons/ui/' + m_GameSettings.mode + '.svg' );

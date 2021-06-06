@@ -119,6 +119,9 @@
 									onmouseover="UiToolkitAPI.ShowTextTooltip('MainMenuNavBarPlay', '#tooltip_navbar_play');"
 									onmouseout="UiToolkitAPI.HideTextTooltip();">
 							<Image textureheight="56" texturewidth="-1" src="file://{images}/icons/ui/play_circle.svg" />
+							<Panel id="MainMenuPlayAlert" class="navbar-btn__notification hidden">
+								<Label id="MainMenuPlayAlertText" class="navbar-btn__notification-text" text="#Store_Price_New"/>
+							</Panel>
 						</RadioButton>
 						<Frame class="MainMenuModeOnly" src="file://{resources}/layout/advertising_toggle.xml" />
 						                                                    

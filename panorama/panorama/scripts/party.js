@@ -183,7 +183,7 @@ var PartyMenu = ( function()
 
 		                                                                                                                                                    
 		
-		if ( wins < winsNeededForRank || ( wins >= winsNeededForRank && skillGroup < 1 ) )
+		if ( wins < winsNeededForRank || ( wins >= winsNeededForRank && skillGroup < 1 ) || !PartyListAPI.GetFriendPrimeEligible( xuid ) )
 		{
 			elRank.visible = false;
 			return;

@@ -132,6 +132,9 @@ var MainMenu = ( function() {
 
 		                                                               
 		_ShowHideAlertForNewEventForWatchBtn();
+
+		                                                         
+		_UpdateUnlockCompAlert()
 	};
 
 	var _TournamentDraftUpdate = function ()
@@ -373,7 +376,6 @@ var MainMenu = ( function() {
 		}
 		
 		return true;
-
 	}
 
 	var _NavigateToTab = function( tab, XmlName )
@@ -387,7 +389,7 @@ var MainMenu = ( function() {
 			return;	                                                                               
 		}
 
-		if( tab === 'JsPlayerStats' && !_CanOpenStatsPanel( tab ) )
+		if( tab === 'JsPlayerStats' && !_CanOpenStatsPanel() )
 		{
 			return;
 		}
@@ -1681,6 +1683,24 @@ var MainMenu = ( function() {
 		_ShowHideAlertForNewEventForWatchBtn();
 	};
 
+	var _UpdateUnlockCompAlert = function()
+	{
+		var btn = $.GetContextPanel().FindChildInLayoutFile( 'MainMenuNavBarPlay' );
+		var alert = btn.FindChildInLayoutFile( 'MainMenuPlayAlert' );
+
+		if ( !MyPersonaAPI.IsConnectedToGC() )
+		{
+			alert.AddClass( 'hidden' );
+			return;
+		}
+
+		var bHide = GameInterfaceAPI.GetSettingString( 'ui_show_unlock_competitive_alert' ) === '1' ||
+			MyPersonaAPI.HasPrestige() ||
+			MyPersonaAPI.GetCurrentLevel() !== 2;
+		
+		alert.SetHasClass( 'hidden', bHide );
+	}
+
 	function _SwitchVanity ( team )
 	{
 		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
@@ -1781,7 +1801,8 @@ var MainMenu = ( function() {
 		HideMainMenuNewsPanel				: _HideMainMenuNewsPanel,
 		SwitchVanity						: _SwitchVanity,
 		GoToCharacterLoadout				: _GoToCharacterLoadout,
-		OpenSubscriptionUpsell				: _OpenSubscriptionUpsell
+		OpenSubscriptionUpsell				: _OpenSubscriptionUpsell,
+		UpdateUnlockCompAlert				: _UpdateUnlockCompAlert
 	};
 })();
 
@@ -1806,6 +1827,7 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'OpenSidebarPanel', MainMenu.ExpandSidebar);
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GameMustExitNowForAntiAddiction', MainMenu.GameMustExitNowForAntiAddiction );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GcLogonNotificationReceived', MainMenu.GcLogonNotificationReceived );
+	$.RegisterForUnhandledEvent( 'PanoramaComponent_GC_Hello', MainMenu.UpdateUnlockCompAlert );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', MainMenu.InventoryUpdated );
 	$.RegisterForUnhandledEvent( 'InventoryItemPreview', MainMenu.OnInventoryInspect );
 	$.RegisterForUnhandledEvent( 'LootlistItemPreview', MainMenu.OnLootlistItemPreview );

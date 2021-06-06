@@ -9,6 +9,7 @@ var playerCard = ( function (){
 	var _m_tooltipDelayHandle = false;
 	var _m_arrAdditionalSkillGroups = [ 'wingman', 'dangerzone' ];
 	var _m_InventoryUpdatedHandler = null;
+	var _m_ShowLockedRankSkillGroupState = false;
 	var _m_cp = $.GetContextPanel();
 
 	var _Init = function()
@@ -58,6 +59,7 @@ var playerCard = ( function (){
 		if ( _m_xuid )
 		{
 			_m_currentLvl = FriendsListAPI.GetFriendLevel( _m_xuid );
+			_m_ShowLockedRankSkillGroupState = !_IsPlayerPrime() && _HasXpProgressToFreeze();
 
 			                                           
 			_SetName();
@@ -65,6 +67,7 @@ var playerCard = ( function (){
 			_SetFlairItems();
 			_SetPlayerBackground();
 			_SetRank();
+			_SetPrimeUpsell();
 
 			                                                                     
 			if ( _m_isSelf )
@@ -105,6 +108,7 @@ var playerCard = ( function (){
 	var _ProfileUpdated = function( xuid )
 	{
 		                                                                                                           
+		                                  
 		if ( _m_xuid === xuid )
 			_FillOutFriendCard();
 	};
@@ -156,31 +160,65 @@ var playerCard = ( function (){
 
 	var _SetRank = function()
 	{
-		                                                             
-		
-		var currentPoints = FriendsListAPI.GetFriendXp( _m_xuid ),
-			pointsPerLevel = MyPersonaAPI.GetXpPerLevel();
+		                                                      
+		                                                                               
+		                                                               
+		                                                                                 
 
-		var elRank = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXp' ),
-			elRankIcon = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXpIcon' ),
-			elRankText = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerRankName' );
+		var elRank = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXp' );
 		
-		if ( !_m_currentLvl )
+		if ( !MyPersonaAPI.IsInventoryValid() || !_m_currentLvl || ( !_HasXpProgressToFreeze() && !_IsPlayerPrime() ))
 		{
 			elRank.AddClass( 'hidden' );
 			return;
 		}
 
+		if( !_IsPlayerPrime() && !_m_isSelf )
+		{
+			elRank.AddClass( 'hidden' );
+			return;
+		}
+
+		var bHasRankToFreezeButNoPrestige = ( _m_ShowLockedRankSkillGroupState ) ? true : false;
+
+		var currentPoints = FriendsListAPI.GetFriendXp( _m_xuid ),
+		pointsPerLevel = MyPersonaAPI.GetXpPerLevel();
+
 		                       
+		var elXpBar = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXpBarInner' );
 		var elXpBarInner = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXpBarInner' );
-		var percentComplete = ( currentPoints / pointsPerLevel ) * 100;
-		elXpBarInner.style.width = percentComplete + '%';
+
+		if ( bHasRankToFreezeButNoPrestige )
+		{
+			elXpBarInner.GetParent().visible = false;
+		}
+		else
+		{
+			var percentComplete = ( currentPoints / pointsPerLevel ) * 100;
+			elXpBarInner.style.width = percentComplete + '%';
+			elXpBarInner.GetParent().visible = true;
+		}
 
 		                    
-		elRankText.SetDialogVariable( 'name', $.Localize( '#SFUI_XP_RankName_' + _m_currentLvl ) );
-		elRankText.SetDialogVariableInt( 'level', _m_currentLvl );
+		var elRankText = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerRankName' );
+
+		                                                                           
+		elRankText.SetHasClass( 'player-card-prime-text', bHasRankToFreezeButNoPrestige );
+
+
+		elRank.SetHasClass( 'player-card-nonprime-locked-xp-row', bHasRankToFreezeButNoPrestige );
+		if ( bHasRankToFreezeButNoPrestige )
+		{
+			elRankText.text = $.Localize( '#Xp_RankName_Locked' )
+		}
+		else
+		{
+			elRankText.SetDialogVariable( 'name', $.Localize( '#SFUI_XP_RankName_' + _m_currentLvl ) );
+			elRankText.SetDialogVariableInt( 'level', _m_currentLvl );
+		}
 
 		                              
+		var elRankIcon = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerXpIcon' );
 		elRankIcon.SetImage( 'file://{images}/icons/xp/level' + _m_currentLvl + '.png' );
 		
 		elRank.RemoveClass( 'hidden' );
@@ -209,10 +247,20 @@ var playerCard = ( function (){
 
 	var _SetAllSkillGroups = function()
 	{
+		var elSkillGroupContainer = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardSkillGroupContainer' );
+		
+		if ( !_HasXpProgressToFreeze() && !_IsPlayerPrime() )
+		{
+			elSkillGroupContainer.AddClass( 'hidden' );
+			return;
+		}
+
 		_SetSkillGroup( 'competitive' );
 		_m_arrAdditionalSkillGroups.forEach( type => {
 			_SetSkillGroup( type );
 		} );
+
+		elSkillGroupContainer.RemoveClass( 'hidden' );
 	};
 
 	var _SetSkillForLobbyTeammates= function()
@@ -316,6 +364,7 @@ var playerCard = ( function (){
 		var typeModifier = ( _m_arrAdditionalSkillGroups.indexOf( type ) >= 0 ) ? type : '';
 
 		var imageName = ( typeModifier !== '' ) ? typeModifier : 'skillgroup';
+		var bNonPrimeButHasXpProgress = ( _m_ShowLockedRankSkillGroupState ) ? true : false;
 
 		if ( wins < winsNeededForRank || isloading )
 		{
@@ -323,10 +372,19 @@ var playerCard = ( function (){
 			if ( !_m_isSelf )
 				return;
 
+			
+			                                                                                  
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).SetHasClass( 'player-card-prime-text', bNonPrimeButHasXpProgress );
+
 			if ( isloading )
 			{
 				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+imageName+'_none.svg' );
 				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#SFUI_LOADING' );
+			}
+			else if ( bNonPrimeButHasXpProgress )
+			{
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_locked' );
+				tooltipText = $.Localize( '#tooltip_skill_group_locked' );
 			}
 			else
 			{
@@ -344,24 +402,49 @@ var playerCard = ( function (){
 			if ( !_m_isSelf )
 				return;
 				
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+imageName+'_expired.svg' );
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_expired' + typeModifier );
-			tooltipText = $.Localize( '#tooltip_skill_group_expired' + typeModifier );
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/' + imageName + '_expired.svg' );
+			
+			if ( bNonPrimeButHasXpProgress )
+			{
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_locked' );
+			}
+			else
+			{
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_expired' + typeModifier );
+			}
+
+			tooltipText = bNonPrimeButHasXpProgress ?  $.Localize('#tooltip_skill_group_locked') : $.Localize( '#tooltip_skill_group_expired' + typeModifier );
 		}
 		else
 		{
 			                   
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/'+ imageName + skillGroup + '.svg' );
-
-			var skillGroupNamingSuffix = ( typeModifier && typeModifier !== 'wingman' ) ? typeModifier : '';
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_' + skillGroup + skillGroupNamingSuffix );
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/' + imageName + skillGroup + '.svg' );
+			
+			if ( bNonPrimeButHasXpProgress )
+			{
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_locked' );
+			}
+			else
+			{
+				var skillGroupNamingSuffix = ( typeModifier && typeModifier !== 'wingman' ) ? typeModifier : '';
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_' + skillGroup + skillGroupNamingSuffix );
+			}
 
 			if ( _m_isSelf )
-				tooltipText = $.Localize( '#tooltip_skill_group_generic' + typeModifier );
+				tooltipText = bNonPrimeButHasXpProgress ?  $.Localize('#tooltip_skill_group_locked') : $.Localize( '#tooltip_skill_group_generic' + typeModifier );
 		}
 		
 		var tooltipLoc = elSkillGroup.id;
-		tooltipText = ( tooltipText !== '' ) ? tooltipText + '<br><br>' + GetMatchWinsText( elSkillGroup, wins ) : GetMatchWinsText( elSkillGroup, wins );
+
+		if( bNonPrimeButHasXpProgress )
+		{
+			tooltipText = ( tooltipText !== '' ) ? tooltipText : '';
+		}
+		else
+		{
+			tooltipText = ( tooltipText !== '' ) ? tooltipText + '<br><br>' + GetMatchWinsText( elSkillGroup, wins ) : GetMatchWinsText( elSkillGroup, wins );
+		}
+
 		
 		elSkillGroup.RemoveClass( 'hidden' );
 		if ( !isloading )
@@ -369,12 +452,32 @@ var playerCard = ( function (){
 			elSkillGroup.SetPanelEvent( 'onmouseover', _ShowSkillGroupTooltip.bind( undefined, tooltipLoc, tooltipText ) );
 			elSkillGroup.SetPanelEvent( 'onmouseout', _HideSkillGroupTooltip );
 		}
+
+		elSkillGroup.SetHasClass( 'player-card-nonprime-locked-xp-row', _m_ShowLockedRankSkillGroupState );
 	};
 
 	var GetMatchWinsText = function( elSkillGroup, wins )
 	{
 		elSkillGroup.SetDialogVariableInt( 'wins', wins );
 		return $.Localize( '#tooltip_skill_group_wins', elSkillGroup );
+	};
+
+	var _SetPrimeUpsell = function()
+	{
+		var elUpsellPanel = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerCardPrimeUpsell' );
+		elUpsellPanel.SetHasClass( 
+			'hidden', 
+			!MyPersonaAPI.IsInventoryValid() || _IsPlayerPrime() || !_m_isSelf
+		);
+
+		                                                                                                                                       
+		                                                                     
+		                                                                              
+		                                                                                           
+		                                                       
+		          
+		elUpsellPanel.FindChildInLayoutFile( "id-player-card-prime-upsell-xp" ).visible = !_HasXpProgressToFreeze() && !_IsPlayerPrime();
+		elUpsellPanel.FindChildInLayoutFile( "id-player-card-prime-upsell-skillgroup" ).visible = !_HasXpProgressToFreeze() && !_IsPlayerPrime();
 	};
 
 	var _SetCommendations = function()
@@ -426,45 +529,38 @@ var playerCard = ( function (){
 		    
 		   	                                                                                    
 		   	                                                                                                      
-		    
+	    
 
 		                                                                   
-		if ( countHiddenCommends === catagoriesCount  )
-			elCommendsBlock.AddClass( 'hidden' );
+		elCommendsBlock.SetHasClass( 'hidden', countHiddenCommends === catagoriesCount && !_IsPlayerPrime());
 	};
 
 	var _SetPrime = function()
 	{
 		var elPrime = $.GetContextPanel().FindChildInLayoutFile( 'JsPlayerPrime' );
 
-		                                                    
-		                                                                                 
-
+		                                      
 		if ( !MyPersonaAPI.IsInventoryValid() )
 			elPrime.AddClass( 'hidden' );
 
-		                                      
-		if ( PartyListAPI.GetFriendPrimeEligible( _m_xuid ) )
+		if ( _IsPlayerPrime() )
 		{
 			elPrime.RemoveClass( 'hidden' );
 			return;
 		}
 		else
 			elPrime.AddClass( 'hidden' );
-
-		var currentStatus = MyPersonaAPI.GetElevatedState();
-
-		if ( currentStatus === 'loading' )
-			elPrime.AddClass( 'hidden' );
-
-		var bHasPrestige = MyPersonaAPI.HasPrestige();
-
-		                                                                                                       
-		if ( bHasPrestige || FriendsListAPI.GetFriendLevel( _m_xuid ) > 20 )
-		{
-			                                                      
-		}
 	};
+
+	var _IsPlayerPrime = function()
+	{
+		return FriendsListAPI.GetFriendPrimeEligible( _m_xuid );
+	}
+
+	var _HasXpProgressToFreeze = function()
+	{
+		return ( MyPersonaAPI.HasPrestige() || ( MyPersonaAPI.GetCurrentLevel() > 2 )) ? true : false;
+	}
 
 	var _SetTeam = function()
 	{
@@ -609,6 +705,13 @@ var playerCard = ( function (){
 
 	var _ShowXpTooltip = function()
 	{
+		if ( _m_ShowLockedRankSkillGroupState )
+		{
+			_ShowSkillGroupTooltip( 'JsPlayerXpIcon', '#tooltip_xp_locked' );
+			return;
+		}
+
+		
 		var ShowTooltip = function()
 		{
 			_m_tooltipDelayHandle = false;
@@ -629,6 +732,12 @@ var playerCard = ( function (){
 
 	var _HideXpTooltip = function()
 	{
+		if ( _m_ShowLockedRankSkillGroupState )
+		{
+			_HideSkillGroupTooltip();
+			return;
+		}
+
 		if ( _m_tooltipDelayHandle != false )
 		{
 			$.CancelScheduled( _m_tooltipDelayHandle );
@@ -667,6 +776,8 @@ var playerCard = ( function (){
 		_SetAvatar();
 		_SetPlayerBackground();
 		_SetFlairItems();
+		_SetPrimeUpsell();
+		_SetRank()
 	};
 
 	var _ShowHideAdditionalRanks = function()

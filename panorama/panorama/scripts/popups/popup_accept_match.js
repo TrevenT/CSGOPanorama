@@ -174,12 +174,19 @@ var PopupAcceptMatch = ( function(){
 		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.mode );
 		labelData.SetDialogVariable ( 'mode', mode );
 
-		if ( ( m_lobbySettings.mode === 'competitive' ) &&
-			( GameTypesAPI.GetMapGroupAttribute( 'mg_'+map, 'competitivemod' ) === 'unranked' ) )
+		                                    
+		                                                     
+		   	                                                                                     
+		    
+		   	                                                                                         
+		   	                                                                                                
+		   	                                                    
+		   	                                                                                          
+		    
+
+
+		if( MyPersonaAPI.GetElevatedState() === 'elevated' && SessionUtil.DoesGameModeHavePrimeQueue( m_lobbySettings.mode ) && ( m_lobbySettings.prime !== 1 || !SessionUtil.AreLobbyPlayersPrime() ))
 		{
-			labelData.SetDialogVariable ( 'mode', $.Localize( '#SFUI_RankType_Modifier_Unranked' ) );
-			                                                                                                
-			                                                    
 			$.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchWarning' ).RemoveClass( 'hidden' );
 		}
 

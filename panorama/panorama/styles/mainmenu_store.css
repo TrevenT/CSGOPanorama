@@ -231,11 +231,12 @@
 	padding: 15px 15px;
 	horizontal-align: center;
 	vertical-align: center;
+	height:fill-parent-flow( 1 );
 
-	border-radius: 50%;
-	box-shadow: fill #000000aa 0px 0px 4px 2px;
-	border: 2px solid warningColor;
-	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( warningColor ), color-stop(.5, warningColor ), to( #000000) );
+	                         
+	                                                 
+	                                     
+	                                                                                                                                       
 
 	transition-property: brightness, transform;
 	transition-duration: .20s;

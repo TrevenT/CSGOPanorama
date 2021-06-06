@@ -366,7 +366,7 @@ var matchList = ( function() {
                         msg = "#CSGO_Watch_NoMatch_live";
                         break;
                     case "JsYourMatches":
-                        msg = "#CSGO_Watch_NoMatch_your";
+                        msg = "#CSGO_Watch_NoMatch_your_ranked";
                         break;
                 }
             }
@@ -563,7 +563,7 @@ var matchList = ( function() {
                         msg = "#CSGO_Watch_NoMatch_live";
                         break;
                     case "JsYourMatches":
-                        msg = "#CSGO_Watch_NoMatch_your";
+                        msg = "#CSGO_Watch_NoMatch_your_ranked";
                         break;
                     case "JsDownloaded":
                         msg = "#CSGO_Watch_NoMatch_downloaded";

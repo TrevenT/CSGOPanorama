@@ -24,6 +24,11 @@ var EOM_Skillgroup = (function () {
 			return false;
 		}
 
+		if( MyPersonaAPI.GetElevatedState() !== 'elevated' )
+		{
+			return false;
+		}
+
 		var oSkillgroupData = MockAdapter.SkillgroupDataJSO( _m_cP );
 
 		var compWins = oSkillgroupData[ "num_wins" ];

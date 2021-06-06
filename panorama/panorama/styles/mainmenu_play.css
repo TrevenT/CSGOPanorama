@@ -996,27 +996,154 @@ RadioButton .map-selection-info__new
 	}
 }
 
-.PopupButton.play-menu-get-prime Image
+.play-menu-get-prime
 {
-	margin: 0px;
-}
-
-.play-menu-primestatus,
-.play-menu-primestatus:disabled
-{
-	width: 48px;
-	height: 48px;
+	max-width: 300px;
+	background-color: blueColor;
 	vertical-align: center;
-	border-radius: 50%;
-	box-shadow: fill #000000aa 0px 0px 4px 2px;
-	wash-color: none;
+	horizontal-align: center;
+	padding: 8px;
+	border-radius: 2px;
+	box-shadow: shadowOffset;
+	margin-left: 8px;
 
-	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( warningColor ), color-stop(.5, warningColor ), to( #000000) );
-	border: 2px solid warningColor;
-
-	transition-property:  background-color, border;
+	transition-property: brightness;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.play-menu-get-prime:hover
+{
+	brightness: 1.5;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-get-prime:disabled
+{
+	background-color: none;
+	box-shadow: none;
+	margin-left: 0px;
+}
+
+.play-menu-get-prime:disabled:hover
+{
+	brightness: 1;
+}
+
+.content-navbar Button.play-menu-get-prime Label,
+.content-navbar ToggleButton.play-menu-toggle-prime Label
+{
+	margin: 0px;
+	                   
+	                                
+	font-size: 18px;
+	max-height: 32px;
+	text-overflow: shrink;
+}
+
+.play-menu-primestatus-image
+{
+	margin: 0px;
+	background-image: url("file://{images}/icons/ui/prime_disabled.png");
+	background-position: 50% 50%;
+	background-size: 100% 100%;
+	vertical-align: center;
+	horizontal-align:center;
+	width: 48px;
+	height: 48px;
+}
+
+.play-menu-prime-logo-bg .play-menu-primestatus-image
+{
+	background-image: url("file://{images}/icons/ui/prime_active.png");
+}
+
+.content-navbar ToggleButton.play-menu-toggle-prime
+{
+	flow-children: right;
+	vertical-align: center;
+	                   
+}
+
+.play-menu-toggle-prime .TickBox
+{
+	visibility: collapse;
+}
+
+.play-menu-toggle-prime:selected .play-menu-prime-toggle__slider-pill
+{
+	background-color: gradient( radial, 50% 60%, 0% 0%, 90% 70%, from( #22a527 ), color-stop( .7, #22a527), to( rgb(10, 88, 10) ) );
+
+	border: 1.5px solid #147717;
+	transition-property: background-color, box-shadow;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-prime-toggle__slider-pill,
+.play-menu-toggle-prime:disabled .play-menu-prime-toggle__slider-pill,
+.play-menu-toggle-prime:selected:disabled .play-menu-prime-toggle__slider-pill
+{
+	height: 24px;
+	width: 48px;
+	background-color: rgba(0, 0, 0, 0.445);
+	border-radius: 16px;
+	border: 1.5px solid rgba(0, 0, 0, 0.363);
+	padding: 2px;
+	margin: 2px 12px 2px 12px;
+	background-color: gradient( radial, 50% 60%, 0% 0%, 90% 70%, from( rgba(0, 0, 0, 0.363) ), color-stop( .7, rgba(0, 0, 0, 0.363)), to( rgba(0, 0, 0, 0.363) ) );
+	horizontal-align: left;
+
+	transition-property: background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-prime-toggle__slider
+{
+	background-color: white;
+	border-radius: 50%;
+	height: 100%;
+	width: height-percentage( 100% );
+	vertical-align: center;
+	box-shadow: shadowOffset;
+
+	transition-property: transform, background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-toggle-prime:selected .play-menu-prime-toggle__slider
+{
+	transform: translateX( 50% );
+
+	transition-property: transform, background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-toggle-prime:disabled .play-menu-prime-toggle__slider
+{
+	background-color: black;
+	opacity: .65;
+
+	transition-property: transform, background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-prime-mode-not-prime-label
+{
+	color: white;
+	margin-left: 12px;
+}
+
+.play-menu-prime-mode-not-prime-label.disabled
+{
+	color: disabledColor;
 }
 
 .play-menu-mapandlbs-container
@@ -1065,26 +1192,3 @@ RadioButton .map-selection-info__new
 	font-weight: lighter;
 	font-size: 20px;
 }
-
-.active .play-menu-primestatus
-{
-	background-color: gradient( radial, 50% 50%, 0% 0%, 50% 50%, from( positiveColor ), color-stop(.5, positiveColor ), to( #000000) );
-	border: 2px solid #45a747;
-
-	transition-property:  background-color, border;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
-
-.play-menu-primestatus .TickBox
-{
-	visibility: collapse;
-}
-
-.play-menu-primestatus-image
-{
-	vertical-align: center;
-	horizontal-align:center;
-	wash-color:black;
-}
-

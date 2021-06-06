@@ -212,7 +212,6 @@
 	margin: 0px 0px 0px 0px;
 	z-index: 2;
 	wash-color: #7EB1CD;
-
 }
 
                                                                                
@@ -230,6 +229,11 @@
 	transition-property: position;
 	transition-duration: .5s;
 	transition-timing-function: ease-in-out;
+}
+
+.player-card-xp__icon-container
+{
+	overflow: noclip;
 }
 
 .player-card-xp__icon
@@ -311,13 +315,21 @@
 	margin-left: 38px;
 }
 
+.player-card-nonprime__lock
+{
+	horizontal-align: center;
+	vertical-align: bottom;
+	                                 
+	visibility: collapse;
+}
+
 #GetPrestigeButtonClickable Label
 {
 	margin-left: 96px;
 }
 
                                                                                
-                                                                            
+                                                                               
                                                                                
 .player-card-skillgroup-container
 {
@@ -392,13 +404,119 @@
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+.player-card-skillgroup__icon-container
+{
+	margin-right: 11px;
+	overflow: noclip;
+}
 
 .player-card-skillgroup__icon
 {
-	margin: 0px 16px 0px 8px;
+	margin: 0px 8px 0px 8px;
 	width: 80px;
 	img-shadow: 2px 2px 2px #000000;
 	vertical-align: middle;
+	img-shadow: 0px 0px 5px 3.0 #000000;
+}
+
+.player-card-nonprime-locked-xp-row .player-card-skillgroup__icon,
+.player-card-nonprime-locked-xp-row .player-card-xp__icon
+{
+	opacity: 0.5;
+	saturation: 0.3;
+	brightness: .4;
+}
+
+.player-card-nonprime-locked-xp-row .player-card-nonprime__lock
+{
+	visibility: visible;
+}
+
+                                                                               
+                                                                       
+                                                                               
+.player-card-prime-upsell-container
+{
+	flow-children: down;
+
+	transition-property: height;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.player-card-prime-upsell-row
+{
+	flow-children: right;
+	margin-bottom: 16px;
+}
+
+.player-card-prime-upsell-image-container
+{
+	height: fit-children;
+	vertical-align: center;
+	width: 96px;
+}
+
+.player-card-prime-upsell-image
+{
+	height: 42px;
+	width: height-percentage( 100% );
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: .5;
+}
+
+.player-card-prime-upsell-image--xp
+{
+	height: 48px;
+}
+
+.player-card-prime-upsell-image--rank
+{
+	height: 30px;
+	width: 74px;
+}
+
+.player-card-prime-btn
+{
+	vertical-align: center;
+	box-shadow: fill 2px 2px 6px #000000d0;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.player-card-prime-btn Label
+{
+	font-weight: medium;
+	font-size: 14px;
+	background-color: #0A5A84;
+	text-align: center;
+	margin: 0px;
+	padding: 8px;
+	border-radius: 2px;
+	color: white;
+}
+
+.player-card-prime-btn:hover
+{
+	brightness: 1.5;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.player-card-prime-text
+{
+	max-height: 64px;
+	width: 300px;
+	font-size: 13px;
+	font-weight: normal;
+	text-overflow: shrink;
+	text-shadow: 1px 1px 2px #000000;
+	color: white;
 }
 
                                                                                
@@ -527,7 +645,8 @@
 .playercard-flair-carousel-container.hidden,
 .player-card-team.hidden,
 .player-card-prime.hidden,
-.player-card-xp-getprestigebutton.hidden
+.player-card-xp-getprestigebutton.hidden,
+.player-card-prime-upsell-container.hidden
 {
 	opacity: 0;
 	visibility: collapse;
