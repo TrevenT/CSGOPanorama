@@ -108,12 +108,12 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 				{
 					elStreamName.SetDialogVariable( 'stream_country', $.Localize( "SFUI_Country_" + countryCode ) )
 
-					                                  
+					                                                                                        
 					var streamName = "";
 
 					if ( oStream[ 'resolved_embed' ].search( "channel=" ) != -1 )
 					{
-						streamName = "Twitch: " + oStream[ 'resolved_embed' ].match("channel=(.*)")[1];
+						streamName = "Twitch: " + oStream[ 'resolved_embed' ].match("channel=(.*?(?=&))")[1];
 					}
 					else if ( oStream[ 'site' ].toLowerCase().search( "youtube" ) != -1 )
 					{
