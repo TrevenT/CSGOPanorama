@@ -33,7 +33,7 @@ Image.eventsched-match__stream__flag {
 
 
 #Contents Label {
-	text-overflow: ellipsis;
+	text-overflow: shrink;
 	padding-left: 2px;
 	font-size: 16px;
 }

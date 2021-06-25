@@ -12,7 +12,7 @@
         <include src="file://{resources}/scripts/mainmenu_tournament_pass_status.js" />
 	</scripts>
 
-	<Panel class="tournament-pass-status hidden MainMenuModeOnly" onactivate="">
+	<Panel class="tournament-pass-status hidden MainMenuModeOnly" >
         <Button id="id-tournament-pass-status" class="tournament-pass-status-container">
             <ItemImage id="id-tournament-pass-status-image" class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect">
                     <Label id="id-tournament-pass-saletag" class="store-sale-tag__text" text=""/>

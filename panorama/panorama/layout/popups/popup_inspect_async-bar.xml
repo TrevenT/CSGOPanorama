@@ -22,7 +22,6 @@
 			
 			<TextButton id="AsyncItemWorkAcceptConfirm" html="true"
 					class="PopupButton"
-					onactivate=""
 					text="#SFUI_Accept"/>
 
 			<TextButton id="AsyncItemWorkCancelBtn" html="true"

@@ -22,7 +22,7 @@
 							<Label id="id-date" class="" text="{s:news_date}"/>
 						</Panel>
 
-						<Button id="id-news-url-button" class="horizontal-align-right" onactivate="" >
+						<Button id="id-news-url-button" class="horizontal-align-right" >
 							<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
 						</Button>
 					</Panel>

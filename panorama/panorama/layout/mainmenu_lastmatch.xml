@@ -15,7 +15,7 @@
 
 	<Panel class="news-panel mainmenu__lastmatch MainMenuModeOnly hidden">
 		<Button id="id-mainmenu-lastmatch" class="mainmenu__lastmatch" hittest="true">
-			<Panel id="id-mainmenu-lastmatch-background" class="full-width full-height" hittest="false" onactivate=""/>
+			<Panel id="id-mainmenu-lastmatch-background" class="full-width full-height" hittest="false" />
 			<Panel class="full-width full-height z-index-2 top-bottom-flow" hittest="false">
 				<Panel class="full-width mmainmenu__lastmatch__top-section">
 					                                                                                                                                                      

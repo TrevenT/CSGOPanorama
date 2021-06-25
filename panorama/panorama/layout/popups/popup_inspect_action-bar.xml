@@ -22,8 +22,7 @@
 			<TextButton id="SingleAction"
 					class="PopupButton hidden"
 					text="#Action"
-					html="true"
-					onactivate=""/>
+					html="true"/>
 		</Panel>
 		<Panel class="horizontal-align-left left-right-flow">
 			<Button id="InspectWeaponBtn"
@@ -60,13 +59,11 @@
 			</Panel>
 
 			<Button id="InspectItemCert"
-					class="IconButton"
-					onactivate="">
+					class="IconButton">
 					<Image class="" src="file://{images}/icons/ui/info.svg" />
 			</Button>
 			<Button id="InspectMarketLink"
-					class="IconButton hidden"
-					onactivate="">
+					class="IconButton hidden">
 					<Image class="" src="file://{images}/icons/ui/link.svg" />
 			</Button>
 			<Button id="InspectActionsButton"

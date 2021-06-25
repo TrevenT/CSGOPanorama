@@ -170,12 +170,10 @@
 					
 					<TextButton id="AsyncItemWorkAcceptConfirm" html="true"
 							class="PopupButton Positive"
-							onactivate=""
 							text="#op_store_purchase_stars"/>
 					
 					<TextButton id="AsyncItemWorkUseItem" html="true"
 							class="PopupButton Positive hidden"
-							onactivate=""
 							text="#op_store_apply"/>
 
 					<TextButton id="" html="true"

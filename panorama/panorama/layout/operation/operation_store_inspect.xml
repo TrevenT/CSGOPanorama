@@ -30,7 +30,7 @@
 		</snippet>
 
 		<snippet name="snippet-tray-btn">
-			<RadioButton class="op-store-inspect-rewards-tray-btn" onactivate="">
+			<RadioButton class="op-store-inspect-rewards-tray-btn" >
 				<ItemImage id="id-op-store-inspect-rewards-tray-image" class="op-store-inspect-rewards-tray-image" src="file://{images}/icons/ui/cheer.svg" scaling="stretch-to-fit-preserve-aspect"/>
 				<Panel id="id-store-inspect-rewards-tray-rarity" class="op-store-inspect__char-rarity" hittest="false"/>
 			</RadioButton>

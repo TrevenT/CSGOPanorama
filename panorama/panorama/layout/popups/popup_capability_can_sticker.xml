@@ -50,12 +50,10 @@
 				<Panel class="left-right-flow horizontal-center">
 					<TextButton id="CanStickerContinue" 
 						class="PopupButton Positive"
-						text="#SFUI_Continue"
-						onactivate="" />
+						text="#SFUI_Continue" />
 					<TextButton id="CanStickerNextPos" 
 						class="PopupButton"
-						text="#SFUI_InvUse_Pick_Sticker_slot"
-						onactivate="" />
+						text="#SFUI_InvUse_Pick_Sticker_slot" />
 				</Panel>
 			</Panel>
 		</snippet>
@@ -77,12 +75,10 @@
 					<Panel class="left-right-flow horizontal-center vertical-center">
 						<TextButton id="CanStickerContinue" 
 							class="PopupButton Positive"
-							text="#SFUI_Continue"
-							onactivate="" />
+							text="#SFUI_Continue" />
 						<TextButton id="CanStickerNextPos" 
 							class="PopupButton"
-							text="#SFUI_InvUse_Pick_Sticker_slot"
-							onactivate="" />
+							text="#SFUI_InvUse_Pick_Sticker_slot" />
 					</Panel>
 				</Panel>
 			</Panel>

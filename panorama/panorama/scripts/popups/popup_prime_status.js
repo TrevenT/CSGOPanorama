@@ -48,7 +48,7 @@ var PopupPrimeStatus = ( function ()
 	{
 		return 'https://store.' +
 			((SteamOverlayAPI.GetAppID() == "710") ? 'beta.' : '') +
-			((MyPersonaAPI.GetSteamType() === 'china') ? 'steamchina' : 'steampowered') + '.com';
+			((MyPersonaAPI.GetSteamType() === 'china' || MyPersonaAPI.GetLauncherType() === "perfectworld" ) ? 'steamchina' : 'steampowered') + '.com';
 	}
 
 	function _UpdateEleveatedStatusPanel()

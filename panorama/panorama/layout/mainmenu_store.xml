@@ -107,7 +107,7 @@
 		</snippet>
 
 		<snippet name="StoreNavBtn">
-			<RadioButton class="news-panel-navbar-btn" onactivate="" selected="false">
+			<RadioButton class="news-panel-navbar-btn" selected="false">
 				                                                                                                                        
 				<Label id="StoreTabLabel" text=""/>
 			</RadioButton>

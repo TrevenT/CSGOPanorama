@@ -11,7 +11,7 @@
 
 	<snippets>
 		<snippet name="AvatarPlayerCard">
-			<Button class="avatar" onactivate="" acceptsinput="false" >
+			<Button class="avatar" acceptsinput="false" >
 				<Panel class="avatar-image">
 					<Panel>
 						<Panel class="avatar-image__default"/>
@@ -27,7 +27,7 @@
 		</snippet>
 
 		<snippet name="AvatarParty" class="avatar-party-controls">
-			<Button class="avatar avatar--party" onactivate="" >
+			<Button class="avatar avatar--party" >
 				<Panel class="avatar-image">
 					<Panel>
 						<Panel class="avatar-image__default"/>

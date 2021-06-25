@@ -56,7 +56,7 @@
 	</snippets>
 
 	<Panel class="op-mainmenu hidden MainMenuModeOnly" onload="">
-		<Panel id="id-op-mainmenu-upsell" class="op-mainmenu__upsell-container" hittest="true" onactivate="">
+		<Panel id="id-op-mainmenu-upsell" class="op-mainmenu__upsell-container" hittest="true">
 			<Panel id="id-op-mainmenu-upsell-bg" class="full-width full-height" blurrects="id-op-mainmenu-upsell-btns-container">
 				                                                                 
 				                                                                        
@@ -78,8 +78,8 @@
 			</Panel>
 		</Panel>
 
-		<Panel id="id-op-mainmenu-status" class="op-mainmenu__status-container" hittest="true" onactivate="">
-			<Panel id="id-op-mainmenu-missions" class="op-mainmenu__missions hide" hittest="true" onactivate="">
+		<Panel id="id-op-mainmenu-status" class="op-mainmenu__status-container" hittest="true" >
+			<Panel id="id-op-mainmenu-missions" class="op-mainmenu__missions hide" hittest="true" >
 					<Panel class="op-mainmenu__operation-bg op-mainmenu__operation-bg--missions" hittest="false"/>
 					<Panel id="id-op-mainmenu-mission-card" class="full-width full-height">
 						                          
@@ -140,7 +140,7 @@
 				</Panel>
 			</Panel>
 
-			<Panel id="id-op-mainmenu-rewards" class="op-mainmenu__rewards hide" hittest="true" onactivate="">
+			<Panel id="id-op-mainmenu-rewards" class="op-mainmenu__rewards hide" hittest="true" >
 				<Panel class="op-mainmenu__operation-bg" hittest="false"/>
 				<Panel class="full-width top-bottom-flow full-height">
 					<Panel class="op-mainmenu__header-container">
@@ -206,8 +206,8 @@
 				                                                                                                                                               
 			</Panel>
 
-			<Button id="id-op-mainmenu-stats" class="op-mainmenu__stats hide" hittest="true" onactivate="">
-			<Panel id="id-op-mainmenu-stats-background" class="full-width full-height" hittest="false" onactivate=""/>
+			<Button id="id-op-mainmenu-stats" class="op-mainmenu__stats hide" hittest="true" >
+			<Panel id="id-op-mainmenu-stats-background" class="full-width full-height" hittest="false" />
 				<Panel class="full-width full-height top-bottom-flow z-index-2" hittest="false">
 					<Panel class="full-width op-mainmenu__stats__top-section">
 						<TextButton id="id-op-mainmenu-open-stats-btn" class="op-mainmenu__unlock-text horizontal-align-right" text="#op_mainmenu_stats_btn_text"/>

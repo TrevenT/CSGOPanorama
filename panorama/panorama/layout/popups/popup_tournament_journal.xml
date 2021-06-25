@@ -150,12 +150,12 @@
 
                 <Panel class="popup-capability__button-row no-border" >
 					<Panel class="full-width">
-                                                 
+                                                  
 
                         <Panel class="left-right-flow horizontal-align-right">
-                            <TextButton id="id-tournament-journal-faq" class="PopupButton" text="#Workshop_Preview_FAQ" onactivate="" />
-					    	<TextButton class="PopupButton" text="#GameUI_Close" onactivate="$.DispatchEvent( 'UIPopupButtonClicked', '' )" />
-                    	</Panel>
+                            <TextButton id="id-tournament-journal-faq" class="PopupButton" text="#Workshop_Preview_FAQ" />
+		                    <TextButton class="PopupButton" text="#GameUI_Close" onactivate="$.DispatchEvent( 'UIPopupButtonClicked', '' )" />
+                        </Panel>
 					</Panel>
 				</Panel>
 
