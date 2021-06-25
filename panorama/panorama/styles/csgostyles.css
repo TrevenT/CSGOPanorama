@@ -3202,6 +3202,7 @@ EdgeScrollBar.Vertical #MaxButton
 	width: 12px;
 	height: 12px;
 	box-shadow: fill #0000005e 0px 0px 2px 2px;
+	visibility: visible;
 }
 
 #MainMenuWatchAlert.navbar-btn__notification,
@@ -3222,8 +3223,7 @@ EdgeScrollBar.Vertical #MaxButton
 	background-color: blueColor;
 }
 
-.navbar-btn__notification.hidden,
-.navbar-btn__notification-dot.hidden
+.navbar-btn__notification.hidden
 {
 	opacity: 0;
 	transform:Scale3d(0, 0, 0);
@@ -3231,6 +3231,11 @@ EdgeScrollBar.Vertical #MaxButton
 	transition-property:  opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.navbar-btn__notification-dot.hidden
+{
+	visibility: collapse;
 }
 
 .navbar-btn__notification-text

@@ -135,7 +135,8 @@ var PlayMenu = ( function()
 		elPrimeButton.SetPanelEvent( 'onactivate', function()
 		{
 			UiToolkitAPI.HideTextTooltip();
-			_ApplySessionSettings();
+			                          
+			ApplyPrimeSetting();
 		} );
 
 		                         
@@ -539,7 +540,7 @@ var PlayMenu = ( function()
 		_UpdateTournamentButton( isHost, isSearching, settings.game.mapgroupname );
 
 		                   
-		_UpdatePrimeBtn( isSearching, isHost, settings.game.prime === 1 ? true : false );
+		_UpdatePrimeBtn( isSearching, isHost );
 		_UpdatePermissionBtnText( settings, isEnabled );
 
 		                             
@@ -1318,12 +1319,13 @@ var PlayMenu = ( function()
 		btnCancel.enabled = ( isSearching && isHost );
 	};
 
-	var _UpdatePrimeBtn = function( isSearching, isHost, isPrime )
+	var _UpdatePrimeBtn = function( isSearching, isHost )
 	{
 		var elPrimePanel = $( '#PrimeStatusPanel' );
 		var elGetPrimeBtn = $( '#id-play-menu-get-prime' );
 		var elTooglePrimeBtn = $( '#id-play-menu-toggle-prime' );
 		var elTextNA = $('#PrimeStatusLabelNA');
+		var isPrime = m_serverPrimeSetting === 1 ? true : false;
 
 		                                                                                  
 		if ( !_IsPlayingOnValveOfficial() || !MyPersonaAPI.IsInventoryValid() )
@@ -1937,14 +1939,9 @@ var PlayMenu = ( function()
 					mode: gameMode,
 					type: GetGameType( gameMode ),
 					mapgroupname: selectedMaps
-				},
+				}
 			}
 		};
-
-		if( MyPersonaAPI.IsInventoryValid() )
-		{
-			settings.update.Game.prime = _IsPrimeChecked();
-		}
 
 		                                                                                                                                      
 		                                                                                                                                      
@@ -1979,6 +1976,17 @@ var PlayMenu = ( function()
 		                                                                                          
 		LobbyAPI.UpdateSessionSettings( settings );
 	};
+
+	var ApplyPrimeSetting = function()
+	{
+		if( MyPersonaAPI.IsInventoryValid() )
+		{
+			var settings = { update: { Game: {}} };
+			settings.update.Game.prime = m_serverPrimeSetting === 1 ? false : true;
+			                                                 
+			LobbyAPI.UpdateSessionSettings( settings );
+		}
+	}
 
 	                                                                                                    
 	                                
@@ -2419,7 +2427,7 @@ var PlayMenu = ( function()
 
 	var _InventoryUpdated = function()
 	{
-		_UpdatePrimeBtn( _IsSearching(), LobbyAPI.BIsHost(), m_serverPrimeSetting === 1 );
+		_UpdatePrimeBtn( _IsSearching(), LobbyAPI.BIsHost());
 	}
 
 

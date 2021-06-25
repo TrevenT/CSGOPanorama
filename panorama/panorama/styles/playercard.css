@@ -250,7 +250,7 @@
 	flow-children: down;
 	height: fit-children;
 	width:fit-children;
-	margin-left: 24px;
+	margin-left: 26px;
 	vertical-align: middle;
 }
 
@@ -511,12 +511,17 @@
 .player-card-prime-text
 {
 	max-height: 64px;
-	width: 300px;
+	width: 240px;
 	font-size: 13px;
 	font-weight: normal;
 	text-overflow: shrink;
 	text-shadow: 1px 1px 2px #000000;
 	color: white;
+}
+
+.player-card-prime-text--popup
+{
+	width: 300px;
 }
 
                                                                                

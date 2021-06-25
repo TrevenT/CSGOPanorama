@@ -366,15 +366,21 @@ var playerCard = ( function (){
 		var imageName = ( typeModifier !== '' ) ? typeModifier : 'skillgroup';
 		var bNonPrimeButHasXpProgress = ( _m_ShowLockedRankSkillGroupState ) ? true : false;
 
+		                                                                                  
+		if ( bNonPrimeButHasXpProgress )
+		{
+			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).SetHasClass( 'player-card-prime-text', bNonPrimeButHasXpProgress );
+			if ( !_m_bShownInFriendsList )
+			{
+				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).SetHasClass( 'player-card-prime-text--popup', bNonPrimeButHasXpProgress );
+			}
+		}
+
 		if ( wins < winsNeededForRank || isloading )
 		{
 			                                   
 			if ( !_m_isSelf )
 				return;
-
-			
-			                                                                                  
-			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).SetHasClass( 'player-card-prime-text', bNonPrimeButHasXpProgress );
 
 			if ( isloading )
 			{

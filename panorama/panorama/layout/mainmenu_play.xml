@@ -147,7 +147,7 @@
 								<Label id="PrimeStatusButtonLabel" text="#elevated_status_btn_no_price" html="true"/>
 							</Button>
 						</TooltipPanel>
-						<ToggleButton id="id-play-menu-toggle-prime" html="true" class="play-menu-toggle-prime" onactivate="">
+						<ToggleButton id="id-play-menu-toggle-prime" html="true" class="play-menu-toggle-prime">
 							<Panel id="id-play-menu-toggle-slider" class="play-menu-prime-toggle__slider-pill">
 								<Panel class="play-menu-prime-toggle__slider"/>
 							</Panel>
