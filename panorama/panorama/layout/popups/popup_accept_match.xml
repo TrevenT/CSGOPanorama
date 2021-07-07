@@ -2,6 +2,7 @@
 	<styles>
 		<include src="file://{resources}/styles/gamestyles.css" />
 		<include src="file://{resources}/styles/popups/popup_accept_match.css" />
+		<include src="file://{resources}/styles/chat.css" />
 	</styles>
 	
 	<scripts>
@@ -20,7 +21,9 @@
 					popupbackground="dim" 
 					onload="PopupAcceptMatch.Init();"
 					oncancel="">                                                                                                        
-					
+		<Panel class="chat-panel-outer" >
+			<Panel id="id-accept-match-chat-container" class="chat-panel"/>
+		</Panel>
 		<Panel id="id-accept-match" class="accept-match accept-match-container">
 			<Panel id="AcceptMatchWarning" class="accept-match-warning hidden">
 				<Image class="vertical-center right-padding" texturewidth="-1" textureheight="24" src="file://{images}/icons/ui/info.svg" />
@@ -54,6 +57,23 @@
 					<Label text="" class="accept-match__data__time__text"/>
 				</Panel>
 
+			</Panel>
+
+
+			<Panel id="Agreement" class="accept-match__agreement" style="visibility:collapse;">
+			                                                                        
+				<Image class="right-margin-medium" src="file://{images}/icons/ui/info.svg" textureheight="24" texturewidth="24"/>
+				<Panel class="top-bottom-flow vertical-center">
+					<Panel id="AcceptMatchAgreementCompetitive" class="top-bottom-flow">
+						<Label class="accept-match__agreement-label" text="#SFUI_MapSelectCompWarning"/>
+						<Panel class="accept-match__agreement_spacer"/>
+					</Panel>
+
+					<Button onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'https://blog.counter-strike.net/index.php/fair-play-guidelines/' );">
+						<Label class="accept-match__agreement-label accept-match__agreement-label--small" html="true" text="#SFUI_AcceptAgreement"/>
+					</Button>
+
+				</Panel>
 			</Panel>
 		</Panel>
 	</PopupCustomLayout>

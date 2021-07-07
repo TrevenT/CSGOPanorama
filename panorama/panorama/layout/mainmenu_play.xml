@@ -20,12 +20,13 @@
 	<snippets>
 		<snippet name="MapGroupSelection" >
 			<Panel class="map-selection-btn">
+
 				<Carousel id="MapGroupImagesCarousel" autoscroll-delay="2s, 5s" panels-visible="3" class="map-selection-btn__carousel full-width full-height">
 					                                                
 				</Carousel>
 				<Panel class="map-selection-btn__gradient" hittest="false" />
 				<Label id="MapGroupBetaTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Overwatch_Beta'/>
-				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
+
 					<Panel id="MapSelectionTopRowIcons" class="map-selection-btn__top-icon-row">
 						<Image id="ActiveGroupIcon" class="right-margin" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/competitive.svg"/>
 						<Label id="MapGroupNewTag" class="map-selection-info__new stratum-font hidden" text='#SFUI_Workshop_New_Map'/>
@@ -34,6 +35,9 @@
 						</Panel>
 						<Label id="MapGroupUnrankedTag" class="map-selection-info__new map-selection-info__unranked stratum-font hidden" text='#SFUI_RankType_Modifier_Unranked'/>
 					</Panel>
+
+
+				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
 					                           
 
 					<Panel id="MapGroupCollectionMultiIcons" class="map-selection-btn__groupmap-icons">
@@ -50,10 +54,18 @@
 				</Panel>
 			</Panel>
 		</snippet>
+		
 		<snippet name="NoWorkshopMaps">
 			<Panel class="map-selection-no-subscriptions">
 				<Label class="map-selection-no-subscriptions-label" html="true" text="#CSGO_Workshop_No_Maps" />
 			</Panel>
+		</snippet>
+
+		<snippet name="QuickSelectionSetButtonSnippet">
+			<Button class="map-selection__quick-selection-set">
+				<Label text="{s:quick-selection-set-name}"/>
+			</Button>
+
 		</snippet>
 
 		<snippet name="MapSelectionContainer_official_cooperative" >
@@ -109,13 +121,6 @@
 
 		<snippet name="MapListSection" >
 			<Panel class="map-selection-list-section">
-				<Panel id="play-maps-section-header-container" class="map-selection-list-section__header">
-					<Label id="play-maps-section-header" class="map-selection-list-section-header__text" text=""/>
-					<Label class="map-selection-list-section-header__text map-selection-list-section-header__text_activedutymaps" text="#play_maps_section_capt_maps_header"/>
-					<Button id="play-maps-section-header-more-info" class="IconButton horizontal-align-right">
-						<Image class="right-margin-medium" texturewidth="-1" textureheight="20" src="file://{images}/icons/ui/info.svg" />
-					</Button>
-				</Panel>
 				                  
 			</Panel>
 		</snippet>
@@ -221,9 +226,52 @@
 			</Panel>
 			
 			<Panel class="top-bottom-flow full-width full-height">
+				<Panel class="left-right-flow map-selection-list__quick-selection-sets">
+					<Label text="#presets_title" class="map-selection__quick-selection-set-title" />
+
+					<Panel class="game-mode-selection-radios-spacer"/>
+
+					<TooltipPanel tooltip="#presets_favorites_tooltip" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center;">
+						<Button id="jsQuickSelectionFavoritesSet" class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'favorites' )">
+							<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/select_favorites.svg"/>
+						</Button>
+					</TooltipPanel>
+
+					<Panel id="jsQuickSelectionSetsContainer" class="map-selection-list__quick-selection-sets__btns">
+						                                                                         
+					</Panel>
+
+					<Panel class="left-right-flow vertical-center right-margin-32">
+						<TooltipPanel tooltip="#presets_select_all" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
+							<Button id="jsQuickSelectAll" class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'all' )">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/select_all.svg"/>
+							</Button>
+						</TooltipPanel>
+						<TooltipPanel tooltip="#presets_clear_all" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
+							<Button id="jsQuickClearAll"  class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'none' )">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/unselect_all.svg"/>
+							</Button>
+						</TooltipPanel>
+						
+						<Panel class="game-mode-selection-radios-spacer"/>
+
+						<TooltipPanel tooltip="#presets_save_tooltip" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
+							<Button id="jsQuickSelectionSave" class="map-selection__quick-selection-set-icon save" onactivate="PlayMenu.SaveMapSelectionToCustomPreset()">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/save_2.svg"/>
+							</Button>
+						</TooltipPanel>
+					</Panel>
+
+
+
+				</Panel>
+
+
 				<Panel id="MapSelectionList" class="map-selection-list map-selection-list-all">
 					                                                                                                
 				</Panel>
+
+
 
 				<Panel class="play-menu-controls-actions-bar">
 					<Panel class="left-right-flow vertical-center">
@@ -263,4 +311,3 @@
 
 	</Panel>
 </root>
-

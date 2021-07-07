@@ -337,3 +337,54 @@
 	transform: translateY( -10px );
 	sound: "ui_custom_lobby_dialog_slide";
 }
+
+.accept-match__agreement
+{
+	transform: translateY( 20px );
+	horizontal-align: center;
+
+	background-color: rgba(0,0,0,0.98);
+	border-radius: 6px;
+	max-width: 740px;
+
+	                                         
+
+	flow-children: right;
+
+	padding: 20px;
+}
+
+.accept-match__agreement Button
+{
+	vertical-align: center;
+}
+
+.accept-match__agreement Button:hover {
+	brightness: 1.5;
+}
+
+.accept-match__agreement_spacer
+{
+	height: 16px;
+	width: 16px;
+}
+
+.accept-match__agreement-label {
+
+	color: rgba(255, 255, 255, 0.7);
+	                   
+	font-size: 16px;
+	font-family: Stratum2, 'Arial Unicode MS';
+	font-weight: medium;
+	                               
+}
+
+.accept-match__agreement-label--small {
+	font-size: 16px;
+	font-weight: lighter;
+}
+
+.TextSpan { 
+	text-decoration: underline;
+}
+

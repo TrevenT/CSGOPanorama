@@ -98,6 +98,142 @@
 	background-color: contentPanelBackground;
 }
 
+                                                                                                      
+
+.map-selection-list__quick-selection-sets {
+  width: 100%;
+  margin-left: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 0px;
+  opacity: 0;
+  transition-property: height;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+
+   flow-children: right;
+}
+
+.map-selection-list__quick-selection-sets__btns {
+	width: fill-parent-flow( 1.0);
+	height:100%;
+	flow-children: right;
+}
+
+.competitive.official .map-selection-list__quick-selection-sets {
+  height: 50px;
+  opacity: 1;
+ 
+}
+
+.map-selection-list__quick-selection-sets .game-mode-selection-radios-spacer
+{
+	width: 1px;
+}
+
+                           
+
+.map-selection__quick-selection-set-title
+{
+	font-size: 16px;
+	margin-right: 16px;
+	font-family: stratum2Font;
+	font-weight: lighter;
+	horizontal-align: center;
+	vertical-align: center;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.map-selection__quick-selection-set
+{
+	height: 60%;
+	width: fit-children;
+	margin: 0px 4px;
+	padding: 0px 16px;
+	border-radius: 3px;
+	vertical-align: center;
+
+	transition-property: background-color;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection__quick-selection-set.match {
+	
+	background-color: rgba(255, 255, 255, 0.288);
+	transition-property: background-color;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-selection__quick-selection-set.match Label
+{
+	wash-color: black;
+}
+
+.map-selection__quick-selection-set Label {
+  font-size: 16px;
+  font-family: stratum2Font;
+  font-weight: medium;
+  horizontal-align: center;
+  vertical-align: center;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.map-selection__quick-selection-set-icon{
+	height: fit-children;
+	width: fit-children;
+	margin: 0px 4px;
+	padding: 8px;
+	border-radius: 3px;
+	vertical-align: center;
+	
+	transition-property: background-color, transform;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+  }
+
+  .map-selection__quick-selection-set:hover:not(:disabled),
+  .map-selection__quick-selection-set-icon:hover:not(:disabled)
+  {
+	background-color: rgba(0, 0, 0, 0.342);
+
+	transition-property: background-color, transform;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+  }
+
+  .map-selection__quick-selection-set-icon.save
+  {
+	animation-name: play-menu-save-favorites;
+	animation-duration: .25s;
+    animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+  }
+
+  @keyframes play-menu-save-favorites
+{
+    0% {
+		transform: translateY(0%);
+	}
+	54% {
+		transform: translateY(100%);
+	}
+    55% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+}
+
+.map-selection__quick-selection-set:disabled,
+.map-selection__quick-selection-set-icon:disabled
+{
+	wash-color: disabledColor;
+}
+
+
 .map-selection-list RadioButton
 {
 	flow-children: none;
@@ -131,12 +267,11 @@
 
 .map-selection-list-section
 {
-	width: 72%;
-	height: fit-children;
-	flow-children: right-wrap;
-	overflow: clip noclip;
-	padding: 0px 16px;
-	border-right: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  height: fit-children;
+  flow-children: right-wrap;
+  overflow: clip noclip;
+  padding: 0px 16px;
 }
 
 .AspectRatio16x9 .map-selection-list-section:not(.map-selection-list-section--single-column)
@@ -220,7 +355,7 @@
 .map-selection-btn
 {
 	width: 224px;
-	height: width-percentage(142%);
+  height: width-percentage(117%);
 	margin: 24px 16px;
 	border: 0px solid gray;
 	box-shadow: shadowOffset;
@@ -375,7 +510,7 @@
 	margin-left: 8px;
 	margin-top: 8px;
 	width: 100%;
-	height: 32px;
+  height: 16px;
 	flow-children: right;
 	overflow: noclip;
 }
@@ -413,6 +548,7 @@
 	horizontal-align: middle;
 	width: 116px;
 	height: 116px;
+	margin-top: 15%;
 }
 
 .map-selection-btn--full .map-selection-btn__map-icon
@@ -519,15 +655,13 @@
 	font-size: 18px;
 }
 
-.map-selection-list .map-selection-btn .map-selection-info__new--star
-{
-	height: 64px;
-	width: 64px;
-
-	background-image: url( "file://{images}/ui_textures/yellow_star.png" );
-    background-size: 100% 100%;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
+.map-selection-list .map-selection-btn .map-selection-info__new--star {
+  height: 100%;
+  width: height-percentage(100%);
+  background-image: url("file://{images}/ui_textures/yellow_star.png");
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
 
 .map-selection-list .map-selection-btn .map-selection-info__new--star Label

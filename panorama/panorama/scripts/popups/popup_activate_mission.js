@@ -174,11 +174,12 @@ function LaunchMission ()
 			
 			var bStartMatchmaking = true;
 			var sStageMatchmaking = '';
-			if ( mapGroup === 'mg_lobby_mapveto' )
-			{
-				sStageMatchmaking = '1';
-				mapGroup = LobbyAPI.GetSessionSettings().game.mapgroupname + ',' + mapGroup;
-			}
+			                                                                                   
+			                                         
+			    
+			   	                        
+			   	                                                                            
+			    
 			
 			var settings = {
                 update: {

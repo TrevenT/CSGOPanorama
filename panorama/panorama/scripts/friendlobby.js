@@ -114,10 +114,11 @@ var friendLobby = ( function (){
 			mapGroups = '';
 		
 		var mapsList = mapGroups.split(',');
-		if ( mapsList.includes( 'mg_lobby_mapveto' ) )
-		{
-			mapsList = [ 'mg_lobby_mapveto' ];
-		}
+		                                                                                   
+		                                                 
+		    
+		   	                                  
+		    
 		
 		var mapsNiceNamesList = [];
 

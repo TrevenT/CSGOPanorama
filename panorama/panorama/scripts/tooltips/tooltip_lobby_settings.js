@@ -38,18 +38,6 @@ var TooltipLobby = ( function ()
 		var elMatchStats = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipStats' );
 		var isSearching = searchingStatus !== '' && searchingStatus !== undefined ? true : false;
 
-		                                          
-		                                                                                          
-		if( m_GameSettings.mapgroupname )
-		{
-			var mapsList = m_GameSettings.mapgroupname.split(',');
-			var elCompWarning = $.GetContextPanel().FindChildInLayoutFile('LobbyTooltipCompWarning');
-			if( mapsList.length < 18 && m_GameSettings.mode === "competitive" && isSearching )
-				elCompWarning.RemoveClass( 'hidden' );
-			else
-				elCompWarning.AddClass( 'hidden' );
-		}
-
 		elMatchStats.SetHasClass( 'hidden', !isSearching );
 
 		                                  
@@ -173,10 +161,11 @@ var TooltipLobby = ( function ()
 			return;
 		
 		var mapsList = m_GameSettings.mapgroupname.split(',');
-		if ( mapsList.includes( 'mg_lobby_mapveto' ) )
-		{
-			mapsList = [ 'mg_lobby_mapveto' ];
-		}
+		                                                                                   
+		                                                 
+		    
+		   	                                  
+		    
 
 		var elMapsSection = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipMapsList' );
 

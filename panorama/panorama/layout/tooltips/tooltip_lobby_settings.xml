@@ -58,7 +58,6 @@
 			<Panel id="LobbyTooltipMapsList" class="tooltip-player-xp__section tooltip-player-xp__section-bottom">
 				                         
 			</Panel>
-			<Label id="LobbyTooltipCompWarning" class="tooltip-player__comp-warning hidden" text="#SFUI_MapSelectCompWarning" />
 		</Panel>
 	</Panel>
 </root>

@@ -16,8 +16,8 @@
 
 .accept-match .chat-panel-outer
 {
-	horizontal-align: center;
 	padding-right: 0px;
+	width: fit-children;
 }
 
 .chat-panel-outer.hidden
@@ -54,7 +54,7 @@
 }
 
 .AspectRatio16x9 .chat-panel,
-.AspectRatio16x10 .chat-panel,
+.AspectRatio16x10 .chat-panel
 {
 	width: 520px;
 }
@@ -119,7 +119,8 @@
 	transition-timing-function: ease-in-out;
 }
 
-.chat-container:hover .chat-panel-blur
+.chat-container:hover .chat-panel-blur,
+.accept-match .chat-panel-blur
 {
 	opacity: 1;
 }

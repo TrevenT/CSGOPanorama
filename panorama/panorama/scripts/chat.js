@@ -179,7 +179,8 @@ var Chat = ( function ()
 
 	var _OnShowAcceptPopup = function( popup )
 	{
-		m_ChatPanel.SetParent( popup.FindChild( 'id-accept-match' ) );
+		m_ChatPanel.SetParent( popup.FindChildInLayoutFile( 'id-accept-match-chat-container' ) );
+		$.GetContextPanel().style.clip = 'rect( 0%,  100%, 100%, 0% );'
 
 		var elChatContainer = $( '#ChatContainer' );
 		

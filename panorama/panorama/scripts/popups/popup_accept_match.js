@@ -16,15 +16,15 @@ var PopupAcceptMatch = ( function(){
 	var _Init = function ()
 	{
 		               
-		var elPlayerSlots = $.GetContextPanel().FindChildInLayoutFile ( 'AcceptMatchSlots' );
+		var elPlayerSlots = $.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchSlots' );
 		elPlayerSlots.RemoveAndDeleteChildren();
 		
 		var settings = $.GetContextPanel().GetAttributeString( 'map_and_isreconnect', '' );
 
 		                                           
-		var settingsList = settings.split(',');
+		var settingsList = settings.split( ',' );
 
-		var map = settingsList[0];
+		var map = settingsList[ 0 ];
 		if ( map.charAt( 0 ) === '@' )
 		{
 			m_isNqmmAnnouncementOnly = true;
@@ -33,12 +33,22 @@ var PopupAcceptMatch = ( function(){
 		}
 		
 		                                                             
-		m_isReconnect = settingsList[1] === 'true' ? true : false;
+		m_isReconnect = settingsList[ 1 ] === 'true' ? true : false;
 		m_lobbySettings = LobbyAPI.GetSessionSettings().game;
+
+		                                          
+		if ( !m_isReconnect && m_lobbySettings  )
+		{
+			                         
+			var elAgreement = $.GetContextPanel().FindChildInLayoutFile( 'Agreement' );
+			elAgreement.visible = true;
+
+			var elAgreementComp = $.GetContextPanel().FindChildInLayoutFile( 'AcceptMatchAgreementCompetitive' );
+			elAgreementComp.visible = ( m_lobbySettings.mode === "competitive" );
+		}
 
 		$.DispatchEvent( "ShowReadyUpPanel", "" );
 
-		
 		_SetMatchData( map );
 
 		if ( m_isNqmmAnnouncementOnly )

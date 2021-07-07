@@ -34,6 +34,10 @@ var EventUtil = ( function ()
 		5506,                              
 		5465,                     
 		5464,                   
+
+		                  
+		5937,                       
+		5967,                 
 	];
 	_officialEventIds.forEach( item => _eventIdSet.add( item.toString() ) );
 
