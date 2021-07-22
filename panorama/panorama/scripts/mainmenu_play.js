@@ -640,6 +640,9 @@ var PlayMenu = ( function()
 
 	function _GetAvailableQuickSelectMapGroups ()
 	{
+		if ( m_isWorkshop )
+			return [];
+		
 		var gameModeCfg = m_gameModeConfigs[ m_gameModeSetting ];
 		if ( gameModeCfg === undefined ) 
 			return [];
@@ -854,11 +857,10 @@ var PlayMenu = ( function()
 
                                                                                      
     function _MatchMapSelectionWithQuickSelect ()
-    {
+	{
                                                
-
         var elQuickSelectContainer = $.GetContextPanel().FindChildInLayoutFile( "jsQuickSelectionSetsContainer" );
-        if ( !elQuickSelectContainer )
+		if ( !elQuickSelectContainer || m_isWorkshop )
             return;
 
         elQuickSelectContainer.Children().forEach( function ( elQuickBtn, index, aMapGroups )
@@ -1032,10 +1034,13 @@ var PlayMenu = ( function()
                                        
         var arrQuickSelectSets = _GetAvailableQuickSelectMapGroups(  );
         var elQuickSelectContainer = $.GetContextPanel().FindChildInLayoutFile( "jsQuickSelectionSetsContainer" );
-        if ( !elQuickSelectContainer )
+		if ( !elQuickSelectContainer )
             return;
 
-        elQuickSelectContainer.RemoveAndDeleteChildren();
+		elQuickSelectContainer.RemoveAndDeleteChildren();
+		
+		if ( m_isWorkshop )
+			return;
 
         arrQuickSelectSets.forEach( function ( mgName )
         {
