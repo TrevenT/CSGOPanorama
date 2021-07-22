@@ -1398,9 +1398,17 @@ var MainMenu = ( function() {
 			}
 			
 			                                                                                                                
-			if ( nBanRemaining <= 49*24*3600 )
+			                                    
+			if ( !CompetitiveMatchAPI.CooldownIsPermanent() )
 			{
-				notification.title = notification.title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
+				var title = notification.title;
+
+				if ( CompetitiveMatchAPI.ShowFairPlayGuidelinesForCooldown() )
+				{
+					title = "<span class='fairplay-link'>" + title + "</span>"; 
+					notification.fairplay_link_enabled = true;
+				}
+				notification.title = title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
 			}
 
 			return notification;
@@ -1428,6 +1436,7 @@ var MainMenu = ( function() {
 		if ( notification !== null )
 		{
 			$.FindChildInContext( '#MainMenuNotificationTitle' ).text = notification.title;
+			$.FindChildInContext( '#FairplayLinkButton' ).enabled = notification.fairplay_link_enabled === true;
 		}
 
 		_m_elNotificationsContainer.SetHasClass( 'hidden', notification === null );

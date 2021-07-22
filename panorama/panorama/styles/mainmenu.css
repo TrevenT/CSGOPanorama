@@ -1151,3 +1151,8 @@ RadioButton.content-navbar__tabs--small-image  Image
 {
 	visibility: visible;
 }
+
+.fairplay-link{ 
+	text-decoration: underline;
+}
+
