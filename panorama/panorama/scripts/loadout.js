@@ -113,6 +113,11 @@ var Loadout = ( function() {
 			elLabel.SetDialogVariable( 'weapon', $.Localize( nameString ) );
 			elLabel.text = $.Localize( "#shuffle_toggle_btn_noteam" , elLabel );
 		}
+		else if ( loadoutSlot === 'flair0')
+		{
+			elLabel.SetDialogVariable( 'weapon', $.Localize( "#LoadoutSlot_Flair") );
+			elLabel.text = $.Localize( "#shuffle_toggle_btn_noteam" , elLabel );
+		}
 		else
 		{
 			elLabel.SetDialogVariable( 'weapon', nameString );
