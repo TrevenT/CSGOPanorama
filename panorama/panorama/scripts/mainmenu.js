@@ -1312,7 +1312,7 @@ var MainMenu = ( function() {
 
 	function _GetNotificationBarData()
 	{
-		var notification = { color_class: "", title: "", tooltip: "" };
+		var notification = { color_class: "", title: "", tooltip: "", link: "" };
 
 		if ( LicenseUtil.GetCurrentLicenseRestrictions() === false )
 		{
@@ -1350,11 +1350,13 @@ var MainMenu = ( function() {
 			{
 				notification.title = $.Localize( "#SFUI_MainMenu_Vac_Title" );
 				notification.tooltip = $.Localize( "#SFUI_MainMenu_Vac_Info" );
+				notification.link = "https://help.steampowered.com/faqs/view/647C-5CC1-7EA9-3C29";
 			}
 			else
 			{
 				notification.title = $.Localize( "#SFUI_MainMenu_GameBan_Title" );
 				notification.tooltip = $.Localize( "#SFUI_MainMenu_GameBan_Info" );
+				notification.link = "https://help.steampowered.com/faqs/view/4E54-0B96-D0A4-1557";
 			}
 			
 			return notification;
@@ -1405,8 +1407,7 @@ var MainMenu = ( function() {
 
 				if ( CompetitiveMatchAPI.ShowFairPlayGuidelinesForCooldown() )
 				{
-					title = "<span class='fairplay-link'>" + title + "</span>"; 
-					notification.fairplay_link_enabled = true;
+					notification.link = "https://blog.counter-strike.net/index.php/fair-play-guidelines/";
 				}
 				notification.title = title + ' ' + FormatText.SecondsToSignificantTimeString( nBanRemaining );
 			}
@@ -1434,9 +1435,16 @@ var MainMenu = ( function() {
 
 		                         
 		if ( notification !== null )
-		{
+		{			
+			if ( notification.link )
+			{
+				var btnClickableLink = $.FindChildInContext( '#ClickableLinkButton' );
+				btnClickableLink.enabled = true;
+				btnClickableLink.SetPanelEvent( 'onactivate', _ => SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser(notification.link) );
+				notification.title = "<span class='fairplay-link'>" + notification.title + "</span>";
+			}
+			
 			$.FindChildInContext( '#MainMenuNotificationTitle' ).text = notification.title;
-			$.FindChildInContext( '#FairplayLinkButton' ).enabled = notification.fairplay_link_enabled === true;
 		}
 
 		_m_elNotificationsContainer.SetHasClass( 'hidden', notification === null );

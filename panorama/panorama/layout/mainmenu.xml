@@ -57,7 +57,7 @@
 					class="MainMenuNotification hidden MainMenuModeOnly"
 					onmouseover="MainMenu.ShowNotificationBarTooltip();"
 					onmouseout="UiToolkitAPI.HideTextTooltip();">
-				<Button id="FairplayLinkButton" class="horizontal-center" enabled="false" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'https://blog.counter-strike.net/index.php/fair-play-guidelines/' );">
+				<Button id="ClickableLinkButton" class="horizontal-center" enabled="false">
 					<Label html="true" id="MainMenuNotificationTitle"/>
 				</Button>
 			</Panel>
