@@ -7,6 +7,7 @@
 		
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/commonutil.js" />
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />

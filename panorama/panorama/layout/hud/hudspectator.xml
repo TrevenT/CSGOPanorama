@@ -194,13 +194,17 @@
         
         <Panel id="ScoreAndNameL" class="TeamScoreAndNameL" text="XX">
           <Label id="ScoreL" class="TeamScoreL TeamScore" text="XX"/>
-          <Image id="TeamLogoL" class="SpecTeamLogo" src=""/>
+            <Image id="TeamLogoL" class="SpecTeamLogo" src="">
+              <Label id="JsRegionLabel" class="world-region-label world-region-label--image visible-if-not-perfectworld" style="background-image:url('file://{images}/regions/world.png');" text=""/>
+            </Image>
           <Label id="TeamNameL" html="true" class="SpecTeamNameL" text=""/>
         </Panel>
 
         <Panel id="ScoreAndNameR" class="TeamScoreAndNameR" text="XX">
           <Label id="ScoreR" class="TeamScoreR TeamScore" text="XX"/>
-          <Image id="TeamLogoR" class="SpecTeamLogo" src=""/>
+            <Image id="TeamLogoR" class="SpecTeamLogo" src="">
+              <Label id="JsRegionLabel" class="world-region-label world-region-label--image visible-if-not-perfectworld" style="background-image:url('file://{images}/regions/world.png');" text=""/>
+            </Image>
           <Label id="TeamNameR" html="true" class="SpecTeamNameR" text=""/>
         </Panel>
       </Panel>

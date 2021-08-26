@@ -99,8 +99,7 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 				elStream.BLoadLayoutSnippet( "snippet-cm-watchnotice-stream" );
 
-				var elStreamIcon = elStream.FindChildTraverse( 'id-eventsched-match__stream__flag' );
-				elStreamIcon.SetImage( "file://{images}/flags/" + countryCode + ".png" );
+				CommonUtil.SetRegionOnLabel( countryCode, elStream );
 
 
 				var elStreamName = elStream.FindChildTraverse( 'id-eventsched-match__stream__name' );

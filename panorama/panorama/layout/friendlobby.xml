@@ -29,12 +29,7 @@
 				<Button id="FriendLobbyCloseButton" class="IconButton hidden">
 					<Image src = "file://{images}/icons/ui/exit.svg"/>
 				</Button>
-				<Image id="JsFriendLobbyFlag" 
-						class="friendlobby__row__icon-flag" 
-						src=""
-						defaultsrc=""
-						texturewidth="-1" 
-						textureheight="20"/>
+				<Label id="JsRegionLabel" class="right-margin" text=""/>
 				<Image id="JsFriendLobbySkillGroup"
 						class="friendlobby__row__icon-skillgroup" 
 						textureheight="20"

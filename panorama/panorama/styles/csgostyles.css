@@ -3274,6 +3274,31 @@ EdgeScrollBar.Vertical #MaxButton
 	padding: 1.5px;
 }
 
+.world-region-label
+{
+	font-size: 18px;
+	text-align: center;
+	text-overflow: shrink;
+	font-weight: black;
+	color: rgb(255, 255, 255);
+	text-shadow: 0px 0px 2px 3.0 rgb(0, 0, 0);
+	background-color: rgba(121, 120, 120, 0.87);
+	border: 1px solid rgb(179, 179, 179);
+	border-radius: 50%;
+	                       
+	width: 42px;
+	font-family: Stratum2, 'Arial Unicode MS';
+
+}
+
+.world-region-label--image
+{
+	background-size : 99% 100%;
+	background-position : 50% 50%;
+	background-repeat : no-repeat;
+	background-img-opacity : 0.8;
+}
+
                                                                                
                                                                                
                                                                                

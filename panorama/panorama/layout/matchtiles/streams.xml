@@ -22,7 +22,7 @@
             </Panel>
         </Panel>
         <Panel id="CountryFlag" class="horizontal-align-right vertical-align-bottom bottom-padding">
-            <Image id="flag" class="Flag"/>
+		    <Label id="JsRegionLabel" class="" text=""/>
         </Panel>
     </Panel>
 </root>

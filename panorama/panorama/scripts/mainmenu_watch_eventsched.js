@@ -16,7 +16,9 @@ var mainmenu_watch_eventsched = ( function()
 
 	function _Init ()
 	{
-
+		if ( _m_isPerfectWorld )
+			return;
+		
 		                                                                      
 		$.RegisterForUnhandledEvent( 'Tournaments_EventsReceived', _EventsReceived );
 		$.RegisterForUnhandledEvent( 'Tournaments_FavoritesReceived', _FavoritesReceived );
@@ -471,30 +473,27 @@ var mainmenu_watch_eventsched = ( function()
 			           
 			if ( 'flag_url' in oEvent )
 			{
+				CommonUtil.SetRegionOnLabel( oEvent[ 'country_iso' ], elEvent, false );
+				                                                                   
 
-				var elFlag = elEvent.FindChildTraverse( "id-eventsched__flag" );
-
-				elFlag.SetImage( oEvent[ 'flag_url' ] );
+				                                           
 				  			                                                                       
 
 				                                                                                                                           
 
 				                                                                                                                                      
-				elEvent.SetDialogVariable( 'eventsched_country', $.LocalizeSafe( '#SFUI_Country_' + oEvent[ 'country_iso' ] ) );
+				var cc = $.LocalizeSafe( '#SFUI_Country_' + oEvent[ 'country_iso' ]);
 
 				                                     
 				          
-				                                                                  
-				                                     
+				          
 				 
-					  	                                       
 					                                   
-
-					                                     
+					                                                
 				 
-
-				                                                      
 				          
+
+				elEvent.SetDialogVariable( 'eventsched_country', cc );
 			}
 
 			       

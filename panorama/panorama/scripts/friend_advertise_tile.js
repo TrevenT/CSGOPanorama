@@ -4,16 +4,23 @@ var FriendAdvertiseTile = ( function (){
 
 	var _m_xuid = '';
 
+
 	var _Init = function ( elTile )
 	{
 		_m_xuid = elTile.GetAttributeString( 'xuid', '(not found)' );
 		var lobbyType = PartyBrowserAPI.GetPartyType( _m_xuid );
-		var gameMode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid,'game/mode' );
+		var gameMode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/mode' );
+		
+		var _m_isPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld" ? true : false;
+
 
 		_SetNameAvatar( elTile );
 		                                                  
 		_SetPrime( elTile );
-		_SetFlag( elTile );
+
+		if ( !_m_isPerfectWorld )
+			_SetRegion( elTile );
+		
 		_SetSkillGroup( elTile, gameMode );
 		_SetInvitedFromCallback( elTile );
 		_ShowInviteButton( elTile );
@@ -36,19 +43,10 @@ var FriendAdvertiseTile = ( function (){
 		elTile.FindChildTraverse( 'JsFriendAdvertisePrime' ).visible = ( primeValue && primeValue != '0' ) ? true : false;
 	};
 
-	var _SetFlag = function ( elTile )
+	var _SetRegion = function ( elTile )
 	{
 		var countryCode = PartyBrowserAPI.GetPartySessionSetting( _m_xuid, 'game/loc' );
-		var elFlagImg = elTile.FindChildTraverse( 'JsFriendAdvertiseFlag' );
-		if ( countryCode )
-		{
-			elFlagImg.SetImage( 'file://{images}/flags/'+ countryCode +'.png' );
-			elFlagImg.RemoveClass( 'hidden' );
-		}
-		else
-		{
-			elFlagImg.AddClass( 'hidden' );
-		}
+		CommonUtil.SetRegionOnLabel( countryCode, elTile );
 	};
 
 	var _SetSkillGroup = function ( elTile, gameMode )

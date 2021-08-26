@@ -56,9 +56,9 @@
 												<Label id="id-eventsched__dates__end" class="event_datum--date-container__date stratum-font" text="#eventsched_date_format"/>
 											</Panel>
 											
-											                 
-											<Panel class="left-right-flow">
-												<Image id="id-eventsched__flag" class="eventsched-match__datum eventsched-match__datum--flag" />
+											                   
+											<Panel class="left-right-flow"  style="margin-top:4px;">
+												<Label id="JsRegionLabel" class="right-margin" text=""/>
 												<Label class="event_datum--date-container__date stratum-font stratum-font" text="#eventsched_country" />
 											</Panel>
 

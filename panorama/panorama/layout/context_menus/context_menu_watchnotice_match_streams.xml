@@ -5,6 +5,7 @@
 		<include src="file://{resources}/styles/context_menus/context_menu_watchnotice_match_streams.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/commonutil.js" />
 		<include src="file://{resources}/scripts/context_menus/context_menu_watchnotice_match_streams.js" />
 	</scripts>
 
@@ -12,7 +13,9 @@
 		<snippet name="snippet-cm-watchnotice-stream">
 			<Button class="eventsched-match__stream Positive left-right-flow">
 
-				<Image id="id-eventsched-match__stream__flag" class="eventsched-match__stream__flag" />
+				<Panel style="width:40px;margin-right:10px;">
+					<Label id="JsRegionLabel" class="" text=""/>
+				</Panel>
 								
 				<Label  id="id-eventsched-match__stream__name" class="eventsched-match__stream eventsched-match__stream__name" text="#eventsched_stream_watch" />
 
