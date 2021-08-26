@@ -30,7 +30,7 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 		for ( var i in arrStreams )
 		{
-			var cc = arrStreams[ i ][ 'iso' ].toLowerCase();
+			var cc = arrStreams[ i ].iso.toLowerCase();
 
 			if ( !( cc in _m_oPriorityMap  ) )
 			{
@@ -47,8 +47,8 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 		function _StreamCompareFunction ( a, b )
 		{
-			var alc = a[ 'iso' ].toLowerCase();
-			var blc = b[ 'iso' ].toLowerCase();
+			var alc = a.iso.toLowerCase();
+			var blc = b.iso.toLowerCase();
 	
 			return _m_oPriorityMap[ alc ] - _m_oPriorityMap[ blc ];
 		}
@@ -86,7 +86,8 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 		{
 			var oStream = oMatch[ 'streams' ][ jdx ];
 
-			var countryCode = oStream[ 'iso' ].replace( "world", "us" );
+			var countryCode = oStream.iso;
+			var languageCode = oStream.hasOwnProperty( 'language' ) ? oStream.language : "";
 
 			                           
 			var elStreamContainer = $.GetContextPanel().FindChildTraverse( 'id-watchnotice__event__match__stream-container' );
@@ -99,13 +100,15 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 				elStream.BLoadLayoutSnippet( "snippet-cm-watchnotice-stream" );
 
-				CommonUtil.SetRegionOnLabel( countryCode, elStream );
+				if ( languageCode )
+					CommonUtil.SetLanguageOnLabel( languageCode, elStream );
+				else
+					CommonUtil.SetRegionOnLabel( countryCode, elStream );
 
 
 				var elStreamName = elStream.FindChildTraverse( 'id-eventsched-match__stream__name' );
 				if ( elStreamName )
 				{
-					elStreamName.SetDialogVariable( 'stream_country', $.Localize( "SFUI_Country_" + countryCode ) )
 
 					                                                                                        
 					var streamName = "";
