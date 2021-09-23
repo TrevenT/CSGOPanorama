@@ -370,7 +370,8 @@ var PlayMenu = ( function()
 			$.Schedule( 0.01, function ( )
 			{
 				var elHeader = $.GetContextPanel().FindChildTraverse( "JsDirectChallengeKey" );
-				elHeader.TriggerClass( 'directchallenge-status__header__queuecode' );
+				if ( elHeader && elHeader.IsValid() )
+					elHeader.TriggerClass( 'directchallenge-status__header__queuecode' );
 			});
 		}
 

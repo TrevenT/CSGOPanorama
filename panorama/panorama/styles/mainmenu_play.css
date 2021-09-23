@@ -60,6 +60,11 @@
 	padding: 0px 32px;
 }
 
+#gameModeButtonContainer_workshop
+{
+	flow-children: right-wrap;
+}
+
 .AspectRatio5x4 .map-selection-list--official-competitive,
 .AspectRatio5x4 .map-selection-list--official-scrimcomp2v2,
 .AspectRatio5x4 .map-selection-list--listen-competitive,
@@ -903,7 +908,7 @@
 
 .map-selection-btn.coop-map-tile
 {
-	height: 572px;
+	height: 552px;
 	width: height-percentage(70%);
 }
 

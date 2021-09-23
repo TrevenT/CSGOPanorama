@@ -296,13 +296,12 @@ var OperationMainMenu = ( function()
 
 		var elXpLabel = _m_cp.FindChildInLayoutFile( 'id-mission-card-xp-progress' );
 		                                                        
+		elXpLabel.text = "";                                                                      
 
 		if ( !oStatus.bPremiumUser )
 		{
 			return;
 		}
-
-		elXpLabel.text = "";                                                                      
 	
 		var numPreviousMissionsCompletedForReward = 0;
 		var numNextMissionsCompletedNeededForReward = null;

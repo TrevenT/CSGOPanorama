@@ -75,7 +75,7 @@
 					<TextButton id="id-op-mainmenu-upsell-store" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_get_premium"/>
 				</Panel>
 			<TextButton id="id-op-mainmenu-mission_select" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_select_mission_card"/>
-			<Button class="op-mainmenu__btn vertical-center left-margin-32" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/riptide/' );" >
+			<Button class="op-mainmenu__btn vertical-center left-margin-32" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'https://counter-strike.net/operationriptide/' );" >
 				<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
 			</Button>
 			</Panel>
@@ -123,7 +123,7 @@
 											<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
 										</TooltipPanel>
 										<TooltipPanel tooltip="#op_faq_link" style="tooltip-position: bottom;">
-											<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/riptide/' );" >
+											<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'https://counter-strike.net/operationriptide/' );" >
 												<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
 											</Button>
 										</TooltipPanel>
