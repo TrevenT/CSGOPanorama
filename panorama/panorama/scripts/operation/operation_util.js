@@ -17,9 +17,9 @@ var OperationUtil = ( function () {
 	var m_numRedeemableBalance = 0;
 	var m_nLoopingRewardsCount = 0;
 	var m_bPrime = false;
-	var m_aCoinDefIndexes = [4700, 4701, 4702, 4703];
-	var m_aStarDefIndexes = [4704, 4705, 4706]
-	var m_passStoreId = 4699;
+	var m_aCoinDefIndexes = [4759, 4760, 4761, 4762];
+	var m_aStarDefIndexes = [4763, 4764, 4765]
+	var m_passStoreId = 4758;
 
 	var _ValidateOperationInfo = function( nSeasonAccess )
 	{
@@ -177,6 +177,7 @@ var OperationUtil = ( function () {
 			{ objHandle:'imagePathInspect', value: 'ui_image_inspect'},
 			{ objHandle:'imagePathThumbnail', value: 'ui_image_thumbnail'},
 			{ objHandle:'RewardItemsNames', value: 'item_name'},
+			{ objHandle:'RewardItemGroups', value: 'item_name_groups'},
 			{ objHandle:'FreeRewardItemsNames', value: 'item_name_free'},
 			{ objHandle:'useAsCallout', value: 'callout'},
 			{ objHandle:'isGap', value: 'none'},
@@ -190,8 +191,6 @@ var OperationUtil = ( function () {
 		{
 			var _rewardData = {};
 			_rewardData.idx = i;
-			_rewardData.rnd = Math.random();
-
 			aRewardDataFields.forEach(function( item, index ) 
 			{
 				                                              
@@ -237,7 +236,33 @@ var OperationUtil = ( function () {
 				_rewardData[ 'item' + rType.type ] = items;
 			} );
 			
-			_rewardData.lootlist = _GetLootListForReward( _rewardData.itempremium.ids[ 0 ] );
+			if ( _rewardData.RewardItemGroups )
+			{
+				var posUnderscore = _rewardData.RewardItemGroups.lastIndexOf('_');
+				var numGroups = parseInt( _rewardData.RewardItemGroups.substr( posUnderscore + 1 ) ) + 1;
+				var strBaseLootlistName = _rewardData.RewardItemGroups.substr( 0, posUnderscore + 1 );
+				_rewardData.lootlistGroups = [];
+				_rewardData.lootlist = [];
+				for ( var k = 0; k < numGroups; ++ k )
+				{
+					var idxFistGroupElement = _rewardData.lootlist.length;
+					var strListName = 'lootlist:'+strBaseLootlistName+k;
+					var moreItems = _GetLootListForReward( strListName );
+					                                                                                                     
+					if ( moreItems.length > 0 )
+					{
+						for ( var mm = 0; mm < moreItems.length; ++ mm )
+						{
+							_rewardData.lootlist.push( moreItems[mm] );
+						}
+						_rewardData.lootlistGroups.push( { idxBegin: idxFistGroupElement, idxEnd: _rewardData.lootlist.length } );
+					}
+				}
+			}
+			else
+			{
+				_rewardData.lootlist = _GetLootListForReward( _rewardData.itempremium.ids[ 0 ] );
+			}
 			_rewardData.containerType = _GetContainerTypeForReward( _rewardData );
 
 			_allRewardsData.push( _rewardData );
@@ -277,8 +302,13 @@ var OperationUtil = ( function () {
 
 	var _GettotalPointsFromAvailableFromMissions = function()
 	{
-		var cardCount =  MissionsAPI.GetSeasonalOperationMissionCardsCount( m_nSeasonAccess );
 		var totalPoints = 0;
+		if ( !m_nSeasonAccess )
+		{
+			return  totalPoints;
+		}
+		
+		var cardCount = MissionsAPI.GetSeasonalOperationMissionCardsCount( m_nSeasonAccess );
 
 		for ( var i = 0; i < cardCount; i++ )
 		{
@@ -301,9 +331,195 @@ var OperationUtil = ( function () {
 		return totalPoints;
 	};
 
+	var _GetMissionDetails = function( missionId )
+	{
+		var oMissionDetails = _UpdateMissionDetailsObject (Number( missionId ) );
+
+		               
+		                                                                                    
+		                                                                                     
+		                                      
+		oMissionDetails.aSegmentsData = _UpdateSegmentData( oMissionDetails );
+
+		                      
+		                                                                       
+		                                         
+		var numGraphCount = MissionsAPI.GetQuestGraphCount( Number( missionId ));
+		if ( numGraphCount > 0 )
+		{
+			oMissionDetails.aSubQuests = _UpdateSubQuestData( Number( missionId ), numGraphCount, oMissionDetails.missonType === 'checklist' );
+		}
+
+		                                             
+		return oMissionDetails;
+	}
+
+	var _UpdateMissionDetailsObject = function( missionId )
+	{
+		var MissionItemID = InventoryAPI.GetQuestItemIDFromQuestID( missionId);
+
+		                                         
+		var gameMode = InventoryAPI.GetQuestGameMode( MissionItemID );
+		var mapGroup = InventoryAPI.GetQuestMapGroup( MissionItemID );
+		if ( !mapGroup )
+		{
+			mapGroup = 'mg_' + InventoryAPI.GetQuestMap( MissionItemID );
+		}
+		if ( mapGroup === 'mg_lobby_mapveto' )
+		{
+			gameMode = 'competitive_teams';
+		}
+
+		var numQuestGraphType = MissionsAPI.GetQuestGraphType( missionId );
+		var missionGoal = MissionsAPI.GetQuestPoints( missionId, "goal" );
+
+		                                                                                                           
+		return {
+			missionId: missionId,
+			missionItemId: InventoryAPI.GetQuestItemIDFromQuestID( missionId ),
+			missionName: InventoryAPI.GetItemName( MissionItemID ),
+			missionDesc: MissionsAPI.GetQuestDefinitionField( missionId, "loc_description" ),
+			nMissionSegments: MissionsAPI.GetQuestPoints( missionId, 'count' ),
+			nMissionPointsRemaining: MissionsAPI.GetQuestPoints( missionId, "remaining" ),
+			nOpPointsPerSegment: MissionsAPI.GetQuestDefinitionField( missionId, 'operational_points' ),
+			isReplayable: ( gameMode === 'cooperative' || gameMode === 'coopmission' ),
+			isSingleMatch: MissionsAPI.GetQuestDefinitionField( missionId, "singlematch" ) === '1' ? true : false,
+			missionGoal: MissionsAPI.GetQuestPoints( missionId, "goal" ),
+			missionGameMode: gameMode,
+			missionMapGroup: mapGroup,
+			missonType: numQuestGraphType === 1 ? 'sequential' :
+				numQuestGraphType === 2 && missionGoal > 1 ? 'checklist' :
+					numQuestGraphType === 2 && missionGoal === 1 ? 'or' :
+						numQuestGraphType === 0 ? 'single' :
+							''
+		}
+	};
+
+	var _SetLocalizationStringAndVarsForMission = function( elMissionPanel, nQuestID, strSchemaField )
+	{
+		MissionsAPI.ApplyQuestDialogVarsToPanelJS( nQuestID, elMissionPanel );
+		elMissionPanel.SetLocalizationString( MissionsAPI.GetQuestDefinitionField( nQuestID, strSchemaField ) );
+	};
+
+	var _UpdateSegmentData = function( oMissionDetails )
+	{
+		var aSegmentsData = [];
+		var nGoalsAlreadyDisplayed = 0;
+		var nPreviousGoal = 0;
+		for ( var i = oMissionDetails.nMissionSegments; i-- > 0; )
+		{
+			var nGoal = MissionsAPI.GetQuestPoints( oMissionDetails.missionId, 'goal' + i );
+			var nEarned = oMissionDetails.missionGoal - oMissionDetails.nMissionPointsRemaining;
+			var nSegmentIncrementalGoalDelta = nGoal - nGoalsAlreadyDisplayed;
+			var nSegmentEarned = nEarned - nGoalsAlreadyDisplayed;
+			if ( nSegmentEarned < 0 )
+			{
+				nSegmentEarned = 0;
+			}
+
+			if ( nSegmentEarned > nSegmentIncrementalGoalDelta ) 
+			{
+				nSegmentEarned = nSegmentIncrementalGoalDelta;
+			}
+
+			nGoalsAlreadyDisplayed = nGoal;
+			                                     
+			var progressPercent = ( nSegmentEarned / nSegmentIncrementalGoalDelta ) * 100;
+			var oSegmentData = {};
+
+			oSegmentData.nGoal = nGoal;
+			oSegmentData.nEarned = nEarned;
+			oSegmentData.nPercentComplete = progressPercent;
+			                                                          
+			oSegmentData.isComplete = oMissionDetails.nMissionPointsRemaining === 0 ?
+				true :
+				( nSegmentEarned === nSegmentIncrementalGoalDelta );
+			oSegmentData.nSegmentEarned = nSegmentEarned;
+			oSegmentData.nSegmentIncrementalGoalDelta = nSegmentIncrementalGoalDelta;
+			oSegmentData.nPreviousGoal = nPreviousGoal;
+
+			aSegmentsData.push( oSegmentData );
+			nPreviousGoal = nGoal;
+		}
+
+		return aSegmentsData;
+	};
+
+	var _UpdateSubQuestData = function( missionId, numGraphCount, isChecklist )
+	{
+		var aSubQuests = [];
+		for ( var i = 0; i < numGraphCount; ++i )
+		{
+			var submissionId = MissionsAPI.GetQuestGraphEntry( missionId, i );
+			var nGoal = MissionsAPI.GetQuestPoints( submissionId, 'goal' );
+			var nRemaining = MissionsAPI.GetQuestPoints( submissionId, "remaining" );
+			var nUncommitted = MissionsAPI.GetQuestPoints( submissionId, "uncommitted" );
+			var nEarned = nGoal - nRemaining;
+			var oData = {
+				missionId: submissionId,
+				nGoal: MissionsAPI.GetQuestPoints( submissionId, "goal" ),
+				nUncommitted: nUncommitted,
+				nEarned: nEarned,
+				nsubQuestPointsRemaining: nRemaining,
+				isComplete: nRemaining === 0 ?
+				true : ( nEarned === nGoal ),
+				nPercentComplete: nRemaining === 0 ? 100 : ( nEarned / nGoal ) * 100,
+				nPercentCompleteUncommitted: nUncommitted === 0 || !nUncommitted ? 0 : ( nUncommitted / nGoal ) * 100,
+			}
+			aSubQuests.push( oData );
+		}
+
+		if( isChecklist )
+		{
+			                                                   
+			return aSubQuests.sort((a, b) => {
+				return ( b.nPercentComplete - a.nPercentComplete ) || ( b.nPercentCompleteUncommitted - a.nPercentCompleteUncommitted ) ;
+			});
+		}
+
+		return aSubQuests;
+	};
+
+	var _GetMissionCardEarnedPoints = function( oCardDetails )
+	{
+		var totalCardPoints = 0;
+		var totalPossilbePoints = 0;
+
+		for ( var iMission = 0; iMission< oCardDetails.quests.length; iMission++ )
+		{
+			var missionID = oCardDetails.quests[ iMission];
+			var numThresholds = MissionsAPI.GetQuestPoints( missionID, "count" );
+			var goal = MissionsAPI.GetQuestPoints( missionID, "goal" );
+			var remaining = MissionsAPI.GetQuestPoints( missionID, "remaining" );
+			if ( remaining > 0 )
+			{
+				var numLoops = numThresholds;
+				for ( var i = 0; i < numLoops; ++ i )
+				{
+					if ( ( goal - remaining ) < MissionsAPI.GetQuestPoints( missionID, "goal" + i ) )
+						-- numThresholds;
+					else
+						break;
+				}
+			}
+			totalCardPoints += parseInt( MissionsAPI.GetQuestDefinitionField( missionID, 'operational_points' ) ) * numThresholds;
+			totalPossilbePoints += MissionsAPI.GetQuestDefinitionField( missionID, 'operational_points' ) * MissionsAPI.GetQuestPoints( missionID, 'count' );
+		}
+
+		var oPoints = {
+			totalCardPoints: totalCardPoints,
+			totalCardPointsDisplay : totalCardPoints > oCardDetails.operational_points ? oCardDetails.operational_points : totalCardPoints,
+			totalPossilbePoints: totalPossilbePoints
+		};
+
+		return oPoints;
+
+		                                                                                                               
+	}
+
 	function _IfOperationEndedGetExtendedSeasonWithRedeemableBalance( bAlwaysShowOperationEndedMessageBox )
 	{
-		var nActiveSeason = 9;                                                                                                                   
+		var nActiveSeason = 10;                                                                                                                   
 		
 		if ( bAlwaysShowOperationEndedMessageBox )
 		{
@@ -657,7 +873,10 @@ var OperationUtil = ( function () {
 		GettotalPointsFromAvailableFromMissions: _GettotalPointsFromAvailableFromMissions,
 		MissionsThatMatchYourMatchMakingSettings: _MissionsThatMatchYourMatchMakingSettings,
 		BlurMenu: _BlurMenu,
-		UnblurMenu: _UnblurMenu
+		UnblurMenu: _UnblurMenu,
+		SetLocalizationStringAndVarsForMission: _SetLocalizationStringAndVarsForMission,
+		GetMissionDetails: _GetMissionDetails,
+		GetMissionCardEarnedPoints: _GetMissionCardEarnedPoints,
 	};
 
 })();

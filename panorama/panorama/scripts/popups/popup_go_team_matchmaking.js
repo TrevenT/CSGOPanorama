@@ -60,7 +60,7 @@ var PopupGoTeamMatchmaking = ( function(){
 				let elTextEntry = $( '#CodeTextEntry' );
 				if ( elTextEntry.text )
 				{
-					code0 = CompetitiveMatchAPI.ValidateDirectChallengeCode( elTextEntry.text.toUpperCase() );
+					code0 = CompetitiveMatchAPI.ValidateDirectChallengeCode( elTextEntry.text.toUpperCase(), 'set' );
 					let pos = ( code0 && typeof code0 === 'string' ) ? code0.indexOf( ',' ) : -1;
 					if ( pos > 0 )
 					{

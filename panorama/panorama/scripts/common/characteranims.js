@@ -171,6 +171,28 @@ var CharacterAnims = ( function()
 		}
 
 		playerPanel.SetCameraPreset( Number( cam ), false );
+
+		           
+
+		if ( 'flashlightAmount' in settings && settings.flashlightAmount !== '' )
+		{
+			                                                                         
+			playerPanel.SetFlashlightAmount( settings.flashlightAmount );
+		}
+
+		if ( 'flashlightColor' in settings && settings.flashlightColor !== '' )
+		{
+			                                                                       
+			playerPanel.SetFlashlightColor( settings.flashlightColor[ 0 ], settings.flashlightColor[ 1 ], settings.flashlightColor[ 2 ] );
+		}
+
+
+		if ( 'ambientLightColor' in settings && settings.ambientLightColor !== '' )
+		{
+			                                                                            
+			playerPanel.SetAmbientLightColor( settings.ambientLightColor[ 0 ], settings.ambientLightColor[ 1 ], settings.ambientLightColor[ 2 ] );
+		}
+
 	};
 
 	var _CancelScheduledAnim = function ( playerPanel )

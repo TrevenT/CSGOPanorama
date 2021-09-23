@@ -76,6 +76,7 @@
 			<CSGOOutOfAmmo id="OutOfAmmo"/>
 			<CSGOHudProgressBar id="HudProgressBar"/>
 			<CSGOHudHintText id="HudHintText"/>
+			<CSGOShieldDamageAlert id="ShieldDamageAlert"/>
 			                                                               
 			            
 			<Frame id="HudTabletHints" src="file://{resources}/layout/hud/hudtablethints.xml" />

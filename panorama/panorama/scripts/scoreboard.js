@@ -3154,6 +3154,10 @@ var Scoreboard = ( function()
 				return sortOrder_gg;
 
 			case "deathmatch":
+				if ( GameInterfaceAPI.GetSettingString( 'mp_dm_teammode' ) !== '0' )
+				{
+					return sortOrder_default;
+				}
 				return sortOrder_dm;
 
 			default:
@@ -3176,6 +3180,22 @@ var Scoreboard = ( function()
 		var mode = MockAdapter.GetGameModeInternalName( false );
 		var skirmish = MockAdapter.GetGameModeInternalName( true );
 
+		                                                                                                                         
+		if ( mode == 'deathmatch' )
+		{
+			      
+			if ( GameInterfaceAPI.GetSettingString( 'mp_teammates_are_enemies' ) !== '0' )
+			{
+				skirmish = 'ffadm';
+			}
+			else if ( GameInterfaceAPI.GetSettingString( 'mp_dm_teammode' ) !== '0' )
+			{
+				skirmish = 'teamdm';
+			}
+		}
+
+
+
 		       
 		if ( mode === 'survival' )
 		{
@@ -3188,13 +3208,22 @@ var Scoreboard = ( function()
 		switch ( mode )
 		{
 			case "competitive":
-			case "gungametrbomb":
 			case "scrimcomp2v2":
 				scoreboardTemplate = "snippet_scoreboard-classic--with-timeline--half-times";
 				break;
 			
-			case "training":
 			case "deathmatch":
+				if ( skirmish == "teamdm" )
+				{
+					scoreboardTemplate = "snippet_scoreboard-classic--no-timeline";
+				}
+				else
+				{
+					scoreboardTemplate = "snippet_scoreboard--no-teams";
+				}
+				break;
+				
+			case "training":
 			case "gungameprogressive":
 				scoreboardTemplate = "snippet_scoreboard--no-teams";
 				break;
@@ -3282,6 +3311,11 @@ var Scoreboard = ( function()
 				break;
 
 			case "deathmatch":
+				if ( GameInterfaceAPI.GetSettingString( 'mp_dm_teammode' ) !== '0' )
+				{
+					_UpdateScore_Classic( bForce );
+				}
+				break;
 			case "gungameprogressive":
 				               
 				break;

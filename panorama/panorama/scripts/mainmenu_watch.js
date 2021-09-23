@@ -268,10 +268,6 @@ var mainmenu_watch = ( function()
 			case "JsDownloaded":
 			case "JsLive":
 				matchList.UpdateMatchList( elTab, MATCHLISTDESCRIPTOR[ elTab.id ], optbFromMatchListChangeEvent );
-				if ( _m_activeTab.activeMatchInfoPanel )
-				{
-					matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
-				}
 				break;
 			case "JsEvents":
 				TournamentsAPI.RequestTournaments();
@@ -510,19 +506,6 @@ var mainmenu_watch = ( function()
 		_InitResourceManagement( elTab );
 	}
 
-	function _Refresh ( tabid )
-	{
-		if ( tabid === 'JsWatch' )
-		{
-			if ( _m_activeTab )
-			{
-				if ( _m_activeTab.activeMatchInfoPanel )
-				{
-					matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
-				}
-			}
-		}
-	}
 
 
 	                                                                                                                                                                     
@@ -536,7 +519,6 @@ var mainmenu_watch = ( function()
 		$.RegisterForUnhandledEvent( "PanoramaComponent_MatchList_StateChange", _UpdateMatchListFromMatchListChangeEvent );
 		$.RegisterForUnhandledEvent( "CloseSubMenuContent", _CloseSubMenuContent );
 		$.RegisterForUnhandledEvent( "NavigateToTab", _NavigateToTab );
-		$.RegisterForUnhandledEvent( "MainMenuTabShown", _Refresh );
 		_InitTab( 'JsYourMatches' );
 		_InitTab( 'JsDownloaded' )
 		_InitTab( 'JsLive' );

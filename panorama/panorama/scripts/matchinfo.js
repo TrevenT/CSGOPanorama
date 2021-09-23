@@ -481,83 +481,8 @@ var matchInfo = ( function() {
         elParentPanel.AddClass( 'mi-sb--hidden' );
     }
 
-                                                         
-    function _ResizeRoundStatBars( elParentPanel )
-    {
-        if ( elParentPanel.matchListDescriptor === 'live' )
-        {
-            return;
-        }
-
-        var elStatsContainer = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__container' );
-        var elTickLabels = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__tick-labels' );
-
-        var totalBars = elStatsContainer.Children().length;
-
-        if ( totalBars == 0 )
-        {
-            return;
-        }
-
-        var statsContainerWidth = 900;
-        var elRoot = $.GetContextPanel().Data().elMainMenuRoot;
-        if ( elRoot && ( elRoot.BHasClass( "AspectRatio4x3" ) || elRoot.BHasClass( "AspectRatio5x4" ) ) ) 
-        {
-            statsContainerWidth = 750;
-        }
-
-        var totalBars = elStatsContainer.Children().length;
-
-        var barWidth = Math.floor( statsContainerWidth/totalBars );
-        var labelContainerWidth = ( totalBars + 2 ) * barWidth + 'px';
-        barWidth = barWidth + 'px';
-        
-        elTickLabels.style.width = labelContainerWidth;
-
-        for ( var i = 1; i <= totalBars; i++ )
-        {
-            var elRoundStats = elStatsContainer.GetChild( i-1 );
-            var elRoundBar = elRoundStats.FindChildTraverse( 'id-mi-round-summary-bar__container' );
-            var elIconContainer = elRoundStats.FindChildTraverse( 'id-mi-icons__container');
-            elRoundBar.style.width = barWidth;
-            elIconContainer.style.width = barWidth;
-        }
-    }
-
     function _FillRoundStats( elParentPanel, elPlayerRow )
     {
-        var tickPattern = [ 
-            'mi-round-tick--major',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--minor',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--minor',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--left-of-team-switch',
-            'mi-round-tick--right-of-team-switch',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--minor',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--minor',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--sub',
-            'mi-round-tick--major'
-        ]
         var tickPatternOvertime = [
             'mi-round-tick--right-of-team-switch',
             'mi-round-tick--sub',
@@ -614,7 +539,9 @@ var matchInfo = ( function() {
             team1Score = 0;
         
         var playedRounds = team0Score + team1Score;
-        var totalRounds = 30 >= playedRounds ? 30 : playedRounds;
+        var maxRounds = MatchInfoAPI.GetMatchMaxRounds( elParentPanel.matchId );
+        var totalRounds = Math.max( playedRounds, maxRounds );
+        
         var nOvertime = Math.ceil( ( totalRounds - 30 ) / 6 );
         if ( nOvertime > 0 )
         {
@@ -667,7 +594,60 @@ var matchInfo = ( function() {
 		deaths = deaths ? deaths.split( ',' ) : Array( totalRounds ).fill( 0 );
 
                    
-        var canWatch = MatchInfoAPI.CanWatch( elParentPanel.matchId );
+        function _IsMajorTick ( matchId, n )
+        {
+            return ( n == 1 || n == MatchInfoAPI.GetMatchMaxRounds( matchId ) );
+        }
+
+        function _IsMinorTick ( matchId, n )
+        {
+            var maxRounds = MatchInfoAPI.GetMatchMaxRounds( matchId );
+
+            if ( maxRounds % 5 == 0 )
+                return ( n % 5 == 0 );
+            else if ( maxRounds % 4 == 0 )
+                return ( n % 4 == 0 );
+            else if ( maxRounds <= 12 && maxRounds % 3 == 0 )
+                return ( n % 3 == 0 );
+            else if ( maxRounds <= 8 && maxRounds % 2 == 0 )
+                return ( n % 2 == 0 );
+
+            return false;
+        }
+
+        function _IsRightOfHalftime ( matchId, n )
+        {
+            return n == MatchInfoAPI.GetMatchMaxRounds( matchId ) / 2 + 1;
+        }
+
+        function _IsLeftOfHalftime ( matchId, n )
+        {
+            return n == MatchInfoAPI.GetMatchMaxRounds( matchId ) / 2;
+        }
+
+        function _GetTickStyleForRound ( matchId, n )
+        {
+            if ( _IsRightOfHalftime( matchId, n ) )
+                return 'mi-round-tick--right-of-team-switch';
+            else if ( _IsLeftOfHalftime( matchId, n ) )
+                return 'mi-round-tick--left-of-team-switch';
+            else if ( _IsMajorTick( matchId, n ) )
+                return 'mi-round-tick--major';
+            else if ( _IsMinorTick( matchId, n ) )
+                return 'mi-round-tick--minor';
+            else
+                return 'mi-round-tick--sub';
+        }
+
+        function _GetLabelForTick ( matchId, n )
+        {
+            if ( _IsRightOfHalftime( matchId, n ) || _IsLeftOfHalftime( matchId, n ) )
+                return '';
+            else if ( _IsMajorTick( matchId, n ) || _IsMinorTick( matchId, n ))
+                return n;
+            else
+                return '';
+        }
 
         for ( var i = 1; i <= totalRounds; i++ )
         {
@@ -692,7 +672,7 @@ var matchInfo = ( function() {
 
                 if ( i <= 30 )                   
                 {
-                    elTick.AddClass( tickPattern[i-1] );
+                    elTick.AddClass( _GetTickStyleForRound( elParentPanel.matchId, i ) );
                 }
                 else            
                 {
@@ -796,12 +776,26 @@ var matchInfo = ( function() {
                 elEliminationWinIcons.RemoveClass( 'sb-tint--' + TEAMS[ flipBit( currentTeamId ) ] );
                 elEliminationWinIcons.AddClass( 'sb-tint--' + TEAMS[ currentTeamId ] );
             }
-            if ( ( i == 15 ) || ( i == 30 ) || ( ( i > 30 ) && ( ( ( i - 30 ) % 3 ) == 0 ) ) )
+            if ( ( i == maxRounds / 2 ) || ( i == maxRounds ) || ( ( i > maxRounds ) && ( ( ( i - maxRounds ) % 3 ) == 0 ) ) )
             {
                 currentTeamId = flipBit( currentTeamId );
             }
         }
-        _ResizeRoundStatBars( elParentPanel );
+       
+                          
+        var elTickLabels = elParentPanel.FindChildInLayoutFile( 'id-mi-round-stats__tick-labels' );
+        elTickLabels.RemoveAndDeleteChildren();
+
+        for ( var i = 1; i <= totalRounds; i++ )
+        {
+            var elTick = $.CreatePanel( 'Panel', elTickLabels, 'id-tick' + i );
+            elTick.BLoadLayoutSnippet( 'snippet-tick' );
+
+            elTick.SetDialogVariable( 'n', _GetLabelForTick( elParentPanel.matchId, i ));
+        }
+
+
+
 	}
 	
 	function _OpenPlayerCard( xuid )
@@ -1118,7 +1112,6 @@ var matchInfo = ( function() {
         Init                    : _Init,
         Hide                    : _Hide,
         Refresh                 : _Refresh,
-        ResizeRoundStatBars     : _ResizeRoundStatBars
     };
 
 })();

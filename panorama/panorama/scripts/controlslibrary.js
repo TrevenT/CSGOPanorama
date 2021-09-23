@@ -613,6 +613,57 @@ function OnRssFeedReceived( feed )
     });
 }
 
+
+                                                                                                    
+           
+                                                                                                    
+
+function JSReadyReset()
+{
+                                        
+
+    var elParent = $('#ControlsLibBugsReadyParent');
+    var elBtnAddChild = $('#ControlsLibBugsReadyButtonAddChild');
+    var elBtnAddBgImg = $('#ControlsLibBugsReadyButtonAddBgImg');
+
+    elParent.RemoveAndDeleteChildren();
+    elParent.SetReadyForDisplay( false );
+
+    elBtnAddChild.enabled = true;
+    elBtnAddBgImg.enabled = false;
+
+                                                    
+                                                                 
+                                              
+}
+
+function JSReadyAddChild()
+{
+    var elParent = $('#ControlsLibBugsReadyParent');
+    var elBtnAddChild = $('#ControlsLibBugsReadyButtonAddChild');
+    var elBtnAddBgImg = $('#ControlsLibBugsReadyButtonAddBgImg');
+
+    $.CreatePanel( 'Panel', elParent, 'ControlsLibBugsReadyChild', { class: 'ControlLibBugs__ReadyChild' } );
+
+    elBtnAddChild.enabled = false;
+    elBtnAddBgImg.enabled = true;
+}
+
+function JSReadyAddBgImg()
+{
+    var elBtnAddChild = $('#ControlsLibBugsReadyButtonAddChild');
+    var elBtnAddBgImg = $('#ControlsLibBugsReadyButtonAddBgImg');
+    var elParent = $('#ControlsLibBugsReadyParent');
+    var elChild = $('#ControlsLibBugsReadyChild');
+
+
+    elBtnAddChild.enabled = false;
+    elBtnAddBgImg.enabled = false;
+
+    elChild.AddClass( 'ControlLibBugs__ReadyChild--Ready' );
+    elParent.SetReadyForDisplay( true );
+}
+
                                                                                                     
                                            
                                                                                                     

@@ -31,6 +31,12 @@
             <Panel class="mi_playerinfo"/>
         </snippet>
 
+        <snippet name="snippet-tick">
+            <Panel class="mi-tick">
+                <Label class="mi-tick-label" text="{s:n}"/>
+            </Panel>
+        </snippet>
+
                                           
         <snippet name="snippet_mi-round-summary-bar">
             <Panel class="mi-round-summary-bar">
@@ -181,35 +187,17 @@
 					</Button>
 				</Panel>
                 <Panel id="id-mi-round-stats__container" class="mi-round-stats__container"/>
-                <Panel id="id-mi-round-stats__tick-labels" class="mi-round-stats__tick-labels">
-                    <Panel class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="#MatchInfo_FirstRound"/>
+                <Panel class="horizontal-center">
+                    <Panel id="id-mi-round-stats__tick-labels" class="mi-round-stats__tick-labels">
+                                                                         
                     </Panel>
-                    <Panel class="mi-tick-label__spacer"/>
-                    <Panel class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="5"/>
-                    </Panel>
-                    <Panel class="mi-tick-label__spacer--double"/>
-                    <Panel class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="10"/>
-                    </Panel>
-                    <Panel class="mi-tick-label__spacer--double"/>
-                    <Panel class="mi-tick-label__container--large">
-                        <Label class="mi-tick-label" text="#MatchInfo_Halftime"/>
-                    </Panel>
-                    <Panel class="mi-tick-label__spacer"/>
-                    <Panel class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="20"/>
-                    </Panel>
-                    <Panel class="mi-tick-label__spacer--double"/>
-                    <Panel class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="25"/>
-                    </Panel>
-                    <Panel id="id-mi-tick-label--last-spacer" class="mi-tick-label__spacer--double"/>
-                    <Panel id="id-mi-tick-label--last" class="mi-tick-label__container">
-                        <Label class="mi-tick-label" text="30"/>
+
+                HALFTIME LABEL
+                    <Panel class="mi-tick-label--halftime horizontal-center full-width">
+                        <Label class="mi-tick-label mi-tick-label--halftime" text="#MatchInfo_Halftime"/>
                     </Panel>
                 </Panel>
+
             </Panel>
 
             

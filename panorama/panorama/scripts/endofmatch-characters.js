@@ -20,22 +20,42 @@ var EOM_Characters = ( function()
 
 	var m_bNoGimmeAccolades = false;                                              
 
+	                                                                                                      
+	const CAMERA_POSITIONS =
+		[
+			10,
+			11,
+			12,
+			13,
+			14,
+			15,
+			22,
+			23,
+			24,
+			25
+		]
+
 	function _GetSnippetForMode ( mode )
 	{
 		switch ( mode )
 		{
+			        
 			case "scrimcomp2v2":
 				return "snippet-eom-chars__layout--scrimcomp2v2";
 
+			               
 			case "competitive":
-			case "casual":
 			case "gungametrbomb":
 			case "cooperative":
+			case "casual":
+			case "teamdm":
 				return "snippet-eom-chars__layout--classic";
 
+			                    
 			case "gungameprogressive":            
 			case "training":
 			case "deathmatch":
+			case "ffadm":
 				return "snippet-eom-chars__layout--ffa";
 
 			default:
@@ -90,10 +110,10 @@ var EOM_Characters = ( function()
 
 		switch ( mode )
 		{
-			case "competitive":
 			case "casual":
 			case "gungametrbomb":
 			case "cooperative":
+			case "teamdm":
 			default:
 				{
 					arrPlayerList = _CollectPlayersOfTeam( _m_teamToShow );
@@ -102,7 +122,23 @@ var EOM_Characters = ( function()
 					break;
 				}
 
+				                                                    
+			case "competitive":
+				{
+					arrPlayerList = _CollectPlayersOfTeam( _m_teamToShow );
+					arrPlayerList = arrPlayerList.sort( _SortByScoreFn );
+
+					                                    
+					arrPlayerList = arrPlayerList.filter( player => player[ 'xuid' ] != _m_localPlayer[ 'xuid' ] );
+					arrPlayerList.splice( 0, 0, _m_localPlayer );
+
+					m_bNoGimmeAccolades = false;
+					break;
+				}
+
+
 			case "deathmatch":
+			case "ffadm":
 			case "gungameprogressive":            
 				{
 					var arrPlayerXuids = Scoreboard.GetFreeForAllTopThreePlayers();
@@ -136,7 +172,7 @@ var EOM_Characters = ( function()
 		}
 
 		if ( arrPlayerList )
-			arrPlayerList = arrPlayerList.slice( 0, _GetNumCharsToShowForMode( mode ) );
+			arrPlayerList = arrPlayerList.slice( 0, _GetNumCharsToShowForMode( mode )  );
 
 		return arrPlayerList;
 	}
@@ -178,13 +214,15 @@ var EOM_Characters = ( function()
 
 			case "casual":
 			case "gungametrbomb":
-				return 7;
+			case "teamdm":
+				return 6;
 
 			case "cooperative":
 				return 2;
 
 			case "gungameprogressive":            
 			case "deathmatch":
+			case "ffadm":
 				return 3;
 
 			case "training":
@@ -198,35 +236,53 @@ var EOM_Characters = ( function()
 
 	function _AddModeSpecificSettings ( mode, settings, index, arrPlayerList )
 	{
+		var zDepth;
+
+		settings.flashlightAmount = 1.5;
+
 		switch ( mode )
 		{
+			                               
 			case "scrimcomp2v2":
-				var zDepth = 1;
+				zDepth = 1;
 				break;
 
+			              
 			case "competitive":
-			case "casual":
-			case "gungametrbomb":
 			default:
-				var zDepth = Math.abs( Math.floor( arrPlayerList.length / 2 ) - index );
-
+				zDepth = Math.abs( Math.floor( arrPlayerList.length / 2 ) - index );
+				break;
+			
+			                    
+			case "casual":
+			case "teamdm":
+			case "gungametrbomb":
+				                                              
+				settings.flashlightAmount = 2 - index * ( 2 / arrPlayerList.length );;
+				zDepth = index;
 				break;
 
+			                            
 			case "cooperative":
-				var zDepth = 0;
+				zDepth = 0;
 				break;
 
+			                                              
 			case "gungameprogressive":            
 			case "deathmatch":
+			case "ffadm":
 			case "training":
 				var positions = [ 1, 0, 2 ];
-				var zDepth = positions[ index ];
+				zDepth = positions[ index ];
 				break;
 
 		}
 
-		settings[ 'cameraPreset' ] = 10 + zDepth;
+		                                                                                                     
+
+		settings[ 'cameraPreset' ] = CAMERA_POSITIONS[ zDepth ];
 		settings[ 'panelPosition' ] = -zDepth;
+
 	}
 
 	function _ShouldDisplayCommendsInMode ( mode )
@@ -243,14 +299,48 @@ var EOM_Characters = ( function()
 			case "casual":
 			case "gungametrbomb":
 			case "cooperative":
+			case "teamdm":
 				return true;
 
 			case "gungameprogressive":            
 			case "deathmatch":
+			case "ffadm":
 			case "training":
 			default:
 				return false;
 		}
+	}
+
+	function _GetModeForEndOfMatchPurposes()
+	{
+		var mode = MockAdapter.GetGameModeInternalName( false );
+
+		                                                                                                                       
+		if ( mode == 'deathmatch' )
+		{
+			      
+			if ( GameInterfaceAPI.GetSettingString( 'mp_teammates_are_enemies' ) !== '0' )
+			{
+				mode = 'ffadm';
+			}
+			else if ( GameInterfaceAPI.GetSettingString( 'mp_dm_teammode' ) !== '0' )
+			{
+				mode = 'teamdm';
+			}
+		}
+
+		return mode;
+	}
+
+	function _ShowWinningTeam( mode )
+	{
+		var arrModesToForceLocalTeam =
+			[
+				"competitive",
+				'gungametrbomb'
+			];
+		
+		return ( !arrModesToForceLocalTeam.includes( mode ) )
 	}
 
 	var _DisplayMe = function()
@@ -276,7 +366,8 @@ var EOM_Characters = ( function()
 
 		var teamNumToShow = 3;
 
-		if ( localPlayer )
+		var mode = _GetModeForEndOfMatchPurposes();
+		if ( localPlayer && !_ShowWinningTeam( mode ) )
 		{
 			_m_localPlayer = localPlayer;
 			teamNumToShow = _m_localPlayer[ 'teamnumber' ];
@@ -286,18 +377,25 @@ var EOM_Characters = ( function()
 			var oMatchEndData = MockAdapter.GetMatchEndWinDataJSO();
 			if ( oMatchEndData )
 				teamNumToShow = oMatchEndData[ "winning_team_number" ];
+			
+			                                                            
+			if ( !teamNumToShow && localPlayer )
+			{
+				_m_localPlayer = localPlayer;
+				teamNumToShow = _m_localPlayer[ 'teamnumber' ];
+			}
 		}
 
 		if ( teamNumToShow == 2 )
 		{
 			_m_teamToShow = "TERRORIST";
 		}
-		else if ( teamNumToShow == 3 )
+		else                                             
 		{
 			_m_teamToShow = "CT";
 		}
 
-		var mode = MockAdapter.GetGameModeInternalName( false );
+		var mode = _GetModeForEndOfMatchPurposes();
 
 		_SetupPanel( mode );
 
@@ -323,9 +421,9 @@ var EOM_Characters = ( function()
 		                                           
 		if ( _m_localPlayer )
 		{
-			var arrLocalPlayer = _m_localPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) );
+			var arrLocalPlayer = _m_localPlayer.hasOwnProperty( 'items') ? _m_localPlayer.items.filter( oItem => ItemInfo.IsCharacter( oItem.itemid ) ) : [];
 			var localPlayerModel = arrLocalPlayer.length > 0 ? arrLocalPlayer[0] : "";	
-			var localPlayerCheer = localPlayerModel ? ItemInfo.GetDefaultCheer( localPlayerModel[ 'itemid'] ) : "";
+			var localPlayerCheer = localPlayerModel ? ItemInfo.GetDefaultCheer( localPlayerModel[ 'itemid' ] ) : "";
 			mapCheers[ localPlayerCheer ] = 1;
 		}
 
@@ -340,23 +438,28 @@ var EOM_Characters = ( function()
 				}
 
 				var cheer = "";
-
+				var playerModelItem = '';
+				
 				if ( 'items' in oPlayer )
 				{
-					var playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) )[ 0 ];
-					cheer = playerModelItem ? ItemInfo.GetDefaultCheer( playerModelItem[ 'itemid' ] ) : "";
-
-					if ( oPlayer != _m_localPlayer &&
-						mapCheers[ cheer ] == 1 )                                         
-					{
-						cheer = "";
-					}
-
-					mapCheers[ cheer ] = 1;
+					playerModelItem = oPlayer[ 'items' ].filter( oItem => ItemInfo.IsCharacter( oItem[ 'itemid' ] ) )[ 0 ];
 				}
 
+				cheer = playerModelItem ? ItemInfo.GetDefaultCheer( playerModelItem[ 'itemid' ] ) : "";
+
+				if ( oPlayer != _m_localPlayer &&
+					mapCheers[ cheer ] == 1 )                                         
+				{
+					cheer = "";
+				}
+
+				mapCheers[ cheer ] = 1;
+				
 				settings.arrModifiers = [ cheer ];
 				settings.activity = cheer == "" ? 'ACT_CSGO_UIPLAYER_WALKUP' : 'ACT_CSGO_UIPLAYER_CELEBRATE';
+
+				                                 
+		  		                                                                                             
 
 				_AddModeSpecificSettings( mode, settings, index, arrPlayerList );
 
@@ -451,7 +554,9 @@ var EOM_Characters = ( function()
 				if ( !charPanel || !charPanel.IsValid() )
 				{
 					          
-					                                                      
+					                               
+						                                                      
+					
 					                                       
 					 
 						              
@@ -534,6 +639,7 @@ var EOM_Characters = ( function()
 	function _SortPlayers ( mode, arrPlayerList )
 	{
 		var midpoint;
+		var localPlayerPosition;
 
 		switch ( mode )
 		{
@@ -541,10 +647,11 @@ var EOM_Characters = ( function()
 				arrPlayerList.sort( _SortByTeamFn );
 				break;
 
+			                              
 			case "competitive":
-			case "casual":
-			case "gungametrbomb":
-				if ( _m_localPlayer )
+				if ( _m_localPlayer &&
+					_m_localPlayer.hasOwnProperty( 'xuid' ) &&
+					( arrPlayerList.filter( p => p.xuid == _m_localPlayer.xuid).length > 0 ) )
 				{
 					                                         
 					midpoint = Math.floor( arrPlayerList.length / 2 );
@@ -552,12 +659,26 @@ var EOM_Characters = ( function()
 					arrPlayerList.splice( midpoint, 0, _m_localPlayer );
 				}
 				break;
+			
+			case "no longer used but force player to have a spot":
+				if ( _m_localPlayer && ( _m_localPlayer in arrPlayerList ) )
+				{
+					                                                 
+					localPlayerPosition = Math.min( arrPlayerList.indexOf( _m_localPlayer ), 7 );
+					arrPlayerList = arrPlayerList.filter( player => player[ 'xuid' ] != _m_localPlayer[ 'xuid' ] );
+					arrPlayerList.splice( localPlayerPosition, 0, _m_localPlayer );
+				}
+				break;
 
 			case "gungameprogressive":            
 			case "deathmatch":
+			case "ffadm":
 				_ReorderForPodium( arrPlayerList );
 				break;
 
+			case "gungametrbomb":
+			case "casual":
+			case "teamdm":
 			default:
 				break;
 
@@ -574,6 +695,9 @@ var EOM_Characters = ( function()
 	                      
 	return {
 		Start: _Start,
+
+		GetModeForEndOfMatchPurposes: _GetModeForEndOfMatchPurposes,
+		ShowWinningTeam				: _ShowWinningTeam
 	};
 } )();
 

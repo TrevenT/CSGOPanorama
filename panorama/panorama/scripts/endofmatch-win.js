@@ -40,7 +40,10 @@ var EOM_Win = ( function () {
 		{
 			var localPlayerTeamNumber = MockAdapter.GetPlayerTeamNumber( MockAdapter.GetLocalPlayerXuid() );
 
-			if ( GameStateAPI.IsDemoOrHltv() ||  ( localPlayerTeamNumber != 2 && localPlayerTeamNumber != 3 ) )
+			var mode = EOM_Characters.GetModeForEndOfMatchPurposes();
+			var bForceShowWinningTeam = EOM_Characters.ShowWinningTeam( mode );
+
+			if ( GameStateAPI.IsDemoOrHltv() || ( localPlayerTeamNumber != 2 && localPlayerTeamNumber != 3 ) || bForceShowWinningTeam )
 			{
 				result = "eom-result-win2";
 				var upperTeamName = CharacterAnims.NormalizeTeamName( winningTeamNumber ).toUpperCase();

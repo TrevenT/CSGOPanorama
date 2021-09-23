@@ -131,9 +131,6 @@ var SettingsMenuShared = ( function () {
 		{
 			elLocationPanel.ScrollParentToMakePanelFit(3, false);
 			elLocationPanel.AddClass('Highlight');
-
-			var kfs = elLocationPanel.CreateCopyOfCSSKeyframes( 'settings-highlight' );
-			elLocationPanel.UpdateCurrentAnimationKeyframes( kfs );
 		}
 	}
 	

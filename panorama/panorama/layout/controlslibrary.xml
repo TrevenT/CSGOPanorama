@@ -874,6 +874,21 @@
 							<Panel class="ControlsLibGradient3Stops" />
 							<Panel class="ControlsLibSolidFill" />
 						</Panel>
+
+						<Label class="fontSize-l" text="Ready for display test" style="padding-top:15px;" />
+						<Panel class="left-right-flow">
+							<Button class="FlatButton" onactivate="JSReadyReset();">
+								<Label text="Reset" />
+							</Button>
+							<Button id="ControlsLibBugsReadyButtonAddChild" class="FlatButton" onactivate="JSReadyAddChild();">
+								<Label text="Add Child" />
+							</Button>
+							<Button id="ControlsLibBugsReadyButtonAddBgImg" class="FlatButton" disabled="true" onactivate="JSReadyAddBgImg();">
+								<Label text="Add bg img" />
+							</Button>
+						</Panel>
+						<Panel id="ControlsLibBugsReadyParent" class="left-right-flow ControlLibBugs__ReadyParent" readyfordisplay="false">
+						</Panel>
 					</Panel>
 
 					<Panel class="top-bottom-flow FillParentFlow">

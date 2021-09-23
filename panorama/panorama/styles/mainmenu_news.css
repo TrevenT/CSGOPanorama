@@ -28,7 +28,7 @@
 }
 .news-panel--hide-news-panel #JsStorePanel
 {
-	height: fill-parent-flow( .3 );
+	height: 265px;
 }
 
 .news-panel-style-feature-panel-visible #JsNewsPanel,

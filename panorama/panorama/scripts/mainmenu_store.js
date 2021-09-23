@@ -29,7 +29,7 @@ var MainMenuStore = ( function()
 
 		                                                   
 		var nSeasonIndex = GameTypesAPI.GetActiveSeasionIndexValue();
-		nSeasonIndex = null;                                                                                              
+		                                                          
 		OperationUtil.ValidateOperationInfo( nSeasonIndex );
 		var oStatus = OperationUtil.GetOperationInfo();
 
@@ -241,66 +241,70 @@ var MainMenuStore = ( function()
 					
 					function GetRandomItem ( aItemList )
 					{
-						var min = 0;
-						var max = aItemList.length - 1;
-						
-						return aItemList[Math.floor(Math.random() * (max - min + 1) + min)];
+						return aItemList[ _GetRandom( 0, aItemList.length ) ];
 					}
 
-					function GetRandomIds( aItemIds, nNeeded )
+					function GetRandomlyTrimmedArray( aItemList, nNeeded )
 					{
-						var aIndexes = [];
-
-						for ( var i = 0; i < nNeeded; i++ )
+						var aIndexes = aItemList;
+						while ( aIndexes.length > 0 && aIndexes.length > nNeeded )
 						{
-							var temp = GetRandomItem( aItemIds );
-
-							if( aIndexes.indexOf( temp ) > -1 )
-							{
-								var count = 0;
-								while( aIndexes.indexOf( temp ) > -1 && count < 15 )
-								{
-									temp = GetRandomItem( aItemIds );
-									count++;
-								}
-							}
-
-							aIndexes.push( temp );
+							aIndexes.splice( _GetRandom( 0, aIndexes.length ), 1 );
 						}
-
 						return aIndexes;
 					}
 
 					var aCharItemIds = [];
-					var aItemIds = [];
+					var aItemIdsByType = {};
 
-					if( aRewards && ( aRewards.length > 0 ))
+					                                                               
+
+					if( aRewards && ( aRewards.length > 0 ) )
 					{
-						aRewards.forEach( function ( reward, index ) {
+						aRewards.forEach( function ( reward ) {
 							                         
 							if ( reward.containerType === "isCharacterLootlist" )
 							{
-								reward.lootlist.forEach( function ( id ) {
-									aCharItemIds.push( id );
-								});
+								var lli = GetRandomItem( reward.lootlist );
+								                                                                                                             
+								aCharItemIds.push( lli );
 							}
 							else if ( reward.containerType !== "isGraffitiBox" )
 							{
-								reward.lootlist.forEach( function ( id ) {
-									aItemIds.push( id );
-								});
+								if ( !aItemIdsByType.hasOwnProperty( reward.containerType ) )
+								{
+									                                                                            
+									aItemIdsByType[ reward.containerType ] = [];
+								}
+								var lli = GetRandomItem( reward.lootlist );
+								                                                                                                             
+								aItemIdsByType[ reward.containerType ].push( lli );
 							}
 						});
+						
+						var aItemIds = [];                                                      
+						Object.values( aItemIdsByType ).forEach( val => {
+							GetRandomlyTrimmedArray( val, 2 ).forEach( subitemid => {
+								                                                                                       
+								aItemIds.push( subitemid );
+							} );
+						} );
 
-						var aIds = GetRandomIds( aCharItemIds, 2 );
-						elpanel.FindChildInLayoutFile( 'id-store-operation-char0' ).itemid = aIds[0];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-char1' ).itemid = aIds[1];
+						var aIds = GetRandomlyTrimmedArray( aCharItemIds, 2 );
+						for ( var idxstoretile = 0; idxstoretile < aIds.length; ++ idxstoretile )
+						{
+							elpanel.FindChildInLayoutFile( 'id-store-operation-char' + idxstoretile ).itemid = aIds[idxstoretile];
+							                                                                                                                                         
+						}
 
-						aIds= [];
-						aIds = GetRandomIds( aItemIds, 3 );
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item0' ).itemid = aIds[0];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item1' ).itemid = aIds[1];
-						elpanel.FindChildInLayoutFile( 'id-store-operation-item2' ).itemid = aIds[2];
+						aIds = GetRandomlyTrimmedArray( aItemIds, 3 );
+						for ( var idxstoretile = 0; idxstoretile < aIds.length; ++ idxstoretile )
+						{
+							elpanel.FindChildInLayoutFile( 'id-store-operation-item' + idxstoretile ).itemid = aIds[idxstoretile];
+							                                                                                                                                    
+						}
+
+						                                                               
 
 						var elBalance = m_elStore.FindChildInLayoutFile( 'id-store-operation-balance-container' );
 						var isPremium = OperationUtil.GetOperationInfo().bPremiumUser;
@@ -1107,11 +1111,13 @@ var MainMenuStore = ( function()
 		 
 		  
 
+		                                                    
 		                                                                                                                  
-		var nCategoryIdx = Math.floor( Math.random() * 3 );
-		fnMoveToFront( tabelements[nCategoryIdx] );
-		var nCategoryIdx2 = Math.floor( Math.random() * 2 );
-		fnMoveToFront( tabelements[ nCategoryIdx2 + ( ( nCategoryIdx2 >= nCategoryIdx ) ? 1 : 0 ) ] );
+		                                                   
+		                                           
+		                                                    
+		                                                                                              
+		  
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};

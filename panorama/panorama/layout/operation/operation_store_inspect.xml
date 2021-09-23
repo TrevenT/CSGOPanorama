@@ -36,6 +36,14 @@
 			</RadioButton>
 		</snippet>
 
+		<snippet name="snippet-tray-group">
+			<Panel class="op-store-inspect-rewards-tray-group" >
+				                                                                                                                                                                                               
+			                                                                                                                 
+			</Panel>
+			
+		</snippet>
+
 		<snippet name="snippet-model-char">
 			<ItemPreviewPanel
 				manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
@@ -77,10 +85,10 @@
 					<Label id="id-store-inspect-item-name" class="op-store-inspect__char-info-name stratum-font" hittest="false" html="true" text=""/>
 				</Panel>
 			</ItemPreviewPanel>
-		</snippet>
+	</snippet>
 	</snippets>
 
-	<Panel class="PopupPanel op-store-inspect Hidden" defaultfocus="" popupbackground="dim" onload="OperationStoreInspect.Init();">
+	<Panel class="PopupPanel op-store-inspect Hidden" defaultfocus="" popupbackground="dim" onload="OperationStoreInspect.Init();" oncancel="OperationStoreInspect.OnCancel();">
 		<Panel class="full-width full-height" hittest="false" >
 			<Panel id="id-store-inspect-movie" class="op-main-movie dark" hittest="false"/>
 			<Panel id="id-store-inspect-loading" class="vertical-center horizontal-center top-bottom-flow">
@@ -94,7 +102,10 @@
 				</Panel>
 			
 				<Panel id="id-op-store-inspect-floor" class="op-store-inspect-floor" hittest="false" />
-				<Panel id="id-op-inspect-all-models-container" class="full-width full-height bottom-top-flow" >
+				<Panel id="id-op-inspect-all-models-container" class="full-width full-height" >
+					<Button id="id-op-inspect-all-models-container-group-expanded" 
+						class="op-store-inspect-rewards-tray-container op-store-inspect-rewards-tray-container--groups-expanded"
+						onactivate="OperationStoreInspect.RemoveGroupExpandedPanel();"/>
 					<Panel id="id-op-inspect-rewards-tray-container" class="op-store-inspect-rewards-tray-container" hittest="false"/>
 					<Panel id="id-op-inspect-models-container" class="op-inspect-model-container" hittest="false"/>
 
@@ -142,7 +153,9 @@
 							<TextButton id="id-op-inspect-shop-get-confirm-btn_cancel" class="op-store-progress__pass-upsell__text-btn cancel-btn large-font" text="#Cancel_Button" html="true"/>
 						</Panel>
 						<Label id="id-op-inspect-shop-get-confirm-flags-notice-2" class="op-store-shop-balance__text op-store-shop-getreward-flags-disclaimer hide stratum-font fontSize-l" text="#op_stars_use_flags_notice_2" html="true"/>
+
 					</Panel>
+
 				</Panel>
 				
 			</Panel>

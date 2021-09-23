@@ -227,7 +227,7 @@
 								class="IconButton friendslist-navbar-lobby-button" onactivate="friendsList.SetLobbiesTabListFilters( 'cooperative' );"
 								onmouseover="UiToolkitAPI.ShowTextTooltip( 'JsFriendsList-lobbies-toolbar-button-cooperative', '#SFUI_GameMode_cooperative' );"
 								onmouseout="UiToolkitAPI.HideTextTooltip();">
-								<Image src="file://{images}/icons/ui/broken_fang.svg"/>
+								<Image src="file://{images}/icons/ui/cooperative.svg"/>
 							</RadioButton>
 							<Panel class="friendslist-navbar-spacer-fit-width"/>
 							<Button id="JsFriendsList-lobbies-toolbar-button-refresh"

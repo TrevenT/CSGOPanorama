@@ -202,7 +202,7 @@ var MockAdapter = ( function()
 		return oPlayerStats;
 	}
 
-	function _r ( min = 0, max = 100 ) {return Math.floor( Math.random() * ( ( max - min ) + min ) )};
+	function _r ( min = 0, max = 100 ) {return Math.floor( Math.random() * ( ( max - min ) + min ) + 0.5 )};
 
 	function _GetRandomXP ()
 	{
@@ -464,11 +464,43 @@ var MockAdapter = ( function()
 		return String( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defid, paintid ) );
 	}
 
+	function _GetRandomModelDefIndex ( teamnum )
+	{
+
+		var models = [
+			[],    
+			[],     
+			[			                   
+				4780,
+				4777,
+				4774,
+			],
+			[			                           
+				4771,
+				4757,
+				4751
+			],
+		]
+
+		var random = _r( 0, 2 );
+
+		                                 
+		    
+		   	                    
+		    
+
+		return ( models[ parseInt( teamnum ) ][ random ] );
+		
+
+
+
+	}
+
+
 
 	var MOCK_TABLE =
 	{
 		          
-
 
 		          	
 	}

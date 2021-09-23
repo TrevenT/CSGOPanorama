@@ -617,6 +617,26 @@ DropDownMenuBackground
 	height: 100%;
 }
 
+.op-mainmenu__missions DropDown:focus,
+.op-mainmenu__missions DropDown.DropDownMenuVisible:focus,
+.op-mainmenu__missions CSGOSettingsEnumDropDown.DropDownMenuVisible:focus
+{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.op_mainmenu__dropdown:hover,
+.op-mainmenu__missions DropDown:hover,
+.op-mainmenu__missions DropDown:hover:focus
+{
+	horizontal-align: left;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.15);
+
+	transition-property: background-color;
+	transition-duration: 0.20s;
+	transition-timing-function: ease-in-out;
+}
+
                                                                                
                																   
                                                                                
@@ -2915,7 +2935,6 @@ EdgeScrollBar.Vertical #MaxButton
 	overflow: clip;
 }
 
-
 .left-right-flow
 {
 	flow-children: right;
@@ -2999,6 +3018,11 @@ EdgeScrollBar.Vertical #MaxButton
 .full-height
 {
     height: 100%;
+}
+
+.fill-parent-flow-height
+{
+    height: fill-parent-flow(1);
 }
 
 .vertical-separator
@@ -3090,6 +3114,11 @@ EdgeScrollBar.Vertical #MaxButton
 	padding-top: 16px;
 }
 
+.top-padding-large
+{
+	padding-top: 32px;
+}
+
 .left-padding
 {
 	padding-left: 8px;
@@ -3099,6 +3128,17 @@ EdgeScrollBar.Vertical #MaxButton
 {
 	padding-right: 8px;
 }
+
+.padding-8
+{
+	padding: 8px;
+}
+
+.padding-16
+{
+	padding: 16px;
+}
+
 
 .icon-blue-24px
 {
@@ -3147,6 +3187,26 @@ EdgeScrollBar.Vertical #MaxButton
 .top-margin-24
 {
 	margin-top: 24px;
+}
+
+.bottom-margin-32
+{
+	margin-bottom: 32px;
+}
+
+.margin-16
+{
+	margin: 16px;
+}
+
+.margin-8
+{
+	margin: 8px;
+}
+
+.margin-32
+{
+	margin: 32px;
 }
 
 .z-index-2

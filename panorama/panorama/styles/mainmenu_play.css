@@ -1,3 +1,6 @@
+
+@define direct-challenge-color: rgb(71, 179, 230);
+
                                                                                
                                                                      
                                                                                
@@ -9,12 +12,20 @@
                                                                                
                                                                            
                                                                                
+.map-selection-list-container
+{
+	width: 100%;
+	height: 100%;
+	                                  
+	overflow: clip;
+}
+
 .map-selection-list
 {
-	width: fit-children;
+	width: fill-parent-flow(1);
 	height: fit-children;
-	flow-children: right-wrap;
-	overflow: clip scroll;
+	                                
+	                            
 	opacity: 1;
 	transform: translatex( 0px );
 	visibility: visible;
@@ -24,6 +35,41 @@
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+
+.map-selection-list--inner
+{
+	width: fit-children;
+	height: fit-children;
+	flow-children: right-wrap;
+	overflow: clip scroll;
+	horizontal-align: center;
+}
+
+.map-selection-list--official-competitive,
+.map-selection-list--official-scrimcomp2v2,
+.map-selection-list--listen-competitive,
+.map-selection-list--listen-scrimcomp2v2,
+.map-selection-list--listen-casual,
+.map-selection-list--listen-deathmatch
+{
+	padding: 0px 96px;
+}
+
+#gameModeButtonContainer_competitive_official_directchallenge.map-selection-list--official-competitive
+{
+	padding: 0px 32px;
+}
+
+.AspectRatio5x4 .map-selection-list--official-competitive,
+.AspectRatio5x4 .map-selection-list--official-scrimcomp2v2,
+.AspectRatio5x4 .map-selection-list--listen-competitive,
+.AspectRatio5x4 .map-selection-list--listen-scrimcomp2v2,
+.AspectRatio5x4 .map-selection-list--listen-casual,
+.AspectRatio5x4 .map-selection-list--listen-deathmatch
+{
+	padding: 0px 52px;
+}
+
 
 .map-selection-list-coop
 {
@@ -38,6 +84,460 @@
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+
+.map-selection-list-directchallenge
+{
+	width: 100%; 
+	height: fit-children;
+	max-height: 760px;
+	flow-children: down;
+	opacity: 1;
+	visibility: visible;
+	horizontal-align: center;
+
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+
+  	                  
+
+	overflow: clip;
+}
+
+
+.directchallenge-explanation-container
+{
+	margin: 32px;
+
+	horizontal-align: center;
+
+	flow-children: down;
+
+	transition-property:  opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+
+	width: 630px;
+
+	height: 100%;
+
+}
+
+.directchallenge-explanation-container.hidden
+{
+	opacity: 0;
+}
+
+.directchallenge-explanation-container Image
+{
+	wash-color: direct-challenge-color;
+}
+
+
+.directchallenge-explanation__top
+{
+	flow-children: right;
+		margin-bottom: 30px;
+}
+
+.directchallenge-explanation__top Image,
+.directchallenge-explanation__top Label
+{
+	vertical-align: bottom;
+}
+
+.directchallenge-explanation__top Image
+{
+	margin-right: 20px;
+	width: 80px;
+	height: width-percentage( 100% );
+}
+
+.directchallenge-explanation__lower
+{
+	flow-children: right;
+  	                     
+
+	margin-bottom: 30px;
+
+	                                                                        
+	margin-left: 100px;
+}
+
+.directchallenge-explanation__lower Image
+{
+	width: 40px;
+	height: width-percentage( 100% );
+
+	margin-right: 16px;
+}
+
+.directchallenge-explanation.note
+{
+	vertical-align: bottom;
+
+	margin-top: 38px;
+}
+
+
+.directchallenge-explanation
+{
+	horizontal-align: left;
+	font-size: 14px;
+	font-family: notosans;	
+
+}
+
+.directchallenge-explanation.title
+{
+	margin-bottom: 4px;
+}
+
+.directchallenge-buttons-container
+{
+	horizontal-align: left;
+	flow-children: down;
+	width:440px;
+	height:400px;
+	vertical-align: center;
+}
+
+.directchallenge-section
+{
+	height:fill-parent-flow( 0.33);
+  	            
+	flow-children:down;
+	horizontal-align: center;
+}
+
+.directchallenge-section .IconButton:hover
+{
+	background-color: rgba(0, 0, 0, 0.623);
+}
+
+.directchallenge-section .IconButton
+{
+	width: 350px;
+	height: 100px;
+	vertical-align: center;
+	horizontal-align: center;
+	flow-children: right;
+  	                       
+  	              
+
+	background-color: rgba( 0,0,0,0.2);
+}
+
+.directchallenge-section .IconButton Image
+{
+	width: 100px;
+	height: width-percentage( 100% );
+	margin: 0px;
+
+	background-color: rgba( 50, 50, 50, 0.9);
+	padding: 20px;
+
+	wash-color: direct-challenge-color;
+
+	transition-property: background-colo;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.directchallenge-section .IconButton:hover Image
+{
+	background-color: rgba(32, 32, 32, 0.9);
+
+	transition-property: background-colo;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.directchallenge-section__text-container
+{
+	flow-children: down;
+	padding: 12px;
+	height: 100%;
+	width: 100%;
+}
+
+.directchallenge-section__title
+{
+	horizontal-align: left;
+	vertical-align: top;
+	font-weight: bold;
+	font-size: 20px;
+	font-family: Stratum2;	
+	text-overflow: shrink;
+}
+
+.directchallenge-section__text
+{
+	font-size: 14px;
+	font-family: Stratum2;	
+	horizontal-align: left;	
+	vertical-align: top;
+	max-width: 280px;
+	margin-top: 4px;
+}
+
+.directchallenge-section .IconButton:hover .directchallenge-section__title,
+.directchallenge-section .IconButton:hover .directchallenge-section__text
+{
+	color: white;
+
+	transition-property: color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+.directchallenge-desc
+{
+	horizontal-align: center;
+	margin-bottom: 32px;
+}
+
+
+.directchallenge-status
+{
+	background-color: rgba( 0, 0, 0, 0.2);
+}
+
+.directchallenge-status__header
+{
+	background-color: rgba( 0, 0, 0, 0.7);
+
+}
+
+.directchallenge-status__header
+{
+		padding: 32px;
+		padding-bottom: 32px;		
+}
+
+.directchallenge-status__queue-members
+{
+		padding: 32px;
+		padding-bottom: 8px;
+		padding-top: 16px;		
+		
+}
+
+.directchallenge-status__header__avatar
+{
+}
+
+.directchallenge-status__header__text
+{
+	flow-children: down;
+	vertical-align: center;
+	horizontal-align:left;
+
+	width: fit-children;
+
+	margin-left: 32px;
+}
+
+.directchallenge-status__queue-members
+{
+	transition-property:  opacity;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+}
+
+.directchallenge-status__queue-members.hidden
+{
+	opacity: 0;
+	visibility: collapse;
+}
+
+
+.directchallenge-status__header__avatar
+{
+	height: 100%;
+	width: height-percentage( 100% );
+}
+
+.directchallenge-status__header__avatar:hover,
+{
+	brightness: 1.5;
+	transform: scale3d( 1.05, 1.05, 1.05 );
+
+	transition-property: brightness, transform;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+#JsDirectChallengeIcon
+{
+	width: 42px;
+	height: width-percentage( 100% );
+}
+
+
+.directchallenge-status__header__codesourcelabel,
+{
+	font-family: Stratum2;
+	font-size: 16px;
+	font-weight: bold;
+
+	max-width: 350px;
+	text-overflow: shrink;
+	white-space: nowrap;
+
+	margin-bottom: 8px;
+}
+
+.directchallenge-status__header__codesource,
+{
+	font-family: Stratum2;
+	font-size: 28px;
+	font-weight: bold;
+
+	max-width: 350px;
+	text-overflow: shrink;
+	white-space: nowrap;
+}
+
+.directchallenge-status__header__queuecode
+{
+	width: 320px;
+
+	animation-name: challengecode-pulse;
+	animation-duration: .5s;
+    animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;	
+
+	font-family: Stratum2;
+	font-size: 26px;
+	font-weight: bold;
+
+	wash-color: direct-challenge-color;
+}
+
+@keyframes challengecode-pulse
+{
+    0% 
+	{
+		opacity: 0;
+	}
+
+	100% 
+	{
+		opacity: 1;
+
+	}
+}
+
+
+.directchallenge-status__queue-members__label
+{
+	font-family: Stratum2;
+	font-size: 18px;
+	font-weight: bold;
+
+	margin-bottom: 16px;
+}
+
+#CopyChallengeKey
+{
+	horizontal-align: right;
+}
+
+#CopyChallengeKey.IconButton
+{
+	flow-children: right;
+	horizontal-align: left;
+	vertical-align: bottom;
+
+	padding: 8px;
+	margin: 0px;
+  	                      
+
+	margin-bottom: -8px;
+}
+
+#CopyChallengeKey.IconButton Image
+{
+	margin: 0px;
+}
+
+
+#CopyChallengeKey.IconButton Label
+{
+	font-family: Stratum2;
+	font-size: 18px;
+	font-weight: bold;	
+	text-transform: uppercase;
+
+	margin-left: 16px;
+}
+
+.directchallenge-validator-results-container
+{
+	flow-children: down;
+	width: 400px;
+	height: 400px;
+}
+
+.directchallenge-status__queuememberscontainer
+{
+	height: fill-parent-flow( 1.0 );
+	width: 100%;
+	flow-children: down-wrap;
+
+	overflow: scroll clip;
+}
+
+.directchallenge__party 
+{
+	width: 290px;
+	flow-children: down;
+	margin-right: 30px;
+
+	transition-property: opacity, transform, position;
+	transition-duration: 0.25s;
+	transition-timing-function: ease-in-out;
+
+	margin-bottom: 10px;
+
+	border-radius: 10px;
+
+	background-color: rgba( 0,0,0,0.4);
+
+
+}
+
+.directchallenge__party.multi
+{
+	                                                   
+	                                              
+	                                                    
+
+	padding-top: 6px;
+	padding-bottom: 6px;
+
+
+}
+
+.directchallenge__party.hidden
+{
+	transform: scaleY( 0 );
+	opacity: 0;
+	visibility: collapse;
+}
+
+.directchallenge__party__member 
+{
+	horizontal-align: center;
+	width: 100px;	
+  	                   
+	padding: 4px;
+	padding-left: 10px;
+
+}
+
+                                       
 
 .coop-mission-controls
 {
@@ -88,10 +588,10 @@
 .map-selection-list-all
 {
 	width: 100%;
-	height: fill-parent-flow ( 0.5 );
+	height: fill-parent-flow ( 1 );
 	flow-children: none;
 	horizontal-align: center;
-	overflow: clip squish;
+	                            
 
 	padding: 0px 8px;
 
@@ -100,58 +600,68 @@
 
                                                                                                       
 
+
 .map-selection-list__quick-selection-sets {
-  width: 100%;
-  margin-left: 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  height: 0px;
-  opacity: 0;
-  transition-property: height;
-  transition-delay: 0s;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
+	height: 100%;
+	width: 0px;
+	opacity: 1;
 
-   flow-children: right;
+	background-color: contentPanelBackground;
+	border-right: 1px solid rgba(255, 255, 255, 0.11);
+	
+	transition-property: width, opacity;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+
+	flow-children: down;
 }
 
-.map-selection-list__quick-selection-sets__btns {
-	width: fill-parent-flow( 1.0);
-	height:100%;
-	flow-children: right;
+.map-selection-list__quick-selection-sets__btns 
+{
+	width:100%;
+	flow-children: down;
+	margin: 0px 12px;
 }
 
-.competitive.official .map-selection-list__quick-selection-sets {
-  height: 50px;
-  opacity: 1;
- 
+.competitive.official:not(.directchallenge) .map-selection-list__quick-selection-sets 
+{
+	width: 200px;
+	opacity: 1;
+	background-color: contentPanelBackground;
+
+	transition-property: width, opacity;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
 }
 
 .map-selection-list__quick-selection-sets .game-mode-selection-radios-spacer
 {
-	width: 1px;
+	height: 1px;
 }
 
                            
 
 .map-selection__quick-selection-set-title
 {
-	font-size: 16px;
-	margin-right: 16px;
+	margin-top: 32px;
+	margin-bottom : 8px;
+	font-size: 18px;
 	font-family: stratum2Font;
 	font-weight: lighter;
-	horizontal-align: center;
+	horizontal-align: left;
 	vertical-align: center;
-	color: rgba(255, 255, 255, 0.6);
+	padding-left: 24px;
+	color: rgba(212, 212, 212, 0.671);
 }
 
 .map-selection__quick-selection-set
 {
-	height: 60%;
-	width: fit-children;
-	margin: 0px 4px;
-	padding: 0px 16px;
+	width: 100%;
+	height: fit-children;
+	padding: 8px 0px;
 	border-radius: 3px;
 	vertical-align: center;
+	padding-left: 12px;
 
 	transition-property: background-color;
 	transition-duration: .2s;
@@ -160,7 +670,7 @@
 
 .map-selection__quick-selection-set.match {
 	
-	background-color: rgba(255, 255, 255, 0.288);
+	background-color: rgba(189, 189, 189, 0.288);
 	transition-property: background-color;
 	transition-duration: .2s;
 	transition-timing-function: ease-in-out;
@@ -171,27 +681,39 @@
 	wash-color: black;
 }
 
-.map-selection__quick-selection-set Label {
+.map-selection__quick-selection-set Label,
+.map-selection__quick-selection-set-icon Label {
   font-size: 16px;
   font-family: stratum2Font;
   font-weight: medium;
-  horizontal-align: center;
+  horizontal-align: left;
   vertical-align: center;
+  width: 280px;
   color: rgba(255, 255, 255, 0.75);
+  text-overflow: ellipsis;
 }
 
 .map-selection__quick-selection-set-icon{
 	height: fit-children;
-	width: fit-children;
+	width: 166px;
 	margin: 0px 4px;
-	padding: 8px;
+	padding: 8px 10px 10px 10px;
 	border-radius: 3px;
 	vertical-align: center;
+	horizontal-align: left;
+	flow-children: right;
 	
 	transition-property: background-color, transform;
 	transition-duration: .2s;
 	transition-timing-function: ease-in-out;
   }
+
+  .map-selection__quick-selection-set-icon Image
+{
+	margin-right: 8px;
+	height: 18px;
+	width: 18px;
+}
 
   .map-selection__quick-selection-set:hover:not(:disabled),
   .map-selection__quick-selection-set-icon:hover:not(:disabled)
@@ -214,16 +736,19 @@
   @keyframes play-menu-save-favorites
 {
     0% {
-		transform: translateY(0%);
+	  	                          
+		transform: scale3d( 1, 1, 1);
 	}
-	54% {
-		transform: translateY(100%);
+	50% {
+  		                            
+		transform: scale3d( 1.1, 1.1, 1);
+
 	}
-    55% {
-		transform: translateY(-100%);
-	}
+
 	100% {
-		transform: translateY(0%);
+  		                          
+		transform: scale3d( 1, 1, 1);
+
 	}
 }
 
@@ -233,6 +758,10 @@
 	wash-color: disabledColor;
 }
 
+.map-selection-list 
+{
+	                  
+}
 
 .map-selection-list RadioButton
 {
@@ -374,7 +903,7 @@
 
 .map-selection-btn.coop-map-tile
 {
-	height: 615px;
+	height: 572px;
 	width: height-percentage(70%);
 }
 
@@ -839,6 +1368,23 @@ RadioButton .map-selection-info__new
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.settings-container
+{
+	flow-children: right;
+	vertical-align: center;
+	padding-left: 32px;
+	padding-right: 32px;
+	height: 64px;
+	width: 100%;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.play-settings-gamemodeflags
+{
+	visibility: collapse;
+}
+
+
 .play-menu-controls-lobby-count
 {
 	width: fit-children;
@@ -928,10 +1474,11 @@ RadioButton .map-selection-info__new
 
 .play-menu-controls-action-bar__right__go-cancel
 {
-	padding-right: 64px;
+	padding-right: 24px;
 	height: 100%;
 	vertical-align: center;
 	padding-left: 16px;
+
 }
 
 .play-menu__playbtn
@@ -946,9 +1493,22 @@ RadioButton .map-selection-info__new
 	background-size: 100%;
 	background-image: url( "file://{resources}/videos/gobutton.webm" );
 
+	min-width: 256px;
+	flow-children: right;
+
 	transition-property: opacity, box-shadow, wash-color, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+ #JsDirectChallengeBtn
+ {
+	 visibility: collapse;
+ }
+
+.competitive.official #JsDirectChallengeBtn,
+{
+	visibility: visible;
 }
 
 .play-menu__playbtn:hover
@@ -979,8 +1539,11 @@ RadioButton .map-selection-info__new
 
 .play-menu__playbtn Label
 {
-	margin: 2px 32px;
-	min-width: 256px;
+	margin: 2px 6px;
+	
+	horizontal-align: center;
+	vertical-align: center;
+
 	font-family: stratum2Font;
 	text-transform: uppercase;
 	color: gradient( linear, 0% 0%, 100% 0%, from( positiveColor ), to( positiveColor) );
@@ -1006,6 +1569,26 @@ RadioButton .map-selection-info__new
 	box-shadow: none;
 	wash-color: disabledColor;
 }
+
+.group-text-with-steam-button
+{
+	horizontal-align: center;
+	flow-children:right;
+}
+
+             
+                                                              
+ 
+	            
+	             
+ 
+                                                             
+                                                            
+ 
+	                     
+ 
+            
+
 
 .play-menu__playbtn--stopsearch
 {
@@ -1041,6 +1624,7 @@ RadioButton .map-selection-info__new
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
+
 
 .play-menu__botdifficulty.hidden
 {
@@ -1130,6 +1714,80 @@ RadioButton .map-selection-info__new
 	}
 }
 
+
+.play-menu-option-btn
+{
+	flow-children:right;
+	vertical-align: center;
+	margin: 12px 12px 12px 0px;
+	min-height: 72px;
+	width: fit-children;
+	                       
+	background-color: rgba(0, 0, 0, 0.151);
+	border-radius: 20px;
+
+	transition-property: background-color;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-option-btn:hover:not(.play-menu-option-btn:disabled)
+{
+	background-color: rgba(0, 0, 0, 0.418);
+	
+	transition-property: background-color;
+	transition-duration: .20s;
+	transition-timing-function: ease-in-out;
+}
+
+.play-menu-option-btn:disabled 
+{
+	wash-color: disabledColor;
+}
+
+.play-menu-option-btn Label,
+ToggleButton.play-menu-option-btn Label,
+ToggleButton.play-menu-option-btn:selected Label
+{
+	font-size: 16px;
+	font-family: stratum2Font;
+	font-weight: medium;
+	color:white;
+	text-overflow: shrink;
+	padding-right: 14px;
+}
+
+.play-menu-option-btn Image
+{
+	vertical-align: center;
+	margin: 0px 8px;
+}
+
+.play-menu-prime Image
+{
+	width: 32px;
+	height: 32px;
+	margin-right: 0px;
+}
+
+
+                             
+ 
+	                 
+	                 
+    
+
+.content-navbar__tabs--small .play-menu-get-prime
+{
+	height: 38px;
+}
+
+.content-navbar__tabs--small .play-menu-get-prime Label
+{
+	margin:0px;
+	text-align: center;
+}
+
 .play-menu-get-prime
 {
 	max-width: 300px;
@@ -1217,17 +1875,17 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
-.play-menu-prime-toggle__slider-pill,
-.play-menu-toggle-prime:disabled .play-menu-prime-toggle__slider-pill,
-.play-menu-toggle-prime:selected:disabled .play-menu-prime-toggle__slider-pill
+                                                                            
+                                                                                    
+.play-menu-prime-toggle__slider-pill
 {
-	height: 24px;
-	width: 48px;
+	height: 20px;
+	width: 42px;
 	background-color: rgba(0, 0, 0, 0.445);
 	border-radius: 16px;
 	border: 1.5px solid rgba(0, 0, 0, 0.363);
 	padding: 2px;
-	margin: 2px 12px 2px 12px;
+	margin: 2px 2px 2px 12px;
 	background-color: gradient( radial, 50% 60%, 0% 0%, 90% 70%, from( rgba(0, 0, 0, 0.363) ), color-stop( .7, rgba(0, 0, 0, 0.363)), to( rgba(0, 0, 0, 0.363) ) );
 	horizontal-align: left;
 
@@ -1259,20 +1917,19 @@ RadioButton .map-selection-info__new
 	transition-timing-function: ease-in-out;
 }
 
-.play-menu-toggle-prime:disabled .play-menu-prime-toggle__slider
-{
-	background-color: black;
-	opacity: .65;
+                                                                   
+ 
+	                        
+	             
 
-	transition-property: transform, background-color;
-	transition-duration: .25s;
-	transition-timing-function: ease-in-out;
-}
+	                                                 
+	                          
+	                                        
+    
 
 .play-menu-prime-mode-not-prime-label
 {
 	color: white;
-	margin-left: 12px;
 }
 
 .play-menu-prime-mode-not-prime-label.disabled

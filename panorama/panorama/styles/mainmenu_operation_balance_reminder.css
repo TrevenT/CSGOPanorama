@@ -32,7 +32,7 @@
 .op_balance__container__text
 {
 	font-size: 14px;
-	color: opTenYellow;
+	color: opCompleteColor;
 	text-overflow: shrink;
 }
 

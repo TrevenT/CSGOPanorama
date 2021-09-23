@@ -166,24 +166,27 @@ var CharacterLineUp = ( function()
 		}
 
 		                                                                    
-		for ( var idxItem = 0; idxItem < oPlayer[ 'items' ].length; ++ idxItem )
+		if ( oPlayer[ 'items' ] )
 		{
-			var ullItemID = oPlayer[ 'items' ][ idxItem ].itemid;
-			if ( !ullItemID ) continue;
-			var strItemSlot = InventoryAPI.GetSlot( ullItemID );
+			for ( var idxItem = 0; idxItem < oPlayer[ 'items' ].length; ++idxItem )
+			{
+				var ullItemID = oPlayer[ 'items' ][ idxItem ].itemid;
+				if ( !ullItemID ) continue;
+				var strItemSlot = InventoryAPI.GetSlot( ullItemID );
 			
-			if ( strItemSlot === 'customplayer' )
-			{	                              
-				oOptions[ 'charItemId' ] = ullItemID;
-			}
-			else if ( strItemSlot === 'clothing' )
-			{	                      
-				oOptions[ 'glovesItemId' ] = ullItemID;
-			}
-			else
-			{	                                                          
-				oOptions[ 'weaponItemId' ] = ullItemID;
-				break;                                                   
+				if ( strItemSlot === 'customplayer' )
+				{	                              
+					oOptions[ 'charItemId' ] = ullItemID;
+				}
+				else if ( strItemSlot === 'clothing' )
+				{	                      
+					oOptions[ 'glovesItemId' ] = ullItemID;
+				}
+				else
+				{	                                                          
+					oOptions[ 'weaponItemId' ] = ullItemID;
+					break;                                                   
+				}
 			}
 		}
 
@@ -256,6 +259,9 @@ var CharacterLineUp = ( function()
 			manifest: "",
 			cameraPreset: "",
 			panelPosition: "",
+			flashlightColor: "",
+      flashlightAmount: "",
+      ambientLightColor: "",
 		} )
 	{
 		var arrPlayerMasterList = elCLU.Data().m_arrPlayerMasterList;

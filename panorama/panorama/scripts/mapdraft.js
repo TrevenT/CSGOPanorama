@@ -572,7 +572,7 @@ var MapDraft = ( function (){
 
 			if( !elAvatar || elAvatar.BHasClass( 'hidden' ))
 			{
-				var elAvatar = $.CreatePanel( panelType, elTeammates, xuid );
+				elAvatar = $.CreatePanel( panelType, elTeammates, xuid );
 				elAvatar.BLoadLayoutSnippet( 'SmallAvatar' );
 
 				if(bisTeamLister )

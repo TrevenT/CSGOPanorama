@@ -618,7 +618,7 @@
 	height: 250px;
 	padding: 0px;
 	background-color:  #241505de;
-	background-image: url('file://{resources}/videos/background_movie_op10.webm');
+	background-image: url('file://{resources}/videos/op11_underwater.webm');
 	background-size: cover;
 	background-img-opacity: 0.75;
 }
@@ -678,7 +678,7 @@
 	font-weight: black;
 	font-family: Stratum2, 'Arial Unicode MS';
 	color: opTenDark;
-	background-color: opTenYellow;
+	background-color: opCompleteColor;
 	padding: 4px 8px;
 	margin-bottom: 4px;
 	text-transform: uppercase;
@@ -689,7 +689,7 @@
 	font-size: 14px;
 	font-weight: light;
 	font-family: Stratum2, 'Arial Unicode MS';
-	color: opTenYellow;
+	color: opCompleteColor;
 	background-color: opTenDark;
 	padding: 4px 8px;
 	margin-bottom: 4px;
@@ -700,7 +700,7 @@
 	background-color: opTenDark;
 	padding: 4px 8px;
 	flow-children: right;
-	wash-color: opTenYellow;
+	wash-color: opCompleteColor;
 }
 
 .store-panel__operation-balance-container Label

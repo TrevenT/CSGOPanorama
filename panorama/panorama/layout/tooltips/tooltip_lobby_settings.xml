@@ -6,6 +6,7 @@
 
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/util_gamemodeflags.js" />
 		<include src="file://{resources}/scripts/common/sessionutil.js" />
 		<include src="file://{resources}/scripts/tooltips/tooltip_lobby_settings.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
@@ -32,6 +33,10 @@
 			
 			<Panel  class="tooltip-player-xp__section">
 				<Label class="tooltip-player-xp__title" text="#matchmaking_tooltip_title" />
+				<Panel id="LobbyTooltipDirectChallengeContainer" class="tooltip-player-setting" >
+					<Image class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/locked.svg" textureheight="16" texturewidth="16"/>
+					<Label class="tooltip-player-xp__subtitle" id="LobbyDirectChallenge" text="" />
+				</Panel>				
 				<Panel class="tooltip-player-setting" >
 					<Image class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/prime.svg" textureheight="16" texturewidth="16"/>
 					<Label class="tooltip-player-xp__subtitle" id="LobbyTooltipPrime" text="" />
@@ -43,8 +48,11 @@
 				<Panel class="tooltip-player-setting" >
 					<Image class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/settings.svg" textureheight="16" texturewidth="16"/>
 					<Label class="tooltip-player-xp__subtitle" id="LobbyTooltipPermissions" text="" />
-			
 				</Panel>
+				<Panel id="LobbyTooltipGameModeFlagsContainer" class="tooltip-player-setting" >
+					<Image id="LobbyTooltipGamdeModeFlagsImage" class="tooltip-player-setting__image tint" src="file://{images}/icons/ui/clock.svg" textureheight="16" texturewidth="16"/>
+					<Label class="tooltip-player-xp__subtitle"  text=" {s:gamemodeflags}" />
+				</Panel>				
 			</Panel>
 
 			<Panel class="tooltip-player-xp__section">
@@ -53,7 +61,7 @@
 					<Image id="SettingImage" class="tooltip-player-setting__image tint" src="" textureheight="16" texturewidth="16"/>
 					<Label id="SettingText" class="tooltip-player-xp__subtitle" text="XXXXXXXXXXX" />
 				</Panel>
-			</Panel>
+			</Panel>		
 
 			<Panel id="LobbyTooltipMapsList" class="tooltip-player-xp__section tooltip-player-xp__section-bottom">
 				                         

@@ -6,8 +6,6 @@ var OperationMainMenu = ( function()
 	var _m_nSeasonIndex = null;
 	var _m_InventoryUpdatedHandler = null;
 	var _m_cp = $.GetContextPanel();
-	var _m_oNamesFlipModule = null;
-	var _m_oNamesFlipModuleMissions = null;
 	var _m_DeepStatsEvtHandle = null;
 
 	var _m_oLastMatch = null;
@@ -61,6 +59,7 @@ var OperationMainMenu = ( function()
 		if ( !_m_nSeasonIndex )
 		{
 			_m_nSeasonIndex = GameTypesAPI.GetActiveSeasionIndexValue();
+			                                                                                              
 		}
 
 		_CheckUsersOperationStatus();
@@ -81,10 +80,7 @@ var OperationMainMenu = ( function()
 		}
 
 		_ShowUpdatePanelBasedOnStatus( oStatus );
-		if ( _m_DeepStatsEvtHandle === null ) 
-		{
-			_m_DeepStatsEvtHandle = $.RegisterForUnhandledEvent( 'DeepStatsReceived', OperationMainMenu.OnStatsReceived );
-		}
+
 		_m_cp.RemoveClass( 'hidden' );
 		$.DispatchEvent( 'HideMainMenuNewsPanel' );
 	};
@@ -117,12 +113,27 @@ var OperationMainMenu = ( function()
 	{
 		var onMissionSelect = function()
 		{
+			var LocalPlayerHasPrime = PartyListAPI.GetFriendPrimeEligible( MyPersonaAPI.GetXuid() );
+			if ( !LocalPlayerHasPrime )
+			{
+				UiToolkitAPI.ShowGenericPopupTwoOptions(
+					'#op_select_mission_card',
+					'#op_play_mission_popup_desc_noprime',
+					'',
+					'#op_stars_shop_open',
+					function() { OperationUtil.OpenPopupCustomLayoutOperationStore(); },
+					'Cancel',
+					function() { }
+				);
+				return;
+			}
+
 			UiToolkitAPI.ShowGenericPopupTwoOptions(
 				'#op_select_mission_card',
 				'#op_play_mission_popup_desc',
 				'',
 				'#op_select_mission_card',
-				function() { _OnMissionSelectPopupBtnPress( 'Option1' ) },
+				function() { _OnMissionSelectPopupBtnPress() },
 				'Cancel',
 				function() { }
 			);
@@ -158,15 +169,35 @@ var OperationMainMenu = ( function()
 			elPassSaleDiscount.visible = false;
 	};
 
-	var _OnMissionSelectPopupBtnPress = function( msg )
+	var _HideUpSell = function()
 	{
-		                                                              
+		var elUpsell = $.GetContextPanel().FindChildInLayoutFile( 'id-op-mainmenu-upsell' );
+		elUpsell.RemoveClass( 'show' );
+	};
+
+	var _ShowOperationPanel = function( oStatus )
+	{
+		                                                                       
+		                             
+		_UpdateMissionsPanel( oStatus );
+	};
+
+	var _ShouldShowStorePanel = function()
+	{
+		return _m_nSeasonIndex !== null && _m_nSeasonIndex >= 9;
+	};
+
+	var _OnMissionSelectPopupBtnPress = function()
+	{
+		                                           
+		                                                                                      
+		                                                    
 		
-		             
+		                  
 		var jsoCardDetails = MissionsAPI.GetSeasonalOperationMissionCardDetails( _m_nSeasonIndex, 0 );
 		var missionCardId = jsoCardDetails.id;
 
-		                            
+		                             
 		var missionId = jsoCardDetails.quests[ 0 ];
 		var MissionItemID = InventoryAPI.GetQuestItemIDFromQuestID( Number( missionId ) );
 
@@ -182,28 +213,155 @@ var OperationMainMenu = ( function()
 		);
 	};
 
-	var _HideUpSell = function()
+	var _ShowMainMenu = function()
 	{
-		var elUpsell = $.GetContextPanel().FindChildInLayoutFile( 'id-op-mainmenu-upsell' );
-		elUpsell.RemoveClass( 'show' );
+		var moviePanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-upsell-movie' );
+		moviePanel.SetMovie( "file://{resources}/videos/riptide_logo_loop.webm" );
+
+		_CheckUsersOperationStatus();
 	};
 
-	var _ShowOperationPanel = function( oStatus )
+	var _HideMainMenu = function()
 	{
-		_SetUpFlipAnimForMissions();
-		_ShowStatsPanel( oStatus );
-		_ShowPassStatusPanel( oStatus );
-		_UpdateMissionsPanel( oStatus );
+		if ( OperationMissionCard )
+		{
+			OperationMissionCard.CancelUnlockTimer();
+		}
+
+		var moviePanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-upsell-movie' );
+		moviePanel.SetMovie( "" );
 	};
 
-	var _ShouldShowStorePanel = function()
+	                    
+	                    
+	                    
+	var _UpdateMissionsPanel = function( oStatus )
 	{
-		return _m_nSeasonIndex !== null && _m_nSeasonIndex >= 9;
+		                                                      
+		                                                              
+		                                  
+		
+		_m_cp.FindChildInLayoutFile( 'id-op-mainmenu-missions' ).RemoveClass( 'hide' );
+		_m_cp.SetDialogVariableInt( 'total_missions', oStatus.nMissionsCompleted );
+
+		_UpdateXpDisplay( oStatus );
+
+		var cardIndex = oStatus.nActiveCardIndex ? oStatus.nActiveCardIndex : 0;
+		_UpdateSelectedMissionCard( cardIndex );
+		_SetUpCardUnlockDisplay( oStatus );
+	};
+
+	var _UpdateSelectedMissionCard = function( cardIndex )
+	{
+		var jsoCardDetails = MissionsAPI.GetSeasonalOperationMissionCardDetails( _m_nSeasonIndex, Number( cardIndex ));
+		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-missions-selected-card-name' );
+
+		var nWeek = cardIndex + 1;
+		elLabel.text = "Week " + nWeek + ": " + $.Localize( jsoCardDetails.name );
+
+		_UpdateMissionCard( cardIndex );
+	};
+
+	var jsContextMenuMissionCardCallbackHandle;
+	var _OpenMissionCardSelectContextMenu = function()
+	{
+		var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParameters( 
+		'id-missions-selected-card-btn',
+		'', 
+		'file://{resources}/layout/context_menus/context_menu_select_mission_card.xml', 
+		'test=123456&callback=' +
+		jsContextMenuMissionCardCallbackHandle );
+
+		contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
+	}
+
+	jsContextMenuMissionCardCallbackHandle = UiToolkitAPI.RegisterJSCallback( _UpdateSelectedMissionCard );
+
+	var _UpdateMissionCard = function( idx )
+	{
+		var elMissionCard = $.GetContextPanel().FindChildInLayoutFile( 'id-missions-mission-card' );
+
+		OperationMissionCard.UpdateMissionCard(
+			parseInt(idx),
+			elMissionCard
+		);
+	}
+
+	var _UpdateXpDisplay = function( oStatus )
+	{
+		                                                        
+		                                                                                  
+		                                               
+		                                                       
+
+		var elXpLabel = _m_cp.FindChildInLayoutFile( 'id-mission-card-xp-progress' );
+		                                                        
+
+		if ( !oStatus.bPremiumUser )
+		{
+			return;
+		}
+
+		elXpLabel.text = "";                                                                      
+	
+		var numPreviousMissionsCompletedForReward = 0;
+		var numNextMissionsCompletedNeededForReward = null;
+		var allThresholds = oStatus.nMissionsRewardThresholds.split( ',' );
+		for ( var j = 0; j < allThresholds.length; ++j )
+		{
+			var numericThreshold = parseInt( allThresholds[ j ] );
+			if ( oStatus.nMissionsCompleted < numericThreshold )
+			{
+				numNextMissionsCompletedNeededForReward = numericThreshold;
+				break;                  
+			} else
+			{
+				numPreviousMissionsCompletedForReward = numericThreshold;
+				                    
+			}
+		}
+		if ( numNextMissionsCompletedNeededForReward )
+		{
+			_m_cp.SetDialogVariableInt( 'xp_missions_completed', oStatus.nMissionsCompleted - numPreviousMissionsCompletedForReward );
+			_m_cp.SetDialogVariableInt( 'xp_missions_needed', numNextMissionsCompletedNeededForReward - numPreviousMissionsCompletedForReward );
+			elXpLabel.text = $.Localize( '#op_mission_card_xp_reward', _m_cp );
+		}
+	};
+
+	var _SetUpCardUnlockDisplay = function( oStatus )
+	{
+		var elPanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-mission-unlock' );
+		var numMissionBacklog = InventoryAPI.GetMissionBacklog();
+		var bShouldShow = oStatus.nActiveCardIndex < numMissionBacklog - 1;
+
+		elPanel.SetHasClass( 'hide', !bShouldShow );
+		
+		if ( !bShouldShow )
+		{
+			return;
+		}
+		
+		elPanel.SetDialogVariableInt( 'unlocked_week', numMissionBacklog );
+		elPanel.SetPanelEvent( 'onactivate', function()
+		{
+			_UpdateSelectedMissionCard( numMissionBacklog - 1 );
+		});
+	};
+
+	var _OpenOperationHub = function( rewardIndexToOpenTo = -1 )
+	{
+		OperationUtil.OpenPopupCustomLayoutOperationHub( rewardIndexToOpenTo );
+	};
+
+	var _OpenOperationStore = function( )
+	{
+		OperationUtil.OpenPopupCustomLayoutOperationStore( );
 	};
 
 	                    
 	                   
 	                    
+	                                                                              
 
 	function _OnStatsReceived ()
 	{
@@ -400,213 +558,17 @@ var OperationMainMenu = ( function()
 		} );
 	};
 
-	                    
-
-	var _ShowMainMenu = function()
-	{
-		                                      
-		                                                                                 
-		                                                                        
-
-		_CheckUsersOperationStatus();
-	};
-
-	var _HideMainMenu = function()
-	{
-		if ( OperationMissionCard )
-		{
-			OperationMissionCard.CancelUnlockTimer();
-		}
-
-		                                      
-		                                                                                 
-		                             
-	};
-
-	                    
-	                    
-	                    
-	var _UpdateMissionsPanel = function( oStatus )
-	{
-		_m_cp.FindChildInLayoutFile( 'id-op-mainmenu-missions' ).RemoveClass( 'hide' );
-		_m_cp.SetDialogVariableInt( 'total_missions', oStatus.nMissionsCompleted );
-
-		_m_oNamesFlipModuleMissions.ActiveIndex = ( oStatus.nActiveCardIndex < 0 ? 0 : oStatus.nActiveCardIndex ) - 1;
-		_m_oNamesFlipModuleMissions.oData.numMissionCards = MissionsAPI.GetSeasonalOperationMissionCardsCount(
-			OperationUtil.GetOperationInfo().nSeasonAccess );
-		
-		_m_oNamesFlipModuleMissions.UseCallback();
-
-		_UpdateXpDisplay( oStatus );
-
-	};
-
-	var _SetUpFlipAnimForMissions = function()
-	{
-		if ( !_m_oNamesFlipModuleMissions )
-		{
-			_m_oNamesFlipModuleMissions = new FlipPanelAnimation.Constructor( {
-				controlBtnPrev: _m_cp.FindChildInLayoutFile( 'id-op-mission-prev' ),
-				controlBtnNext: _m_cp.FindChildInLayoutFile( 'id-op-mission-next' ),
-				animPanelA: _m_cp.FindChildInLayoutFile( 'id-op-mission-name-1' ),
-				animPanelB: _m_cp.FindChildInLayoutFile( 'id-op-mission-name-2' ),
-				parentPanel: _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-missions' ),
-				funcCallback: UpdateMissionDisplay,
-				activeIndex: 0
-			} );
-			_m_oNamesFlipModuleMissions[ 'ControlBtnActions' ]();
-		}
-	};
-
-	var _UpdateXpDisplay = function( oStatus )
-	{
-		  
-		                                                        
-		                                                                                  
-		                                               
-		                                                       
-		  
-
-		var elXpLabel = _m_cp.FindChildInLayoutFile( 'id-mission-card-xp-progress' );
-		elXpLabel.GetParent().visible = oStatus.bPremiumUser;
-
-		if ( !oStatus.bPremiumUser )
-		{
-			return;
-		}
-
-		elXpLabel.text = "";                                                                      
-	
-		var numPreviousMissionsCompletedForReward = 0;
-		var numNextMissionsCompletedNeededForReward = null;
-		var allThresholds = oStatus.nMissionsRewardThresholds.split( ',' );
-		for ( var j = 0; j < allThresholds.length; ++j )
-		{
-			var numericThreshold = parseInt( allThresholds[ j ] );
-			if ( oStatus.nMissionsCompleted < numericThreshold )
-			{
-				numNextMissionsCompletedNeededForReward = numericThreshold;
-				break;                  
-			} else
-			{
-				numPreviousMissionsCompletedForReward = numericThreshold;
-				                    
-			}
-		}
-		if ( numNextMissionsCompletedNeededForReward )
-		{
-			_m_cp.SetDialogVariableInt( 'xp_missions_completed', oStatus.nMissionsCompleted - numPreviousMissionsCompletedForReward );
-			_m_cp.SetDialogVariableInt( 'xp_missions_needed', numNextMissionsCompletedNeededForReward - numPreviousMissionsCompletedForReward );
-			elXpLabel.text = $.Localize( '#op_mission_card_xp_reward', _m_cp );
-		}
-	};
-
-	var _SetUpCardUnlockDisplay = function()
-	{
-		var elPanel = _m_cp.FindChildInLayoutFile( 'id-op-mainmenu-mission-unlock' );
-		var numMissionBacklog = InventoryAPI.GetMissionBacklog();
-		var bShouldShow = _m_oNamesFlipModuleMissions.ActiveIndex < numMissionBacklog - 1;
-
-		elPanel.SetHasClass( 'hide', !bShouldShow );
-		
-		if ( !bShouldShow )
-		{
-			return;
-		}
-		
-		elPanel.SetDialogVariableInt( 'unlocked_week', numMissionBacklog );
-		elPanel.SetPanelEvent( 'onactivate', _GotoMissionWeek.bind( undefined, ( numMissionBacklog - 1 )) );
-	};
-
-	var _GotoMissionWeek = function( numMissionBacklog )
-	{
-		_m_oNamesFlipModuleMissions.oData.activeIndex = numMissionBacklog - 1;
-		UpdateMissionDisplay( _m_oNamesFlipModuleMissions.oData, false );
-	}
-
-	var UpdateMissionDisplay = function( oData, isPrev = false )
-	{
-		function UpdateData ( oData, isPrev )
-		{
-			var jsoCardDetails = MissionsAPI.GetSeasonalOperationMissionCardDetails(
-				OperationUtil.GetOperationInfo().nSeasonAccess, oData.activeIndex );
-
-			if ( !jsoCardDetails )
-			{
-				                                                                                              
-				return;
-			}
-
-			var NextPanel = _m_oNamesFlipModuleMissions.DetermineHiddenPanel( oData.animPanelA, oData.animPanelB );
-			_m_oNamesFlipModuleMissions.UpdateTextLabel(
-				NextPanel,
-				[
-					{ name: 'mission_name', value: $.Localize( jsoCardDetails.name ) },
-					{ name: 'card_week', value: oData.activeIndex + 1 }
-				] );
-			                                                                                                                    
-			                                                                                      
-			                                                                                                
-
-			OperationMissionCard.GetMissionCardDetails(
-				oData.activeIndex,
-				_m_cp.FindChildInLayoutFile( 'id-op-mainmenu-mission-card' ),
-				isPrev
-			);
-
-			_SetUpCardUnlockDisplay();
-		}
-
-		if ( isPrev )
-		{
-			--oData.activeIndex;
-			UpdateData( oData, true );
-			_m_oNamesFlipModuleMissions.BtnPressPrevAnim( oData.animPanelA, oData.animPanelB );
-		}
-		else
-		{
-			++oData.activeIndex;
-			UpdateData( oData, false );
-			_m_oNamesFlipModuleMissions.BtnPressNextAnim( oData.animPanelA, oData.animPanelB );
-		}
-		$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.generic_button_press', 'MOUSE' );
-		oData.controlBtnPrev.enabled = oData.activeIndex > 0;
-		oData.controlBtnNext.enabled = oData.activeIndex < oData.numMissionCards - 1;
-	};
-
-	var _OpenOperationHub = function( rewardIndexToOpenTo = -1 )
-	{
-		OperationUtil.OpenPopupCustomLayoutOperationHub( rewardIndexToOpenTo );
-	};
-
-	var _OpenOperationStore = function( )
-	{
-		OperationUtil.OpenPopupCustomLayoutOperationStore( );
-	};
-
-	                
-	                
-	                
-
-	var _ShowPassStatusPanel = function( oStatus )
-	{
-		if( oStatus.bPremiumUser )
-		{
-			return;
-		}
-
-
-	};
-
 	return {
 		Init: _Init,
-		OnInventoryUpdated: _OnInventoryUpdated,
+		OnInventoryUpdated: _OnInventoryUpdated, 
 		CheckUsersOperationStatus: _CheckUsersOperationStatus,
 		OpenOperationHub: _OpenOperationHub,
 		OpenOperationStore: _OpenOperationStore,
 		ShowMainMenu: _ShowMainMenu,
 		HideMainMenu: _HideMainMenu,
 		OnStatsReceived: _OnStatsReceived,
+		OpenMissionCardSelectContextMenu: _OpenMissionCardSelectContextMenu,
+		UpdateSelectedMissionCard: _UpdateSelectedMissionCard
 	};
 } )();
 

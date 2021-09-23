@@ -8,7 +8,7 @@
 	<CSGOHudGuardianPanel hittest="false" class="guardianpanel">
    		<Panel class="guardianpanel-bg" />
     	<Panel class="left-right-flow">
-			<Image class="Icon" src="file://{images}/icons/ui/broken_fang.svg" scaling="stretch-to-fit-preserve-aspect" />
+			<Image class="Icon" src="file://{images}/icons/ui/cooperative.svg" scaling="stretch-to-fit-preserve-aspect" />
 				<Panel class="guardianpanel-content cl-hud-wash-color">
 					<Panel class="guardianpanel-header">	
 						<Image class="complete-image" src="file://{images}/icons/ui/checkbox.svg" scaling="stretch-to-fit-preserve-aspect" />

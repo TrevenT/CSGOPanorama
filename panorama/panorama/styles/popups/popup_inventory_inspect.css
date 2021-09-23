@@ -22,11 +22,6 @@
 	background-image: none;
 }
 
-.popup-inspect-modelpanel.constrain
-{
-	max-width: 1400px;
-}
-
 .popup-inspect-modelpanel_darken
 {
 	brightness: .25;
@@ -61,11 +56,6 @@
 	transition-timing-function: ease-in-out;
 }
 
-.inspect-model-panel-size-for-characters
-{
-	width: 1458px;
-	horizontal-align:center;
-}
 
 #id-character-button-container.hidden
 {

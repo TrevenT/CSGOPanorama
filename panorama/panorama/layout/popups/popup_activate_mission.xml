@@ -6,6 +6,7 @@
 	</styles>
 	<scripts>
 		<include src="file://{resources}/scripts/popups/popup_activate_mission.js" />
+		<include src="file://{resources}/scripts/util_gamemodeflags.js" />
 	</scripts>
 
 	<PopupCustomLayout class="PopupPanel Hidden" popupbackground="dim" onload="SetupPopup()">

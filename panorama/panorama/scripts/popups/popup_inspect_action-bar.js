@@ -261,17 +261,35 @@ var InspectActionBar = ( function (){
 	function _ShowButtonsForCharacterInspect ( elPanel, id )
 	{
 		var elPreviewPanel = m_modelImagePanel.FindChildTraverse( 'InspectItemModel' );
-		elPreviewPanel.SetHasClass( 'inspect-model-panel-size-for-characters', ItemInfo.IsCharacter( id ) );
 
 		if ( !ItemInfo.IsCharacter( id ) )
 			return;
 		
 		elPanel.FindChildInLayoutFile( 'id-character-button-container' ).SetHasClass( 'hidden', false );	
 		
+		var inspectCameraPresets =
+		{
+			"AspectRatio4x3": [ 16, 17 ],
+			"AspectRatio16x9": [ 26, 27 ],
+			"AspectRatio21x9": [ 28, 29 ]
+		}
+
+		var arrCameraSetToUse = inspectCameraPresets.AspectRatio4x3;
+		
+		if ( $.GetContextPanel().BAscendantHasClass( "AspectRatio16x9" ) ||
+			$.GetContextPanel().BAscendantHasClass( "AspectRatio16x10" ))
+		{
+			arrCameraSetToUse = inspectCameraPresets.AspectRatio16x9;
+		}
+		else if ( $.GetContextPanel().BAscendantHasClass( "AspectRatio21x9" ) )
+		{
+			arrCameraSetToUse = inspectCameraPresets.AspectRatio21x9;
+		}
+
 		var characterToolbarButtonSettings = {
 			charItemId: id,
-			cameraPresetUnzoomed: 16,
-			cameraPresetZoomed: 17
+			cameraPresetUnzoomed: arrCameraSetToUse[0],
+			cameraPresetZoomed: arrCameraSetToUse[1]
 		};
 
 		var elCharacterButtons = elPanel.FindChildInLayoutFile( 'id-character-buttons' );

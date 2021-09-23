@@ -130,6 +130,9 @@ var MainMenu = ( function() {
 		                                                                          
 		_DeleteSurvivalEndOfMatch();
 
+		                                 
+		_DeletePauseMenuMissionPanel();
+
 		                                                               
 		_ShowHideAlertForNewEventForWatchBtn();
 
@@ -311,6 +314,9 @@ var MainMenu = ( function() {
 		                                                            
 		_UpdateSurvivalEndOfMatchInstance();
 
+		                                               
+		_AddPauseMenuMissionPanel();
+
 		                
 		_OnHomeButtonPressed();
 	};
@@ -318,7 +324,9 @@ var MainMenu = ( function() {
 	var _OnHidePauseMenu = function ()
 	{
 		$.GetContextPanel().RemoveClass( 'MainMenuRootPanel--PauseMenuMode' );
-
+		                                 
+		_DeletePauseMenuMissionPanel();
+		                                                                  
 		_OnHomeButtonPressed();
 	};
 
@@ -701,7 +709,7 @@ var MainMenu = ( function() {
 		};
 
 		                            
-		var bFeaturedPanelIsActive = false;
+		var bFeaturedPanelIsActive = true;
 		
 		if ( bFeaturedPanelIsActive )
 		{
@@ -768,8 +776,11 @@ var MainMenu = ( function() {
 	
 	var _ShowNewsAndStore = function ()
 	{
-		var elNews = $.FindChildInContext( '#JsNewsContainer' );
-		elNews.SetHasClass( 'hidden', false );
+		var elPanel = $.FindChildInContext( '#JsNewsContainer' );
+		elPanel.SetHasClass( 'hidden', false );
+
+		elPanel = $.FindChildInContext( '#JsActiveMissionPanel' );
+		elPanel.SetHasClass( 'hidden', false );
 
 		var elVanityButton = $.FindChildInContext( '#VanityControls' );
 		if ( elVanityButton )
@@ -781,8 +792,11 @@ var MainMenu = ( function() {
 
 	var _HideNewsAndStore = function ()
 	{
-		var elNews = $.FindChildInContext( '#JsNewsContainer' );
-		elNews.SetHasClass( 'hidden', true );
+		var elPanel = $.FindChildInContext( '#JsNewsContainer' );
+		elPanel.SetHasClass( 'hidden', true );
+
+		elPanel = $.FindChildInContext( '#JsActiveMissionPanel' );
+		elPanel.SetHasClass( 'hidden', true );
 
 		var elVanityButton = $.FindChildInContext( '#VanityControls' );
 
@@ -792,6 +806,7 @@ var MainMenu = ( function() {
 		}
 
 	};
+
 
 	                                                                
 	                                                             
@@ -1595,10 +1610,10 @@ var MainMenu = ( function() {
 		var elCoverPlaque = $( '#MainMenuFullScreenBlackCoverPlaque' );
 		if ( elCoverPlaque )
 			elCoverPlaque.visible = false;
-			
-		return;                                                                                                  
+		
+		                                                                                                            
 
-		var setVersionTo = '2';
+		var setVersionTo = '2109';                                       
 		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
 
 		if ( currentVersion !== setVersionTo )
@@ -1630,8 +1645,48 @@ var MainMenu = ( function() {
 			'',
 			'none'
 		);
-	}; 
-	
+	};
+
+	                                                                                                    
+	                         
+	                                                                                                    
+	function _AddPauseMenuMissionPanel()
+	{
+		var elPanel = null;
+		var missionId = GameStateAPI.GetActiveQuestID();
+
+		                                                         
+		var oGameState = GameStateAPI.GetTimeDataJSO();
+		
+		if ( !$.GetContextPanel().FindChildInLayoutFile( 'JsActiveMission' ) && missionId && oGameState && oGameState.gamephase !== 5 )
+		{
+			elPanel = $.CreatePanel( 
+				'Panel', 
+				$( '#JsActiveMissionPanel' ),
+				'JsActiveMission',
+				{ class: 'PauseMenuModeOnly' });
+				
+			elPanel.BLoadLayout('file://{resources}/layout/operation/operation_active_mission.xml', false, false );
+		}
+		else
+		{
+			elPanel = $.GetContextPanel().FindChildInLayoutFile( 'JsActiveMission' );
+		}
+
+		if( missionId && elPanel && elPanel.IsValid() )
+		{
+			elPanel.SetAttributeString( 'missionid', missionId );
+		}
+	}
+
+	function _DeletePauseMenuMissionPanel()
+	{
+		if( $.GetContextPanel().FindChildInLayoutFile( 'JsActiveMission' ) )
+		{
+			$.GetContextPanel().FindChildInLayoutFile( 'JsActiveMission' ).DeleteAsync( 0.0 );
+		}
+	}
+
 	                                                                                                    
 	                                                
 	                                                                                                    

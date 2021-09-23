@@ -1,0 +1,63 @@
+
+.root
+{
+	                    
+}
+
+.entry-row
+{
+	margin-left: 32px;
+}
+
+.entry-row TextEntry
+{
+	width: 400px;
+}
+
+.results-panel
+{
+	font-size : 14px;
+	max-width : 500px;
+	horizontal-align : left;
+}
+
+.validation-results-container
+{
+	margin-left: 32px;
+	margin-right: 78px;
+	padding: 10px;
+}
+
+.results-panel-valid .validation-results-container
+{
+	  
+	                   
+	                                             
+	  
+	padding-left: 32px;
+
+	transition-property:  background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.results-panel-valid .validation-results-container:hover
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( white ), color-stop( 0.0125, white ), color-stop( 0.0125, #ffffff40 ), color-stop( 0.025, #30303080 ), to( #30303000 ) );
+
+	transition-property:  background-color;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.avatar-container
+{
+	margin-top: 8px;
+	horizontal-align: center;
+	width: 100%;
+}
+
+.results-panel-valid .validation-results-container:hover .simple-avatar
+{
+	background-color: #00000000;
+}

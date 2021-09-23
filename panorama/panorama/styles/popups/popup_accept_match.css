@@ -21,7 +21,7 @@
 {
 	flow-children: down;
 	vertical-align: center;
-	margin-top: 35%;
+	margin-top: 20%;
 	box-shadow: none;
 }
 
@@ -90,7 +90,7 @@
 	horizontal-align: center;
 	width: 100%;
 	height: 300px;
-	brightness: .1;
+	brightness: .05;
 
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -192,8 +192,8 @@
 .accept-match .FlatButton
 {
 	horizontal-align: center;
-	vertical-align: center;
-	margin-top: 68px;
+	vertical-align: bottom;
+	margin-bottom: 76px;
 	ui-scale: 100% 100% 100%;
 
 	transition-property: opacity, ui-scale;
@@ -253,8 +253,8 @@
 	width: fit-children;
 	height: fit-children;
 	horizontal-align: center;
-	vertical-align: center;
-	margin-top: 78px;
+	vertical-align: bottom;
+	margin-bottom: 70px;
 
 	transition-property: width;
 	transition-duration: 0.2s;
@@ -386,5 +386,153 @@
 
 .TextSpan { 
 	text-decoration: underline;
+}
+
+                                                   
+
+.map-draft-phase-teams
+{
+	flow-children: right;
+	width: 720px;
+	height: 260px;
+	horizontal-align: center;
+	vertical-align: top;
+	margin-top: 120px;
+	padding: 6px;
+	
+	                                                                                          
+	                                                                                              
+	                               
+	z-index: 2;
+
+	  
+	                             
+	                            
+	                      
+	                                                                   
+	  
+
+	transition-property: width;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+
+	visibility: collapse;
+}
+
+
+.accept-match-with-player-list .map-draft-phase-teams
+{
+	visibility: visible;
+}
+
+.accept-match-with-player-list .accept-match__map
+{
+	height: 530px;
+}
+
+.accept-match-with-player-list .accept-match__slots__player
+{
+	height: 10px;
+	background-image: none;
+	margin-bottom: 30px;
+}
+
+.accept-match-with-player-list .accept-match .FlatButton
+{
+	margin-bottom: 50px;
+}
+
+.accept-match-with-player-list .accept-match__slots-count
+{
+	margin-bottom: 30px;
+}
+
+
+.map-draft-phase-teams__team
+{
+	flow-children: down;
+	height: 100%;
+	width: 50%;
+}
+
+.map-draft-phase-teams__border
+{
+	height: 100%;
+	width: 1px;
+	background-color: rgba(101, 228, 106, 0.3);
+}
+
+.map-draft-phase-teams__title
+{
+	font-size: 20px;
+	letter-spacing: 1.8px;
+	padding: 0px 12px 6px;
+	vertical-align: top;
+	color: rgb(101, 228, 106);
+	text-shadow: 0px 0px 4px 2.0 rgba(0, 0, 0, 0.534);
+	text-transform: uppercase;
+}
+
+.map-draft-phase-button__avatar
+{
+	flow-children: right;
+}
+
+.map-draft-phase-teams__team--left .map-draft-phase-teams__title,
+.map-draft-phase-teams__team--left .map-draft-phase-button__avatar-name
+{
+	horizontal-align: right;
+	text-align: right;
+}
+
+.map-draft-phase-teams__team--left .map-draft-phase-button__avatar
+{
+	flow-children: left;
+	horizontal-align: right;
+}
+
+.map-draft-phase-teams .map-draft-phase-button__avatar-name
+{
+	font-size: 18px;
+	padding: 0px 8px;
+	height: 26px;
+	color: rgb(101, 228, 106);
+	text-shadow: 0px 0px 4px 2.0 rgba(0, 0, 0, 0.534);
+}
+
+.map-draft-phase-teams .map-draft-phase-button__avatar
+{
+	margin: 0px 16px;
+}
+
+.map-draft-phase-button__avatar CSGOAvatarImage
+{
+	visibility: visible;
+	margin: 3px;
+	background-color: rgb(101, 228, 106);
+	border: 1px solid rgb(101, 228, 106);
+}
+
+.map-draft-phase-teams .map-draft-phase-button__avatar:hover CSGOAvatarImage,
+.map-draft-phase-teams .map-draft-phase-button__avatar:hover .map-draft-phase-button__avatar-name
+{
+	brightness: 2;
+
+	transition-property: brightness;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.map-draft-phase-teams .map-draft-phase-button__avatar CSGOAvatarImage
+{
+	width: 36px;
+	height: 36px;
+}
+
+.map-draft-phase-teams .avatar-teamcolor,
+.map-draft-phase-teams .avatar-image__default
+{
+	width: 36px;
+	opacity: 0;
 }
 

@@ -1,160 +1,56 @@
 <root>
-    <styles>
-        <include src="file://{resources}/styles/gamestyles.css" />
-        <include src="file://{resources}/styles/operation/operation_shared.css" />
-        <include src="file://{resources}/styles/operation/operation_mission_card.css" />
-    </styles>
+	<styles>
+		<include src="file://{resources}/styles/gamestyles.css" />
+		<include src="file://{resources}/styles/operation/operation_shared.css" />
+		<include src="file://{resources}/styles/operation/operation_mission_card.css" />
+	</styles>
 
-   	<scripts>
-        <include src="file://{resources}/scripts/common/formattext.js"/>
+	<scripts>
+		<include src="file://{resources}/scripts/common/formattext.js"/>
 	</scripts>
 
-    <snippets>
-        <snippet name="snippet-mission">
-            <Button id="" class="op-mission-card__mission" >
-                <Panel class="op-mission-card__mission__icon-container vertical-center right-margin">
-                    <Image id="id-mission-card-icon-play" class="op-mission-card__mission__icon" src="file://{images}/icons/ui/play.svg" textureheight="36" texturewidth="-1"/>
-                    <Image id="id-mission-card-icon-complete" class="op-mission-card__mission__icon" src="file://{images}/icons/ui/check.svg" textureheight="36" texturewidth="-1"/>
-                    <Image id="id-mission-card-icon-locked" class="op-mission-card__mission__icon" src="file://{images}/icons/ui/locked.svg" textureheight="36" texturewidth="-1"/>
-                    <Image id="id-mission-card-icon-replay" class="op-mission-card__mission__icon" src="file://{images}/icons/ui/replay.svg" textureheight="36" texturewidth="-1"/>
-                    <Panel id="id-mission-card-spinner" class="Spinner vertical-center horizontal-center hide"/>
-                </Panel>
-                <Panel class="op-mission-card__mission__info">
-                    <Panel class="full-width">
-                        <Label id="id-mission-name" html="true" class="op_mission-card__mission_name" text=""/>
-                    </Panel>
-                    <Label id="id-mission-desc" html="true" class="op_mission-card__mission_body" text=""/>
-					<Panel class="left-right-flow full-width vertical-center">
-						<Panel id="segment2" class="left-right-flow vertical-center op_mission-card__mission_segment">
-							<Panel class="op-mission-card__mission__bar-container">
-								<Panel class="op_mission-card__bar" >
-									<Panel id="op_mission-card-bar" class="op_mission-card__bar__inner" />
-								</Panel>
-							</Panel>
-							<Panel class="top-bottom-flow horizontal-center vertical-center">
-								<Panel class="left-right-flow vertical-center horizontal-center" >
-									<Panel id="star0">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star1">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star2">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-								</Panel>
-								<Label html="true" class="op_mission-card__mission_info" text="#op_mission_card_quest_progress"/>
-							</Panel>
-						</Panel>
-						<Panel id="segment1" class="left-right-flow vertical-center op_mission-card__mission_segment">
-							<Panel class="op-mission-card__mission__bar-container">
-								<Panel class="op_mission-card__bar" >
-									<Panel id="op_mission-card-bar" class="op_mission-card__bar__inner" />
-								</Panel>
-							</Panel>
-							<Panel class="top-bottom-flow horizontal-center vertical-center">
-								<Panel class="left-right-flow vertical-center horizontal-center" >
-									<Panel id="star0">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star1">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star2">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-								</Panel>
-								<Label html="true" class="op_mission-card__mission_info" text="#op_mission_card_quest_progress"/>
-							</Panel>
-						</Panel>
-						<Panel id="segment0" class="left-right-flow vertical-center op_mission-card__mission_segment">
-							<Panel class="op-mission-card__mission__bar-container">
-								<Panel class="op_mission-card__bar" >
-									<Panel id="op_mission-card-bar" class="op_mission-card__bar__inner" />
-								</Panel>
-							</Panel>
-							<Panel class="top-bottom-flow horizontal-center vertical-center">
-								<Panel class="left-right-flow vertical-center horizontal-center" >
-									<Panel id="star0">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star1">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-									<Panel id="star2">
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-									<Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-									</Panel>
-								</Panel>
-								<Label html="true" class="op_mission-card__mission_info" text="#op_mission_card_quest_progress"/>
-							</Panel>
-						</Panel>
-					</Panel>
-                </Panel>
 
-                <Panel class="op-mission-card__mission__star-count">
-                    <Panel class="op-mission-card__mission__seperator" />
-                    <Panel class="horizontal-center vertical-center left-right-flow">
-                        <Panel class="vertical-center" >
-                            <Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--empty-star" src="file://{images}/icons/ui/icon_star_empty_thick.svg" textureheight="18" texturewidth="-1"/>
-                            <Image class="op-mission-card__mission__icon op-mission-card__mission__icon--dark-border op-mission-card__mission__icon--filled-star" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-                        </Panel>
-                        <Label id="" html="true" class="op_mission-card__mission_name" text="#op_mission_card_quest_stars"/>
-                    </Panel>
-                </Panel>
-            </Button>
-        </snippet>
-    </snippets>
+	<Panel class="op-mission-card hidden">
+		                                                                                                                 
+		<Panel class="op-mission-card-contents" >
+			<Panel class="op-mission-card-contents__info" >
+				<TooltipPanel id="id-mission-card-tag" class="op-mission-card-contents__info__containter complete-tag right-margin-medium" tooltip="#op_rewards_active_tooltip" style='tooltip-position: bottom;'>
+					<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/clock.svg" textureheight="18" texturewidth="-1"/>
+					<Label class="op-mission-card-contents__info__desc left-padding" text="#op_mission_card_active"/>
+				</TooltipPanel>
+				<TooltipPanel id="id-mission-card-tag-timer" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_active_tooltip" style='tooltip-position: bottom;'>
+					<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/locked.svg" textureheight="18" texturewidth="-1"/>
+					<Label class="op-mission-card-contents__info__desc left-padding" text="{s:unlock_time}"/>
+				</TooltipPanel>
+				<TooltipPanel id="id-mission-card-tag-missions-max" class="op-mission-card-contents__info__containter" tooltip="#op_rewards_star_tooltip" style='tooltip-position: bottom;'>
+					<Image id="" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
+					<Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
+				</TooltipPanel>
+			</Panel>
 
-    <Panel class="op-mission-card hidden">
-                                                                                                                         
-        <Panel class="op-mission-card-contents" >
-            <Panel class="op-mission-card-contents__info" >
-                <TooltipPanel id="id-mission-card-tag" class="op-mission-card-contents__info__containter complete-tag right-margin-medium" tooltip="#op_rewards_active_tooltip" style='tooltip-position: bottom;'>
-                    <Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/clock.svg" textureheight="18" texturewidth="-1"/>
-                    <Label class="op-mission-card-contents__info__desc left-padding" text="#op_mission_card_active"/>
-                </TooltipPanel>
-                <TooltipPanel id="id-mission-card-tag-timer" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_active_tooltip" style='tooltip-position: bottom;'>
-                    <Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/locked.svg" textureheight="18" texturewidth="-1"/>
-                    <Label class="op-mission-card-contents__info__desc left-padding" text="{s:unlock_time}"/>
-                </TooltipPanel>
-                <TooltipPanel id="id-mission-card-tag-missions-max" class="op-mission-card-contents__info__containter" tooltip="#op_rewards_star_tooltip" style='tooltip-position: bottom;'>
-                    <Image id="" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/icon_star.svg" textureheight="18" texturewidth="-1"/>
-                    <Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
-                </TooltipPanel>
-            </Panel>
+			<Panel class="card-missions-locked-container">
+				<Panel class="top-bottom-flow horizontal-center vertical-center">
+					<Image class="op-mission-card__mission__icon" src="file://{images}/icons/ui/clock.svg" textureheight="64" texturewidth="-1"/>
+					<Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text="#op_mission_card_revealed_later"/>
+				</Panel>
+			</Panel>
 
-            <Panel class="card-missions-locked-container">
-                <Panel class="top-bottom-flow horizontal-center vertical-center">
-                    <Image class="op-mission-card__mission__icon" src="file://{images}/icons/ui/clock.svg" textureheight="64" texturewidth="-1"/>
-                    <Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text="#op_mission_card_revealed_later"/>
-                </Panel>
-            </Panel>
+			<Panel id="id-mission-card-missions-container" class="op-mission-card__missions-container" >
+				                    
+			</Panel>
 
-            <Panel id="id-mission-card-missions-container" class="op-mission-card__missions-container" >
-                                    
-            </Panel>
+		</Panel>
+		                                              
+			                                                               
+				                                        
+					                                                     
+						                                                                                                                       
+						                                                                                                                             
+					                 
+				                 
+				                                                                                                                                   
+			                 
+		                 
 
-        </Panel>
-        <Panel class="op-missions-card__top">
-                                                                           
-                                                        
-                                                                         
-                                                                                                                                               
-                                                                                                                                                     
-                                     
-                                 
-                                                                                                                                                   
-                             
-        </Panel>
-
-    </Panel>
+	</Panel>
 </root>

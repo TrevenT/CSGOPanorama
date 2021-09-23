@@ -60,7 +60,8 @@ var AdvertisingToggle = ( function()
 			if ( !PartyListAPI.IsPlayerForHireAdvertisingEnabledForGameMode( entry.mode ) )
 				return;
 
-			var sReplaces = ["<img src='file://{images}/icons/ui/broken_fang.svg'",                                                                                            
+			var sReplaces = ["<img src='file://{images}/icons/ui/cooperative.svg'",                                                                                            
+				"<img src='file://{images}/icons/ui/broken_fang.svg'",
 				"<img src='file://{images}/icons/ui/shattered_web.svg'"];
 			var sLocalizedMode = $.Localize( '#advertising_for_hire_' + entry.mode );
 			for ( var k = 0; k < sReplaces.length; ++ k )

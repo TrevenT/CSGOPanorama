@@ -199,7 +199,11 @@
 }
 
 @define bar-width: 30px;
+@define bar-width-4x3: 25px;
+
 @define bar-height: 150px;
+
+
 
 .mi-round-summary-bar
 {
@@ -214,6 +218,12 @@
 	flow-children:down;
 	width:bar-width;
 	height:fit-children;
+}
+
+.AspectRatio4x3 .mi-round-summary-bar__container,
+.AspectRatio5x4 .mi-round-summary-bar__container
+{
+		width:bar-width-4x3;
 }
 
 .mi-round-summary-bar__border
@@ -295,7 +305,7 @@
 
 .mi-round-stats__tick-labels
 {
-	width:960px;
+  	            
 	height:fit-children;
 	flow-children:right;
 	horizontal-align:center;
@@ -316,11 +326,27 @@
 	width:fill-parent-flow(4);
 }
 
+.mi-tick
+{
+	width: bar-width;
+}
+
+.AspectRatio4x3 .mi-tick,
+.AspectRatio5x4 .mi-tick
+{
+		width:bar-width-4x3;
+}
+
 .mi-tick-label
 {
 	text-align:center;
 	horizontal-align:center;
 	text-overflow:shrink;
+}
+
+.mi-tick-label--halftime
+{
+	width: 80px;
 }
 
 .mi-tick-label__spacer
@@ -374,6 +400,12 @@
 	width:bar-width;
 	horizontal-align:center;
 	flow-children:down;
+}
+
+.AspectRatio4x3 .mi-icons__container,
+.AspectRatio5x4 .mi-icons__container,
+{
+	width:bar-width-4x3;
 }
 
 .mi-icons__padding

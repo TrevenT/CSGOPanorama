@@ -10,7 +10,7 @@
 	<scripts>
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
-		<include src="file://{resources}/scripts/common/flip_panel_anim.js" />
+		<include src="file://{resources}/scripts/operation/operation_mission.js" />
 		<include src="file://{resources}/scripts/operation/operation_mission_card.js" />
 		<include src="file://{resources}/scripts/operation/operation_util.js" />
 		<include src="file://{resources}/scripts/stats/matchstats.js" />
@@ -29,7 +29,7 @@
 						<Image id="" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/gift.svg" textureheight="18" texturewidth="-1"/>
 						<Label id="id-mission-card-stars-text" html="true" class="op-mission-card-contents__info__desc left-padding" text="#op_rewards_next"/>
 					</TooltipPanel>
-					<Panel id="id-op-reward-status-tag" class="op-mission-card-contents__info__containter right-margin-medium" style='tooltip-position: bottom;'>
+					<Panel id="id-op-reward-status-tag" class="op-mission-card-contents__info__containter" style='tooltip-position: bottom;'>
 						<Image id="id-op-reward-status-icon" class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/locked.svg" textureheight="18" texturewidth="-1"/>
 						<Label id="id-op-reward-status-text" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
 					</Panel>
@@ -60,9 +60,9 @@
 			<Panel id="id-op-mainmenu-upsell-bg" class="full-width full-height" blurrects="id-op-mainmenu-upsell-btns-container">
 				                                                                 
 				                                                                        
-				<Image class="full-width horizontal-center vertical-center" scaling="stretch-to-fit-x-preserve-aspect"
-						src="file://{images}/operations/op10/store-bg-logo.png"/>  
-				                                                                                                                                      
+				                                                                                                           
+						                                                               
+				<Movie id="id-op-mainmenu-upsell-movie" class="op-mainmenu__upsell__movie" controls="none" repeat="true" autoplay="onload" hittest="false"/>
 			</Panel>
 			<Panel class="op-mainmenu__title-container ">
 				                                                                              
@@ -74,7 +74,10 @@
 					<Label id="id-op-mainmenu-upsell-store-passsalediscount" class="op-mainmenu__title__prefix op-mainmenu__title__salediscount" text=""/>
 					<TextButton id="id-op-mainmenu-upsell-store" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_get_premium"/>
 				</Panel>
-				<TextButton id="id-op-mainmenu-mission_select" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_select_mission_card"/>
+			<TextButton id="id-op-mainmenu-mission_select" class="op-mainmenu__title__prefix op-mainmenu__title__prefix--btn" text="#op_select_mission_card"/>
+			<Button class="op-mainmenu__btn vertical-center left-margin-32" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/riptide/' );" >
+				<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+			</Button>
 			</Panel>
 		</Panel>
 
@@ -87,7 +90,6 @@
 
 					<Panel class="full-width top-bottom-flow">
 						<Panel class="full-width" >
-							<TextButton id="id-op-mainmenu-mission-unlock" class="op-mainmenu__unlock-text horizontal-align-right" text="#op_missions_unlock"/>
 							                                                      
 								                                                                      
 								                                                                       
@@ -96,26 +98,33 @@
 							                 
 
 							<Panel class="op-header" hittest="false">
-								<Panel class="left-right-flow full-width right-margin-medium" hittest="false">
-									<Panel class="horizontal-center">
-										<Image class="op-header__stars-bg" texturewidth="48" textureheight="-1" src="file://{images}/operations/banner.svg" />
-										<Label class="vertical-center horizontal-center op-header__num" text="{d:total_missions}"/>
-									</Panel>
-									<Panel class="top-bottom-flow vertical-center left-margin" >
-										<Label id="op-main-header" class="vertical-center op-header__text" text="#op_mission_title_main"/>
-										<TooltipPanel id="id-mission-card-tag-xp" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_xp_tooltip" style='tooltip-position: bottom;'>
-											<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/xp_rank.svg" textureheight="18" texturewidth="-1"/>
-											<Label id="id-mission-card-xp-progress" html="true" class="op-mission-card-contents__info__desc left-padding" text=""/>
-										</TooltipPanel>
+								<Panel class="full-width" hittest="false">
+									<Panel class="left-right-flow" >
+											<Image class="op-header__stars-bg" texturewidth="48" textureheight="-1" src="file://{images}/icons/ui/operation_11.svg" />
+											<Panel class="top-bottom-flow vertical-center left-margin">
+												<Panel class="left-right-flow vertical-center">
+													<Label class="vertical-center horizontal-center op-header__num" text="{d:total_missions}"/>
+													<Label id="op-main-header" class="vertical-center op-header__text" text="#op_mission_title_main"/>
+												</Panel>
+												<TooltipPanel id="id-mission-card-tag-xp" class="op-mission-card-contents__info__containter right-margin-medium" tooltip="#op_rewards_xp_tooltip" style='tooltip-position: bottom;'>
+													<Image class="op-mission-card__mission__icon no-padding" src="file://{images}/icons/ui/xp_rank.svg" textureheight="14" texturewidth="-1"/>
+													<Label id="id-mission-card-xp-progress" html="true" class="op-mission-card-contents__info__desc left-padding" text="Test String"/>
+												</TooltipPanel>
+											</Panel>
 									</Panel>
 
-									<Panel class="vertical-center horizontal-align-right right-margin-medium left-right-flow top-margin-24">
+									<Panel class="top-bottom-flow vertical-center left-margin" >
+	
+									</Panel>
+
+									<Panel class="vertical-center horizontal-align-right left-right-flow">
+										<TextButton id="id-op-mainmenu-mission-unlock" class="op-mainmenu__unlock-text horizontal-align-right vertical-center" text="#op_missions_unlock"/>
 										<TooltipPanel id="" class="op-mainmenu__btn right-margin" tooltip="#op_missions_tooltip_op10" style="tooltip-position: bottom;"> 
-											<Image texturewidth="26" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
+											<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/info.svg"/>
 										</TooltipPanel>
 										<TooltipPanel tooltip="#op_faq_link" style="tooltip-position: bottom;">
-											<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/brokenfang/' );" >
-												<Image texturewidth="24" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
+											<Button class="op-mainmenu__btn" onactivate="SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( 'http://www.counter-strike.net/riptide/' );" >
+												<Image texturewidth="20" textureheight="-1" src="file://{images}/icons/ui/link.svg"/>
 											</Button>
 										</TooltipPanel>
 									</Panel>
@@ -123,20 +132,12 @@
 							</Panel>
 						</Panel>
 
-						<Panel class="top-bottom-flow left-margin-32 top-padding-medium">
-							<Panel class="op-mainmenu__content__selector vertical-center" >
-							<Panel class="op-mainmenu__content__info" >
-								<Frame id="id-op-mission-name-1" class="down-show" snippet="snippet-mission-name"/>
-								<Frame id="id-op-mission-name-2"  class="down-hidden" snippet="snippet-mission-name"/>
-							</Panel>
-							<Button id="id-op-mission-prev" class="op-mainmenu__arrow_btn horizontal-center vertical-center">
-								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg"/>
-							</Button>
-							<Button id="id-op-mission-next" class="op-mainmenu__arrow_btn down horizontal-center vertical-center">
-								<Image texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg" />
-							</Button>
-						</Panel>
-					</Panel>
+						<Button id="id-missions-selected-card-btn" class="op-mainmenu__mission-card-selector" onactivate="OperationMainMenu.OpenMissionCardSelectContextMenu();">
+							<Label id="id-missions-selected-card-name" class="op-mainmenu__mission-card-selector__name" text="Mission Card Name"/>
+							<Image class="horizontal-align-right right-margin-medium vertical-center" texturewidth="18" textureheight="-1" src="file://{images}/icons/ui/expand.svg"/>
+						</Button>
+
+						<Panel id="id-missions-mission-card" class="op_mainmenu__mission_card"/>
 				</Panel>
 			</Panel>
 

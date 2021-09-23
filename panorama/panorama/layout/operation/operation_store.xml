@@ -43,7 +43,38 @@
 			</Panel>
 		</snippet>
 
+		<snippet name="reward-row">
+			<Panel class="op-store-reward-row">
+				<CSGOBlurTarget id="id-op-store-reward-row-bg" class="op-store-reward-row__bg"/>
+				<Panel class="op-store-reward-row-elements">
+					<Panel class="op-store-reward-row__title-block">
+						<Image id="id-op-store-reward-row-bg-icon" class="op-store-reward-row__icon" scaling="stretch-to-fit-y-preserve-aspect"/>
+						<Label class="stratum-font op-store-reward-row__title" text="{s:title}"/>
+						<Label class="stratum-font op-store-reward-row__desc" text="#op_store_row_desc"/>
+					</Panel>
+					<Panel id="id-rewards-container" class="full-width left-right-flow top-padding"/>
+				</Panel>
+			</Panel>
+		</snippet>
+
 		<snippet name="reward-tile">
+			<Panel class="op-store-reward-tile-container">
+				<Button id="id-op-store-item-tile-btn" class="op-store-reward-tile">
+						<Panel id="id-op-store-item-tile-images" class="op-store-reward-tile__images-container">
+							<Panel id="id-op-store-item-tile-rarity" class="op-store-reward-tile__info-block__rarity"/>
+						</Panel>
+						<Panel class="op-store-reward-tile__info-block" >
+							<Label id="id-op-store-item-tile-name" class="op-store-reward-tile__info-block__name stratum-font" text="Item Name"/>
+							<Panel class="op-store-reward-tile__info-block__price">
+								<Label id="id-op-store-item-cost" class="op-store-reward-tile__info-block__price__text stratum-font" text="200"/>
+								<Image class="op-store-reward-tile__info-block__price__star" src="file://{images}/icons/ui/icon_star_multi.svg" scaling="stretch-to-fit-y-preserve-aspect" texturewidth="22" textureheight="-1"/>
+							</Panel>
+						</Panel>
+				</Button>
+			</Panel>
+		</snippet>
+
+		<snippet name="reward-tile-old">
 			<Panel class="op-store-item-tile-container">
 				<Button id="id-op-store-item-tile-btn" class="op-store-item-tile">
 					<Panel class="full-width z-index-2">
@@ -86,7 +117,7 @@
 		<Panel class="op-main-container" hittest="false" >
 			<Panel id="id-store-progress" class="op-store-progress" >
 				<Panel class="op-store-progress__top" >
-					<Image class="vertical-center" src="file://{images}/operations/op10/logo.png" scaling="stretch-to-fit-preserve-aspect" texturewidth="24" textureheight="-1"/>
+					<Image class="vertical-center" src="file://{images}/operations/op11/logo.png" scaling="stretch-to-fit-preserve-aspect" texturewidth="24" textureheight="-1"/>
 					<Panel id="id-op-store-progress-pass-upsell" class="op-store-progress__pass-upsell">
 						<Label  id="id-store-pass-upsell-desc" class="op-store-progress__pass-upsell__desc stratum-font fontSize-l" text="#op_stars_max_upsell" />
 						<TextButton id="id-store-pass-upsell-text-btn" class="op-store-progress__pass-upsell__text-btn" text="#op_pass_upsell" />
@@ -118,28 +149,30 @@
 					<TextButton id="id-op-store-get-more-points-btn" class="op-store-progress__pass-upsell__text-btn medium-font" text="#op_stars_upsell" />
 				</Panel>
 			</Panel>
-			<Panel id="id-op-store-items-rows" class="op-store-items-rows-container">
-				<Panel class="op-store-items-row" >
-					<Frame id="id-op-store-tile-011" class="" hittest="false" snippet="reward-tile" data-type="char-small" />
-					<Frame id="id-op-store-tile-01" class="" hittest="false" snippet="reward-tile" data-type="char-small"/>
-					<Frame id="id-op-store-tile-02" class="" hittest="false" snippet="reward-tile"/>
-					<Frame id="id-op-store-tile-03" class="" hittest="false" snippet="reward-tile"/>
-				</Panel>
-				<Panel class="op-store-items-row" >
-					<Frame id="id-op-store-tile-11" class="" hittest="false" snippet="reward-tile" data-type="char"/>
-					<Frame id="id-op-store-tile-12" class="" hittest="false" snippet="reward-tile"/>
-					<Frame id="id-op-store-tile-13" class="" hittest="false" snippet="reward-tile"/>
-				</Panel>
-				<Panel class="op-store-items-row" >
-					<Frame id="id-op-store-tile-21" class="" hittest="false" snippet="reward-tile" data-type="char"/>
-					<Frame id="id-op-store-tile-22" class="" hittest="false" snippet="reward-tile"/>
-					<Frame id="id-op-store-tile-23" class="" hittest="false" snippet="reward-tile"/>
-				</Panel>
-				<Panel class="op-store-items-row" >
-					<Frame id="id-op-store-tile-31" class="" hittest="false" snippet="reward-tile" data-type="char"/>
-					<Frame id="id-op-store-tile-32" class="" hittest="false" snippet="reward-tile"/>
-					<Frame id="id-op-store-tile-33" class="" hittest="false" snippet="reward-tile"/>
-				</Panel>
+			<Panel id="id-op-store-reward-rows" class="op-store-reward-rows-container">
+
+
+				                                        
+					                                                                                                         
+					                                                                                                       
+					                                                                                
+					                                                                                
+				        
+				                                   
+					                                                                                                 
+					                                                                                
+					                                                                                
+				        
+				                                   
+					                                                                                                 
+					                                                                                
+					                                                                                
+				        
+				                                   
+					                                                                                                 
+					                                                                                
+					                                                                                
+				            
 			</Panel>
 			<Button id=""
 				class="PopupButton horizontal-align-right right-margin-32" >

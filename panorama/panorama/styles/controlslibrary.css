@@ -1079,6 +1079,32 @@ Label.Orange
 	transition-delay: 0.0s, 0.5s, 0.5s;
 }
 
+.ControlLibBugs__ReadyParent
+{
+	width: 300px;
+	height: 300px;
+	border: 2px solid red;
+	background-color: rgb(190, 190, 190);
+}
+
+.ControlLibBugs__ReadyChild
+{
+	width: 100px;
+	height: 100px;
+	margin: 15px;
+	border: 2px solid red;
+	background-color: rgb(255, 153, 0);
+}
+
+.ControlLibBugs__ReadyChild--Ready
+{
+	border: 2px solid rgb(0, 255, 0);
+	background-repeat: no-repeat;
+	background-position: 0% 50%;
+	background-size: 100%;
+	background-image: url( "file://{images}/operations/op9/op9_sticker_pack_01_thumbnail.png" );
+}
+
 
 .RSSFeed
 {

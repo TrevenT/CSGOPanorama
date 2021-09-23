@@ -46,7 +46,8 @@
 								<Label text="#SFUI_Map_de_ancient" value="ancient" id="ui_mainmenu_bkgnd_movie_ancient"/>
 								<Label text="#SFUI_Map_dz_blacksite" value="blacksite" id="ui_mainmenu_bkgnd_movie_blacksite"/>
 								<Label text="#SFUI_Map_de_cbble" value="cbble" id="ui_mainmenu_bkgnd_movie_cbble"/>
-								<Label text="#SFUI_Map_dz_frostbite" value="frostbite" id="ui_mainmenu_bkgnd_movie_frostbite"/>
+								<Label text="#SFUI_Map_dz_county" value="county" id="ui_mainmenu_bkgnd_movie_county"/>
+								                                                                                                        
 								<Label text="#SFUI_Map_de_nuke" value="nuke" id="ui_mainmenu_bkgnd_movie_nuke"/>
 								<Label text="#SFUI_Map_coop_kasbah" value="sirocco_night" id="ui_mainmenu_bkgnd_movie_sirocco_night"/>
 								<Label text="#SFUI_Map_de_vertigo" value="vertigo" id="ui_mainmenu_bkgnd_movie_vertigo"/>

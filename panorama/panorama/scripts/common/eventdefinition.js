@@ -107,4 +107,13 @@
     $.DefineEvent( 'PlayerStats_PopupSingleMatch', 1, 'matchid', '' );
     $.DefineEvent( 'PlayerStats_DismissSingleMatch', 1, 'matchid', '' );
     $.DefineEvent( 'PlayerStats_MatchListerGoToMostRecent', 0, "", "" );
+
+    $.DefineEvent( 'DirectChallenge_GenRandomKey', 0, "", "" );
+    $.DefineEvent( 'DirectChallenge_EditKey', 0, "", "" );
+    $.DefineEvent( 'DirectChallenge_CopyKey', 0, "", "" );
+    $.DefineEvent( 'DirectChallenge_ChooseClanKey', 0, "", "" );
+    $.DefineEvent( 'DirectChallenge_ClanChallengeKeySelected', 1, "challengekey", "" );    
+
+
+
 } )();

@@ -80,10 +80,6 @@ var mainmenu_watch_tournament = (function () {
 	var _RefreshMatchesTab = function( tournament_id )
 	{
 		matchList.UpdateMatchList( _m_activeTab, tournament_id );
-		if ( _m_activeTab.activeMatchInfoPanel )
-		{
-			matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
-		}
 	};
 
 	var _RefreshActivePage = function( tournament_id )
@@ -373,7 +369,6 @@ var mainmenu_watch_tournament = (function () {
 			{
 				if ( _m_activeTab.activeMatchInfoPanel )
 				{
-					matchInfo.ResizeRoundStatBars( _m_activeTab.activeMatchInfoPanel );
 					matchList.ReselectActiveTile( _m_activeTab );
 				}
 			}

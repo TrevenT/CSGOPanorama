@@ -756,11 +756,23 @@ CSGOEndOfMatch.mainmenu-content__container
 	transition-timing-function: ease-in-out;
 }
 
-.mainmenu_news_container.hidden
+.mainmenu_news_container.hidden,
+.mainmenu_active-mission-container.hidden
 {
 	opacity: 0;
 	transform: scale3d( .5, .5, 5 );
 
+	transition-property:  opacity, transform;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.mainmenu_active-mission-container
+{
+	background-color: rgba(0, 0, 0, 0.90);
+	margin-left: 128px;
+	margin-top: 32px;
+	
 	transition-property:  opacity, transform;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
@@ -858,10 +870,18 @@ ToggleButton Label,
 	height: 64px;
 }
 
+.content-navbar__tabs--small Image
+{
+	height: 18px;
+	width: 18px;
+}
+
 .content-navbar__tabs--small Button Label,
-.content-navbar__tabs--small RadioButton Label
+.content-navbar__tabs--small RadioButton Label,
+.content-navbar__tabs--small ToggleButton Label
 {
 	font-size: 16px;
+	text-transform: none;
 }
 
 .content-navbar__tabs RadioButton:enabled:hover,

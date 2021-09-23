@@ -82,6 +82,36 @@ function OnInventoryUpdated ()
     LaunchMission();
 }
 
+
+function _InterruptToGetGameModeFlags ( mode )
+{
+
+    function _Callback ( value, resumeMatchmakingHandle = '' )
+    {
+        GameInterfaceAPI.SetSettingString( 'ui_playsettings_flags_official' + '_' + mode, value );
+
+        LaunchMission();
+    }
+
+    function _CancelCallback ( unused1, unused2 )
+    {
+        _ClosePopUp();
+        $.DispatchEvent( 'UIPopupButtonClicked', '' );
+    }
+
+    var callback = UiToolkitAPI.RegisterJSCallback( _Callback );
+    var cancelCallback = UiToolkitAPI.RegisterJSCallback( _CancelCallback );
+
+    UiToolkitAPI.ShowCustomLayoutPopupParameters( '', 'file://{resources}/layout/popups/popup_play_gamemodeflags.xml',
+        '&callback=' + callback +
+        '&cancelcallback=' + cancelCallback +
+        '&textToken=' + '#play_settings_' + mode + '_dialog' +
+        GameModeFlags.GetOptionsString( mode ) +
+        '&currentvalue=' + 0,
+    );
+    
+}
+
 function LaunchMission ()
 {
     var nRequestedMissonCardId = $.GetContextPanel().GetAttributeInt( "requestedMissonCardId", 0 );
@@ -139,6 +169,23 @@ function LaunchMission ()
 			}
         }
 
+		var gameModeFlags = GameInterfaceAPI.GetSettingString( 'ui_playsettings_flags_official_' + gameMode );
+		gameModeFlags = gameModeFlags ? parseInt( gameModeFlags ) : 0;
+
+		var questGameModeFlags = InventoryAPI.GetQuestGameModeFlags( QuestItemID );
+		if ( questGameModeFlags )
+		{	                                                                               
+			gameModeFlags = questGameModeFlags;
+		}
+
+                                           
+        if ( GameModeFlags.DoesModeUseFlags( gameMode ) && gameModeFlags == 0)
+        {
+            _InterruptToGetGameModeFlags( gameMode );
+
+            return;
+        }
+
                                                                                
         var cfg = GameTypesAPI.GetConfig();
         for ( var type in cfg.gameTypes )
@@ -191,9 +238,15 @@ function LaunchMission ()
                         mode: gameMode,
                         type: gameType,
                         mapgroupname: mapGroup,
-                        questid: 0
+                        questid: 0,
+                        gamemodeflags: gameModeFlags,
                     },
-                }
+				},
+				delete: {
+					Options: {
+						challengekey: 1
+					}
+				}
             };
 
             if ( gameType === 'cooperative' )

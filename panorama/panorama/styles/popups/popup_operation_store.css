@@ -14,7 +14,7 @@
 	border-radius: 0px;
 	flow-children: none;
 	padding: 0px;
-	background-color: gradient( linear, 0% 100%,0% 0%, from( rgba(31, 22, 5, 0.5)), to( rgba(85, 61, 26, 0.5)));
+	background-color: gradient( linear, 0% 100%,0% 0%, from( rgba(5, 30, 31, 0.5)), to( rgba(26, 66, 85, 0.5)));
 	horizontal-align: center;
     vertical-align: center;
 	box-shadow: shadowOffset;
@@ -36,11 +36,11 @@
 	padding-bottom: 0px;
 	flow-children: down;
 
-	background-image: url( "file://{resources}/videos/background_movie_op10.webm" );
+	background-image: url( "file://{resources}/videos/op11_underwater.webm" );
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: rgba(0, 0, 0, 0.2);
 
 
 	background-img-opacity: .1;
@@ -61,7 +61,7 @@
 	font-size: 36px;
 	font-family: Stratum2, 'Arial Unicode MS';
 	font-weight: medium;
-	color: opTenYellow;
+	color: opCompleteColor;
 	letter-spacing: 5px;
 	width: 100%;
 	text-overflow: shrink;
@@ -89,7 +89,7 @@
 	font-size: 16px;
 	font-family: Stratum2, 'Arial Unicode MS';
 	font-weight: lighter;
-	color: opTenYellow;
+	color: opCompleteColor;
 	width: 250px;
 	opacity: 1;
 
@@ -101,13 +101,13 @@
 .popup-operation-store-subtitle--light
 {
 	opacity: .7;
-	color: opTenYellow;
+	color: opCompleteColor;
 }
 
 .popup-operation-store-subtitle--price
 {
 	opacity: 1;
-	color: opTenYellow;
+	color: opCompleteColor;
 }
 
 .popup-operation-store-progress
@@ -133,7 +133,7 @@
 
 .popup-operation-store-progress__title
 {
-	color: opTenYellow;
+	color: opCompleteColor;
 	text-align: center;
 	horizontal-align: center;
 	margin-bottom: 16px;
@@ -159,7 +159,7 @@
 	margin: 0px 16px;
 	vertical-align: center;
 	transform: rotateZ( -90deg ) translateX( 0px);
-	wash-color: opTenYellow;
+	wash-color: opCompleteColor;
 	margin-top: 38px;
 	width: 32px;
 
@@ -218,7 +218,7 @@
 {
     horizontal-align: center;
     font-weight: bold;
-    color:opTenYellow;
+    color:opCompleteColor;
     font-size: 32px;
 	text-shadow: 0px 0px 2px 4 #000000e1;
 	
@@ -254,7 +254,7 @@
 .op-main__progress.after-purchase .op-main__progress__label-count
 {
 	color: white;
-	text-shadow: 0px 0px 4px 2 opAccentColorLight;
+	text-shadow: 0px 0px 4px 2 rgb(155, 187, 229);
 }
 
 .op-main__progress.after-purchase .op-main__progress__image
@@ -265,7 +265,7 @@
 
 .op-main__progress__glow
 {
-	wash-color: opTenYellow;
+	wash-color: opCompleteColor;
 	height: 0px;
 	width: 0px;
 	-s2-mix-blend-mode: SRGBadditive;
@@ -712,9 +712,9 @@
 .popup-operation-store-row__quantity__btn
 {
 	vertical-align: center;
-	border: 1px solid opTenYellow;
+	border: 1px solid opCompleteColor;
 	padding: 0px;
-	background-color: opTenTan;
+	background-color: opIncompleteColor;
 	margin: 2px 0px 2px 8px;
 
 	brightness: 1.0;
@@ -767,14 +767,14 @@
 
 .popup-operation-store-row-bottom-border
 {
-	border-bottom: 1px solid opTenTan;
+	border-bottom: 1px solid opIncompleteColor;
 	padding-bottom: 16px;
 	margin-bottom: 0px;
 }
 
 .popup-operation-store-row__text--title
 {
-	color: opTenTan;
+	color: opIncompleteColor;
 	font-weight: black;
 }
 
@@ -852,7 +852,7 @@
 .popup-operation-store-progress-apply-panel .popup-operation-store-progress__title
 {
 	font-size: 48px;
-	color: gradient( linear, 0% 0%,0% 100%, from( opTenYellow), to( #8f7c12));
+	color: gradient( linear, 0% 0%,0% 100%, from( opCompleteColor), to( #8f7c12));
 } 
 
 .popup-operation-store-progress-apply-panel .popup-operation-store-progress-panel--current
@@ -864,7 +864,7 @@
 .popup-operation-store-progress-apply-panel .op-main__progress__image
 {
 	opacity: 1;
-	wash-color: opTenTan;
+	wash-color: opIncompleteColor;
 	vertical-align: center;
 	horizontal-align: center;
 	img-shadow: 0px 0px 6px 5 rgb(0, 0, 0);

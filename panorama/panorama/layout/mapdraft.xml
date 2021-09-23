@@ -7,7 +7,6 @@
 
 	<scripts>
 		<include src="file://{resources}/scripts/common/teamcolor.js" />
-		<include src="file://{resources}/scripts/common/teamcolor.js" />
 		<include src="file://{resources}/scripts/avatar.js" />
 		<include src="file://{resources}/scripts/mapdraft.js" />
 	</scripts>

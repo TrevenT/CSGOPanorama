@@ -129,7 +129,6 @@ var OperationStore = ( function()
 						elParent.MoveChildBefore( elBarSection, aCoinPanels[coinLevel] );
 					}
 				}
-	
 			}
 
 			if ( !_m_placeBarSegments )
@@ -143,132 +142,243 @@ var OperationStore = ( function()
 	var _FillOutStoreTiles = function ()
 	{
 		var aRewards = OperationUtil.GetRewardsData();
+		var aRowTypes = [ 'isCharacterLootlist', 'set_train_2021', [ 'isWeaponLootlist', 'isWeaponsCase', 'isStickerLootlist', 'isGraffitiBox' ] ];
+		var bHasTitle = false;
+		
+		aRowTypes.forEach((type, index) => {
+			var aRow = [];
+			                                               
+			aRewards.forEach( ( reward, index ) =>
+			{
+				var strSetName = InventoryAPI.GetTag( reward.lootlist[ 0 ], 'ItemSet' );
+		
+				if ( strSetName === type )
+				{
+					aRow.push( reward );
+					bHasTitle = true;
+				}
+				else if( strSetName !== 'set_train_2021' && Array.isArray( type ) && type.indexOf( reward.containerType) !== -1  )
+				{
+					aRow.push( reward );
+					bHasTitle = false;
+				}
+				else if( reward.containerType === type )
+				{
+					aRow.push( reward );
+					bHasTitle = true;
+				}
+			});
 
-		aRewards.sort( function( a, b ) {                                       
-			var cmpUiOrder = parseInt( a.uiOrder ) - parseInt( b.uiOrder );
-			if ( cmpUiOrder != 0 )
-				return cmpUiOrder;                      
-
-			var cmpPoints = parseInt( a.points ) - parseInt( b.points );
-			if ( cmpPoints != 0 || true )                                                         
-				return a.idx - b.idx;                                                 
-
-			return a.rnd - b.rnd;                                                
-		} );
-
-		var uiOrderRows = [ 0, -1, 0, 0 ];                             
-
-		aRewards.forEach((reward, index) => {
-			var uiOrder = parseInt( reward.uiOrder );
-			var nItemRow = uiOrderRows[ uiOrder ];
-			uiOrderRows[ uiOrder ] += 1;
-			
-			                                                                                                                                                                  
-			var nActualRow = ( nItemRow >= 0 ) ? nItemRow : 0;
-			var sExtraId = ( nItemRow >= 0 ) ? '' : ( '' + ( -nItemRow ) );
-			var itemTileNameId = _oTileId + nActualRow + '' + uiOrder + sExtraId;
-			var itemTile = _m_cp.FindChildInLayoutFile( itemTileNameId );
-			itemTile.AddClass( 'op-store-item-tile-reward_ui_order' + uiOrder );
-			itemTile.AddClass( 'op-store-item-tile-reward_ui_row' + nActualRow );
-
-			var itemBtn = itemTile.FindChildInLayoutFile( 'id-op-store-item-tile-btn' );
-			_MakeItemImages( itemTile, reward, index, itemBtn );
-
-			var rewardId = reward.itempremium.ids[ 0 ];
-			var itemName = itemTile.FindChildInLayoutFile( 'id-op-store-item-tile-name' );
-			itemName.text = InventoryAPI.GetItemName( rewardId );
-
-			itemBtn.SetPanelEvent( 'onactivate', _OpenInspect.bind( undefined, reward ) );
-			itemBtn.FindChildInLayoutFile( 'id-op-store-item-cost').text = reward.points;
+			var elRow = _AddRewardRow( index, bHasTitle );
+			_UpdateRowDescPanel( elRow, aRow,  bHasTitle );
+			var aRewardPanels = _AddRewards( elRow, aRow );
+			if( bHasTitle )
+			{
+				aRewardPanels.forEach( reward =>
+				{
+					elRow.FindChildInLayoutFile( 'id-op-store-reward-row-bg' ).AddBlurPanel( reward );
+				} );
+			}
 		});
+
+		                                                                           
+		   	                                                               
+		   	                      
+		   		                                        
+
+		   	                                                            
+		   	                                                                                      
+		   		                                                                      
+
+		   	                                                                       
+		       
+
+		                                                                  
+
+		                                      
+		   	                                         
+		   	                                      
+		   	                            
+			
+		   	                                                                                                                                                                  
+		   	                                                  
+		   	                                                               
+		   	                                                                     
+		   	                                                             
+		   	                                                                    
+		   	                                                                     
+
+		   	                                                                            
+		   	                                                    
+
+		   	                                           
+		   	                                                                              
+		   	                                                     
+
+		   	                                                                              
+		   	                                                                             
+		      
 	};
 
-	var numBackGroundImages = 4;
-	var currentImage = 0; 
-	var _MakeItemImages = function ( itemTile, oReward, index, itemBtn )
+	var _AddRewardRow = function( index, bHasTitle )
 	{
-		var elParent = itemTile.FindChildInLayoutFile('id-op-store-item-tile-image');
-		var randomRotate = false;
+		var elContainer = $.GetContextPanel().FindChildInLayoutFile( 'id-op-store-reward-rows' );
 
-		currentImage++;
-		_SetTileBackgroundImage( elParent, "store_bg_pixels" + currentImage );
-		currentImage = ( currentImage === numBackGroundImages ) ? 1 : currentImage;
+		var row = null;
 
-		if( oReward.containerType === 'isCharacterLootlist' )
+		if ( !elContainer.FindChildInLayoutFile( 'id-op-store-reward-row' + index ) )
 		{
-			_LoadCharactorImages( itemTile ,elParent, itemBtn, oReward );
-			var color = ItemInfo.GetRarityColor( oReward.lootlist[0] );
-			_SetBackgroundGradient( elParent, color, '#002456' );
+			row = $.CreatePanel( 'Panel', elContainer, 'id-op-store-reward-row' + index );
+			row.BLoadLayoutSnippet( 'reward-row' );
 		}
-		else if( oReward.containerType === 'isWeaponLootlist' )
+		else
 		{
-			_LoadWeaponImages( elParent, oReward );
-			_SetBackgroundGradient( elParent, '#291F0C90', '#291F0C' );
+			row = elContainer.FindChildInLayoutFile( 'id-op-store-reward-row' + index );
 		}
-		else if( oReward.containerType === 'isStickerLootlist' || oReward.containerType === 'isGraffitiBox' )
-		{
-			randomRotate = true;
-			var aImagePanel = _SetMultiItemImages( elParent, oReward );
 
-			if( oReward.containerType === 'isGraffitiBox' )
+		row.SetHasClass( "show-row-title", bHasTitle );
+		return row;
+	}
+
+	var _UpdateRowDescPanel = function( elRow, aRow, bHasTitle )
+	{
+		if( !bHasTitle )
+		{
+			return;
+		}
+
+		var setName =  InventoryAPI.GetTag( aRow[0].lootlist[ 0 ], 'ItemSet' );
+		if( setName )
+		{
+			elRow.FindChildInLayoutFile('id-op-store-reward-row-bg-icon' ).SetImage( 'file://{images_econ}/econ/set_icons/' + setName + '.png' );
+			elRow.FindChildInLayoutFile('id-op-store-reward-row-bg' ).style.backgroundImage = 'url("file://{images}/operations/op11/' + setName + '_row_bg.png");'
+			elRow.FindChildInLayoutFile('id-op-store-reward-row-bg' ).style.backgroundPosition = '0% 20%;';
+			elRow.FindChildInLayoutFile('id-op-store-reward-row-bg' ).style.backgroundSize = 'cover;';
+			elRow.FindChildInLayoutFile('id-op-store-reward-row-bg' ).style.backgroundImgOpacity = '.6;';
+		}
+
+		elRow.SetDialogVariable( 'title', $.Localize( '#CSGO_' + setName ) );
+	}
+
+	var _AddRewards = function( elRow, aRow )
+	{
+		var elContainer = elRow.FindChildInLayoutFile( 'id-rewards-container' );
+		aRow = aRow.sort(function(a, b) {
+			return a.uiOrder - b.uiOrder;
+		} );
+		
+		var aRewardPanels = [];
+
+		aRow.forEach( ( oRewardData, index ) =>
+		{
+			var elReward = null;
+
+			if ( !elContainer.FindChildInLayoutFile( 'id-op-store-reward-' + index ) )
+			{
+				elReward = $.CreatePanel( 'Panel', elContainer, 'id-op-store-reward-' + index );
+				elReward.BLoadLayoutSnippet( 'reward-tile' );
+			}
+			else
+			{
+				elReward = elContainer.FindChildInLayoutFile( 'id-op-store-reward-' + index );
+			}
+
+			_UpdateRewardTile( elRow, elReward, oRewardData );
+
+			aRewardPanels.push( elReward );
+		} );
+
+		return aRewardPanels;
+	}
+
+	                        
+	var _UpdateRewardTile = function( elRow, elReward, oRewardData )
+	{
+		var elImagesContainer = elReward.FindChildInLayoutFile( 'id-op-store-item-tile-images');
+
+		if( oRewardData.containerType === 'isCharacterLootlist' )
+		{
+			for ( var i = oRewardData.lootlist.length - 1; i >= 0; i-- )
+			{
+				var bCreateSeperator = ( i > 0 );
+				_LoadCharactorImages( elImagesContainer, oRewardData.lootlist[ i ], i, bCreateSeperator );
+	
+				                                                                 
+			}
+
+			elImagesContainer.SetHasClass( "three-tile", oRewardData.lootlist.length === 3 );
+			
+			                  
+			                                                                                  
+			
+			var color = ItemInfo.GetRarityColor( oRewardData.lootlist[ 0 ] );
+			_SetRarityColor( elReward, color );
+		}
+		else if( oRewardData.containerType === 'isWeaponLootlist' )
+		{
+			_LoadWeaponImages( elImagesContainer, oRewardData );
+			var strSetName = InventoryAPI.GetTag( oRewardData.lootlist[ 0 ], 'ItemSet' );
+		
+			if ( strSetName ==="set_train_2021" )
+			{
+				var color = ItemInfo.GetRarityColor( oRewardData.lootlist[ 0 ] );
+				_SetRarityColor( elReward, color );
+				                                                                                          
+			}
+			else
+			{
+				_SetTileBackgroundImage( elImagesContainer, "store_bg_base", true );
+			}
+		}
+		else if( oRewardData.containerType === 'isStickerLootlist' || oRewardData.containerType === 'isGraffitiBox' )
+		{
+			var aImagePanel = _SetMultiItemImages( elImagesContainer, oRewardData );
+
+			if( oRewardData.containerType === 'isGraffitiBox' )
 			{
 				_TintGraffitiImages( aImagePanel );
 			}
-			_SetBackgroundGradient( elParent, '#291F0C90', '#291F0C' );
+			_SetTileBackgroundImage( elImagesContainer, "store_bg_sand", true );
 		}
 		else
 		{
-			LoadItemImage( elParent, oReward.itempremium.ids[ 0 ], '', 'op-store-item-tile__image center' );
+			LoadItemImage( elImagesContainer, oRewardData.itempremium.ids[ 0 ], '', 'op-store-item-tile__image center' );
+			_SetTileBackgroundImage( elImagesContainer, "store_bg_sand", true );
+		}
+		
+		_SetRewardName( elReward, oRewardData.itempremium.ids[ 0 ] );
+		elReward.FindChildInLayoutFile( 'id-op-store-item-cost').text = oRewardData.points;
+		elReward.SetPanelEvent( 'onactivate', _OpenInspect.bind( undefined, oRewardData ) );
+	};
+
+	var _LoadCharactorImages = function( elImagesContainer, rewardId, index, bCreateSeperator )
+	{
+		var elImage = elImagesContainer.FindChildInLayoutFile( 'id-op-shop-tile-item-image-' + rewardId );
+
+		if( !elImage && rewardId )
+		{
+			var styleName = 'op-store-reward-tile__image-char-' + index;
+			elImage = LoadItemImage( elImagesContainer, rewardId,
+				'id-store-item-tile__item--char' + rewardId,
+				styleName
+			);
+			
+			if ( bCreateSeperator )
+			{
+				$.CreatePanel( "Panel", elImagesContainer, '', { class: 'op-store-reward-tile__image-seperator' });
+			}
 		}
 	};
 
-	var _LoadCharactorImages = function( itemTile, elParent, itemBtn, oReward )
+	var _SetRewardName = function( elReward, rewardId )
 	{
-		var numImagesInPanel = 5;
-		var charforModelIndex = 2;
-
-		function LoadCharImageAndModel ( index, rewardId, isSmallCharTile )
-		{
-			var elImage = elParent.FindChildInLayoutFile( 'id-op-shop-tile-item' + index );
-
-			if( !elImage && rewardId)
-			{
-				var cameraPreset = isSmallCharTile ? 20 : 19;
-				{
-					elImage = LoadItemImage( elParent, rewardId,
-						'id-store-item-tile__item--char' + index, 
-						'op-store-item-tile__item--char' + index 
-						);
-
-					if( index === charforModelIndex )
-					{
-						itemBtn.SetPanelEvent( 'onmouseover', _OnCharMouseover.bind( undefined, elParent, rewardId, elImage, cameraPreset) );
-						itemBtn.SetPanelEvent( 'onmouseout', _OnCharMouseout.bind( undefined, elParent, elImage ) );
-					}
-					elImage.SetHasClass( 'small-char-tile', isSmallCharTile );
-				}
-			}
-		}
-
-		var isSmallCharTile = ( itemTile.GetAttributeString( 'data-type', '' ) === "char-small" ) ? true : false;
-
-		if( oReward.lootlist.length === 1 )
-		{
-			                  
-			LoadCharImageAndModel( 2, oReward.lootlist[ 0 ], isSmallCharTile );
-		}
-		else
-		{
-			for ( var i = 0; i < numImagesInPanel; i++ )
-			{
-				LoadCharImageAndModel( i, oReward.lootlist[ i ], isSmallCharTile );
-			}
-		}
+		var itemName = elReward.FindChildInLayoutFile( 'id-op-store-item-tile-name' );
+		itemName.text = InventoryAPI.GetItemName( rewardId );
 	};
 
 	var _LoadWeaponImages = function( elParent, oReward )
 	{
-		var elCollectionIcon = $.CreatePanel( "ItemImage", elParent , "id-op-store-item-tile__icon", {
+		var elCollectionIcon = $.CreatePanel( "ItemImage", elParent, "id-op-store-item-tile__icon", {
 			scaling: 'stretch-to-fit-preserve-aspect',
 			class: 'op-store-item-tile__icon'
 		});
@@ -285,7 +395,7 @@ var OperationStore = ( function()
 			elImage = LoadItemImage( elParent, 
 				oReward.lootlist[ indexToDisplay ], 
 				'id-op-shop-tile-item', 
-				'op-store-item-tile__item op-store-item-tile__icon--weapon'
+				'op-store-item-tile__item'
 			);
 			elParent.SetPanelEvent( 'onmouseover', function(){ InventoryAPI.PrecacheCustomMaterials( oReward.lootlist[0] );} );
 		}
@@ -296,13 +406,13 @@ var OperationStore = ( function()
 		var elMultiItemTile = $.CreatePanel( "Panel", elParent , "" );
 		elMultiItemTile.BLoadLayoutSnippet( 'reward-sticker-images' );
 		elMultiItemTile.style.zIndex = "2";
-		var numItems = oReward.lootlist.length - 1;
+		var numItems = oReward.lootlistGroups ? oReward.lootlistGroups.length - 1 :  oReward.lootlist.length - 1;
 
 		elMultiItemTile.Children().forEach( function( elImage, index )
 		{
 			var lootlistIndex = index % 2 === 0 ? ( numItems - index) : ( 0 + index );
-			elImage.itemid = oReward.lootlist[ lootlistIndex ];
-			elImage.Data().rewardId = oReward.lootlist[ lootlistIndex ];
+			elImage.itemid = oReward.lootlist[ oReward.lootlistGroups ? oReward.lootlistGroups[ lootlistIndex ].idxBegin : lootlistIndex ];
+			elImage.Data().rewardId = elImage.itemid;
 		});
 
 		return elMultiItemTile.Children();
@@ -334,53 +444,56 @@ var OperationStore = ( function()
 		return elImage;
 	};
 
-	var _SetBackgroundGradient = function( itemTile, color, color2 )
+	var _SetRarityColor = function( itemTile, color )
 	{
 		if ( !color )
 			return;
 		
-		itemTile.style.backgroundColor = 'gradient( linear, 0% 0%, 100% 0%, from( '+ color +'), to ( '+color2+' ) );';
+		itemTile.FindChildInLayoutFile( 'id-op-store-item-tile-rarity' ).style.backgroundColor = color;
 	};
 
-	var _SetTileBackgroundImage = function( elParent, imageName )
+	var _SetTileBackgroundImage = function( elParent, imageName, bFade = false )
 	{
 		var elPanelBg = $.CreatePanel( "Image", elParent , "id-op-shop-tile-bg", { class: 'op-store-item-tile__bg'});
-		elPanelBg.style.backgroundImage = "url( 'file://{images}/operations/op10/" + imageName+".png' );";
-		elPanelBg.style.backgroundSize ='cover';
+		elPanelBg.style.backgroundImage = "url( 'file://{images}/operations/op11/" + imageName+".png' );";
+		elPanelBg.style.backgroundSize ='auto 100% ';
 		elPanelBg.style.backgroundRepeat = 'no-repeat';
 		elPanelBg.style.zIndex ='1';
+
+		elPanelBg.SetHasClass( 'faded', bFade )
 	};
 
-	var _OnCharMouseover = function( elParent, rewardId, rewardImage, cameraPreset )
-	{
-		var elPlayerModel = elParent.FindChildInLayoutFile( 'id-op-shop-tile-char-model' );
-		if( !elPlayerModel )
-		{
-			elPlayerModel = $.CreatePanel( "ItemPreviewPanel", elParent , "id-op-shop-tile-char-model", { class: 'op-store-item-tile__char-model'});
-			var model = ItemInfo.GetModelPathFromJSONOrAPI( rewardId );
+	                                                                                   
+	    
+	   	                                                                                   
+	   	                    
+	   	 
+	   		                                                                                                                                        
+	   		                                                           
 
-			elPlayerModel.SetScene( "resource/ui/econ/ItemModelPanelCharWeaponInspect.res",
-				model,
-				false
-			);
+	   		                                                                               
+	   			      
+	   			     
+	   		  
 
-			elPlayerModel.SetSceneIntroFOV( 20, 0 );
-			var settings = ItemInfo.GetOrUpdateVanityCharacterSettings( rewardId, 'unowned' );
-			settings.panel = elPlayerModel;
+	   		                                        
+	   		                                                                                  
+	   		                               
 
-			elPlayerModel.SetCameraPreset( cameraPreset, false );
-			elPlayerModel.SetHasClass( 'hide', true );
+	   		                                                     
+	   		                                          
 
-		}
-		elPlayerModel.SetHasClass( 'hide', false );
-		rewardImage.SetHasClass( 'hide', true );
-	};
+	   	 
 
-	var _OnCharMouseout = function( elParent, rewardImage ) 
-	{
-		elParent.FindChildInLayoutFile( 'id-op-shop-tile-char-model').SetHasClass( 'hide', true );
-		rewardImage.SetHasClass( 'hide', false );
-	};
+	   	                                           
+	   	                                        
+	     
+
+	                                                           
+	    
+	   	                                                                                          
+	   	                                         
+	     
 
 	var _SetPurchaseBtns = function( totalStarsAvailiable )
 	{

@@ -6,6 +6,8 @@
 		<include src="file://{resources}/styles/advertising_toggle.css" />
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/scheduler.js" />	
+		<include src="file://{resources}/scripts/util_gamemodeflags.js" />
 		<include src="file://{resources}/scripts/common/formattext.js" />
 		<include src="file://{resources}/scripts/common/icon.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
@@ -14,6 +16,7 @@
 		<include src="file://{resources}/scripts/mainmenu_play.js" />
 		<include src="file://{resources}/scripts/controlslibrary.js" />
 		<include src="file://{resources}/scripts/operation/operation_main.js" />
+
 	</scripts>
 
 	                                                  
@@ -35,7 +38,6 @@
 						</Panel>
 						<Label id="MapGroupUnrankedTag" class="map-selection-info__new map-selection-info__unranked stratum-font hidden" text='#SFUI_RankType_Modifier_Unranked'/>
 					</Panel>
-
 
 				<Panel id="MapSelectionButton" class="map-selection-btn-container" hittest="false" >
 					                           
@@ -62,7 +64,7 @@
 		</snippet>
 
 		<snippet name="QuickSelectionSetButtonSnippet">
-			<Button class="map-selection__quick-selection-set">
+			<Button class="map-selection__quick-selection-set preset-button">
 				<Label text="{s:quick-selection-set-name}"/>
 			</Button>
 
@@ -119,6 +121,149 @@
 			</Panel>
 		</snippet>
 
+		<snippet name="MapSelectionContainer_directchallenge" >
+			<Panel class="map-selection-list-directchallenge hidden">
+
+				<Panel class="full-width left-right-flow top-padding-medium" style="height: fill-parent-flow( 1.0 );">
+
+					             
+					<Panel class="directchallenge-buttons-container">
+
+						               
+						<Panel class="directchallenge-section">
+
+							<Button id="RandomChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_GenRandomKey' )">
+
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/create_new.svg"/>
+
+								<Panel class="directchallenge-section__text-container">
+									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_create_title" />
+									<Label class="directchallenge-section__text" html="true" text="#DirectChallenge_create_text" />
+								</Panel>
+
+							</Button>
+
+						</Panel>
+
+						                    
+						<Panel class="directchallenge-section">
+
+							<Button id="ClanChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_ChooseClanKey' )">
+
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/group_queue.svg"/>
+
+								<Panel class="directchallenge-section__text-container">
+									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_clan_title" />
+									<Label class="directchallenge-section__text" html="true" text="#DirectChallenge_clan_text" />
+								</Panel>
+
+							</Button>
+
+						</Panel>
+
+						             
+
+						<Panel class="directchallenge-section">
+
+							<Button id="EditChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_EditKey' )">
+
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/join_queue.svg"/>
+
+								<Panel class="directchallenge-section__text-container">
+									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_join_title" />
+									<Label class="directchallenge-section__text" html="true" text="#DirectChallenge_join_text" />
+								</Panel>
+							</Button>
+
+						</Panel>
+
+					</Panel>
+
+					              
+					<Panel class="directchallenge-status horizontal-align-right top-bottom-flow" style="width:fill-parent-flow(1.0); height:100%;">
+
+						               
+						<Panel id="" class="directchallenge-status__header left-right-flow full-width"> 
+
+							<CSGOAvatarImage id="JsDirectChallengeAvatar" class="directchallenge-status__header__avatar"/>
+
+							<Panel class="directchallenge-status__header__text">
+
+								<Label id="" class="directchallenge-status__header__codesourcelabel horizontal-align-left vertical-align-top" text="{s:code-source-label}"/>
+								<Label id="JsDirectChallengeKeySource" class="directchallenge-status__header__codesource horizontal-align-left vertical-align-top" text="{s:code-source}"/>
+
+								<Label id="JsDirectChallengeKey" class="directchallenge-status__header__queuecode horizontal-align-left vertical-align-top" text="{s:queue-code}"/>
+							</Panel>
+
+							<Button 
+							id="CopyChallengeKey" 
+							class="IconButton" 
+							onactivate="$.DispatchEvent( 'DirectChallenge_CopyKey' )"
+							onmouseout="UiToolkitAPI.HideTextTooltip()">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/make_copy.svg"/>
+								<Label id="" class="horizontal-align-left vertical-center" text="#directchallenge_copycode"/>
+							</Button>
+															
+						</Panel>
+
+						<Panel class="flow-none full-width full-height">
+
+							<Panel id="id-directchallenge-explanation" class="directchallenge-explanation-container">
+
+									<Panel class="directchallenge-explanation__top">
+										<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/private_queue.svg"/>
+										<Panel class="top-bottom-flow vertical-align-bottom">
+											<Label class="directchallenge-explanation title" html="true" text="#DirectChallenge_Help_title" />
+											<Label class="directchallenge-explanation" html="true" text="#DirectChallenge_Help_desc" />
+										</Panel>
+
+									</Panel>
+
+									<Panel class="directchallenge-explanation__lower">
+										<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/join_queue.svg"/>
+										<Panel class="top-bottom-flow vertical-align-top">
+											<Label class="directchallenge-explanation title" html="true" text="#DirectChallenge_Help_personal_title" />
+											<Label class="directchallenge-explanation" html="true" text="#DirectChallenge_Help_personal_desc" />
+										</Panel>
+
+									</Panel>
+
+									<Panel class="directchallenge-explanation__lower">
+										<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/group_queue.svg"/>
+										<Panel class="top-bottom-flow vertical-align-top">
+											<Label class="directchallenge-explanation title" html="true" text="#DirectChallenge_Help_clan_title" />
+											<Label class="directchallenge-explanation" html="true" text="#DirectChallenge_Help_clan_desc" />
+											<Label class="directchallenge-explanation note" html="true" text="#DirectChallenge_Help_note" />
+										</Panel>
+									</Panel>
+								
+							</Panel>
+
+							<Panel id="id-directchallenge-status__queue-members" class="directchallenge-status__queue-members top-bottom-flow full-width full-height hidden" >
+								<Label id="id-directchallenge-status" class="directchallenge-status__queue-members__label horizontal-align-left vertical-align-top" text="" html='true' />
+								
+								<Panel id="DirectChallengeQueueMembers" class="directchallenge-status__queuememberscontainer" />
+								                                  
+
+							</Panel>
+						</Panel>
+
+					</Panel>
+
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="SmallAvatar">
+			<Panel class="small-avatar hidden">
+				<Panel>
+					<Panel class="avatar-image__default"/>
+					<CSGOAvatarImage id="JsAvatarImage" class="avatar-image__icon"/>
+				</Panel>
+				<Label class="small-avatar-name stratum-font" text="{s:teammate_name}"/>
+			</Panel>
+		</snippet>
+
 		<snippet name="MapListSection" >
 			<Panel class="map-selection-list-section">
 				                  
@@ -144,21 +289,7 @@
 
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentTeamDropdown" menuclass="DropDownMenu Width-300" />
 					<DropDown class="PopupButton play-menu__tournament-only" id="TournamentStageDropdown" menuclass="DropDownMenu Width-300" />
-
-					<Panel id="PrimeStatusPanel" class="left-right-flow vertical-center">
-						<Panel class="play-menu-primestatus-image" />
-						<TooltipPanel tooltip="#tooltip_prime_not_enrolled_2" class="vertical-center">
-							<Button id="id-play-menu-get-prime" class="play-menu-get-prime" >
-								<Label id="PrimeStatusButtonLabel" text="#elevated_status_btn_no_price" html="true"/>
-							</Button>
-						</TooltipPanel>
-						<ToggleButton id="id-play-menu-toggle-prime" html="true" class="play-menu-toggle-prime">
-							<Panel id="id-play-menu-toggle-slider" class="play-menu-prime-toggle__slider-pill">
-								<Panel class="play-menu-prime-toggle__slider"/>
-							</Panel>
-						</ToggleButton>
-						<Label id="PrimeStatusLabelNA" class="play-menu-prime-mode-not-prime-label stratum-font fontWeight-Medium fontSize-m fontcolor-white" text="#elevated_status_toggle_non_prime" html="true"/>
-					</Panel>
+	
 				</Panel>
 
 			</Panel>
@@ -203,7 +334,7 @@
 						<Label text="#SFUI_GameModeCoopMission"
 						onmouseover="UiToolkitAPI.ShowTextTooltip( 'coopmission', '#PlayMenu_guardian_tooltip' );"
 						onmouseout="UiToolkitAPI.HideTextTooltip();"/>
-					</RadioButton>
+					</RadioButton>				
 				</Panel>
 
 				<Panel id="WorkshopSearchBar" class="content-navbar__tabs">
@@ -226,84 +357,146 @@
 			</Panel>
 			
 			<Panel class="top-bottom-flow full-width full-height">
-				<Panel class="left-right-flow map-selection-list__quick-selection-sets">
-					<Label text="#presets_title" class="map-selection__quick-selection-set-title" />
 
-					<Panel class="game-mode-selection-radios-spacer"/>
+					<Panel class="settings-container content-navbar__tabs--small">
+						<Panel class="left-right-flow full-height">
+							<ToggleButton id="JsDirectChallengeBtn" html="true" class="play-menu-toggle-prime play-menu-option-btn play-menu-option-long-btn" onactivate="PlayMenu.OnDirectChallengeBtn()">
+								<Panel id="id-play-menu-toggle-slider" class="PopupButton play-menu-prime-toggle__slider-pill">
+									<Panel class="play-menu-prime-toggle__slider"/>
+								</Panel>
+								<Label text="#directchallenge" />
+							</ToggleButton>
 
-					<TooltipPanel tooltip="#presets_favorites_tooltip" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center;">
-						<Button id="jsQuickSelectionFavoritesSet" class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'favorites' )">
-							<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/select_favorites.svg"/>
-						</Button>
-					</TooltipPanel>
+							<TooltipPanel id="id-tt_gamemodeflags" tooltip="" class="horizontal-right play-settings-gamemodeflags vertical-center" style="tooltip-position: top;">
+								<Button id="GameModeFlagsBtn" class="play-menu-option-btn" onactivate="PlayMenu.OnGameModeFlagsBtnClicked()" >
+									<Image id="FlagSettingImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/settings.svg" />
+									<Label text="{s:gamemodeflag_setting}"/>
+								</Button>
+							</TooltipPanel>
 
-					<Panel id="jsQuickSelectionSetsContainer" class="map-selection-list__quick-selection-sets__btns">
-						                                                                         
+							<Button id="PlayMenulLeaderboards" class="play-menu-option-btn" style="horizontal-align:left;" >
+								<Image texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/graph.svg" />
+								<Label text="#SFUI_LEADERBOARD" />
+							</Button>
+						</Panel>
+
+						<Panel class="left-right-flow full-height horizontal-align-right">
+							<Panel id="PrimeStatusPanel" class="left-right-flow vertical-center">
+								<TooltipPanel tooltip="#tooltip_prime_not_enrolled_2" class="vertical-center">
+									<Button id="id-play-menu-get-prime" class="PopupButton play-menu-get-prime right-margin" >
+										<Label id="PrimeStatusButtonLabel" text="#elevated_status_btn_no_price" html="true"/>
+									</Button>
+								</TooltipPanel>
+								<ToggleButton id="id-play-menu-toggle-prime" html="true" class="play-menu-toggle-prime play-menu-option-btn play-menu-option-long-btn">
+									<Panel id="id-play-menu-toggle-slider" class="PopupButton play-menu-prime-toggle__slider-pill">
+										<Panel class="play-menu-prime-toggle__slider"/>
+									</Panel>
+								</ToggleButton>
+								<Panel id="PrimeStatusLabelContainer" class="play-menu-option-btn play-menu-prime right-margin">
+									<Image class="play-menu-prime" src="file://{images}/icons/ui/prime_active.png" />
+									<Label id="PrimeStatusLabelNA" class="play-menu-prime-mode-not-prime-label stratum-font fontWeight-Medium fontSize-sm fontcolor-white" text="#elevated_status_toggle_non_prime" html="true"/>
+								</Panel>
+							</Panel>
+							<TooltipPanel tooltip="#tooltip_permission_settings_explain" class="vertical-center">
+								<ToggleButton id="PermissionsSettings" html="true" class="play-menu-toggle-prime play-menu-option-btn play-menu-option-long-btn">
+									<Panel id="id-play-menu-toggle-slider" class="PopupButton play-menu-prime-toggle__slider-pill">
+										<Panel class="play-menu-prime-toggle__slider"/>
+									</Panel>
+								</ToggleButton>
+							</TooltipPanel>
+						</Panel>
 					</Panel>
 
-					<Panel class="left-right-flow vertical-center right-margin-32">
-						<TooltipPanel tooltip="#presets_select_all" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
-							<Button id="jsQuickSelectAll" class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'all' )">
-								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/select_all.svg"/>
-							</Button>
-						</TooltipPanel>
-						<TooltipPanel tooltip="#presets_clear_all" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
-							<Button id="jsQuickClearAll"  class="map-selection__quick-selection-set-icon" onactivate="PlayMenu.OnMapQuickSelect( 'none' )">
-								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/unselect_all.svg"/>
-							</Button>
-						</TooltipPanel>
-						
+				<Panel class="left-right-flow full-width fill-parent-flow-height">
+					<Panel id="JsQuickSelectParent" class="top-bottom-flow map-selection-list__quick-selection-sets">
+						<Label text="#presets_title" class="map-selection__quick-selection-set-title" />
+
 						<Panel class="game-mode-selection-radios-spacer"/>
 
-						<TooltipPanel tooltip="#presets_save_tooltip" tooltip-class="ShortTextTooltip" style="tooltip-position: bottom; vertical-align:center; ">
-							<Button id="jsQuickSelectionSave" class="map-selection__quick-selection-set-icon save" onactivate="PlayMenu.SaveMapSelectionToCustomPreset()">
-								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/save_2.svg"/>
+						<Panel id="jsQuickSelectionSetsContainer" class="map-selection-list__quick-selection-sets__btns">
+							<Button id="favorites" class="map-selection__quick-selection-set horizontal-align-left preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'favorites' )">
+								                                                                                                          
+								<Label text="#mg_quick_favorites"/>
 							</Button>
-						</TooltipPanel>
+
+							<Button id="new" class="map-selection__quick-selection-set horizontal-align-left preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'new' )">
+								<Label text="#mg_quick_new" />
+							</Button>
+
+							<Button id="premier" class="map-selection__quick-selection-set horizontal-align-left preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'premier' )">
+								<Label text="#mg_quick_premier" />
+							</Button>
+							<Button id="activeduty" class="map-selection__quick-selection-set horizontal-align-left preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'activeduty' )">
+								<Label text="#mg_quick_activeduty" />
+							</Button>
+							<Button id="hostage" class="map-selection__quick-selection-set horizontal-align-left preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'hostage' )">
+								<Label text="#mg_quick_hostage" />
+							</Button>
+						</Panel>
+
+						<Panel class="map-selection-list__quick-selection-sets__btns top-padding-large">
+							<Button id="jsQuickSelectAll" class="map-selection__quick-selection-set-icon preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'all' )">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/select_all.svg"/>
+								<Label text="#mg_quick_select_all"/>
+							</Button>
+
+							<Button id="jsQuickClearAll"  class="map-selection__quick-selection-set-icon preset-button" onactivate="PlayMenu.OnMapQuickSelect( 'none' )">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/unselect_all.svg"/>
+								<Label text="#mg_quick_clear_all"/>
+							</Button>
+							
+							<Panel class="game-mode-selection-radios-spacer"/>
+
+							<Button id="jsQuickSelectionSave" class="map-selection__quick-selection-set-icon save preset-button" onactivate="PlayMenu.SaveMapSelectionToCustomPreset()">
+								<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/save_2.svg"/>
+								<Label text="#mg_quick_save_favorites"/>
+							</Button>
+
+						</Panel>
 					</Panel>
 
 
+					                       
+					<Panel class="map-selection-list-container">
+
+						<Panel id="MapSelectionList" class="map-selection-list map-selection-list-all">
+							                                                                                                
+						</Panel>
+					</Panel>
 
 				</Panel>
-
-
-				<Panel id="MapSelectionList" class="map-selection-list map-selection-list-all">
-					                                                                                                
-				</Panel>
-
-
 
 				<Panel class="play-menu-controls-actions-bar">
-					<Panel class="left-right-flow vertical-center">
-						<Button id="PermissionsSettings" class="PopupButton" >
-							<Image id="PermissionsSettingsImg" texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/unlockedwide.svg" />
-							<Label id="PermissionsSettingsLabel" text="" />
-						</Button>
-						<Button id="PlayMenulLeaderboards" class="PopupButton" >
-							<Image texturewidth="-1" textureheight="28" src="file://{images}/icons/ui/info.svg" />
-							<Label text="#SFUI_LEADERBOARD" />
-						</Button>
-					</Panel>
+
+
 					<Panel class="play-menu-controls-actions-bar__right">
-						<Panel id="PlayMenuControlLobbyUserIcons" class="play-menu-controls-lobby-count"
-							style="tooltip-position: top left;"
-							onmouseover="UiToolkitAPI.ShowTextTooltip( 'PlayMenuControlLobbyUserIcons', '#PopupGoTeamMatchmaking_Tooltip_SearchUI' );"
-							onmouseout="UiToolkitAPI.HideTextTooltip();"
-							>
-							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-1" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
-							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-2" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
-							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-3" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
-							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-4" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
-							<Image class="play-menu-controls-lobby-icon play-menu-controls-lobby-icon-5" texturewidth="-1" textureheight="42" src="file://{images}/icons/ui/teamplayer.svg" />
+
+						<Panel class="full-height">
+					
+							<Panel class="play-menu-controls-action-bar__right__go-cancel right-left-flow">
+
+								<Panel class="no-flow vertical-center" style="padding:10px;">
+
+									<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch horizontal-center"  >
+										<Panel class="group-text-with-steam-button">
+											                  
+											                                                                                                                     
+											                  
+											<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
+										</Panel>
+									</Button>
+									<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive horizontal-center" >
+										<Panel class="group-text-with-steam-button">
+											                  
+											                                                                                                                     
+											                  
+											<Label text="#SFUI_Lobby_StartMatchButton" />
+										</Panel>
+									</Button>
+								</Panel>
+							</Panel>
 						</Panel>
-						<Panel class="play-menu-controls-action-bar__right__go-cancel">
-							<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive" >
-								<Label text="#SFUI_Lobby_StartMatchButton" />
-							</Button>
-							<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch"  >
-								<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
-							</Button>
-						</Panel>
+
 					</Panel>
 				</Panel>
 			</Panel>

@@ -24,10 +24,10 @@
 					onload="PopupOperationLaunchMovie.Init();"
 					oncancel="">
 
+		    	                                                           
 		<Movie id="VideoTrailerPlayer" 
 			class="popup-operation-launch__movie" 
-			src="file://{resources}/videos/broken_fang_launch.webm" 
-			title="#op10_name" 
+			title="#op11_name" 
 			controls="none" 
 			repeat="false" 
 			autoplay="onload"
@@ -35,7 +35,7 @@
 
 		<Panel id="id-operation-launch-buttons-row-buy-Btns" class="popup-operation-launch__buttons-row" >
 			                                                                                                           
-				                                                                                            
+				                                                                                           
 				                                                                                                              
 			             
 			<Panel class="right-left-flow vertical-center horizontal-align-right">

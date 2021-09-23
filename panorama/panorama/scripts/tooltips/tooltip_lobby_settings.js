@@ -3,6 +3,7 @@
 var TooltipLobby = ( function ()
 {
 	var m_GameSettings = {};
+	var m_GameOptions = {};
 	var m_RefreshStatsScheduleHandle = false;
 
 	
@@ -17,6 +18,8 @@ var TooltipLobby = ( function ()
 			_SetMode();
 			_SetMaps();
 			_GetLobbyStatistics();
+			_SetGameModeFlags();
+			_SetDirectChallengeSettings();
 		}
 		else {
 			UiToolkitAPI.HideCustomLayoutTooltip('LobbySettingsTooltip');
@@ -91,7 +94,9 @@ var TooltipLobby = ( function ()
 
 	var _GetLobbySettings = function ()
 	{
-		m_GameSettings = LobbyAPI.GetSessionSettings().game;
+		var gss = LobbyAPI.GetSessionSettings();
+		m_GameSettings = gss.game;
+		m_GameOptions = gss.options;
 	}
 
 	var _SetPrimeStatus = function ()
@@ -105,7 +110,47 @@ var TooltipLobby = ( function ()
 		elPrimeText.text = $.Localize( displayText );
 		                                                                        
 
-		_SetRankedStatus( isLocalPlayerPrime )
+		_SetRankedStatus( isLocalPlayerPrime );
+	}
+
+	function _SetDirectChallengeSettings ()
+	{
+		var elDirectChallengeText = $.GetContextPanel().FindChildInLayoutFile( 'LobbyDirectChallenge' );
+
+		var gss = LobbyAPI.GetSessionSettings();
+		var bPrivate = gss.options.hasOwnProperty( 'challengekey' ) && gss.options.challengekey != '';
+
+		elDirectChallengeText.text = bPrivate ? $.Localize( '#DirectChallenge_lobbysettings_on' ) : $.Localize( '#DirectChallenge_lobbysettings_off' );
+		var elContainer = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipDirectChallengeContainer' );
+
+		elContainer.visible = bPrivate;
+
+
+	}
+
+
+	function _SetGameModeFlags ()
+	{
+		var elContainer = $.GetContextPanel().FindChildInLayoutFile( 'LobbyTooltipGameModeFlagsContainer' );
+
+		var flags = parseInt( m_GameSettings.gamemodeflags );
+		
+		if ( !flags || !GameModeFlags.DoesModeUseFlags( m_GameSettings.mode ) )
+		{
+			elContainer.visible = false;
+			return;
+		}
+
+		elContainer.visible = true;
+
+		var displayTextToken = 'play_setting_gamemodeflags_' + m_GameSettings.mode + '_' + m_GameSettings.gamemodeflags;
+		elContainer.SetDialogVariable( 'gamemodeflags', $.Localize( displayTextToken ) );
+
+		var elIcon = $.GetContextPanel().FindChildTraverse( 'LobbyTooltipGamdeModeFlagsImage' );
+		var icon = GameModeFlags.GetIcon( m_GameSettings.mode, flags );
+		elIcon.SetImage( icon );
+
+		
 	}
 
 	var _SetRankedStatus = function( isLocalPlayerPrime )
@@ -179,8 +224,16 @@ var TooltipLobby = ( function ()
 		mapsList.forEach(function(element) {
 			var p = $.CreatePanel( 'Panel', elMapsSection, element );
 			p.BLoadLayoutSnippet("SettingsEntry");
-			p.FindChildInLayoutFile('SettingText').text = $.Localize( GameTypesAPI.GetMapGroupAttribute( element, 'nameID' ));
-			
+
+			                                            
+			var strMapText = $.Localize(GameTypesAPI.GetMapGroupAttribute(element, 'nameID'));
+			if ( element === 'mg_lobby_mapveto' && m_GameOptions && m_GameOptions.challengekey )
+			{
+				strMapText = $.Localize( "#SFUI_Lobby_LeaderMatchmaking_Type_PremierPrivateQueue" );
+			}
+
+			p.FindChildInLayoutFile('SettingText').text = strMapText;
+
 			var maps = GameTypesAPI.GetMapGroupAttributeSubKeys( element, 'maps' ).split(',');
 			p.FindChildInLayoutFile('SettingImage').SetImage( 'file://{images}/map_icons/map_icon_'+ maps[0] + '.svg' );
 		});

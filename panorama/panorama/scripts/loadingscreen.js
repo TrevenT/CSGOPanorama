@@ -2,6 +2,9 @@
 
 var LoadingScreen = ( function() {
 
+	var cvars = [ 'mp_roundtime', 'mp_fraglimit', 'mp_maxrounds' ];
+	var cvalues = [ '0', '0', '0' ];
+
 	var _Init = function ()
 	{
 		$('#ProgressBar').value = 0;
@@ -23,6 +26,23 @@ var LoadingScreen = ( function() {
 
 	var _UpdateLoadingScreenInfo = function (mapName, prettyMapName, prettyGameModeName, gameType, gameMode, descriptionText)
 	{
+		                                                                                        
+		for ( var j = 0; j < cvars.length; ++ j )
+		{
+			var val = GameInterfaceAPI.GetSettingString( cvars[j] );
+			if ( val !== '0' )
+			{
+				cvalues[j] = val;
+			}
+		}
+		                                              
+		for ( var j = 0; j < cvars.length; ++ j )
+		{
+			const regex = new RegExp( '\\${d:'+cvars[j]+'}', 'gi' );
+			descriptionText = descriptionText.replace( regex, cvalues[j] );
+			$.GetContextPanel().SetDialogVariable( cvars[j], cvalues[j] );
+		}
+
 		if( mapName )
 		{
 			var elBackgroundImage = $.GetContextPanel().FindChildInLayoutFile( 'BackgroundMapImage' );		

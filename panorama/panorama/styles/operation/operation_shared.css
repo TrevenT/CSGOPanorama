@@ -15,17 +15,22 @@
 @define op-missions-left-padding: 32px;
 @define op-missions-right-padding: 32px;
             
-@define opTenYellow: #EDCF2E;
+@define opTenYellow: #93EEFB;
 @define opTenYellowFaded: #EDCF2E;
 @define opTenYellowMedium: #6e511b;
 @define opTenYellowAlpha: #EDCF2E30;
-@define opTenDark: #291F0C;
-@define opTenBaseColor: #64B9EE;
+@define opTenDark: #0A2333;
+@define opTenBaseColor: #93EEFB;
 @define opTenTan: #503A12;
+
+           
+@define opCompleteColor: #93EEFB;
+@define opIncompleteColor: #4fa1a7;
 
 .OpTintTextYellow
 {
-	color:opTenYellow;
+	color:opCompleteColor;
+	                                                                                           
 }
 
 .op-main-container{
@@ -33,14 +38,16 @@
 	height: 100%;
 	width: 100%;
 	                                      
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #1b140281 ), to( #1f1002c7 ) );
+	                                                                                               
 }
 
 .op-main-movie
 {
 	width: 100%;
 	height: 100%;
-	background-image: url('file://{resources}/videos/background_movie_op10.webm');
+	background-image: url('file://{resources}/videos/op11_underwater.webm');
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5186a8 ), to( #315264 ) );
+	                                                                                           
 	background-size: cover;
 	background-img-opacity: 0.75;
 }
@@ -94,11 +101,9 @@
 .op-header
 {
 	flow-children: down;
-	padding-top: 12px;
-	padding-bottom: 12px;
-	padding-left: op-missions-left-padding;
+	padding: 12px;
 	width: 100%;
-	border-bottom: 1px solid #edd02e3a;
+	border-bottom: 1px solid #afcde079;
 	                                       
 }
 
@@ -111,11 +116,10 @@
 .op-header__text
 {
 	font-family: Stratum2, 'Arial Unicode MS';
-	color: opTenYellow;
-	font-size: 24px;
+	color: White;
+	font-size: 20px;
 	font-weight: medium;
-	text-transform: uppercase;
-	letter-spacing: 5px;
+	letter-spacing: 2px;
 	                  
 	text-overflow: shrink;
 }
@@ -153,12 +157,12 @@
 .op-header__num
 {
 	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
-	color: opAccentColorGradientLight;
-	font-size: 24px;
-	font-weight: bold;
-	letter-spacing: 4px;
+	color: white;
+	font-size: 20px;
+	font-weight: black;
+	letter-spacing: 1px;
 	text-align: center;
-	margin: 0px 8px;
+	margin: 0px 8px 0px 0px;
 }
 
 .op-main .op-header__num
@@ -178,7 +182,6 @@
 
 .op-header__stars-bg
 {
-	wash-color: opTenYellow;
 	horizontal-align: center;
 	vertical-align: center;
 	                   
@@ -217,7 +220,7 @@
 	text-align: left;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: opTenYellow;
+	color: opCompleteColor;
 	background-color: opTenDark;
 	padding: 6px 6px;
 	text-overflow: ellipsis;
@@ -292,7 +295,7 @@
 
 .op-mission-reward-name__text.week
 {
-	background-color: opTenYellowMedium;
+	background-color: opCompleteColor;
 	width:fill-parent-flow( .3 );
 	padding: 6px;
 	text-align: center;

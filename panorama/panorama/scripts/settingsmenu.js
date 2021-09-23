@@ -159,8 +159,6 @@ var SettingsMenu = ( function () {
 		$.DispatchEvent( "Activated", $( "#" + tabInfo[ tab ].radioid ), "mouse" );
 		p.ScrollParentToMakePanelFit(3, false);
 		p.AddClass('Highlight');
-		var kfs = p.CreateCopyOfCSSKeyframes( 'settings-highlight' );
-		p.UpdateCurrentAnimationKeyframes( kfs )
 	}
 
 	var _Init = function( )

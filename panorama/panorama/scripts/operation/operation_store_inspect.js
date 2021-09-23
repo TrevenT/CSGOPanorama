@@ -4,6 +4,7 @@ var OperationStoreInspect = ( function()
 {
 	var _m_rewardId = '';
 	var _m_aLootist= '';
+	var _m_aLootlistGroups = undefined;
 	var _m_rewardtype = '';
 	var _m_rewardIndex = undefined;
 	var _m_rewardCost = undefined;
@@ -45,7 +46,10 @@ var OperationStoreInspect = ( function()
 
 		                                 
 		_m_rewardId = oReward.itempremium.ids[ 0 ] ;
-		_m_aLootist = OperationUtil.GetLootListForReward( _m_rewardId );
+		_m_aLootist = oReward.lootlist;
+		if ( oReward.lootlistGroups )
+			_m_aLootlistGroups = oReward.lootlistGroups;
+
 		_m_rewardtype = oReward.containerType;
 		_m_rewardImagePath = oReward.imagePath;
 		_m_rewardIndex = Number( oReward.idx );
@@ -66,6 +70,9 @@ var OperationStoreInspect = ( function()
 			_SetupItemTray();
 			_m_modelContainer.SetHasClass( 'narrow', _m_rewardtype !== "isGraffitiBox");
 			_m_modelContainer.SetHasClass( 'graffiti', _m_rewardtype == "isGraffitiBox");
+			_m_cp.SetHasClass( 
+				'single-line', 
+				oReward.lootlist.length <= 8 );
 			_m_cp.FindChildInLayoutFile('id-op-store-inspect-floor').visible = false;
 		}
 		else
@@ -180,66 +187,6 @@ var OperationStoreInspect = ( function()
 		}
 	};
 
-	                                                                            
-	                                              
-	        
-	                                                               
-	 
-		                                                                                    
-
-		                                                     
-			                                        
-		    
-	  
-
-	                                                                         
-	 
-		                                               
-			                                                                            
-			                                                                                                 
-			                                      
-				                                
-			 
-			      
-				                     
-			 
-		   
-	  
-
-	                                           
-	 
-		                                                                                 
-		                                                                                                      
-
-		                             
-		                                        
-		                                  
-		                             
-		                                  
-		                    
-		                    
-		                                                
-	  
-
-	                                                      
-	 
-		                                    
-		 
-			                                                                                 
-			                                                                                                      
-			                                       
-			                                           
-			                                                         
-			                                   
-			                              
-			                                  
-			                   
-			                   
-			                                                 
-		 
-	  
-	      
-
 	var _PlaceCharsEvenlyInPanel = function( elPlayerModel, sizePerPanel, index )
 	{
 		elPlayerModel.style.x = (sizePerPanel * index) + 'px';
@@ -270,22 +217,109 @@ var OperationStoreInspect = ( function()
 	{
 		var elParent = _m_cp.FindChildInLayoutFile( 'id-op-inspect-rewards-tray-container' );
 		elParent.SetHasClass( 'has-model-panel', _m_rewardtype ==='isWeaponsCase');
-		_m_aLootist.forEach( function( rewardId )
-		{
-			if ( rewardId !== '0' )
-			{
-				var elThumbnail = MakeThumbnailImageForTray( elParent, rewardId, "RadioButton" );
-				elThumbnail.SetPanelEvent( 'onactivate', _OnActivateOpenInSeperateInspect.bind( undefined, rewardId ) );
-				elThumbnail.SetPanelEvent( 'onmouseover', _CacheWeapon.bind( undefined, rewardId ) );
-				_UpdateItemRarityColor( elThumbnail.FindChildInLayoutFile('id-store-inspect-rewards-tray-rarity'), rewardId );
 
-			}
-			else if( _m_rewardtype ==='isWeaponsCase' )
+		if ( _m_aLootlistGroups )
+		{
+			_m_aLootlistGroups.forEach( function( grp, index )
 			{
-				var elThumbnail = MakeThumbnailImageForTray( elParent, rewardId, "RadioButton" );
-				elThumbnail.FindChildInLayoutFile('id-store-inspect-rewards-tray-rarity').visible = false;
+				var isEnabled = false;
+				var elGroup = fnMakeLootlistGroup( grp, elParent, index, isEnabled);
+				elGroup.SetPanelEvent( 'onactivate', _PlaceGroupExpandedPanel.bind( undefined, elGroup, grp) );
+
+				var offest = 0;
+
+				var zIndex = elGroup.Children().length;
+				elGroup.Children().forEach( function( tile, index ){
+					tile.style.transform = "translateX("+offest+"px);";
+					tile.style.zIndex = zIndex;
+					tile.style.brightness = 1/(index + 1 );
+					offest+=14;
+					zIndex--;
+				});
+			});
+		}
+		else
+		{
+			for ( var i = 0; i < _m_aLootist.length; ++ i )
+			{
+				fnMakeItemTrayButton( _m_aLootist[i], elParent );
 			}
+		}
+	};
+
+	var _PlaceGroupExpandedPanel = function ( elGroup, grp ) 
+	{
+		var elGroupExpanded = _m_cp.FindChildInLayoutFile('id-lootlist-grp-expanded');
+		if( elGroupExpanded && elGroupExpanded.IsValid())
+		{
+			elGroupExpanded.DeleteAsync(0);
+		}
+
+		var elParent =_m_cp.FindChildInLayoutFile('id-op-inspect-all-models-container-group-expanded');
+		elParent.hittest = true;
+		elParent.visible = true;
+	
+		var isEnabled = true;
+		elGroupExpanded = fnMakeLootlistGroup( grp, elParent, 'expanded', isEnabled );
+		$.DispatchEvent( "PlaySoundEffect", "submenu_dropdown_option_select", "MOUSE" );
+		
+		$.Schedule( .1, function()
+		{
+			var  tileWidth = elGroupExpanded.Children()[0].actuallayoutwidth/elGroupExpanded.actualuiscale_x;
+			var numGroupWidth = tileWidth * elGroupExpanded.Children().length;
+			elGroupExpanded.style.width = numGroupWidth+'px;';
+			
+			elGroupExpanded.Children().forEach( function( tile, index ){
+				tile.style.x = (tileWidth * index) +"px;";
+			} );
+			
 		});
+	
+
+			_m_cp.FindChildInLayoutFile('id-op-inspect-rewards-tray-container').AddClass( 'blur');
+	};
+
+	var _RemoveGroupExpandedPanel = function( elGroupExpanded )
+	{
+		_m_cp.FindChildInLayoutFile('id-lootlist-grp-expanded').DeleteAsync(0);
+		_m_cp.FindChildInLayoutFile('id-lootlist-grp-expanded').GetParent().visible = false
+		_m_cp.FindChildInLayoutFile( 'id-op-inspect-rewards-tray-container' ).RemoveClass( 'blur' );
+		$.DispatchEvent( "PlaySoundEffect", "ui_custom_lobby_dialog_slide", "MOUSE" );
+	};
+
+	
+	var fnMakeLootlistGroup = function( grp, elParent, index, isEnabled )
+	{
+		var elGroup = $.CreatePanel( 'Panel', elParent, 'id-lootlist-grp-' + index );
+		elGroup.BLoadLayoutSnippet('snippet-tray-group');
+
+		for ( var i = grp.idxBegin; i < grp.idxEnd; ++ i )
+		{
+			var elImage = fnMakeItemTrayButton( _m_aLootist[i], elGroup );
+			elImage.enabled = isEnabled;
+		}
+
+		return elGroup;
+	}
+
+	var fnMakeItemTrayButton = function( rewardId, elParent )
+	{
+		var elThumbnail = null;
+		if ( rewardId !== '0' )
+		{
+			elThumbnail = MakeThumbnailImageForTray( elParent, rewardId, "RadioButton" );
+			elThumbnail.SetPanelEvent( 'onactivate', _OnActivateOpenInSeperateInspect.bind( undefined, rewardId ) );
+			elThumbnail.SetPanelEvent( 'onmouseover', _CacheWeapon.bind( undefined, rewardId ) );
+			_UpdateItemRarityColor( elThumbnail.FindChildInLayoutFile('id-store-inspect-rewards-tray-rarity'), rewardId );
+
+		}
+		else if( _m_rewardtype ==='isWeaponsCase' )
+		{
+			elThumbnail = MakeThumbnailImageForTray( elParent, rewardId, "RadioButton" );
+			elThumbnail.FindChildInLayoutFile('id-store-inspect-rewards-tray-rarity').visible = false;
+		}
+
+		return elThumbnail;
 	};
 
 	                                                 
@@ -577,10 +611,25 @@ var OperationStoreInspect = ( function()
 
 	};
 
+	var _OnCancel = function()
+	{
+		var elGroupExpanded = _m_cp.FindChildInLayoutFile('id-lootlist-grp-expanded');
+		if ( elGroupExpanded && elGroupExpanded.IsValid() )
+		{
+			_RemoveGroupExpandedPanel();
+		}
+		else
+		{
+			$.DispatchEvent( 'UIPopupButtonClicked', '' );
+		}
+	}
+
 	return {
 		Init: _Init,
 		OnItemCustomizationNotification: _OnItemCustomizationNotification,
-		UpdateBtns: _UpdateBtns
+		RemoveGroupExpandedPanel: _RemoveGroupExpandedPanel,
+		UpdateBtns: _UpdateBtns,
+		OnCancel: _OnCancel
 	};
 })();
 
