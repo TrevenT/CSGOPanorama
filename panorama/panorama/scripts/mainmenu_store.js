@@ -449,16 +449,16 @@ var MainMenuStore = ( function()
 				var getNameId = '';
 				var obj = itemsByCategory.coupons[j];
 				                                           
-				if( typeof obj === "object" && obj.linkedid )
+				if( typeof obj === "object" )
 				{
-					getNameId = obj.linkedid;
+					getNameId = obj.linkedid ? obj.linkedid : obj.id;
 				}
 				else
 				{
 					getNameId = obj;
 				}
 				
-				var strItemName = ItemInfo.GetName( getNameId );
+				var strItemName = getNameId ? ItemInfo.GetName( getNameId ) : '';                                                
 				if ( !strItemName ) continue;
 				strItemName = strItemName.toLowerCase();
 
@@ -548,10 +548,14 @@ var MainMenuStore = ( function()
 			itemsByCategory = {};
 		}
 	
+		                                              
 		for ( var i = 0; i < count; i++ )
 		{
 			var ItemId = StoreAPI.GetBannerEntryDefIdx( i );
 			var FauxItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( ItemId, 0 );
+			var strBannerEntryCustomFormatString = "";                           
+
+			                                                                                                   
 
 			                                     
 			if ( !bPerfectWorld &&
@@ -575,19 +579,22 @@ var MainMenuStore = ( function()
 				
 				itemsByCategory.market.push( FauxItemId );
 			}
-			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "new" )
-			{
-				if ( !_BAllowDisplayingItemInStore( FauxItemId ) )
-					continue;
-
-				if ( !itemsByCategory.newstore )
-				{
-					itemsByCategory.newstore = [];
-				}
-				
-				itemsByCategory.newstore.push( FauxItemId );
-			}
-			else if ( StoreAPI.GetBannerEntryCustomFormatString( i ) === "coupon" )
+			                                                                      
+			                                                                        
+			                                                             
+			   
+			  	                                                  
+			  		         
+			  
+			  	                                
+			  	 
+			  		                              
+			  	 
+			  	
+			  	                                            
+			   
+			                                                                                          
+			else if ( ( strBannerEntryCustomFormatString = StoreAPI.GetBannerEntryCustomFormatString( i ) ).startsWith( "coupon" ) )
 			{
 				if ( !_BAllowDisplayingItemInStore( FauxItemId ) )
 					continue;
@@ -623,6 +630,10 @@ var MainMenuStore = ( function()
 					var LinkedItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( parseInt( sLinkedCoupon ), 0 );
 					                                                                                                                              
 					itemsByCategory.coupons.push( { id:FauxItemId, linkedid: LinkedItemId, snippet_name: 'LinkedStoreEntry' } );
+				}
+				else if ( strBannerEntryCustomFormatString === "coupon_new" )
+				{
+					itemsByCategory.coupons.push( { id:FauxItemId, activationType: 'newstore', isNewRelease: true } );
 				}
 				else
 				{
@@ -873,8 +884,13 @@ var MainMenuStore = ( function()
 
 			elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile.xml", false, false );
 		}
-		                                                        
-		else if( typeof itemList[ i ] === "object" && type === "coupons" && itemList[ i ].linkedid )
+		  
+		                                                                     
+		                                                                                        
+		                                                                                             
+		  
+		                                                              
+		else if( typeof itemList[ i ] === "object" && type === "coupons" && itemList[ i ].snippet_name && itemList[ i ].linkedid )
 		{
 			elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name );
 			var oItemIds = { 
@@ -885,10 +901,29 @@ var MainMenuStore = ( function()
 			_FillOutLinkedItemData( elItem, oItemIds );
 			_SetOnActivateEventLinkedItemTile( elItem, oItemIds );
 		}
-		                                                    
-		else if ( typeof itemList[ i ] == "object" && elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name ) )
+		                             
+		else if ( typeof itemList[ i ] == "object" && itemList[ i ].snippet_name && elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name ) )
 		{
 			itemList[ i ].load_func( elItem );
+		}
+		         
+		else if( typeof itemList[ i ] === "object" && type === "coupons" )
+		{
+			elItem.Data().oData = {
+				id: itemList[ i ].id,
+				activationType: itemList[ i ].activationType,
+				isNewRelease: itemList[ i ].isNewRelease
+			}
+
+			elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile.xml", false, false );
+		}
+		                                 
+		else
+		{
+			                                                                                                        
+			          
+			                                    
+			          
 		}
 
 		if ( i % itemsPerPage === 0 )

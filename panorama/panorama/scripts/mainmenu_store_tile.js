@@ -13,7 +13,6 @@ var MainMenuStoreTile = ( function()
 		var id = elItem.Data().oData.id;
 		var activationType = elItem.Data().oData.activationType;
 		var isNewRelease = elItem.Data().oData.isNewRelease;
-		var isNewTagOverride = elItem.Data().oData.newTagOverride;
 		var useItemId = elItem.Data().oData.useItemId;
 		var isProTeam = elItem.Data().oData.isProTeam;
 		var isMarketItem = activationType === 'market';
@@ -34,7 +33,7 @@ var MainMenuStoreTile = ( function()
 		elStattrak.SetHasClass( 'hidden', !ItemInfo.IsStatTrak( id ) );
 
 		var elNewHighlight = elImage.FindChildInLayoutFile( 'StoreItemNew' );
-		elNewHighlight.SetHasClass( 'hidden', !isNewRelease || id !== isNewRelease );
+		elNewHighlight.SetHasClass( 'hidden', !isNewRelease );
 
 		var elSale = elItem.FindChildInLayoutFile( 'StoreItemSalePrice' );
 		var elPrecent = elItem.FindChildInLayoutFile( 'StoreItemPercent' );
