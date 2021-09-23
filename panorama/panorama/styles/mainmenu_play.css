@@ -50,7 +50,8 @@
 .map-selection-list--listen-competitive,
 .map-selection-list--listen-scrimcomp2v2,
 .map-selection-list--listen-casual,
-.map-selection-list--listen-deathmatch
+.map-selection-list--listen-deathmatch,
+.map-selection-list--workshop
 {
 	padding: 0px 96px;
 }
@@ -70,7 +71,8 @@
 .AspectRatio5x4 .map-selection-list--listen-competitive,
 .AspectRatio5x4 .map-selection-list--listen-scrimcomp2v2,
 .AspectRatio5x4 .map-selection-list--listen-casual,
-.AspectRatio5x4 .map-selection-list--listen-deathmatch
+.AspectRatio5x4 .map-selection-list--listen-deathmatch,
+.AspectRatio5x4 .map-selection-list--workshop
 {
 	padding: 0px 52px;
 }

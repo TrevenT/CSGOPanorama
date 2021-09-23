@@ -2739,7 +2739,7 @@ var PlayMenu = ( function()
 
 	function _LoadGameModeFlagsFromSettings ()
 	{
-		m_gameModeFlags[ m_serverSetting + m_gameModeSetting ] = parseInt( GameInterfaceAPI.GetSettingString( 'ui_playsettings_flags_' + m_serverSetting + '_' + m_gameModeSetting ), 0 );
+		m_gameModeFlags[ m_serverSetting + m_gameModeSetting ] = parseInt( GameInterfaceAPI.GetSettingString( 'ui_playsettings_flags_' + m_serverSetting + '_' + m_gameModeSetting ) );
 	}
 
 	                                                                                                    
@@ -3007,8 +3007,10 @@ var PlayMenu = ( function()
 
 		                      
 		var container = $.CreatePanel( "Panel", $( '#MapSelectionList' ), panelId, {
-			class: 'map-selection-list hidden'
+			class: 'map-selection-list map-selection-list--inner hidden'
 		} );
+
+		container.AddClass( 'map-selection-list--workshop' );
 
 		                                                                                 
 		m_mapSelectionButtonContainers[ panelId ] = container;
