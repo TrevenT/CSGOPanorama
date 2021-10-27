@@ -336,6 +336,7 @@ var mainmenu_watch_tournament = (function () {
     {
         var elLink = elPanel.FindChildInLayoutFile( 'JsTournamentInfoLink' );
 		var olinks = {
+			18: "https://store.steampowered.com/sale/csgostockholm",
 			16: "https://csgomajor.starladder.com/",
 			15: "https://www.intelextrememasters.com/season-13/katowice/schedule/",
             14: "https://www.faceitmajor.com/",

@@ -185,7 +185,7 @@
 	width: fill-parent-flow( 1.0 );
 }
 
-Slider.news-panel-streamfeed-volumeslider
+.news-panel-streamfeed__navbar Slider.news-panel-streamfeed-volumeslider
 {
 	width: 100px;
 	height: 20px;

@@ -350,7 +350,7 @@ var OperationUtil = ( function () {
 			oMissionDetails.aSubQuests = _UpdateSubQuestData( Number( missionId ), numGraphCount, oMissionDetails.missonType === 'checklist' );
 		}
 
-		                                             
+		                                                
 		return oMissionDetails;
 	}
 

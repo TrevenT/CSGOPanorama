@@ -11,6 +11,7 @@ var MainmenuWatchNotice = (function () {
 	var _m_arrEvents = undefined;                          
 	var _m_arrFavorites = undefined;
 	var _m_prevSchedeventsString = "";
+	var _m_isPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld" ? true : false;
 
 	function _Init()
 	{
@@ -42,7 +43,6 @@ var MainmenuWatchNotice = (function () {
 		_m_elWatchNoticeContainer.RemoveAndDeleteChildren();
 
 		_FindNoticeEvents().forEach( event => _PopulateEvent( event ) );
-		
 	}
 
 	var openUrl = function ( url )
@@ -54,7 +54,6 @@ var MainmenuWatchNotice = (function () {
 	                                            
 	function _EventsReceived ( eventsAsString )
 	{
-
 		if ( ADD_DEBUG_EVENT == 1 )
 			_m_prevSchedeventsString = "";
 		
@@ -81,9 +80,21 @@ var MainmenuWatchNotice = (function () {
 	{
 		if ( eventsAsString != undefined && eventsAsString != "" )
 		{
+			var arrEvents = [];
 			var jsonEvents = JSON.parse( eventsAsString );
-			_m_arrEvents = EventUtil.AnnotateOfficialEvents( jsonEvents );
-			_m_arrEvents.sort( _StartDateCompareFunction );
+			arrEvents = EventUtil.AnnotateOfficialEvents( jsonEvents );
+			arrEvents.sort( _StartDateCompareFunction );
+
+			if ( _m_isPerfectWorld )
+			{
+				                                        
+				                                      
+				_m_arrEvents = arrEvents.filter( o => o.is_official === true );
+			}
+			else
+			{
+				_m_arrEvents = arrEvents;
+			}
 		}
 	}
 	
@@ -228,8 +239,7 @@ var MainmenuWatchNotice = (function () {
 	{
 
 		var elEvent = $.CreatePanel( "Panel", _m_elWatchNoticeContainer, oEvent[ 'event_id' ] );
-		elEvent.BLoadLayoutSnippet( 'snippet-wn-event' );
-
+		elEvent.BLoadLayoutSnippet( 'snippet-wn-event', oEvent[ 'event_id' ] );
 		                                                                           
 
 		var elCarouselContainer = elEvent.FindChildTraverse( "id-watchnotice__matches-carousel-container" );
@@ -293,7 +303,6 @@ var MainmenuWatchNotice = (function () {
 			var url = oEvent[ 'event_page_url' ];
 			var elLinkBtn = elEvent.FindChildTraverse( "id-watchnotice__link__btn" );
 
-
 			function OnSimpleContextMenu( url )
 			{
 				var items = [];
@@ -305,9 +314,10 @@ var MainmenuWatchNotice = (function () {
 				UiToolkitAPI.ShowSimpleContextMenu( '', 'externallink', items );
 			}
 
-			elLinkBtn.SetPanelEvent( 'onactivate', OnSimpleContextMenu.bind( undefined, url ) );
-
-
+			if ( !_m_isPerfectWorld )
+			{
+				elLinkBtn.SetPanelEvent( 'onactivate', OnSimpleContextMenu.bind( undefined, url ) );
+			}
 
 			                                    
 			    
@@ -317,8 +327,6 @@ var MainmenuWatchNotice = (function () {
 
 			                                                                              
 		}
-		
-
 
 		          
 		
@@ -342,7 +350,8 @@ var MainmenuWatchNotice = (function () {
 			var elMatch = $.CreatePanel( "Panel", elMatchPage, oMatch[ 'match_id' ] );
 			elMatch.BLoadLayoutSnippet( 'snippet-wn-event__match' );
 
-			elMatch.BLoadLayout('file://{resources}/layout/watchmatchtile.xml', false, false);
+			elMatch.BLoadLayout( 'file://{resources}/layout/watchmatchtile.xml', false, false );
+			elMatch.Data().isofficial = oEvent[ 'is_official'];
 
 			function _GetTeam ( num )
 			{

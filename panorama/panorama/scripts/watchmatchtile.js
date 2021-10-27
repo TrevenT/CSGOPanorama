@@ -2,6 +2,7 @@
 
 var watchMatchTile = ( function (){
 
+	var _m_isPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld" ? true : false;
 
 	function _Init ( elTile, oMatch, oTeam1, oTeam2 )
 	{
@@ -59,7 +60,8 @@ var watchMatchTile = ( function (){
 						'id - watchmatchtile - match__watch',
 						'',
 						'file://{resources}/layout/context_menus/context_menu_watchnotice_match_streams.xml',
-						'match_id=' + matchId,
+						'match_id=' + matchId +
+						'&' + 'is_official=' + elTile.Data().isofficial,
 						function() {$.DispatchEvent( 'ContextMenuEvent', '' );}
 					)
 					elContextMenuPanel.AddClass( "ContextMenu_NoArrow" );
@@ -68,7 +70,50 @@ var watchMatchTile = ( function (){
 					$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
 				}
 
-				elWatchButton.SetPanelEvent( 'onactivate', OnActivate.bind( undefined, oMatch[ 'match_id' ] ) );
+				function OnSimplePerfectWorldContextMenu( )
+				{
+					var items = [];
+
+					                  
+					if ( EmbeddedStreamAPI.GetStreamExternalLinkTypes().indexOf( 'B' ) >= 0 )
+					{
+						items.push( { label: $.Localize( '#CSGO_Watch_Info_live' ), jsCallback: function() {
+							StoreAPI.RecordUIEvent( "WatchNoticeSchedEventLink" );
+							EmbeddedStreamAPI.OpenStreamInExternalBrowser( 'XB' );
+							$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
+						} } );
+					}
+					
+					       
+					if ( EmbeddedStreamAPI.GetStreamExternalLinkTypes().indexOf( 'G' ) >= 0 )
+					{
+						items.push( { label: $.Localize( '#CSGO_Watch_Watch_GOTV' ), jsCallback: function() {
+							StoreAPI.RecordUIEvent( "WatchNoticeSchedEventLink" );
+							EmbeddedStreamAPI.OpenStreamInExternalBrowser( 'XG' );
+							$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
+						} } );
+					}
+
+					                                                                    
+					if ( items.length <= 0 )
+					{
+						items.push( { label: $.Localize( '#CSGO_Watch_Info_live' ), jsCallback: function() {
+							                        
+							$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.sidemenu_select', 'MOUSE' );
+						} } );
+					}
+				
+					UiToolkitAPI.ShowSimpleContextMenu( '', 'externallink', items );
+				}
+
+				if ( _m_isPerfectWorld )
+				{
+					elWatchButton.SetPanelEvent( 'onactivate', OnSimplePerfectWorldContextMenu );
+				}
+				else
+				{
+					elWatchButton.SetPanelEvent( 'onactivate', OnActivate.bind( undefined, oMatch[ 'match_id' ] ) );
+				}
 			}
 		}
 	}

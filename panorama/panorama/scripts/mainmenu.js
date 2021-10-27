@@ -718,10 +718,10 @@ var MainMenu = ( function() {
 			_AddFeaturedPanel( 'operation/operation_mainmenu.xml', 'JsOperationPanel' );
 		}
 		                                                                           
-		if ( !_m_bPerfectWorld )
-		{
+		                          
+		    
 			_AddWatchNoticePanel();
-		}
+		    
 		
 		_ShowNewsAndStore();
 	};

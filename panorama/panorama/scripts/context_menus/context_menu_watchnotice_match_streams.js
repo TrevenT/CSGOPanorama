@@ -6,6 +6,7 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 	var _m_cP = $.GetContextPanel();
 	var _m_myCountryCode = undefined;
 	var _m_oPriorityMap = {};
+	var _m_isOfficial = false;
 
 
 	function _Init()
@@ -13,14 +14,13 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 		$.RegisterForUnhandledEvent( 'Tournaments_RequestMatch_Response', _RequestMatchString_Received);
 
 		var matchId = _m_cP.GetAttributeString( "match_id", "" );
+		_m_isOfficial = ( _m_cP.GetAttributeString( "is_official", "" ) === 'true' ) ? true : false;
 
 		                                                                      
 		$.DispatchEvent( 'Tournaments_RequestMatch', matchId );
 
 		_m_cP.SetFocus();
 	}
-
-
 
 
 	                                                        
@@ -153,6 +153,21 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 			elLinkBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
 		}
+
+		       
+		var elGotvBtn = $.GetContextPanel().FindChildTraverse( "id-watchnotice__event__match_gotv" );
+		var bHasGotvAddress = _m_isOfficial && ( EmbeddedStreamAPI.GetStreamExternalLinkTypes().indexOf( 'G' ) >= 0 );
+		if ( bHasGotvAddress )
+		{
+			var onActivate = function ( url )
+			{
+				StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchLink" );
+				EmbeddedStreamAPI.OpenStreamInExternalBrowser( 'XG' );
+			}
+
+			elGotvBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
+		}
+		elGotvBtn.visible = bHasGotvAddress;
 
 
 	};

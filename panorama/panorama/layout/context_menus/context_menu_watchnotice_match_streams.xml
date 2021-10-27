@@ -30,6 +30,9 @@
 		<Button id="id-watchnotice__event__match" class="contextmenu-watchnotice_match_streams__url-link">
 			<Label text="#eventsched_match_link" />
 		</Button>
+		<Button id="id-watchnotice__event__match_gotv" class="contextmenu-watchnotice_match_streams__url-link">
+			<Label text="#CSGO_Watch_Watch_GOTV" />
+		</Button>
 
 		<Panel class="contextmenu-watchnotice_match_streams__divider" />
 
