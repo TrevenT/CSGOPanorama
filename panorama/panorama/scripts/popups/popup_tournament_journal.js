@@ -523,23 +523,27 @@ var TournamentJournal = ( function()
     var _WatchStreamBtn = function( journalId )
     {   
         var elPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-watch-stream' );
-        if ( !_IsValidJournalId( journalId ) )
+        var isPerfectWorld = MyPersonaAPI.GetLauncherType() === "perfectworld" ? true : false;
+        if ( !_IsValidJournalId( journalId ) || isPerfectWorld )
         {
             if( elPanel && elPanel.IsValid() )
             {
-                elPanel.visible = false;
+                                           
+                elPanel.enabled = false;
+                elPanel.SetHasClass('opacity-none', true )
             }
 
             return;
         }
 
-        elPanel.visible = true;
+        elPanel.enabled = true;
+        elPanel.SetHasClass('opacity-none', false )
         _OnWatchStream( elPanel );
     };
 
     var _SetWinners = function( tournamentId, journalId )
     {
-        if ( !_IsValidJournalId( journalId ) || m_activeTournament === tournamentId)
+        if ( !_IsValidJournalId( journalId ) || m_activeTournament === tournamentId )
         {
             return false;
         }

@@ -406,6 +406,11 @@
     horizontal-align: left;
 }
 
+.tournament-journal-button.opacity-none
+{
+    opacity:0;
+}
+
 .tournament-journal-button Label
 {
 	horizontal-align: left;
