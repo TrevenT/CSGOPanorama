@@ -680,8 +680,12 @@
 {
 	font-size: 192px;
 	font-weight: bold;
-    	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
+ 	font-family: Stratum2 Bold Monodigit, 'Arial Unicode MS';
+}
 
+.AspectRatio4x3 .tournamentinfo-minimal--score-label
+{
+	font-size: 128px;
 }
 
 .tournamentinfo-minimal--team-image
@@ -690,6 +694,13 @@
 	height: 192px;
 	margin: 0px 12px 0px 12px;
 }
+
+.AspectRatio4x3 .tournamentinfo-minimal--team-image
+{
+	width: 128px;
+	height: 128px;
+}
+
 
 .matchinfo--minimal .hide-when-minimal-info 
 {
