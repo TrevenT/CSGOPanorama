@@ -18,12 +18,8 @@ var MainMenuStore = ( function()
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 		var itemsByCategory = {};
 
-		                                        
-		var sRestriction = InventoryAPI.GetDecodeableRestriction( "capsule" );
-		var bCanSellCapsules = ( sRestriction !== "restricted" && sRestriction !== "xray" );
-
 		                                               
-		if ( bCanSellCapsules && ( NewsAPI.GetActiveTournamentEventID() !== 0 )
+		if ( ( NewsAPI.GetActiveTournamentEventID() !== 0 )
 			&& ( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[0][0], 0 ), 1, '' ) )
 			)
 		{

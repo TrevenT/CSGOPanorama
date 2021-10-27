@@ -689,28 +689,20 @@ var TournamentJournal = ( function()
     var _SetFaqBtn = function( tournamentId )
     {
         $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-faq' ).SetPanelEvent( 'onactivate', function(){
-            switch( tournamentId ) {
-                case 15:
-                    SteamOverlayAPI.OpenURL( 'http://www.counter-strike.net/pickem/katowice2019#faq' );
-                  break;
-                case 16:
-                    SteamOverlayAPI.OpenURL( 'http://www.counter-strike.net/pickem/berlin2019#faq' );
-                    break;
-                case 18:
-                    SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgostockholm' );
-                      break;
-                default:
-                    SteamOverlayAPI.OpenURL( 'http://www.counter-strike.net/pickem/katowice2019#faq' );
-                } 
+            SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgostockholm' );
         });
     };
 
     var _UpdateStoreItems = function()
     {
         var elItemsPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-items' );
-        var elBlurPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-container' );
-    
-        g_ActiveTournamentStoreLayout.forEach( function ( ids, i ) {
+		var elBlurPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-container' );
+		
+		                                        
+		var sRestriction = InventoryAPI.GetDecodeableRestriction( "capsule" );
+		var bCanSellCapsules = ( sRestriction !== "restricted" && sRestriction !== "xray" );
+
+		var fnCreateOffering = function ( ids, i ) {
 
             if ( !elItemsPanel.FindChildInLayoutFile( 'tournament-items' + i ) )
             {
@@ -736,7 +728,12 @@ var TournamentJournal = ( function()
 
                 elBlurPanel.AddBlurPanel( elItem );
             }
-		} );
+		};
+		
+		if ( bCanSellCapsules )
+			g_ActiveTournamentStoreLayout.forEach( fnCreateOffering );
+		else
+			fnCreateOffering( g_ActiveTournamentStoreLayout[0], 0 );
     };
 
     var _IsPurchaseable = function( itemid )

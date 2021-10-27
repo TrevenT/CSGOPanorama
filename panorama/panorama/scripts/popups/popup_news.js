@@ -13,9 +13,9 @@ var PopupNews = ( function()
 
 		var link = $.GetContextPanel().GetAttributeString( "link", '' );
 
-		function _OpenUrl ()
+		function _OpenUrl ( strUrl )
 		{
-			SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( link );
+			SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( strUrl );
 			$.DispatchEvent( 'UIPopupButtonClicked', '' );
 			$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.mainmenu_press_home', 'MOUSE' );
 		}
@@ -23,7 +23,7 @@ var PopupNews = ( function()
 		var elUrlBtn = $.GetContextPanel().FindChildTraverse( 'id-news-url-button' );
 		if ( elUrlBtn )
 		{
-			elUrlBtn.SetPanelEvent( 'onactivate', _OpenUrl );
+			elUrlBtn.SetPanelEvent( 'onactivate', _OpenUrl.bind( null, link ) );
 		}
 
 		  
