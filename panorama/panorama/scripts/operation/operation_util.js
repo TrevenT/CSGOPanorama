@@ -385,6 +385,7 @@ var OperationUtil = ( function () {
 			isReplayable: ( gameMode === 'cooperative' || gameMode === 'coopmission' ),
 			isSingleMatch: MissionsAPI.GetQuestDefinitionField( missionId, "singlematch" ) === '1' ? true : false,
 			missionGoal: MissionsAPI.GetQuestPoints( missionId, "goal" ),
+			nUncommitted: MissionsAPI.GetQuestPoints( missionId, "uncommitted" ),
 			missionGameMode: gameMode,
 			missionMapGroup: mapGroup,
 			missonType: numQuestGraphType === 1 ? 'sequential' :

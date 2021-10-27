@@ -13,13 +13,25 @@ var StreamPanel = (function () {
 	{
 		m_elSteamPanel = $.GetContextPanel();
 		_UpdateEmbeddedStream();
-	}
+		_MinimizeStream();
+	};
 
 	var _CloseStream = function()
 	{
 		m_bAllowStream = false;
 		_UpdateEmbeddedStream();
 	};
+
+	var _MinimizeStream = function()
+	{
+		m_elSteamPanel.GetParent().SetHasClass( 'minimize_stream', true );
+	};
+
+	var _FullSizeStream = function()
+	{
+		m_elSteamPanel.GetParent().SetHasClass( 'minimize_stream', false );
+	};
+
 
 	var _CSGOHideMainMenu = function()
 	{
@@ -72,6 +84,10 @@ var StreamPanel = (function () {
 				{
 					elVolumeImage.SetPanelEvent( 'onactivate', StreamPanel.ToggleVolumeMute );
 				}
+
+				elStreamPanelFeed.FindChildInLayoutFile( "id-close-btn" ).SetPanelEvent( 'onactivate', _CloseStream );
+				elStreamPanelFeed.FindChildInLayoutFile( "id-minimize-btn" ).SetPanelEvent( 'onactivate', _MinimizeStream );
+				elStreamPanelFeed.FindChildInLayoutFile( "id-full-size-btn" ).SetPanelEvent( 'onactivate', _FullSizeStream );
 			}
 		}
 		
@@ -194,6 +210,7 @@ var StreamPanel = (function () {
 						elchild.SetHasClass( 'hidden', sSupportedStreamTypes.indexOf( chrLookupTypeCharacter ) < 0 );
 					}
 				} );
+
 			}
 			else
 			{
@@ -208,7 +225,9 @@ var StreamPanel = (function () {
 		Init				: _Init,
 		CSGOShowMainMenu	: _CSGOShowMainMenu,
 		CSGOHideMainMenu	: _CSGOHideMainMenu,
-		CloseStream			: _CloseStream,
+		CloseStream: _CloseStream,
+		MinimizeStream: _MinimizeStream,
+		FullSizeStream: _FullSizeStream,
 		ToggleVolumeMute	: _ToggleVolumeMute,
 		OnVolumeCodeValueChanged : _OnVolumeCodeValueChanged,
 		OnVolumeSliderValueChanged : _OnVolumeSliderValueChanged,

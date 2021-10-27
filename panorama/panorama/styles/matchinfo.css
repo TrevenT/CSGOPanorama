@@ -111,7 +111,7 @@
 
 .mi-player-stats
 {
-	width:100%;
+  	           
 	height:270px;
 
 	horizontal-align: center;
@@ -119,7 +119,7 @@
 
 	flow-children: down;
 
-	padding-bottom:30px;
+  	                    
 
 	opacity:1;
 }
@@ -157,7 +157,7 @@
 	height:fill-parent-flow(1);
 	flow-children:down;
 	
-	padding: 0px 64px;
+	padding: 0px 32px;
 }
 
 .AspectRatio5x4 .mi-sb-frame
@@ -190,19 +190,36 @@
 	horizontal-align:center;
 }
 
+.round-stats-outer
+{
+	width:fit-children;
+	height:fit-children;
+	flow-children:down;
+
+	overflow: scroll clip;
+
+	padding-bottom:  40px;
+}
+
+
 .mi-round-stats__container
 {
 	width:fit-children;
 	height:fit-children;
 	flow-children:right;
-	horizontal-align:center;
 }
+
 
 @define bar-width: 30px;
 @define bar-width-4x3: 25px;
 
-@define bar-height: 150px;
+                    
+@define regtime-width: 900px;
 
+                        
+@define regtime-width-4x3: 750px;
+
+@define bar-height: 150px;
 
 
 .mi-round-summary-bar
@@ -303,6 +320,7 @@
 	background-color:rgba(128,128,128,1.0);
 }
 
+
 .mi-round-stats__tick-labels
 {
   	            
@@ -346,7 +364,14 @@
 
 .mi-tick-label--halftime
 {
-	width: 80px;
+	width: regtime-width;
+	horizontal-align: left;
+}
+
+.AspectRatio4x3 .mi-tick-label--halftime,
+.AspectRatio5x4 .mi-tick-label--halftime
+{
+	width: regtime-width-4x3;
 }
 
 .mi-tick-label__spacer
@@ -619,3 +644,94 @@
 	                                 
 	             
    
+
+.tournamentinfo-minimal-container
+{
+	flow-children: none;
+	width: fit-children;
+	height: fit-children;
+	horizontal-align:center;
+	vertical-align: top;
+}
+
+.tournamentinfo-minimal
+{
+	horizontal-align:center;
+	vertical-align: top;
+	flow-children: down;
+	width: fit-children;
+	height: fit-children;
+}
+
+.tournamentinfo-minimal--vs-label
+{
+	font-size: 36px;
+}
+
+.tournamentinfo-minimal--team
+{
+	flow-children: right; 
+	width: fit-children;
+	height: fit-children;
+	margin: 48px 64px 48px 64px;
+}
+
+.tournamentinfo-minimal--score-label
+{
+	font-size: 192px;
+	font-weight: bold;
+}
+
+.tournamentinfo-minimal--team-image
+{
+	width: 192px;
+	height: 192px;
+	margin: 0px 12px 0px 12px;
+}
+
+.matchinfo--minimal .hide-when-minimal-info 
+{
+	visibility: collapse;
+}
+
+.tournamentinfo-minimal--mapinfo
+{
+	margin-top: 128px;
+	width: 100%;
+	height: width-percentage( 100% ) ;
+	flow-children: none;
+}
+
+.tournamentinfo-minimal--map-image
+{
+	horizontal-align: center;
+	opacity: 0.2;
+	blur:gaussian( 2, 2, 1 );
+}
+
+.tournamentinfo-minimal--timeinfo
+{
+	flow-children: right;
+	width: 100%;
+	height: fit-children;
+}
+
+.tournamentinfo-minimal--tournament-logo
+{
+	margin-top: 12px;
+	opacity: 0.4;
+	blur:gaussian( 2, 2, 1 );
+	horizontal-align:center;
+}
+
+.tournamentinfo-minimal--tournamentphase
+{
+	horizontal-align: left;
+	font-size: 24px;
+}
+
+.tournamentinfo-minimal--matchphase
+{
+	horizontal-align: right;
+	font-size: 24px;
+}

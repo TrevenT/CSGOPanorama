@@ -72,17 +72,17 @@
 						<Label id="" class="navbar-btn__notification-text" text="1"/>
 					</Panel>
 				</Panel>
-				<Button id="InvSearchBtn"
-							class="" 
-							data-type='any'>
-					                                                                                               
-					<Label text="#inv_nav_search" />
-				</Button>
 				<Button id="InvLoadoutBtn" class="">
 					<Label text="#inv_nav_loadout" />
 				</Button>
 				<Button id="InvCraftingBtn" class="">
 					<Label text="#inv_nav_tradeup" />
+				</Button>
+				<Panel class="game-mode-selection-radios-spacer"></Panel>
+				<Button class="content-navbar__tabs--small-image" id="InvSearchBtn"
+						data-type='any'>
+					<Image src="file://{images}/icons/ui/find.svg" textureheight="48" texturewidth="-1" />
+					<Label text="#inv_nav_search" />
 				</Button>
 			</Panel>
 		</snippet>

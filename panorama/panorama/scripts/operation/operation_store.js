@@ -123,6 +123,7 @@ var OperationStore = ( function()
 				}
 
 				if ( !_m_placeBarSegments )
+				
 				{
 					if( aCoinPanels[coinLevel] )
 					{

@@ -113,6 +113,18 @@ var mainmenu_watch = ( function()
 	              
 	                                                                                                                                                                     
 
+	function _OnMouseOverTextTooltip ( _panel, _text )
+	{
+		UiToolkitAPI.ShowTextTooltip(
+			_panel,
+			_text );
+	}
+
+	function _OnMouseOutTextTooltip ( __tooltipId )
+	{
+		UiToolkitAPI.HideTextTooltip();
+	}
+
 	function _PopulateTournamentPage ( parentPanel )
 	{
 
@@ -126,119 +138,209 @@ var mainmenu_watch = ( function()
 			var pastTournamentPanel = elTournamentList.FindChildTraverse( "other-tournaments" );
 
 			                                                                                                                      
-			                                                          
+			var maxTournaments = g_ActiveTournamentInfo.eventid - 1;
 			      
 
 			                                                                             
-			var maxTournaments = g_ActiveTournamentInfo.eventid;
+			                                                       
 			      
 
-			for ( var i = maxTournaments; i >= 1; i-- )
+			for ( let i = maxTournaments; i >= 1; i-- )
 			{
-				if ( i == 2 ) continue;
+				if ( i == 2 ) continue;             
+				if ( i == 17 ) continue;            
 				                                         
-				var elTournamentPanel = $.CreatePanel( 'Button', pastTournamentPanel, "Tournament_" + i );
+				let elTournamentPanel = $.CreatePanel( 'Panel', pastTournamentPanel, "Tournament_" + i );
 				             
 				elTournamentPanel.BLoadLayoutSnippet( "tournament_tile" );
+				elTournamentPanel.SetDialogVariable( 'tournament-title', $.Localize( '#CSGO_Tournament_Event_Location_' + i ));
 
-				elTournamentPanel.FindChildTraverse( 'title' ).SetLocalizationString( '#CSGO_Tournament_Event_Location_' + i );
+				let elTOLogo = elTournamentPanel.FindChildTraverse( 'id-tournament-to-logo' );
+				elTOLogo.SetImage( 'file://{images}/tournaments/events/tournament_logo_' + i + '.svg' );
 
-				var iconSource = 'file://{images}/tournaments/events/tournament_logo_' + i + '.svg';
+  				                                                                                 
+  				                                                                                          
 
-				$.CreatePanel( 'Image', elTournamentPanel.FindChildTraverse( 'blur-backing' ), 'id-tournament-logo--large', {
-					src: iconSource,
-					texturewidth: 32,
-					textureheight: 32,
-					class: "tournament-logo--large"
-				} );
+				            
+				let ProEventJSO = TournamentsAPI.GetProEventDataJSO( i, 8);
 
-				$.CreatePanel( 'Image', elTournamentPanel.FindChildTraverse( 'image-container' ), 'id-tournament-logo--small', {
-					src: iconSource,
-					texturewidth: 100,
-					textureheight: 100,
-					class: "tournament-logo--small"
-				} );
+				let oWinningTeam;
+				let hasEventData = false;
 
-				                                       
-
-				function _Populate( elPanel, oData, eventid )
-				{				
-					var team = oData[ 'team_id' ];
-					var teamTag = oData[ 'tag' ];
-					var teamGeo = oData[ 'geo' ];
-					var teamLogo = 'file://{images}/tournaments/teams/' + teamTag.toLowerCase() + '.svg'
-					var teamName = $.Localize( 'CSGO_TeamID_' + team );
-
-					            
-					elPanel.SetDialogVariable( 'eventsched-tt-teamname', teamName );
-					
-					            
-					var elTeamLogo = elPanel.FindChildTraverse( 'id-estt-header__team-logo' );
-					if ( elTeamLogo )
-					{
-						elTeamLogo.SetImage( teamLogo );
-					}
-
-					var elTeamLogoBlurBG = elPanel.FindChildTraverse( 'id-estt-blur' );
-					if ( elTeamLogoBlurBG )
-					{
-						elTeamLogoBlurBG.SetImage( teamLogo );
-					}
-			
-					var elPlayerContainer = elPanel.FindChildTraverse( 'id-estt-lineup-container' );
-
-					          
-					var playerIndex = 0;
-
-					                  
-					var arrIndices = [ 0, 1, 2, 3, 4 ];
-					for ( var i = 0; i < 5; i++ )
-					{
-						var n = arrIndices.splice( Math.floor( Math.random() * 5 ), 1 )[ 0 ];
-						arrIndices.push( n );
-					}
-
-					var arrTeamPlayers = Object.entries( oWinningTeam[ 'players' ] );
-
-					arrIndices.forEach( function( i )
-					{
-						var oPlayer = arrTeamPlayers[ i ][ 1 ];                                                    
-						var elPlayer = $.CreatePanel( 'Panel', elPlayerContainer, oPlayer[ 'name' ] );
-						elPlayer.BLoadLayoutSnippet( 'snippet-estt-player' );
-						elPlayer.AddClass( 'player' + playerIndex );
-			
-						var playerName = oPlayer[ 'name' ];
-						              
-						elPlayer.SetDialogVariable( 'esttplayer-name', playerName );
-
-  						                                                                     
-			
-						              
-						var elPlayerImage = elPlayer.FindChildTraverse( 'id-estt-player__photo' );
-						if ( elPlayerImage )
-						{
-							var photo_url = "file://{images}/tournaments/avatars/" + eventid + "/" + oPlayer[ 'accountid64' ] + ".png";
-							elPlayerImage.SetImage( photo_url );
-						}
-
-						playerIndex++;
-					} );
-				}
-
-				var ProEventJSO = TournamentsAPI.GetProEventDataJSO( i, 1 );                                 
-
-				if( ProEventJSO )
+				if ( ProEventJSO
+					&& ProEventJSO.hasOwnProperty( 'eventdata' )
+					&& ProEventJSO[ 'eventdata' ].hasOwnProperty( i ))
 				{
-					var elChampionsRoot = elTournamentPanel.FindChildInLayoutFile( 'id-champions-frame' );
-					var oWinningTeam = ProEventJSO[ 'eventdata' ][ i ][ 1 ];
-
-					_Populate( elChampionsRoot, oWinningTeam, i );
-
-					elTournamentPanel.FindChildTraverse('individual-tournaments').SetPanelEvent( 'onmouseover', function( elPanel ) {elPanel.AddClass( 'hover' );}.bind( undefined, elChampionsRoot ) );
-					elTournamentPanel.FindChildTraverse('individual-tournaments').SetPanelEvent( 'onmouseout', function( elPanel ) {elPanel.RemoveClass( 'hover' );}.bind( undefined, elChampionsRoot ) );
+					oWinningTeam = ProEventJSO[ 'eventdata' ][ i ][ 0 ];
+					hasEventData = true;
 				}
 
-				elTournamentPanel.SetPanelEvent( 'onactivate', _NavigateToTab.bind( undefined, 'JsMainMenuSubContent_Tournament' + i, 'mainmenu_watch_tournament', 'tournament:' + i, true, true ) );
+				let elChampions = elTournamentPanel.FindChildTraverse( 'JsChampions' );
+				_SetTeam( elChampions, oWinningTeam, i, false );
+
+				let elLegendsContainer = elTournamentPanel.FindChildTraverse( 'JsLegendsContainer' );
+
+				let elPlayerRoot = elTournamentPanel.FindChildTraverse( "JsPlayersContainer" );
+
+				let elHoverPanel = elTournamentPanel.FindChildTraverse( 'JsChampionsHoverTarget' );
+				_PopulateTeamPlayers( elPlayerRoot, elHoverPanel, elLegendsContainer, oWinningTeam, i );
+
+				          
+				for ( let iTeam = 1; iTeam < 8; iTeam++ )
+				{
+
+					let oTeam;
+					if ( hasEventData &&
+						ProEventJSO[ 'eventdata' ][ i ].hasOwnProperty( iTeam ) &&
+						ProEventJSO[ 'eventdata' ][ i ][ iTeam ] )
+					{
+						oTeam = ProEventJSO[ 'eventdata' ][ i ][ iTeam ];
+					}
+
+					let elLegend = $.CreatePanel( 'Panel', elLegendsContainer, iTeam );
+					elLegend.BLoadLayoutSnippet( "snippet-tournament-legends" );
+
+					_SetTeam( elLegend, oTeam, i );
+
+				}
+				
+				var elModel = elTournamentPanel.FindChildTraverse( 'ParticleModel' );
+				if ( elModel )
+				{
+					elModel.SetCameraPosition( -10, 0, 0.00 );
+					elModel.SetCameraAngles( 0.00, 0.00, 0.00 );
+					elModel.SetParticleSystemOffsetPosition( 0.0, 0.0, 0.0 );
+
+					elModel.AddParticleSystem( 'ui_panel_liveambient', '', true );
+					  			                      
+				}
+
+				let elButton = elTournamentPanel.FindChild( 'JsTournamentContent' );
+				elButton.SetPanelEvent( 'onactivate', _NavigateToTab.bind( undefined, 'JsMainMenuSubContent_Tournament' + i, 'mainmenu_watch_tournament', 'tournament:' + i, true, true ) );
+				
+
+				var image = 'url("file://{images}/tournaments/events/bg_' + i +'.png")';
+				elButton.style.backgroundImage = image;
+				elButton.style.backgroundPosition = '50% 50%';
+				elButton.style.backgroundSize = 'auto 110%';
+				elButton.style.backgroundImgOpacity = '.7';
+	  			                                                                                                                       
+	  			                                                                                                                      
+			}
+		}
+
+
+		function _SetTeam ( elTeam, oTeamData, uniqueIdentifier, bTooltip = true )
+		{
+			let elTeamLogo = elTeam.FindChildTraverse( 'JsTeamLogo' );
+
+			let teamName = $.Localize( "#CSGO_PickEm_Team_TBD" );
+			let teamPlaceStr = "";
+
+			if ( oTeamData )
+			{
+				let team = oTeamData[ 'team_id' ];
+				let teamTag = oTeamData[ 'tag' ];
+				let teamGeo = oTeamData[ 'geo' ];
+				let teamPlaceToken = oTeamData[ 'place_token' ];
+
+				let teamLogo = 'file://{images}/tournaments/teams/' + teamTag.toLowerCase() + '.svg';
+				teamName = $.Localize( 'CSGO_TeamID_' + team );
+				teamPlaceStr = $.Localize( teamPlaceToken );
+
+				elTeamLogo.SetImage( teamLogo );
+
+				if ( bTooltip )
+				{
+					let TooltipString = $.Localize( teamName );
+					let elTooltipAnchor = $.CreatePanel( "Panel", elTeam, uniqueIdentifier + "_" + elTeam.id, { style: "	tooltip-position: bottom;" } )
+					  				                                                                                                                    
+					  				                                                             
+				}
+			}
+
+			elTeam.SetDialogVariable( "team-place", teamPlaceStr );
+			elTeam.SetDialogVariable( "team-name", teamName );
+		}
+
+		function _PopulateTeamPlayers ( elPlayerContainer, elHoverPanel, elLegendsContainer, oTeamData, eventid )
+		{
+			if ( !oTeamData )
+				return;
+			
+			          
+			                  
+			let arrIndices = [ 0, 1, 2, 3, 4 ];
+			for ( var i = 0; i < 5; i++ )
+			{
+				var n = arrIndices.splice( Math.floor( Math.random() * 5 ), 1 )[ 0 ];
+				arrIndices.push( n );
+			}
+
+			let arrTeamPlayers = Object.entries( oTeamData[ 'players' ] );
+
+			arrIndices.forEach( function ( i )
+			{
+				let oPlayer = arrTeamPlayers[ i ][ 1 ];                                                    
+				let elPlayer = $.CreatePanel( 'Panel', elPlayerContainer, 'JsPlayerCard' );
+				elPlayer.BLoadLayoutSnippet( 'snippet-tournament-player' );
+
+				              
+				elPlayer.SetDialogVariable( 'tournament-player-name', oPlayer[ 'name' ] );
+
+				              
+				let elPlayerImage = elPlayer.FindChildTraverse( 'JsTournamentPlayerPhoto' );
+				if ( elPlayerImage )
+				{
+					let photo_url = "file://{images}/tournaments/avatars/" + eventid + "/" + oPlayer[ 'accountid64' ] + ".png";
+					elPlayerImage.SetImage( photo_url );
+				}
+			} );
+
+			elHoverPanel.AddClass( "has-team-data" );
+			elHoverPanel.SetPanelEvent( 'onmouseover', function ( elPlayerContainer, elLegendsContainer ) { _RevealPlayers( elPlayerContainer, elLegendsContainer ) }.bind( this, elPlayerContainer, elLegendsContainer ) );
+			elHoverPanel.SetPanelEvent( 'onmouseout', function ( elPlayerContainer, elLegendsContainer ) { _HidePlayers( elPlayerContainer, elLegendsContainer ) }.bind( this, elPlayerContainer, elLegendsContainer ) );
+
+			function _RevealPlayers ( elPlayerContainer, elLegendsContainer )
+			{
+				let arrElPlayers = elPlayerContainer.Children();
+
+				elLegendsContainer.AddClass( 'hidden' );
+
+				const DELAY_INIT = 0;
+				const DELAY_DELTA = 0.1;
+
+				arrElPlayers.forEach( function ( elPlayer, i )
+				{
+					let delay = DELAY_INIT + i * DELAY_DELTA;
+					Scheduler.Schedule( delay, function ( elPlayer )
+					{
+						if ( elPlayer )
+							elPlayer.RemoveClass( 'hidden' );
+						
+						                                            
+						Scheduler.Schedule( 0.1, function ()
+						{
+							$.DispatchEvent( 'PlaySoundEffect', 'UIPanorama.mainmenu_rollover', 'MOUSE' );
+						}, "player-reveal" );
+
+					}.bind( this, elPlayer ), "player-reveal");
+
+				});
+			}
+
+			function _HidePlayers ( elPlayerContainer, elLegendsContainer )
+			{
+				elLegendsContainer.RemoveClass( 'hidden' );
+
+				let arrElPlayers = elPlayerContainer.Children();
+
+				Scheduler.Cancel( "player-reveal" );
+				
+				arrElPlayers.forEach( function ( elPlayer )
+				{
+					elPlayer.AddClass( 'hidden' );
+				} );
 			}
 		}
 	}
@@ -547,7 +649,7 @@ var mainmenu_watch = ( function()
 		if ( restrictions === false )
 		{
 			                                                                                       
-			if ( false )
+			if ( true )
 			{
 				_InitResourceManagement( $( '#JsActiveTournament' ) );
 				_NavigateToTab( 'JsActiveTournament' );
@@ -597,11 +699,14 @@ var mainmenu_watch = ( function()
 
 	var _ShowActiveTournamentPage = function( idOfTab = '' )
 	{
+		while ( _CloseSubMenuContent() )
+			continue;                                                                  
+
 		_NavigateToTab( 'JsActiveTournament' );
+		$( '#WatchNavBarActiveTourament' ).checked = true;
 
 		var elTournamentActive = $( '#JsActiveTournament' );
-
-		if ( idOfTab )
+		if ( idOfTab && elTournamentActive )
 		{
 			$.DispatchEvent( "Activated", elTournamentActive.FindChildInLayoutFile( idOfTab ), "mouse" );
 		}

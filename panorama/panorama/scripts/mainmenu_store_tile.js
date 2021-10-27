@@ -14,20 +14,22 @@ var MainMenuStoreTile = ( function()
 		var activationType = elItem.Data().oData.activationType;
 		var isNewRelease = elItem.Data().oData.isNewRelease;
 		var useItemId = elItem.Data().oData.useItemId;
-		var isProTeam = elItem.Data().oData.isProTeam;
 		var isMarketItem = activationType === 'market';
 
 		                  
 		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
 		var LootListItemID = '';
 
-		if( ItemInfo.GetLootListCount( id ) > 0 )
+		if( InventoryAPI.GetItemTypeFromEnum( id ) === 'coupon' )
 			LootListItemID = InventoryAPI.GetLootListItemIdByIndex( id, 0 );
 
 		elImage.itemid = ( !isMarketItem && !useItemId && LootListItemID ) ? LootListItemID : id;
 
 		var elName = elItem.FindChildInLayoutFile( 'StoreItemName' );
-		elName.text = ItemInfo.GetName( id );
+		var strItemName = ItemInfo.GetName( id );
+		if ( elItem.Data().oData.usetinynames )
+			strItemName = $.Localize( InventoryAPI.GetRawDefinitionKey(id, 'item_name') + '_tinyname' );
+		elName.text = strItemName;
 		
 		var elStattrak = elImage.FindChildInLayoutFile( 'StoreItemStattrak' );
 		elStattrak.SetHasClass( 'hidden', !ItemInfo.IsStatTrak( id ) );
@@ -56,18 +58,18 @@ var MainMenuStoreTile = ( function()
 		var elPrice = elItem.FindChildInLayoutFile( 'StoreItemPrice' );
 		elPrice.text = ( isMarketItem ) ? $.Localize( '#SFUI_Store_Market_Link' ) : ItemInfo.GetStoreSalePrice( id, 1 );
 
-		if( isProTeam )
-		{
-			elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined,id, id, 'newstore' ));
-		}
-		else
-		{
-			_OnActivateStoreItem( elItem, id, activationType );
-		}
+		_OnActivateStoreItem( elItem, id, activationType );
+
 	};
 
 	var _OnActivateStoreItem = function( elItem, id, type )
 	{
+		if ( elItem.Data().oData.isDisabled )
+		{
+			elItem.enabled = false;
+			return;
+		}
+		
 		if ( type === "market" )
 		{
 			elItem.SetPanelEvent( 'onactivate', _OpenOverlayToMarket.bind( undefined, id ));
@@ -76,11 +78,15 @@ var MainMenuStoreTile = ( function()
 		{
 			var displayItemId = '';
 
-			if( ItemInfo.GetLootListCount( id ) > 0 )
-				displayItemId= InventoryAPI.GetLootListItemIdByIndex( id, 0 );
-			
-			if( displayItemId )
+			if ( InventoryAPI.GetItemTypeFromEnum( id ) === 'coupon' )
+			{
+				displayItemId = InventoryAPI.GetLootListItemIdByIndex( id, 0 );
 				elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined, id, displayItemId, type ) );
+			}
+			else if ( ItemInfo.GetLootListCount( id ) > 0 )
+			{
+				elItem.SetPanelEvent( 'onactivate', _ShowDecodePopup.bind( undefined, id, id, type ) );
+			}
 			else
 				elItem.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id, type ) );
 		}
@@ -107,6 +113,11 @@ var MainMenuStoreTile = ( function()
 			strExtraSettings = '&overridepurchasemultiple=1';
 		}
 
+		if ( elItem.Data().oData.extrapopupfullscreenstyle )
+		{
+			strExtraSettings += '&extrapopupfullscreenstyle=solidbkgnd';
+		}
+
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
@@ -123,6 +134,8 @@ var MainMenuStoreTile = ( function()
 
 	var _ShowInpsectPopup = function( id )
 	{
+		var strExtraSettings = elItem.Data().oData.extrapopupfullscreenstyle ? '&extrapopupfullscreenstyle=solidbkgnd' : '';
+		
 		                                                            
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -133,7 +146,9 @@ var MainMenuStoreTile = ( function()
 			+ '&' +
 			'asyncworkitemwarning=no'
 			+ '&' +
-			'storeitemid=' + id,
+			'storeitemid=' + id 
+			+ '&' + 
+			strExtraSettings,
 			'none'
 		);
 	};

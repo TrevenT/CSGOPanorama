@@ -8,9 +8,37 @@
 #Contents.store-linked-items
 {
 	width: fit-children;
-	height: 220px;
 	                             
-	flow-children: right;
+	flow-children: down;
 	padding: 12px;
+}
+
+.store-linked-items__tiles
+{
+	flow-children: right;
+	height: 230px;
+}
+
+.store-linked-items__warning
+{
+	flow-children: right;
+	background-color: rgba(0, 0, 0, 0.589);
+	padding:0px 4px;
+	border-radius: 3px;
+	opacity: .5;
+}
+
+.store-linked-items__warning__text
+{
+	font-size: 14px;
+	padding: 8px 0px 8px 8px;
+	width: 360px;
+	visibility: visible;
+	
+}
+
+.hidewarning .store-linked-items__warning
+{
+	visibility: collapse;
 }
 

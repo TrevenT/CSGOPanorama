@@ -156,6 +156,10 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
 {
 	font-size: 24px; 
 }
+.fontSize-ml
+{
+	font-size: 20px; 
+}
 .fontSize-m
 {
 	font-size: 18px; 
@@ -212,6 +216,13 @@ Label.MonoNumbersFont, TextEntry.MonoNumbersFont
 {
 	text-transform: uppercase;
 }
+
+.text-letterspace-2px
+{
+	letter-spacing: 2px;
+}
+
+
 
 
                                                                                
@@ -2171,6 +2182,17 @@ SlottedSlider.HorizontalSlider .SliderNotch
 	background-color: gradient( radial, 50% 50%, -5% -5%, 60% 60%, from( #b8c5d3 ), to( #444f52 ) );
 }
 
+#SliderDefault
+{
+	background-color: gradient( radial, 50% 50%, -5% -5%, 60% 60%, from( #91a5b9 ), to( #444f52 ) );
+	border-radius: 13%;
+	width: 30px;
+	height: 16px;
+	                                          
+	z-index: 5;
+}
+
+
 Slider.HorizontalSlider, 
 SlottedSlider.HorizontalSlider
 {
@@ -2217,6 +2239,7 @@ SlottedSlider.HorizontalSlider #SliderTrackProgress:disabled
 }
 
 
+
 Slider.HorizontalSlider #SliderThumb, 
 SlottedSlider.HorizontalSlider #SliderThumb
 {
@@ -2225,6 +2248,15 @@ SlottedSlider.HorizontalSlider #SliderThumb
 	width: 16px;
 	height: 10px;
 	align: center center;
+}
+
+Slider.HorizontalSlider #SliderDefault
+{
+	align: center center;
+	background-color: baseText;
+	border-radius: 2px;
+	width: 2px;
+	height: 12px;
 }
 
 Slider.HorizontalSlider #SliderThumb:hover, 
@@ -3037,6 +3069,11 @@ EdgeScrollBar.Vertical #MaxButton
 .vscroll
 {
 	overflow: squish scroll;
+}
+
+.hscroll
+{
+	overflow: scroll squish;
 }
 
 .horizontal-separator

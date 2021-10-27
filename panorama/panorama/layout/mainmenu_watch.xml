@@ -7,6 +7,7 @@
 		
 	</styles>
 	<scripts>
+		<include src="file://{resources}/scripts/common/scheduler.js" />	
 		<include src="file://{resources}/scripts/common/commonutil.js" />
 		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/licenseutil.js" />
@@ -60,9 +61,9 @@
 					<Panel class="content-navbar__tabs">
 						                                                                                                                                                 
 						                                                         
-						                                                                                                                                                                        
-							                                                            
-						                  
+						<RadioButton id="WatchNavBarActiveTourament" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsActiveTournament', 'active tournament menu button');">
+							<Label class="" text="#CSGO_Tournament_Event_NameShort_18"/>
+						</RadioButton>
 						<RadioButton id="WatchNavBarButtonTournaments" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Tournament_0"/>
 						</RadioButton>
@@ -94,8 +95,8 @@
 				<Panel class="full-width full-height" useglobalcontext="true">
 					<Panel id="JsLive" class="WatchMenu WatchMenu--Hide"/>
 					<Panel id="JsYourMatches" class="WatchMenu WatchMenu--Hide"/>
-					<Panel id="JsTournaments" class="WatchMenu WatchMenu--Hide left-right-padding WatchMenu--Streams subsection-content__background-color">
-						<Panel id="JsTournamentList" class="horizontal-center top-bottom-flow full-width full-height vscroll"/>
+					<Panel id="JsTournaments" class="WatchMenu WatchMenu--Hide subsection-content__background-color">
+						<Panel id="JsTournamentList" class="horizontal-center top-bottom-flow full-width full-height"/>
 					</Panel>
 					<Frame id="JsActiveTournament" src="file://{resources}/layout/mainmenu_watch_tournament.xml" class="WatchMenu WatchMenu--Hide" />
 					<Panel id="JsStreams" class="WatchMenu WatchMenu--Streams WatchMenu--Hide subsection-content__background-color no-flow">

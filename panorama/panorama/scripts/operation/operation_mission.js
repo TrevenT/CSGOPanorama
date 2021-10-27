@@ -7,7 +7,6 @@
 var OperationMission = ( function()
 {
 	var _m_missionPrefix = 'id-mission-';
-	var nMissionsCompleteWithUncommittedPoints = 0;
 
 	var _CreateMission = function( elContainer, oMissionDetails, isUnlocked )
 	{
@@ -89,19 +88,28 @@ var OperationMission = ( function()
 		{
 			var oCompletedOrQuest = oMissionDetails.aSubQuests.filter( element => element.nsubQuestPointsRemaining === 0 )[ 0 ];
 
+			var uncommitedPointsMeetGoal = false;
 			if ( oCompletedOrQuest )
 			{
 				var elContainer = LoadSnippetByType( elParent, missionPanelId, "snippet-mission-segment-container" );
 				_UpdateMissionDesc( elMission, oCompletedOrQuest.missionId, bHideDesc = false );
-				_UpdateSegmentsMissionTypes( oMissionDetails, elContainer, oCompletedOrQuest, 0 );
+				_UpdateSegmentsMissionTypes( oMissionDetails, elContainer, oMissionDetails.aSegmentsData[ 0 ], oCompletedOrQuest, 0 );
 			}
 			else
 			{
-				nMissionsCompleteWithUncommittedPoints = 0;
 				for ( var i = 0; i < oMissionDetails.aSubQuests.length; i++ )
 				{
-					_UpdateOrTypeMission( oMissionDetails, elParent, i );
+					if ( !uncommitedPointsMeetGoal && oMissionDetails.aSubQuests[i].nUncommitted >= oMissionDetails.aSubQuests[i].nGoal )
+					{
+						uncommitedPointsMeetGoal = true;
+					}
+					_UpdateOrTypeMission( oMissionDetails, oMissionDetails.aSegmentsData[ 0 ], elParent, i );
 				}
+
+				var aStars = elParent.FindChildInLayoutFile( 'id-mission-segments-stars' ).Children();
+				aStars.forEach(element => {
+					element.SetHasClass( 'uncommitted', uncommitedPointsMeetGoal );
+				}); 
 			}
 		}
 		else
@@ -111,7 +119,7 @@ var OperationMission = ( function()
 
 			for ( var i = 0; i < oMissionDetails.nMissionSegments; i++ )
 			{
-				_UpdateSegmentsMissionTypes( oMissionDetails, elContainer, oMissionDetails.aSegmentsData[ i ], i );
+				_UpdateSegmentsMissionTypes( oMissionDetails, elContainer, oMissionDetails.aSegmentsData[ i ],null, i );
 			}
 		}
 
@@ -128,7 +136,7 @@ var OperationMission = ( function()
 		MissionsAPI.ApplyQuestDialogVarsToPanelJS( Number( oMissionDetails.missionItemId ), elMission );
 	};
 
-	var _UpdateOrTypeMission = function( oMissionDetails, elParent, index )
+	var _UpdateOrTypeMission = function( oMissionDetails, oSegmentData, elParent, index )
 	{
 		var oSubQuestData = oMissionDetails.aSubQuests[ index ];
 		var elContainer = LoadSnippetByType( elParent, _m_missionPrefix + oSubQuestData.missionId, "snippet-mission-segment-container-or-type" );
@@ -138,19 +146,15 @@ var OperationMission = ( function()
 
 		var segmentPanelId = _m_missionPrefix + oSubQuestData.missionId + '_segment' + index;
 		_CreateBars( elContainer.FindChildInLayoutFile( 'id-mission-bar' ),
+			oSegmentData,
 			oSubQuestData,
 			oMissionDetails,
 			segmentPanelId
 		);
 
-		oSubQuestData.nPreviousGoal = 0;                                                                            
-		var nEarnedDisplay = _GetTotalPointsEarned( oSubQuestData.nUncommitted, oSubQuestData.nEarned, oSubQuestData.nGoal, oSubQuestData.nPreviousGoal );
-		var elCount = _CreateSectionCount( elContainer.FindChildInLayoutFile( 'id-mission-bar' ), oSubQuestData, nEarnedDisplay );
-
-		var isMissionCompleteWithUncommittedPoints = ( ( nEarnedDisplay >= oSubQuestData.nGoal ) && oMissionDetails.nMissionPointsRemaining > 0 ) 
-		nMissionsCompleteWithUncommittedPoints = isMissionCompleteWithUncommittedPoints ?
-			++ nMissionsCompleteWithUncommittedPoints :
-			nMissionsCompleteWithUncommittedPoints;
+		var nEarnedDisplay = _GetTotalPointsEarned( oMissionDetails, oSegmentData, oSubQuestData );
+		var elCount = _CreateSectionCount( elContainer.FindChildInLayoutFile( 'id-mission-bar' ), oSubQuestData.nGoal, nEarnedDisplay );
+		var isMissionCompleteWithUncommittedPoints = ( ( nEarnedDisplay >= oSubQuestData.nGoal ) && oMissionDetails.nMissionPointsRemaining > 0 );
 
 		elCount.SetHasClass( 'uncommitted', isMissionCompleteWithUncommittedPoints );
 
@@ -158,7 +162,7 @@ var OperationMission = ( function()
 		{
 			var starsPanelId = _m_missionPrefix + "sudquest-stars" + oSubQuestData.missionId;
 			var elStarsContainer = LoadSnippetByType( elParent, starsPanelId, "snippet-mission-stars-container-or-type" );
-		
+			
 			for ( var k = 0; k < oMissionDetails.nOpPointsPerSegment; k++ )
 			{
 				var starPanelId = _m_missionPrefix + oSubQuestData.missionId + '_star' + k;
@@ -168,33 +172,27 @@ var OperationMission = ( function()
 					oMissionDetails,
 					starPanelId,
 					nEarnedDisplay );
-
-				elStar.SetHasClass( 'uncommitted', nMissionsCompleteWithUncommittedPoints > 0 );
 			}
 		}
 	};
 
-	var _UpdateSegmentsMissionTypes = function( oMissionDetails, elContainer, oSegmentData, index )
+	var _UpdateSegmentsMissionTypes = function( oMissionDetails, elContainer, oSegmentData, oSubQuestData, index )
 	{	
 		var segmentPanelId = _m_missionPrefix + oMissionDetails.missionId + '_segment' + index;
 		_CreateBars( elContainer,
 			oSegmentData,
+			oSubQuestData,
 			oMissionDetails,
-			segmentPanelId );
+			segmentPanelId
+		);
 
-		var nUncommittedForSegment = _GetUncommittedSegmentPoints( oMissionDetails, oSegmentData )
-		var nEarnedDisplay = oMissionDetails.isReplayable ? oSegmentData.nEarned :
-			oSegmentData.isComplete ? oSegmentData.nGoal :
-			_GetTotalPointsEarned(
-				nUncommittedForSegment,
-				oSegmentData.nSegmentEarned,
-				oSegmentData.nGoal,
-				oSegmentData.nPreviousGoal );
+		var nEarnedDisplay = _GetTotalPointsEarned( oMissionDetails, oSegmentData, oSubQuestData );
 
 		if ( oMissionDetails.nMissionSegments === 1 )
 		{
-			var elCount = _CreateSectionCount( elContainer, oSegmentData, nEarnedDisplay );
-			elCount.SetHasClass( 'uncommitted', ( nUncommittedForSegment + oSegmentData.nSegmentEarned ) === oSegmentData.nGoal && !oSegmentData.isComplete );
+			var nGoal = oMissionDetails.missonType === 'or' ? oSubQuestData.nGoal : oSegmentData.nGoal;
+			var elCount = _CreateSectionCount( elContainer, nGoal, nEarnedDisplay );
+			elCount.SetHasClass( 'uncommitted', ( oMissionDetails.nUncommitted + oSegmentData.nEarned ) >= oSegmentData.nGoal && !oSegmentData.isComplete );
 		}
 
 		for ( var k = 0; k < oMissionDetails.nOpPointsPerSegment; k++ )
@@ -202,22 +200,28 @@ var OperationMission = ( function()
 			var starPanelId = _m_missionPrefix + segmentPanelId + '_star' + k;
 			var elStar = _CreateMissionStar( elContainer, oSegmentData, oMissionDetails, starPanelId, nEarnedDisplay );
 
-			elStar.SetHasClass( 'uncommitted', ( nUncommittedForSegment + oSegmentData.nEarned ) === oSegmentData.nGoal && !oSegmentData.isComplete );
+			elStar.SetHasClass( 'uncommitted', ( oMissionDetails.nUncommitted + oSegmentData.nEarned ) >= oSegmentData.nGoal && !oSegmentData.isComplete );
 		}
 	};
 
-	var _GetUncommittedSegmentPoints = function( oMissionDetails, oSegmentData )
+	var _GetTotalPointsEarned = function( oMissionDetails, oSegmentData, oSubQuestData )
 	{
-		var nUncommittedForSegment = 0
-		if( oMissionDetails.aSubQuests && oMissionDetails.aSubQuests.length > 0 )
+		if ( oMissionDetails.isReplayable )
 		{
-			for ( var j = 0; j < ( oSegmentData.nSegmentIncrementalGoalDelta + oSegmentData.nPreviousGoal); j++ )
-			{
-				nUncommittedForSegment += oMissionDetails.aSubQuests[ j ].nUncommitted;
-			}
+			return oSegmentData.nEarned;
 		}
 
-		return nUncommittedForSegment;
+		                                                                                                             
+		                                                            
+		var oData = oMissionDetails.missonType === 'or' ? oSubQuestData : oSegmentData;
+		var nUncommitted = oMissionDetails.missonType === 'or' ? oSubQuestData.nUncommitted : oMissionDetails.nUncommitted;
+
+		if ( oData.isComplete || ( oData.nEarned + nUncommitted ) >= oData.nGoal )
+		{
+			return oData.nGoal;
+		}
+
+		return oData.nEarned + nUncommitted;
 	}
 
 	var _UpdateMissionDesc = function ( elMission, missionId, bhideDesc )
@@ -249,11 +253,28 @@ var OperationMission = ( function()
 
 		var aChildren = elContainer.Children();
 		aChildren.forEach( element => {
-			if( MissionsAPI.GetQuestPoints( Number( element.id ), "uncommitted" ) > 0 )
+			var nUncommitted = MissionsAPI.GetQuestPoints( Number( element.id ), "uncommitted" );
+			var nGoal = MissionsAPI.GetQuestPoints( Number( element.id ), "goal" );
+			
+			if ( nUncommitted > 0 )
+			{
+				var nDisplay = nUncommitted >= nGoal ? nGoal : nUncommitted;
+				element.SetDialogVariableInt( 'uncommited', nDisplay );
+				element.SetDialogVariableInt( 'goal', nGoal );
+			}
+
+			element.FindChildInLayoutFile( 'id-subquest-progress' ).visible = nUncommitted > 0 && nGoal > 1;
+
+			if ( element.FindChildInLayoutFile( 'id-subquest-progress' ).visible && nUncommitted < nGoal )
+			{
+				elContainer.MoveChildBefore( element, elContainer.GetChild( 0 ) );
+			}
+
+			if ( nUncommitted >= nGoal )
 			{
 				elContainer.MoveChildBefore( element, elContainer.GetChild( 0 ) );
 				element.AddClass( 'uncommitted' );
-				
+
 				$.Schedule( 1.5, function(){ element.AddClass( 'hide-submission' ) });
 			}
 		});
@@ -322,9 +343,9 @@ var OperationMission = ( function()
 		}
 	};
 
-	var _CreateBars = function( elContainer, oSegmentData, oMissionDetails, segmentPanelId, )
+	var _CreateBars = function( elContainer, oSegmentData, oSubQuestData, oMissionDetails, segmentPanelId, )
 	{
-		var nSegments = oMissionDetails.missonType === 'or' ? 1 : oSegmentData.nSegmentIncrementalGoalDelta;
+		var nSegments = oSegmentData.nSegmentIncrementalGoalDelta;
 		var isSingleBar = ( oMissionDetails.nMissionSegments === 1 || oMissionDetails.missonType === 'or' ) ? true : false;
 
 		for ( var i = 0; i < nSegments; i++ )
@@ -339,8 +360,8 @@ var OperationMission = ( function()
 			
 			if( oMissionDetails.missonType === 'or' )
 			{
-				nPercentComplete = oSegmentData.nPercentComplete;
-				nPercentCompleteUncommitted = oSegmentData.nPercentCompleteUncommitted;
+				nPercentComplete = oSubQuestData.nPercentComplete;
+				nPercentCompleteUncommitted = oSubQuestData.nPercentCompleteUncommitted;
 			}
 			else if ( oMissionDetails.isReplayable )
 			{
@@ -348,15 +369,17 @@ var OperationMission = ( function()
 			}
 			else if ( oMissionDetails.aSubQuests )
 			{
-				nPercentComplete = oMissionDetails.aSubQuests[ oSegmentData.nPreviousGoal + i ].nPercentComplete;
-				nPercentCompleteUncommitted = oMissionDetails.aSubQuests[ oSegmentData.nPreviousGoal + i ].nPercentCompleteUncommitted;
+				var oSubQuest = oMissionDetails.aSubQuests[ oSegmentData.nPreviousGoal + i ];
+				nPercentComplete = oSubQuest.nPercentComplete;
+				
+				                                                                
+				nPercentCompleteUncommitted = oSubQuest.nUncommitted < oSubQuest.nGoal ? 0 : 100;
 			}
 
 			elBar.FindChildInLayoutFile( 'id-mission-card-bar' ).style.width = nPercentComplete + '%;';
 			elBar.FindChildInLayoutFile( 'id-mission-card-bar-uncommitted' ).style.width = nPercentCompleteUncommitted + '%;';
 		}
 	};
-
 
 	var _CreateMissionStar = function( elContainer, oSegmentData, oMissionDetails, starPanelId, nEarned )
 	{
@@ -377,7 +400,7 @@ var OperationMission = ( function()
 		return elStar;
 	};
 
-	var _CreateSectionCount = function( elContainer, oData, nEarnedDisplay )
+	var _CreateSectionCount = function( elContainer, nGoal, nEarnedDisplay )
 	{
 		var elSectionCount = null;
 		if( !elContainer.FindChildInLayoutFile( 'id-section-count' ) )
@@ -393,21 +416,9 @@ var OperationMission = ( function()
 			elSectionCount = elContainer.FindChildInLayoutFile( 'id-section-count' );
 		}
 
-		elSectionCount.text = nEarnedDisplay +'/'+ oData.nGoal;
+		elSectionCount.text = nEarnedDisplay +'/'+ nGoal;
 		return elSectionCount;
 	}
-
-	var _GetTotalPointsEarned = function( nUncommitedPoints, nEarned, nGoal, nPreviousGoal )
-	{
-		var earnedPoints = ( nEarned >= ( nGoal + nPreviousGoal )) ?
-			nGoal : nEarned === 0 ?
-			0 :
-			nEarned + nPreviousGoal;
-		
-		return ( ( nUncommitedPoints > 0 ) && ( nUncommitedPoints + earnedPoints ) >= nGoal ) ? nGoal
-			: ( nUncommitedPoints > 0 ) ? nUncommitedPoints + earnedPoints :
-				earnedPoints;
-	};
 
 	var LoadSnippetByType = function ( elContainer, snippetPanelId, snippetName )
 	{

@@ -210,6 +210,11 @@ var PickEmInfoBar = ( function()
 		var elParent = elPanel.FindChildTraverse( 'id-pickem-info' );
 		var elBtn = elParent.FindChildInLayoutFile( 'JsTournamentLiveMatch' );
 		var matchId = GetLiveMatchId( elPanel._oPickemData.oInitData.tournamentid );
+
+		                                                 
+		var bIsMinimalMatchInfo = MatchInfoAPI.IsServerLogTournamentMatch( matchId ); 
+		if ( bIsMinimalMatchInfo )
+			matchId = '';
 		
 		if( matchId )
 		{

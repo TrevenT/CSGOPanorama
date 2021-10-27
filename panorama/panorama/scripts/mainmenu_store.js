@@ -18,9 +18,13 @@ var MainMenuStore = ( function()
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 		var itemsByCategory = {};
 
+		                                        
+		var sRestriction = InventoryAPI.GetDecodeableRestriction( "capsule" );
+		var bCanSellCapsules = ( sRestriction !== "restricted" && sRestriction !== "xray" );
+
 		                                               
-		if ( ( NewsAPI.GetActiveTournamentEventID() !== 0 )
-			&& ( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_sticker, 0 ), 1, '' ) )
+		if ( bCanSellCapsules && ( NewsAPI.GetActiveTournamentEventID() !== 0 )
+			&& ( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[0][0], 0 ), 1, '' ) )
 			)
 		{
 			m_elStore.SetDialogVariable( "tournament_name", $.Localize( "#CSGO_Tournament_Event_Location_" + NewsAPI.GetActiveTournamentEventID() ) );
@@ -98,131 +102,174 @@ var MainMenuStore = ( function()
 		var tournament = [
 			{
 				snippet_name: "TournamentStore",
-				load_func: function ( elpanel ) {
-					var itemsCount = g_ActiveTournamentTeams.length;
-					var randomItemsIndex = [];
-					var count = 0;
-			
-					while ( count < 7 )
-					{
-						var random = _GetRandom( 0, itemsCount );
-						var filteredIndexes = randomItemsIndex.filter(index => index === random );
-			
-						if( filteredIndexes.length === 0  )
-						{
-							randomItemsIndex.push(random);
-							count++;
-						}
-					}
-			
-					var elImagesContainer = elPanel.FindChildInLayoutFile( 'id-store-tournament-items-container' );
-					var itemTypes = [
-						'itemid_sticker',
-						'itemid_pass'
-					];
-					var offset = 78;
-			
-					_ShowSaleTag( );
-					
-					for( var i = 0; i < randomItemsIndex.length ; i++ )
-					{
-						var elImage = elImagesContainer.FindChildInLayoutFile( 'id-store-tournament-item' + i );
-						var defIndex = 0;
-			
-						if( i === 0 )
-						{
-							var randomItemType = _GetRandom( 0, itemTypes.length );
-							defIndex = g_ActiveTournamentInfo[ itemTypes[ randomItemType ]];
-						}
-						else
-						{
-							                                     
-							var randomItemType = _GetRandom( 0, itemTypes.length - 1 );
-							defIndex = g_ActiveTournamentTeams[ randomItemsIndex[i]][ itemTypes[ randomItemType ]];
-						}
-						
-						elImage.itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( defIndex, 0 );
-						elImage.style.x = ( offset*i ) + 'px';
-						var scaleOffset = 1 - ( 0.08 * i );
-						elImage.style.transform = 'scale3d( '+ scaleOffset +','+ scaleOffset +','+ scaleOffset +')';
-						elImage.style.zIndex = 10-i;
-						if( i > randomItemsIndex.length/2 )
-						{
-							elImage.style.blur = 'gaussian( 4, 4,' + 1 +')';
-						}
-					}
-			
-					function _ShowSaleTag ()
-					{
-						var itemsThatGoOnSale = [
-							g_ActiveTournamentInfo.itemid_sticker,
-							g_ActiveTournamentInfo.itemid_pass,
-							g_ActiveTournamentInfo.itemid_pack,
-							g_ActiveTournamentInfo.itemid_charge
-						];
-			
-						var itemsWithSaleReduction = [];
-						itemsThatGoOnSale.forEach( itemDefIndex =>
-						{
-							var reduction = ItemInfo.GetStoreSalePercentReduction( itemDefIndex, 1 );
-							
-							if ( reduction )
-							{
-								var oItem = { defindex: itemDefIndex, reduction: reduction };
-								itemsWithSaleReduction.push( oItem );
-							}
-						} );
-			
-						var aSorted = itemsWithSaleReduction.sort(function (a, b) {
-							return parseInt( a.reduction ) - parseInt( b.reduction );
-						});
-						
-						var elPrecent = elPanel.FindChildInLayoutFile( 'StorePanelTournamentSaleTagLabel' );
-						elPrecent.SetHasClass( 'hidden', aSorted.length < 1 ? true : false );
-						
-						if ( aSorted.length >= 1 )
-						{
-							var itemName = aSorted[0].defindex === g_ActiveTournamentInfo.itemid_sticker ?
-								$.Localize( '#store_tournament_reduction_strickers' ) :
-								ItemInfo.GetName( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( aSorted[0].defindex , 0 ));
-							
-							elPrecent.SetDialogVariable( 'reduction', aSorted[ 0 ].reduction );
-							elPrecent.SetDialogVariable( 'reduction_name', itemName );
-						}
-					}
-					
-					elPanel.SetDialogVariable( 'tournament-name', $.Localize('#CSGO_Tournament_Event_NameShort_'+ g_ActiveTournamentInfo.eventid) );
-					                                                                                       
-					                                                   
-			
-					                             
-					    
-					   	                               
-					   	                                 
-			
-					   		                                                                               
-					   		                                                
-			
-					   		                                                    
-					   		 
-					   			                                    
-					   			                                               
-					   				       
-			
-					   			                                                                                            
-					   			                   
-					   				       
-			
-					   			                                                                                 
-					   			                                                                                                   
-					   			                                                                         
-					   			                                                                  
-					   		 
-			
-					   		                                                              
-					   	 
-					     
+
+				load_func: function( elpanel )
+				{
+					elpanel.BLoadLayout( "file://{resources}/layout/mainmenu_tournament_pass_status.xml", false, false );
 				}
+				                            
+				                                 
+				    
+				   	                                                   
+				   	                       
+				   		                                                                                               
+				   		                                                                                                  
+				   	 
+
+				   	                                                                                               
+
+				   	                                                   
+				   	                       
+				   		                                                                                                   
+				   		                                                                                                      
+				   	 
+
+				   	                                                                                               
+
+				   	                                                   
+				   	                       
+				   		                                                                                             
+				   		                                                                                                
+				   	 
+
+				   	                                                                                               
+
+				   	                                                   
+				   	                       
+				   		                                                                                         
+				   		                                                                                            
+				   	 
+
+				   	                                                                                               
+
+				   	                                                                                                                                      
+				    
+
+				                 
+				                 
+				                 
+				    
+				                                                   
+				                             
+				                 
+
+				                      
+				    
+				   	                                         
+				   	                                                                          
+		
+				   	                                   
+				   	 
+				   		                              
+				   		        
+				   	 
+				    
+		
+				                                                                                                  
+				                    
+				   	                 
+				   	             
+				     
+				                   
+		
+				                   
+				
+				                                                      
+				    
+				   	                                                                                        
+				   	                 
+		
+				   	             
+				   	 
+				   		                                                       
+				   		                                                                
+				   	 
+				   	    
+				   	 
+				   		                                     
+				   		                                                           
+				   		                                                                                       
+				   	 
+					
+				   	                                                                               
+				   	                                      
+				   	                                   
+				   	                                                                                            
+				   	                            
+				   	                                   
+				   	 
+				   		                                                
+				   	 
+				    
+		
+				                           
+				    
+				   	                         
+				   		                                      
+				   		                                   
+				   		                                   
+				   		                                    
+				   	  
+		
+				   	                                
+				   	                                          
+				   	 
+				   		                                                                         
+						
+				   		                
+				   		 
+				   			                                                             
+				   			                                     
+				   		 
+				   	    
+		
+				   	                                                           
+				   		                                                         
+				   	   
+					
+				   	                                                                                    
+				   	                                                                     
+					
+				   	                          
+				   	 
+				   		                                                                              
+				   			                                                       
+				   			                                                                                             
+						
+				   		                                                                   
+				   		                                                          
+				   	 
+				    
+
+				                   
+				                   
+				                   
+				    
+				   	                               
+				   	                                 
+		
+				   		                                                                               
+				   		                                                
+		
+				   		                                                    
+				   		 
+				   			                                    
+				   			                                               
+				   				       
+		
+				   			                                                                                            
+				   			                   
+				   				       
+		
+				   			                                                                                 
+				   			                                                                                                   
+				   			                                                                         
+				   			                                                                  
+				   		 
+		
+				   		                                                              
+				   	 
+				    
 			}
 		];
 
@@ -633,7 +680,7 @@ var MainMenuStore = ( function()
 				{
 					var LinkedItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( parseInt( sLinkedCoupon ), 0 );
 					                                                                                                                              
-					itemsByCategory.coupons.push( { id:FauxItemId, linkedid: LinkedItemId, snippet_name: 'LinkedStoreEntry' } );
+					itemsByCategory.coupons.push( { id:FauxItemId, linkedid: LinkedItemId } );
 				}
 				else if ( strBannerEntryCustomFormatString === "coupon_new" )
 				{
@@ -851,7 +898,7 @@ var MainMenuStore = ( function()
 		{
 			elPage = $.CreatePanel( 'Panel', elCarousel, 'Page-'+(i/itemsPerPage) );
 			elPage.BLoadLayoutSnippet( 'StoreCarouselPage' );
-			elPage.SetHasClass( 'store-panel__carousel-page--single', ( type === "operation" || type === "proteams" ) );
+			elPage.SetHasClass( 'store-panel__carousel-page--single', ( type === "operation" || type === "proteams"  ||  type === "tournament") );
 		}
 		else
 		{
@@ -892,18 +939,16 @@ var MainMenuStore = ( function()
 		                                                                     
 		                                                                                        
 		                                                                                             
-		  
-		                                                              
-		else if( typeof itemList[ i ] === "object" && type === "coupons" && itemList[ i ].snippet_name && itemList[ i ].linkedid )
-		{
-			elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name );
-			var oItemIds = { 
-				id:itemList[ i ].id, 
-				linkedid: itemList[ i ].linkedid
-			};
 
-			_FillOutLinkedItemData( elItem, oItemIds );
-			_SetOnActivateEventLinkedItemTile( elItem, oItemIds );
+		                                                              
+		else if( typeof itemList[ i ] === "object" && type === "coupons" && itemList[ i ].linkedid )
+		{
+			elItem.Data().oData = {
+				itemid: itemList[ i ].id,
+				linkedid: itemList[ i ].linkedid
+			}
+
+			elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile_linked.xml", false, false );
 		}
 		                             
 		else if ( typeof itemList[ i ] == "object" && itemList[ i ].snippet_name && elItem.BLoadLayoutSnippet( itemList[ i ].snippet_name ) )
@@ -943,61 +988,6 @@ var MainMenuStore = ( function()
 			}
 			elPage.AddClass( 'store-panel__carousel-page__animations_enabled' );
 		}
-	};
-
-	var _FillOutLinkedItemData = function ( elItem, oItemIds )
-	{
-		var LootListItemID = InventoryAPI.GetLootListItemIdByIndex( oItemIds.id, 0 );
-		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
-		elImage.itemid = LootListItemID;
-
-		LootListItemID = InventoryAPI.GetLootListItemIdByIndex( oItemIds.linkedid, 0 );
-		elImage = elItem.FindChildInLayoutFile( 'StoreItemImageLinked' );
-		elImage.itemid = LootListItemID;
-
-		var elStattrak = elImage.FindChildInLayoutFile( 'StoreItemStattrak' );
-		elStattrak.SetHasClass( 'hidden', false );
-
-		var elName = elItem.FindChildInLayoutFile( 'StoreItemName' );
-		elName.text = ItemInfo.GetName( LootListItemID );
-
-		var elSale = elItem.FindChildInLayoutFile( 'StoreItemSalePrice' );
-		var elPrecent = elItem.FindChildInLayoutFile( 'StoreItemPercent' );
-		var reduction = ItemInfo.GetStoreSalePercentReduction( oItemIds.id, 1 );
-
-		if ( reduction )
-		{
-			elSale.visible = true;
-			elSale.text = ItemInfo.GetStoreOriginalPrice( oItemIds.linkedid, 1 ) + ' - ' +  ItemInfo.GetStoreOriginalPrice( oItemIds.id, 1 );
-
-			elPrecent.visible = true;
-			elPrecent.text = reduction;
-		}
-		else
-		{
-			elSale.visible = false;
-			elPrecent.visible = false;
-		}
-
-		var elPrice = elItem.FindChildInLayoutFile( 'StoreItemPrice' );
-		elPrice.text = ItemInfo.GetStoreSalePrice( oItemIds.linkedid, 1 ) + ' - ' + ItemInfo.GetStoreSalePrice( oItemIds.id, 1 );
-	};
-
-	var _SetOnActivateEventLinkedItemTile = function( elTile, oItemIds )
-	{
-		var OpenContextMenu = function( oItemIds )
-		{
-			var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParameters(
-				'',
-				'',
-				'file://{resources}/layout/context_menus/context_menu_store_linked_items.xml',
-				'itemids=' + oItemIds.id +',' + oItemIds.linkedid
-			);
-			contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
-		};
-
-		elTile.SetPanelEvent( 'onactivate', OpenContextMenu.bind( undefined, oItemIds ) );
-		elTile.SetPanelEvent( 'oncontextmenu', OpenContextMenu.bind( undefined, oItemIds ) );
 	};
 
 	var _PrimeStoreItem = function( elItem, id, type )
@@ -1086,8 +1076,8 @@ var MainMenuStore = ( function()
 		                                                                               
 		                                                                               
 		  
-		var tabsorder = [ 'proteams', 'operation', 'coupons',
-			'tournament', 'prime', 'newstore',
+		var tabsorder = [ 'tournament', 'operation', 'coupons',
+			'proteams', 'prime', 'newstore',
 			'store', 'keys', 'market' ];
 
 		var dict = {};

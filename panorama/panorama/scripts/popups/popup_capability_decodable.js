@@ -19,6 +19,7 @@ var CapabilityDecodable = ( function()
 	var m_unusualItemImagePath = '';
 	var m_showInspectScheduleHandle = null;
 	var m_isAllowedToInteractWithLootlistItems = true;
+	var m_styleforPopUpInspectFullScreenHostContainer = '';
 	var m_isXrayMode = false;
 	var m_blurOperationPanel = false;
 	
@@ -102,11 +103,11 @@ var CapabilityDecodable = ( function()
 			SetsItemVarsFromMsg();
 		}
 
-		var styleforPopUpInspectFullScreenHostContainer = $.GetContextPanel().GetAttributeString( 'extrapopupfullscreenstyle', null );
-		if ( styleforPopUpInspectFullScreenHostContainer )
+		m_styleforPopUpInspectFullScreenHostContainer = $.GetContextPanel().GetAttributeString( 'extrapopupfullscreenstyle', '' );
+		if ( m_styleforPopUpInspectFullScreenHostContainer )
 		{
 			var elPopUpInspectFullScreenHostContainer = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectFullScreenHostContainer' );
-			elPopUpInspectFullScreenHostContainer.AddClass( styleforPopUpInspectFullScreenHostContainer );
+			elPopUpInspectFullScreenHostContainer.AddClass( m_styleforPopUpInspectFullScreenHostContainer );
 		}
 
 		                                           
@@ -361,7 +362,7 @@ var CapabilityDecodable = ( function()
 			                                                                
 			var additionalParams = _GetSettingCallback( 'inspectonly', 'false' ) === 'true' ? 'inspectonly=true,' : '';
 			additionalParams = _GetSettingCallback( 'asyncworkbtnstyle', 'positive' ) === 'hidden' ? additionalParams + 'asyncworkbtnstyle=hidden' : '';
-			additionalParams = m_blurOperationPanel ? additionalParams + ','+'bluroperationpanel=true' : '';
+			additionalParams = m_blurOperationPanel ? additionalParams + ',' + 'bluroperationpanel=true' : '';
 			
 			$.DispatchEvent(
 				"LootlistItemPreview",
@@ -370,6 +371,7 @@ var CapabilityDecodable = ( function()
 				',' + caseId +
 				',' + storeid +
 				',' + bluroperationpanel +
+				',' + m_styleforPopUpInspectFullScreenHostContainer +
 				',' + additionalParams
 			);
 		};

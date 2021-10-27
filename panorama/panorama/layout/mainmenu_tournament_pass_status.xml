@@ -12,15 +12,21 @@
         <include src="file://{resources}/scripts/mainmenu_tournament_pass_status.js" />
 	</scripts>
 
-	<Panel class="tournament-pass-status hidden MainMenuModeOnly" >
+	<Panel class="tournament-pass-status" >
         <Button id="id-tournament-pass-status" class="tournament-pass-status-container">
-            <ItemImage id="id-tournament-pass-status-image" class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect">
-                    <Label id="id-tournament-pass-saletag" class="store-sale-tag__text" text=""/>
-            </ItemImage>
             <Panel class="tournament-pass-status__info">
-                <Label id="id-tournament-pass-status-header" class="news-entry__title stratum-font" text="Check your coin status"/>
-                <Label id="id-tournament-pass-status-game-countdown" class="tournament-pass-status__desc hidden" html="true" text=""/>
+                <Label class="tournament-pass-status__desc" html="true" text="#CSGO_TournamentPass_stockh2021_store_desc"/>
+                <Panel class="left-right-flow">
+                    <Label id="id-tournament-pass-status-header" class="tournament-pass-status__title" text="#CSGO_TournamentPass_stockh2021_store_title"/>
+                    <Label id="id-tournament-pass-saletag" class="tournament-pass-status__saletag" text="#ON SALE!"/>
+                </Panel>
             </Panel>
+            <Panel id="id-tournament-pass-status-images-row" class="tournament-pass-status__images-row">
+                <ItemImage class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
+                <ItemImage class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
+                <ItemImage class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
+            </Panel>
+            <Label id="id-tournament-pass-status-game-countdown" class="tournament-pass-status__timer hidden" html="true" text="#CSGO_TournamentPass_stockh2021_store_desc"/>
         </Button>
 	</Panel>
 </root>

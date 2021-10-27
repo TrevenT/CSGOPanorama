@@ -37,3 +37,29 @@
 	transition-duration: .5s ;
 	transition-timing-function: ease-in-out;
 }
+
+.PopupMessage
+{
+	max-width: 520px;
+	max-height: 68px;
+	text-overflow: ellipsis;
+	font-size: 14px;
+}
+
+.hidden
+{
+	opacity: 0;
+}
+
+.validiation-icon
+{
+	opacity: .04;
+	vertical-align: center;
+	margin-left: 8px;
+}
+
+.valid.validiation-icon
+{
+	opacity: 1;
+	                                
+}

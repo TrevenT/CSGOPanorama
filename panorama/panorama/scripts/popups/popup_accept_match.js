@@ -319,8 +319,7 @@ var PopupAcceptMatch = ( function(){
 
 		                                                                                                                                                      
 		
-		var mode = $.Localize ( '#SFUI_GameMode_' + m_lobbySettings.game.mode );
-		labelData.SetDialogVariable ( 'mode', mode );
+		labelData.SetDialogVariable( 'mode', $.Localize( '#SFUI_GameMode_' + m_lobbySettings.game.mode ) );
 
 		                                    
 		                                                          
@@ -336,7 +335,7 @@ var PopupAcceptMatch = ( function(){
 
 		if ( GameModeFlags.DoesModeUseFlags( m_lobbySettings.game.mode ) && flags )
 		{
-			labelData.SetDialogVariable( 'modifier', $.Localize( '#play_setting_gamemodeflags_' + mode + '_' + flags ) );
+			labelData.SetDialogVariable( 'modifier', $.Localize( '#play_setting_gamemodeflags_' + m_lobbySettings.game.mode + '_' + flags ) );
 			strLocalize = '#match_ready_match_data_modifier';
 		}
 

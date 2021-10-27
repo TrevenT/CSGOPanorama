@@ -24,13 +24,14 @@ var TooltipMission = ( function()
 			var elCheckbox = $.CreatePanel( 'Panel', elParent, 'id-' + element );
 			elCheckbox.BLoadLayoutSnippet( strType +'-mission' );
 			MissionsAPI.ApplyQuestDialogVarsToPanelJS( Number( element ), elCheckbox );
-			elCheckbox.SetDialogVariable( 'missiontext', $.Localize( MissionsAPI.GetQuestDefinitionField( Number( element ), "loc_description" )));
+			elCheckbox.SetDialogVariable( 'missiontext', $.Localize( MissionsAPI.GetQuestDefinitionField( Number( element ), "loc_description" ), elCheckbox ) );
 
 			var nRemaining = MissionsAPI.GetQuestPoints(  Number( element ), "remaining" );
 			elCheckbox.SetHasClass( 'complete', nRemaining === 0 );
 
 			var nUncommitted = MissionsAPI.GetQuestPoints( Number( element ), "uncommitted" );
-			elCheckbox.SetHasClass( 'uncommitted', nUncommitted > 0 );
+			var nGoal = MissionsAPI.GetQuestPoints( Number( element ), "goal" );
+			elCheckbox.SetHasClass( 'uncommitted', nUncommitted >= nGoal );
 
 			completedIndex = nRemaining === 0 ? index : 0;
 		});

@@ -16,8 +16,8 @@ var MainMenuTournamentPassStatus = ( function()
 			return;
 		}
 		
-		$.GetContextPanel().SetHasClass( 'hidden',false );
-		_SetImage();
+		                                                     
+		_UpdatePanel();
 	};
 
 	var _RegisterForInventoryUpdate = function()
@@ -49,94 +49,44 @@ var MainMenuTournamentPassStatus = ( function()
 		} );
 	};
 	
-	var _SetImage = function()
+	var _UpdatePanel = function()
 	{
-		var elImage = $.GetContextPanel().FindChildInLayoutFile('id-tournament-pass-status-image');
-		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-header' );
-		var title = '';
-		var elDescLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-game-countdown' );
-	var onActivate = null;
+		var elCountdownLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-game-countdown' );
 
 		                                                                                                
 		var id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid );
-		var elPrecent = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-saletag' );
-		elPrecent.SetHasClass( 'hidden', true );
-			
+
 		if( !id || id === '0' )
 		{
-			elDescLabel.SetHasClass( 'hidden', false );
-
 			                                                              
-			id = InventoryAPI.GetActiveTournamentCoinItemId( g_ActiveTournamentInfo.eventid * -1 );
-			if ( !id || id === '0' )
-			{
-				                                                               
-				id = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
-				if ( !StoreAPI.GetStoreItemSalePrice( id, 1, '' ) )
-				{
-					$.GetContextPanel().SetHasClass( 'hidden', true );
-					return;
-				}
-				
-				                                                
-				onActivate = _ShowInpsectPopup;
-				title = InventoryAPI.GetItemName( id );
-
-				                 
-				var reduction = ItemInfo.GetStoreSalePercentReduction( g_ActiveTournamentInfo.itemid_pass, 1 );
-				elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
-				elPrecent.text = reduction;
-
-				if ( !reduction )
-				{
-					if ( MyPersonaAPI.GetAccountCategory( 'viewerpass' ) === 1 )
-					{
-						EnableCountdownTimer( elDescLabel, "#pickem_timer_upsell" );
-					}
-					else
-					{
-						elDescLabel.text = "#CSGO_TournamentPass_katowice2019_Desc_short";
-					}
-				}
-				else
-				{
-					EnableCountdownTimer( elDescLabel, "#pickem_timer" );
-				}
-			}
-			else
-			{
-				onActivate = _ActivatePass;
-				elDescLabel.text = "#SFUI_ConfirmBtn_ActivatePassNow";
-				title = InventoryAPI.GetItemName( id );
-			}
-			
-			elImage.SetHasClass( 'pass', true );
-
-			$.GetContextPanel().style.backgroundImage = 'url("file://{images}/tournaments/backgrounds/tournament_pass_bg_' + g_ActiveTournamentInfo.eventid + '.png")';
-			$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
-			$.GetContextPanel().style.backgroundSize = '100% 250%';
-			$.GetContextPanel().style.backgroundPosition = '50% 0%';
+			elCountdownLabel.SetHasClass( 'hidden', true );
 		}
 		else
 		{
 			                  
-			elImage.SetHasClass( 'pass', false );
-			EnableCountdownTimer( elDescLabel, "#pickem_timer" );
-
-			$.GetContextPanel().style.backgroundImage = 'url( "file://{images}/tournaments/backgrounds/background_' + g_ActiveTournamentInfo.eventid + '.png" )';
-			$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
-			$.GetContextPanel().style.backgroundSize = 'cover';
-			$.GetContextPanel().style.backgroundPosition = '50% 40%';
-
-			onActivate = _ShowTournamentJournalPanel;
-			title = InventoryAPI.GetItemName( id );
+			elCountdownLabel.SetHasClass( 'hidden', false );
+			EnableCountdownTimer( elCountdownLabel, "#pickem_timer" );
 		}
 
-		elLabel.text = title;
-		elImage.itemid = id;
-		$.GetContextPanel().FindChildInLayoutFile('id-tournament-pass-status').SetPanelEvent(
-			'onactivate', onActivate.bind(undefined, id)
-		);
+		$.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status' ).SetPanelEvent(
+			'onactivate', _ShowTournamentJournalPanel.bind( undefined, id ) );
+		
+		_AddItemImages();
+		_ItemsOnSale();
+			
+		$.GetContextPanel().style.backgroundImage = 'url("file://{images}/store/tournament_items_' + g_ActiveTournamentInfo.eventid + '.png")';
+		$.GetContextPanel().style.backgroundRepeat = 'no-repeat';
+		$.GetContextPanel().style.backgroundSize = 'cover' ;
+		$.GetContextPanel().style.backgroundPosition = '50% 50%';
+	};
+
+
+	var _AddItemImages = function()
+	{
+		var aImages = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-status-images-row' ).Children();
+		aImages[ 0 ].itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ 0 ][ 1 ], 0 );
+		aImages[ 1 ].itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ 1 ][ 0 ], 0 );
+		aImages[ 2 ].itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ 2 ][ 0 ], 0 );
 	};
 
 	var EnableCountdownTimer = function( elDescLabel, displayString )
@@ -149,6 +99,16 @@ var MainMenuTournamentPassStatus = ( function()
 			_m_schTimer = $.Schedule( 0.1, _Timer.bind( undefined, elPanel ) );
 		}
 	};
+
+	var _ItemsOnSale = function()
+	{
+		var elPrecent = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-pass-saletag' );
+		elPrecent.SetHasClass( 'hidden', true );
+
+			                 
+			var reduction = ItemInfo.GetStoreSalePercentReduction( g_ActiveTournamentInfo.itemid_pass, 1 );
+			elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
+	}
 
 	var _ShowInpsectPopup = function( id )
 	{

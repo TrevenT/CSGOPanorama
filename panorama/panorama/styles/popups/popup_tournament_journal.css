@@ -39,12 +39,12 @@
 
 #id-tournament-journal-container
 {
-	blur: fastgaussian( 8, 8, 6 );
+	blur: fastgaussian( 4, 4, 3 );
     -s2-mix-blend-mode: opaque;
-    brightness: 1;
+    brightness: .1;
     saturation: .8;
 
-    background-image: url( "file://{resources}/videos/tournament_bg.webm" );
+    background-image: url( "file://{images}/tournaments/events/bg_18_fullscreen.png" );
 	background-repeat: no-repeat;
 	background-size: clip_then_cover;
 	background-position: 50% 0%;
@@ -67,7 +67,6 @@
     height: fit-children;
     width: 100%;
     min-height: 72px;
-    background-color: rgba(0, 0, 0, 0.5);
     margin-bottom: 16px;
 }
 
@@ -116,7 +115,7 @@
 .tournament-journal__titlebar__subtitle
 {
     color:rgb(231, 236, 241);
-    font-size: 18px;
+    font-size: 15px;
     text-shadow: 1px 1px 1px 1.5 rgb(44, 60, 78);
     width: 1080px;
     text-align: center;
@@ -131,66 +130,56 @@
 
 .tournament-journal__section
 {
-    width: 100%;
     flow-children: right;
                                                            
-    height:fill-parent-flow( 1 );
-}
-
-.tournament-journal__section.center
-{
-    height: 82%;
+    height: 360px;
 }
 
 .tournament-journal__section--bottom-block
 {
     background-color: none;
                                                  
-    height: fit-children;
-    margin-top: 16px;
+    height: 240px;
+    margin-top: 8px;
 }
 
 .tournament-journal__column
 {
-    width: 640px;
+    width: fill-parent-flow(1);
+    height: fill-parent-flow(1);
+    max-width: 740px;
                         
     flow-children: down;
-    margin: 0px 8px;
+    padding: 8px;
+    margin: 0px 2px;
+    background-color: rgba(255, 255, 255, .03);
 }
 
 .tournament-journal__info-block
 {
     horizontal-align: center;
     flow-children: right;
-    width: 640px;
-}
-
-.tournament-journal__info-block.short
-{
-    padding: 16px;
-    min-height: 200px;
     vertical-align: center;
+
+    margin: 6px 0px;
+    horizontal-align: left;
+    width: 512px;
 }
 
-#id-steam-block,
-#id-graffiti-block,
-#id-tournament-redeem-block,
-#id-winners-block
+.tournament-journal__column--redeem .tournament-journal__info-block,
+#id-graffiti-block .tournament-journal__info-block
 {
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
-#id-winners-block .tournament-journal__info-block.short
-{
-    padding-bottom: 0px;
+    transform: translateX(140px);
 }
 
                                                                   
 .tournament-journal__info-block__title
 {
     font-size: 24px;
+    color:white;
     font-weight: medium;
-    letter-spacing: 8px;
+    letter-spacing: 3px;
 
     text-shadow: 1px 1px 1px 1.5 rgb(44, 60, 78);
 }
@@ -234,15 +223,25 @@
 
 .tournament-journal__info-block__subtitle
 {
-    color:#89ABD2;
-    font-size: 17px;
-    width: 520px;
-    text-overflow: noclip;
+    color:white;
+    font-size: 15px;
+    width: 400px;
+    text-overflow: shrink;
 }
 
 .tournament-journal__info-block__info
 {
     flow-children: down;
+}
+
+.tournament-journal__info-block__buttons-row
+{
+    vertical-align: bottom;
+    flow-children: left;
+    horizontal-align: right;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.116);
+    padding-top: 8px;
 }
 
 #id-tournament-coin-levelbanner-bg,
@@ -263,14 +262,21 @@
 
 #id-tournament-ticket-icon
 {
-    width: 128px;
+    width: 198px;
 }
 
 .tournament-journal__model
 {
     width: height-percentage(100%);
-    height: fill-parent-flow( 1 );
+    height: 460px;
     horizontal-align: center;
+    vertical-align: center;
+    z-index: 5;
+}
+
+.no-active-pass .tournament-journal__model
+{
+    height: 640px;
 }
 
 .tournament-journal__model.trophy
@@ -284,15 +290,15 @@
 {
     flow-children: down;
     width: 100%;
-    margin-top: 12px;
-    height: fill-parent-flow( 1 );
+    vertical-align: center;
 }
 
 .tournament-journal__challenge
 {
     flow-children: right;
     width: 100%;
-    height: fill-parent-flow( 1 );
+    padding: 6px 0px;
+    margin: 1px 0px 1px 4px;
                                                       
     background-color: rgba(0, 0, 0, 0.5);
                            
@@ -320,7 +326,7 @@
 
 .tournament-journal__challenge.dark.complete
 {
-    background-color: gradient( linear, 100% 0%, 0% 0%, from( rgba(14, 119, 14, 0.8) ), to( rgba(2, 90, 2, 0.3)) );
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( rgb(15, 141, 15) ), to( rgba(4, 82, 4, 0.829)) );
 }
 
 .tournament-journal__challenge:hover:not(.tournament-journal__challenge:disabled)
@@ -335,14 +341,20 @@
 
 .tournament-journal__challenge__name
 {
+    font-size: 15px;
     width: fill-parent-flow( 1 );
-    padding: 0px 8px;
     text-overflow: shrink;
     color: white;
 
     transition-property: transform;
     transition-duration: .20s;
     transition-timing-function: ease-in-out;
+}
+
+.tournament-journal__challenge__spacer
+{
+    width: 180px;
+    height: 100%;
 }
 
 .tournament-journal__challenge__icon-container
@@ -355,7 +367,7 @@
 .tournament-journal__challenge:hover:not(.tournament-journal__challenge:disabled) .tournament-journal__challenge__icon,
 .tournament-journal__challenge:hover:not(.tournament-journal__challenge:disabled) .tournament-journal__challenge__name
 {
-    transform: scale3d( 1.05, 1.05, 1.05 );
+    transform: scale3d( 1.03, 1.03, 1 );
 
     transition-property: transform;
     transition-duration: .20s;
@@ -370,6 +382,12 @@
 
     opacity: .3;
 }
+
+.complete .tournament-journal__challenge__icon
+{
+    opacity: 1;
+}
+
                       
 .tournament-journal__spray_emotes
 {
@@ -386,22 +404,22 @@
 .tournament-journal-button
 {
     horizontal-align: left;
-    margin: 8px 8px 8px 0px;
 }
 
 .tournament-journal-button Label
 {
-
 	horizontal-align: left;
-	vertical-align: middle;
+    vertical-align: middle;
+    color: white;
+    padding: 12px;
 	text-align: left;
 	text-transform: uppercase;
 	font-weight: medium;
-	font-size: 20px;
+	font-size: 16px;
 	font-family: stratum2Font;
     text-overflow: shrink;
 
-    transition-property: color, brightness;
+    transition-property: background-color, brightness;
 	transition-duration: .20s;
 	transition-timing-function: ease-in-out;
 }
@@ -410,9 +428,10 @@
 {
     color: White;
     brightness: 1.4;
+    background-color: rgba(0, 0, 0, 0.329);
                                               
 
-    transition-property: color, brightness;
+    transition-property: background-color, brightness;
 	transition-duration: .20s;
 	transition-timing-function: ease-in-out;
 }
@@ -423,56 +442,56 @@
     color: disabledColor;
     text-shadow-fast: none;
 }
+   
+                                
+ 
+                                               
+                                               
+                       
+                             
+ 
 
-.tournament-journal-button.small
-{
-    background-color: rgba(32, 204, 32, 0.075);
-    border: 1px solid rgba(32, 204, 32, 0.301);
-    border-radius: 3px;
-    margin: 8px 16px 8px 0px;
-}
+                                     
+ 
+                                                
+                                                
 
-.tournament-journal-button.small.blue
-{
-    background-color: rgba(66, 122, 224, 0.123);
-    border: 1px solid rgba(66, 121, 224, 0.555);
-
-	animation-name: blue-btn-glow;
-	animation-duration: 1s;
-	animation-timing-function: linear;
-    animation-iteration-count: infinite;
+	                              
+	                       
+	                                  
+                                        
     
-}
+ 
 
-@keyframes 'blue-btn-glow'
-{
-	0%
-	{
-        background-color: rgba(66, 122, 224, 0.123);
-        border: 1px solid rgba(66, 121, 224, 0.555);
-	}
+                          
+ 
+	  
+	 
+                                                    
+                                                    
+	 
 
-	50%
-	{
-        background-color: rgba(82, 140, 247, 0.294);
-        border: 1px solid rgba(66, 121, 224, 0.8);
-	}
+	   
+	 
+                                                    
+                                                  
+	 
 	
-	100%
-	{
-        background-color: rgba(66, 122, 224, 0.123);
-        border: 1px solid rgba(66, 121, 224, 0.555);
-	}
-}
+	    
+	 
+                                                    
+                                                    
+	 
+    
 
-.tournament-journal-button.small Label
-{
-    font-size: 14px;
-    font-family: stratum2Font;
-    font-weight: medium;
-    padding: 6px 8px;
-    text-align: center;
-}
+                                         
+ 
+                    
+                              
+                        
+                     
+                       
+    
 
 #id-tournament-journal-spray
 {
@@ -483,7 +502,7 @@
 .tournament-journal__info-steamtv-icon
 {
     vertical-align: center;
-    wash-color: rgb(99, 27, 233);
+    wash-color: rgb(145, 97, 233);
     margin-right: 16px;
 
 }
@@ -492,14 +511,6 @@
 {
     color:#89ABD2;
     font-size: 16px;
-}
-
-.tournament-over #id-graffiti-block,
-.tournament-over #id-steam-block,
-.tournament-over #id-tournament-journal-remaining,
-.tournament-over #id-tournament-journal-subtitle
-{
-    visibility: collapse;
 }
 
 .tournament-over #id-winners-block
@@ -528,6 +539,27 @@
 {
     wash-color: disabledColor;
 }
+
+                                                       
+.tournament-over #id-graffiti-block,
+.tournament-over #id-steam-block,
+.tournament-over #id-tournament-journal-remaining,
+.no-active-pass #id-graffiti-block,
+.no-active-pass #id-steam-block,
+.no-active-pass #id-winners-block,
+.no-active-pass #id-redeem-block,
+.no-active-pass #id-tournament-journal-challenges-section
+{
+    visibility: collapse;
+}
+
+.tournament-journal__challenge__items-row
+{
+    flow-children: right;
+    horizontal-align: center;
+    vertical-align: center;
+}
+
 
 
 

@@ -280,7 +280,7 @@ var HudWinPanel = ( function()
 		                      
 		var bCT = _m_teamPerspective == 3;
 		var drawColor = bCT ? '#B5D4EEaa' : '#EAD18Aaa';
-		_m_elCanvas.DrawLinePointsJS( plotPoints.length, _flattenArrayOfTuples( plotPoints ), 2, drawColor );
+		_m_elCanvas.DrawSoftLinePointsJS( plotPoints.length, _flattenArrayOfTuples( plotPoints ), 4, 1.0, drawColor );
 		_m_elCanvas.TriggerClass( 'show-canvas' );
 
 		                       

@@ -102,7 +102,7 @@ var Loadout = ( function() {
 			elLabel.text = $.Localize( "#shuffle_toggle_btn" , elLabel );
 		}
 
-		elBtn.visible = ItemInfo.IsShuffleAllowed( ItemId ) && ItemInfo.CountItemsInInventoryForShuffleSlot( ItemId, teamAsString ) > 1;
+		elBtn.visible = ( loadoutSlot !== 'spray0' ) && ItemInfo.IsShuffleAllowed( ItemId ) && ItemInfo.CountItemsInInventoryForShuffleSlot( ItemId, teamAsString ) > 1;
 
 		var nameString = ( loadoutSlot === 'melee' || loadoutSlot === 'clothing_hands' ) || loadoutSlot === 'musickit' || loadoutSlot === 'customplayer' ?
 		$.Localize( '#loadoutslot_' + loadoutSlot ) :
@@ -204,6 +204,8 @@ var Loadout = ( function() {
 			modelPath,
 			false
 		);
+
+		
 
 	
 		elBackground.SetImage( "file://{images}/backgrounds/inspect.svg" );
@@ -369,8 +371,8 @@ var Loadout = ( function() {
 	{
 		if ( loadoutSlot === 'spray0' ||
 			loadoutSlot === 'musickit' ||
-			loadoutSlot === 'flair0' )
-		{
+			loadoutSlot === 'flair0')	
+			{
 			return true;
 		}
 

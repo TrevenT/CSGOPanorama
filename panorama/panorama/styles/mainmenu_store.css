@@ -1,5 +1,4 @@
 
-
 .news-panel--store-container
 {
 	                                                                       
@@ -59,6 +58,7 @@
 .store-panel__carousel-page.store-panel__carousel-page--single
 {
 	padding: 0px 0px;
+	height: 100%;
 }
 
 .store-panel__carousel__item
@@ -69,6 +69,24 @@
 	vertical-align: top;
 	transform-origin: 50% 50%;
 	brightness: 1;
+}
+
+.store-linked-items__tiles .store-panel__carousel__item
+{
+	margin: 0px 12px;
+}
+
+.store-panel__carousel__item:disabled 
+{
+	brightness: .5;
+	opacity: .7;
+}
+
+.tournament-journal__challenge__items-row .store-panel__carousel__item
+{
+	margin: 0px 20px;
+	width: 200px;
+	background-color: rgba(255, 255, 255, 0.048);
 }
 
 .store-panel__carousel__item.store-panel__carousel__item__prime__full
@@ -106,11 +124,6 @@
 	font-size: 24px;
 	font-weight: medium;
 }
-
-                                                                                        
- 
-	                     
-    
 
 .store-panel__carousel__item_primecontainer_detailed
 {
@@ -173,6 +186,11 @@
 	sound-trans: "UIPanorama.store_item_rolloff";
 }
 
+.tournament-journal__challenge__items-row .store-panel__carousel__item__image
+{
+	margin: 0px 20px;
+}
+
 .store-panel__carousel__item__images-linked
 {
 	
@@ -186,6 +204,18 @@
 
 	sound-trans: "UIPanorama.store_item_rolloff";
 }
+
+.tournament-journal__challenge__items-row .store-panel__carousel__item__image,
+.tournament-journal__challenge__items-row .store-panel__carousel__item__images-linked
+{
+	height: 180px;
+}
+
+                                                          
+ 
+	              
+    
+
 
 .store-panel__carousel__item__images-linked:Hover .store-panel__carousel__item__image--shadow
 {
@@ -223,6 +253,12 @@
 	transition-timing-function: ease-in-out;
 
 	sound-trans: "UIPanorama.store_item_rollover";
+}
+
+.store-panel__carousel__item:disabled .store-panel__carousel__item__image:hover
+{
+	transform: scale3d( 1.0, 1.0, 1.0 );
+	brightness: 1;
 }
 
 .store-panel__carousel__item__image--prime
@@ -291,12 +327,32 @@
 	height: 18px;
 }
 
+.store-panel__carousel__item__header
+{
+	font-size: 16px;
+	height: 52px;
+	font-weight:bold;
+	padding: 8px 0px;
+	text-align: center;
+	horizontal-align: center;
+}
+
 .store-panel__carousel__item__name.saleprice
 {
 	font-size: 12px;
 	color: rgb(141, 141, 141);
 	font-weight: medium;
 	text-decoration: line-through;
+}
+
+.store-panel__carousel__item_price-container
+{
+	flow-children: right;
+}
+
+.tournament-journal__challenge__items-row .store-panel__carousel__item_price-container
+{
+	horizontal-align: center;
 }
 
 .store-panel__carousel__item__name.price

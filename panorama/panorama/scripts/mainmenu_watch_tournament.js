@@ -291,7 +291,7 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
-			var tabIdToActivate = 'id-nav-pick-playoffs';
+			var tabIdToActivate = 'id-nav-pick-prelims';
 
 			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );	
 		}
@@ -301,6 +301,7 @@ var mainmenu_watch_tournament = (function () {
 		}
 
 		_SetUpTournamentInfoLink( elParentPanel, tournament_id );
+		_SetUpTournamentControlRoom( elParentPanel, tournament_id );
 		_SetStyleOverridesForTournament( elParentPanel, tournamentNumber )
 	};
 
@@ -353,6 +354,29 @@ var mainmenu_watch_tournament = (function () {
         }
 
         elLink.visible = false;
+	};
+	
+	var _SetUpTournamentControlRoom = function( elPanel, tournament_id )
+    {
+        var elBtn = elPanel.FindChildInLayoutFile( 'JsTournamentOperatorBtn' );
+		var tournamentNum = PickemCommon.GetTournamentIdNumFromString( tournament_id );
+		var bCanControl = false;
+		if ( MyPersonaAPI.GetMyOfficialTournamentName() &&                                                       
+			tournamentNum === NewsAPI.GetActiveTournamentEventID() )
+		{
+			bCanControl = true;
+			elBtn.SetPanelEvent( 'onactivate', function() {
+				UiToolkitAPI.ShowCustomLayoutPopupParameters(
+					'',
+					'file://{resources}/layout/popups/popup_tournament_controlroom.xml',
+					'type=matches' +
+					'&' + 'eventid=' + tournament_id +
+					'&' + 'titleoverride=#Control',
+					'none'
+				);
+			} );
+		}
+		elBtn.SetHasClass( 'hidden', !bCanControl );
     };
 
 	                                                       

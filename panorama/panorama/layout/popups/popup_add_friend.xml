@@ -19,19 +19,13 @@
 		                                                                             
 
 		<Panel class="popup-addfriend-entry">
-			<Image class="popup-addfriend-icon" 
-					src="file://{images}/icons/ui/find.svg" 
-					texturewidth="28" 
-					textureheight="28"/>
 			<TextEntry id="JsAddFriendTextEntryLabel"
-						placeholder="#AddFriend_hint-textentry"
+						placeholder="XXXXX-XXXX"
 						onfocus=""
 						oncancel="PopupAddFriend.OnCancelEntry();"
 						ontextentrysubmit="PopupAddFriend.OnEntrySubmit();"/>
 
-			<Button id="JsEnterNameBtn" class="IconButton" >
-				<Image texturewidth="24" textureheight="24" src="file://{images}/icons/ui/check.svg"/>
-			</Button>
+			<Image id="JSFriendValidIcon" class="validiation-icon" texturewidth="24" textureheight="24" src="file://{images}/icons/ui/check.svg"/>
 		</Panel>
 
 		<Label id="JsFriendCodeNotFound" class="PopupMessage" text="" />

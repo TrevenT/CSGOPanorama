@@ -11,20 +11,25 @@
 	</scripts>
 	<snippets>
 		<snippet name="stream-panel">
-			<Panel class="full-height full-width top-bottom-flow">                               
+			<Panel class="width-fit-children height-fit-children top-bottom-flow">                               
 				<Panel class="news-panel-navbar">
-					<Label id="Title" html="true" text="#CSGO_Watch_Info_live" />
+					<Label id="Title" class="news-panel-streamfeed-title" html="true" text="#CSGO_Watch_Info_live" />
 					                  
-					<Panel id="StreamClose" class="content-navbar__extra-buttons">
-						<Button class="IconButton">
-							<Image src = "file://{images}/icons/ui/exit.svg" 
-									onactivate="StreamPanel.CloseStream();"/>
+					<Panel class="content-navbar__extra-buttons">
+						<Button id="id-close-btn" class="IconButton" >
+							<Image src="file://{images}/icons/ui/exit.svg" />
+						</Button>
+						<Button id="id-full-size-btn" class="IconButton" >
+							<Image src="file://{images}/icons/ui/expand_stream.svg"/>
+						</Button>
+						<Button id="id-minimize-btn" class="IconButton">
+							<Image src="file://{images}/icons/ui/minimize_stream.svg" />
 						</Button>
 					</Panel>
 				</Panel>
 				<HTML id="StreamHTML" acceptsinput="false" acceptsfocus="false" focusonhover="false"
-					mousetracking="false" url="about:blank" />
-				<Panel class="news-panel-navbar news-panel-navbar__streamfeed">
+					mousetracking="false" url="about:blank" hittest="false"/>
+				<Panel class="news-panel-streamfeed__navbar">
 					<Button id="StreamVolumeMute" class="IconButton">
 						<Image id="VolumeImage" src = "file://{images}/icons/ui/unmuted.svg" />                                                    
 					</Button>
@@ -44,17 +49,16 @@
 							<Label html="true" text="#CSGO_Watch_External_FaceIT"/>
 						</Button>
 						<Button id="NavBarWatchExternalT" class="IconButton ExternalStreamButton" onactivate="EmbeddedStreamAPI.OpenStreamInExternalBrowser( 'XT' );" >              
-							<Image class="WideLogoTwitchTV" src = "file://{images}/browser/twitch.svg" texturewidth="-1" textureheight="26"/>
+							<Image class="WideLogoTwitchTV" src = "file://{images}/browser/twitch.svg" texturewidth="-1" textureheight="18"/>
 						</Button>
 						<Button id="NavBarWatchExternalS" class="IconButton ExternalStreamButton" onactivate="SteamOverlayAPI.OpenExternalBrowserURL( 'https://steam.tv' );" >                
-							<Image class="WideLogoSteamTV" src = "file://{images}/browser/steamtv.svg" texturewidth="-1" textureheight="26"/>
+							<Image class="WideLogoSteamTV" src = "file://{images}/browser/steamtv.svg" texturewidth="-1" textureheight="18"/>
 						</Button>
 
 						<Button id="NavBarWatchExternal1btn" class="IconButton" >
 							<Image src = "file://{images}/icons/ui/link.svg" onactivate="EmbeddedStreamAPI.OpenStreamInExternalBrowser();"/>
 						</Button>
 						<Label id="NavBarWatchExternal1txt" html="true" text="#CSGO_Watch_External_Stream" />
-
 					</Panel>
 				</Panel>
 			</Panel>
@@ -62,7 +66,7 @@
 
 	</snippets>
 
-	<Panel class="news-panel-streamfeed hidden MainMenuModeOnly">                           
+	<Panel class="news-panel-streamfeed hidden MainMenuModeOnly" hittest="true">                           
 		                                          
 	</Panel>
 </root>

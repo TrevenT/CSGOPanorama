@@ -31,8 +31,7 @@
 	height: 265px;
 }
 
-.news-panel-style-feature-panel-visible #JsNewsPanel,
-.mainmenu-news-container-stream-active #JsNewsPanel
+.news-panel-style-feature-panel-visible #JsNewsPanel
 {
 	height: fill-parent-flow( .5 );
 }
@@ -42,7 +41,6 @@
 	height: 32px;
 	flow-children: right;
 	width: 100%;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 	margin: 0px 16px;
 }
 

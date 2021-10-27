@@ -250,6 +250,13 @@
 	animation-iteration-count: infinite;
 }
 
+#id-pickem-apply.errorenabled.loop
+{
+	border: 2px solid warningColor;
+	background-color: warningColor;
+	animation-name: pick-btn-errorloop;
+}
+
 @keyframes pick-btn-loop
 {
 	0%
@@ -265,6 +272,24 @@
 	100%
 	{
 		background-color: #4caf5033;
+	}
+}
+
+@keyframes pick-btn-errorloop
+{
+	0%
+	{
+		background-color: #b1af2d33;
+	}
+
+	50%
+	{
+		background-color: warningColor;
+	}
+
+	100%
+	{
+		background-color: #b1af2d33;
 	}
 }
 

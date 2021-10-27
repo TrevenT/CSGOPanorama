@@ -4,11 +4,23 @@ var friendTile = ( function (){
 
 	var _m_xuid = '';
 	var _m_tile = null;
+	var _m_isClan = '';
+	var _m_hasClanInfo = false;
+	var _m_clanHandle = null;
 	
 	var _Init = function( elTile )
 	{
 		_m_xuid = elTile.GetAttributeString( 'xuid', '(not found)' );
+		_m_isClan = elTile.GetAttributeString( 'isClan', 'false' ) === 'true';
 		_m_tile = elTile;
+
+		if ( _m_isClan )
+		{
+			_m_hasClanInfo = MyPersonaAPI.GetMyClanNameById( _m_xuid ) != '';
+
+			if ( !_m_clanHandle )
+				_m_clanHandle = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_ClansInfoUpdated', _ClansInfoUpdated );
+		}
 
 		_SetImage( elTile );
 		_SetName( elTile );
@@ -24,6 +36,10 @@ var friendTile = ( function (){
 	{
 		var elAvatarImg = elTile.FindChildTraverse( 'JsFriendAvatar' );
 		elAvatarImg.steamid = _m_xuid;
+
+		                                                                   
+		elAvatarImg.visible = !_m_isClan || _m_hasClanInfo;
+			
 	};
 
 	var _SetStatusBar = function( elTile )
@@ -59,20 +75,36 @@ var friendTile = ( function (){
 	var _SetName = function( elTile )
 	{
 		var elLabel = elTile.FindChildTraverse( 'JsFriendName' );
-		elLabel.text = FriendsListAPI.GetFriendName( _m_xuid );
+
+		if ( !_m_isClan )
+		{
+			elLabel.text = FriendsListAPI.GetFriendName( _m_xuid );
+		}
+		else
+		{
+			elLabel.text = MyPersonaAPI.GetMyClanNameById( _m_xuid );
+			elLabel.visible = !_m_isClan || _m_hasClanInfo;
+		}
 	};
 
 	var _SetStatus = function( elTile )
 	{
 		var friendStatusText = '';
 
-		if ( elTile.Data().type === 'recent' )
+		if ( _m_isClan )
 		{
-			friendStatusText = TeammatesAPI.GetCoPlayerTime( _m_xuid );
+			friendStatusText = "#steamgroup";
 		}
+		else
+		{
+			if ( elTile.Data().type === 'recent' )
+			{
+				friendStatusText = TeammatesAPI.GetCoPlayerTime( _m_xuid );
+			}
 
-		if ( !friendStatusText )
-			friendStatusText = FriendsListAPI.GetFriendStatus( _m_xuid );
+			if ( !friendStatusText )
+				friendStatusText = FriendsListAPI.GetFriendStatus( _m_xuid );
+		}
 
 		var elLabel = elTile.FindChildTraverse( 'JsFriendStatus' );
 		elLabel.text = $.Localize( friendStatusText );
@@ -114,6 +146,16 @@ var friendTile = ( function (){
 
 	var _SetOnActivateEvent = function( elTile )
 	{
+		if ( _m_isClan )
+		{
+			elTile.SetPanelEvent( 'onactivate', function ()
+			{
+				SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( "https://" + SteamOverlayAPI.GetSteamCommunityURL() + "/gid/" + _m_xuid );
+			} );
+
+			return;
+		}
+		
 		var OpenContextMenu = function( xuid )
 		{
 			                                                                                             
@@ -137,14 +179,25 @@ var friendTile = ( function (){
 		elTile.FindChildTraverse( 'JsFriendTileBtn' ).SetPanelEvent( 'oncontextmenu', OpenContextMenu.bind( undefined, _m_xuid ) );
 	};
 
+	function _ClansInfoUpdated ()
+	{
+		var elTile = $.GetContextPanel().FindChildTraverse( 'JsKeyValidatedResult' );
+
+		if ( elTile.codeType === 'g' && !elTile.FindChildTraverse( 'JsAvatarImage' ) )
+		{
+			_Init( elTile );
+		}
+	}
+
 	return {
-		Init			: 	_Init,		                      
-		SetInvitedFromContextMenu		:	_SetInvitedFromContextMenu
+		Init: 							_Init,		                      
+		SetInvitedFromContextMenu:		_SetInvitedFromContextMenu,
 	};
 })();
 
 ( function (){
 	                                                                                                      
+
 })();
 
 

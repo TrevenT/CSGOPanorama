@@ -264,6 +264,8 @@ var matchInfo = ( function() {
 
         var canWatch = MatchInfoAPI.CanWatch( elParentPanel.matchId );
 		_EnableButton( elWatchButton, canWatch );
+
+		                                                                                                         
 		
         if ( elParentPanel.matchListDescriptor != 'live' )
         {
@@ -367,12 +369,17 @@ var matchInfo = ( function() {
         {
             _PopulateMatchInfo( elParentPanel );
         }
+        else if ( MatchInfoAPI.IsServerLogTournamentMatch( elParentPanel.matchId ) )
+        {
+            _PopulateServerLogTournamentMatchInfo( elParentPanel );
+        }
         else if ( !elParentPanel.downloadFailedHandler )
         {
             MatchInfoAPI.DownloadWithShareToken( elParentPanel.matchId );
             elParentPanel.downloadFailedHandler = $.Schedule(  3.0, _ShowLoadingError.bind( undefined, elParentPanel ) );
             elParentPanel.updateMatchInfoHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MatchInfo_StateChange', _PopulateMatchInfo.bind( undefined, elParentPanel ) );
         }
+
     }
 
     function _PopulateMatchInfo( elParentPanel )
@@ -388,6 +395,13 @@ var matchInfo = ( function() {
         {
             _FillRoundStats( elParentPanel, elParentPanel.activePlayerRow );
         }
+        _Show( elParentPanel );
+    }
+    
+    function _PopulateServerLogTournamentMatchInfo( elParentPanel )
+    {
+        _FillServerLogTournamentInfo( elParentPanel );
+        _UpdateMatchMenu( elParentPanel );
         _Show( elParentPanel );
     }
 
@@ -542,44 +556,16 @@ var matchInfo = ( function() {
         var maxRounds = MatchInfoAPI.GetMatchMaxRounds( elParentPanel.matchId );
         var totalRounds = Math.max( playedRounds, maxRounds );
         
-        var nOvertime = Math.ceil( ( totalRounds - 30 ) / 6 );
+        var nOvertime = Math.ceil( ( totalRounds - maxRounds ) / 6 );
         if ( nOvertime > 0 )
         {
             totalRounds = 30 + 6 * nOvertime;
         }
         var totalBars = elStatsContainer.Children().length;
 
-                               
+        elStatsContainer.SetHasClass( "horizontal-center", nOvertime == 0 );
+                                                                                                                                         
 
-        if ( ( totalBars === 0 ) && ( totalRounds > 30 ) )
-        {
-                                                                          
-            elTickLabels.FindChildInLayoutFile('id-mi-tick-label--last').AddClass( 'hide' );
-
-            var elOTStartContainer = $.CreatePanel( 'Panel', elTickLabels, "" );
-            var elOTStart = $.CreatePanel( 'Label', elOTStartContainer, "" );
-            elOTStart.AddClass( 'mi-tick-label' );
-            for ( var i = 0; i < nOvertime; i++ )
-            {
-                elOTStartContainer.AddClass( 'mi-tick-label__container--large' );
-                if ( nOvertime > 1 )
-                {
-                    elOTStart.text = $.Localize( '#MatchInfo_Overtime' ) + ' ' + ( i + 1 );
-                }
-                else
-                {
-                    elOTStart.text = $.Localize( '#MatchInfo_Overtime' );
-                }
-                $.CreatePanel( 'Panel', elTickLabels, "" ).AddClass( 'mi-tick-label__spacer--double' );
-                var elLabelContainer = $.CreatePanel( 'Panel', elTickLabels, "" );
-                elLabelContainer.AddClass( 'mi-tick-label__container' );
-                var elOTEnd = $.CreatePanel( 'Label', elLabelContainer, 'id-mi-ot-end' );
-                elOTEnd.AddClass( 'mi-tick-label' );
-                elOTEnd.text = totalRounds;            
-                elOTStart = elOTEnd;
-                elOTStartContainer = elLabelContainer;
-            }
-        }
 
 		                        
 		var roundWins = MatchInfoAPI.GetMatchPlayerRoundStats( elParentPanel.matchId, elParentPanel.activePlayerRow.playerXuid, "round_wins" );
@@ -594,56 +580,100 @@ var matchInfo = ( function() {
 		deaths = deaths ? deaths.split( ',' ) : Array( totalRounds ).fill( 0 );
 
                    
-        function _IsMajorTick ( matchId, n )
+        function _IsMajorTick ( n )
         {
-            return ( n == 1 || n == MatchInfoAPI.GetMatchMaxRounds( matchId ) );
+                          
+            if ( n == 1 )
+                return true;
+            
+                                     
+            if ( n == maxRounds )
+                return true;
+            
+                                                         
+            if ( n == totalRounds )
+                return true;
+            
+                           
+            if ( n > maxRounds && ( ( n - maxRounds ) % 6 == 0 ) )
+                return true;
+
         }
 
-        function _IsMinorTick ( matchId, n )
+        function _IsMinorTick ( n )
         {
-            var maxRounds = MatchInfoAPI.GetMatchMaxRounds( matchId );
-
-            if ( maxRounds % 5 == 0 )
-                return ( n % 5 == 0 );
-            else if ( maxRounds % 4 == 0 )
-                return ( n % 4 == 0 );
-            else if ( maxRounds <= 12 && maxRounds % 3 == 0 )
-                return ( n % 3 == 0 );
-            else if ( maxRounds <= 8 && maxRounds % 2 == 0 )
-                return ( n % 2 == 0 );
+            if ( n < maxRounds )
+            {
+                if ( maxRounds % 5 == 0 )
+                    return ( n % 5 == 0 );
+                else if ( maxRounds % 4 == 0 )
+                    return ( n % 4 == 0 );
+                else if ( maxRounds <= 12 && maxRounds % 3 == 0 )
+                    return ( n % 3 == 0 );
+                else if ( maxRounds <= 8 && maxRounds % 2 == 0 )
+                    return ( n % 2 == 0 );
+            }
+            else            
+            {
+                                       
+            }
 
             return false;
         }
 
-        function _IsRightOfHalftime ( matchId, n )
+        function _IsRightOfHalftime ( n )
         {
-            return n == MatchInfoAPI.GetMatchMaxRounds( matchId ) / 2 + 1;
+            if ( n == ( maxRounds / 2 + 1 ) )
+                return true;
         }
 
-        function _IsLeftOfHalftime ( matchId, n )
+        function _IsLeftOfHalftime ( n )
         {
-            return n == MatchInfoAPI.GetMatchMaxRounds( matchId ) / 2;
+            if ( n == ( maxRounds / 2 ) )
+                return true;
         }
 
-        function _GetTickStyleForRound ( matchId, n )
+        function _GetTickStyleForRound ( n )
         {
-            if ( _IsRightOfHalftime( matchId, n ) )
+            if ( _IsRightOfHalftime( n ) )
                 return 'mi-round-tick--right-of-team-switch';
-            else if ( _IsLeftOfHalftime( matchId, n ) )
+            else if ( _IsLeftOfHalftime( n ) )
                 return 'mi-round-tick--left-of-team-switch';
-            else if ( _IsMajorTick( matchId, n ) )
+            else if ( _IsMajorTick( n ) )
                 return 'mi-round-tick--major';
-            else if ( _IsMinorTick( matchId, n ) )
+            else if ( _IsMinorTick( n ) )
                 return 'mi-round-tick--minor';
             else
                 return 'mi-round-tick--sub';
         }
 
-        function _GetLabelForTick ( matchId, n )
+        function _IsOvertime ( n )
         {
-            if ( _IsRightOfHalftime( matchId, n ) || _IsLeftOfHalftime( matchId, n ) )
+            return ( n > maxRounds );
+        }
+
+        function _OverTimeLabel ( n )
+        {
+            if ( n <= maxRounds )
                 return '';
-            else if ( _IsMajorTick( matchId, n ) || _IsMinorTick( matchId, n ))
+            
+            let ot = Math.ceil( n - maxRounds ) / 6;
+            
+            if ( nOvertime > 1 )
+            {
+                return $.Localize( '#MatchInfo_Overtime' ) + ' ' + ( ot );
+            }
+            else
+            {
+                return $.Localize( '#MatchInfo_Overtime' );
+            }
+        }
+
+        function _GetLabelForTick ( n )
+        {
+            if ( _IsRightOfHalftime( n ) || _IsLeftOfHalftime( n ) )
+                return '';
+            else if ( _IsMajorTick( n ) || _IsMinorTick( n ))
                 return n;
             else
                 return '';
@@ -669,20 +699,8 @@ var matchInfo = ( function() {
             if ( i > totalBars )
             {                
                 var elTick = elRoundBar.GetChild( 2 ).GetChild( 1 );
-
-                if ( i <= 30 )                   
                 {
-                    elTick.AddClass( _GetTickStyleForRound( elParentPanel.matchId, i ) );
-                }
-                else            
-                {
-                    var c = tickPatternOvertime[ ( i - 31 ) % 6 ];
-                    elTick.AddClass( c );
-                }
-                                      
-                if ( ( i >= 30 ) && ( ( ( i - 30 ) % 6 ) == 0 ) && ( i != totalRounds ) )
-                {
-                    elTick.AddClass(  'mi-round-tick--left-of-team-switch' );
+                    elTick.AddClass( _GetTickStyleForRound( i ) );
                 }
                 
             }
@@ -791,7 +809,7 @@ var matchInfo = ( function() {
             var elTick = $.CreatePanel( 'Panel', elTickLabels, 'id-tick' + i );
             elTick.BLoadLayoutSnippet( 'snippet-tick' );
 
-            elTick.SetDialogVariable( 'n', _GetLabelForTick( elParentPanel.matchId, i ));
+            elTick.SetDialogVariable( 'n', _GetLabelForTick( i ));
         }
 
 
@@ -970,11 +988,55 @@ var matchInfo = ( function() {
         }
     }
 
+    function _FillServerLogTournamentInfo( elParentPanel )
+    {
+        PopulateForTeam( 0 );
+        PopulateForTeam( 1 );
+
+        function PopulateForTeam( nTeam )
+        {
+            var tag = MatchInfoAPI.GetMatchTournamentTeamTag( elParentPanel.matchId, nTeam );
+            if ( tag )
+            {
+                var strFilename= 'file://{images}/tournaments/teams/' + tag.toLowerCase() + '.svg';
+                var img = elParentPanel.FindChildTraverse( 'team_image' + nTeam );
+                img.SetImage( strFilename );
+            }
+
+            elParentPanel.SetDialogVariable( 'teamname' + nTeam, MatchInfoAPI.GetMatchTournamentTeamName( elParentPanel.matchId, nTeam ) );
+            elParentPanel.SetDialogVariable( 'score' + nTeam, MatchInfoAPI.GetMatchRoundScoreForTeam( elParentPanel.matchId, nTeam ) );
+        }
+
+        var rawMapName = MatchInfoAPI.GetMatchMap( elParentPanel.matchId );
+        var mapStringPrefix = 'SFUI_Map_';
+        var mapName = $.Localize( mapStringPrefix + rawMapName );
+        if ( mapName === mapStringPrefix + rawMapName ) mapName = rawMapName;
+        elParentPanel.SetDialogVariable( 'mapname', mapName );
+        var elMatchMapIcon = elParentPanel.FindChildTraverse( "map_image" );
+        if ( elMatchMapIcon )
+        {
+            elMatchMapIcon.SetImage( "file://{images}/map_icons/map_icon_"+rawMapName+".svg" );
+        }
+        
+        var elTournamentLogo = elParentPanel.FindChildTraverse( "tournament_logo" );
+        elTournamentLogo.SetImage( 'file://{images}/tournaments/events/tournament_logo_' + elParentPanel.tournamentIndex + '.svg' );
+
+        elParentPanel.SetDialogVariable( 'tournamentphase', $.Localize( MatchInfoAPI.GetMatchTournamentStageName( elParentPanel.matchId ) ) );
+        elParentPanel.SetDialogVariable( 'matchphase', MatchInfoAPI.IsLive( elParentPanel.matchId ) ? $.Localize( '#CSGO_Watch_Cat_LiveMatches' ) : MatchInfoAPI.GetMatchTimestamp( elParentPanel.matchId ) );
+    }
 
     function _Init( elParentPanel )
     {
         _ShowMatchSpinner( true, elParentPanel );                           
         _SetMatchMessage( "", false, elParentPanel );                           
+
+        var bIsMinimalMatchInfo = MatchInfoAPI.IsServerLogTournamentMatch( elParentPanel.matchId );
+        elParentPanel.SetHasClass( 'matchinfo--minimal', bIsMinimalMatchInfo );
+        if ( bIsMinimalMatchInfo )
+        {
+            var minimalInfoBody = $.CreatePanel( 'Panel', elParentPanel, 'minimal-match-info' );
+            minimalInfoBody.BLoadLayoutSnippet( 'matchinfo_serverlogtournament_minimal');
+        }
 
         var myXuid = MyPersonaAPI.GetXuid();
 

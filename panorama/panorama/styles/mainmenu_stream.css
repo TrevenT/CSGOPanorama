@@ -5,35 +5,92 @@
 
 .news-panel-streamfeed
 {
-	width: 100%;
-	height: 512px;
-	background-color: blurBackgroundColor;
-	margin-bottom: 16px;
+	width: fit-children;
+	height: fit-children;
+	background-color: gradient( linear, 0% 100%, 0% 0%, from( #274057  ), to( blueColorDark ) );
+	border-radius: 3px;
 	flow-children: down;
+	                               
 
-	transition-property: height;
+	transition-property:  position, height, width;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
+}
+
+.minimize_stream .news-panel-streamfeed
+{
+	background-color: blurBackgroundColor;
+	border-radius: 0px;
 }
 
 .news-panel-streamfeed.hidden
 {
-	height: fill-parent-flow( 0 );
+	height: 0px;
+	height: 0px;
 	margin-bottom: 0px;
 
-	transition-property: height;
+	transition-property:  position, height, width;
 	transition-duration: .25s;
 	transition-timing-function: ease-in-out;
 }
 
+.news-panel-streamfeed-title
+{
+	margin: 0px;
+	font-size: 16px;
+	font-weight: medium;
+	color: white;
+	vertical-align: center;
+	font-family: Stratum2, 'Arial Unicode MS';
+	width: fill-parent-flow( 1 );
+	text-overflow: ellipsis;
+}
+
 .news-panel-streamfeed #StreamHTML
 {
-	width: news-image-width;
+	width: 900px;
 	horizontal-align: center;
 	height: width-percentage( 56.25% );
 	border: 1px solid blueColor;
 	margin: 8px 16px 0px 16px;
 	box-shadow: fill #000000aa 0px 0px 8px 4px;
+
+	transition-property:  position, height, width;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.minimize_stream #StreamHTML
+{
+	width: 312px;
+}
+.AspectRatio16x9 .minimize_stream #StreamHTML,
+.AspectRatio16x10 .minimize_stream #StreamHTML,
+.AspectRatio21x9 .minimize_stream #StreamHTML
+{
+	width: 460px;
+}
+
+                    
+#id-full-size-btn
+{
+	visibility: collapse;
+}
+
+#id-minimize-btn
+{
+	visibility: visible;
+}
+
+                                     
+.minimize_stream #id-full-size-btn
+{
+	visibility: visible;
+}
+
+.minimize_stream #id-minimize-btn
+{
+	visibility: collapse;
 }
 
 .news-panel-streamfeed-header
@@ -53,15 +110,20 @@
 	brightness: .7;
 }
 
+.news-panel-streamfeed .IconButton Image
+{
+	height: 18px;
+}
+
+.minimize_stream .news-panel-streamfeed__navbar .IconButton Image
+{
+	height: 12px;
+}
+
 .news-panel-streamfeed .IconButton.hidden,
 .news-panel-streamfeed Label.hidden
 {
 	visibility: collapse;
-}
-
-.news-panel-streamfeed .IconButton.ExternalStreamButton
-{
-	margin-left: 15px;
 }
 
 .news-panel-streamfeed .IconButton Image.WideLogoSteamTV
@@ -72,7 +134,8 @@
 .news-panel-streamfeed .IconButton.TextFullbright
 {
 	border: 1px solid #FFFFFF88;
-	padding: 2px 4px 2px 10px;
+	padding: 2px 6px;
+	margin: 8px;
 	brightness: .85;
 }
 
@@ -97,16 +160,24 @@
 	transition-timing-function: ease-in-out;
 }
 
-.news-panel-navbar.news-panel-navbar__streamfeed
+.news-panel-streamfeed__navbar
 {
-	border: 0px;
-	height: 100%;
+	height: 48px;
+	flow-children: right;
+	width: 100%;
+	margin: 0px 16px;
 }
 
-.news-panel-navbar.news-panel-navbar__streamfeed Label
+.news-panel-streamfeed__navbar Label
 {
-	font-size: 16px;
+	font-size: 12px;
 	font-weight: normal;
+	text-align: center;
+}
+
+.minimize_stream .content-navbar__extra-buttons
+{
+	font-size: 10px;
 }
 
 .news-panel-streamfeed-spacer
@@ -116,9 +187,14 @@
 
 Slider.news-panel-streamfeed-volumeslider
 {
-	width: 150px;
+	width: 100px;
 	height: 20px;
 	vertical-align: center;
+}
+
+.minimize_stream Slider.news-panel-streamfeed-volumeslider
+{
+	width: 50px;
 }
 
 Slider.HorizontalSlider.news-panel-streamfeed-volumeslider #SliderTrack

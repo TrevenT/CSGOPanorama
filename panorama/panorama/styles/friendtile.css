@@ -255,3 +255,25 @@
 	flow-children: right;
 	margin-top: 4px;
 }
+
+                                              
+.validation-results-container .friendtile,
+.popup-addfriend-entry .friendtile
+{
+	width: 400px;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 0.445);
+	border: 1px  solid rgba(0, 0, 0, 0.452);
+}
+
+.validation-results-container .friendtile:hover,
+.popup-addfriend-entry .friendtile:hover
+{
+	background-color: rgba(0, 0, 0, 0.739);
+}
+
+.validation-results-container .friendtile-avatar,
+.popup-addfriend-entry .friendtile-avatar
+{
+	margin-left: 0px;
+}

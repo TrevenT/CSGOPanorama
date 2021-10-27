@@ -4,6 +4,7 @@
 var DirectChallengeJoin = ( function ()
 {
 	var m_submitFn = null;
+	var m_elErrortext = $.GetContextPanel().FindChildInLayoutFile( 'id-error_text' );
 
 	function _Init()
 	{
@@ -12,8 +13,27 @@ var DirectChallengeJoin = ( function ()
 		m_submitFn = parseInt( $.GetContextPanel().GetAttributeInt( "submitCallback", -1 ) );
 
 		$( "#submit" ).enabled = false;
-
+		$( '#TextEntry' ).SetPanelEvent( 'ontextentrychange', OnTextEntryChanged );
+		OnTextEntryChanged();
 		$( '#TextEntry' ).SetFocus();
+	}
+
+	function OnTextEntryChanged ()
+	{
+		                                                
+
+		                          
+		var hasText = /.*\S.*/;
+		if ( !hasText.test( $( '#TextEntry' ).text ) )
+		{
+			_Validate();
+			return;
+		}
+
+		                                                                 
+		var arrStrings = $( '#TextEntry' ).text.split( /\s/ ).filter( s => /^\w+$/.test( s ) );
+		_Validate();
+
 	}
 
 	function _Submit()
@@ -22,95 +42,6 @@ var DirectChallengeJoin = ( function ()
 
 		UiToolkitAPI.InvokeJSCallback( m_submitFn, value );
 		_Close();
-	}
-
-	function _AddGoToClanPageAction ( elAvatar, id )
-	{
-		elAvatar.SetPanelEvent( 'onactivate', function ()
-		{
-			SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( "https://" + SteamOverlayAPI.GetSteamCommunityURL() + "/gid/" + id );
-		} );
-	}
-
-	function _CreateClanTile ( elTile, xuid )
-	{
-		elTile.BLoadLayout( 'file://{resources}/layout/simple_player_tile.xml', false, false );
-
-		                                                               
-		$.Schedule( .1, function ( elTile, xuid )
-		{
-			if ( !elTile )
-				return;
-
-			elTile.FindChildTraverse( 'JsAvatarImage' ).steamid = xuid;
-
-			var strName = MyPersonaAPI.GetMyClanNameById( xuid );
-			elTile.SetDialogVariable( 'player_name', strName );
-
-			_AddGoToClanPageAction( elTile, xuid );
-
-			elTile.RemoveClass( 'hidden' );
-
-		}.bind( this, elTile, xuid ) );
-	}
-
-	var _AddOpenPlayerCardAction = function ( elAvatar, xuid )
-	{
-		var openCard = function ( xuid )
-		{
-			                                                                                             
-			$.DispatchEvent( 'SidebarContextMenuActive', true );
-
-			if ( xuid !== 0 )
-			{
-				var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParametersDismissEvent(
-					'',
-					'',
-					'file://{resources}/layout/context_menus/context_menu_playercard.xml',
-					'xuid=' + xuid,
-					function ()
-					{
-						$.DispatchEvent( 'SidebarContextMenuActive', false )
-					}
-				);
-				contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
-			}
-		}
-
-		elAvatar.SetPanelEvent( "onactivate", openCard.bind( undefined, xuid ) );
-	};
-	
-	function _CreatePlayerTile ( elTile, xuid )
-	{
-		                                                                   
-
-		elTile.BLoadLayout( 'file://{resources}/layout/simple_player_tile.xml', false, false );
-
-		                                                               
-		$.Schedule( .1, function ( elTile, xuid )
-		{
-			if ( !elTile || !elTile.IsValid() )
-				return;
-
-			elTile.FindChildTraverse( 'JsAvatarImage' ).steamid = xuid;
-
-			var strName = FriendsListAPI.GetFriendName( xuid );
-			elTile.SetDialogVariable( 'player_name', strName );
-
-			_AddOpenPlayerCardAction( elTile, xuid );
-			elTile.RemoveClass( 'hidden' );
-
-		}.bind( this, elTile, xuid ) );
-	}
-
-	function _ClansInfoUpdated ()
-	{
-		var elTile = $.GetContextPanel().FindChildTraverse( 'JsKeyValidatedResult' );
-
-		if ( elTile.codeType === 'g' && !elTile.FindChildTraverse( 'JsAvatarImage' ) )
-		{
-			_CreateClanTile( elTile, elTile.codeXuid );
-		}
 	}
 
 	function _IsChallengeKeyValid ( key, oReturn = { value: [] }, how = '' )
@@ -127,62 +58,97 @@ var DirectChallengeJoin = ( function ()
 		return bValid;
 	}
 
+	function _IsPartOfGroup ( groupId )
+	{
+		var nNumClans = MyPersonaAPI.GetMyClanCount();
+		for ( var i = 0; i < nNumClans; i++ )
+		{
+			                                                   
+			var clanID64 = MyPersonaAPI.GetMyClanIdByIndex( i );
+
+			if ( groupId === clanID64 )
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	function _Validate ()
 	{
 		var elResultsPanel = $( "#validation-result" );
-		elResultsPanel.RemoveAndDeleteChildren();
+		if ( elResultsPanel && elResultsPanel.IsValid() )
+		{
+			elResultsPanel.RemoveAndDeleteChildren();
+		}
 
 		var bSuccess = false;
-
-		var elText = $.CreatePanel( 'Label', elResultsPanel, 'created-by', { class: 'results-panel' } );
 		var elAvatarContainer = $.CreatePanel( 'Panel', elResultsPanel, 'avatar-container', { class: 'avatar-container' } );
 
 		var value = $( '#TextEntry' ).text;
-
 		var oReturn = { value: [] };
+
 		if ( _IsChallengeKeyValid( value.toUpperCase(), oReturn, '' ) )
 		{
 			                             
-
 			var type = oReturn.value[ 2 ];                           
 			var id = oReturn.value[ 3 ];                                 
 
 			var elTile = $.CreatePanel( "Panel", elAvatarContainer, 'JsKeyValidatedResult', { class: "directchallenge__join-validator" } );
-			elTile.codeXuid = id ;
+			elTile.codeXuid = id;
 			elTile.codeType = type ;
 
-			switch ( type )
+			elTile.SetAttributeString( 'xuid', id );
+			elTile.BLoadLayout( 'file://{resources}/layout/friendtile.xml', false, false );
+			$.GetContextPanel().FindChildInLayoutFile( 'id-direct-challenge-icon' ).SetHasClass( 'valid', true );
+
+			                                               
+			if ( type == 'g' )
 			{
-				case 'u':
-					elText.text = $.Localize( "#DirectChallenge_KeyGeneratedByUser" );
-					_CreatePlayerTile( elTile, id );
+				elTile.SetAttributeString( 'isClan', 'true' );
 
-					break;
-
-				case 'g':
-					elText.text = $.Localize( "#DirectChallenge_KeyGeneratedByClan" );
-
-					if ( MyPersonaAPI.GetMyClanNameById( id ) )
-					{
-						_CreateClanTile( elTile, id );
-					}
-
-					break;
+				$.CreatePanel( "Image", elTile.FindChildInLayoutFile( 'JsFriendTileBtn' ), '', {
+					src: "file://{images}/icons/ui/link.svg",
+					class: "vertical-center left-padding right-padding horizontal-align-right",
+					textureheight: "24",
+					texturewidth: "24",
+				});
 			}
 
-			bSuccess = true;
+			                                                                
+			$.Schedule( .1, function ()
+			{
+				friendTile.Init( elTile );
+				elTile.RemoveClass( 'hidden' );
+			} );
+
+			                                              
+			if ( type == 'g' && !_IsPartOfGroup( id ) )
+			{
+				bSuccess = false;
+				m_elErrortext.visible = true;
+				m_elErrortext.text = $.Localize( "#DirectChallenge_not_member" );
+			}
+			else
+			{
+				bSuccess = true;
+				m_elErrortext.visible = false;
+			}
 		}
 		else
 		{
-			                             
-			elText.text = $.Localize( "#DirectChallenge_BadKeyText" );
-			elText.style.color = 'red';
 
+			m_elErrortext.visible = $( '#TextEntry' ).text === '' ? false : true;
+
+			$.GetContextPanel().FindChildInLayoutFile( 'id-direct-challenge-icon' ).SetHasClass( 'valid', false );
+			
+			                          
+			m_elErrortext.SetDialogVariable( 'code', $( '#TextEntry' ).text.toUpperCase() );
+			m_elErrortext.text = $.Localize( '#DirectChallenge_BadKeyText', m_elErrortext );
 		}
 
 		$( "#submit" ).enabled = bSuccess;
 		$.GetContextPanel().SetHasClass( 'results-panel-valid', bSuccess );
-
 	}
 
 	function _Cancel ()
@@ -204,7 +170,6 @@ var DirectChallengeJoin = ( function ()
 		Close: 					_Close,
 		Cancel: 				_Cancel,
 		Validate: 				_Validate,
-		ClansInfoUpdated: 		_ClansInfoUpdated
 	};
 
 } )();
@@ -214,5 +179,4 @@ var DirectChallengeJoin = ( function ()
                                                                                                     
 ( function ()
 {
-	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_ClansInfoUpdated', DirectChallengeJoin.ClansInfoUpdated );
 } )();

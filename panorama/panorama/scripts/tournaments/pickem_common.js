@@ -480,8 +480,12 @@ var PickemCommon = ( function()
 
 		  
 		                                                           
+		                                           
+		                                 
+		                                                                                          
 		  
-		var bEnable = _funcEnableApply( elPanel );
+		var strEnable = _funcEnableApply( elPanel );
+		var bEnable = ( strEnable ? true : false );
 		elApplyPicks.visible = true;
 		elApplyPicks.SetHasClass( 'loop', bEnable );
 		
@@ -492,6 +496,21 @@ var PickemCommon = ( function()
 		                                    
 
 		elApplyPicks.enabled = bEnable;
+
+		var bErrorButHasDifferencesToApply = ( bEnable && strEnable !== 'ok' );
+		elApplyPicks.SetHasClass( 'errorenabled', bErrorButHasDifferencesToApply );
+		if ( bErrorButHasDifferencesToApply )
+		{
+			elApplyPicks.SetPanelEvent( 'onactivate', function() {
+				UiToolkitAPI.ShowGenericPopupOk(
+					$.Localize( '#CSGO_PickEm_Title' ),
+					$.Localize( strEnable ),
+					'',
+					function() {},
+					function() {}
+				);
+			} );
+		}
 	};
 
 	var _UpdatePurchaseBtnForPass = function( elPurchase, tournamentNum )
@@ -525,6 +544,23 @@ var PickemCommon = ( function()
 			);
 		};
 
+		                                                                                  
+		var _OpenContextMenu = function()
+		{
+			var usetinynames = true;
+			var itemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pass, 0 );
+			var itemIdLinked = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_pack, 0 );
+			var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParameters(
+				'',
+				'',
+				'file://{resources}/layout/context_menus/context_menu_store_linked_items.xml',
+				'itemids=' + itemId + ',' + itemIdLinked +
+				( usetinynames ? '&usetinynames=' + usetinynames : '' ) +
+				'&warningtext=#tournament_items_notice'
+			);
+			contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
+		};
+
 		elPurchase.visible = false;
 
 		                                                                                                
@@ -546,7 +582,7 @@ var PickemCommon = ( function()
 				elPurchase.visible = true;
 				                                                
 				elPurchase.FindChildInLayoutFile( 'id-pickem-getitems-label' ).text = '#SFUI_ConfirmBtn_GetPassNow';
-				elPurchase.SetPanelEvent( 'onactivate', _ShowInpsectPopup.bind( undefined, id ) );
+				elPurchase.SetPanelEvent( 'onactivate', _OpenContextMenu );
 				return;
 			}
 

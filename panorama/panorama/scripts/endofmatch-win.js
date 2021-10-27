@@ -217,7 +217,8 @@ var EOM_Win = ( function () {
                                                                                                     
 (function () {
 
-	EndOfMatch.RegisterPanelObject( EOM_Win );
+	if ( EndOfMatch )
+		EndOfMatch.RegisterPanelObject( EOM_Win );
 
 
 })();

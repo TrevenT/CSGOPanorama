@@ -128,9 +128,12 @@ var EOM_Characters = ( function()
 					arrPlayerList = _CollectPlayersOfTeam( _m_teamToShow );
 					arrPlayerList = arrPlayerList.sort( _SortByScoreFn );
 
-					                                    
-					arrPlayerList = arrPlayerList.filter( player => player[ 'xuid' ] != _m_localPlayer[ 'xuid' ] );
-					arrPlayerList.splice( 0, 0, _m_localPlayer );
+					                                                              
+					if ( _m_localPlayer )
+					{
+						arrPlayerList = arrPlayerList.filter( player => player[ 'xuid' ] != _m_localPlayer[ 'xuid' ] );
+						arrPlayerList.splice( 0, 0, _m_localPlayer );
+					}
 
 					m_bNoGimmeAccolades = false;
 					break;

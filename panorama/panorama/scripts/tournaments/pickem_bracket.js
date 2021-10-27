@@ -318,6 +318,9 @@ var PickEmBracket = ( function()
 				return false;
 			}
 		}
+
+		var bFoundDifferenceToApply = false;
+		var strErrorString = null;
 		
 		var sectionCount = elPickemPanel._oPickemData.oTournamentData.sections.length;
 		var startIndex = elPickemPanel._oPickemData.oInitData.sectionindex;
@@ -335,16 +338,21 @@ var PickEmBracket = ( function()
 					var idSaved = groupsList[j].picks[0].savedid;
 					if ( !idLocal ) idLocal = 0;
 					if ( !idSaved ) idSaved = 0;
-					if( idLocal !== idSaved )
+					if ( !idLocal && !strErrorString )
 					{
-						                                                                                                                                           
-						return true;
+						                                                                                                     
+						strErrorString = '#pickem_apply_emptyslots';
+					}
+					if( !bFoundDifferenceToApply && idLocal !== idSaved )
+					{
+						                                                                                                                                                                
+						bFoundDifferenceToApply = true;
 					}
 				}
 			}
 		}
 
-		return false;
+		return bFoundDifferenceToApply ? ( strErrorString ? strErrorString : 'ok' ) : false;
 	};
 
 	var _RemoveBracketsPicks = function ( elPickemPanel, elPick )

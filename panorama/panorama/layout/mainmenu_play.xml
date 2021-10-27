@@ -134,7 +134,7 @@
 
 							<Button id="RandomChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_GenRandomKey' )">
 
-								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/create_new.svg"/>
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/plus.svg"/>
 
 								<Panel class="directchallenge-section__text-container">
 									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_create_title" />
@@ -150,7 +150,7 @@
 
 							<Button id="ClanChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_ChooseClanKey' )">
 
-								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/group_queue.svg"/>
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/steam_logo_white.svg"/>
 
 								<Panel class="directchallenge-section__text-container">
 									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_clan_title" />
@@ -167,7 +167,7 @@
 
 							<Button id="EditChallengeKey" class="IconButton" onactivate="$.DispatchEvent( 'DirectChallenge_EditKey' )">
 
-								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/join_queue.svg"/>
+								<Image texturewidth="96" textureheight="-1" src="file://{images}/icons/ui/enter_code.svg"/>
 
 								<Panel class="directchallenge-section__text-container">
 									<Label class="directchallenge-section__title" html="true" text="#DirectChallenge_join_title" />

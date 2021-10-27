@@ -13,17 +13,17 @@
 
 	background-color: #000000;
 
-	transform: translateY(100%);
+  	                            
 	opacity: 0.0;
 
 	transition-property: transform, opacity;
-	transition-duration: 0.20s;
+	transition-duration: 0.5s;
 	transition-timing-function: ease-in-out;
 }
 
 .frame-root.hover{
 
-	transform: translateY(10%);
+  	                           
 	opacity: 1;
 }
 

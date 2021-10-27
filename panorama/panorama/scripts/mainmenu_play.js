@@ -1000,7 +1000,9 @@ var PlayMenu = ( function()
 
 			Scheduler.Schedule( delay, function ()
 			{
-				elTile.RemoveClass( 'hidden' );
+				if ( elTile )
+					elTile.RemoveClass( 'hidden' );
+				
 			}, "directchallenge" );
 
 
@@ -1161,7 +1163,9 @@ var PlayMenu = ( function()
 
 				Scheduler.Schedule( delay, function ( elParty )
 				{
-					elParty.RemoveClass( 'hidden' );
+					if ( elParty && elParty.IsValid())
+						elParty.RemoveClass( 'hidden' );
+					
 				}.bind( this, elParty ), "directchallenge" );
 			
 				                                  
@@ -2788,7 +2792,7 @@ var PlayMenu = ( function()
 		else
 		{
 			selectedMaps = _GetSelectedMapsForServerTypeAndGameMode( serverType, gameMode );
-		}
+		}	
 
 		var settings = {
 			update: {

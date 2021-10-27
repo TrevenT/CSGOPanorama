@@ -65,7 +65,8 @@
 
 .popup-inspect-image.y-offset
 {
-	transform: translateY( -15% );
+	transform: translateY( -20% );
+	height: 280px;
 
 	transition-property: transform;
 	transition-duration: 0.25s;

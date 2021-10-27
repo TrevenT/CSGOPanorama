@@ -19,6 +19,25 @@
 		<include src="file://{resources}/scripts/tournaments/pickem_info_bar.js" />
 	</scripts>
 
+	<snippets>
+		                                                  
+		<snippet name="matchinfo_serverlogtournament_minimal">
+			<Panel class="matchinfo-tournamentinfo-minimal">
+				<Panel class="matchinfo-tournamentinfo-minimal--team">
+					<Label class="matchinfo-tournamentinfo-minimal--score-label" text="{s:score0}"/>
+					<Image class="matchinfo-tournamentinfo-minimal--team-image" id="team_image0"/>
+				</Panel>
+				<Panel class="matchinfo-tournamentinfo-minimal--team">
+					<Label class="matchinfo-tournamentinfo-minimal--score-label" text="{s:score1}"/>
+					<Image class="matchinfo-tournamentinfo-minimal--team-image" id="team_image1"/>
+				</Panel>
+					<Button id="id-mi-souvenir" class="IconButton Positive" style="tooltip-position: top;">
+						<Image src="file://{images}/icons/ui/gift.svg"/>
+					</Button>
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="full-width full-height top-bottom-flow" useglobalcontext="true">
 		<Panel id="id-tournament-title-bar" class="content-navbar content-navbar--short">
 			                  
@@ -40,7 +59,11 @@
 			
 			                                                                                                                                                                     
 			<Panel id = "content-navbar__tabs" class="content-navbar__tabs content-navbar__tabs--small"/>
-			<Panel class="horizontal-align-right vertical-center left-right-padding">
+			<Panel class="horizontal-align-right vertical-center left-right-padding left-right-flow">
+				<Button id="JsTournamentOperatorBtn" class="IconButton left-right-flow hidden" >
+					<Image src="file://{images}/icons/ui/ct_logo_1c.svg"/>
+					<Label text="#Control"/>
+				</Button>
 				<Button id="JsTournamentInfoLink" class="IconButton left-right-flow" >
 					<Image src="file://{images}/icons/ui/link.svg"/>
 					<Label text="#CSGO_Watch_Tournament_Info_external_link"/>

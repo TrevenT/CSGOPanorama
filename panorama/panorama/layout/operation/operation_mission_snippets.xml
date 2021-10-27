@@ -48,7 +48,10 @@
 				<Panel class="op-hud-submissions__checkbox"/>
 				<Panel>
 					<Panel class="op-hud-submission-entry__line" />
-					<Label id="id-subquest-desc" html="true" class="op-hud-submissions__text" text="Mission Desc Missing"/>
+					<Panel class="left-right-flow">
+						<Label id="id-subquest-desc" html="true" class="op-hud-submissions__text" text="Mission Desc Missing"/>
+						<Label id="id-subquest-progress" html="true" class="op-hud-submissions__progress" text="{d:uncommited}/{d:goal}"/>
+					</Panel>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -56,7 +59,7 @@
 		<snippet name="snippet-mission-stars-container-or-type">
 			<Panel class="op-mission-card__misson-type-or-seperator">
 				<Panel class="op-mission-card__bar__line"/>
-				<Label id="id-mission-desc" html="true" class="op_mission-card__mission_body--or" text="OR"/>
+				<Label id="id-mission-desc" html="true" class="op_mission-card__mission_body--or" text="#op_mainmenu_or_type_mission"/>
 				<Panel class="op-mission-card__bar__line"/>
 				<Panel id="id-mission-segments-stars" class="left-right-flow left-margin-medium">
 					                       

@@ -37,7 +37,10 @@ var PopupAddFriend = ( function(){
 		$( '#JsFriendCodeNotFound' ).visible = false;
 		$( '#JsFriendCodeFound' ).visible = false;
 
-		_SetUpEnterTextButton();
+		$( '#JsAddFriendTextEntryLabel' ).SetFocus();
+		$( '#JsAddFriendTextEntryLabel' ).SetPanelEvent( 'ontextentrychange', _OnEntrySubmit );
+
+		                           
 	};
 
 	var _SetUpEnterTextButton = function()
@@ -69,8 +72,6 @@ var PopupAddFriend = ( function(){
 			$.Schedule( .1, function () { 
 				friendTile.Init( elTile ); 
 				elTile.RemoveClass( 'hidden' );
-				                                     
-				                                        
 			});
 
 			$( '#JsAddFriendInviteImg' ).AddClass('hidden');
@@ -78,6 +79,7 @@ var PopupAddFriend = ( function(){
 			$( '#JsPopupYourSendRequest' ).enabled = true;
 
 			elNotFoundLabel.visible = false;
+			$.GetContextPanel().FindChildInLayoutFile( 'JSFriendValidIcon' ).SetHasClass( 'valid', true );
 
 			m_xuidToInvite = xuid;
 		}
@@ -92,6 +94,7 @@ var PopupAddFriend = ( function(){
 			                          
 			elNotFoundLabel.SetDialogVariable( 'code', elTextEntry.text.toUpperCase() );
 			elNotFoundLabel.text = $.Localize( '#AddFriend_not_found', elNotFoundLabel );
+			$.GetContextPanel().FindChildInLayoutFile( 'JSFriendValidIcon' ).SetHasClass( 'valid', false );
 			
 			elNotFoundLabel.visible = true;
 

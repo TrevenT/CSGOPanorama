@@ -169,6 +169,9 @@ var PickEmGroup = ( function()
 		var oGroupData = elPanel._oPickemData.oTournamentData.sections[ activeSectionIdx ].groups[ 0 ];
 		
 		var picks = oGroupData.picks;
+
+		var bFoundDifferenceToApply = false;
+		var strErrorString = null;
 	
 		for ( var i = 0; i < oGroupData.pickscount; i++ )
 		{
@@ -178,15 +181,20 @@ var PickEmGroup = ( function()
 				var idSaved = picks[i].savedid;
 				if ( !idLocal ) idLocal = 0;
 				if ( !idSaved ) idSaved = 0;
-				if( idLocal !== idSaved )
+				if ( !idLocal && !strErrorString )
 				{
-					                                                                                                               
-					return true;
+					                                                                                                              
+					strErrorString = '#pickem_apply_emptyslots';
+				}
+				if( !bFoundDifferenceToApply && idLocal !== idSaved )
+				{
+					                                                                                                                          
+					bFoundDifferenceToApply = true;
 				}
 			}
 		}
 
-		return false;
+		return bFoundDifferenceToApply ? ( strErrorString ? strErrorString : 'ok' ) : false;
 	};
 
 

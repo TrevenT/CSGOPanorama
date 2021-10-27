@@ -257,7 +257,7 @@ var OperationMainMenu = ( function()
 		var elLabel = $.GetContextPanel().FindChildInLayoutFile( 'id-missions-selected-card-name' );
 
 		var nWeek = cardIndex + 1;
-		elLabel.text = "Week " + nWeek + ": " + $.Localize( jsoCardDetails.name );
+		elLabel.text = $.Localize( "#op_mainmenu_mission_week_prefix") + " " + nWeek + ": " + $.Localize( jsoCardDetails.name );
 
 		_UpdateMissionCard( cardIndex );
 	};

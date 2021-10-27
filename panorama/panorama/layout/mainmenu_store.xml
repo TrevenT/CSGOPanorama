@@ -6,8 +6,6 @@
 		<include src="file://{resources}/styles/tournaments/pickem_common.css" />
 		<include src="file://{resources}/styles/mainmenu_news.css" />
 		<include src="file://{resources}/styles/mainmenu_store.css" />
-
-
 	</styles>
 
 	<scripts>
@@ -30,26 +28,6 @@
 		<snippet name="StoreCarouselPage" class="">
 			<Panel class="store-panel__carousel-page" >
 				                          
-			</Panel>
-		</snippet>
-
-		<snippet name="LinkedStoreEntry" class="">
-			<Panel class="store-panel__carousel__item"  hittest="true">
-				<Panel class="store-panel__carousel__item__images-linked" >
-					<ItemImage id="StoreItemImageLinked" class="store-panel__carousel__item__image store-panel__carousel__item__image--offset" scaling="stretch-to-fit-preserve-aspect" hittest="false" >
-						<Label id="StoreItemStattrak" class="store-panel__carousel__item__stattrak hidden" text="#CSGO_KillEater_Hud"/>
-						<Label id="StoreItemNew" class="store-panel__carousel__item__stattrak hidden" text="#Store_Price_New"/>
-					</ItemImage>
-					<ItemImage id="StoreItemImage" class="store-panel__carousel__item__image" scaling="stretch-to-fit-preserve-aspect" hittest="false"/>
-				</Panel>
-				<Label id="StoreItemName" class="store-panel__carousel__item__name stratum-font" text=""/>
-				<Panel class='left-right-flow full-width'>
-					<Label id="StoreItemPercent" class="store-sale-tag__text" text=""/>
-					<Panel  class='top-bottom-flow'>
-						<Label id="StoreItemPrice" class="store-panel__carousel__item__name price" text="$X.XX"/>
-						<Label id="StoreItemSalePrice" class="store-panel__carousel__item__name saleprice" html="true" text=""/>
-					</Panel>
-				</Panel>
 			</Panel>
 		</snippet>
 

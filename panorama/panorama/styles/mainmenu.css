@@ -213,10 +213,11 @@ CSGOMainMenu.PopupBackgroundBlur #MainMenuInput
 #VanityControls
 {
 	opacity: 0.5;
-	position: 0px -50px 0px;
 	vertical-align: bottom;
 	horizontal-align: center;
 	flow-children: right;
+	margin-left: 360px;
+	margin-bottom: 14px;
 
 	transition-property:  opacity, brightness;
 	transition-duration: 0.25s;
@@ -734,8 +735,8 @@ CSGOEndOfMatch.mainmenu-content__container
 {
 	width: 720px;
 	height: 100%;
-	margin: 0px 0px 48px 128px;
-	position: 0px 24px 0px;
+	margin: 24px 0px 24px 128px;
+	position: 0px 0px 0px;
 	transform: scale3d( 1, 1, 1 );
 	flow-children: down;
 
@@ -757,7 +758,8 @@ CSGOEndOfMatch.mainmenu-content__container
 }
 
 .mainmenu_news_container.hidden,
-.mainmenu_active-mission-container.hidden
+.mainmenu_active-mission-container.hidden,
+.mainmenu_stream_container.hidden
 {
 	opacity: 0;
 	transform: scale3d( .5, .5, 5 );
@@ -778,6 +780,49 @@ CSGOEndOfMatch.mainmenu-content__container
 	transition-timing-function: ease-in-out;
 }
 
+                                                                               
+                                                                                 
+                                                                               
+.mainmenu_stream_container
+{
+	z-index: 5;
+	width: fit-children;
+	height: fit-children;
+	horizontal-align: center;
+	vertical-align: center;
+	box-shadow: #000000 0px 0px 15px 0px;
+
+	transition-property: position, height, width;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+.mainmenu_stream_container.minimize_stream
+{
+	y:0%;
+	margin-bottom: 24px;
+	margin-left: 864px;
+	horizontal-align: left;
+	vertical-align: bottom;
+	box-shadow: #00000000 0px 0px 0px 0px;
+	
+	transition-property:  position, height, width;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
+}
+
+
+
+                                                              
+                                                          
+ 
+	                       
+	                     
+	
+	                                              
+	                          
+	                                        
+    
 
                                                                                
                                                                                
@@ -929,9 +974,12 @@ ToggleButton Label,
 	img-shadow: 2px 2px 2px #000000;
 }
 
-RadioButton.content-navbar__tabs--small-image  Image
+RadioButton.content-navbar__tabs--small-image Image,
+Button.content-navbar__tabs--small-image Image
 {
 	height: 28px;
+	width: height-percentage( 100% );
+	vertical-align: middle;
 	img-shadow: none;
 }
 

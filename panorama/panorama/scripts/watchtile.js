@@ -196,19 +196,25 @@ var watchTile = ( function() {
                 spectatorCount = 0;
             }
             elTile.SetDialogVariableInt( 'spectatorCount', spectatorCount );
-
-            var elSingleViewerLabel = elTile.FindChildInLayoutFile('single_viewer');
-            if ( elSingleViewerLabel )
+            if ( spectatorCount === 0 )
             {
-                if ( spectatorCount === 1 )
+                elViewersLabel.AddClass( 'hide' );
+            }
+            else
+            {
+                var elSingleViewerLabel = elTile.FindChildInLayoutFile('single_viewer');
+                if ( elSingleViewerLabel )
                 {
-                    elSingleViewerLabel.RemoveClass( 'hide' );
-                    elViewersLabel.AddClass( 'hide' );
-                }
-                else
-                {
-                    elSingleViewerLabel.AddClass( 'hide' );
-                    elViewersLabel.RemoveClass( 'hide' );
+                    if ( spectatorCount === 1 )
+                    {
+                        elSingleViewerLabel.RemoveClass( 'hide' );
+                        elViewersLabel.AddClass( 'hide' );
+                    }
+                    else
+                    {
+                        elSingleViewerLabel.AddClass( 'hide' );
+                        elViewersLabel.RemoveClass( 'hide' );
+                    }
                 }
             }
         }
