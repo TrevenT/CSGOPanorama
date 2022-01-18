@@ -108,13 +108,12 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 				var onActivate = function ( url )
 				{
 					StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchLink" );
-					GameInterfaceAPI.ConsoleCommand( 'playcast "' + url + '"');
+					GameInterfaceAPI.ConsoleCommand( 'playcast "' + url + '"' );
+					$.DispatchEvent( 'ContextMenuEvent', '' );
 				}
 
 				elGotvBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, oStream[ 'resolved_embed' ] ) );
 				elGotvBtn.visible = true;
-
-				
 			}
 			else
 			{
@@ -171,7 +170,8 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 			var onActivate = function ( url )
 			{
 				StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchLink" );
-				SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( url ); 
+				SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( url );
+				$.DispatchEvent( 'ContextMenuEvent', '' );
 			}
 
 			elLinkBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
