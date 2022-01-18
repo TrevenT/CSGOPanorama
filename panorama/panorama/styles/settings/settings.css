@@ -139,6 +139,7 @@ CSGOSettingsEnumDropDown:hover
 
 #SettingsLaunchSteamInputButton
 {
+	margin : 10px;
 	horizontal-align: center;
 }
 

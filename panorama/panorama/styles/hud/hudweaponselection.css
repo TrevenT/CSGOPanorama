@@ -467,7 +467,7 @@ CSGOWeaponSelectionView Label
     opacity:1;
 }
 
-.ConsoleControlsInUse .weapon-row-number
+.SteamInputGlyphsActive .weapon-row-number 
 {
     visibility: collapse;
 }
@@ -808,7 +808,13 @@ CSGOHudWeaponSelection .weapon-selection-item-icon CCSGOSteamInputAction
     visibility: collapse;
    
 }
-.ConsoleControlsInUse CCSGOSteamInputAction.ControllerConnected.NextWeaponSelection
+
+.SteamInputGlyphsActive CCSGOSteamInputAction.ControllerConnected 
+{
+    visibility: collapse;
+}
+
+.SteamInputGlyphsActive CCSGOSteamInputAction.ControllerConnected.NextWeaponSelection 
 {
     visibility: visible;
 }

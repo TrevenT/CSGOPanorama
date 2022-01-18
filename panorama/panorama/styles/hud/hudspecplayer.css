@@ -244,6 +244,11 @@
     visibility: collapse;
 }
 
+.SteamInputGlyphsActive .HudSpecplayer__key-hints-text--hidden 
+{
+    visibility: visible;
+}
+
 .HudSpecplayer__Item
 {
 

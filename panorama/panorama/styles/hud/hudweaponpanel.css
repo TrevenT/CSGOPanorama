@@ -536,9 +536,9 @@ CSGOHudWeaponPanel CCSGOSteamInputAction.ControllerConnected
     visibility: collapse;
 }
 
-.ConsoleControlsInUse CSGOHudWeaponPanel.WeaponPanel--HasAltFireMode CCSGOSteamInputAction.ControllerConnected
+.SteamInputGlyphsActive CSGOHudWeaponPanel.WeaponPanel--HasAltFireMode CCSGOSteamInputAction.ControllerConnected 
 {
-     visibility: visible;
+	visibility: visible;
 }
 
 

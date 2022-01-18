@@ -20,6 +20,9 @@ var TournamentJournal = ( function()
     {
         var journalId = $.GetContextPanel().GetAttributeString( "journalid", '' );
         var tournamentId = InventoryAPI.GetItemAttributeValue( journalId, "tournament event id" );
+        var bNoItemsOnSale = true;
+        $.GetContextPanel().SetHasClass( 'no_items', bNoItemsOnSale );
+
                            
                               
 
@@ -59,8 +62,8 @@ var TournamentJournal = ( function()
         _SetSubtitle( journalId );
         _SetModel( journalId );
         _SetBannerColor( journalId );
-        _SetFaqBtn(tournamentId);
-        _UpdateStoreItems();
+        _SetFaqBtn(tournamentId, bNoItemsOnSale);
+        _UpdateStoreItems( bNoItemsOnSale );
         _UpdateActivateBtn();
         
                          
@@ -712,15 +715,30 @@ var TournamentJournal = ( function()
         _UpdateApplyCharges();
     };
 
-    var _SetFaqBtn = function( tournamentId )
+    var _SetFaqBtn = function( tournamentId, bNoItemsOnSale )
     {
-        $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-faq' ).SetPanelEvent( 'onactivate', function(){
+        var btn = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-faq' );
+        if( bNoItemsOnSale )
+        {
+            btn.visible = false;
+            return;
+        }
+        
+        btn.SetPanelEvent( 'onactivate', function(){
             SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgostockholm' );
         });
+
+        btn.visible = true;
     };
 
-    var _UpdateStoreItems = function()
+    var _UpdateStoreItems = function( bNoItemsOnSale )
     {
+                                                        
+        if( bNoItemsOnSale )
+        {
+            return false;
+        }
+
         var elItemsPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-items' );
 		var elBlurPanel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-container' );
 		

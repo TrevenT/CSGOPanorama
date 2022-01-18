@@ -69,6 +69,10 @@
     min-height: 72px;
     margin-bottom: 16px;
 }
+.no_items .tournament-journal__titlebar
+{
+    min-height: 180px;
+}
 
 .tournament-journal__titlebar--border
 {
@@ -141,6 +145,11 @@
                                                  
     height: 240px;
     margin-top: 8px;
+}
+
+.no_items .tournament-journal__section
+{
+    height: 380px;
 }
 
 .tournament-journal__column

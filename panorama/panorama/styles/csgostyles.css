@@ -628,6 +628,15 @@ DropDownMenuBackground
 	height: 100%;
 }
 
+DropDownMenu .InlineImage
+{
+	vertical-align: middle;
+}
+CSGOSettingsEnumDropDown .InlineImage
+{
+	width: 32px;
+	height: 32px;
+}
 .op-mainmenu__missions DropDown:focus,
 .op-mainmenu__missions DropDown.DropDownMenuVisible:focus,
 .op-mainmenu__missions CSGOSettingsEnumDropDown.DropDownMenuVisible:focus
@@ -3420,4 +3429,12 @@ Label .InlineGlyph
 	width: 16px;
 	height: 16px;
 	vertical-align: center;
+}
+
+Label .FlickStickInfoIcon
+{
+	height: 16px;
+	width: height-percentage( 100% );
+	vertical-align: center;
+	margin-right: 2px;
 }

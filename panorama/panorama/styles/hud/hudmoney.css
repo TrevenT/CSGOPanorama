@@ -394,9 +394,9 @@ CSGOHudMoney CCSGOSteamInputAction.ControllerConnected
     visibility: collapse;
 }
 
-.ConsoleControlsInUse CSGOHudMoney.money__in-buy-zone CCSGOSteamInputAction.ControllerConnected
+.SteamInputGlyphsActive CSGOHudMoney.money__in-buy-zone CCSGOSteamInputAction.ControllerConnected 
 {
-     visibility: visible;
+    visibility: visible;
 }
 
 

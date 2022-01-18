@@ -192,9 +192,9 @@ CSGOHudGameIcons CCSGOSteamInputAction.ControllerConnected
     visibility: collapse;
 }
 
-.ConsoleControlsInUse CSGOHudGameIcons.hud-game-icons--bomb-zone CCSGOSteamInputAction.ControllerConnected
+.SteamInputGlyphsActive CSGOHudGameIcons.hud-game-icons--bomb-zone CCSGOSteamInputAction.ControllerConnected 
 {
-     visibility: visible;
+    visibility: visible;
 }
 
 
