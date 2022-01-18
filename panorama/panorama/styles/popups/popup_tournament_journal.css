@@ -155,21 +155,70 @@
     background-color: rgba(255, 255, 255, .03);
 }
 
+.tournament-journal__column.tournament-journal__column--winner
+{
+    max-width: 1480px;
+    padding: 0px;
+}
+
+.tournament-journal__column--trophy
+{
+    width: 640px;
+    padding: 0px;
+    margin: 0px 0px;
+    background-color: rgba(255, 255, 255, .0);
+    horizontal-align: right;
+}
+
+
 .tournament-journal__info-block
 {
     horizontal-align: center;
     flow-children: right;
     vertical-align: center;
-
-    margin: 6px 0px;
     horizontal-align: left;
     width: 512px;
+}
+
+.tournament-journal__winner-block
+{
+    horizontal-align: center;
+    flow-children: right;
+    vertical-align: center;
+    horizontal-align: left;
+    width: 100%;
+    margin-left: 32px;
+}
+
+.tournament-journal__winner-block__players
+{
+    flow-children: left;
+    width: fit-children;
+    vertical-align: center;
+}
+
+.tournament-journal-player
+{
+    margin: 8px;
+}
+
+.tournament-journal-player__photo
+{
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.288);
+}
+
+.tournament-journal-player__sticker
+{
+    width: 72px;
+    y: 56px;
 }
 
 .tournament-journal__column--redeem .tournament-journal__info-block,
 #id-graffiti-block .tournament-journal__info-block
 {
-
     transform: translateX(140px);
 }
 
@@ -182,6 +231,17 @@
     letter-spacing: 3px;
 
     text-shadow: 1px 1px 1px 1.5 rgb(44, 60, 78);
+}
+
+.tournament-journal__info-block__title.narrow
+{
+    font-size: 90px;
+    vertical-align: top;
+                           
+
+    color: gradient( linear, 0% 0%, 0% 95%, from( rgba(207, 171, 11, 0.733) ), to( rgba(119, 119, 119, 0)) );
+    text-shadow: none;
+
 }
 
 .tournament-journal__info-block__title--update-anim
@@ -281,8 +341,10 @@
 
 .tournament-journal__model.trophy
 {
-    brightness: .25;
-    height: 198px;
+    brightness: .5;
+    height: fill-parent-flow(1);
+    opacity-mask: url( "file://{images}/masks/top-bottom-fade-2.png" );
+    horizontal-align: center;
 }
 
                                 
@@ -291,11 +353,13 @@
     flow-children: down;
     width: 100%;
     vertical-align: center;
+    margin: 6px 0px;
 }
 
 .tournament-journal__challenge
 {
     flow-children: right;
+    height: fill-parent-flow(1);
     width: 100%;
     padding: 6px 0px;
     margin: 1px 0px 1px 4px;
@@ -310,7 +374,7 @@
 
 .tournament-journal__challenge.dark 
 {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .tournament-journal__challenge.margin-top
@@ -518,37 +582,16 @@
     font-size: 16px;
 }
 
-.tournament-over #id-winners-block
-{
-    visibility: visible;
-    width: 1296px;
-}
-
-.tournament-over #id-bottom-block
-{
-    flow-children: none;
-}
-
-.tournament-over #id-tournament-journal-redeem-btn,
-.tournament-over #id-tournament-journal-info-block-subtitle
-{
-    visibility: collapse;
-}
-
-.tournament-over .tournament-journal__challenge:disabled:not(.complete) Label
+.tournament-over.tournament-journal__challenge:disabled:not(.complete) Label
 {
     color: disabledColor;
 }
 
-.tournament-over .tournament-journal__challenge:disabled:not(.complete) Image
+.tournament-over.tournament-journal__challenge:disabled:not(.complete) Image
 {
     wash-color: disabledColor;
 }
 
-                                                       
-.tournament-over #id-graffiti-block,
-.tournament-over #id-steam-block,
-.tournament-over #id-tournament-journal-remaining,
 .no-active-pass #id-graffiti-block,
 .no-active-pass #id-steam-block,
 .no-active-pass #id-winners-block,

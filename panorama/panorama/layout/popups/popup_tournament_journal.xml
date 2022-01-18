@@ -4,6 +4,7 @@
 		<include src="file://{resources}/styles/popups/popups_shared.css" />
         <include src="file://{resources}/styles/popups/popup_capability_shared.css" />
 		<include src="file://{resources}/styles/popups/popup_tournament_journal.css" />
+       <include src="file://{resources}/styles/mainmenu_watch.css" />
 	</styles>
 
 	<scripts>
@@ -21,7 +22,13 @@
                 <Label id="id-tournament-journal__challenge__name" class="tournament-journal__challenge__name stratum-font" text="#tournament_coin_desc"/>
                 <Panel class="tournament-journal__challenge__spacer"/>
             </Button>
-        </snippet>!
+        </snippet>
+        <snippet name="snippet-tournament-player">
+			<Panel class="tournament-journal-player hidden">
+				<Image id="id-tournament-journal-player-photo" class="tournament-journal-player__photo" />
+				<ItemImage id="id-tournament-journal-player-sticker" class="tournament-journal-player__sticker" scaling="stretch-to-fit-preserve-aspect"/>
+			</Panel>
+		</snippet>
     </snippets>
 
 	<PopupCustomLayout class="PopupPanel tournament-journal Hidden"
@@ -101,20 +108,25 @@
                         </Panel>
                     </Panel>
                     <Panel id="id-bottom-block" class="tournament-journal__section tournament-journal__section--bottom-block">
-                        <Panel id="id-winners-block" class="tournament-journal__column horizontal-center hide">
-                            <Panel class="tournament-journal__info-block">
-                                <Panel class="right-margin-medium" >
-                                    <ItemPreviewPanel id="id-tournament-journal-trophy"
-                                        class="tournament-journal__model trophy"
-                                        manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
-                                        item="models/inventory_items/trophy_majors.mdl"
-                                        mouse_rotate="true"
-                                        sound=""/>
-                                    <ItemImage id="tournament-journal-winners-img" class="horizontal-center vertical-center" src="" textureheight="112" texturewidth="-1"/>
+                        <Panel id="id-winners-block" class="tournament-journal__column horizontal-center tournament-journal__column--winner">
+                            <Panel class="tournament-journal__winner-block">
+                                <Panel class="right-margin-medium left-right-flow vertical-center" >
+                                    <ItemImage id="tournament-journal-winners-img" class="horizontal-center vertical-center" src="" textureheight="136" texturewidth="-1"/>
                                 </Panel>
                                 <Panel class="top-bottom-flow vertical-center horizontal-center">
-                                    <Label id="tournament-journal-winners-title" class="tournament-journal__titlebar__title stratum-font" text=""/>
-                                    <Label id="tournament-journal-winners-desc" class="tournament-journal__info-block__title stratum-font" html="true" text=""/>
+                                    <Label id="tournament-journal-winners-title" class="tournament-journal__info-block__title stratum-font" text=""/>
+                                    <Panel id="tournament-journal-winners-players" class="tournament-journal__winner-block__players">
+                                                            
+                                    </Panel>
+                                </Panel>
+                                <Panel class="tournament-journal__column--trophy">
+                                    <ItemPreviewPanel id="id-tournament-journal-trophy"
+                                            class="tournament-journal__model trophy "
+                                            manifest="resource/ui/econ/ItemModelPanelCharWeaponInspect.res"
+                                            item="models/inventory_items/trophy_majors.mdl"
+                                            mouse_rotate="true"
+                                            sound=""/>
+                                <Label id="tournament-journal-winners-desc" class="tournament-journal__info-block__title narrow stratum-font horizontal-center" html="true" text=""/>
                                 </Panel>
                             </Panel>
                         </Panel>

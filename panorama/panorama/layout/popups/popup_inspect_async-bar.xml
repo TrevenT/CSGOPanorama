@@ -8,6 +8,7 @@
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
         <include src="file://{resources}/scripts/common/item_context_entries.js" />
         <include src="file://{resources}/scripts/popups/popup_inspect_async-bar.js" />
 	</scripts>

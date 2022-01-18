@@ -1161,7 +1161,8 @@ var MainMenu = ( function() {
 			'',
 			'file://{resources}/layout/popups/popup_inventory_inspect.xml',
 			'itemid=' + id +
-			'&' + 'inspectonly=true',
+			'&' + 'inspectonly=true' +
+			'&' + 'viewfunc=primary',
 			'none'
 		);
 	};

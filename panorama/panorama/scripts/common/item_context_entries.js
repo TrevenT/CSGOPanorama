@@ -179,7 +179,9 @@ var ItemContextEntires = ( function (){
 				return false;
 			},
 			AvailableForItem: function ( id ) {
-				return ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_journal_') && ( InventoryAPI.GetRawDefinitionKey(id, 'item_sub_position2') === 'spray0' ) );
+				return ( ItemInfo.ItemDefinitionNameSubstrMatch(id, 'tournament_journal_') &&
+					                                                                          
+					g_ActiveTournamentInfo.eventid == InventoryAPI.GetItemAttributeValue( id, "tournament event id" ) );
 			},
 			OnSelected:  function ( id ) {
 				UiToolkitAPI.ShowCustomLayoutPopupParameters(

@@ -26,6 +26,10 @@ var MainMenuStoreTileLinked = ( function()
 		var elStattrak = elImage.FindChildInLayoutFile( 'StoreItemStattrak' );
 		elStattrak.SetHasClass( 'hidden', !ItemInfo.IsStatTrak( itemIdLinked ) && !ItemInfo.IsStatTrak( itemId ) );
 
+		var isNewRelease = elItem.Data().oData.isNewRelease;
+		var elNewHighlight = elItem.FindChildInLayoutFile( 'StoreItemNew' );
+		elNewHighlight.SetHasClass( 'hidden', !isNewRelease );
+
 		var elStoreItemName = elItem.FindChildInLayoutFile( 'StoreItemName' );
 		var elShortNameHeader = elItem.FindChildInLayoutFile( 'ShortName' );
 		var strItemName = '';

@@ -675,8 +675,8 @@ var MainMenuStore = ( function()
 				if ( sLinkedCoupon )
 				{
 					var LinkedItemId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( parseInt( sLinkedCoupon ), 0 );
-					                                                                                                                              
-					itemsByCategory.coupons.push( { id:FauxItemId, linkedid: LinkedItemId } );
+					                                                                                                                                                                           
+					itemsByCategory.coupons.push( { id:FauxItemId, linkedid: LinkedItemId, isNewRelease: ( strBannerEntryCustomFormatString === "coupon_new" ) } );
 				}
 				else if ( strBannerEntryCustomFormatString === "coupon_new" )
 				{
@@ -941,7 +941,8 @@ var MainMenuStore = ( function()
 		{
 			elItem.Data().oData = {
 				itemid: itemList[ i ].id,
-				linkedid: itemList[ i ].linkedid
+				linkedid: itemList[ i ].linkedid,
+				isNewRelease: itemList[ i ].isNewRelease
 			}
 
 			elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile_linked.xml", false, false );
@@ -1097,13 +1098,11 @@ var MainMenuStore = ( function()
 		 
 		  
 
-		                                                    
 		                                                                                                                  
-		                                                   
-		                                           
-		                                                    
-		                                                                                              
-		  
+		var nCategoryIdx = Math.floor( Math.random() * 3 );
+		fnMoveToFront( tabelements[nCategoryIdx] );
+		var nCategoryIdx2 = Math.floor( Math.random() * 2 );
+		fnMoveToFront( tabelements[ nCategoryIdx2 + ( ( nCategoryIdx2 >= nCategoryIdx ) ? 1 : 0 ) ] );
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};

@@ -17,7 +17,7 @@ var InventoryInspect = ( function()
 		                                                                        
 		                                                                                                     
 		var elItemModelImagePanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectModelOrImage' );
-		InspectModelImage.Init( elItemModelImagePanel, itemId );
+		InspectModelImage.Init( elItemModelImagePanel, itemId, _GetSettingCallback );
 
 		var elActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectActionBar' );
 		InspectActionBar.Init(

@@ -707,7 +707,7 @@ var ItemInfo = ( function() {
 	function _IsPreviewable ( id )
 	{
 		return ( ItemInfo.GetSlotSubPosition( id ) || ItemInfo.ItemMatchDefName( id, 'sticker' ) || ItemInfo.ItemMatchDefName( id, 'patch' ) ||ItemInfo.ItemMatchDefName( id, 'spray' ) ) &&
-			!ItemInfo.ItemDefinitionNameSubstrMatch( id, 'tournament_journal_' ) &&                                                       
+			                                                                                                                                 
 			!_IsDefaultCharacter( id );
 	}
 

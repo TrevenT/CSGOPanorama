@@ -138,11 +138,11 @@ var mainmenu_watch = ( function()
 			var pastTournamentPanel = elTournamentList.FindChildTraverse( "other-tournaments" );
 
 			                                                                                                                      
-			var maxTournaments = g_ActiveTournamentInfo.eventid - 1;
+			                                                           
 			      
 
 			                                                                             
-			                                                       
+			var maxTournaments = g_ActiveTournamentInfo.eventid;
 			      
 
 			for ( let i = maxTournaments; i >= 1; i-- )
@@ -363,9 +363,9 @@ var mainmenu_watch = ( function()
 			case "JsTournaments":
 				_PopulateTournamentPage( elTab );
 				break;
-			case "JsActiveTournament":
-				$.DispatchEvent( 'InitializeTournamentsPage', elTab, 'tournament:' + g_ActiveTournamentInfo.eventid );
-				break;
+			                             
+			   	                                                                                                      
+			   	      
 			case "JsYourMatches":
 			case "JsDownloaded":
 			case "JsLive":
@@ -641,7 +641,7 @@ var mainmenu_watch = ( function()
 		}
 		else
 		{
-			_InitResourceManagement( $( '#JsStreams' ) );
+			                                                
 			_InitResourceManagement( $( '#JsEvents' ) );
 		}
 
@@ -649,7 +649,7 @@ var mainmenu_watch = ( function()
 		if ( restrictions === false )
 		{
 			                                                                                       
-			if ( true )
+			if ( false )
 			{
 				_InitResourceManagement( $( '#JsActiveTournament' ) );
 				_NavigateToTab( 'JsActiveTournament' );
@@ -702,13 +702,33 @@ var mainmenu_watch = ( function()
 		while ( _CloseSubMenuContent() )
 			continue;                                                                  
 
-		_NavigateToTab( 'JsActiveTournament' );
-		$( '#WatchNavBarActiveTourament' ).checked = true;
+		                                   
+		_NavigateToTab( 'JsTournaments' );
+		$( '#WatchNavBarButtonTournaments' ).checked = true;
 
-		var elTournamentActive = $( '#JsActiveTournament' );
+		                                                          
+		var i = g_ActiveTournamentInfo.eventid;                    
+		_NavigateToTab( 'JsMainMenuSubContent_Tournament' + i, 'mainmenu_watch_tournament', 'tournament:' + i, true, true );
+
+		                                                            
+		var elTournamentActive = _m_activeTab;                                                                              
 		if ( idOfTab && elTournamentActive )
 		{
-			$.DispatchEvent( "Activated", elTournamentActive.FindChildInLayoutFile( idOfTab ), "mouse" );
+			var elTabToActivate = elTournamentActive.FindChildTraverse( 'content-navbar__tabs' );
+			if ( elTabToActivate )
+			{
+				elTabToActivate = elTabToActivate.FindChildInLayoutFile( idOfTab );
+			}
+			
+			if ( elTabToActivate )
+			{
+				                                                                       
+				$.DispatchEvent( "Activated", elTabToActivate, "mouse" );
+			}
+			else
+			{
+				                                                                      
+			}
 		}
 	}
 
@@ -731,6 +751,7 @@ var mainmenu_watch = ( function()
                                                                                                     
 ( function()
 {
+	mainmenu_watch.InitMainWatchPanel();
 	$.RegisterEventHandler( 'Cancelled', $( '#JsWatch' ), mainmenu_watch.CloseSubMenuContent );
 	$.RegisterEventHandler( 'ReadyForDisplay', $( '#JsWatch' ), mainmenu_watch.OnReadyForDisplay );
 	$.RegisterForUnhandledEvent( 'ShowActiveTournamentPage', mainmenu_watch.ShowActiveTournamentPage );

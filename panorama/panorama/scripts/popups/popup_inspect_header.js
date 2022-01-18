@@ -13,16 +13,19 @@ var InspectHeader = ( function()
 		
 		elPanel.RemoveClass( 'hidden' );
 		
-		_SetName( elPanel, itemId );
+		_SetName( elPanel, itemId, funcGetSettingCallback );
 		_SetRarity( elPanel, itemId );
 		_SetCollectionInfo( elPanel, itemId );
 	};
 	
-	var _SetName = function( elPanel, ItemId )
+	var _SetName = function( elPanel, ItemId, funcGetSettingCallback )
 	{
 		                                                                      
+		                                                                             
+		var strViewFunc = funcGetSettingCallback ? funcGetSettingCallback( 'viewfunc', '' ) : '';
+
 		if ( ItemInfo.ItemDefinitionNameSubstrMatch( ItemId, 'tournament_journal_' ) )
-			ItemId = ItemInfo.GetFauxReplacementItemID( ItemId, 'graffiti' );
+			ItemId = ( strViewFunc === 'primary' ) ? ItemId : ItemInfo.GetFauxReplacementItemID( ItemId, 'graffiti' );
 
 		elPanel.FindChildInLayoutFile( 'InspectName' ).text = ItemInfo.GetName( ItemId );
 	};
