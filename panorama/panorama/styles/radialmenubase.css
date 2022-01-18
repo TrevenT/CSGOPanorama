@@ -24,7 +24,7 @@
 	transform: scale3d( 1, 1, 1 );
 	opacity: 1;
 	transition-property: opacity, transform;
-	transition-duration: 0.06125s;
+	transition-duration: 0.03s;
 	                                                     
 	transition-timing-function: ease-out;
 }

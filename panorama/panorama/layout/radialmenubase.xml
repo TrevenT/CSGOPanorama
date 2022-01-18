@@ -26,11 +26,11 @@
       <Panel id="backdropcircle" class="RadialBackdropCircle"/>
     </Panel>
 
-    <Panel class="Radial-heading-container">
+    <Panel class="Radial-heading-container RadialFadeIn">
       <Label id="chatwheel-heading-label" class="RadialHeading-text" style="visibility: visible; position: 0.0px 0.0px 0.0px;" />
       <Image id="" texturewidth="24" textureheight="20" class="RadialHeading-image" src="file://{images}/icons/ui/middle_mouse_button.svg" />
     </Panel>
-    <Label id="item-selected-name" class="RadialSegmentSelectedCenter-text" text="{s:SelectedSegment--name}"/>
+    <Label id="item-selected-name" class="RadialSegmentSelectedCenter-text RadialFadeIn" text="{s:SelectedSegment--name}"/>
   </CCSGORadialMenuBase>
   
 </root>
