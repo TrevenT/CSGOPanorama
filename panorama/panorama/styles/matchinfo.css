@@ -649,7 +649,7 @@
 {
 	flow-children: none;
 	width: fit-children;
-	height: fit-children;
+	height: fill-parent-flow(1);
 	horizontal-align:center;
 	vertical-align: top;
 }
@@ -661,7 +661,9 @@
 	flow-children: down;
 	width: fit-children;
 	height: fit-children;
+	padding-top: 96px;
 }
+
 
 .tournamentinfo-minimal--vs-label
 {
@@ -709,10 +711,10 @@
 
 .tournamentinfo-minimal--mapinfo
 {
-	margin-top: 128px;
+	margin-top: 72px;
 	width: 100%;
 	height: width-percentage( 100% ) ;
-	flow-children: none;
+	flow-children: down;
 }
 
 .tournamentinfo-minimal--map-image

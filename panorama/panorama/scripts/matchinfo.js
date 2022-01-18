@@ -1019,7 +1019,9 @@ var matchInfo = ( function() {
         }
         
         var elTournamentLogo = elParentPanel.FindChildTraverse( "tournament_logo" );
-        elTournamentLogo.SetImage( 'file://{images}/tournaments/events/tournament_logo_' + elParentPanel.tournamentIndex + '.svg' );
+        var elEventID = MatchInfoAPI.GetMatchTournamentId( elParentPanel.matchId );
+        if ( elEventID )
+            elTournamentLogo.SetImage('file://{images}/tournaments/events/tournament_logo_' + elEventID + '.svg');
 
         elParentPanel.SetDialogVariable( 'tournamentphase', $.Localize( MatchInfoAPI.GetMatchTournamentStageName( elParentPanel.matchId ) ) );
         elParentPanel.SetDialogVariable( 'matchphase', MatchInfoAPI.IsLive( elParentPanel.matchId ) ? $.Localize( '#CSGO_Watch_Cat_LiveMatches' ) : MatchInfoAPI.GetMatchTimestamp( elParentPanel.matchId ) );
@@ -1036,6 +1038,7 @@ var matchInfo = ( function() {
         {
             var minimalInfoBody = $.CreatePanel( 'Panel', elParentPanel, 'minimal-match-info' );
             minimalInfoBody.BLoadLayoutSnippet( 'matchinfo_serverlogtournament_minimal');
+		        elParentPanel.MoveChildBefore( minimalInfoBody, elParentPanel.FindChild( 'footer' ) );
         }
 
         var myXuid = MyPersonaAPI.GetXuid();
