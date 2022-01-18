@@ -8,9 +8,10 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/popups/popup_tournament_journal.js" />
         <include src="file://{resources}/scripts/generated/items_event_current_generated_store.js" />
 		<include src="file://{resources}/scripts/common/iteminfo.js" />
+        <include src="file://{resources}/scripts/common/eventutil.js" />
+        <include src="file://{resources}/scripts/popups/popup_tournament_journal.js" />
 	</scripts>
 
     <snippets>

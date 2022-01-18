@@ -17,8 +17,8 @@
             <Panel class="tournament-pass-status__info">
                 <Label class="tournament-pass-status__desc" html="true" text="#CSGO_TournamentPass_stockh2021_store_desc"/>
                 <Panel class="left-right-flow">
+                    <Label id="id-tournament-pass-saletag" class="tournament-pass-status__saletag" text="#store_sale"/>
                     <Label id="id-tournament-pass-status-header" class="tournament-pass-status__title" text="#CSGO_TournamentPass_stockh2021_store_title"/>
-                    <Label id="id-tournament-pass-saletag" class="tournament-pass-status__saletag" text="#ON SALE!"/>
                 </Panel>
             </Panel>
             <Panel id="id-tournament-pass-status-images-row" class="tournament-pass-status__images-row">

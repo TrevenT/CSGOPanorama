@@ -37,6 +37,8 @@
     letter-spacing: 3px;
     color: gradient( linear, 0% 0%, 0% 100%, from( #1de7ae ), to( #157a5e) );
     font-family: notosans, 'Arial Unicode MS';
+    height: 40px;
+    text-overflow: shrink;
 }
 
 .tournament-pass-status__images-row
@@ -99,6 +101,8 @@
     padding: 4px 6px;
     margin-right: 12px;
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #12ca4a ), to( #1b8524 ) );
+    vertical-align: center;
+    font-size: 18px;
 }
 
 .tournament-pass-status__timer
@@ -132,12 +136,4 @@
 .hidden
 {
     visibility: collapse;
-}
-
-#id-tournament-pass-saletag
-{
-    vertical-align: bottom;
-    margin-bottom: 8px;
-    margin-left: 0;
-    font-size: 18px;
 }

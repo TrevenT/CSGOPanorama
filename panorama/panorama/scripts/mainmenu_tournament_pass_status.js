@@ -106,7 +106,7 @@ var MainMenuTournamentPassStatus = ( function()
 		elPrecent.SetHasClass( 'hidden', true );
 
 			                 
-			var reduction = ItemInfo.GetStoreSalePercentReduction( g_ActiveTournamentInfo.itemid_pass, 1 );
+			var reduction = ItemInfo.GetStoreSalePercentReduction( g_ActiveTournamentStoreLayout[1][0], 1 );
 			elPrecent.SetHasClass( 'hidden', ( reduction === '' || reduction === undefined ) ? true : false );
 	}
 

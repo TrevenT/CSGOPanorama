@@ -18,13 +18,25 @@ var MainMenuStore = ( function()
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 		var itemsByCategory = {};
 
-		                                               
-		if ( ( NewsAPI.GetActiveTournamentEventID() !== 0 )
-			&& ( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[0][0], 0 ), 1, '' ) )
-			)
+		                                                                     
+		var tournamentId = NewsAPI.GetActiveTournamentEventID();
+
+		if ( ( tournamentId !== 0 ) &&
+			( '' !== StoreAPI.GetStoreItemSalePrice( InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ 0 ][ 0 ], 0 ), 1, '' ) ) )
 		{
-			m_elStore.SetDialogVariable( "tournament_name", $.Localize( "#CSGO_Tournament_Event_Location_" + NewsAPI.GetActiveTournamentEventID() ) );
-			itemsByCategory.tournament = _OperationTournamentSetupObj();
+			var oWinningTeam = EventUtil.GetTournamentWinner( tournamentId, 1 );
+			                                                           
+			                                        
+			var sRestriction = InventoryAPI.GetDecodeableRestriction( "capsule" );
+			var bCanSellCapsules = ( sRestriction !== "restricted" && sRestriction !== "xray" );
+			
+			                                                                                     
+			                                                                              
+			if ( bCanSellCapsules || ( !bCanSellCapsules && !oWinningTeam ) )
+			{
+				m_elStore.SetDialogVariable( "tournament_name", $.Localize( "#CSGO_Tournament_Event_Location_" + NewsAPI.GetActiveTournamentEventID() ) );
+				itemsByCategory.tournament = _OperationTournamentSetupObj();
+			}
 		}
 
 		                                                   

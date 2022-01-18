@@ -50,7 +50,7 @@ var TournamentJournal = ( function()
             } );
         }
 
-        var oWinningTeam = !_IsValidJournalId( journalId ) ? null : _GetTournamentWinner( tournamentId );
+        var oWinningTeam = !_IsValidJournalId( journalId ) ? null : EventUtil.GetTournamentWinner( tournamentId, 1 );
         m_isTournament_active = oWinningTeam === null || !oWinningTeam.hasOwnProperty( 'team_id' ) ? true : false;
 
                                                                                                      
@@ -85,21 +85,6 @@ var TournamentJournal = ( function()
         _WatchStream( journalId );
     };
 
-    var _GetTournamentWinner = function( tournamentId )
-    {
-        let ProEventJSO = TournamentsAPI.GetProEventDataJSO( tournamentId, 8 );
-        let oWinningTeam;
-
-        if ( ProEventJSO
-            && ProEventJSO.hasOwnProperty( 'eventdata' )
-            && ProEventJSO[ 'eventdata' ].hasOwnProperty( tournamentId ) )
-        {
-            oWinningTeam = ProEventJSO[ 'eventdata' ][ tournamentId ][ 0 ];
-        }
-
-        return oWinningTeam;
-    };
-    
     var GetPassToActivate = function()
     {
         var journalId = $.GetContextPanel().GetAttributeString( "journalid", '' );

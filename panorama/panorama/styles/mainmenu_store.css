@@ -87,6 +87,7 @@
 	margin: 0px 20px;
 	width: 200px;
 	background-color: rgba(255, 255, 255, 0.048);
+	vertical-align: center;
 }
 
 .tournament-journal__challenge__items-row .store-panel__carousel__item.bright-background

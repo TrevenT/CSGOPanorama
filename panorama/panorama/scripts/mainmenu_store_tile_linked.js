@@ -71,7 +71,9 @@ var MainMenuStoreTileLinked = ( function()
 		if ( reduction )
 		{
 			elSale.visible = true;
-			elSale.text = ItemInfo.GetStoreOriginalPrice( priceItemFirst, 1 ) + ' - ' +  ItemInfo.GetStoreOriginalPrice( priceItemLast, 1 );
+			elSale.text = ItemInfo.GetStoreOriginalPrice( priceItemFirst, 1 ) === ItemInfo.GetStoreOriginalPrice( priceItemLast, 1 ) ?
+				ItemInfo.GetStoreOriginalPrice( priceItemFirst, 1 ) :
+				ItemInfo.GetStoreOriginalPrice( priceItemFirst, 1 ) + ' - ' + ItemInfo.GetStoreOriginalPrice( priceItemLast, 1 );
 
 			elPrecent.visible = true;
 			elPrecent.text = reduction;
@@ -85,7 +87,9 @@ var MainMenuStoreTileLinked = ( function()
 		var elPrice = elItem.FindChildInLayoutFile( 'StoreItemPrice' );
 		if ( ItemInfo.GetStoreSalePrice( priceItemFirst, 1 ) )
 		{
-			elPrice.text = ItemInfo.GetStoreSalePrice( priceItemFirst, 1 ) + ' - ' + ItemInfo.GetStoreSalePrice( priceItemLast, 1 );
+			elPrice.text = ItemInfo.GetStoreSalePrice( priceItemFirst, 1 ) === ItemInfo.GetStoreSalePrice( priceItemLast, 1 ) ?
+				ItemInfo.GetStoreSalePrice( priceItemFirst, 1 ) : 
+				ItemInfo.GetStoreSalePrice( priceItemFirst, 1 ) + ' - ' + ItemInfo.GetStoreSalePrice( priceItemLast, 1 );
 		}
 		else
 		{
