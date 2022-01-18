@@ -80,7 +80,7 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 		_m_myCountryCode = MyPersonaAPI.GetMyCountryCode().toLowerCase();
 
-		_SortStreams( _m_arrStreams );
+		                                
 		
 		for ( var jdx in _m_arrStreams )
 		{
