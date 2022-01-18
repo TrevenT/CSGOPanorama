@@ -89,6 +89,21 @@ Image.eventsched-match__stream__flag {
 	text-transform: none;
 	color: baseText;
 	background-color: #ffffff00;
-	margin: 12px 0px;
+  	                 
 }
 
+
+#Contents .contextmenu-watchnotice_match_streams__url-link.gotv
+ {
+	flow-children: right;
+	wash-color: rgb(255, 231, 97);
+
+}
+
+#Contents Image.WideLogoStreamGOTV
+{
+	height: width-percentage( 56.8% );
+	width: 40px;
+	margin: 0px;
+	margin-right: 10px;
+}

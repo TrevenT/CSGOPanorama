@@ -59,8 +59,18 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 	function _RequestMatchString_Received( matchString )
 	{
 		if ( _m_arrStreams != undefined )
+		{
+			$.DispatchEvent( 'ContextMenuEvent', '' );
 			return;
-			
+		}
+		
+		var elStreamContainer = $.GetContextPanel().FindChildTraverse( 'id-watchnotice__event__match__stream-container' );
+		if ( elStreamContainer == undefined || !elStreamContainer.IsValid() )
+		{
+			$.DispatchEvent( 'ContextMenuEvent', '' );
+			return;
+		}
+
 		var oMatch = JSON.parse( matchString );
 		
 		if ( oMatch == undefined )
@@ -89,10 +99,24 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 			var countryCode = oStream.iso;
 			var languageCode = oStream.hasOwnProperty( 'language' ) ? oStream.language : "";
 
-			                           
-			var elStreamContainer = $.GetContextPanel().FindChildTraverse( 'id-watchnotice__event__match__stream-container' );
+			       
+			var bIsGotv = oStream[ 'site' ].toLowerCase() === "gotv";
+			var elGotvBtn = $.GetContextPanel().FindChildTraverse( "id-watchnotice__event__match_gotv" );
 
-			if ( elStreamContainer != undefined && elStreamContainer.IsValid() )
+			if ( bIsGotv )
+			{
+				var onActivate = function ( url )
+				{
+					StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchLink" );
+					GameInterfaceAPI.ConsoleCommand( 'playcast "' + url + '"');
+				}
+
+				elGotvBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, oStream[ 'resolved_embed' ] ) );
+				elGotvBtn.visible = true;
+
+				
+			}
+			else
 			{
 				var elStream = $.CreatePanel( 'Button', elStreamContainer, oStream[ 'stream_id' ] );
 				                                                                                           
@@ -115,19 +139,19 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 					if ( oStream[ 'resolved_embed' ].search( "channel=" ) != -1 )
 					{
-						streamName = "Twitch: " + oStream[ 'resolved_embed' ].match("channel=(.*?(?=&))")[1];
+						streamName = "Twitch: " + oStream[ 'resolved_embed' ].match( "channel=(.*?(?=&))" )[ 1 ];
 					}
 					else if ( oStream[ 'site' ].toLowerCase().search( "youtube" ) != -1 )
 					{
 						streamName = "YouTube";
 					}
-						
+					
 					elStreamName.SetDialogVariable( 'stream_site', streamName );
 				}
 
 				var url = oStream[ 'resolved_embed' ];
-				
-				var onActivate = function( url )
+			
+				var onActivate = function ( url )
 				{
 					StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchView" );
 					SteamOverlayAPI.OpenUrlInOverlayOrExternalBrowser( url );
@@ -136,7 +160,6 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 				elStream.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
 			}
-
 		}
 
 		      
@@ -153,23 +176,6 @@ var ContextMenuWatchNoticeMatchStream = (function () {
 
 			elLinkBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
 		}
-
-		       
-		var elGotvBtn = $.GetContextPanel().FindChildTraverse( "id-watchnotice__event__match_gotv" );
-		var bHasGotvAddress = _m_isOfficial && ( EmbeddedStreamAPI.GetStreamExternalLinkTypes().indexOf( 'G' ) >= 0 );
-		if ( bHasGotvAddress )
-		{
-			var onActivate = function ( url )
-			{
-				StoreAPI.RecordUIEvent( "WatchNoticeSchedMatchLink" );
-				EmbeddedStreamAPI.OpenStreamInExternalBrowser( 'XG' );
-			}
-
-			elGotvBtn.SetPanelEvent( 'onactivate', onActivate.bind( undefined, url ) );
-		}
-		elGotvBtn.visible = bHasGotvAddress;
-
-
 	};
 
 	

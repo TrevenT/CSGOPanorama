@@ -862,7 +862,7 @@ var mainmenu_watch_eventsched = ( function()
 
 					var elMatch = $.CreatePanel( "Panel", elMatchContainer, oMatch[ 'match_id' ] );
 					elMatch.BLoadLayout( 'file://{resources}/layout/watchmatchtile.xml', false, false );
-
+					elMatch.Data().isofficial = oEvent[ 'is_official'];
 
 					function _GetTeam ( num )
 					{

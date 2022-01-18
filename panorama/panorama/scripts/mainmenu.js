@@ -26,6 +26,9 @@ var MainMenu = ( function() {
 
 	var _m_hOnEngineSoundSystemsRunningRegisterHandle = null;
 
+	var _m_jobFetchTournamentData = null;
+	const TOURNAMENT_FETCH_DELAY = 10;
+
 	                                         
 	let nNumNewSettings = UpdateSettingsMenuAlert();
 
@@ -71,6 +74,32 @@ var MainMenu = ( function() {
 			}
 		}
 	};
+
+	function _FetchTournamentData ()
+	{
+		                                         
+
+		                                                             
+		if ( _m_jobFetchTournamentData )
+			return;
+		
+		TournamentsAPI.RequestTournaments();
+			
+		_m_jobFetchTournamentData = $.Schedule( TOURNAMENT_FETCH_DELAY, function ()
+		{
+			_m_jobFetchTournamentData = null;
+			_FetchTournamentData();
+		} );
+	}
+
+	function _StopFetchingTournamentData ()
+	{
+		if ( _m_jobFetchTournamentData )
+		{
+			$.CancelScheduled( _m_jobFetchTournamentData );
+			_m_jobFetchTournamentData = null;
+		}
+	}
 
 	var _SetBackgroundMovie = function()
 	{
@@ -137,7 +166,9 @@ var MainMenu = ( function() {
 		_ShowHideAlertForNewEventForWatchBtn();
 
 		                                                         
-		_UpdateUnlockCompAlert()
+		_UpdateUnlockCompAlert();
+
+		_FetchTournamentData();
 	};
 
 	var _TournamentDraftUpdate = function ()
@@ -279,6 +310,8 @@ var MainMenu = ( function() {
 		_CancelNotificationSchedule();
 
 		UiToolkitAPI.CloseAllVisiblePopups();
+
+		_StopFetchingTournamentData();
 	};
 
 	var _OnShowPauseMenu = function()
