@@ -246,6 +246,11 @@
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'rebuy' )">
 						<Label text="#BuyMenu_Buyprev" />
 					</Button>
+
+				  	                  
+     				                                                                                                                                                      
+      				                  
+
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'autobuy' )">
 						<Label text="#BuyMenu_Autobuy"/>
 					</Button>

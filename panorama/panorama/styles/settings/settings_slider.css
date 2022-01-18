@@ -30,7 +30,7 @@ CSGOSettingsSlider
 TextEntry#Value
 {
 	width: 80px;
-	text-align: right;
+	text-align: center;
 	color: baseText;
     font-family: Stratum2, notosans, 'Arial Unicode MS';
 	font-weight: bold;
@@ -39,6 +39,12 @@ TextEntry#Value
 	padding-left: 10px;
 	border-radius: 2px;
 	border: 2px solid #cccccc15;
+}
+
+#ControllerSettings TextEntry#Value
+{
+	width: 64px;
+	
 }
 
 TextEntry#Value:hover

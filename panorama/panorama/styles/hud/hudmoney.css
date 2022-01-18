@@ -65,6 +65,15 @@
     transition-duration: 0.1s;
 }
 
+
+
+CSGOHudMoney .steam-button-glyph
+{
+    width: 24px;
+    height: 24px;
+}
+
+
 .money-text-buy-icon
 {
     margin-top: 5px;
@@ -81,11 +90,14 @@
 
     wash-color-fast: lightgreen;
 }
+
+CSGOHudMoney.money__in-buy-zone .steam-button-glyph,
 .money__in-buy-zone .money-text-buy-icon
 {
     opacity:1;
 }
 
+.buymenu .buymenu-money CSGOHudMoney.money__in-buy-zone .steam-button-glyph,
 .buymenu .buymenu-money .money__in-buy-zone .money-text-buy-icon
 {
     opacity:0;
@@ -374,6 +386,24 @@
         y: 40px;
         z: 0px;
     }
+}
+
+
+CSGOHudMoney CCSGOSteamInputAction.ControllerConnected
+{
+    visibility: collapse;
+}
+
+.ConsoleControlsInUse CSGOHudMoney.money__in-buy-zone CCSGOSteamInputAction.ControllerConnected
+{
+     visibility: visible;
+}
+
+
+CSGOHudMoney .steam-button-glyph
+{
+    width: 24px;
+    height: 24px;
 }
 
          

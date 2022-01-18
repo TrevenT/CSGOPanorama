@@ -137,6 +137,11 @@ CSGOSettingsEnumDropDown:hover
 	opacity: .10;
 }
 
+#SettingsLaunchSteamInputButton
+{
+	horizontal-align: center;
+}
+
 .horizontal-separator
 {
 	opacity: .10;

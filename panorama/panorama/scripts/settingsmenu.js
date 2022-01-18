@@ -40,13 +40,13 @@ var SettingsMenu = ( function () {
 
     var _NavigateToTab = function( tabID ) {
 		
-        var bDisplayBlankPage = false;
+        var bDisplaySteamInputSettings = false;
 
         if ( tabID == 'ControllerSettings' )
         {
-           if ( OptionsMenuAPI.ShowSteamControllerBindingsPanel() )
+           if ( OptionsMenuAPI.BIsSteamInputActiveAndControllersConnected() )                                                                                
             {
-                bDisplayBlankPage = true;
+                bDisplaySteamInputSettings = true;
             }
 		}
 	
@@ -60,6 +60,9 @@ var SettingsMenu = ( function () {
                                                              
 
 			let XmlName = tabInfo[ tabID ].xml;
+			if (bDisplaySteamInputSettings) {
+                XmlName = "settings_steaminput";
+            }
             newPanel.BLoadLayout('file://{resources}/layout/settings/' + XmlName + '.xml', false, false );
             
                                                                                         
@@ -108,7 +111,7 @@ var SettingsMenu = ( function () {
                                           
 
                                                                                      
-            if ( !bDisplayBlankPage )
+                                                
             {
                 activePanel.visible = true;
                 activePanel.SetReadyForDisplay( true );   

@@ -1562,6 +1562,18 @@ RadioButton .map-selection-info__new
 	text-shadow: 2px 2px 2px #000000;
 }
 
+.play-menu__playbtn CCSGOSteamInputAction .steam-button-glyph 
+{
+	width: 28px;
+	height: 28px;
+}
+
+.play-menu__playbtn Label.steam-button-name
+{
+	visibility: collapse;
+}
+
+
 .play-menu__playbtn:hover
 {
 	box-shadow: 0px 0px 12px 0px #5abd5d69;
@@ -1582,19 +1594,6 @@ RadioButton .map-selection-info__new
 	horizontal-align: center;
 	flow-children:right;
 }
-
-             
-                                                              
- 
-	            
-	             
- 
-                                                             
-                                                            
- 
-	                     
- 
-            
 
 
 .play-menu__playbtn--stopsearch

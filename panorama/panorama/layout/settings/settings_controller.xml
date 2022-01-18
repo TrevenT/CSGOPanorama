@@ -24,8 +24,11 @@
 		</Panel>
 
 		<Panel class="SettingsMenuTabContent vscroll">
-
 			                                    
+
+
+
+			                                                                                                     
 			<Panel id="SettingsController" class="SettingsBackground">
 				<Panel class="SettingsSectionTitleContianer">
 					<Label class="SettingsSectionTitleLabel" text="#settings_controller_section" />
@@ -96,7 +99,7 @@
 				</Panel>
 			</Panel>
 
-			                                  
+			                         
 
 			<Panel id="SettingsControllerBindings" class="SettingsBackground">
 				<Panel class="SettingsSectionTitleContianer">

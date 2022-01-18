@@ -119,14 +119,25 @@
 		<CSGOHudDemoPlayback id="HudDemoPlayback" />
 
 		<CSGOHudRosettaSelector id="HudRosettaSelector" />
+
+
 		<CSGOMapOverview id="MapOverview"/>
 
-		<CSGOQuickInventory id="QuickInventory"/>
-		<CSGORadialRadio id="RadialRadio"/>
+    	<CSGOQuickInventory id="QuickInventory" sound_click="UIPanorama.loadout_sector_select" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickGrenadesRadial id="QuickGrenadesRadial" sound_click="UIPanorama.loadout_sector_select" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickUtilityItemRadial id="QuickUtilityItemRadial" sound_click="UIPanorama.loadout_sector_select" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CSGORadialRadio id="RadialRadio" sound_click="UIPanorama.loadout_sector_select" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+
 		<CSGORetakeLoadout id="RetakeLoadout"/>
 
 		<CSGOBuyMenu id="BuyMenu" />
-
+		<CCSGOQuickBuyRadial id="QuickBuyPistols" buy_menu = "pistols" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickBuyRadial id="QuickBuyHeavyWeapons" buy_menu = "heavyweapons" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickBuyRadial id="QuickBuySMGs" buy_menu = "smgs" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickBuyRadial id="QuickBuyRifles" buy_menu = "rifles" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickBuyRadial id="QuickBuyGear" buy_menu = "gear" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		<CCSGOQuickBuyRadial id="QuickBuyGrenades" buy_menu = "grenades" sound_click="" sound_rollover="UIPanorama.loadout_sector_scroll" sound_rollover_cannot_select="UIPanorama.loadout_sector_cannot_select" sound_open_radial="UIPanorama.loadout_sector_open"/>
+		
 		                                                                                                               
 		<Panel id="ScoreboardContainer" class="full-width full-height" hittest="false">
 			<CSGOScoreboard id="Scoreboard" />

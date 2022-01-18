@@ -527,3 +527,23 @@ CSGOHudWeaponPanel Label
 {
 	visibility: collapse;
 }
+
+
+
+
+CSGOHudWeaponPanel CCSGOSteamInputAction.ControllerConnected
+{
+    visibility: collapse;
+}
+
+.ConsoleControlsInUse CSGOHudWeaponPanel.WeaponPanel--HasAltFireMode CCSGOSteamInputAction.ControllerConnected
+{
+     visibility: visible;
+}
+
+
+CSGOHudWeaponPanel .steam-button-glyph
+{
+    width: 24px;
+    height: 24px;
+}

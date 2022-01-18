@@ -10,6 +10,7 @@
         <Panel class="weapon-row-background" />
         <Panel class="weapon-row-horiz-container" id="icon-container">
           <Label class="weapon-row-number" text="{s:WeaponRow--binding}" />
+        
                                                                        
         </Panel>
       </Panel>
@@ -18,7 +19,11 @@
     <snippet name="WeaponIcon">
       <Panel class="weapon-selection-item">
         <Panel class="weapon-selection-item-icon">
-          <Image class="WEAPON-ICON weapon-selection-item-icon-main" src="file://{images}/icons/equipment/flashbang.svg" textureheight="48" />
+          <Image class="WEAPON-ICON weapon-selection-item-icon-main" src="file://{images}/icons/equipment/flashbang.svg" textureheight="48"/>
+                            
+          <CCSGOSteamInputAction actionset="GameControls" separatortext="/" controllernumber = "1" id="action-binding-glyph-slots"/> 
+          <CCSGOSteamInputAction actionset="GameControls" separatortext="/" controllernumber = "1" id="action-binding-glyph"/> 
+                            
           <Label class="weapon-selection-item-count" text="#Panorama_WeaponSelection_ItemCount" />
         </Panel>
         <Panel class="weapon-selection-item-name">
@@ -32,7 +37,11 @@
       <Panel class="weapon-selection-item weapon-selection-item--bomb">
         <Panel class="weapon-selection-item-icon">
           <Image class="weapon-selection-item-icon-bombzone" src="file://{images}/icons/ui/bomb_arrow_segment.svg" texturewidth="-1" textureheight="25" />
-          <Image class="WEAPON-ICON weapon-selection-item-icon-main" src="file://{images}/icons/equipment/flashbang.svg" textureheight="56" />
+          <Image class="WEAPON-ICON weapon-selection-item-icon-main" src="file://{images}/icons/equipment/flashbang.svg" textureheight="56"/>
+                            
+          <CCSGOSteamInputAction actionset="GameControls" separatortext="/" controllernumber = "1" id="action-binding-glyph-slots"/> 
+          <CCSGOSteamInputAction actionset="GameControls" separatortext="/" controllernumber = "1" id="action-binding-glyph"/> 
+                            
           <Label class="weapon-selection-item-count" text="#Panorama_WeaponSelection_ItemCount" />
         </Panel>
         <Panel class="weapon-selection-item-name">

@@ -3412,3 +3412,12 @@ EdgeScrollBar.Vertical #MaxButton
 {
 	visibility: visible;
 }
+
+                                   
+
+Label .InlineGlyph
+{
+	width: 16px;
+	height: 16px;
+	vertical-align: center;
+}

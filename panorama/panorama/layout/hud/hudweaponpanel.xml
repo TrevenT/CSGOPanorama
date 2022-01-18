@@ -37,7 +37,9 @@
 						<Label id="KillEaterCount" class="Kills__KillEaterText WeaponPanel-apply-hud-color-bg" text="0" />
 					</Panel>
 				</Panel>
-				
+				                  
+		        <CCSGOSteamInputAction actionset="GameControls" action="attack2" separatortext="/" controllernumber = "1"/> 
+         		                  
 				             
 				<Panel id="AmmoContent" class="Ammo">
 					<Label id="AmmoTextClip" class="Ammo__Clip WeaponPanel-apply-hud-color" text="10" />

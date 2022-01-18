@@ -100,3 +100,31 @@
 {
     margin-right:10px;
 }
+
+#SteamInputAPITests
+{
+    width: fit-children;
+    height:fit-children;
+    flow-children: right;
+}
+
+.flowdown
+{
+    background-color: #000000AA;
+    margin: 10px;
+    border: 10px;
+    width: fit-children;
+    height:fit-children;
+    flow-children: down;
+}
+
+CCSGOSteamInputAction
+{
+    background-color: #000000DD;
+    margin: 10px;
+    border: 10px;
+    width: fit-children;
+    height:fit-children;
+}
+
+

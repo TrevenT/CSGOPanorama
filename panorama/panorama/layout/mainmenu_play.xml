@@ -479,17 +479,11 @@
 
 									<Button id="PartyCancelBtn" class="play-menu__playbtn play-menu__playbtn--stopsearch horizontal-center"  >
 										<Panel class="group-text-with-steam-button">
-											                  
-											                                                                                                                     
-											                  
 											<Label text="#SFUI_Lobby_Cancel_QueueMode_Search" />
 										</Panel>
 									</Button>
 									<Button id="StartMatchBtn" class="play-menu__playbtn play-menu__playbtn--startsearch Positive horizontal-center" >
 										<Panel class="group-text-with-steam-button">
-											                  
-											                                                                                                                     
-											                  
 											<Label text="#SFUI_Lobby_StartMatchButton" />
 										</Panel>
 									</Button>

@@ -183,3 +183,23 @@
     vertical-align: middle;
 }
 .hud-game-icons--hostage-rescue-zone .hud-game-icons-hostage-zone {opacity:1;}
+
+
+
+
+CSGOHudGameIcons CCSGOSteamInputAction.ControllerConnected
+{
+    visibility: collapse;
+}
+
+.ConsoleControlsInUse CSGOHudGameIcons.hud-game-icons--bomb-zone CCSGOSteamInputAction.ControllerConnected
+{
+     visibility: visible;
+}
+
+
+CSGOHudGameIcons .steam-button-glyph
+{
+    width: 24px;
+    height: 24px;
+}
