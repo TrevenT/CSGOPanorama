@@ -46,7 +46,7 @@
 
 	<CCSGOSteamInputGlyph>   	
    		<Panel class ="glyph-container">
-     		<Image id="ButtonGlyph" class="steam-button-glyph"/>
+     		<Image id="ButtonGlyph" class="steam-button-glyph"  texturewidth="64" textureheight="64"/>
      		<Label id="NameOfButton" class="steam-button-name"/>
      	</Panel>
    	</CCSGOSteamInputGlyph>

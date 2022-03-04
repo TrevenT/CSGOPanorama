@@ -50,6 +50,13 @@ var SettingsMenuShared = ( function () {
 		_ResetControls();
 	};
 
+    var _ResetSteamInputDefaults = function( )
+    {
+                                         
+        OptionsMenuAPI.RestoreKeybdMouseBindingDefaults();
+        _ResetControls();
+    };
+
 	var _ResetAudioSettings = function( )
 	{
 		$.DispatchEvent( "CSGOAudioSettingsResetDefault" );
@@ -233,6 +240,7 @@ var SettingsMenuShared = ( function () {
 		ResetControlsRecursivepanel	    : _ResetControlsRecursive,
 		ResetControls	                : _ResetControls,
 		ResetKeybdMouseDefaults	        : _ResetKeybdMouseDefaults,
+        ResetSteamInputDefaults	        : _ResetSteamInputDefaults,
 		ResetAudioSettings	            : _ResetAudioSettings,
 		ResetVideoSettings	            : _ResetVideoSettings,
 		ScrollToId                      : _ScrollToId,

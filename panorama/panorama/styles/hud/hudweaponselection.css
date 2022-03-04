@@ -796,35 +796,47 @@ CSGOWeaponSelectionView Label
 }
 
 
-
 CSGOHudWeaponSelection CCSGOSteamInputAction
 {
     vertical-align: bottom;
     horizontal-align: right;
     visibility: collapse;
 }
-CSGOHudWeaponSelection .weapon-selection-item-icon CCSGOSteamInputAction
-{
-    visibility: collapse;
-   
-}
-
-.SteamInputGlyphsActive CCSGOSteamInputAction.ControllerConnected 
-{
-    visibility: collapse;
-}
-
-.SteamInputGlyphsActive CCSGOSteamInputAction.ControllerConnected.NextWeaponSelection 
-{
-    visibility: visible;
-}
 
 CSGOHudWeaponSelection .steam-button-glyph
 {
     width: 24px;
     height: 24px;
-
 }
+
+.SteamInputGlyphsActive CSGOHudWeaponSelection CCSGOSteamInputAction.ControllerConnected 
+{
+     visibility: visible;
+     opacity: 0.5;
+     brightness:  0.5;
+
+     transition-property: opacity, brightness;
+     transition-duration: 0.25s;
+     transition-timing-function: ease-out;
+     
+}
+
+                              
+.SteamInputGlyphsActive CSGOHudWeaponSelection .weapon-selection-item--selected CCSGOSteamInputAction.ControllerConnected 
+{
+    opacity: 0.5;
+    brightness:  0.5;
+}
+
+
+                                               
+.SteamInputGlyphsActive CSGOHudWeaponSelection CCSGOSteamInputAction.ControllerConnected.NextWeaponSelection 
+{
+    opacity: 1.0;
+    brightness:  1.0;
+}
+
+
 
                                           
 CSGOHudWeaponSelection Label.steam-button-name
