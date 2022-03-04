@@ -719,9 +719,9 @@ var MainMenu = ( function() {
 		elStore.BLoadLayout( 'file://{resources}/layout/mainmenu_store.xml', false, false );
 
 		                             
-		                                                                                          
-		                                                                                                                             
-		                                                                                                                                     
+		                                                                                                            
+		var elOperationStoreBalanceReminder = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsOpBalance' );
+		elOperationStoreBalanceReminder.BLoadLayout( 'file://{resources}/layout/mainmenu_operation_balance_reminder.xml', false, false );
 		      
 		
 		$.FindChildInContext( '#JsNewsContainer' ).OnPropertyTransitionEndEvent = function ( panelName, propertyName )
@@ -742,7 +742,7 @@ var MainMenu = ( function() {
 		};
 
 		                            
-		var bFeaturedPanelIsActive = true;
+		var bFeaturedPanelIsActive = false;
 		
 		if ( bFeaturedPanelIsActive )
 		{
@@ -1649,7 +1649,7 @@ var MainMenu = ( function() {
 		if ( elCoverPlaque )
 			elCoverPlaque.visible = false;
 		
-		                                                                                                            
+		return;                                                                                                     
 
 		var setVersionTo = '2109';                                       
 		var currentVersion = GameInterfaceAPI.GetSettingString( 'ui_popup_weaponupdate_version' );
