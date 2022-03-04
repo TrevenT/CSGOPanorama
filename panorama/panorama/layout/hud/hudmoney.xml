@@ -3,6 +3,7 @@
 		<include src="file://{resources}/styles/base.css" />
     <include src="file://{resources}/styles/csgostyles.css" />
     <include src="file://{resources}/styles/hud/hudmoney.css" />
+    <include src="file://{resources}/styles/buymenu.css" />
 	</styles>
 
 	<CSGOMoneyPanel class="money" hittest="false" force-no-composition-layer="true">
@@ -17,9 +18,7 @@
 			<CSGOSurvivalZoneMoneyProgress id="SurvivalZoneMoneyProgress" class="hidden"/>
 			            
 			<Image class="money-text-buy-icon cl-hud-wash-color" src="file://{images}/icons/ui/buyzone.svg"/>
-			                                                                                                            
-	                                                                                                                
-	                                                                                                                             
+	        <CCSGOSteamInputAction class="money-text-buy-icon" actionset="BuyZoneLayer" action="buymenu" separatortext="/" controllernumber = "1"/> 
 	    </Panel>
 
 	    <CSGOMoneyAnimLabel id="Money-Add"      class="money-anim" text="#Hud_Money_Signed"/>

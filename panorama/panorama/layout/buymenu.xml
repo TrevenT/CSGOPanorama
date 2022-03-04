@@ -242,7 +242,7 @@
 			</Panel>
 			<Panel id="BuyMenuNavBar" class="buymenu-navbar">
 				<Panel class="vertical-center left-right-flow horizontal-align-right">
-					<Label id="BuyForTeammateLabel" class="buymenu__for-teammate" text="#BuyMenu_BuyForTeammate"/>
+					<Label id="BuyForTeammateLabel" class="buymenu__for-teammate" text="#BuyMenu_BuyForTeammate" html="true"/>
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'rebuy' )">
 						<Label text="#BuyMenu_Buyprev" />
 					</Button>
@@ -252,7 +252,7 @@
       				                  
 
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'autobuy' )">
-						<Label text="#BuyMenu_Autobuy"/>
+						<Label text="#BuyMenu_Autobuy" html="true"/>
 					</Button>
 				</Panel>
 				<Panel class="vertical-center left-right-flow horizontal-align-left">
