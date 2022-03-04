@@ -39,7 +39,7 @@
 				<CSGOEndOfMatchCharactersPanel	id="id-eom-characters-root" class="" />
 				<Panel id="id-eom-scoreboard-container" class="horizontal-center eom-scoreboard"/>	
 				<Panel id="id-eom-chat-container" />
-				<Label class="eom-scoreboard-toggle-instructions" text="#Scoreboard_Toggle_Instruction" />
+				<Label class="eom-scoreboard-toggle-instructions" html="true" text="#Scoreboard_Toggle_Instruction" />
 			</Panel>
 		</snippet>
 

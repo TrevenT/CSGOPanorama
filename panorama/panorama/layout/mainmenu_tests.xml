@@ -124,6 +124,10 @@
 						<CCSGOSteamInputAction id="ButtonTest13" actionset="MenuControls" action="menu_select" separatortext="/" controllernumber = "1"/> 
 						<CCSGOSteamInputActionLabel actionset="MenuControls" action="menu_select" controllernumber = "1" class ="steam-action-name"/>
 
+						<Label allowrawtext="true" text="Action Set: BuyZoneLayer. Action: quickbuyradial_smgs"/>
+						<CCSGOSteamInputAction id="ButtonTest14" actionset="BuyZoneLayer" action="quickbuyradial_smgs" separatortext="/" controllernumber = "1"/> 
+						<CCSGOSteamInputActionLabel actionset="BuyZoneLayer" action="quickbuyradial_smgs" controllernumber = "1" class ="steam-action-name"/>
+
 					</Panel>
 					<Panel class="flowdown">
 						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_Control_Bot"/>
