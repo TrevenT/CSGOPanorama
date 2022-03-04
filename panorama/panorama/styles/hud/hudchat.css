@@ -193,3 +193,8 @@ CSGOHudChat
 	height: 20px;
 	background-size: 100% 100%;
 }
+
+.SteamInputChat
+{
+	transform: translateX(20px) translateY(-475px);
+}

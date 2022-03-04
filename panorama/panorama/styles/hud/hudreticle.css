@@ -18,6 +18,12 @@ CSGOHudReticle Label
 	font-family: ForceStratum2, 'Arial Unicode MS';
 }
 
+CSGOHudReticle Label .InlineGlyph
+{
+	transform: translateY(-25px);	                                                            
+	-s2-mix-blend-mode: normal;
+}
+
                                                                                
                                                                                
                                                                                
@@ -461,3 +467,5 @@ CSGOHudReticle Label
         transform: scale3d( 1, 1, 1 ); 
 	}
 }
+
+

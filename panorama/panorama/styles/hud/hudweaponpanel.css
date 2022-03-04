@@ -530,8 +530,8 @@ CSGOHudWeaponPanel Label
 
 
 
-
-CSGOHudWeaponPanel CCSGOSteamInputAction.ControllerConnected
+.SteamInputGlyphsActive CSGOHudWeaponPanel CCSGOSteamInputAction.ControllerConnected,
+CSGOHudWeaponPanel CCSGOSteamInputAction
 {
     visibility: collapse;
 }

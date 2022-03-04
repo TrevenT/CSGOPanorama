@@ -19,16 +19,12 @@
 					<Label text="#settings_steam_input_button_bindings"/>
 				</RadioButton>
 				
-				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-MovementStick')" group="SettingsSteamInput" selectionpos="auto">
-					<Label text="#settings_steam_input_move_stick"/>
-				</RadioButton>
-			
-				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-FlickStick')" group="SettingsSteamInput" selectionpos="auto">
-					<Label text="#settings_steam_input_flick_stick"/>
-				</RadioButton>
-
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-AimStick')" group="SettingsSteamInput" selectionpos="auto">
 					<Label text="#settings_steam_input_aim_stick"/>
+				</RadioButton>
+
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-FlickStick')" group="SettingsSteamInput" selectionpos="auto">
+					<Label text="#settings_steam_input_flick_stick"/>
 				</RadioButton>
 
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-GyroAim')" group="SettingsSteamInput" selectionpos="auto">
@@ -38,6 +34,15 @@
 				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-TouchPadAim')" group="SettingsSteamInput" selectionpos="auto">
 					<Label text="#settings_steam_input_touch_pad_aim"/>
 				</RadioButton>
+
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-MovementStick')" group="SettingsSteamInput" selectionpos="auto">
+					<Label text="#settings_steam_input_move_stick"/>
+				</RadioButton>
+
+				<RadioButton onactivate="SettingsMenuShared.ScrollToId('SettingsController-MovementTouchPad')" group="SettingsSteamInput" selectionpos="auto">
+					<Label text="#settings_steam_input_move_touch_pad"/>
+				</RadioButton>
+
 
 			</Panel>
 		</Panel>
@@ -63,57 +68,8 @@
 
 
 			                                       
-			<Panel id="SettingsController-MovementStick" class="SettingsBackground">
+			<Panel id="SettingsController-FlickStick-Enabling" class="SettingsBackground">
 
-				                       
-				<Panel class="SettingsSectionTitleContianer">
-					<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_move_stick" />
-				</Panel>
-
-				<Panel class ="top-bottom-flow full-width ">
-					    	                                                                                                                                                                                                      
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Joystick_DeadzoneMin_Info">
-						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="move_stick_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-	 
-					    	                                                                                                                                                                                                     
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Joystick_DeadzoneMax_Info">
-						<CSGOSettingsSlider text="#SFUI_DeadzoneMax" percentage="true" max="1.0" min="0.0"  convar="move_stick_circular_deadzone_max"  showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-					    	                                                                                                                                                                                                                                      
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneForward_Info">
-						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneForward" percentage="true" max="1.0" min="0.0"  convar="move_stick_square_deadzone_forward"  showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-					    	                                                                                                                                                                                                                                         
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneStrafe_Info">
-						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneStrafe" percentage="true" max="1.0" min="0.0" convar="move_stick_square_deadzone_strafe" showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-					    	                                                                                                                                                                                                        
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_ResponseCurve_Info">
-						<CSGOSettingsSlider text="#SFUI_ResponseCurve" max="4.0" min="0.01" displayprecision="2" convar="move_stick_response_curve" showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-				</Panel>
-
-			</Panel>
-			
-			
-			<Panel id="SettingsController-FlickStick" class="SettingsBackground">
-				                                                                                                                                                                    
-				<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickActive_Info">
-					<Panel class="SettingsSectionTitleContianer">
-						<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_flick_stick"/>
-					</Panel>
-				</TooltipPanel>
-				
 				<Panel class ="top-bottom-flow full-width ">
 					                             
 					
@@ -127,52 +83,8 @@
 						</Panel>
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
-					
-					                                                                                                                                                                     
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStick_DeadzoneMin_Info">
-						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="aim_flickstick_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>				
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-					                                                                                                                                                                     
-					                                                                                                    
-						                                                                                                                                                                              				
-					               
-					                                        
-
-					                               
-					                                                                                                                                                      
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSnapAngle_Info">
-						<Panel class="SettingsMenuDropdownContainer">
-							<Label text="#SFUI_FlickStickSnapAngle" class="half-width"/>
-							<CSGOSettingsEnumDropDown class="PopupButton White" convar="aim_flickstick_flick_snap_mode">
-								<Label text="#SFUI_FlickStickSnapAngle_None" id="Ctrlflicksticksnapangle0" value="0" html="true"/>
-								<Label text="#SFUI_FlickStickSnapAngle_One" id="Ctrlflicksticksnapangle1" value="1" html="true"/>
-								<Label text="#SFUI_FlickStickSnapAngle_Two" id="Ctrlflicksticksnapangle2" value="2" html="true"/>
-								<Label text="#SFUI_FlickStickSnapAngle_Three" id="Ctrlflicksticksnapangle3" value="3" html="true"/>
-								<Label text="#SFUI_FlickStickSnapAngle_Four" id="Ctrlflicksticksnapangle4" value="4" html="true"/>
-							</CSGOSettingsEnumDropDown>
-						</Panel>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-
-					                                
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSnapDuration_Info">
-						<CSGOSettingsSlider text="#SFUI_FlickStickSnapDuration" percentage="true" min="0.0" max="1.0" displayprecision="2" convar="aim_flickstick_flick_tightness" showdefaultvalue="true" selectionpos="auto"/>
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-					
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickTightness_Info">
-						<CSGOSettingsSlider text="#SFUI_FlickStickTightness" percentage="true" min="0.0" max="1.0" convar="aim_flickstick_crank_tightness" showdefaultvalue="true" selectionpos="auto"/>				
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
-					
-					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSensitivity_Info">
-						<CSGOSettingsSlider text="#SFUI_FlickStickSensitivity" min="0.0" max="4.0"  displayprecision="2" convar="aim_flickstick_crank_sensitivity" showdefaultvalue="true" selectionpos="auto"/>				
-					</TooltipPanel>
-					<Panel class="horizontal-separator"/>
 				</Panel>
-
+				
 			</Panel>
 
 			<Panel id="SettingsController-AimStick" class="SettingsBackground">
@@ -266,6 +178,7 @@
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickAimTurningExtraRampUpDelay_Info">
 						<CSGOSettingsSlider text="#SFUI_JoystickAimTurningExtraRampUpDelay" max="1.0" min="0.0" displayprecision="2" convar="aim_stick_extra_turning_delay" showdefaultvalue="true" selectionpos="auto"/>				
 					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
 
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Zoom_Dampening">
 						<CSGOSettingsSlider text="#SFUI_ControllerZoomSensitivity" max="1.5" min="0.1" displayprecision="2" convar="aim_stick_zoom_dampening" showdefaultvalue="true" selectionpos="auto"/>				
@@ -274,6 +187,65 @@
 				</Panel>
 
 			</Panel>
+
+			<Panel id="SettingsController-FlickStick" class="SettingsBackground">
+
+				<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickActive_Info">
+					<Panel class="SettingsSectionTitleContianer">
+						<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_flick_stick"/>
+					</Panel>
+				</TooltipPanel>
+				
+				<Panel class ="top-bottom-flow full-width ">
+					
+					
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStick_DeadzoneMin_Info">
+						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="aim_flickstick_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>				
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                                                                                                                                                     
+					                                                                                                    
+						                                                                                                                                                                              				
+					               
+					                                        
+
+					                               
+					                                                                                                                                                      
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSnapAngle_Info">
+						<Panel class="SettingsMenuDropdownContainer">
+							<Label text="#SFUI_FlickStickSnapAngle" class="half-width"/>
+							<CSGOSettingsEnumDropDown class="PopupButton White" convar="aim_flickstick_flick_snap_mode">
+								<Label text="#SFUI_FlickStickSnapAngle_None" id="Ctrlflicksticksnapangle0" value="0" html="true"/>
+								<Label text="#SFUI_FlickStickSnapAngle_One" id="Ctrlflicksticksnapangle1" value="1" html="true"/>
+								<Label text="#SFUI_FlickStickSnapAngle_Two" id="Ctrlflicksticksnapangle2" value="2" html="true"/>
+								<Label text="#SFUI_FlickStickSnapAngle_Three" id="Ctrlflicksticksnapangle3" value="3" html="true"/>
+								<Label text="#SFUI_FlickStickSnapAngle_Four" id="Ctrlflicksticksnapangle4" value="4" html="true"/>
+							</CSGOSettingsEnumDropDown>
+						</Panel>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					                                
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSnapDuration_Info">
+						<CSGOSettingsSlider text="#SFUI_FlickStickSnapDuration" percentage="true" min="0.0" max="1.0" displayprecision="2" convar="aim_flickstick_flick_tightness" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickTightness_Info">
+						<CSGOSettingsSlider text="#SFUI_FlickStickTightness" percentage="true" min="0.0" max="1.0" convar="aim_flickstick_crank_tightness" showdefaultvalue="true" selectionpos="auto"/>				
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStickSensitivity_Info">
+						<CSGOSettingsSlider text="#SFUI_FlickStickSensitivity" min="0.0" max="4.0"  displayprecision="2" convar="aim_flickstick_crank_sensitivity" showdefaultvalue="true" selectionpos="auto"/>				
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+				</Panel>
+
+			</Panel>
+
+			
 
 			<Panel id="SettingsController-GyroAim" class="SettingsBackground">
 				                 
@@ -334,6 +306,7 @@
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Gyro_PitchDeadzone_Info">
 						<CSGOSettingsSlider text="#SFUI_PitchDeadzone" max="15.0" min="0.0" displayprecision="2" convar="aim_gyro_square_deadzone_pitch" showdefaultvalue="true"/>	
 					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
 
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Zoom_Dampening">
 						<CSGOSettingsSlider text="#SFUI_ControllerZoomSensitivity" max="1.5" min="0.1" displayprecision="2" convar="aim_gyro_zoom_dampening" showdefaultvalue="true" selectionpos="auto"/>				
@@ -374,23 +347,6 @@
 					</Panel>
 					<Panel class="horizontal-separator"/>
 	
-					
-					                                                                                         
-						                                                                                                                                                             				
-					               
-					                                     
-						
-					                                                                                     
-						                                                                                                                                                           				
-					               
-					                                     
-							
-					                                                                                       
-						                                                                                                                                                               				
-					               
-					                                        
-
-					                                                                                                                                                                
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_PitchSensitivity_Info">
 						<CSGOSettingsSlider text="#SFUI_PitchSensitivity" max="8" min="0.05" displayprecision="2" convar="aim_touchpad_sensitivity_pitch" showdefaultvalue="true"/>	
 					</TooltipPanel>
@@ -400,6 +356,7 @@
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_YawSensitivity_Info">
 						<CSGOSettingsSlider text="#SFUI_YawSensitivity" max="8" min="0.05" displayprecision="2" convar="aim_touchpad_sensitivity_yaw" showdefaultvalue="true"/>			
 					</TooltipPanel>		
+					<Panel class="horizontal-separator"/>
 
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Zoom_Dampening">
 						<CSGOSettingsSlider text="#SFUI_ControllerZoomSensitivity" max="1.5" min="0.1" displayprecision="2" convar="aim_touchpad_zoom_dampening" showdefaultvalue="true" selectionpos="auto"/>				
@@ -409,6 +366,87 @@
 				</Panel>
  
 			</Panel>
+			<Panel id="SettingsController-MovementStick" class="SettingsBackground">
+
+				                       
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_move_stick" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width ">
+					    	                                                                                                                                                                                                      
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Joystick_DeadzoneMin_Info">
+						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="move_stick_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+	 
+					    	                                                                                                                                                                                                     
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Joystick_DeadzoneMax_Info">
+						<CSGOSettingsSlider text="#SFUI_DeadzoneMax" percentage="true" max="1.0" min="0.0"  convar="move_stick_circular_deadzone_max"  showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					    	                                                                                                                                                                                                                                      
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneForward_Info">
+						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneForward" percentage="true" max="1.0" min="0.0"  convar="move_stick_square_deadzone_forward"  showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					    	                                                                                                                                                                                                                                         
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneStrafe_Info">
+						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneStrafe" percentage="true" max="1.0" min="0.0" convar="move_stick_square_deadzone_strafe" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					    	                                                                                                                                                                                                        
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_ResponseCurve_Info">
+						<CSGOSettingsSlider text="#SFUI_ResponseCurve" max="4.0" min="0.01" displayprecision="2" convar="move_stick_response_curve" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+				</Panel>
+
+			</Panel>
+			
+			<Panel id="SettingsController-MovementTouchPad" class="SettingsBackground">
+
+				                       
+				<Panel class="SettingsSectionTitleContianer">
+					<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_move_touch_pad" />
+				</Panel>
+
+				<Panel class ="top-bottom-flow full-width ">
+					
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_Joystick_DeadzoneMin_Info">
+						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="move_touchpad_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneForward_Info">
+						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneForward" percentage="true" max="1.0" min="0.0"  convar="move_touchpad_square_deadzone_forward"  showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_JoystickMoveSquareDeadzoneStrafe_Info">
+						<CSGOSettingsSlider text="#SFUI_JoystickMoveSquareDeadzoneStrafe" percentage="true" max="1.0" min="0.0" convar="move_touchpad_square_deadzone_strafe" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_ForwardSensitivity_Info">
+						<CSGOSettingsSlider text="#SFUI_TouchPadMoveSensitivityForward" max="2.0" min="0.0" displayprecision="2" convar="move_touchpad_sensitivity_forward" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_StrafeSensitivity_Info">
+						<CSGOSettingsSlider text="#SFUI_TouchPadMoveSensitivityStrafe" max="2.0" min="0.0" displayprecision="2" convar="move_touchpad_sensitivity_strafe" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+
+				</Panel>
+
+			</Panel>
+
+			
 
 		
 

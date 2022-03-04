@@ -129,6 +129,8 @@ CSGORadialRadio .RadialSegment
 	y:62px;
 }
 
+CCSGOQuickUtilityItemRadial .RadialSegment-text,
+CCSGOQuickGrenadesRadial .RadialSegment-text,
 CSGOQuickInventory .RadialSegment-text
 {
 	visibility: collapse;
