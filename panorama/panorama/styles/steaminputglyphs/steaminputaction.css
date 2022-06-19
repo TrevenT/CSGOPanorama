@@ -13,6 +13,10 @@ CCSGOSteamInputAction,
     transition-duration: 0.125s;
     transition-timing-function: ease-out;
     visibility: collapse;
+    
+                                                                    
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
 .SteamInputGlyphsActive CCSGOSteamInputAction.ControllerConnected
@@ -27,14 +31,14 @@ CCSGOSteamInputAction.AnalogDeadZoned,
 CCSGOSteamInputAction.DigitalReleased
 {
 	brightness: 1;
-	transform: translateY(0px);
+	transform: translateY(-1px);
 }
 
-CCSGOSteamInputAction.AnalogThrown ,
-CCSGOSteamInputAction.DigitalPressed 
+CCSGOSteamInputAction.AnalogThrown,
+CCSGOSteamInputAction.DigitalPressed
 {
 	brightness: 0.5;
-	transform: translateY(2px);
+	transform: translateY(1px);
 }
 
 

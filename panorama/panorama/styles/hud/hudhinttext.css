@@ -128,8 +128,16 @@
 	font-size: 20px;
 	font-weight: bold;
 	text-shadow-fast: 1px 1px #00000088;
-	                          
+	text-overflow: shrink;
 }
+
+
+.InlineGlyph.LineNumber1,
+.InlineGlyph.LineNumber2
+{
+		transform: translateY(-25px);	                                                            
+}
+
 
                                                                                                                                   
                                                                                                

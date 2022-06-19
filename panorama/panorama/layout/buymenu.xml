@@ -240,27 +240,38 @@
 
 				</Panel>
 			</Panel>
-			<Panel id="BuyMenuNavBar" class="buymenu-navbar">
+			<Panel id="BuyMenuNavBar" class="buymenu-navbar pccontrols">
 				<Panel class="vertical-center left-right-flow horizontal-align-right">
 					<Label id="BuyForTeammateLabel" class="buymenu__for-teammate" text="#BuyMenu_BuyForTeammate" html="true"/>
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'rebuy' )">
-						<Label text="#BuyMenu_Buyprev" />
+						<Label text="#BuyMenu_Buyprev" html="true" />
 					</Button>
-
-				  	                  
-     				                                                                                                                                                      
-      				                  
-
 					<Button class="PopupButton" onactivate="GameInterfaceAPI.ConsoleCommand( 'autobuy' )">
 						<Label text="#BuyMenu_Autobuy" html="true"/>
 					</Button>
 				</Panel>
 				<Panel class="vertical-center left-right-flow horizontal-align-left">
 					<Button class="PopupButton" onactivate="$.DispatchEvent( 'BuyMenu_Back' );">
-						<Label text="#BuyMenu_Back" />
+						<Label text="#BuyMenu_Back" html="true"/>
 					</Button>
 				</Panel>
 			</Panel>
+
+			<Panel id="BuyMenuNavBarConsole" class="buymenu-navbar consolecontrols">
+				<Panel class="vertical-center left-right-flow horizontal-align-right">
+     				<CCSGOSteamInputAction actionset="BuyMenuLayer" action="rebuy" separatortext="/" controllernumber = "1"/>
+     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="rebuy" separatortext="/" controllernumber = "1"/>
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="buy" separatortext="/" controllernumber = "1"/>
+					<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="buy" separatortext="/" controllernumber = "1"/>
+				</Panel>
+				<Panel class="vertical-center left-right-flow horizontal-align-left">
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="donate" separatortext="/" controllernumber = "1"/>
+					<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="donate" controllernumber = "1"/>
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="autobuy" separatortext="/" controllernumber = "1"/>
+     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="autobuy" separatortext="/" controllernumber = "1"/>
+				</Panel>
+			</Panel>
+
 			<Panel class="buymenu-money">
 				<CSGOMoneyPanel id="BuyMenuMoney" class="money__buymenu"/>
 			</Panel>

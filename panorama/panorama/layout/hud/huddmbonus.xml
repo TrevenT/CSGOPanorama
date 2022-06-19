@@ -40,6 +40,7 @@
 
       <Panel class="bonuspanel-info">                    
         <Panel class="bonuspanel-title">                                
+		  <CCSGOSteamInputAction actionset="GameControls" action="drop" separatortext="/" controllernumber = "1"/>
           <Label class="bonuspanel-title-text" text="#Panorama_DMBonusPanel_Title" />
           <Label class="bonuspanel-title-weapon" text="#Panorama_DMBonusPanel_Weapon" /> 
         </Panel>

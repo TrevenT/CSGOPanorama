@@ -52,7 +52,7 @@
 			</Panel>
 			<Panel class="left-right-flow">
 				<Label id="NavigationCancel" class="FreezePanel__Navigation" text="#Panorama_Freeze_Cancel_Replay" />
-				<Label id="NavigationSnapshot" class="FreezePanel__Navigation" text="#Panorama_Freeze_Snapshot" />
+				<Label id="NavigationSnapshot" class="FreezePanel__Navigation" text="#Panorama_Freeze_Snapshot" html="true" />
 				<Label id="NavigationReplay" class="FreezePanel__Navigation" html="true" text="#Panorama_HUD_Spectate_Navigation_Replay_Death" />
 				<Label id="SurvivalEndOfMatch" class="FreezePanel__SurvivalEndOfMatch" text="#Panorama_SurvivalEndOfMatch_ShowStats" />
 			</Panel>

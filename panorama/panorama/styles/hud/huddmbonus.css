@@ -67,6 +67,11 @@
     padding-top: -2px;
 }
 
+.bonuspanel-title CCSGOSteamInputAction 
+{
+    margin-right: 4px;
+}
+
 .bonuspanel-title-text {
     font-family: Stratum2;
                           
@@ -101,6 +106,7 @@
     horizontal-align: left;
     vertical-align: center;
 }
+
 
 .bonuspanel-icon {
                    

@@ -18,7 +18,7 @@ CSGOHudReticle Label
 	font-family: ForceStratum2, 'Arial Unicode MS';
 }
 
-CSGOHudReticle Label .InlineGlyph
+CSGOHudReticle Label .InlineGlyph.LineNumber1
 {
 	transform: translateY(-25px);	                                                            
 	-s2-mix-blend-mode: normal;

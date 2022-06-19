@@ -31,8 +31,6 @@
       </Panel>
                          
       <CCSGOSteamInputAction actionset="GameControls" action="use" separatortext="/" controllernumber = "1"/> 
-      <CCSGOSteamInputAction actionset="GameControls" action="use_or_reload" separatortext="/" controllernumber = "1"/>
-      <CCSGOSteamInputAction actionset="GameControls" action="quickgearradial" separatortext="/" controllernumber = "1"/>
                         
       <Panel class ="hud-game-icons-defuse-icon-arrow vertical-center">
         <Image class="horizontal-align-left" src="file://{images}/icons/ui/bomb_arrow_segment.svg" orientation="90" />

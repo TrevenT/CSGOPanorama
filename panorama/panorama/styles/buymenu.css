@@ -113,6 +113,38 @@
 	vertical-align: bottom;
 	border-top: 1px solid rgba(255, 255, 255, 0.05);
 	background-color: #00000088;
+	visibility:visible;
+	
+
+}
+
+.SteamInputGlyphsActive .buymenu-navbar.pccontrols
+{
+	visibility:collapse;
+}
+
+.buymenu-navbar.consolecontrols
+{
+	visibility: collapse;	
+}
+
+.SteamInputGlyphsActive .buymenu-navbar.consolecontrols
+{
+	visibility: visible;
+}
+
+CCSGOSteamInputActionLabel
+{
+	vertical-align: middle;
+	margin-left: 4px;
+	margin-right: 8px;
+}
+
+CCSGOSteamInputAction
+{
+	vertical-align: middle;
+	margin-left: 8px;
+	margin-right: 4px;
 }
 
 .buymenu-topbar-btn 

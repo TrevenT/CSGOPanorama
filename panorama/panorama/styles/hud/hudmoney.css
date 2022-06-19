@@ -90,9 +90,10 @@ CSGOHudMoney CCSGOSteamInputAction
     wash-color-fast: lightgreen;
 }
 
-.money-text-buy-icon CCSGOSteamInputAction
+CCSGOSteamInputAction.money-text-buy-icon 
 {
     wash-color-fast: white;
+    margin-left: 0px;
 }
 
 
