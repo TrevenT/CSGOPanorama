@@ -720,8 +720,9 @@ var MainMenu = ( function() {
 
 		                             
 		                                                                                                            
-		var elOperationStoreBalanceReminder = $.CreatePanel( 'Panel', $.FindChildInContext( '#JsNewsContainer' ), 'JsOpBalance' );
-		elOperationStoreBalanceReminder.BLoadLayout( 'file://{resources}/layout/mainmenu_operation_balance_reminder.xml', false, false );
+	                                                  
+	  	                                                                                                                          
+	  	                                                                                                                                 
 		      
 		
 		$.FindChildInContext( '#JsNewsContainer' ).OnPropertyTransitionEndEvent = function ( panelName, propertyName )
@@ -928,6 +929,9 @@ var MainMenu = ( function() {
 		oSettings.activity = 'ACT_CSGO_UIPLAYER_WALKUP';
 		oSettings.arrModifiers.push( 'vanity' );
 
+		                                                                 
+		_ApplyVanitySettingsToLobbyMetadata( oSettings );
+
 		var vanityPanel = $( '#JsMainmenu_Vanity' );
 		if ( !vanityPanel )
 		{
@@ -941,6 +945,30 @@ var MainMenu = ( function() {
 		
 		                                                                          
 		vanityPanel.hittest = false; 
+
+		  
+		                                                                                        
+		                            
+			                                                                                        
+			 
+		 
+			                                                              
+			           
+			 
+				                                                           
+				                 
+				 
+					                                            
+					                                  
+					                                        
+					                                          
+					                                         
+					                                          
+					                                                                                
+				 
+			 
+		 
+		  
 
 		  
 		                               
@@ -961,9 +989,32 @@ var MainMenu = ( function() {
 
 		                                                                       
 		$.Schedule( 3.0, function() {if (vanityPanel && vanityPanel.IsValid() ) vanityPanel.hittest = true;} );
-
 	};
 
+	var _ApplyVanitySettingsToLobbyMetadata = function( oSettings )
+	{
+		                                               
+		PartyListAPI.SetLocalPlayerVanityPresence( oSettings.team,
+			oSettings.charItemId, oSettings.glovesItemId,
+			oSettings.loadoutSlot, oSettings.weaponItemId );
+	};
+
+	var _LobbyPlayerUpdated = function()
+	{
+		  
+		                                                
+		                                                        
+		                                    
+		 
+			                                               
+		 
+		                                            
+		 
+			                                     
+			                      
+		 
+		  
+	};
 
 	var _SetVanityLightingBasedOnBackgroundMovie = function( vanityPanel )
 	{
@@ -1889,6 +1940,7 @@ var MainMenu = ( function() {
 		GameMustExitNowForAntiAddiction		: _GameMustExitNowForAntiAddiction,
 		GcLogonNotificationReceived			: _GcLogonNotificationReceived,
 		InventoryUpdated					: _InventoryUpdated,
+		LobbyPlayerUpdated					: _LobbyPlayerUpdated,
 		OnInventoryInspect					: _OnInventoryInspect,
 		OnShowXrayCasePopup					: _OnShowXrayCasePopup,
 		WeaponPreviewRequest				: _WeaponPreviewRequest,
@@ -1943,6 +1995,8 @@ var MainMenu = ( function() {
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_GcLogonNotificationReceived', MainMenu.GcLogonNotificationReceived );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_GC_Hello', MainMenu.UpdateUnlockCompAlert );
 	$.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', MainMenu.InventoryUpdated );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_MatchmakingSessionUpdate", MainMenu.LobbyPlayerUpdated );
+	$.RegisterForUnhandledEvent( "PanoramaComponent_Lobby_PlayerUpdated", MainMenu.LobbyPlayerUpdated );
 	$.RegisterForUnhandledEvent( 'InventoryItemPreview', MainMenu.OnInventoryInspect );
 	$.RegisterForUnhandledEvent( 'LootlistItemPreview', MainMenu.OnLootlistItemPreview );
 	$.RegisterForUnhandledEvent( 'ShowXrayCasePopup', MainMenu.OnShowXrayCasePopup );
