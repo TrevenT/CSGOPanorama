@@ -331,3 +331,18 @@ CSGOSettingsEnumDropDown:hover
 	margin: 16px 32px;
 	border-radius: 3px;
 }
+
+.UseGyroAcceleration,
+.UseStickAim,
+.UseFlickStickAim,
+.UseFlickStickAimForwardDeadzone,
+{
+	visibility: collapse;
+}
+
+.GyroAccelerationEnabled .UseGyroAcceleration,
+.FlickStickEnabled .UseFlickStickAim,
+.StickAimEnabled .UseStickAim,
+.FlickStickForwardDeadzoneEnabled .UseFlickStickAimForwardDeadzone {
+	visibility: visible;
+}

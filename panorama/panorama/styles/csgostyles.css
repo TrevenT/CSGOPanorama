@@ -3438,3 +3438,20 @@ Label .FlickStickInfoIcon
 	vertical-align: center;
 	margin-right: 2px;
 }
+
+
+                                                                                                        
+Label.NumberOfLines1 .InlineGlyph
+{
+    transform: translateY(0px);	
+}
+
+Label.NumberOfLines2 .InlineGlyph
+{
+    transform: translateY(-11px);	
+}
+
+Label.NumberOfLines3 .InlineGlyph
+{
+    transform: translateY(-22px);	
+}

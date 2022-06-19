@@ -49,28 +49,29 @@
    
                                                                                
 
-.money
+.money 
 {
-    width: fit-children;         
+    width: fit-children;
+            
     height: 140px;
-
     opacity: 1.0;
-
-    margin-top:-52px;
+    margin-top: -52px;
     margin-bottom: -12px;
     z-index: 1;
-
-	transition-property: opacity;
-	transition-timing-function: linear;
-    transition-duration: 0.1s;
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: 0.05s;
 }
 
-.buymenu CSGOHudMoney.money__in-buy-zone CCSGOSteamInputAction,
-CSGOHudMoney CCSGOSteamInputAction
+.buymenu CSGOHudMoney.money__in-buy-zone.money__in-buy-time CCSGOSteamInputAction,
+CSGOHudMoney CCSGOSteamInputAction 
 {
     width: 24px;
     height: 24px;
-    opacity:  0;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: 0.05s;
 }
 
 .money-text-buy-icon
@@ -85,6 +86,9 @@ CSGOHudMoney CCSGOSteamInputAction
     -s2-mix-blend-mode: additive;
 
     opacity: 0;
+    transition-property: opacity;
+	transition-timing-function: linear;
+    transition-duration: 0.05s;
     img-shadow: 1px 1px 2px 1.0 #00000033;
 
     wash-color-fast: lightgreen;
@@ -97,15 +101,15 @@ CCSGOSteamInputAction.money-text-buy-icon
 }
 
 
-.money__in-buy-zone .money-text-buy-icon
+.money__in-buy-zone.money__in-buy-time .money-text-buy-icon 
 {
-    opacity:1;
+    opacity: 1;
 }
 
 
-.buymenu .buymenu-money .money__in-buy-zone .money-text-buy-icon
+.buymenu .buymenu-money .money__in-buy-zone.money__in-buy-time .money-text-buy-icon 
 {
-    opacity:0;
+    opacity: 0;
 }
 
 .money-text-explorebonus-icon
@@ -399,8 +403,7 @@ CSGOHudMoney CCSGOSteamInputAction
     visibility: collapse;
 }
 
-.SteamInputGlyphsActive CSGOHudMoney.money__in-buy-zone CCSGOSteamInputAction.ControllerConnected 
-{
+.SteamInputGlyphsActive CSGOHudMoney.money__in-buy-zone.money__in-buy-time CCSGOSteamInputAction.ControllerConnected {
     visibility: visible;
 }
 

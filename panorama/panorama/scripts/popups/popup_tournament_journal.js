@@ -20,7 +20,7 @@ var TournamentJournal = ( function()
     {
         var journalId = $.GetContextPanel().GetAttributeString( "journalid", '' );
         var tournamentId = InventoryAPI.GetItemAttributeValue( journalId, "tournament event id" );
-        var bNoItemsOnSale = !g_ActiveTournamentInfo.active;
+        var bNoItemsOnSale = !ItemsOnSale();
         $.GetContextPanel().SetHasClass( 'no_items', bNoItemsOnSale );
 
                            
@@ -86,6 +86,16 @@ var TournamentJournal = ( function()
         _SetWinners( oWinningTeam, tournamentId, journalId );
         _SetUpSpray( journalId );
         _WatchStream( journalId );
+    };
+
+    var ItemsOnSale = function()
+    {
+        var tournamentId = NewsAPI.GetActiveTournamentEventID();
+
+        return ( ( tournamentId !== 0 ) &&
+            ( '' !== StoreAPI.GetStoreItemSalePrice(
+                InventoryAPI.GetFauxItemIDFromDefAndPaintIndex(
+                    g_ActiveTournamentStoreLayout[ 0 ][ 0 ], 0 ), 1, '' ) ) );
     };
 
     var GetPassToActivate = function()

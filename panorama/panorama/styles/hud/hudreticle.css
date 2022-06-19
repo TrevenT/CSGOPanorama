@@ -18,18 +18,17 @@ CSGOHudReticle Label
 	font-family: ForceStratum2, 'Arial Unicode MS';
 }
 
-CSGOHudReticle Label .InlineGlyph.LineNumber1
+CSGOHudReticle Label .InlineGlyph 
 {
-	transform: translateY(-25px);	                                                            
-	-s2-mix-blend-mode: normal;
+    -s2-mix-blend-mode: normal;
 }
 
-                                                                               
-                                                                               
-                                                                               
 
-.reticle
-{}
+                                                                               
+                                                                               
+                                                                               
+.reticle {
+}
 
 
 .reticle--hidden
@@ -109,6 +108,12 @@ CSGOHudReticle Label .InlineGlyph.LineNumber1
 	transform: translateY( 7px );
 }
 
+      
+.targetid.NumberOfLines1 .InlineGlyph
+{
+	vertical-align: top;
+	transform: translateY( 4px );
+}
 
                                                                                
                                                                                

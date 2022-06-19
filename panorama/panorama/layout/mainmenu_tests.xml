@@ -124,15 +124,27 @@
 						<CCSGOSteamInputAction id="ButtonTest13" actionset="MenuControls" action="menu_select" separatortext="/" controllernumber = "1"/> 
 						<CCSGOSteamInputActionLabel actionset="MenuControls" action="menu_select" controllernumber = "1" class ="steam-action-name"/>
 
-						<Label allowrawtext="true" text="Action Set: BuyZoneLayer. Action: quickbuyradial_smgs"/>
-						<CCSGOSteamInputAction id="ButtonTest14" actionset="BuyZoneLayer" action="quickbuyradial_smgs" separatortext="/" controllernumber = "1"/> 
-						<CCSGOSteamInputActionLabel actionset="BuyZoneLayer" action="quickbuyradial_smgs" controllernumber = "1" class ="steam-action-name"/>
+						<Label allowrawtext="true" text="Action Set: BuyZoneLayer. Action: buymenu"/>
+						<CCSGOSteamInputAction id="ButtonTest14" actionset="BuyZoneLayer" action="buymenu" separatortext="/" controllernumber = "1"/> 
+						<CCSGOSteamInputActionLabel actionset="BuyZoneLayer" action="buymenu" controllernumber = "1" class ="steam-action-name"/>
 
 					</Panel>
 					<Panel class="flowdown">
 						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_Control_Bot"/>
 						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_Arrows"/>
 						<Label class="left-right-flow" html="true" text="#TabletNotification_UpgradeDronePilotNone"/>
+						<Label class="left-right-flow" html="true" text="#ControlsLib_Virtual_Test1"/>
+						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_ToggleOverview"/>-->	
+						<Label class="left-right-flow" html="true" text="#SFUI_Notice_DM_BuyMenu_RandomON"/>				
+						<Label class="left-right-flow" html="true" text="#Panorama_HUD_weaponid_swap"/>
+						<Label class="left-right-flow" html="true" text="#Panorama_Notice_DM_BonusSwitchTo"/>
+						<Label class="left-right-flow" html="true" text="#SFUI_Hint_TossGrenade"/>
+						<Label class="left-right-flow" html="true" text="#SFUI_Hint_ScoreboardRadar"/>
+						<Label allowrawtext="true" class="left-right-flow" html="true" text="---"/>
+						<Label allowrawtext="true" class="left-right-flow" html="true" text="Below are action conversion strings. Should work with respect to steam input glyphs"/>
+						<Label allowrawtext="true" class="left-right-flow" html="true" text="---"/>
+						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_Control_Bot"/>
+						<Label class="left-right-flow" html="true" text="#PANOHUD_Spectate_Navigation_Arrows_Prev"/>
 						
 					</Panel>
 				

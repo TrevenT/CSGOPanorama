@@ -23,7 +23,7 @@ var g_ActiveTournamentInfo =
 	],
 	itemid_pack: 4830,
 	itemid_charge: 4831,
-	active: true,
+	active: false,
 };
 
 

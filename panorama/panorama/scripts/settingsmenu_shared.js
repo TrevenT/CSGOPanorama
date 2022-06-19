@@ -193,7 +193,7 @@ var SettingsMenuShared = ( function () {
 		                                            
 		
 		var videoSettingsStr = 'VideoSettings';
-
+        
 		if ( newTab == videoSettingsStr )
 		{
 			var videoSettingsPanel = $.GetContextPanel().FindChildInLayoutFile( videoSettingsStr );
@@ -208,8 +208,8 @@ var SettingsMenuShared = ( function () {
 
 			                                         
 			$.DispatchEvent( "CSGOVideoSettingsInit" );
-		}
-
+		} 
+		
 		var newTabPanel = $.GetContextPanel().FindChildInLayoutFile( newTab );
 		_RefreshControlsRecursive( newTabPanel );
 

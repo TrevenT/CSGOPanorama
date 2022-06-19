@@ -23,23 +23,26 @@
 	                                        
 }
 
+
+.IsFading .RadialFadeIn,
+.RadialFadeIn.IsFading
+{
+	transition-duration: 0.125s;
+	transition-delay: 0.08s;                                                                   
+	opacity: 0;
+	transform: scale3d( 1.05,  1.05, 1 );
+}
+
 .RadialFadeIn
 {
 	transform: scale3d( 1, 1, 1 );
 	opacity: 1;
 	transition-property: opacity, transform;
-	transition-duration: 0.03s;
-	                                                     
+	transition-duration: 0.1s;
+	transition-delay: 0.0s;
 	transition-timing-function: ease-out;
 }
 
-.IsFading .RadialFadeIn,
-.RadialFadeIn.IsFading
-{
-	                                                   
-	opacity: 0;
-	transform: scale3d( 1.2,  1.2, 1 );
-}
 
 
 CSGORadialRadio .RadialSegment
@@ -266,14 +269,14 @@ CCSGOQuickBuyRadial .RadialSegment
 .RadialSegment.RadialSegment--hover
 {
     background-color: RADIAL_SEGMENT_CANNOT_SELECT_HOVERED;
-    transform: scale3d( 1, 1, 1 );
+                                    
 }
 
 .RadialSegment.RadialSegment--canSelect
 {
 	opacity: 1;
 	background-color: RADIAL_SEGMENT_CANSELECT;
-	transform: scale3d( 1, 1, 1 );
+	                                
 }
 
 .RadialSegment.RadialSegment--canSelect.RadialSegment--hover
@@ -291,12 +294,12 @@ CCSGOQuickBuyRadial .RadialSegment
                                                                              
 .RadialSegment.RadialSegment--canSelect.RadialSegment--hover.Chosen
 {
-	wash-color-fast: #00FF00;       
+	wash-color-fast: #FFFFFF;       
 }
 
 .IsFading .RadialSegment.RadialSegment--canSelect.RadialSegment--hover
 {
-	 transform: scale3d( 0.3333333333, 0.3333333333, 1 );                                                                                                      
+	                                                                                                                                             
 }
 
 .RadialSegment-image
@@ -304,7 +307,7 @@ CCSGOQuickBuyRadial .RadialSegment
     width: 400px;
 	height: 200px;
 	                       
-	transform: scale3d( .9, .9, 1 );
+	transform: scale3d( .95, .95, 1 );
 
 	horizontal-align: center;
 	vertical-align: center;
