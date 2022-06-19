@@ -335,6 +335,7 @@ CSGOSettingsEnumDropDown:hover
 .UseGyroAcceleration,
 .UseStickAim,
 .UseFlickStickAim,
+.UseStickAimAndFlickStickAim,
 .UseFlickStickAimForwardDeadzone,
 {
 	visibility: collapse;
@@ -343,6 +344,7 @@ CSGOSettingsEnumDropDown:hover
 .GyroAccelerationEnabled .UseGyroAcceleration,
 .FlickStickEnabled .UseFlickStickAim,
 .StickAimEnabled .UseStickAim,
+.StickAndFlickStickAimEnabled .UseStickAimAndFlickStickAim,
 .FlickStickForwardDeadzoneEnabled .UseFlickStickAimForwardDeadzone {
 	visibility: visible;
 }

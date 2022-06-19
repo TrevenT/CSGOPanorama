@@ -51,10 +51,10 @@
 				</Panel>
 			</Panel>
 			<Panel class="left-right-flow">
-				<Label id="NavigationCancel" class="FreezePanel__Navigation" text="#Panorama_Freeze_Cancel_Replay" />
+				<Label id="NavigationCancel" class="FreezePanel__Navigation" text="#Panorama_Freeze_Cancel_Replay" html="true" />
 				<Label id="NavigationSnapshot" class="FreezePanel__Navigation" text="#Panorama_Freeze_Snapshot" html="true" />
 				<Label id="NavigationReplay" class="FreezePanel__Navigation" html="true" text="#Panorama_HUD_Spectate_Navigation_Replay_Death" />
-				<Label id="SurvivalEndOfMatch" class="FreezePanel__SurvivalEndOfMatch" text="#Panorama_SurvivalEndOfMatch_ShowStats" />
+				<Label id="SurvivalEndOfMatch" class="FreezePanel__SurvivalEndOfMatch" html="true" text="#Panorama_SurvivalEndOfMatch_ShowStats" />
 			</Panel>
 		</Panel>
 
@@ -89,6 +89,6 @@
 		</Panel>
 
 		                     
-		<Label id="FreezeCancel" class="FreezeCancel" text="#Panorama_Freeze_Cancel_Start_Replay" />
+		<Label id="FreezeCancel" class="FreezeCancel" text="#Panorama_Freeze_Cancel_Start_Replay" html="true" />
 	</CSGOHudFreezePanel>
 </root>

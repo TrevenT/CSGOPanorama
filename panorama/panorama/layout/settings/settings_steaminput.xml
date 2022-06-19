@@ -89,6 +89,7 @@
 						<CSGOSettingsEnumDropDown class="PopupButton White" convar="aim_flickstick_enabled">
 							<Label text="#SFUI_FlickStickDisabled" id="Ctrlaimflickstickactive0" value="0"/>
 							<Label text="#SFUI_FlickStickEnabled" id="Ctrlaimflickstickactive1" value="1"/>
+							<Label text="#SFUI_FlickStickDisabledForScope" id="Ctrlaimflickstickactive2" value="2"/>
 						</CSGOSettingsEnumDropDown>
 					</Panel>
 				</TooltipPanel>
@@ -97,7 +98,7 @@
 
 				                  
 					
-				<Panel class ="top-bottom-flow full-width UseStickAim">
+				<Panel class ="top-bottom-flow full-width UseStickAim UseStickAimAndFlickStickAim">
 					                  
 					                                                                                                                                                                           
 					<Panel class="SettingsMenuDropdownContainer" selectionpos="auto">
@@ -187,8 +188,18 @@
 				
 				</Panel>                    
 			
-				<Panel class ="top-bottom-flow full-width UseFlickStickAim">
-
+				                                                          
+				
+				<Panel class ="top-bottom-flow full-width UseStickAimAndFlickStickAim">
+					<Panel class="SettingsSectionTitleContianer">
+						<Label class="SettingsSectionTitleLabel" text="#settings_steam_input_flick_stick"/>
+						<CCSGOSteamInputAction actionset="GameControls" action="JoystickCamera" separatortext="/" controllernumber = "1" />
+					</Panel>
+					<Panel class="horizontal-separator"/>
+				</Panel>
+				
+				<Panel class ="top-bottom-flow full-width UseFlickStickAim UseStickAimAndFlickStickAim">
+				
 					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_FlickStick_DeadzoneMin_Info">
 						<CSGOSettingsSlider text="#SFUI_DeadzoneMin" percentage="true" max="1.0" min="0.0" convar="aim_flickstick_circular_deadzone_min" showdefaultvalue="true" selectionpos="auto"/>				
 					</TooltipPanel>
@@ -254,7 +265,18 @@
 					<CCSGOSteamInputAction actionset="GameControls" action="GyroCamera" separatortext="/" controllernumber = "1" />
 				</Panel>
 				<Panel class ="top-bottom-flow full-width ">
-
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_EnableGyro_Info">
+						<Panel class="SettingsMenuDropdownContainer">
+							<Label text="#SFUI_EnableGyro" class="half-width"/>
+							<CSGOSettingsEnumDropDown class="PopupButton White" convar="aim_gyro_enable_mode">
+								<Label text="#SFUI_EnableGyro_Always" id="Ctrlaim_gyro_enable_mode0" value="0"/>
+								<Label text="#SFUI_EnableGyro_When_Scoped" id="Ctrlaim_gyro_enable_mode1" value="1"/>
+								<Label text="#SFUI_EnableGyro_When_AimStickNeutral" id="Ctrlaim_gyro_enable_mode2" value="2"/>
+							</CSGOSettingsEnumDropDown>
+						</Panel>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+			
 					                  
 					                                                                                                                                                                    
 					<Panel class="SettingsMenuDropdownContainer">
@@ -447,6 +469,11 @@
 					</TooltipPanel>
 					<Panel class="horizontal-separator"/>
 
+					<TooltipPanel class="SettingsMenuDropdownContainer" tooltip="#SFUI_WalkZone_Info">
+						<CSGOSettingsSlider text="#SFUI_WalkZone" percentage="true" max="1.0" min="0.0" displayprecision="2" convar="move_stick_walk_zone" showdefaultvalue="true" selectionpos="auto"/>
+					</TooltipPanel>
+					<Panel class="horizontal-separator"/>
+					
 				</Panel>
 
 			</Panel>
