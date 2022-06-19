@@ -1110,11 +1110,13 @@ var MainMenuStore = ( function()
 		 
 		  
 
+		                                                                 
 		                                                                                                                  
-		var nCategoryIdx = Math.floor( Math.random() * 3 );
-		fnMoveToFront( tabelements[nCategoryIdx] );
-		var nCategoryIdx2 = Math.floor( Math.random() * 2 );
-		fnMoveToFront( tabelements[ nCategoryIdx2 + ( ( nCategoryIdx2 >= nCategoryIdx ) ? 1 : 0 ) ] );
+		                                                   
+		                                           
+		                                                    
+		                                                                                              
+		  
 
 		_SetDefaultTabActive( elParent.Children()[0] )
 	};

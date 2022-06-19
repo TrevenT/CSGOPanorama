@@ -19,9 +19,13 @@ var MainMenuStoreTileLinked = ( function()
 		var elImage = elItem.FindChildInLayoutFile( 'StoreItemImage' );
 		elImage.itemid = LootListItemID;
 
-		LootListItemID =  ( InventoryAPI.GetItemTypeFromEnum( itemIdLinked ) !== 'coupon' ) ? itemIdLinked : InventoryAPI.GetLootListItemIdByIndex( itemIdLinked, 0 );
+		LootListItemID = ( InventoryAPI.GetItemTypeFromEnum( itemIdLinked ) !== 'coupon' ) ? itemIdLinked : InventoryAPI.GetLootListItemIdByIndex( itemIdLinked, 0 );
 		elImage = elItem.FindChildInLayoutFile( 'StoreItemImageLinked' );
 		elImage.itemid = LootListItemID;
+
+		                                                                                                              
+		var bShowLinked = itemId != itemIdLinked;
+		elImage.visible = bShowLinked;
 
 		var elStattrak = elImage.FindChildInLayoutFile( 'StoreItemStattrak' );
 		elStattrak.SetHasClass( 'hidden', !ItemInfo.IsStatTrak( itemIdLinked ) && !ItemInfo.IsStatTrak( itemId ) );

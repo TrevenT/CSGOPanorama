@@ -2,16 +2,16 @@
 .news-panel--store-container
 {
 	                                                                       
-	max-height: 288px;
-	height: fill-parent-flow( .4 );
+	max-height: 300px;
+	height: 256px;
 	margin-bottom: 0px;
 }
 
-.news-panel-style-feature-panel-visible .news-panel--store-container,
-.mainmenu-news-container-stream-active .news-panel--store-container
-{
-	height: fill-parent-flow( .5 );
-}
+                                                                        
+                                                                   
+ 
+	                               
+    
 
 .store-panel__carousels
 {

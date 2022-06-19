@@ -35,7 +35,7 @@
 {
     font-size: 34px;
     letter-spacing: 3px;
-    color: gradient( linear, 0% 0%, 0% 100%, from( #1de7ae ), to( #157a5e) );
+    color: gradient( linear, 0% 0%, 0% 100%, from( #e9e4ce ), to( #5eb38b) );
     font-family: notosans, 'Arial Unicode MS';
     height: 40px;
     text-overflow: shrink;
@@ -80,14 +80,15 @@
 {
     flow-children: down;
     vertical-align: top;
+    font-size: 12px;
     margin-left: 16px;
-    margin-top: 16px;
+                           
 }
 
 .tournament-pass-status__desc
 {
 	margin-top: 8px;
-	font-size: 16px;
+	font-size: 14px;
 	color: white;
 	max-height: 64px;
     text-overflow: ellipsis;
@@ -107,7 +108,7 @@
 
 .tournament-pass-status__timer
 {
-    font-size: 14px;
+    font-size: 10px;
     color: #0fecade0;
     font-weight: bold;
                                       

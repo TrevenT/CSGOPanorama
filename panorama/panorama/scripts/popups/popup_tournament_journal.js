@@ -10,23 +10,23 @@ var TournamentJournal = ( function()
                                                                                                                             
                                                          
                                                                                                                                    
-    var m_activeTournament = 18;
+    var m_activeTournament = g_ActiveTournamentInfo.eventid;
     var m_tokenItemDefName = null;
     var m_scheduleHandle = null;
-    var m_isTournament_active = false;
+    var m_isTournament_active = g_ActiveTournamentInfo.active;
     var m_isInMatch = GameStateAPI.IsDemoOrHltv() || GameStateAPI.IsLocalPlayerPlayingMatch();
 
     var _Init = function()
     {
         var journalId = $.GetContextPanel().GetAttributeString( "journalid", '' );
         var tournamentId = InventoryAPI.GetItemAttributeValue( journalId, "tournament event id" );
-        var bNoItemsOnSale = true;
+        var bNoItemsOnSale = !g_ActiveTournamentInfo.active;
         $.GetContextPanel().SetHasClass( 'no_items', bNoItemsOnSale );
 
                            
                               
 
-		m_tokenItemDefName = 'tournament_pass_stockh2021_charge';
+		m_tokenItemDefName = 'tournament_pass_' + g_ActiveTournamentInfo.location + '_charge';
 
                                      
         var nCampaignID = parseInt( InventoryAPI.GetItemAttributeValue( journalId, "campaign id" ) );
@@ -54,7 +54,7 @@ var TournamentJournal = ( function()
         }
 
         var oWinningTeam = !_IsValidJournalId( journalId ) ? null : EventUtil.GetTournamentWinner( tournamentId, 1 );
-        m_isTournament_active = oWinningTeam === null || !oWinningTeam.hasOwnProperty( 'team_id' ) ? true : false;
+        m_isTournament_active = ( !oWinningTeam || !oWinningTeam.hasOwnProperty( 'team_id' ) ? true : false );
 
                                                                                                      
                                                
@@ -123,19 +123,19 @@ var TournamentJournal = ( function()
     var _SetTitle = function( journalId )
     {
         $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-title' ).text = !_IsValidJournalId( journalId ) ? 
-            $.Localize('CSGO_TournamentPass_stockh2021_store_title') : 
+            $.Localize('CSGO_TournamentPass_' + g_ActiveTournamentInfo.location + '_store_title') : 
             ItemInfo.GetName( journalId );
     };
 
     var _SetSubtitle = function( journalId )
     {
-        var srtText = !_IsValidJournalId( journalId ) ? '#CSGO_TournamentPass_stockh2021_store_desc' : '#tournament_coin_desc_token';
+        var srtText = !_IsValidJournalId( journalId ) ? '#CSGO_TournamentPass_' + g_ActiveTournamentInfo.location + '_store_desc' : '#tournament_coin_desc_token';
         $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-subtitle' ).text = $.Localize( srtText );
     };
 
     var _SetModel = function( id )
     {
-        var fakeId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( 4800, 0 );                                            
+        var fakeId = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentInfo.itemid_coins[ g_ActiveTournamentInfo.itemid_coins.length - 1 ], 0 );                                                                       
         id = !_IsValidJournalId( id ) ? fakeId : id;
 
         var elModel = $.GetContextPanel().FindChildInLayoutFile( 'id-tournament-journal-model' );
@@ -725,7 +725,7 @@ var TournamentJournal = ( function()
         }
         
         btn.SetPanelEvent( 'onactivate', function(){
-            SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgostockholm' );
+            SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgomajor' + g_ActiveTournamentInfo.location );
         });
 
         btn.visible = true;
@@ -750,8 +750,10 @@ var TournamentJournal = ( function()
 
             if ( !elItemsPanel.FindChildInLayoutFile( 'tournament-items' + i ) )
             {
-                var itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ i ][ 0 ], 0 );
-                var linkedid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ i ][ 1 ], 0 );
+				var itemid = InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ i ][ 0 ], 0 );
+				var bContainsJustChampions = ( typeof g_ActiveTournamentStoreLayout[ i ][ 1 ]  === 'string' );
+				var linkedid = bContainsJustChampions ? itemid
+					: InventoryAPI.GetFauxItemIDFromDefAndPaintIndex( g_ActiveTournamentStoreLayout[ i ][ 1 ], 0 );
                 var bIsPurchaseable = _IsPurchaseable( itemid )
                 
                 var elItem = $.CreatePanel( 'Panel', elItemsPanel, 'tournament-items' + i );
@@ -762,7 +764,7 @@ var TournamentJournal = ( function()
 					usetinynames: true,
                     usegroupname: g_ActiveTournamentStoreLayout[ i ][ 2 ],
                     warningtext: !bIsPurchaseable ?
-                        '#tournament_items_not_released' : InventoryAPI.GetItemTypeFromEnum( itemid ) === 'type_tool' ?
+                        '#tournament_items_not_released' + ( bContainsJustChampions ? '_1' : '' ) : InventoryAPI.GetItemTypeFromEnum( itemid ) === 'type_tool' ?
                         '#tournament_items_notice' : '',
                     isdisabled: !bIsPurchaseable,
                     extrapopupfullscreenstyle: true
@@ -770,7 +772,9 @@ var TournamentJournal = ( function()
                 elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile_linked.xml", false, false );
                 elBlurPanel.AddBlurPanel( elItem );
 
-                if ( g_ActiveTournamentStoreLayout[ i ][ 0 ] === 4816 )
+				                      
+				var defidxChampionHighlight = [ g_ActiveTournamentStoreLayout[ g_ActiveTournamentStoreLayout.length - 1 ][0] ];
+                if ( g_ActiveTournamentStoreLayout[ i ][ 0 ] === defidxChampionHighlight )
                 {
                     elItem.SetHasClass( 'bright-background', true );
                 }

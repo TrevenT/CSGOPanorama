@@ -61,11 +61,6 @@
 					<Panel class="content-navbar__tabs">
 						                                                                                                                                                 
 						                                                         
-						    
-						                                                                                                                                                                   
-							                                                            
-						              
-						   
 						<RadioButton id="WatchNavBarButtonTournaments" group="WatchNavBar" onactivate="mainmenu_watch.NavigateToTab('JsTournaments', 'tournament menu button');">
 							<Label class="" text="#CSGO_Watch_Cat_Tournament_0"/>
 						</RadioButton>
