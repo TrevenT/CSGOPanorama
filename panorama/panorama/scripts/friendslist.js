@@ -524,8 +524,6 @@ var friendsList = (function() {
 
 	var _UpdateTilePosition = function( elList, children, elTile, xuid, index, tileXmlToUse )
 	{
-		var name = FriendsListAPI.GetFriendName( xuid );
-		
 		if( children[index] )
 			elList.MoveChildBefore( elTile, children[index] );
 		
@@ -687,12 +685,26 @@ var friendsList = (function() {
 		SteamOverlayAPI.OpenURL( link ); 
 	};
 
-	var _FriendsListNameChanged = function ()
+	var _FriendsListNameChanged = function ( xuid )
 	{
-		_UpdateActiveTabList();
+		       
+		                               
+		  
+		                                                                 
+		  
+
+		var tabData = _m_tabs[ _m_activeTabIndex ];
+		var elTile = tabData ? tabData.elList.FindChildTraverse( xuid ) : null;
+		if ( elTile && elTile.IsValid() )
+		{
+			_InitTile( elTile, tabData.tileXmlToUse );
+		}
 		
-		                                      
-		_SetLocalPlayerAvatar();
+		if ( xuid == MyPersonaAPI.GetXuid() )
+		{
+			                                      
+			_SetLocalPlayerAvatar();
+		}
 	};
 
 	var _HideLocalPlayer = function ( bshouldHide )
