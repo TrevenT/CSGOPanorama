@@ -253,7 +253,7 @@ var InspectActionBar = ( function (){
 						ItemInfo.IsItemAnyTeam(id);
 				});
 			
-			if ( list && ( list.length > 0 ) )
+			if ( list && ( list.length > 0 )  && !elPanel.FindChildInLayoutFile( 'InspectDropdownCharModels' ).Data().selectedId )
 				_SetDropdown( elPanel, list, id );
 		}
 	};
@@ -328,6 +328,8 @@ var InspectActionBar = ( function (){
 	var _OnUpdateCharModel = function ( bPlaySound, elDropdown, weaponItemId )
 	{
 		var characterItemId = elDropdown.GetSelected().id;
+		elDropdown.Data().selectedId = elDropdown.GetSelected().id;
+		
 		InspectModelImage.SetCharScene( m_modelImagePanel, characterItemId, weaponItemId );
 		
 		                                                                                     

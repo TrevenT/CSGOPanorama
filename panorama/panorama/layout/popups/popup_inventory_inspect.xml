@@ -32,14 +32,14 @@
 						<Label class="fontSize-m fontWeight-Bold left-margin" text="#popup_inv_lootlist_count"/>
 					</Panel>
 					<Panel id="id-lootlist-btns-container" class="inv-lootlist-btns-container">
-						<Button id="id-lootlist-next" class="inv-arrow-btn" onactivate='SceneNextAnimSequence();'>
+						<Button id="id-lootlist-next" class="inv-arrow-btn">
 							<Image class="inv-arrow-btn__image" src="file://{images}/icons/ui/expand.svg" textureheight="64" texturewidth="-1"/>
 							<Panel class="left-right-flow">
 								<Label id="id-lootlist-label" class="inv-arrow-btn__text text-align-right" text="Item name and color"/>
 								<Panel id="id-lootlist-rarity" class="inv-arrow-btn__rarity"/>
 							</Panel>
 						</Button>
-						<Button id="id-lootlist-prev" class="inv-arrow-btn inv-arrow-btn--left" onactivate='SceneNextAnimSequence();'>
+						<Button id="id-lootlist-prev" class="inv-arrow-btn inv-arrow-btn--left">
 							<Image class="inv-arrow-btn__image inv-arrow-btn__image--left" src="file://{images}/icons/ui/expand.svg" textureheight="64" texturewidth="-1"/>
 							<Panel class="left-right-flow">
 								<Panel id="id-lootlist-rarity" class="inv-arrow-btn__rarity"/>

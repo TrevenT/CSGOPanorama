@@ -53,8 +53,9 @@ var InventoryInspect = ( function()
 	{
 		var elItemModelImagePanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectModelOrImage' );
 		InspectModelImage.Init( elItemModelImagePanel, itemId, _GetSettingCallback );
-
+		
 		var elActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectActionBar' );
+
 		InspectActionBar.Init(
 			elActionBarPanel,
 			itemId,
@@ -194,6 +195,7 @@ var InventoryInspect = ( function()
 			m_lootlistItemIndex = ( m_lootlistItemIndex < ( count - 1 ) ) ? m_lootlistItemIndex + 1 : m_lootlistItemIndex;
 			_EnableNextPrevBtns( aLootlistIds );
 			_UpdatePanelData( aLootlistIds[ m_lootlistItemIndex ] );
+			_UpdateCharacterModelPanel( aLootlistIds[ m_lootlistItemIndex ] );
 			_PrecacheCustomMaterials( aLootlistIds, count, false, true );
 		} );
 
@@ -202,6 +204,7 @@ var InventoryInspect = ( function()
 			m_lootlistItemIndex = m_lootlistItemIndex > 0 ? m_lootlistItemIndex - 1 : m_lootlistItemIndex;
 			_EnableNextPrevBtns( aLootlistIds );
 			_UpdatePanelData( aLootlistIds[ m_lootlistItemIndex ] );
+			_UpdateCharacterModelPanel( aLootlistIds[ m_lootlistItemIndex ] );
 			_PrecacheCustomMaterials( aLootlistIds, count, true, false );
 		} );
 
@@ -214,6 +217,14 @@ var InventoryInspect = ( function()
 		{
 			_PrecacheCustomMaterials( aLootlistIds, count, true, false );
 		} );
+	}
+
+	var _UpdateCharacterModelPanel = function( itemId )
+	{
+		var elActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectActionBar' );
+		InspectActionBar.OnUpdateCharModel( false,
+			elActionBarPanel.FindChildInLayoutFile( 'InspectDropdownCharModels' ),
+			itemId );
 	}
 
 	var _PrecacheCustomMaterials = function( aLootlistIds, count, bPrev, bNext )
