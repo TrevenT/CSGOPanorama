@@ -288,7 +288,7 @@ var ItemTile = ( function()
 		var filterForContextMenuEntries = filterValue ? '&populatefiltertext=' + filterValue : '';
 		                                    
 		var contextMenuPanel = UiToolkitAPI.ShowCustomLayoutContextMenuParametersDismissEvent(
-			'',
+			'popup-inspect-' + id,
 			'',
 			'file://{resources}/layout/context_menus/context_menu_inventory_item.xml',
 			'itemid=' + id + filterForContextMenuEntries,
@@ -330,7 +330,7 @@ var ItemTile = ( function()
 	var _CapabilityNameableAction = function( idsToUse )
 	{
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-' + idsToUse.item,
 			'file://{resources}/layout/popups/popup_capability_nameable.xml',
 			'nametag-and-itemtoname=' + idsToUse.tool + ',' + idsToUse.item +
 			'&' + 'asyncworktype=nameable'
@@ -340,7 +340,7 @@ var ItemTile = ( function()
 	var _CapabilityCanStickerAction = function( idsToUse )
 	{
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-' + idsToUse.item,
 			'file://{resources}/layout/popups/popup_capability_can_sticker.xml',
 			'sticker-and-itemtosticker=' + idsToUse.tool + ',' + idsToUse.item +
 			'&' + 'asyncworktype=can_sticker'
@@ -350,7 +350,7 @@ var ItemTile = ( function()
 	var _CapabilityCanPatchAction = function( idsToUse )
 	{
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-' + idsToUse.item,
 			'file://{resources}/layout/popups/popup_capability_can_sticker.xml',
 			'sticker-and-itemtosticker=' + idsToUse.tool + ',' + idsToUse.item +
 			'&' + 'asyncworktype=can_patch'
@@ -360,7 +360,7 @@ var ItemTile = ( function()
 	var _CapabilityDecodableAction = function( idsToUse )
 	{
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-' + idsToUse.item,
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
 			'key-and-case=' + idsToUse.tool + ',' + idsToUse.item +
 			'&' + 'asyncworktype=decodeable'

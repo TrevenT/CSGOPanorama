@@ -283,3 +283,15 @@
 	margin-top: 2px;
 	margin-right: 4px;
 }
+
+                                        
+
+.inv-arrow-btn
+{
+
+}
+
+.inv-arrow-btn--image
+{
+	transform: rotateZ(90deg);
+}

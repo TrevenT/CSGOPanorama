@@ -44,6 +44,27 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+.popup-browse-btn
+{
+	horizontal-align: right;
+	padding: 10px;
+	margin-bottom: 4px;
+	border-radius: 3px;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000), color-stop( 1, #00000000 ), to( #00000010 ) );
+
+	transition-property: background-color;
+	transition-duration: .3s;
+	transition-timing-function: ease-in-out;
+}
+
+.popup-browse-btn:hover
+{
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000), color-stop( 0, #00000070 ), to( #00000070 ) );
+	transition-property: background-color;
+	transition-duration: .2s;
+	transition-timing-function: ease-in-out;
+}
+
                                                                                                         
                      
                                                                                                         

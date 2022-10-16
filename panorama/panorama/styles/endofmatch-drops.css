@@ -133,12 +133,13 @@
 	margin-left: 8px;
 	margin-top: 4px;
 	max-height: 42px;
+	width: 200px;
 }
 
 .non-prime-ad-drop .item-tile__name
 {
 	text-align: left;
-	width: 100%;
+	width: 200px;
 	vertical-align: center;
 	horizontal-align: left;
 	margin: 0px;

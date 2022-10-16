@@ -119,7 +119,7 @@ var MainMenuStoreTile = ( function()
 		}
 
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-' + id,
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
 			'key-and-case=' + '' + ',' + displayItemId
 			+ '&' +
@@ -138,7 +138,7 @@ var MainMenuStoreTile = ( function()
 		
 		                                                            
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-'+ id,
 			'file://{resources}/layout/popups/popup_inventory_inspect.xml',
 			'itemid=' + id
 			+ '&' +

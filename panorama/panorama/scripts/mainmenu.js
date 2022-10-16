@@ -1223,7 +1223,7 @@ var MainMenu = ( function() {
 		var showpopup = bShowPopupWarning ? 'yes' : 'no';
 		
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
-			'',
+			'popup-inspect-'+ caseId,
 			'file://{resources}/layout/popups/popup_capability_decodable.xml',
 			'key-and-case=' + toolid + ',' + caseId +
 			'&' + 'asyncworktype=decodeable' +
@@ -1240,7 +1240,7 @@ var MainMenu = ( function() {
 			UiToolkitAPI.UnregisterJSCallback( JsInspectCallback );
 			JsInspectCallback = -1;
 		}
-		                            
+		                             
 		var ParamsList = params.split( ',' );
 		var keyId = ParamsList[ 0 ];
 		var caseId = ParamsList[ 1 ];
@@ -1248,10 +1248,16 @@ var MainMenu = ( function() {
 		var blurOperationPanel = ParamsList[ 3 ];
 		var extrapopupfullscreenstyle = ParamsList[ 4 ];
 		                                                                                    
-		var aParamsForCallback = ParamsList.slice( 5);
+		var aParamsForCallback = ParamsList.slice( 5 );
 		var showMarketLinkDefault = _m_bPerfectWorld ? 'false' : 'true';
 
-		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( _OpenDecodeAfterInspect.bind( undefined, keyId, caseId, storeId, extrapopupfullscreenstyle, aParamsForCallback ) );
+		                                                                                                                                                                           
+		
+		JsInspectCallback = UiToolkitAPI.RegisterJSCallback( function()
+		{
+			let idtoUse = storeId ? storeId : caseId
+			$.GetContextPanel().FindChildInLayoutFile( 'PopupManager' ).FindChildInLayoutFile( 'popup-inspect-' + idtoUse ).visible = true;
+		} );
 
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -1264,7 +1270,8 @@ var MainMenu = ( function() {
 			'&' + blurOperationPanel +
 			'&' + 'extrapopupfullscreenstyle=' + extrapopupfullscreenstyle +
 			'&' + 'showmarketlink=' + showMarketLinkDefault +
-			'&' + 'callback=' + JsInspectCallback,
+			'&' + 'callback=' + JsInspectCallback +
+			'&' + 'caseidforlootlist=' + caseId,
 			'none'
 		);
 	};
