@@ -66,7 +66,7 @@ var EOM_Skillgroup = (function () {
 			
 			let strSkillGroupExpired = '#eom-skillgroup-expired';
 			                                
-			strSkillGroupExpired = '#eom-skillgroup-recalibrating';
+			                                                          
 			                                
 			oData.rankInfo = $.Localize(strSkillGroupExpired, _m_cP);
 			oData.image = 'file://{images}/icons/skillgroups/'+modePrefix+'_expired.svg';

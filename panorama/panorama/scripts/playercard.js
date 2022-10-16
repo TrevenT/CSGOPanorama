@@ -418,7 +418,7 @@ var playerCard = ( function (){
 			else
 			{
 				                                
-				strSkillGroupString = 'recalibrating';
+				                                         
 				                                
 				strSkillGroupString += typeModifier;
 			}
