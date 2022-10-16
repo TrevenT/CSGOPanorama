@@ -259,16 +259,16 @@
 
 			<Panel id="BuyMenuNavBarConsole" class="buymenu-navbar consolecontrols">
 				<Panel class="vertical-center left-right-flow horizontal-align-right">
-     				<CCSGOSteamInputAction actionset="BuyMenuLayer" action="rebuy" separatortext="/" controllernumber = "1"/>
-     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="rebuy" separatortext="/" controllernumber = "1"/>
-					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="buy" separatortext="/" controllernumber = "1"/>
-					<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="buy" separatortext="/" controllernumber = "1"/>
+     				<CCSGOSteamInputAction actionset="BuyMenuLayer" action="rebuy" separatortext="/" />
+     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="rebuy" separatortext="/" />
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="buy" separatortext="/" />
+					<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="buy" separatortext="/" />
 				</Panel>
 				<Panel class="vertical-center left-right-flow horizontal-align-left">
-					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="donate" separatortext="/" controllernumber = "1"/>
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="donate" separatortext="/" />
 					<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="donate" controllernumber = "1"/>
-					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="autobuy" separatortext="/" controllernumber = "1"/>
-     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="autobuy" separatortext="/" controllernumber = "1"/>
+					<CCSGOSteamInputAction actionset="BuyMenuLayer" action="autobuy" separatortext="/" />
+     				<CCSGOSteamInputActionLabel actionset="BuyMenuLayer" action="autobuy" separatortext="/" />
 				</Panel>
 			</Panel>
 

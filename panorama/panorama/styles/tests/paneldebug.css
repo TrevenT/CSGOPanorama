@@ -118,6 +118,15 @@
     flow-children: down;
 }
 
+.flowright {
+    background-color: #000000AA;
+    margin: 10px;
+    border: 10px;
+    width: fit-children;
+    height: 400px;
+    flow-children: right;
+}
+
 .SteamInputGlyphsActive  #SteamInputAPITests CCSGOSteamInputAction.ControllerConnected
 {
   visibility: visible;
