@@ -224,7 +224,12 @@ var friendsList = (function() {
 		else if ( tabIndex == 3 ) StoreAPI.RecordUIEvent( "FriendsListerTabNearby" );
 
 		_m_activeTabIndex = tabIndex;
-		_m_tabs[ tabIndex ].elContent.RemoveClass( 'hidden' );
+		_m_tabs[tabIndex].elContent.RemoveClass('hidden');
+
+		if ( tabIndex === 2 )
+		{
+			_RefreshRecentFriendsListings();
+		}
 
 		if ( tabIndex === 3 )
 		{
@@ -283,7 +288,12 @@ var friendsList = (function() {
 		PartyBrowserAPI.Refresh();
 	};
 
-	var _UpdateTabList = function( tabIndex )
+	var _RefreshRecentFriendsListings = function () {
+		_m_tabs[2].elList.ScrollToTop();
+		TeammatesAPI.Refresh();
+	};
+
+	var _UpdateTabList = function (tabIndex)
 	{	
 		var tabData = _m_tabs[ tabIndex ];
 		var count = tabData.getCount();
@@ -576,7 +586,7 @@ var friendsList = (function() {
 
 	var _GetRecentsCount = function()
 	{
-		TeammatesAPI.Refresh();
+		                          
 		var count = TeammatesAPI.GetCount();
 
 		if( count )
