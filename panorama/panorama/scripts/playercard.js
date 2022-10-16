@@ -409,17 +409,22 @@ var playerCard = ( function (){
 				return;
 				
 			elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillIcon' ).SetImage( 'file://{images}/icons/skillgroups/' + imageName + '_expired.svg' );
-			
-			if ( bNonPrimeButHasXpProgress )
+
+			let strSkillGroupString = 'expired';
+			if (bNonPrimeButHasXpProgress)
 			{
-				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_locked' );
+				strSkillGroupString = 'locked';
 			}
 			else
 			{
-				elSkillGroup.FindChildInLayoutFile( 'JsPlayerSkillLabel' ).text = $.Localize( '#skillgroup_expired' + typeModifier );
+				                                
+				strSkillGroupString = 'recalibrating';
+				                                
+				strSkillGroupString += typeModifier;
 			}
 
-			tooltipText = bNonPrimeButHasXpProgress ?  $.Localize('#tooltip_skill_group_locked') : $.Localize( '#tooltip_skill_group_expired' + typeModifier );
+			elSkillGroup.FindChildInLayoutFile('JsPlayerSkillLabel').text = $.Localize('#skillgroup_' + strSkillGroupString);
+			tooltipText = $.Localize( '#tooltip_skill_group_' + strSkillGroupString );
 		}
 		else
 		{

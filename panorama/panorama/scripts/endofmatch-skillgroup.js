@@ -64,7 +64,11 @@ var EOM_Skillgroup = (function () {
 
 			var modePrefix = ( oData.mode === 'scrimcomp2v2' ) ? 'wingman' : ( ( oData.mode === 'survival' ) ? 'dangerzone' : 'skillgroup' );
 			
-			oData.rankInfo = $.Localize( '#eom-skillgroup-expired', _m_cP );
+			let strSkillGroupExpired = '#eom-skillgroup-expired';
+			                                
+			strSkillGroupExpired = '#eom-skillgroup-recalibrating';
+			                                
+			oData.rankInfo = $.Localize(strSkillGroupExpired, _m_cP);
 			oData.image = 'file://{images}/icons/skillgroups/'+modePrefix+'_expired.svg';
 		}
 		else if ( currentRank < 1 )
