@@ -664,10 +664,15 @@ var mainmenu_watch = ( function()
 			}
 		}
 
+		                                                                               
+		                                                                              
+		                                                                                     
+		_NavigateToTab( 'JsYourMatches' );
+		$( '#WatchNavBarButtonYourMatches' ).checked = true;
 
 		                                                                          
-		_NavigateToTab( 'JsLive' );
-		$( '#WatchNavBarButtonLive' ).checked = true;
+		                              
+		                                                
 
 		                                                                            
 		                                
