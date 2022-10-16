@@ -43,6 +43,7 @@ var contextmenuPlayerCard = ( function (){
 			AvailableForItem: function ( id ) {
 				                                                                                              
 				return !GameStateAPI.IsLocalPlayerPlayingMatch() && !( LobbyAPI.IsPartyMember( id ) ) && !_IsSelf( id) &&
+					( PartyListAPI.GetFriendPrimeEligible( MyPersonaAPI.GetXuid() ) || ( FriendsListAPI.GetFriendRelationship( id ) === "friend" ) ) &&
 					( 'purchased' === MyPersonaAPI.GetLicenseType() );
 			},
 			OnSelected:  function ( id, type ) {

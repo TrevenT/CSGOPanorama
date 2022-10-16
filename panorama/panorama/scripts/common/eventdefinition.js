@@ -115,5 +115,4 @@
     $.DefineEvent( 'DirectChallenge_ClanChallengeKeySelected', 1, "challengekey", "" );    
 
 
-
 } )();

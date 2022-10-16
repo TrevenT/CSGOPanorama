@@ -265,6 +265,17 @@
 			<Label class="store-panel-connectingtogc-text" text="#Store_Connecting_ToGc"/>
 			<Panel class="Spinner vertical-center horizontal-center"/>
 		</Panel>
+		<Panel class="store-panel-inventory-full hidden" id="StorePanelInventoryFull">
+			<Label class="store-panel-inventory-full__text" id="StorePanelInventoryFullText"
+				html="true" text="#SFUI_InventoryFull"/>
+				                     
+			<Panel id="JsStorageContainerItem" class="store-panel-inventory-full__item"/>
+			<TextButton id="StorePanelInventoryFullButton"
+				class="store-panel-inventory-full__button PopupButton"
+				onactivate="MainMenuStore.DismissInventoryFull()"
+				selected="false" html="true"
+				text="#Store_Dismiss_Inventory"/>				
+		</Panel>				
 		<Panel id="StoreNaveBar" class="news-panel-navbar">
 			                         
 			<TextButton id="StoreNaveBarWalletBalance" class="hidden news-panel-navbar-btn"

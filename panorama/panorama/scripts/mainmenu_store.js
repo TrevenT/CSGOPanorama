@@ -7,6 +7,9 @@ var MainMenuStore = ( function()
 	var m_elStore = $.GetContextPanel();
 	var m_pendingItemsToPopulateByTab = {};
 	var m_pendingItemsToPopulateScheduled = {};
+
+	const INVENTORY_FULL_THRESHOLD = 97;
+
 	
 	var _Init = function()
 	{
@@ -14,6 +17,8 @@ var MainMenuStore = ( function()
 
 		if ( !MyPersonaAPI.IsConnectedToGC() )
 			return;
+		
+		_CheckInventoryFull();
 
 		var bPerfectWorld = ( MyPersonaAPI.GetLauncherType() === "perfectworld" );
 		var itemsByCategory = {};
@@ -104,6 +109,49 @@ var MainMenuStore = ( function()
 		_SortTabs();
 		_AccountWalletUpdated();
 	};
+
+
+	function _CheckInventoryFull ()
+	{
+
+		                                                                               
+
+		if ( InventoryAPI.GetInventoryUsagePercentage() >= INVENTORY_FULL_THRESHOLD )
+		{
+			let elStorageContainerItem = $( '#JsStorageContainerItem' );
+
+			$( '#StorePanelInventoryFull' ).SetDialogVariableInt( "inv-usage", InventoryAPI.GetInventoryUsagePercentage() );
+
+			let elItem = elStorageContainerItem.FindChildInLayoutFile( 'StorageUnit' );
+			if ( !elItem )
+			{
+				
+				elItem = $.CreatePanel( 'Panel', elStorageContainerItem, 'StorageUnit' );
+
+				elItem.Data().oData = {
+					id: "17293822569102705841",
+					activationType: "store",
+					isNewRelease: false,
+					useItemId: true,
+					isMarketItem: false
+				}
+
+				elItem.BLoadLayout( "file://{resources}/layout/mainmenu_store_tile.xml", false, false );
+			}
+
+			$( '#StorePanelInventoryFull' ).RemoveClass( 'hidden' );
+		}
+		else
+		{
+			_DismissInventoryFull();
+		}
+			
+	}
+
+	function _DismissInventoryFull ()
+	{
+		$( '#StorePanelInventoryFull' ).AddClass( 'hidden' );
+	}
 
 	var _OperationTournamentSetupObj = function()
 	{
@@ -1184,7 +1232,12 @@ var MainMenuStore = ( function()
 				}
 			}
 		}
+
+		_CheckInventoryFull();
+
 	}
+
+
 
 	return {
 		Init: _Init,
@@ -1195,7 +1248,8 @@ var MainMenuStore = ( function()
 		                                                          
 		SetCarouselSelectedChild : _SetCarouselSelectedChild,
 		CouponsSearchFilterCallback: _CouponsSearchFilterCallback,
-		OnInventoryUpdate: _OnInventoryUpdate
+		OnInventoryUpdate: _OnInventoryUpdate,
+		DismissInventoryFull: _DismissInventoryFull,
 	};
 } )();
 
