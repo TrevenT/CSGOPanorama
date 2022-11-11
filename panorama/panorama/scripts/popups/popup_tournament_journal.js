@@ -735,7 +735,7 @@ var TournamentJournal = ( function()
         }
         
         btn.SetPanelEvent( 'onactivate', function(){
-            SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgomajor' + g_ActiveTournamentInfo.location );
+            SteamOverlayAPI.OpenURL( 'https://store.steampowered.com/sale/csgo' + g_ActiveTournamentInfo.location );
         });
 
         btn.visible = true;
