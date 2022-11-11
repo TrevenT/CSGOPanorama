@@ -127,14 +127,14 @@
 	transition-timing-function: ease-in-out;
 }
 
+
 .item-tile__multi-select
 {
 	visibility: collapse;
-	opacity: 0;
-	y: 40px;
-	horizontal-align: center;
-	background-color: rgba(252, 252, 252, 0.61);
-	padding: 8px;
+	horizontal-align: left;
+	border: 1px solid rgba(252, 252, 252, 0.50);
+	padding: 2px;
+	margin: 8px;
 	border-radius: 50%;
 
 	transition-property: opacity;
@@ -142,21 +142,84 @@
 	transition-timing-function: ease-in-out;
 }
 
-.item-tile__multi-select Image
+.item-tile__inspect
 {
-	wash-color: rgb(31, 31, 31);
+	visibility: collapse;
+	margin: 8px;
+	y: 80px;
+	horizontal-align: right;	
+
+	transition-property: opacity;
+	transition-duration: .25s;
+	transition-timing-function: ease-in-out;
 }
 
-.item-tile.capability_multistatus_selected .item-tile__multi-select
+
+.inv-multi-select-allow .item-tile__multi-select
 {
 	visibility: visible;
+}
+
+.inv-multi-select-allow .item-tile__multi-select Image
+{
+	opacity: 0;
+
+	transition-property: opacity;
+	transition-duration: .1s;
+	transition-timing-function: ease-in-out;
+}
+
+.inv-multi-select-allow .item-tile:hover:not(.capability_multistatus_selected) .item-tile__multi-select
+{
+	background-color: rgba(252, 252, 252, 0.60);
+	border: 1px solid rgba(252, 252, 252, 0.0);
+}
+
+.inv-multi-select-allow .item-tile:hover:not(.capability_multistatus_selected) .item-tile__multi-select Image
+{
+	wash-color: rgb(31, 31, 31);
 	opacity: 1;
+}
+
+.inv-multi-select-allow .item-tile:hover .item-tile__inspect
+{
+	visibility: visible;
+	opacity: .5;
+}
+
+.inv-multi-select-allow .item-tile:hover .item-tile__inspect:hover
+{
+	opacity: 1;
+
+	transition-property: opacity;
+	transition-duration: .1s;
+	transition-timing-function: ease-in-out;
+}
+
+.inv-multi-select-allow .item-tile.capability_multistatus_selected .item-tile__multi-select
+{
+	visibility: visible;
+	border: 1px solid rgba(252, 252, 252, 0.0);
+	box-shadow: shadowOffset;
+	opacity: 1;
+	background-color: positiveColor;
+}
+
+.inv-multi-select-allow .item-tile.capability_multistatus_selected .item-tile__multi-select Image
+{
+	visibility: visible;
+	wash-color: white;
+	opacity: 1;
+
+	transition-property: opacity;
+	transition-duration: .1s;
+	transition-timing-function: ease-in-out;
 }
 
 .item-tile.capability_multistatus_selected .item-tile__bg,
 .item-tile.capability_multistatus_selected .item-tile__image
 {
-	brightness: .3;
+	brightness: .2;
 }
 
 .item-tile__rarity

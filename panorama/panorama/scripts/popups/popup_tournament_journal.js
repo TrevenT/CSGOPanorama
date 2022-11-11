@@ -757,6 +757,10 @@ var TournamentJournal = ( function()
 		var bCanSellCapsules = ( sRestriction !== "restricted" && sRestriction !== "xray" );
 
 		var fnCreateOffering = function ( ids, i ) {
+            if ( !bCanSellCapsules && ( i >= g_ActiveTournamentInfo.num_global_offerings ) )
+            {                                                                                                      
+                return;
+            }
 
             if ( !elItemsPanel.FindChildInLayoutFile( 'tournament-items' + i ) )
             {
@@ -791,10 +795,7 @@ var TournamentJournal = ( function()
             }
 		};
 		
-		if ( bCanSellCapsules )
-			g_ActiveTournamentStoreLayout.forEach( fnCreateOffering );
-		else
-            fnCreateOffering( g_ActiveTournamentStoreLayout[ 0 ], 0 );
+        g_ActiveTournamentStoreLayout.forEach( fnCreateOffering );
     };
 
     var _IsPurchaseable = function( itemid )

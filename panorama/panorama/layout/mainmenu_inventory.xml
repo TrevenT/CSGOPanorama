@@ -15,7 +15,7 @@
 
 	<snippets>
 		<snippet name="InvSortDropdownSnippet">
-			<Panel class="horizontal-align-right left-right-padding">
+			<Panel class="horizontal-align-right left-right-padding vertical-center">
 				<DropDown class="PopupButton White" id="InvSortDropdown" menuclass="DropDownMenu Width-250" oninputsubmit="">
 
 				</DropDown>
@@ -160,9 +160,8 @@
 						<Label class="inv-popup-title__text" id="CapItemName" text=""/>
 					</Panel>
 
-
 				</Panel>
-
+				<Panel id="CapabilityPopupSortContainer" class="content-navbar content-navbar--short"/>
 			</Panel>
 
 		</Panel>

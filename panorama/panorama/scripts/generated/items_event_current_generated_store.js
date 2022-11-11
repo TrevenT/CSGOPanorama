@@ -3,7 +3,7 @@
                                                                  
                                                            
                                  
-                                 
+                               
   
                       
 
@@ -23,6 +23,7 @@ var g_ActiveTournamentInfo =
 	],
 	itemid_pack: 4855,
 	itemid_charge: 4856,
+	num_global_offerings: 2,
 	active: true,
 };
 
@@ -213,6 +214,11 @@ var g_ActiveTournamentStoreLayout =
 	g_ActiveTournamentInfo.itemid_pass,
 	g_ActiveTournamentInfo.itemid_pack,
 	'#CSGO_TournamentPass_rio2022_pack_tinyname'
+	],
+	[
+	4871,
+	4872,
+	'#CSGO_storageunit_rio2022_tinyname'
 	],
 	[
 	4857,                                

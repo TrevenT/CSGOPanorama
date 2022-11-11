@@ -239,7 +239,7 @@ var InventoryPanel = ( function (){
 				} );
 
 				           
-				_AddSortDropdownToNavBar( elNavBar.GetParent() );
+				_AddSortDropdownToNavBar( elNavBar.GetParent(), false);
 
 				              
 				$.CreatePanel( 'InventoryItemList', elCategory, tag + '-List' );
@@ -335,7 +335,7 @@ var InventoryPanel = ( function (){
 	                                                                                                    
 	                               
 	                                                                                                    
-	var _AddSortDropdownToNavBar = function( elNavBar )
+	var _AddSortDropdownToNavBar = function( elNavBar, bIsCapabliltyPopup )
 	{
 		var elDropdown = elNavBar.FindChildInLayoutFile( 'InvSortDropdown' );
 		
@@ -344,7 +344,6 @@ var InventoryPanel = ( function (){
 			var elDropdownParent = $.CreatePanel( 'Panel', elNavBar, 'InvExtraNavOptions' );
 			elDropdownParent.BLoadLayoutSnippet( 'InvSortDropdownSnippet' );
 			elDropdown = elDropdownParent.FindChildInLayoutFile( 'InvSortDropdown' );
-			elDropdown.SetPanelEvent('oninputsubmit', _UpdateSort.bind( undefined, elDropdown ) );
 
 			var count = InventoryAPI.GetSortMethodsCount();
 
@@ -354,11 +353,16 @@ var InventoryPanel = ( function (){
 				var newEntry = $.CreatePanel('Label', elDropdownParent, sort, {
 					class: 'DropDownMenu'
 				});
-	
+
 				newEntry.text = $.Localize('#'+sort);
 				elDropdown.AddOption(newEntry);
 			}
-	
+
+			if ( !bIsCapabliltyPopup )
+			{
+				elDropdown.SetPanelEvent( 'oninputsubmit', _UpdateSort.bind( undefined, elDropdown ) );
+			}
+
 			                        
 			elDropdown.SetSelected( GameInterfaceAPI.GetSettingString( "cl_inventory_saved_sort2" ) );
 		}
@@ -483,7 +487,6 @@ var InventoryPanel = ( function (){
 		_ShowInventoryMainListers();
 		return true;
 	};
-
 
 	var _ShowLoadoutForItem = function( slot, subSlot, team )
 	{
@@ -785,6 +788,11 @@ var InventoryPanel = ( function (){
 		_SelectedCapabilityInfo.multiselectItemIdsArray = [];
 		_SelectedCapabilityInfo.popupVisible = true;
 
+		var elDropDownParent = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile( 'CapabilityPopupSortContainer' );
+		_AddSortDropdownToNavBar( elDropDownParent, true );
+
+		var elDropdown = elDropDownParent.FindChildInLayoutFile( 'InvSortDropdown' );
+		elDropdown.SetPanelEvent( 'oninputsubmit', _UpdatePopup.bind( undefined, itemid, capability ) );
 		_UpdatePopup( itemid, capability );
 	};
 	
@@ -809,17 +817,19 @@ var InventoryPanel = ( function (){
 	var _UpdatePopup = function ( id, capability )
 	{
 		var elList = _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile( 'ItemListForCapability' );
-		
+		                                     
+
 		if( !elList )
 			elList =  $.CreatePanel('InventoryItemList', _m_elSelectItemForCapabilityPopup, 'ItemListForCapability' );
 
-		var capabilityFilter= capability + ':' + id;
+		elList.SetHasClass( 'inv-multi-select-allow', capability === "casketstore" || capability === "casketretrieve" );
+		var capabilityFilter = capability + ':' + id;
 
 		_UpdateActiveItemList(
 			elList,
 			'any',
 			'any',
-			_GetSelectedSort( null ),
+			_GetSelectedSort( _m_elSelectItemForCapabilityPopup.FindChildInLayoutFile( 'CapabilityPopupSortContainer' ) ),
 			capabilityFilter
 		);
 
@@ -1225,6 +1235,14 @@ var InventoryPanel = ( function (){
 		return false;
 	}
 
+	var _UpdateItemListCallback = function()
+	{
+		if ( _SelectedCapabilityInfo.popupVisible === true && _SelectedCapabilityInfo.capability )
+		{
+			_UpdatePopup( _SelectedCapabilityInfo.initialItemId, _SelectedCapabilityInfo.capability );
+		}
+	}
+
 	return {
 		Init: _Init,
 		NavigateToTab: _NavigateToTab,
@@ -1247,6 +1265,7 @@ var InventoryPanel = ( function (){
 		UpdateCraftingPanelVisibility: _UpdateCraftingPanelVisibility,
 		UpdateSearchPanelVisibility: _UpdateSearchPanelVisibility,
 		CloseSearchPanel: _CloseSearchPanel,
+		UpdateItemListCallback: _UpdateItemListCallback,
 		ClosePopups : _ClosePopups,
 	};
 })();

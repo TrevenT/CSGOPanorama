@@ -45,8 +45,8 @@ var ItemTile = ( function()
 	                                                                                                    
 	var _SetItemName = function( id )
 	{
-	    var fmtName = ItemInfo.GetFormattedName( id );
-	    fmtName.SetOnLabel( $( '#JsItemName' ) );
+		var fmtName = ItemInfo.GetFormattedName( id );
+		fmtName.SetOnLabel( $( '#JsItemName' ) );
 	};
 
 	function _SetBackground ( id )
@@ -85,13 +85,13 @@ var ItemTile = ( function()
 			InventoryPanel.GetCapabilityInfo().multiselectItemIds &&
 			InventoryPanel.GetCapabilityInfo().multiselectItemIds.hasOwnProperty( id ) );
 		
-		$.GetContextPanel().SetHasClass( 'capability_multistatus_selected', bSelectedInMultiSelect );
+		$.GetContextPanel().SetHasClass( 'capability_multistatus_selected', bSelectedInMultiSelect && !$.GetContextPanel().BHasClass('capability_multistatus_selected'));
 	};
 
-	                             
-	    
-	   	                                                                   
-	     
+	var _UpdatePopUpCapabilityList = function()
+	{
+		InventoryPanel.UpdateItemListCallback();
+	}
 
 	var _SetImage = function( id )
 	{
@@ -299,6 +299,13 @@ var ItemTile = ( function()
 		contextMenuPanel.AddClass( "ContextMenu_NoArrow" );
 	};
 
+	var _OnActivateInspectButtonFropmTile = function()
+	{
+		var id = $.GetContextPanel().GetAttributeString( 'itemid', '0' );
+		var capabilityInfo = _GetPopUpCapability();
+		_CapabilityItemInsideCasketAction( capabilityInfo.initialItemId, id );
+	}
+
 	var _GetPopUpCapability = function()
 	{
 		if ( typeof InventoryPanel === "object" )                                                                 
@@ -405,9 +412,12 @@ var ItemTile = ( function()
 		}
 	};
 
+	var jsUpdateItemListCallback = UiToolkitAPI.RegisterJSCallback(_UpdatePopUpCapabilityList );
+
 	var _CapabilityItemInsideCasketAction = function( idCasket, idItem )
 	{
 		                                                              
+		var capabilityInfo = _GetPopUpCapability();
 
 		UiToolkitAPI.ShowCustomLayoutPopupParameters(
 			'',
@@ -415,8 +425,11 @@ var ItemTile = ( function()
 			'itemid=' + idItem +
 			'&' + 'inspectonly=true' +
 			'&' + 'insidecasketid=' + idCasket +
+			'&' + 'capability=' + capabilityInfo.capability +
 			'&' + 'showequip=false' +
-			'&' + 'allowsave=false',
+			'&' + 'allowsave=false' +
+			'&' + 'isselected=' + $.GetContextPanel().BHasClass( 'capability_multistatus_selected' ) + 
+			'&' + 'callback=' + jsUpdateItemListCallback,
 			'none'
 		);
 	}
@@ -497,11 +510,12 @@ var ItemTile = ( function()
 	};
 
 	return {
-		OnTileUpdated	: _OnTileUpdated,
-		OnActivate		: _OnActivate,
-		ShowTooltip		: _ShowTooltip,
-		HideTooltip		: _HideTooltip,
-		Ondblclick		: _Ondblclick
+		OnTileUpdated					: _OnTileUpdated,
+		OnActivate						: _OnActivate,
+		ShowTooltip						: _ShowTooltip,
+		HideTooltip						: _HideTooltip,
+		Ondblclick						: _Ondblclick,
+		OnActivateInspectButtonFropmTile: _OnActivateInspectButtonFropmTile
 	};
 } )();
 

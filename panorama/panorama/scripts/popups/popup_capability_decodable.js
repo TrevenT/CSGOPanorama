@@ -311,6 +311,8 @@ var CapabilityDecodable = ( function()
 		elImage.AddClass( 'y-offset' );
 
 		_ShowHideLootList( true );
+		_SetLootlistHintText( caseId, count );
+		
 		for ( var i = 0; i < count; i++ )
 		{
 			var itemid = ItemInfo.GetLootListItemByIndex( caseId, i );
@@ -318,8 +320,6 @@ var CapabilityDecodable = ( function()
 			
 			if ( !elItem )
 			{
-				                                                            
-
 				var elItem = $.CreatePanel( 'Panel', elLootList, itemid );
 				elItem.SetAttributeString( 'itemid', itemid );
 				elItem.BLoadLayoutSnippet( 'LootListItem' );
@@ -430,6 +430,19 @@ var CapabilityDecodable = ( function()
 		var elLootListContainer = $.GetContextPanel().FindChildInLayoutFile( 'DecodableLootlistContainer' );
 		elLootListContainer.SetHasClass( 'hidden', !bshow );
 	};
+
+	var _SetLootlistHintText = function( caseId, count )
+	{
+		var bAllItems = InventoryAPI.GetLootListAllEntriesAreAdditionalDrops( caseId );
+	
+		$.GetContextPanel().FindChildInLayoutFile( 'CanDecodableDesc' ).visible = !bAllItems;
+
+		if ( count > 1 )
+		{
+			$.GetContextPanel().FindChildInLayoutFile( 'CanDecodableDescMulti' ).SetDialogVariableInt( 'num_items', count );
+			$.GetContextPanel().FindChildInLayoutFile( 'CanDecodableDescMulti' ).visible = bAllItems;
+		}
+	}
 
 	var _UpdateUnusualItemInfo = function( elItem, caseId, unusualItemImagePath )
 	{
@@ -1012,7 +1025,7 @@ var CapabilityDecodable = ( function()
 			if (  ItemInfo.ItemMatchDefName( ItemId, matchtingKeyDefName ) )
 			{
 				m_keyId = ItemId;
-				$.DispatchEvent( 'HideStoreStatusPanel', m_Inspectpanel.id );
+				$.DispatchEvent( 'HideStoreStatusPanel' );
 				_AcknowlegeMatchingKeys( matchtingKeyDefName );
 				_SetUpPanelElements();
 			}
@@ -1021,7 +1034,7 @@ var CapabilityDecodable = ( function()
 		{
 			_ClosePopUp();
 			$.DispatchEvent( 'ShowAcknowledgePopup', '', ItemId );
-			$.DispatchEvent( 'HideStoreStatusPanel', m_Inspectpanel.id );
+			$.DispatchEvent( 'HideStoreStatusPanel' );
 		}
 	};
 

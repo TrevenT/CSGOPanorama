@@ -69,9 +69,9 @@ var ItemContextEntires = ( function (){
 			},
 			AvailableForItem: function ( id ) {
 				                              
-				var defName = InventoryAPI.GetItemDefinitionName( id );
-				if ( defName === 'casket' )
-					return InventoryAPI.GetItemAttributeValue( id, 'modification date' ) ? true : false;
+				                                                         
+				                             
+					                                                                                      
 
 				                                                                 
 				return ItemInfo.IsPreviewable( id );
