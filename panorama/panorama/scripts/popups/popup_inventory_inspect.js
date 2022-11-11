@@ -221,6 +221,11 @@ var InventoryInspect = ( function()
 
 	var _UpdateCharacterModelPanel = function( itemId )
 	{
+		if ( !ItemInfo.IsWeapon(itemId) )
+		{
+			return;
+		}
+		
 		var elActionBarPanel = $.GetContextPanel().FindChildInLayoutFile( 'PopUpInspectActionBar' );
 		InspectActionBar.OnUpdateCharModel( false,
 			elActionBarPanel.FindChildInLayoutFile( 'InspectDropdownCharModels' ),

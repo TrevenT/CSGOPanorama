@@ -462,6 +462,7 @@ var Loadout = ( function() {
 		var loadoutSlot = _GetSelectededLoadoutSlot();
 		$.DispatchEvent( "ShowLoadout", loadoutSlot, Number( _GetSelectededTeam( loadoutSlot ) ) );
 		Loadout.PlayerEquipSlotChangedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', Loadout.UpdateForSingleSlotItems );
+		Loadout.InventoryUpdatedHandler = $.RegisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', Loadout.UpdateInteriorPreviewAndItemTiles );
 	};
 
 	var _OnUnreadyForDisplay = function()
@@ -471,6 +472,12 @@ var Loadout = ( function() {
 			$.UnregisterForUnhandledEvent( 'PanoramaComponent_Inventory_PlayerEquipSlotChanged', Loadout.PlayerEquipSlotChangedHandler );
 			Loadout.PlayerEquipSlotChangedHandler = undefined;
 		}
+
+		if ( Loadout.InventoryUpdatedHandler )
+		{
+			$.UnregisterForUnhandledEvent( 'PanoramaComponent_MyPersona_InventoryUpdated', Loadout.InventoryUpdatedHandler );
+			Loadout.InventoryUpdatedHandler = undefined;
+		}
 	};
 
 	var _UpdateForSingleSlotItems = function( pos, subslot, oldItemId, newItemId)
@@ -478,7 +485,12 @@ var Loadout = ( function() {
 		                         
 		if ( oldItemId == newItemId )
 			return;
-		
+
+		_UpdateInteriorPreviewAndItemTiles();
+	}
+	
+	var _UpdateInteriorPreviewAndItemTiles = function()
+	{
 		if ( _GetUsesWedges() )
 		{
 			var loadoutSlot = _GetSelectededLoadoutSlot();
@@ -584,6 +596,7 @@ var Loadout = ( function() {
 		OnUnreadyForDisplay					: _OnUnreadyForDisplay,
 		LoadoutWedgePressed					: _LoadoutWedgePressed,
 		UpdateForSingleSlotItems			: _UpdateForSingleSlotItems,
+		UpdateInteriorPreviewAndItemTiles	: _UpdateInteriorPreviewAndItemTiles,
 		ResetFlair							: _ResetFlair,
 		UpdateItemLister					: _UpdateItemList,
 		OnShuffleToggle						: _OnShuffleToggle,

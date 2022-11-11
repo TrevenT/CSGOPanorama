@@ -291,7 +291,7 @@ var mainmenu_watch_tournament = (function () {
 
 		if ( isCurrentTourament )
 		{
-			var tabIdToActivate = 'id-nav-pick-playoffs';
+			var tabIdToActivate = 'id-nav-pick-prelims';
 
 			$.DispatchEvent( "Activated", navBarPanel.FindChildInLayoutFile( tabIdToActivate ), "mouse" );	
 		}
@@ -336,6 +336,7 @@ var mainmenu_watch_tournament = (function () {
     {
         var elLink = elPanel.FindChildInLayoutFile( 'JsTournamentInfoLink' );
 		var olinks = {
+			20: "https://store.steampowered.com/sale/csgomajorrio2022",
 			19: "https://store.steampowered.com/sale/csgomajorantwerp2022",
 			18: "https://store.steampowered.com/sale/csgostockholm",
 			16: "https://csgomajor.starladder.com/",

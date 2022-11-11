@@ -15,10 +15,10 @@
 	<Panel class="tournament-pass-status" >
         <Button id="id-tournament-pass-status" class="tournament-pass-status-container">
             <Panel class="tournament-pass-status__info">
-                <Label class="tournament-pass-status__desc" html="true" text="#CSGO_TournamentPass_antwerp2022_store_desc"/>
+                <Label class="tournament-pass-status__desc" html="true" text="#CSGO_TournamentPass_rio2022_store_desc"/>
                 <Panel class="left-right-flow">
                     <Label id="id-tournament-pass-saletag" class="tournament-pass-status__saletag" text="#store_sale"/>
-                    <Label id="id-tournament-pass-status-header" class="tournament-pass-status__title" text="#CSGO_TournamentPass_antwerp2022_store_title"/>
+                    <Label id="id-tournament-pass-status-header" class="tournament-pass-status__title" text="#CSGO_TournamentPass_rio2022_store_title"/>
                 </Panel>
             </Panel>
             <Panel id="id-tournament-pass-status-images-row" class="tournament-pass-status__images-row">
@@ -26,7 +26,7 @@
                 <ItemImage class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
                 <ItemImage class="tournament-pass-status__image" scaling="stretch-to-fit-x-preserve-aspect"/>
             </Panel>
-            <Label id="id-tournament-pass-status-game-countdown" class="tournament-pass-status__timer hidden" html="true" text="#CSGO_TournamentPass_antwerp2022_store_desc"/>
+            <Label id="id-tournament-pass-status-game-countdown" class="tournament-pass-status__timer hidden" html="true" text="#CSGO_TournamentPass_rio2022_store_desc"/>
         </Button>
 	</Panel>
 </root>
